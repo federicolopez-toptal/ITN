@@ -1,0 +1,5 @@
+* NEW DESIGNS in JIRA
+https://improvethenews.atlassian.net/browse/ITN-1520
+
+* MAIN FEED
+https://www.figma.com/file/2trQtjl1kAFZOspiVF3RNp/Card%2C-Feed-%26-Navigation

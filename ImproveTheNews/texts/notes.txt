@@ -1,0 +1,5 @@
+* BUILD CONFIGURATIONS
+https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project?changes=_8
+
+* ADD CUSTOM SETTINGS TO PROJECT
+https://medium.com/@hassanahmedkhan/defining-your-own-settings-in-xcode-build-settings-1bd71539ea4f
