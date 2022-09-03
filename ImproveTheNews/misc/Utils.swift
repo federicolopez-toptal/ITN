@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+
 
 func WRITE(_ key: String, value: Any) {
     UserDefaults.standard.setValue(value, forKey: key)
@@ -37,4 +39,8 @@ func JSON(fromData data: Data?) -> [String: Any]? {
     } else {
         return nil
     }
+}
+
+func APP_DELEGATE() -> AppDelegate {
+    return UIApplication.shared.delegate as! AppDelegate
 }

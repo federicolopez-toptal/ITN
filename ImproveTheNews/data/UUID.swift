@@ -1,5 +1,5 @@
 //
-//  UserID.swift
+//  UUID.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 02/09/2022.
@@ -7,32 +7,40 @@
 
 import Foundation
 
-class UserID {
+class UUID {
     
-    static let instance = UserID()
+    static let shared = UUID()
     
     private let key_uuid = "SHARE_uuid"
     private let key_jwt = "SHARE_jwt"
     
-    func getValue(callback: @escaping (String) -> ()) {
-        if let _uuid = READ(self.key_uuid) {
-            callback(_uuid)
+    func getValue() -> String {
+        if let _value = READ(self.key_uuid) {
+            return _value
         } else {
-            self.generate { (error, gen_uuid) in
-                if let _error = error {
-                    callback(self.randomValue())
+            return self.randomValue()
+        }
+    }
+    
+    func check(callback: @escaping (Bool) -> ()) {
+        if(READ(self.key_uuid) != nil) {
+            callback(true)
+        } else {
+            self.generate { (error, new_uuid) in
+                if let _ = error {
+                    callback(false)
                 } else {
-                    if let _uuid = gen_uuid {
-                        callback(_uuid)
+                    if(new_uuid != nil) {
+                        callback(true)
                     } else {
-                        callback(self.randomValue())
+                        callback(false)
                     }
                 }
             }
         }
     }
     
-    func generate(callback: @escaping (Error?, String?) -> ()) {
+    private func generate(callback: @escaping (Error?, String?) -> ()) {
         let url = "https://biaspost.org/api/user/"
         
         let bodyJson: [String: String] = [

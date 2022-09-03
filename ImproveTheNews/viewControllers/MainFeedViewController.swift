@@ -28,16 +28,18 @@ class MainFeedViewController: BaseViewController {
         
         if(!self.didAppear) {
             self.didAppear = true
-            
-            UserID.instance.getValue { (uuid) in
-                print("UUID", uuid)
-            }
-            
-            let data = MainFeed()
-            data.loadData { (error) in
-            }
+            self.loadData()
         }
     }
     
+    func loadData() {
+        self.showLoading()
+        UUID.shared.check { _ in // generates a new uuid (if needed)
+            let data = MainFeed()
+            data.loadData { (error) in
+                self.hideLoading()
+            }
+        }
+    }
 
 }

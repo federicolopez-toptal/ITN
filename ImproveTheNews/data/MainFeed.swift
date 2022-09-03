@@ -11,14 +11,6 @@ import UIKit
 
 class MainFeed {
     
-    /*
-        Documentation
-        https://docs.google.com/document/d/1UTdmnjjLTR5UjkQ7UmP-xGlpFN7MkEImYK1Vq3w7RwE/edit
-        
-        API call example:
-        https://www.improvemynews.com/appserver.php/?topic=news.A4.B4.S0&sliders=LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11&uid=3978511592857187948&v=I1.5.0&dev=iPhone_X
-    */
-    
     var topic = "news"
     var A_articlesPerTopic = 4
     var B_articlesPerSubtopic = 4
@@ -31,7 +23,7 @@ class MainFeed {
         var request = URLRequest(url: URL(string: self.buildUrl())!)
         request.httpMethod = "GET"
         
-        //print("URL", request.url!.absoluteString)
+        print("MAIN FEED from", request.url!.absoluteString)
         let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
             if let _error = error {
                 print(_error.localizedDescription)
@@ -44,6 +36,7 @@ class MainFeed {
             
                 if let _json = JSON(fromData: Data(str.utf8)) {
                     self.parse(_json)
+                    callback(nil)
                 } else {
                     let _error = CustomError.jsonParseError
                     callback(_error)
@@ -56,14 +49,24 @@ class MainFeed {
     
     func buildUrl() -> String {
     
+        /*
+            DOCUMENTATION
+                https://docs.google.com/document/d/1UTdmnjjLTR5UjkQ7UmP-xGlpFN7MkEImYK1Vq3w7RwE/edit
+        
+            API call example:
+                https://www.improvemynews.com/appserver.php/?topic=news.A4.B4.S0
+                &sliders=LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11
+                &uid=3978511592857187948&v=I1.5.0&dev=iPhone_X
+        */
+    
         var result = API_BASE_URL() + "/appserver.php/?topic=" + self.topic
         result += ".A" + String(A_articlesPerTopic)
         result += ".B" + String(B_articlesPerSubtopic)
         result += ".S" + String(S_articlesToSkipPerTopic)
         
         result += "&sliders=LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11"
-        result += "&uid=3978511592857187948"
         
+        result += "&uid=" + UUID.shared.getValue()
         result += "&v=I" + Bundle.main.releaseVersionNumber!
         result += "&dev=" + UIDevice.current.modelName.replacingOccurrences(of: " ", with: "_")
         
