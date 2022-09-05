@@ -71,6 +71,7 @@ class SlidersPanel: UIView {
         ])
         
         let roboto_bold = UIFont(name: "Roboto-Bold", size: 13)
+        let characterSpacing: Double = 1.5
         
         for i in 1...6 {
             // Each row
@@ -84,6 +85,7 @@ class SlidersPanel: UIView {
                 titleLabel.text = self.titles[i-1].uppercased()
                 titleLabel.font = roboto_bold
                 titleLabel.textColor = UIColor(hex: 0x1D242F)
+                titleLabel.addCharacterSpacing(kernValue: characterSpacing)
                 titleHStack.addArrangedSubview(titleLabel)
                 
                 self.addSpacer(to: titleHStack)
@@ -98,7 +100,7 @@ class SlidersPanel: UIView {
                     NSLayoutConstraint.activate([
                         square.widthAnchor.constraint(equalToConstant: 15),
                         square.heightAnchor.constraint(equalToConstant: 15),
-                        square.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -70),
+                        square.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -76),
                         square.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue),
                     ])
                     
@@ -108,7 +110,7 @@ class SlidersPanel: UIView {
                     NSLayoutConstraint.activate([
                         check.widthAnchor.constraint(equalToConstant: 18),
                         check.heightAnchor.constraint(equalToConstant: 14),
-                        check.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -65),
+                        check.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -71),
                         check.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue-3),
                     ])
                     check.tag = 40 + i
@@ -132,6 +134,7 @@ class SlidersPanel: UIView {
                     splitLabel.text = "SPLIT"
                     splitLabel.font = roboto_bold
                     splitLabel.textColor = UIColor(hex: 0x1D242F)
+                    splitLabel.addCharacterSpacing(kernValue: characterSpacing)
                     titleHStack.addArrangedSubview(splitLabel)
                     
                     let hLine = UIView()
@@ -163,6 +166,7 @@ class SlidersPanel: UIView {
                 leftLabel.text = _legends.0.uppercased()
                 leftLabel.font = roboto_bold
                 leftLabel.textColor = UIColor(hex: 0x93A0B4)
+                leftLabel.addCharacterSpacing(kernValue: characterSpacing)
                 legendsHStack.addArrangedSubview(leftLabel)
                 
                 self.addSpacer(to: legendsHStack)
@@ -171,6 +175,7 @@ class SlidersPanel: UIView {
                 rightLabel.text = _legends.1.uppercased()
                 rightLabel.font = roboto_bold
                 rightLabel.textColor = UIColor(hex: 0x93A0B4)
+                rightLabel.addCharacterSpacing(kernValue: characterSpacing)
                 legendsHStack.addArrangedSubview(rightLabel)
             
             var sliderValue = LocalKeys.sliders.defaultValues[i-1]
@@ -203,10 +208,17 @@ class SlidersPanel: UIView {
             self.coverView.topAnchor.constraint(equalTo: self.topAnchor, constant: 228),
             self.coverView.heightAnchor.constraint(equalToConstant: 400)
         ])
+        self.coverView.isUserInteractionEnabled = false
         self.coverView.hide()
         
         self.addSwipeGesture()
         self.show(rows: 0)
+        
+        if let _split = READ(LocalKeys.sliders.split) {
+            print("SPLIT read", _split)
+            self.split = Int(_split)!
+            self.checkSplitComponents()
+        }
     }
     
     private func addSpacer(to container: UIStackView, backgroundColor: UIColor = .clear,
@@ -254,14 +266,17 @@ class SlidersPanel: UIView {
                 constant = 0
         }
         
-        self.coverView.hide()
+        var alphaTo: CGFloat = 0.0
+        
+        self.coverView.show()
         if(rows == 2) {
-            self.coverView.show()
+            alphaTo = 1.0
         }
         
         self.bottomConstraint?.constant = constant
         if(animated) {
             UIView.animate(withDuration: 0.4) {
+                self.coverView.alpha = alphaTo
                 self.superview!.layoutIfNeeded()
             } completion: { (succeed) in
             }
@@ -342,6 +357,16 @@ extension SlidersPanel {
 //        print("SPLIT", self.split)
         WRITE(LocalKeys.sliders.split, value: String(self.split))
         NOTIFY(Notification_reloadMainFeed)
+    }
+    
+    func floatingButtonOnTap() {
+        if(self.rowsShown == 0) {
+            self.show(rows: 2, animated: true)
+        } else if(self.rowsShown==2) {
+            self.show(rows: 0, animated: true)
+        } else if(self.rowsShown==6) {
+            self.show(rows: 2, animated: true)
+        }
     }
     
 }
