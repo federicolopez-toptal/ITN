@@ -16,8 +16,8 @@ class CustomNavController: UINavigationController {
         super.viewDidLoad()
         
         self.isNavigationBarHidden = true
-        self.slidersPanel.insertInto(self.view)
-        self.loadingView.insertInto(self.view)
+        self.slidersPanel.buildInto(self.view)
+        self.loadingView.buildInto(self.view)
         self.addViewController()
     }
     

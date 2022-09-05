@@ -18,7 +18,7 @@ class LoadingView: UIView {
     }
     
     // MARK: - Build component
-    func insertInto(_ container: UIView) {
+    func buildInto(_ container: UIView) {
         // Square (self)
         self.backgroundColor = .black.withAlphaComponent(0.5)
         self.layer.cornerRadius = 15

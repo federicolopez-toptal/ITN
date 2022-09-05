@@ -9,15 +9,17 @@ import UIKit
 
 class SlidersPanel: UIView {
 
-    private let height: CGFloat = 600
+    private let height: CGFloat = 615
     private var bottomConstraint: NSLayoutConstraint?
 
     private let titles = ["Political stance", "Establishment stance", "Writing style", "Depth", "Shelf-life", "Recency"]
-    private let defaultValues = [50, 50, 70, 70, 70, 70]
     private let legends = [("Left", "Right"), ("Critical", "Pro"), ("Provocative", "Nuanced"), ("Breezy", "Detailed"),
                             ("Short", "Long"), ("Evergreen", "Latest")]
 
     private var rowsShown: Int = 0
+    private var split: Int = 0
+    private var coverView = UIView()
+
 
     // MARK: - Init(s)
     init() {
@@ -29,10 +31,10 @@ class SlidersPanel: UIView {
     }
     
     // MARK: - Build component
-    func insertInto(_ container: UIView) {
+    func buildInto(_ container: UIView) {
         // Panel (self)
         self.backgroundColor = .white
-        self.layer.cornerRadius = 15
+        self.layer.cornerRadius = 22
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         container.addSubview(self)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -44,6 +46,17 @@ class SlidersPanel: UIView {
             self.bottomConstraint!
         ])
         
+        //Handle
+        let handle = UIImageView(image: UIImage(named: "slidersPanel.handle.bright"))
+        self.addSubview(handle)
+        handle.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            handle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            handle.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            handle.widthAnchor.constraint(equalToConstant: 50),
+            handle.heightAnchor.constraint(equalToConstant: 5),
+        ])
+        
         // Rows container
         let rowsVStack = UIStackView()
         rowsVStack.axis = .vertical
@@ -52,10 +65,12 @@ class SlidersPanel: UIView {
         self.addSubview(rowsVStack)
         rowsVStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            rowsVStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            rowsVStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-            rowsVStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 20)
+            rowsVStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 55),
+            rowsVStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 27),
+            rowsVStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27)
         ])
+        
+        let roboto_bold = UIFont(name: "Roboto-Bold", size: 13)
         
         for i in 1...6 {
             // Each row
@@ -66,16 +81,75 @@ class SlidersPanel: UIView {
             rowsVStack.addArrangedSubview(titleHStack)
             
                 let titleLabel = UILabel()
-                titleLabel.text = self.titles[i-1]
+                titleLabel.text = self.titles[i-1].uppercased()
+                titleLabel.font = roboto_bold
+                titleLabel.textColor = UIColor(hex: 0x1D242F)
                 titleHStack.addArrangedSubview(titleLabel)
                 
                 self.addSpacer(to: titleHStack)
                 
                 if(i<3) {
+                    var topValue: CGFloat = 54
+                    if(i==2){ topValue += 86 }
+                
+                    let square = UIImageView(image: UIImage(named: "slidersPanel.split.square"))
+                    self.addSubview(square)
+                    square.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        square.widthAnchor.constraint(equalToConstant: 15),
+                        square.heightAnchor.constraint(equalToConstant: 15),
+                        square.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -70),
+                        square.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue),
+                    ])
+                    
+                    let check = UIImageView(image: UIImage(named: "slidersPanel.split.check"))
+                    self.addSubview(check)
+                    check.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        check.widthAnchor.constraint(equalToConstant: 18),
+                        check.heightAnchor.constraint(equalToConstant: 14),
+                        check.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -65),
+                        check.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue-3),
+                    ])
+                    check.tag = 40 + i
+                    check.hide()
+                    
+                    let checkButton = UIButton(type: .system)
+                    checkButton.backgroundColor = .clear
+                    checkButton.alpha = 0.5
+                    self.addSubview(checkButton)
+                    checkButton.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        checkButton.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue-10),
+                        checkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -17),
+                        checkButton.widthAnchor.constraint(equalToConstant: 100),
+                        checkButton.heightAnchor.constraint(equalToConstant: 35),
+                    ])
+                    checkButton.tag = 30 + i
+                    checkButton.addTarget(self, action: #selector(onSplitButtonTap(_:)), for: .touchUpInside)
+                
                     let splitLabel = UILabel()
                     splitLabel.text = "SPLIT"
+                    splitLabel.font = roboto_bold
+                    splitLabel.textColor = UIColor(hex: 0x1D242F)
                     titleHStack.addArrangedSubview(splitLabel)
+                    
+                    let hLine = UIView()
+                    hLine.backgroundColor = UIColor(hex: 0xFF643C)
+                    self.addSubview(hLine)
+                    hLine.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        hLine.widthAnchor.constraint(equalToConstant: 6),
+                        hLine.heightAnchor.constraint(equalToConstant: 20),
+                        hLine.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                        hLine.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue + 52),
+                    ])
+                    hLine.layer.cornerRadius = 3.0
+                    hLine.tag = 50 + i
+                    hLine.hide()
                 }
+            
+            self.addSpacer(to: rowsVStack, height: 6)
             
             let legendsHStack = UIStackView()
             legendsHStack.axis = .horizontal
@@ -86,16 +160,20 @@ class SlidersPanel: UIView {
             let _legends = self.legends[i-1]
             
                 let leftLabel = UILabel()
-                leftLabel.text = _legends.0
+                leftLabel.text = _legends.0.uppercased()
+                leftLabel.font = roboto_bold
+                leftLabel.textColor = UIColor(hex: 0x93A0B4)
                 legendsHStack.addArrangedSubview(leftLabel)
                 
                 self.addSpacer(to: legendsHStack)
                 
                 let rightLabel = UILabel()
-                rightLabel.text = _legends.1
+                rightLabel.text = _legends.1.uppercased()
+                rightLabel.font = roboto_bold
+                rightLabel.textColor = UIColor(hex: 0x93A0B4)
                 legendsHStack.addArrangedSubview(rightLabel)
             
-            var sliderValue = self.defaultValues[i-1]
+            var sliderValue = LocalKeys.sliders.defaultValues[i-1]
             if let _value = READ(LocalKeys.sliders.allKeys[i-1]) {
                 sliderValue = Int(_value)!
             }
@@ -104,20 +182,35 @@ class SlidersPanel: UIView {
             slider.minimumValue = 0
             slider.maximumValue = 99
             slider.isContinuous = false
-            slider.minimumTrackTintColor = .orange
-            slider.maximumTrackTintColor = .gray
-            slider.thumbTintColor = .systemPink
+            slider.minimumTrackTintColor = UIColor(hex: 0xD9DCDF)
+            slider.maximumTrackTintColor = UIColor(hex: 0xD9DCDF)
+            slider.setThumbImage(UIImage(named: "slidersThumb"), for: .normal)
+//            slider.thumbTintColor = UIColor(hex: 0xFF643C)
             slider.tag = 20 + i
             slider.setValue(Float(sliderValue), animated: false)
             slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
             rowsVStack.addArrangedSubview(slider)
+            
+            self.addSpacer(to: rowsVStack, height: 8)
         }
+        
+        self.coverView.backgroundColor = self.backgroundColor
+        self.addSubview(self.coverView)
+        self.coverView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.coverView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            self.coverView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            self.coverView.topAnchor.constraint(equalTo: self.topAnchor, constant: 228),
+            self.coverView.heightAnchor.constraint(equalToConstant: 400)
+        ])
+        self.coverView.hide()
         
         self.addSwipeGesture()
         self.show(rows: 0)
     }
     
-    private func addSpacer(to container: UIStackView, backgroundColor: UIColor = .clear, width: CGFloat? = nil) {
+    private func addSpacer(to container: UIStackView, backgroundColor: UIColor = .clear,
+        width: CGFloat? = nil, height: CGFloat? = nil) {
         let spacer = UIView()
         spacer.backgroundColor = backgroundColor
         container.addArrangedSubview(spacer)
@@ -126,6 +219,13 @@ class SlidersPanel: UIView {
             spacer.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 spacer.widthAnchor.constraint(equalToConstant: _width)
+            ])
+        }
+        
+        if let _height = height {
+            spacer.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                spacer.heightAnchor.constraint(equalToConstant: _height)
             ])
         }
     }
@@ -148,10 +248,15 @@ class SlidersPanel: UIView {
             case 0:
                 constant = self.height
             case 2:
-                constant = self.height - 250
+                constant = self.height - 275
                 
             default:
                 constant = 0
+        }
+        
+        self.coverView.hide()
+        if(rows == 2) {
+            self.coverView.show()
         }
         
         self.bottomConstraint?.constant = constant
@@ -161,7 +266,39 @@ class SlidersPanel: UIView {
             } completion: { (succeed) in
             }
         }
+           
+        var panelState = "0"
+        if(rows == 2){ panelState = "1" }
+        else if(rows == 6){ panelState = "2" }
+        WRITE(LocalKeys.sliders.panelState, value: panelState)
+    }
+    
+    private func checkSplitComponents() {
+        for i in 1...2 {
+            // update check
+            if(i==self.split) {
+                self.viewWithTag(40+i)?.show()
+            } else {
+                self.viewWithTag(40+i)?.hide()
+            }
             
+            // update slider thumb
+            var imageAlpha = 1.0
+            let slider = self.viewWithTag(20 + i) as! UISlider
+            let hLine = self.viewWithTag(50 + i)!
+            
+            if(i==self.split) {
+                imageAlpha = 0.0
+                slider.isUserInteractionEnabled = false
+                hLine.show()
+            } else {
+                slider.isUserInteractionEnabled = true
+                hLine.hide()
+            }
+            
+            let alphaImage = UIImage(named: "slidersThumb")?.image(alpha: imageAlpha)
+            slider.setThumbImage(alphaImage, for: .normal)
+        }
     }
     
 }
@@ -176,6 +313,7 @@ extension SlidersPanel {
         let key = LocalKeys.sliders.allKeys[tag-1]
         
         WRITE(key, value: strValue)
+        NOTIFY(Notification_reloadMainFeed)
     }
     
     @objc func onViewSwipe(_ gesture: UISwipeGestureRecognizer) {
@@ -184,8 +322,26 @@ extension SlidersPanel {
                 self.show(rows: 6, animated: true)
             }
         } else if(gesture.direction == .down) {
-            self.show(rows: 0, animated: true)
+            if(self.rowsShown == 2) {
+                self.show(rows: 0, animated: true)
+            } else if(self.rowsShown == 6) {
+                self.show(rows: 2, animated: true)
+            }
         }
+    }
+    
+    @objc func onSplitButtonTap(_ sender: UIButton) {
+        let tag = sender.tag - 30
+        if(self.split == tag) {
+            self.split = 0
+        } else {
+            self.split = tag
+        }
+        
+        self.checkSplitComponents()
+//        print("SPLIT", self.split)
+        WRITE(LocalKeys.sliders.split, value: String(self.split))
+        NOTIFY(Notification_reloadMainFeed)
     }
     
 }

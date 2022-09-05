@@ -12,6 +12,11 @@ class MainFeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
+        
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(loadData),
+            name: Notification_reloadMainFeed,
+            object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -32,7 +37,7 @@ class MainFeedViewController: BaseViewController {
         }
     }
     
-    func loadData() {
+    @objc func loadData() {
         self.showLoading()
         UUID.shared.check { _ in // generates a new uuid (if needed)
             let data = MainFeed()

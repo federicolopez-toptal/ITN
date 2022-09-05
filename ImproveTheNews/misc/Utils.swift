@@ -10,17 +10,17 @@ import UIKit
 
 
 func WRITE(_ key: String, value: Any) {
-    print("WRITING", key, value)
+//    print("WRITING", key, value)
     UserDefaults.standard.setValue(value, forKey: key)
     UserDefaults.standard.synchronize()
 }
 
 func READ(_ key: String) -> String? {
     if let _value = UserDefaults.standard.string(forKey: key) {
-        print("READING", key, _value)
+//        print("READING", key, _value)
         return _value
     } else {
-        print("READING", key, "nil")
+//        print("READING", key, "nil")
         return nil
     }
 }

@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90104628C583D600A5BDC9 /* LocalKeys.swift */; };
+		1F90105228C598DA00A5BDC9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */; };
+		1F90105428C5992E00A5BDC9 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105328C5992E00A5BDC9 /* Roboto-Medium.ttf */; };
+		1F90105628C5997900A5BDC9 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */; };
+		1F90105828C599DC00A5BDC9 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90105728C599DC00A5BDC9 /* UIColorExtension.swift */; };
+		1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90105B28C5ADE700A5BDC9 /* UIImageExtension.swift */; };
+		1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90105D28C5B2A300A5BDC9 /* Notifications.swift */; };
 		1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95134028BFB92E00A77AB6 /* AppDelegate.swift */; };
 		1F95134328BFB92E00A77AB6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95134228BFB92E00A77AB6 /* SceneDelegate.swift */; };
 		1F95134828BFB92E00A77AB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F95134628BFB92E00A77AB6 /* Main.storyboard */; };
@@ -37,6 +43,12 @@
 
 /* Begin PBXFileReference section */
 		1F90104628C583D600A5BDC9 /* LocalKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalKeys.swift; sourceTree = "<group>"; };
+		1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		1F90105328C5992E00A5BDC9 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		1F90105728C599DC00A5BDC9 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		1F90105B28C5ADE700A5BDC9 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		1F90105D28C5B2A300A5BDC9 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		1F95133D28BFB92E00A77AB6 /* ImproveTheNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImproveTheNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F95134028BFB92E00A77AB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F95134228BFB92E00A77AB6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +89,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F90105028C5979F00A5BDC9 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */,
+				1F90105328C5992E00A5BDC9 /* Roboto-Medium.ttf */,
+				1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		1F95133428BFB92E00A77AB6 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +143,7 @@
 		1F95135528BFB96F00A77AB6 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				1F90105028C5979F00A5BDC9 /* fonts */,
 				1F95136D28BFDBF600A77AB6 /* navBar */,
 				1F95134628BFB92E00A77AB6 /* Main.storyboard */,
 				1F95134B28BFB92F00A77AB6 /* LaunchScreen.storyboard */,
@@ -174,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				1FA4CE6428C2865B0068DE4A /* Utils.swift */,
+				1F90105D28C5B2A300A5BDC9 /* Notifications.swift */,
 			);
 			path = misc;
 			sourceTree = "<group>";
@@ -195,6 +219,8 @@
 				1FA4CE6E28C2D47F0068DE4A /* BundleExtension.swift */,
 				1FA4CE7228C2DDFD0068DE4A /* ErrorExtension.swift */,
 				1FA4CE7428C306590068DE4A /* UIViewExtension.swift */,
+				1F90105728C599DC00A5BDC9 /* UIColorExtension.swift */,
+				1F90105B28C5ADE700A5BDC9 /* UIImageExtension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -258,12 +284,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F95135828BFB9D300A77AB6 /* notes.txt in Resources */,
+				1F90105628C5997900A5BDC9 /* Roboto-Bold.ttf in Resources */,
+				1F90105228C598DA00A5BDC9 /* Roboto-Regular.ttf in Resources */,
 				1F95135E28BFC4D300A77AB6 /* to-do.txt in Resources */,
 				1F95136628BFCB2800A77AB6 /* references.txt in Resources */,
 				1F95134D28BFB92F00A77AB6 /* LaunchScreen.storyboard in Resources */,
 				1FA4CE6228C282A00068DE4A /* misc.txt in Resources */,
 				1F95136828BFD74600A77AB6 /* ITN_logo_bright.png in Resources */,
 				1F95136C28BFDB6B00A77AB6 /* search_bright.png in Resources */,
+				1F90105428C5992E00A5BDC9 /* Roboto-Medium.ttf in Resources */,
 				1F95136A28BFDB0000A77AB6 /* hamburger_bright.png in Resources */,
 				1F95134A28BFB92F00A77AB6 /* Assets.xcassets in Resources */,
 				1F95134828BFB92E00A77AB6 /* Main.storyboard in Resources */,
@@ -277,10 +306,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F90105828C599DC00A5BDC9 /* UIColorExtension.swift in Sources */,
+				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				1F95136F28BFDC5600A77AB6 /* NavBar.swift in Sources */,
 				1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */,
 				1F95136128BFC64300A77AB6 /* CustomNavController.swift in Sources */,
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
+				1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */,
 				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */,
 				1F95134328BFB92E00A77AB6 /* SceneDelegate.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */,

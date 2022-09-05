@@ -96,7 +96,7 @@ extension MainFeed {
 
     /*
         Example:
-        LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11
+        >> LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11yT04
     
         Sliders panel values (00 to 99)
             LR  Left-Right
@@ -173,10 +173,40 @@ extension MainFeed {
                 02  User tapped on "close"
                 03  User check "Don't show again", then tap on "close"
                 04  User interaction (tap on banner, opened video)
+                
+        Example:
+        >> LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11yT04
     */
 
     private func sliderValues() -> String {
-        return "LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11"
+        var result = ""
+        
+        // Sliders panel values (6 in total)
+        let sliderCodes = ["LR", "PE", "NU", "DE", "SL", "RE"]
+        for (i, code) in sliderCodes.enumerated() {
+            var value = LocalKeys.sliders.defaultValues[i]
+            if let _value = READ(LocalKeys.sliders.allKeys[i]) {
+                value = Int(_value)!
+            }
+            
+            result += code + String(format: "%02d", value)
+        }
+        
+        // Split + Sliders panel state
+        result += "SS"
+        if let _split = READ(LocalKeys.sliders.split) {
+            result += _split
+        } else {
+            result += "0"   // default value: No split
+        }
+        if let _panelState = READ(LocalKeys.sliders.panelState) {
+            result += _panelState
+        } else {
+            result += "0" // default value: Panel closed
+        }
+    
+        result += "LA00ST01VB00VC01VA00VM00VE35oB11"
+        return result
     }
 
 }

@@ -16,6 +16,9 @@ class LocalKeys { // Keys to store local values
     
     class LocalKeys_sliders {
         let allKeys = ["slider_LR", "slider_PE", "slider_NU", "slider_DE", "slider_SL", "slider_RE"]
+        let defaultValues = [50, 50, 70, 70, 70, 70]
+        let split = "sliders_split"
+        let panelState = "sliders_panelState"
     }
     
     static var user = LocalKeys_user()
