@@ -10,14 +10,17 @@ import UIKit
 
 
 func WRITE(_ key: String, value: Any) {
+    print("WRITING", key, value)
     UserDefaults.standard.setValue(value, forKey: key)
     UserDefaults.standard.synchronize()
 }
 
 func READ(_ key: String) -> String? {
     if let _value = UserDefaults.standard.string(forKey: key) {
+        print("READING", key, _value)
         return _value
     } else {
+        print("READING", key, "nil")
         return nil
     }
 }
@@ -41,6 +44,13 @@ func JSON(fromData data: Data?) -> [String: Any]? {
     }
 }
 
-func APP_DELEGATE() -> AppDelegate {
-    return UIApplication.shared.delegate as! AppDelegate
+func SAFE_AREA() -> UIEdgeInsets? {
+    let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
+    return window?.safeAreaInsets
+}
+
+func DELAY(_ time: TimeInterval, callback: @escaping () ->() ) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
+        callback()
+    })
 }

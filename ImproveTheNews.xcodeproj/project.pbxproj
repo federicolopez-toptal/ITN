@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90104628C583D600A5BDC9 /* LocalKeys.swift */; };
 		1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95134028BFB92E00A77AB6 /* AppDelegate.swift */; };
 		1F95134328BFB92E00A77AB6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95134228BFB92E00A77AB6 /* SceneDelegate.swift */; };
 		1F95134828BFB92E00A77AB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F95134628BFB92E00A77AB6 /* Main.storyboard */; };
@@ -30,9 +31,12 @@
 		1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE7028C2D5460068DE4A /* UUID.swift */; };
 		1FA4CE7328C2DDFD0068DE4A /* ErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE7228C2DDFD0068DE4A /* ErrorExtension.swift */; };
 		1FA4CE7528C306590068DE4A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE7428C306590068DE4A /* UIViewExtension.swift */; };
+		1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE7628C3DAEE0068DE4A /* LoadingView.swift */; };
+		1FA4CE7928C3DCFB0068DE4A /* SlidersPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE7828C3DCFB0068DE4A /* SlidersPanel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F90104628C583D600A5BDC9 /* LocalKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalKeys.swift; sourceTree = "<group>"; };
 		1F95133D28BFB92E00A77AB6 /* ImproveTheNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImproveTheNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F95134028BFB92E00A77AB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F95134228BFB92E00A77AB6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +62,8 @@
 		1FA4CE7028C2D5460068DE4A /* UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUID.swift; sourceTree = "<group>"; };
 		1FA4CE7228C2DDFD0068DE4A /* ErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorExtension.swift; sourceTree = "<group>"; };
 		1FA4CE7428C306590068DE4A /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		1FA4CE7628C3DAEE0068DE4A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		1FA4CE7828C3DCFB0068DE4A /* SlidersPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidersPanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +98,8 @@
 			children = (
 				1F95135428BFB95000A77AB6 /* app */,
 				1FA4CE6328C2864F0068DE4A /* misc */,
-				1FA4CE6B28C2D3870068DE4A /* extensions */,
 				1FA4CE6628C286C40068DE4A /* data */,
+				1FA4CE6B28C2D3870068DE4A /* extensions */,
 				1F95135F28BFC61A00A77AB6 /* components */,
 				1F95135628BFB97C00A77AB6 /* viewControllers */,
 				1F95135528BFB96F00A77AB6 /* resources */,
@@ -137,6 +143,8 @@
 			children = (
 				1F95136028BFC64300A77AB6 /* CustomNavController.swift */,
 				1F95136E28BFDC5600A77AB6 /* NavBar.swift */,
+				1FA4CE7628C3DAEE0068DE4A /* LoadingView.swift */,
+				1FA4CE7828C3DCFB0068DE4A /* SlidersPanel.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -173,6 +181,7 @@
 		1FA4CE6628C286C40068DE4A /* data */ = {
 			isa = PBXGroup;
 			children = (
+				1F90104628C583D600A5BDC9 /* LocalKeys.swift */,
 				1FA4CE7028C2D5460068DE4A /* UUID.swift */,
 				1FA4CE6728C286F40068DE4A /* MainFeed.swift */,
 			);
@@ -269,12 +278,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F95136F28BFDC5600A77AB6 /* NavBar.swift in Sources */,
+				1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */,
 				1F95136128BFC64300A77AB6 /* CustomNavController.swift in Sources */,
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
 				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */,
 				1F95134328BFB92E00A77AB6 /* SceneDelegate.swift in Sources */,
+				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */,
 				1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */,
 				1FA4CE6F28C2D47F0068DE4A /* BundleExtension.swift in Sources */,
+				1FA4CE7928C3DCFB0068DE4A /* SlidersPanel.swift in Sources */,
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
 				1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */,
 				1FA4CE7528C306590068DE4A /* UIViewExtension.swift in Sources */,

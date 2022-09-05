@@ -11,11 +11,8 @@ class UUID {
     
     static let shared = UUID()
     
-    private let key_uuid = "SHARE_uuid"
-    private let key_jwt = "SHARE_jwt"
-    
     func getValue() -> String {
-        if let _value = READ(self.key_uuid) {
+        if let _value = READ(LocalKeys.user.UUID) {
             return _value
         } else {
             return self.randomValue()
@@ -23,7 +20,7 @@ class UUID {
     }
     
     func check(callback: @escaping (Bool) -> ()) {
-        if(READ(self.key_uuid) != nil) {
+        if(READ(LocalKeys.user.UUID) != nil) {
             callback(true)
         } else {
             self.generate { (error, new_uuid) in
@@ -61,8 +58,8 @@ class UUID {
             } else {
                 if let _json = JSON(fromData: data) {
                     if let _jwt = _json["jwt"] as? String, let _uuid = _json["uuid"] as? String {
-                        WRITE(self.key_uuid, value: _uuid)
-                        WRITE(self.key_jwt, value: _jwt)
+                        WRITE(LocalKeys.user.UUID, value: _uuid)
+                        WRITE(LocalKeys.user.JWT, value: _jwt)
                         callback(nil, _uuid)
                     } else {
                         let _error = CustomError.jsonParseError
@@ -87,7 +84,7 @@ class UUID {
     */
     
     
-    func randomValue() -> String {
+    private func randomValue() -> String {
         
         var randomNums = "3" // 3 for "iOS"
         for _ in 1...18 {

@@ -47,7 +47,7 @@ class MainFeed {
         task.resume()
     }
     
-    func buildUrl() -> String {
+    private func buildUrl() -> String {
     
         /*
             DOCUMENTATION
@@ -63,9 +63,7 @@ class MainFeed {
         result += ".A" + String(A_articlesPerTopic)
         result += ".B" + String(B_articlesPerSubtopic)
         result += ".S" + String(S_articlesToSkipPerTopic)
-        
-        result += "&sliders=LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11"
-        
+        result += "&sliders=" + self.sliderValues()
         result += "&uid=" + UUID.shared.getValue()
         result += "&v=I" + Bundle.main.releaseVersionNumber!
         result += "&dev=" + UIDevice.current.modelName.replacingOccurrences(of: " ", with: "_")
@@ -73,7 +71,7 @@ class MainFeed {
         return result
     }
     
-    func parse(_ json: [String: Any]) {
+    private func parse(_ json: [String: Any]) {
         
         let mainNode = json["data"] as! [Any]
         self.topics = [MainFeedTopic]()
@@ -93,6 +91,97 @@ class MainFeed {
     }
     
 }
+
+extension MainFeed {
+
+    /*
+        Example:
+        LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11
+    
+        Sliders panel values (00 to 99)
+            LR  Left-Right
+            PE  Pro-Establishment
+            NU  Nuance (from writing style)
+            DE  Depth (Breezy/Detailed)
+            SL  Shelft-Life
+            RE  Recency
+            
+        SS  Slider status
+            1st digit
+                0   No split
+                1   LR split
+                2   PE split
+                
+            2nd digit
+                0   sliders panel closed
+                1   sliders panel showing 2 rows
+                2   sliders panel showing all 6 rows
+                
+        LA  Layout selection
+            1st digit
+                0   Dense & Intense
+                1   Text only
+                2   Big & Beautiful
+            
+            2nd digit
+                0   Dark mode
+                1   Bright mode
+                
+        MORE PREFERENCES
+            ST  Show stories
+                00 no
+                01 yes
+                
+            VA Show newspaper flags
+                00 yes
+                01 no
+                
+            VB  Show newspaper stance icons
+                00  yes
+                01  no
+                
+            VC  Show newspaper info popup
+                00 yes
+                01 no
+                
+            VM  Show markups
+                00  yes
+                01  no
+                
+        VE VERSION code
+            1st digit
+                2   website
+                3   iOS
+                4   android
+                
+            2nd digit
+                minor version number
+                example: From version "1.5.0" -> 5
+                
+        oB  ONBOARDING status
+            1st digit
+                1   hidden
+                2   shown
+                
+            2nd digit
+                current step (0...6)
+                10 if never cancelled
+                
+        BANNER(s)
+            yT  YouTube banner
+                01  Banner shown, no user interaction
+                02  User tapped on "close"
+                03  User check "Don't show again", then tap on "close"
+                04  User interaction (tap on banner, opened video)
+    */
+
+    private func sliderValues() -> String {
+        return "LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11"
+    }
+
+}
+
+
 
 
 struct MainFeedTopic {
@@ -128,6 +217,7 @@ struct MainFeedTopic {
 }
 
 struct MainFeedTopicPath {
+
     var name: String
     var capitalizedName: String
     
