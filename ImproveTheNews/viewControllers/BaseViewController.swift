@@ -23,5 +23,10 @@ class BaseViewController: UIViewController {
             (self.navigationController as! CustomNavController).loadingView.hide()
         }
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        let darkMode = (DisplayMode.current() == .dark)
+        return darkMode ? .lightContent : .darkContent
+    }
 
 }

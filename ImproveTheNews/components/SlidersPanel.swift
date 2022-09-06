@@ -20,6 +20,8 @@ class SlidersPanel: UIView {
     private var split: Int = 0
     private var coverView = UIView()
 
+    var displayModeComponents = [Any]()
+
 
     // MARK: - Init(s)
     init() {
@@ -34,7 +36,7 @@ class SlidersPanel: UIView {
     func buildInto(_ container: UIView) {
         // Panel (self)
         self.backgroundColor = .white
-        self.layer.cornerRadius = 22
+        self.layer.cornerRadius = 20
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         container.addSubview(self)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -56,6 +58,7 @@ class SlidersPanel: UIView {
             handle.widthAnchor.constraint(equalToConstant: 50),
             handle.heightAnchor.constraint(equalToConstant: 5),
         ])
+        self.displayModeComponents.append(handle)
         
         // Rows container
         let rowsVStack = UIStackView()
@@ -87,6 +90,8 @@ class SlidersPanel: UIView {
                 titleLabel.textColor = UIColor(hex: 0x1D242F)
                 titleLabel.addCharacterSpacing(kernValue: characterSpacing)
                 titleHStack.addArrangedSubview(titleLabel)
+                titleLabel.tag = 3
+                self.displayModeComponents.append(titleLabel)
                 
                 self.addSpacer(to: titleHStack)
                 
@@ -136,6 +141,8 @@ class SlidersPanel: UIView {
                     splitLabel.textColor = UIColor(hex: 0x1D242F)
                     splitLabel.addCharacterSpacing(kernValue: characterSpacing)
                     titleHStack.addArrangedSubview(splitLabel)
+                    splitLabel.tag = 3
+                    self.displayModeComponents.append(splitLabel)
                     
                     let hLine = UIView()
                     hLine.backgroundColor = UIColor(hex: 0xFF643C)
@@ -168,6 +175,8 @@ class SlidersPanel: UIView {
                 leftLabel.textColor = UIColor(hex: 0x93A0B4)
                 leftLabel.addCharacterSpacing(kernValue: characterSpacing)
                 legendsHStack.addArrangedSubview(leftLabel)
+                leftLabel.tag = 4
+                self.displayModeComponents.append(leftLabel)
                 
                 self.addSpacer(to: legendsHStack)
                 
@@ -177,6 +186,8 @@ class SlidersPanel: UIView {
                 rightLabel.textColor = UIColor(hex: 0x93A0B4)
                 rightLabel.addCharacterSpacing(kernValue: characterSpacing)
                 legendsHStack.addArrangedSubview(rightLabel)
+                rightLabel.tag = 4
+                self.displayModeComponents.append(rightLabel)
             
             var sliderValue = LocalKeys.sliders.defaultValues[i-1]
             if let _value = READ(LocalKeys.sliders.allKeys[i-1]) {
@@ -214,11 +225,14 @@ class SlidersPanel: UIView {
         self.addSwipeGesture()
         self.show(rows: 0)
         
+        // split value
         if let _split = READ(LocalKeys.sliders.split) {
-            print("SPLIT read", _split)
             self.split = Int(_split)!
             self.checkSplitComponents()
         }
+        
+        // display mode
+        self.refreshDisplayMode()
     }
     
     private func addSpacer(to container: UIStackView, backgroundColor: UIColor = .clear,
@@ -366,6 +380,48 @@ extension SlidersPanel {
             self.show(rows: 0, animated: true)
         } else if(self.rowsShown==6) {
             self.show(rows: 2, animated: true)
+        }
+    }
+    
+}
+
+// MARK: - Display mode(s)
+extension SlidersPanel {
+
+    func refreshDisplayMode() {
+        let darkMode = (DisplayMode.current() == .dark)
+        
+        self.backgroundColor = darkMode ? UIColor(hex: 0x1D242F) : .white
+        self.coverView.backgroundColor = self.backgroundColor
+        
+        for component in self.displayModeComponents {
+            if(component is UILabel) {
+                let label = (component as! UILabel)
+                if(label.tag == 3) { // title & split
+                    label.textColor = darkMode ? .white : UIColor(hex: 0x1D242F)
+                } else if(label.tag == 4) { // left & right legends
+                    label.textColor = darkMode ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+                }
+            }
+            
+            // handle
+            if(component is UIImageView) {
+                let handle = (component as! UIImageView)
+                handle.image = UIImage(named: DisplayMode.imageName("slidersPanel.handle"))
+            }
+        }
+        
+        // sliders
+        for i in 1...6 {
+            let slider = self.viewWithTag(20 + i) as! UISlider
+            
+            if(darkMode) {
+                slider.minimumTrackTintColor = UIColor(hex: 0x545B67)
+                slider.maximumTrackTintColor = UIColor(hex: 0x545B67)
+            } else {
+                slider.minimumTrackTintColor = UIColor(hex: 0xD9DCDF)
+                slider.maximumTrackTintColor = UIColor(hex: 0xD9DCDF)
+            }
         }
     }
     

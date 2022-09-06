@@ -9,6 +9,8 @@ import UIKit
 
 class MainFeedViewController: BaseViewController {
 
+    var displayModeComponentsNavBar = [Any]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
@@ -24,7 +26,7 @@ class MainFeedViewController: BaseViewController {
         
         if(!self.didLayout) {
             self.didLayout = true
-            self.setNavBar() // from extension
+            self.buildNavBar() // from extension
         }
     }
 
@@ -38,13 +40,21 @@ class MainFeedViewController: BaseViewController {
     }
     
     @objc func loadData() {
-        self.showLoading()
-        UUID.shared.check { _ in // generates a new uuid (if needed)
-            let data = MainFeed()
-            data.loadData { (error) in
-                self.hideLoading()
-            }
-        }
+//        self.showLoading()
+//        UUID.shared.check { _ in // generates a new uuid (if needed)
+//            let data = MainFeed()
+//            data.loadData { (error) in
+//                self.hideLoading()
+//            }
+//        }
+    }
+
+}
+
+extension MainFeedViewController {
+
+    func refreshDisplayMode() {
+        self.refreshDisplayModeNavBar()
     }
 
 }

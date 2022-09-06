@@ -29,6 +29,7 @@ class CustomNavController: UINavigationController {
         self.setViewControllers([vc], animated: false)
     }
     
+    // TEST
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         DELAY(1.0) {
@@ -36,6 +37,34 @@ class CustomNavController: UINavigationController {
         }
     }
 
+    func refreshDisplayMode() {
+        self.slidersPanel.refreshDisplayMode()
+        
+        for vc in self.viewControllers {
+            if(vc is MainFeedViewController) {
+                (vc as! MainFeedViewController).refreshDisplayMode()
+            }
+        }
+    }
+    
 }
 
+// MARK: - Menu
+extension CustomNavController {
 
+    func callMenu() {
+        let menuVC = MenuViewController()
+        self.customPushViewController(menuVC)
+
+        self.slidersPanel.hide()
+        self.floatingButton.hide()
+    }
+    
+    func dismissMenu() {
+        self.customPopViewController()
+    
+        self.slidersPanel.show()
+        self.floatingButton.show()
+    }
+
+}

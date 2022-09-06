@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */; };
 		1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */; };
+		1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */; };
+		1F22E2E928C6E41A007F00D1 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E828C6E41A007F00D1 /* MenuViewController.swift */; };
+		1F22E2EB28C6E5E0007F00D1 /* UINavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2EA28C6E5E0007F00D1 /* UINavigationControllerExtension.swift */; };
 		1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90104628C583D600A5BDC9 /* LocalKeys.swift */; };
 		1F90105228C598DA00A5BDC9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */; };
 		1F90105428C5992E00A5BDC9 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105328C5992E00A5BDC9 /* Roboto-Medium.ttf */; };
@@ -26,9 +29,6 @@
 		1F95136128BFC64300A77AB6 /* CustomNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95136028BFC64300A77AB6 /* CustomNavController.swift */; };
 		1F95136328BFC69200A77AB6 /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95136228BFC69200A77AB6 /* MainFeedViewController.swift */; };
 		1F95136628BFCB2800A77AB6 /* references.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F95136528BFCB2800A77AB6 /* references.txt */; };
-		1F95136828BFD74600A77AB6 /* ITN_logo_bright.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F95136728BFD74600A77AB6 /* ITN_logo_bright.png */; };
-		1F95136A28BFDB0000A77AB6 /* hamburger_bright.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F95136928BFDB0000A77AB6 /* hamburger_bright.png */; };
-		1F95136C28BFDB6B00A77AB6 /* search_bright.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F95136B28BFDB6B00A77AB6 /* search_bright.png */; };
 		1F95136F28BFDC5600A77AB6 /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95136E28BFDC5600A77AB6 /* NavBar.swift */; };
 		1FA4CE6228C282A00068DE4A /* misc.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1FA4CE6128C282A00068DE4A /* misc.txt */; };
 		1FA4CE6528C2865B0068DE4A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE6428C2865B0068DE4A /* Utils.swift */; };
@@ -46,6 +46,9 @@
 /* Begin PBXFileReference section */
 		1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMode.swift; sourceTree = "<group>"; };
+		1F22E2E828C6E41A007F00D1 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		1F22E2EA28C6E5E0007F00D1 /* UINavigationControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtension.swift; sourceTree = "<group>"; };
 		1F90104628C583D600A5BDC9 /* LocalKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalKeys.swift; sourceTree = "<group>"; };
 		1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		1F90105328C5992E00A5BDC9 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -65,9 +68,6 @@
 		1F95136028BFC64300A77AB6 /* CustomNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavController.swift; sourceTree = "<group>"; };
 		1F95136228BFC69200A77AB6 /* MainFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
 		1F95136528BFCB2800A77AB6 /* references.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = references.txt; sourceTree = "<group>"; };
-		1F95136728BFD74600A77AB6 /* ITN_logo_bright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ITN_logo_bright.png; sourceTree = "<group>"; };
-		1F95136928BFDB0000A77AB6 /* hamburger_bright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hamburger_bright.png; sourceTree = "<group>"; };
-		1F95136B28BFDB6B00A77AB6 /* search_bright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_bright.png; sourceTree = "<group>"; };
 		1F95136E28BFDC5600A77AB6 /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
 		1FA4CE6128C282A00068DE4A /* misc.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = misc.txt; sourceTree = "<group>"; };
 		1FA4CE6428C2865B0068DE4A /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -160,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				1FA4CE6928C2874E0068DE4A /* BaseViewController.swift */,
+				1F22E2E828C6E41A007F00D1 /* MenuViewController.swift */,
 				1F95136228BFC69200A77AB6 /* MainFeedViewController.swift */,
 			);
 			path = viewControllers;
@@ -191,9 +192,6 @@
 		1F95136D28BFDBF600A77AB6 /* navBar */ = {
 			isa = PBXGroup;
 			children = (
-				1F95136728BFD74600A77AB6 /* ITN_logo_bright.png */,
-				1F95136928BFDB0000A77AB6 /* hamburger_bright.png */,
-				1F95136B28BFDB6B00A77AB6 /* search_bright.png */,
 			);
 			path = navBar;
 			sourceTree = "<group>";
@@ -203,6 +201,7 @@
 			children = (
 				1FA4CE6428C2865B0068DE4A /* Utils.swift */,
 				1F90105D28C5B2A300A5BDC9 /* Notifications.swift */,
+				1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */,
 			);
 			path = misc;
 			sourceTree = "<group>";
@@ -227,6 +226,7 @@
 				1F90105728C599DC00A5BDC9 /* UIColorExtension.swift */,
 				1F90105B28C5ADE700A5BDC9 /* UIImageExtension.swift */,
 				1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */,
+				1F22E2EA28C6E5E0007F00D1 /* UINavigationControllerExtension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -296,10 +296,7 @@
 				1F95136628BFCB2800A77AB6 /* references.txt in Resources */,
 				1F95134D28BFB92F00A77AB6 /* LaunchScreen.storyboard in Resources */,
 				1FA4CE6228C282A00068DE4A /* misc.txt in Resources */,
-				1F95136828BFD74600A77AB6 /* ITN_logo_bright.png in Resources */,
-				1F95136C28BFDB6B00A77AB6 /* search_bright.png in Resources */,
 				1F90105428C5992E00A5BDC9 /* Roboto-Medium.ttf in Resources */,
-				1F95136A28BFDB0000A77AB6 /* hamburger_bright.png in Resources */,
 				1F95134A28BFB92F00A77AB6 /* Assets.xcassets in Resources */,
 				1F95134828BFB92E00A77AB6 /* Main.storyboard in Resources */,
 			);
@@ -313,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F90105828C599DC00A5BDC9 /* UIColorExtension.swift in Sources */,
+				1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */,
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				1F95136F28BFDC5600A77AB6 /* NavBar.swift in Sources */,
 				1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */,
@@ -333,6 +331,8 @@
 				1F95136328BFC69200A77AB6 /* MainFeedViewController.swift in Sources */,
 				1FA4CE7328C2DDFD0068DE4A /* ErrorExtension.swift in Sources */,
 				1FA4CE6528C2865B0068DE4A /* Utils.swift in Sources */,
+				1F22E2E928C6E41A007F00D1 /* MenuViewController.swift in Sources */,
+				1F22E2EB28C6E5E0007F00D1 /* UINavigationControllerExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

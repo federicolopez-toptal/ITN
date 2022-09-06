@@ -204,8 +204,17 @@ extension MainFeed {
         } else {
             result += "0" // default value: Panel closed
         }
+        
+        // Layout + Display mode
+        result += "LA0"
+        if let _displayMode = READ(LocalKeys.preferences.displayMode) {
+            result += _displayMode
+        } else {
+            result += "0" // default value: Dark mode
+        }
+        
     
-        result += "LA00ST01VB00VC01VA00VM00VE35oB11"
+        result += "ST01VB00VC01VA00VM00VE35oB11"
         return result
     }
 

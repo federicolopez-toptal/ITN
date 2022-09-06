@@ -10,7 +10,7 @@ import UIKit
 
 
 func WRITE(_ key: String, value: Any) {
-//    print("WRITING", key, value)
+//    print(">> WRITING", key, value)
     UserDefaults.standard.setValue(value, forKey: key)
     UserDefaults.standard.synchronize()
 }
