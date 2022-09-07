@@ -394,9 +394,9 @@ extension SlidersPanel {
         self.backgroundColor = darkMode ? UIColor(hex: 0x1D242F) : .white
         self.coverView.backgroundColor = self.backgroundColor
         
-        for component in self.displayModeComponents {
-            if(component is UILabel) {
-                let label = (component as! UILabel)
+        for C in self.displayModeComponents {
+            if(C is UILabel) {
+                let label = (C as! UILabel)
                 if(label.tag == 3) { // title & split
                     label.textColor = darkMode ? .white : UIColor(hex: 0x1D242F)
                 } else if(label.tag == 4) { // left & right legends
@@ -405,8 +405,8 @@ extension SlidersPanel {
             }
             
             // handle
-            if(component is UIImageView) {
-                let handle = (component as! UIImageView)
+            if(C is UIImageView) {
+                let handle = (C as! UIImageView)
                 handle.image = UIImage(named: DisplayMode.imageName("slidersPanel.handle"))
             }
         }

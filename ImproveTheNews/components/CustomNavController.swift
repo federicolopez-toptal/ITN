@@ -9,12 +9,15 @@ import UIKit
 
 class CustomNavController: UINavigationController {
 
+    static var shared: CustomNavController!
+
     let loadingView = LoadingView()
     let slidersPanel = SlidersPanel()
     let floatingButton = FloatingButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(CustomNavController.shared == nil){ CustomNavController.shared = self }
         
         self.isNavigationBarHidden = true
         self.slidersPanel.buildInto(self.view)

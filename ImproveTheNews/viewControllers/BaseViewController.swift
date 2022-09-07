@@ -14,13 +14,13 @@ class BaseViewController: UIViewController {
 
     func showLoading() {
         DispatchQueue.main.async {
-            (self.navigationController as! CustomNavController).loadingView.show()
+            CustomNavController.shared.loadingView.show()
         }
     }
 
     func hideLoading() {
         DispatchQueue.main.async {
-            (self.navigationController as! CustomNavController).loadingView.hide()
+            CustomNavController.shared.loadingView.hide()
         }
     }
     

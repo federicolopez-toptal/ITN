@@ -41,8 +41,7 @@ class MenuViewController: BaseViewController {
     
     
     private func dismissMe() {
-        let navController = (self.navigationController as! CustomNavController)
-        navController.dismissMenu()
+        CustomNavController.shared.dismissMenu()
     }
     
 }
@@ -60,10 +59,8 @@ extension MenuViewController {
         if(changeTo == .bright){ newValue = "1" }
         WRITE(LocalKeys.preferences.displayMode, value: newValue)
 
-        let navController = (self.navigationController as! CustomNavController)
-        navController.refreshDisplayMode()
-        
-        NOTIFY(Notification_reloadMainFeed)
+        CustomNavController.shared.refreshDisplayMode()
+        //NOTIFY(Notification_reloadMainFeed)
         self.dismissMe()
     }
     

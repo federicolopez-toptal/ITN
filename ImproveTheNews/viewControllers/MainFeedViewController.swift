@@ -9,7 +9,8 @@ import UIKit
 
 class MainFeedViewController: BaseViewController {
 
-    var displayModeComponentsNavBar = [Any]()
+    let navBar = NavBarView()
+    let topicSelector = TopicSelectorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,8 +18,7 @@ class MainFeedViewController: BaseViewController {
         
         NotificationCenter.default.addObserver(self,
             selector: #selector(loadData),
-            name: Notification_reloadMainFeed,
-            object: nil)
+            name: Notification_reloadMainFeed, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -26,7 +26,12 @@ class MainFeedViewController: BaseViewController {
         
         if(!self.didLayout) {
             self.didLayout = true
-            self.buildNavBar() // from extension
+            
+            self.navBar.buildInto(self.view)
+            self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
+            
+            self.topicSelector.buildInto(self.view)
+            self.topicSelector.delegate = self
         }
     }
 
@@ -40,21 +45,28 @@ class MainFeedViewController: BaseViewController {
     }
     
     @objc func loadData() {
-//        self.showLoading()
-//        UUID.shared.check { _ in // generates a new uuid (if needed)
-//            let data = MainFeed()
-//            data.loadData { (error) in
-//                self.hideLoading()
-//            }
-//        }
+        self.showLoading()
+        UUID.shared.check { _ in // generates a new uuid (if needed)
+            let data = MainFeed()
+            data.loadData { (error) in
+                self.topicSelector.setTopics(data.topics)
+                self.hideLoading()
+            }
+        }
+    }
+    
+    func refreshDisplayMode() {
+        self.navBar.refreshDisplayMode()
+        self.topicSelector.refreshDisplayMode()
     }
 
 }
 
-extension MainFeedViewController {
+// MARK: - Event(s)
+extension MainFeedViewController: TopicSelectorViewDelegate {
 
-    func refreshDisplayMode() {
-        self.refreshDisplayModeNavBar()
+    func onTopicSelected(_ index: Int) {
+        print("Scroll to topic", index)
     }
 
 }

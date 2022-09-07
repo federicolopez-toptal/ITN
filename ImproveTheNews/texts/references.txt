@@ -3,3 +3,6 @@ https://improvethenews.atlassian.net/browse/ITN-1520
 
 * MAIN FEED
 https://www.figma.com/file/2trQtjl1kAFZOspiVF3RNp/Card%2C-Feed-%26-Navigation
+
+* NEW DESIGN (website)
+http://ec2-18-223-109-255.us-east-2.compute.amazonaws.com
