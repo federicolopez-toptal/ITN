@@ -49,7 +49,7 @@ class MainFeedViewController: BaseViewController {
         UUID.shared.check { _ in // generates a new uuid (if needed)
             let data = MainFeed()
             data.loadData { (error) in
-                self.topicSelector.setTopics(data.topics)
+                self.topicSelector.setTopics(data.topicNames())
                 self.hideLoading()
             }
         }

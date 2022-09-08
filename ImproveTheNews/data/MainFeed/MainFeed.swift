@@ -18,7 +18,6 @@ class MainFeed {
     
     var topics = [MainFeedTopic]()
     
-    
     func loadData(callback: @escaping (Error?) -> ()) {
         var request = URLRequest(url: URL(string: self.buildUrl())!)
         request.httpMethod = "GET"
@@ -81,17 +80,34 @@ class MainFeed {
             if(_obj.count>1) {
                 // Topics
                 let topicInfo = _obj[0] as! [Any]
-                if( (topicInfo[0] as! String) != "INFO") { // Not a banner
-                    let newTopic = MainFeedTopic(topicInfo)
+                
+                var isBanner = false
+                if( (topicInfo[0] as! String) == "INFO"){ isBanner = true }
+                    
+                if(!isBanner) {
+                    let articles = _obj[1] as! [Any]
+                    let newTopic = MainFeedTopic(topicInfo, articles)
                     self.topics.append(newTopic)
+                } else {
+                    // Banner(s)
                 }
             }
         }
         
     }
     
+    func topicNames() -> [String] {
+        var result = [String]()
+        for T in self.topics {
+            result.append(T.capitalizedName)
+        }
+        
+        return result
+    }
+    
 }
 
+// MARK: - Slider value(s)
 extension MainFeed {
 
     /*
@@ -223,45 +239,4 @@ extension MainFeed {
 
 
 
-struct MainFeedTopic {
-    
-    var name: String
-    var nonCapitalizedName: String
-    var capitalizedName: String
-    var subtopicsCount: Int
-    var sliderCode: String
-//    var baselinePopularity: Float
-//    var chosenLocalPopularity: Float
-//    var globalPopularity: Float
-    var hierarchy: [MainFeedTopicPath]
-    
-    init (_ json: [Any]) {
-        self.name = json[0] as! String
-        self.nonCapitalizedName = json[1] as! String
-        self.capitalizedName = json[2] as! String
-        self.subtopicsCount = json[3] as! Int
-        self.sliderCode = json[4] as! String
-//        self.baselinePopularity = (json[5] as! NSNumber).floatValue
-//        self.chosenLocalPopularity = (json[6] as! NSNumber).floatValue
-//        self.globalPopularity = (json[7] as! NSNumber).floatValue
-        
-        self.hierarchy = [MainFeedTopicPath]()
-        let _path = json[8] as! [Any]
-        for P in _path {
-            let newTopicPath = MainFeedTopicPath(P as! [Any])
-            self.hierarchy.append(newTopicPath)
-        }
-    }
-    
-}
 
-struct MainFeedTopicPath {
-
-    var name: String
-    var capitalizedName: String
-    
-    init(_ json: [Any]) {
-        self.name = json[0] as! String
-        self.capitalizedName = json[1] as! String
-    }
-}

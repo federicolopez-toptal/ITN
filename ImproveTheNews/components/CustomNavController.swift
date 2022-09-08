@@ -32,13 +32,12 @@ class CustomNavController: UINavigationController {
         self.setViewControllers([vc], animated: false)
     }
     
-    // TEST
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        DELAY(1.0) {
-            self.slidersPanel.show(rows: 2, animated: true)
-        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        DELAY(1.0) {
+//            self.slidersPanel.show(rows: 2, animated: true)
+//        }
+//    }
 
     func refreshDisplayMode() {
         self.slidersPanel.refreshDisplayMode()
