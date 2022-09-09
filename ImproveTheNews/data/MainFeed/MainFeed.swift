@@ -221,15 +221,20 @@ extension MainFeed {
             result += "0" // default value: Panel closed
         }
         
-        // Layout + Display mode
-        result += "LA0"
+        // Layout
+        result += "LA"
+        if let _layout = READ(LocalKeys.preferences.layout) {
+            result += _layout
+        } else {
+            result += "0" // default value: Dense & Intense
+        }
+        // Display mode
         if let _displayMode = READ(LocalKeys.preferences.displayMode) {
             result += _displayMode
         } else {
             result += "0" // default value: Dark mode
         }
         
-    
         result += "ST01VB00VC01VA00VM00VE35oB11"
         return result
     }

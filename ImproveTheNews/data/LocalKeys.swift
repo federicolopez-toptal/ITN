@@ -28,6 +28,7 @@ class LocalKeys { // Keys to store local values
     
     class LocalKeys_preferences {
         let displayMode = "pref_displayMode"
+        let layout = "pref_layout"
     }
     
 }
