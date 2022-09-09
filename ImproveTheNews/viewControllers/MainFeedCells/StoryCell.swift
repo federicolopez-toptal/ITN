@@ -6,10 +6,17 @@
 //
 
 import UIKit
+import SDWebImage
+
 
 class StoryCell: UITableViewCell {
 
     static let identifier = "StoryCell"
+
+    let mainImageView = UIImageView()
+    let gradient = UIImageView()
+    let titleLabel = UILabel()
+    let timeLabel = UILabel()
 
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -28,20 +35,33 @@ extension StoryCell {
     private func buildContent() {
         self.backgroundColor = .white
         
-        let imageView = UIImageView()
-        imageView.backgroundColor = .clear
-        self.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        self.mainImageView.backgroundColor = .darkGray
+        self.addSubview(self.mainImageView)
+        self.mainImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            imageView.topAnchor.constraint(equalTo: self.topAnchor),
-            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            self.mainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.mainImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.mainImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.mainImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+        self.mainImageView.contentMode = .scaleAspectFill
+        self.mainImageView.clipsToBounds = true
+        
+        self.gradient.backgroundColor = .clear
+        self.addSubview(self.gradient)
+        self.gradient.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.gradient.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.gradient.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.gradient.topAnchor.constraint(equalTo: self.topAnchor),
+            self.gradient.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+        self.gradient.contentMode = .scaleToFill
+        self.gradient.clipsToBounds = true
         
         let vStack = UIStackView()
         vStack.axis = .vertical
-        vStack.backgroundColor = .lightGray
+        vStack.backgroundColor = .clear //.lightGray
         self.addSubview(vStack)
         vStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -77,27 +97,25 @@ extension StoryCell {
         self.addSpacer(to: storyHStack)
         self.addSpacer(to: vStack, height: 8)
         //----------------------------------------
-        
-        let titleLabel = UILabel()
-        titleLabel.backgroundColor = .yellow
-        titleLabel.textColor = UIColor(hex: 0x1D242F)
-        titleLabel.numberOfLines = 3
-        titleLabel.font = merriweather_bold
-        titleLabel.text = "Vaccine required for NHS health care workers"
-        titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.minimumScaleFactor = 0.65
-        vStack.addArrangedSubview(titleLabel)
+    
+        self.titleLabel.backgroundColor = .clear //.yellow
+        self.titleLabel.textColor = UIColor(hex: 0x1D242F)
+        self.titleLabel.numberOfLines = 3
+        self.titleLabel.font = merriweather_bold
+        self.titleLabel.text = "Vaccine required for NHS health care workers"
+        self.titleLabel.adjustsFontSizeToFitWidth = true
+        self.titleLabel.minimumScaleFactor = 0.65
+        vStack.addArrangedSubview(self.titleLabel)
         
         self.addSpacer(to: vStack, height: 10)
         //----------------------------------------
         let sourcesHStack = self.createHorizontalStackView(into: vStack)
         sourcesHStack.spacing = 5
         
-        let lastUpdatedLabel = UILabel()
-        lastUpdatedLabel.text = "Last updated 2 hours ago"
-        lastUpdatedLabel.textColor = .black
-        lastUpdatedLabel.font = roboto
-        sourcesHStack.addArrangedSubview(lastUpdatedLabel)
+        self.timeLabel.text = "Last updated 2 hours ago"
+        self.timeLabel.textColor = .black
+        self.timeLabel.font = roboto
+        sourcesHStack.addArrangedSubview(self.timeLabel)
         
         let arrow = UIImageView(image: UIImage(named: "story.lastUpdated.arrow"))
         sourcesHStack.addArrangedSubview(arrow)
@@ -107,11 +125,12 @@ extension StoryCell {
             arrow.heightAnchor.constraint(equalToConstant: 18)
         ])
         
-        self.addSpacer(to: sourcesHStack, backgroundColor: .systemPink)
+        self.addSpacer(to: sourcesHStack)
         vStack.addArrangedSubview(sourcesHStack)
         
         self.addSpacer(to: vStack, height: 10)
         //----------------------------------------
+        
     }
     
     private func createHorizontalStackView(into stackView: UIStackView) -> UIStackView {
@@ -138,8 +157,15 @@ extension StoryCell {
 extension StoryCell {
     
     func populate(with story: MainFeedArticle) {
-        print(story.isStory)
-        print(story.storySources.count)
+        self.mainImageView.image = nil
+        if let _url = URL(string: story.imgUrl) {
+            self.mainImageView.sd_setImage(with: _url)
+        }
+        
+        self.gradient.image = UIImage(named: DisplayMode.imageName("story.gradient"))
+        
+        self.titleLabel.text = story.title
+        self.timeLabel.text = "Last updated " + story.time
     }
     
 }

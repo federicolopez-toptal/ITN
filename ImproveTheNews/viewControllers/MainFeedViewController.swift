@@ -19,7 +19,7 @@ class MainFeedViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray
+        self.view.backgroundColor = .white //.gray
         
         NotificationCenter.default.addObserver(self,
             selector: #selector(loadData),
@@ -56,6 +56,7 @@ class MainFeedViewController: BaseViewController {
         UUID.shared.check { _ in // generates a new uuid (if needed)
             self.data.loadData { (error) in
                 self.topicSelector.setTopics(self.data.topicNames())
+                self.refreshList()
                 self.hideLoading()
             }
         }
@@ -99,13 +100,19 @@ extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
         self.list.register(StoryCell.self, forCellReuseIdentifier: StoryCell.identifier)
     }
     
+    func refreshList() {
+        DispatchQueue.main.async {
+            self.list.reloadData()
+        }
+    }
+    
     // TableView
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 1 //3
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -116,8 +123,10 @@ extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
         cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let  cell = tableView.dequeueReusableCell(withIdentifier: StoryCell.identifier) as! StoryCell
-        if(data.topics.count>0) {
-            cell.populate(with: self.data.topics.first!.articles.first!)
+        
+        if(self.data.topics.count>0) {
+            //cell.populate(with: self.data.topics.first!.articles.first!)
+            cell.populate(with: self.data.topics.first!.articles[indexPath.row])
         }
         return cell
     }
