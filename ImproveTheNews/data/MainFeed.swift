@@ -28,12 +28,8 @@ class MainFeed {
                 print(_error.localizedDescription)
                 callback(_error)
             } else {
-                // The json from the server is an array (starts with "[]"), BUT the json parser needs a main node ("{}")
-                var str = String(decoding: data!, as: UTF8.self)
-                str = str.replacingOccurrences(of: "\n", with: "")
-                str  = "{\"data\":" + str + "}"
-            
-                if let _json = JSON(fromData: Data(str.utf8)) {
+                let mData = ADD_MAIN_NODE(to: data)
+                if let _json = JSON(fromData: mData) {
                     self.parse(_json)
                     callback(nil)
                 } else {

@@ -16,6 +16,7 @@ class StoryCell: UITableViewCell {
     let mainImageView = UIImageView()
     let gradient = UIImageView()
     let titleLabel = UILabel()
+    let sourcesContainer = UIStackView()
     let timeLabel = UILabel()
 
     // MARK: - Init
@@ -77,7 +78,6 @@ extension StoryCell {
         
         let storyHStack = self.createHorizontalStackView(into: vStack)
         
-        // "story" orange label
         let storyLabel = UILabel()
         storyLabel.backgroundColor = UIColor(hex: 0xFF643C)
         storyLabel.textColor = .white
@@ -94,8 +94,8 @@ extension StoryCell {
             storyLabel.heightAnchor.constraint(equalToConstant: 23)
         ])
         
-        self.addSpacer(to: storyHStack)
-        self.addSpacer(to: vStack, height: 8)
+        ADD_SPACER(to: storyHStack)
+        ADD_SPACER(to: vStack, height: 8)
         //----------------------------------------
     
         self.titleLabel.backgroundColor = .clear //.yellow
@@ -107,13 +107,20 @@ extension StoryCell {
         self.titleLabel.minimumScaleFactor = 0.65
         vStack.addArrangedSubview(self.titleLabel)
         
-        self.addSpacer(to: vStack, height: 10)
+        ADD_SPACER(to: vStack, height: 10)
         //----------------------------------------
         let sourcesHStack = self.createHorizontalStackView(into: vStack)
         sourcesHStack.spacing = 5
         
+        sourcesContainer.axis = .horizontal
+        sourcesContainer.spacing = 5
+        sourcesContainer.backgroundColor = .clear //.yellow
+        sourcesHStack.addArrangedSubview(sourcesContainer)
+        sourcesContainer.hide()
+//        ADD_SPACER(to: sourcesHStack, width: 1)
+        
         self.timeLabel.text = "Last updated 2 hours ago"
-        self.timeLabel.textColor = .black
+        self.timeLabel.textColor = UIColor(hex: 0x1D242F)
         self.timeLabel.font = roboto
         sourcesHStack.addArrangedSubview(self.timeLabel)
         
@@ -125,10 +132,10 @@ extension StoryCell {
             arrow.heightAnchor.constraint(equalToConstant: 18)
         ])
         
-        self.addSpacer(to: sourcesHStack)
+        ADD_SPACER(to: sourcesHStack)
         vStack.addArrangedSubview(sourcesHStack)
         
-        self.addSpacer(to: vStack, height: 10)
+        ADD_SPACER(to: vStack, height: 10)
         //----------------------------------------
         
     }
@@ -141,17 +148,6 @@ extension StoryCell {
         return result
     }
     
-    private func addSpacer(to stackView: UIStackView, backgroundColor: UIColor = .clear, height: CGFloat? = nil) {
-        let spacer = UIView()
-        spacer.backgroundColor = backgroundColor
-        stackView.addArrangedSubview(spacer)
-        spacer.translatesAutoresizingMaskIntoConstraints = false
-        
-        if let _height = height {
-            spacer.heightAnchor.constraint(equalToConstant: _height).isActive = true
-        }
-    }
-    
 }
 
 extension StoryCell {
@@ -162,10 +158,40 @@ extension StoryCell {
             self.mainImageView.sd_setImage(with: _url)
         }
         
-        self.gradient.image = UIImage(named: DisplayMode.imageName("story.gradient"))
-        
         self.titleLabel.text = story.title
         self.timeLabel.text = "Last updated " + story.time
+        
+        REMOVE_ALL_SUBVIEWS(from: self.sourcesContainer)
+        for S in story.storySources {
+            if let _icon = Sources.shared.search(name: S), _icon.url != nil {
+                let newIcon = UIImageView()
+                newIcon.backgroundColor = .white
+                self.sourcesContainer.addArrangedSubview(newIcon)
+                newIcon.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    newIcon.widthAnchor.constraint(equalToConstant: 18),
+                    newIcon.heightAnchor.constraint(equalToConstant: 18)
+                ])
+                
+                if(!_icon.url!.contains(".svg")) {
+                    newIcon.sd_setImage(with: URL(string: _icon.url!))
+                } else {
+                    newIcon.image = UIImage(named: _icon.identifier + ".png")
+                }
+            }
+        }
+        
+        if(self.sourcesContainer.arrangedSubviews.count>0) {
+            ADD_SPACER(to: self.sourcesContainer, width: 5)
+            self.sourcesContainer.show()
+        }
+        
+        self.refreshDisplayMode()
     }
     
+    func refreshDisplayMode() {
+        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.gradient.image = UIImage(named: DisplayMode.imageName("story.gradient"))
+    }
 }

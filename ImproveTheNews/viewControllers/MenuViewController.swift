@@ -15,7 +15,7 @@ class MenuViewController: BaseViewController {
         self.view.backgroundColor = .systemPink
         
         var text = "go to Bright mode"
-        if(DisplayMode.current() == .bright){ text = "go to Dark mode" }
+        if(BRIGHT_MODE()){ text = "go to Dark mode" }
         
         let button = UIButton(type: .custom)
         button.backgroundColor = .yellow

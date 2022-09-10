@@ -22,8 +22,8 @@ class CustomNavController: UINavigationController {
         self.isNavigationBarHidden = true
         self.slidersPanel.buildInto(self.view)
         self.floatingButton.buildInto(self.view, panel: self.slidersPanel)
-        
         self.loadingView.buildInto(self.view)
+        
         self.addViewController()
     }
     

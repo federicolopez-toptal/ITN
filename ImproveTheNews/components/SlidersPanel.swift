@@ -12,9 +12,10 @@ class SlidersPanel: UIView {
     private let height: CGFloat = 615
     private var bottomConstraint: NSLayoutConstraint?
 
-    private let titles = ["Political stance", "Establishment stance", "Writing style", "Depth", "Shelf-life", "Recency"]
-    private let legends = [("Left", "Right"), ("Critical", "Pro"), ("Provocative", "Nuanced"), ("Breezy", "Detailed"),
-                            ("Short", "Long"), ("Evergreen", "Latest")]
+    private let titles = ["Political stance", "Establishment stance",
+        "Writing style", "Depth", "Shelf-life", "Recency"]
+    private let legends = [("Left", "Right"), ("Critical", "Pro"), ("Provocative", "Nuanced"),
+        ("Breezy", "Detailed"), ("Short", "Long"), ("Evergreen", "Latest")]
 
     private var rowsShown: Int = 0
     private var split: Int = 0
@@ -93,7 +94,7 @@ class SlidersPanel: UIView {
                 titleLabel.tag = 3
                 self.displayModeComponents.append(titleLabel)
                 
-                self.addSpacer(to: titleHStack)
+                ADD_SPACER(to: titleHStack)
                 
                 if(i<3) {
                     var topValue: CGFloat = 54
@@ -159,7 +160,7 @@ class SlidersPanel: UIView {
                     hLine.hide()
                 }
             
-            self.addSpacer(to: rowsVStack, height: 6)
+            ADD_SPACER(to: rowsVStack, height: 6)
             
             let legendsHStack = UIStackView()
             legendsHStack.axis = .horizontal
@@ -178,7 +179,7 @@ class SlidersPanel: UIView {
                 leftLabel.tag = 4
                 self.displayModeComponents.append(leftLabel)
                 
-                self.addSpacer(to: legendsHStack)
+                ADD_SPACER(to: legendsHStack)
                 
                 let rightLabel = UILabel()
                 rightLabel.text = _legends.1.uppercased()
@@ -207,7 +208,7 @@ class SlidersPanel: UIView {
             slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
             rowsVStack.addArrangedSubview(slider)
             
-            self.addSpacer(to: rowsVStack, height: 8)
+            ADD_SPACER(to: rowsVStack, height: 8)
         }
         
         self.coverView.backgroundColor = self.backgroundColor
@@ -233,27 +234,6 @@ class SlidersPanel: UIView {
         
         // display mode
         self.refreshDisplayMode()
-    }
-    
-    private func addSpacer(to container: UIStackView, backgroundColor: UIColor = .clear,
-        width: CGFloat? = nil, height: CGFloat? = nil) {
-        let spacer = UIView()
-        spacer.backgroundColor = backgroundColor
-        container.addArrangedSubview(spacer)
-        
-        if let _width = width {
-            spacer.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                spacer.widthAnchor.constraint(equalToConstant: _width)
-            ])
-        }
-        
-        if let _height = height {
-            spacer.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                spacer.heightAnchor.constraint(equalToConstant: _height)
-            ])
-        }
     }
     
     private func addSwipeGesture() {
@@ -389,18 +369,16 @@ extension SlidersPanel {
 extension SlidersPanel {
 
     func refreshDisplayMode() {
-        let darkMode = (DisplayMode.current() == .dark)
-        
-        self.backgroundColor = darkMode ? UIColor(hex: 0x1D242F) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
         self.coverView.backgroundColor = self.backgroundColor
         
         for C in self.displayModeComponents {
             if(C is UILabel) {
                 let label = (C as! UILabel)
                 if(label.tag == 3) { // title & split
-                    label.textColor = darkMode ? .white : UIColor(hex: 0x1D242F)
+                    label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
                 } else if(label.tag == 4) { // left & right legends
-                    label.textColor = darkMode ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+                    label.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
                 }
             }
             
@@ -415,7 +393,7 @@ extension SlidersPanel {
         for i in 1...6 {
             let slider = self.viewWithTag(20 + i) as! UISlider
             
-            if(darkMode) {
+            if(DARK_MODE()) {
                 slider.minimumTrackTintColor = UIColor(hex: 0x545B67)
                 slider.maximumTrackTintColor = UIColor(hex: 0x545B67)
             } else {

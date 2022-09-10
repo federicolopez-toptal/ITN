@@ -53,11 +53,13 @@ class MainFeedViewController: BaseViewController {
     
     @objc func loadData() {
         self.showLoading()
-        UUID.shared.check { _ in // generates a new uuid (if needed)
-            self.data.loadData { (error) in
-                self.topicSelector.setTopics(self.data.topicNames())
-                self.refreshList()
-                self.hideLoading()
+        UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
+            Sources.shared.checkIfLoaded { _ in // load sources (if needed)
+                self.data.loadData { (error) in
+                    self.topicSelector.setTopics(self.data.topicNames())
+                    self.refreshList()
+                    self.hideLoading()
+                }
             }
         }
     }
@@ -65,6 +67,7 @@ class MainFeedViewController: BaseViewController {
     func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
         self.topicSelector.refreshDisplayMode()
+        self.list.reloadData()
     }
 
 }
@@ -112,7 +115,7 @@ extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 //3
+        return 5
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -126,8 +126,7 @@ class NavBarView: UIView {
     
     // MARK: - Display mode
     func refreshDisplayMode() {
-        let darkMode = (DisplayMode.current() == .dark)
-        self.backgroundColor = darkMode ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         
         for C in self.displayModeComponents {
             if(C is UIImageView) {

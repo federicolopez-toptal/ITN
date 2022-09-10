@@ -25,8 +25,7 @@ class BaseViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        let darkMode = (DisplayMode.current() == .dark)
-        return darkMode ? .lightContent : .darkContent
+        return DARK_MODE() ? .lightContent : .darkContent
     }
 
 }

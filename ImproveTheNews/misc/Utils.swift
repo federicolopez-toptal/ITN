@@ -30,27 +30,12 @@ func API_BASE_URL() -> String {
     return dict["API_BASE_URL"] as! String
 }
 
-func JSON(fromData data: Data?) -> [String: Any]? {
-    if let _data = data {
-        do{
-            let json = try JSONSerialization.jsonObject(with: _data,
-                            options: []) as? [String : Any]
-            return json
-        }catch {
-            return nil
-        }
-    } else {
-        return nil
-    }
-}
-
-func SAFE_AREA() -> UIEdgeInsets? {
-    let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
-    return window?.safeAreaInsets
-}
-
 func DELAY(_ time: TimeInterval, callback: @escaping () ->() ) {
     DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
         callback()
     })
+}
+
+func REMOVE_ALL_SUBVIEWS(from view: UIView) {
+    view.subviews.forEach({ $0.removeFromSuperview() })
 }
