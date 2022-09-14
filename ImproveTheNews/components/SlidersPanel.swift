@@ -232,7 +232,7 @@ class SlidersPanel: UIView {
             self.checkSplitComponents()
         }
         
-        // display mode
+        ADD_SHADOW(to: self, offset: CGSize(width: 0, height: -3))
         self.refreshDisplayMode()
     }
     

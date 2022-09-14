@@ -12,6 +12,7 @@ import SDWebImage
 class StoryCell: UITableViewCell {
 
     static let identifier = "StoryCell"
+    static let heigth: CGFloat = 248
 
     let mainImageView = UIImageView()
     let gradient = UIImageView()
@@ -22,6 +23,7 @@ class StoryCell: UITableViewCell {
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         self.buildContent()
     }
     
@@ -111,10 +113,6 @@ extension StoryCell {
         //----------------------------------------
         let sourcesHStack = self.createHorizontalStackView(into: vStack)
         sourcesHStack.spacing = 5
-        
-        sourcesContainer.axis = .horizontal
-        sourcesContainer.spacing = 5
-        sourcesContainer.backgroundColor = .clear //.yellow
         sourcesHStack.addArrangedSubview(sourcesContainer)
         sourcesContainer.hide()
 //        ADD_SPACER(to: sourcesHStack, width: 1)
@@ -160,31 +158,7 @@ extension StoryCell {
         
         self.titleLabel.text = story.title
         self.timeLabel.text = "Last updated " + story.time
-        
-        REMOVE_ALL_SUBVIEWS(from: self.sourcesContainer)
-        for S in story.storySources {
-            if let _icon = Sources.shared.search(name: S), _icon.url != nil {
-                let newIcon = UIImageView()
-                newIcon.backgroundColor = .white
-                self.sourcesContainer.addArrangedSubview(newIcon)
-                newIcon.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    newIcon.widthAnchor.constraint(equalToConstant: 18),
-                    newIcon.heightAnchor.constraint(equalToConstant: 18)
-                ])
-                
-                if(!_icon.url!.contains(".svg")) {
-                    newIcon.sd_setImage(with: URL(string: _icon.url!))
-                } else {
-                    newIcon.image = UIImage(named: _icon.identifier + ".png")
-                }
-            }
-        }
-        
-        if(self.sourcesContainer.arrangedSubviews.count>0) {
-            ADD_SPACER(to: self.sourcesContainer, width: 5)
-            self.sourcesContainer.show()
-        }
+        ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
         
         self.refreshDisplayMode()
     }

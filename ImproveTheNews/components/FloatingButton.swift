@@ -25,7 +25,7 @@ class FloatingButton: UIView {
     func buildInto(_ container: UIView, panel: SlidersPanel) {
         self.panel = panel
 
-        self.backgroundColor = .clear
+        self.backgroundColor = .clear //.yellow
         container.addSubview(self)
         self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

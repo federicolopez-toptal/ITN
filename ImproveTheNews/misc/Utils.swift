@@ -36,6 +36,3 @@ func DELAY(_ time: TimeInterval, callback: @escaping () ->() ) {
     })
 }
 
-func REMOVE_ALL_SUBVIEWS(from view: UIView) {
-    view.subviews.forEach({ $0.removeFromSuperview() })
-}

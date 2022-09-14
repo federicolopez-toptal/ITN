@@ -1,1 +1,10 @@
+FROM NIMA:
 
+Hi
+the current logic is like this
+There will be a layout that supports stories if there are any. The first story will be at the top left, the second story at the top of the right column and the third story at the bottom of each section. Also, the first two articles will appear under the main story, followed by two articles without images. next articles will be placed at the end and the right columns, if there will be only 1 story, the second and third stories will be replaced with articles
+articles will be displayed in three columns if there is no story
+
+You can still use the old API, as I'm using it under the hood, but also I have developed a new API that works as a translator/transformer for the current API, feel free to use it if you find it useful
+
+http://ec2-18-223-109-255.us-east-2.compute.amazonaws.com/swagger
