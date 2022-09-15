@@ -123,7 +123,7 @@ extension MainFeedViewController {
         self.dataProvider = [DP_item]()
         for (i, T) in self.data.topics.enumerated() {
             
-            var items = "hS-AA"//-AAAS-SA"
+            var items = "hS-AA-TTT" //-S-SA"
             
             items = items.replacingOccurrences(of: "-", with: "")
             if(i==0){ items = items.swapCharacters(index1: 1, index2: 0) }
@@ -136,14 +136,20 @@ extension MainFeedViewController {
                         
                     case "S": // big story
                         if let _j = self.getNextArticle(topicIndex: i, isStory: true) {
-                            let story = DP_Story(T: i, A: _j)
-                            self.dataProvider.append(story)
+                            let storyItem = DP_Story(T: i, A: _j)
+                            self.dataProvider.append(storyItem)
                         }
                         
                     case "A": // wide article
                         if let _j = self.getNextArticle(topicIndex: i) {
-                            let article = DP_wideArticle(T: i, A: _j)
-                            self.dataProvider.append(article)
+                            let articleItem = DP_Article(T: i, A: _j)
+                            self.dataProvider.append(articleItem)
+                        }
+                        
+                    case "T": // wide text article
+                        if let _j = self.getNextArticle(topicIndex: i) {
+                            let articleItem = DP_TextArticle(T: i, A: _j)
+                            self.dataProvider.append(articleItem)
                         }
                         
                     default:
@@ -186,7 +192,7 @@ extension MainFeedViewController {
                             self.dataProvider.append(newHeader)
                         }
                     case 1...10:
-                        let newDP_item = DP_wideArticle(T: i, A: j)
+                        let newDP_item = DP_Article(T: i, A: j)
                         self.dataProvider.append(newDP_item)
                     default:
                         print("")
@@ -225,7 +231,8 @@ extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
         // Cells registration
         self.list.register(HeaderCell.self, forCellReuseIdentifier: HeaderCell.identifier)
         self.list.register(StoryCell.self, forCellReuseIdentifier: StoryCell.identifier)
-        self.list.register(WideArticleCell.self, forCellReuseIdentifier: WideArticleCell.identifier)
+        self.list.register(ArticleCell.self, forCellReuseIdentifier: ArticleCell.identifier)
+        self.list.register(ArticleTextCell.self, forCellReuseIdentifier: ArticleTextCell.identifier)
     }
     
     func refreshList() {
@@ -264,9 +271,12 @@ extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
         } else if let _item = item as? DP_Story {
             cell = tableView.dequeueReusableCell(withIdentifier: StoryCell.identifier) as! StoryCell
             (cell as! StoryCell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_wideArticle {
-            cell = tableView.dequeueReusableCell(withIdentifier: WideArticleCell.identifier) as! WideArticleCell
-            (cell as! WideArticleCell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_Article {
+            cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.identifier) as! ArticleCell
+            (cell as! ArticleCell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_TextArticle {
+            cell = tableView.dequeueReusableCell(withIdentifier: ArticleTextCell.identifier) as! ArticleTextCell
+            (cell as! ArticleTextCell).populate(with: self.getArticle(from: _item))
         }
         
         return cell

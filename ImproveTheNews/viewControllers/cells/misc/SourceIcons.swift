@@ -20,13 +20,21 @@ func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView, limit: 
     var count = 0
     for S in sources {
         if let _icon = Sources.shared.search(identifier: S), _icon.url != nil {
+            let iconContainer = UIView()
+            iconContainer.backgroundColor = .clear //.blue
+            container.addArrangedSubview(iconContainer)
+            NSLayoutConstraint.activate([
+                iconContainer.widthAnchor.constraint(equalToConstant: 18)
+            ])
+            
             let newIcon = UIImageView()
             newIcon.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
-            container.addArrangedSubview(newIcon)
+            iconContainer.addSubview(newIcon)
             newIcon.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 newIcon.widthAnchor.constraint(equalToConstant: 18),
-                newIcon.heightAnchor.constraint(equalToConstant: 18)
+                newIcon.heightAnchor.constraint(equalToConstant: 18),
+                newIcon.centerYAnchor.constraint(equalTo: container.centerYAnchor)
             ])
             
             if(!_icon.url!.contains(".svg")) {

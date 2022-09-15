@@ -42,13 +42,20 @@ class DP_itemPointingData: DP_item {
     }
 }
 
+
+
+
 class DP_Story: DP_itemPointingData {
     init(T topicIndex: Int, A articleIndex: Int) {
         super.init(T: topicIndex, A: articleIndex, height: StoryCell.heigth)
     }
 }
-
-class DP_wideArticle: DP_itemPointingData {
+class DP_Article: DP_itemPointingData {
+    init(T topicIndex: Int, A articleIndex: Int) {
+        super.init(T: topicIndex, A: articleIndex, height: nil)
+    }
+}
+class DP_TextArticle: DP_itemPointingData {
     init(T topicIndex: Int, A articleIndex: Int) {
         super.init(T: topicIndex, A: articleIndex, height: nil)
     }

@@ -87,6 +87,8 @@ class StanceIconView: UIView {
         
         let thumb1 = self.slider1.subviews.first!
         thumb1.backgroundColor = DARK_MODE() ? .white : UIColor(hex: 0xFF643C)
+        let thumb2 = self.slider2.subviews.first!
+        thumb2.backgroundColor = thumb1.backgroundColor
     }
     
     func setValues(_ value1: Int, _ value2: Int) {

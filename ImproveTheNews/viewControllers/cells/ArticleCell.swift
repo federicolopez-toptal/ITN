@@ -7,9 +7,9 @@
 
 import UIKit
 
-class WideArticleCell: UITableViewCell {
+class ArticleCell: UITableViewCell {
 
-    static let identifier = "WideArticleCell"
+    static let identifier = "ArticleCell"
     static let heigth: CGFloat = 130
 
     let mainImageView = UIImageView()
@@ -33,7 +33,7 @@ class WideArticleCell: UITableViewCell {
 
 }
 
-extension WideArticleCell {
+extension ArticleCell {
     
     private func buildContent() {
         self.backgroundColor = .white
