@@ -38,7 +38,7 @@ extension StoryCell {
     private func buildContent() {
         self.backgroundColor = .white
         
-        self.mainImageView.backgroundColor = .darkGray
+        self.mainImageView.backgroundColor = .gray
         self.addSubview(self.mainImageView)
         self.mainImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -62,10 +62,8 @@ extension StoryCell {
         self.gradient.contentMode = .scaleToFill
         self.gradient.clipsToBounds = true
         
-        let vStack = UIStackView()
-        vStack.axis = .vertical
+        let vStack = VSTACK(into: self)
         vStack.backgroundColor = .clear //.lightGray
-        self.addSubview(vStack)
         vStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             vStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
@@ -78,8 +76,8 @@ extension StoryCell {
     let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 18)
     let characterSpacing: Double = 1.35
         
-        let storyHStack = self.createHorizontalStackView(into: vStack)
-        
+        let storyHStack = HSTACK(into: vStack)
+
         let storyLabel = UILabel()
         storyLabel.backgroundColor = UIColor(hex: 0xFF643C)
         storyLabel.textColor = .white
@@ -111,11 +109,9 @@ extension StoryCell {
         
         ADD_SPACER(to: vStack, height: 10)
         //----------------------------------------
-        let sourcesHStack = self.createHorizontalStackView(into: vStack)
-        sourcesHStack.spacing = 5
+        let sourcesHStack = HSTACK(into: vStack, spacing: 5.0)
         sourcesHStack.addArrangedSubview(sourcesContainer)
         sourcesContainer.hide()
-//        ADD_SPACER(to: sourcesHStack, width: 1)
         
         self.timeLabel.text = "Last updated 2 hours ago"
         self.timeLabel.textColor = UIColor(hex: 0x1D242F)
@@ -138,14 +134,6 @@ extension StoryCell {
         
     }
     
-    private func createHorizontalStackView(into stackView: UIStackView) -> UIStackView {
-        let result = UIStackView()
-        result.axis = .horizontal
-        stackView.addArrangedSubview(result)
-        
-        return result
-    }
-    
 }
 
 extension StoryCell {
@@ -164,6 +152,9 @@ extension StoryCell {
     }
     
     func refreshDisplayMode() {
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
+    
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.gradient.image = UIImage(named: DisplayMode.imageName("story.gradient"))

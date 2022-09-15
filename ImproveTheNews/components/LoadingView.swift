@@ -38,7 +38,12 @@ class LoadingView: UIView {
         loading.center = CGPoint(x: 35, y: 35)
         loading.startAnimating()
         
+        self.refreshDisplayMode()
         self.hide()
+    }
+    
+    func refreshDisplayMode() {
+        self.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.2) : .black.withAlphaComponent(0.5)
     }
     
 }

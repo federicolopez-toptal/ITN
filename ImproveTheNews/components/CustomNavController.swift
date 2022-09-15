@@ -41,6 +41,7 @@ class CustomNavController: UINavigationController {
 
     func refreshDisplayMode() {
         self.slidersPanel.refreshDisplayMode()
+        self.loadingView.refreshDisplayMode()
         
         for vc in self.viewControllers {
             if(vc is MainFeedViewController) {

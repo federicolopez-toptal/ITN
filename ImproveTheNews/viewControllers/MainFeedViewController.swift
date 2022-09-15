@@ -113,14 +113,71 @@ extension MainFeedViewController: TopicSelectorViewDelegate {
 // MARK: - Data Provider
 extension MainFeedViewController {
     
+    /*
+        Story
+        
+    */
+    
     private func populateDataProvider() {
+    
+        self.dataProvider = [DP_item]()
+        for (i, T) in self.data.topics.enumerated() {
+            
+            var items = "hS-AA"//-AAAS-SA"
+            
+            items = items.replacingOccurrences(of: "-", with: "")
+            if(i==0){ items = items.swapCharacters(index1: 1, index2: 0) }
+            
+            for currentItem in items {
+                switch(currentItem) {
+                    case "h": // simple header
+                        let header = DP_header(text: T.capitalizedName.uppercased(), isHeadlines: (T.name=="news"))
+                        self.dataProvider.append(header)
+                        
+                    case "S": // big story
+                        if let _j = self.getNextArticle(topicIndex: i, isStory: true) {
+                            let story = DP_Story(T: i, A: _j)
+                            self.dataProvider.append(story)
+                        }
+                        
+                    case "A": // wide article
+                        if let _j = self.getNextArticle(topicIndex: i) {
+                            let article = DP_wideArticle(T: i, A: _j)
+                            self.dataProvider.append(article)
+                        }
+                        
+                    default:
+                        print("")
+                }
+            }
+                        
+        }
+    }
+    
+    func getNextArticle(topicIndex i: Int, isStory: Bool = false) -> Int? {
+        var result: Int? = nil
+        for (j, A) in self.data.topics[i].articles.enumerated() {
+            if(A.isStory==isStory && !A.used) {
+                self.data.topics[i].articles[j].used = true
+                result = j
+                break
+            }
+        }
+        return result
+    }
+    
+    
+    private func populateDataProvider_2() {
         self.dataProvider = [DP_item]()
         
         for (i, T) in self.data.topics.enumerated() {
+        
             let newHeader = DP_header(text: T.capitalizedName.uppercased(), isHeadlines: (T.name=="news"))
             if(i>0){ self.dataProvider.append(newHeader) }
         
-            for (j, _) in T.articles.enumerated() {
+            for (j, A) in T.articles.enumerated() {
+                print("USED?", A.used)
+                
                 switch(j) {
                     case 0:
                         let newDP_item = DP_Story(T: i, A: j)
@@ -136,6 +193,10 @@ extension MainFeedViewController {
                 }
             }
         }
+        
+    }
+    
+    private func getNextStory() {
         
     }
     

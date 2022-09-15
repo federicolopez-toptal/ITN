@@ -62,19 +62,32 @@ class Sources {
         }
     }
     
-    func search(name: String) -> SourceIcon? {
-        let found = self.all?.first(where: { $0.identifier == name.lowercased() })
+    func search(identifier: String) -> SourceIcon? {
+        let found = self.all?.first(where: { $0.identifier == identifier.lowercased() })
         return found
     }
+    
+    func search(name: String) -> String? {
+        if let _cleanName = name.components(separatedBy: " #").first {
+            if let _found = self.all?.first(where: { $0.name == _cleanName.lowercased() }) {
+                return _found.identifier
+            }
+        }
+        
+        return nil
+    }
+    
 }
 
 struct SourceIcon {
 
     var identifier: String
     var url: String?
-
+    var name: String
+    
     init(_ json: [String: Any]) {
         self.identifier = (json["shortname"] as! String).lowercased()
+        self.name = (json["name"] as! String).lowercased()
         
         if let _icon = json["icon"] as? String {
             if(!_icon.isEmpty) {

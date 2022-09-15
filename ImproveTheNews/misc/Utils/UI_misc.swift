@@ -1,5 +1,5 @@
 //
-//  UIUtils.swift
+//  UI_misc.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 10/09/2022.
@@ -29,19 +29,27 @@ func ADD_SPACER(to: UIStackView, backgroundColor: UIColor = .clear, width: CGFlo
     }
 }
 
-func HSTACK(into: UIStackView) -> UIStackView {
+func STACK(axis: NSLayoutConstraint.Axis, into container: UIView, spacing: CGFloat = 0) -> UIStackView {
     let result = UIStackView()
-    result.axis = .horizontal
-    into.addArrangedSubview(result)
+    result.axis = axis
+    result.spacing = spacing
+    
+    if let _containerStack = container as? UIStackView {
+        _containerStack.addArrangedSubview(result)
+    } else {
+        container.addSubview(result)
+    }
     
     return result
 }
 
-func VSTACK(into: UIStackView) -> UIStackView {
-    let result = UIStackView()
-    result.axis = .vertical
-    into.addArrangedSubview(result)
-    
+func HSTACK(into container: UIView, spacing: CGFloat = 0) -> UIStackView {
+    let result = STACK(axis: .horizontal, into: container, spacing: spacing)
+    return result
+}
+
+func VSTACK(into container: UIView, spacing: CGFloat = 0) -> UIStackView {
+    let result = STACK(axis: .vertical, into: container, spacing: spacing)
     return result
 }
 

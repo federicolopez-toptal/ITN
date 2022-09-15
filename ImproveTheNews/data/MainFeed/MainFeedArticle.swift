@@ -24,6 +24,8 @@ struct MainFeedArticle {
     var isStory: Bool
     var storySources: [String]
     
+    var used: Bool = false
+    
     
     init (_ json: [Any]) {
         self.source = json[0] as! String

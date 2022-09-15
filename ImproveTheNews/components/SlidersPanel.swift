@@ -62,11 +62,8 @@ class SlidersPanel: UIView {
         self.displayModeComponents.append(handle)
         
         // Rows container
-        let rowsVStack = UIStackView()
-        rowsVStack.axis = .vertical
-        rowsVStack.spacing = 5.0
+        let rowsVStack = VSTACK(into: self, spacing: 5.0)
         rowsVStack.backgroundColor = .clear
-        self.addSubview(rowsVStack)
         rowsVStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             rowsVStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 55),
@@ -79,11 +76,8 @@ class SlidersPanel: UIView {
         
         for i in 1...6 {
             // Each row
-            let titleHStack = UIStackView()
-            titleHStack.axis = .horizontal
-            titleHStack.spacing = 0
+            let titleHStack = HSTACK(into: rowsVStack)
             titleHStack.backgroundColor = .clear
-            rowsVStack.addArrangedSubview(titleHStack)
             
                 let titleLabel = UILabel()
                 titleLabel.text = self.titles[i-1].uppercased()
@@ -162,11 +156,8 @@ class SlidersPanel: UIView {
             
             ADD_SPACER(to: rowsVStack, height: 6)
             
-            let legendsHStack = UIStackView()
-            legendsHStack.axis = .horizontal
-            legendsHStack.spacing = 0
+            let legendsHStack = HSTACK(into: rowsVStack)
             legendsHStack.backgroundColor = .clear
-            rowsVStack.addArrangedSubview(legendsHStack)
             
             let _legends = self.legends[i-1]
             

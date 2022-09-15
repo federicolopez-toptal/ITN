@@ -19,9 +19,9 @@ func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView, limit: 
     
     var count = 0
     for S in sources {
-        if let _icon = Sources.shared.search(name: S), _icon.url != nil {
+        if let _icon = Sources.shared.search(identifier: S), _icon.url != nil {
             let newIcon = UIImageView()
-            newIcon.backgroundColor = .white
+            newIcon.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
             container.addArrangedSubview(newIcon)
             newIcon.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
