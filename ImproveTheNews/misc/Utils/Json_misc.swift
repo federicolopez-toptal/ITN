@@ -28,5 +28,7 @@ func ADD_MAIN_NODE(to jsonData: Data?) -> Data {
     str = str.replacingOccurrences(of: "\n", with: "")
     str  = "{\"data\":" + str + "}"
     
+    print("JSON \n", str)
+    
     return Data(str.utf8)
 }

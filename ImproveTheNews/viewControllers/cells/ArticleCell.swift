@@ -10,7 +10,6 @@ import UIKit
 class ArticleCell: UITableViewCell {
 
     static let identifier = "ArticleCell"
-    static let heigth: CGFloat = 130
 
     let mainImageView = UIImageView()
     let titleLabel = UILabel()

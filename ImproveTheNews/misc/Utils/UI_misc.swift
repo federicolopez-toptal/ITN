@@ -70,3 +70,7 @@ func ADD_SHADOW(to view: UIView, offset: CGSize = CGSize(width: 5, height: 5)) {
     view.layer.shouldRasterize = true
     view.layer.rasterizationScale = UIScreen.main.scale
 }
+
+func SCREEN_SIZE() -> CGSize {
+    return UIScreen.main.bounds.size
+}

@@ -31,6 +31,8 @@ struct MainFeedArticle {
         self.source = json[0] as! String
         self.time = json[1] as! String // "2 minutes ago"
         self.title = json[2] as! String
+//        print(">> TITLE", self.title)
+        
         self.url = json[3] as! String
         self.imgUrl = json[4] as! String
 //        self.ampCode = json[5] as! String
@@ -48,6 +50,7 @@ struct MainFeedArticle {
         
         self.isStory = false
         self.storySources = [String]()
+        
         if(json.count == 13) {
             self.isStory = true
             if let _sources = json[12] as? [Any] {
@@ -57,8 +60,8 @@ struct MainFeedArticle {
                     }
                 }
             }
-            
         }
+        
     }
     
 }

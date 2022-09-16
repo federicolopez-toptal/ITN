@@ -10,7 +10,6 @@ import UIKit
 class ArticleTextCell: UITableViewCell {
 
     static let identifier = "ArticleTextCell"
-    static let heigth: CGFloat = 100
 
     let titleLabel = UILabel()
     let sourcesContainer = UIStackView()

@@ -62,6 +62,7 @@ class MainFeed {
         result += "&uid=" + UUID.shared.getValue()
         result += "&v=I" + Bundle.main.releaseVersionNumber!
         result += "&dev=" + UIDevice.current.modelName.replacingOccurrences(of: " ", with: "_")
+        result += "&rnd=" + self.randomString()
         
         return result
     }
@@ -96,6 +97,18 @@ class MainFeed {
         var result = [String]()
         for T in self.topics {
             result.append(T.capitalizedName)
+        }
+        
+        return result
+    }
+    
+    private func randomString() -> String {
+        var result = ""
+        let validCharacters = "abcdefghijklmnopqrstuvwxyz0123456789"
+        for _ in 1...15 {
+            let i = Int.random(in: 0...validCharacters.count-1)
+            let rnd = validCharacters.getCharAt(index: i)!
+            result += rnd
         }
         
         return result
