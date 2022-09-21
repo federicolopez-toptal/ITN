@@ -1,33 +1,32 @@
 //
-//  ArticleWI_cell.swift
+//  ArticleCO_cell.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 13/09/2022.
+//  Created by Federico Lopez on 21/09/2022.
 //
 
 import UIKit
 
-class ArticleWI_cell: UICollectionViewCell {
-
-    static let identifier = "ArticleWI_cell"
+class ArticleCO_cell: UICollectionViewCell {
+    
+    static let identifier = "ArticleCO_cell"
     //private let HEIGHT: CGFloat = 1.0     Height based on content!
-    private let WIDTH: CGFloat = SCREEN_SIZE().width
-
+    private let WIDTH: CGFloat = SCREEN_SIZE().width/2
+    
     lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
         width.isActive = true
         return width
     }()
     
+    var mainVStack: UIStackView!
     let mainImageView = UIImageView()
     let titleLabel = UILabel()
     let sourcesContainer = UIStackView()
     let sourceTimeLabel = UILabel()
-    let bottomLine = UIView()
     let stanceIcon = StanceIconView()
-
     
-
+    
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,91 +45,80 @@ class ArticleWI_cell: UICollectionViewCell {
         width.constant = self.WIDTH
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
     }
-
+    
 }
 
-extension ArticleWI_cell {
-    
+extension ArticleCO_cell {
+
     private func buildContent() {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            //self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
+//            self.contentView.heightAnchor.constraint(equalToConstant: 200)
         ])
         self.contentView.backgroundColor = .white
         
-        self.contentView.addSubview(bottomLine)
-        bottomLine.backgroundColor = .black
-        bottomLine.translatesAutoresizingMaskIntoConstraints = false
+    let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 18)
+    let roboto = UIFont(name: "Roboto-Regular", size: 13)
+    let roboto_bold = UIFont(name: "Roboto-Bold", size: 11)
+    let characterSpacing: Double = 1.35
+    
+        self.mainVStack = VSTACK(into: self.contentView)
+        self.mainVStack.backgroundColor = .green
+        self.mainVStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            bottomLine.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            bottomLine.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            bottomLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-            bottomLine.heightAnchor.constraint(equalToConstant: 1.0)
+            self.mainVStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
+            self.mainVStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16) // cell height
         ])
         
-        let mainHStack = HSTACK(into: self.contentView, spacing: 16)
-        mainHStack.backgroundColor = .clear //.cyan
-        mainHStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mainHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            mainHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            mainHStack.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            mainHStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16) // cell height
-        ])
-        
-        let imageVStack = VSTACK(into: mainHStack)
-        imageVStack.backgroundColor = .clear
-        
-        self.mainImageView.backgroundColor = .darkGray
-        imageVStack.addArrangedSubview(self.mainImageView)
+        self.mainImageView.backgroundColor = .gray
+        self.mainVStack.addArrangedSubview(self.mainImageView)
         self.mainImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.mainImageView.widthAnchor.constraint(equalToConstant: 112),
-            self.mainImageView.heightAnchor.constraint(equalToConstant: 75)
+            self.mainImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
         self.mainImageView.contentMode = .scaleAspectFill
         self.mainImageView.clipsToBounds = true
-        ADD_SPACER(to: imageVStack)
-
-        let titleVStack = VSTACK(into: mainHStack, spacing: 13)
-        titleVStack.backgroundColor = .clear //.orange
-
-    let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 16)
-    let roboto = UIFont(name: "Roboto-Regular", size: 13)
+        ADD_SPACER(to: self.mainVStack, height: 10)
 
         self.titleLabel.backgroundColor = .clear //.yellow
-        self.titleLabel.textColor = .black
-        self.titleLabel.numberOfLines = 4
+        self.titleLabel.textColor = UIColor(hex: 0x1D242F)
+        self.titleLabel.numberOfLines = 5
         self.titleLabel.font = merriweather_bold
-        self.titleLabel.text = "Test title"
+        self.titleLabel.text = "Vaccine required for NHS health care workers"
         self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
-        titleVStack.addArrangedSubview(self.titleLabel)
+        self.mainVStack.addArrangedSubview(self.titleLabel)
+        ADD_SPACER(to: self.mainVStack, height: 10)
         
-        let iconsHStack = HSTACK(into: titleVStack)
+        let sourcesHStack = HSTACK(into: self.mainVStack)
+        sourcesHStack.backgroundColor = .clear //.yellow
+        //sourcesHStack.spacing = 5.0
         NSLayoutConstraint.activate([
-            iconsHStack.heightAnchor.constraint(equalToConstant: 28)
+            sourcesHStack.heightAnchor.constraint(equalToConstant: 28)
         ])
-        iconsHStack.addArrangedSubview(self.sourcesContainer)
+        
+        sourcesHStack.addArrangedSubview(self.sourcesContainer)
         
         self.sourceTimeLabel.text = "Last updated 2 hours ago"
         self.sourceTimeLabel.textColor = .black
         self.sourceTimeLabel.font = roboto
         self.sourceTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
-        iconsHStack.addArrangedSubview(self.sourceTimeLabel)
+        sourcesHStack.addArrangedSubview(self.sourceTimeLabel)
         
-        ADD_SPACER(to: iconsHStack, width: 10)
-        iconsHStack.addArrangedSubview(self.stanceIcon)
-        ADD_SPACER(to: iconsHStack)
+        ADD_SPACER(to: sourcesHStack, width: 5)
+        sourcesHStack.addArrangedSubview(self.stanceIcon)
+        ADD_SPACER(to: sourcesHStack)
         
-        //ADD_SPACER(to: titleVStack)
+        ADD_SPACER(to: self.mainVStack, height: 10)
     }
-    
+
     func populate(with article: MainFeedArticle) {
         self.mainImageView.image = nil
         if let _url = URL(string: article.imgUrl) {
             self.mainImageView.sd_setImage(with: _url)
         }
-        
+
         self.titleLabel.text = article.title
         
         var sourcesArray = [String]()
@@ -138,25 +126,28 @@ extension ArticleWI_cell {
             sourcesArray.append(_identifier)
         }
         ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer)
-        
+    
         var source = article.source
         if let _cleanSource = source.components(separatedBy: " #").first {
             source = _cleanSource
         }
-        self.sourceTimeLabel.text = source + " • " + article.time
-        
-        self.stanceIcon.setValues(article.LR, article.PE)
+        self.sourceTimeLabel.text = source + " • " + self.shortenTime(article.time)
+    
         self.refreshDisplayMode()
+    }
+    
+    private func shortenTime(_ text: String) -> String {
+        var result = text
+        result = result.replacingOccurrences(of: " ago", with: "")
+        
+        return result
     }
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.mainVStack.backgroundColor = self.contentView.backgroundColor
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
-        
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.sourceTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
-        self.stanceIcon.refreshDisplayMode()
-        self.bottomLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
     }
-    
 }

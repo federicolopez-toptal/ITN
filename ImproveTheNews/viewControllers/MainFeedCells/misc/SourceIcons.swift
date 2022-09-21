@@ -11,11 +11,16 @@ import UIKit
 
 func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView, limit: Int = 6) {
     
+    //container.backgroundColor = .clear //.yellow
     container.axis = .horizontal
     container.spacing = 5
-    //container.backgroundColor = .clear //.yellow
     container.hide()
     REMOVE_ALL_SUBVIEWS(from: container)
+    
+    container.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+        container.heightAnchor.constraint(equalToConstant: 18)
+    ])
     
     var count = 0
     for S in sources {

@@ -55,7 +55,7 @@ extension StoryBI_cell {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.backgroundColor = .lightGray
         NSLayoutConstraint.activate([
-            self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
+            self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT) // cell height
         ])
         self.contentView.backgroundColor = .white
     
@@ -136,6 +136,7 @@ extension StoryBI_cell {
         self.timeLabel.text = "Last updated 2 hours ago"
         self.timeLabel.textColor = UIColor(hex: 0x1D242F)
         self.timeLabel.font = roboto
+        self.timeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         sourcesHStack.addArrangedSubview(self.timeLabel)
         
         let arrow = UIImageView(image: UIImage(named: "story.lastUpdated.arrow"))

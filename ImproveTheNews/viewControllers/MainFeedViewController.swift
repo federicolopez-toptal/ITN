@@ -118,17 +118,18 @@ extension MainFeedViewController {
             VALID (working) items
             
             h       simple header
+            
             sbi     story, big with image
+            swt     story, wide only text
+            sco     story column
+            
             awi     article, wide with image
             awt     article, wide only text
-            swt     story, wide only text
-                
+            aco     article column
+            
         */
         
-        //"h,sli,awi2,awt3,swt,csa"
-        //,sbi,awi2"
-        
-        let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt"
+        let itemsToShowPerTopic = "h,sbi,awi2,awt3,sco,aco"
 
         self.dataProvider = [DP_item]()
         for (i, T) in self.data.topics.enumerated() {
@@ -170,6 +171,8 @@ extension MainFeedViewController {
                         dpItem = DP_Story_BI(T: i, A: _j)
                     } else if(_format == "wt") {
                         dpItem = DP_Story_WT(T: i, A: _j)
+                    } else if(_format == "co") {
+                        dpItem = DP_Story_CO(T: i, A: _j)
                     }
                     
                     if let _dpItem = dpItem {
@@ -193,9 +196,10 @@ extension MainFeedViewController {
 
                     if(_format == "wi") {
                         dpItem = DP_Article_WI(T: i, A: _j)
-                    }
-                    if(_format == "wt") {
+                    } else if(_format == "wt") {
                         dpItem = DP_Article_WT(T: i, A: _j)
+                    } else if(_format == "co") {
+                        dpItem = DP_Article_CO(T: i, A: _j)
                     }
 
                     if let _dpItem = dpItem {
@@ -254,8 +258,8 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
         self.list.register(ArticleWI_cell.self, forCellWithReuseIdentifier: ArticleWI_cell.identifier)
         self.list.register(ArticleWT_cell.self, forCellWithReuseIdentifier: ArticleWT_cell.identifier)
         self.list.register(StoryWT_cell.self, forCellWithReuseIdentifier: StoryWT_cell.identifier)
-        
-//        self.list.register(ColumnsCell.self, forCellReuseIdentifier: ColumnsCell.identifier)
+        self.list.register(StoryCO_cell.self, forCellWithReuseIdentifier: StoryCO_cell.identifier)
+        self.list.register(ArticleCO_cell.self, forCellWithReuseIdentifier: ArticleCO_cell.identifier)
 
         self.list.delegate = self
         self.list.dataSource = self
@@ -303,6 +307,16 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
             cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryWT_cell.identifier,
                 for: indexPath) as! StoryWT_cell
             (cell as! StoryWT_cell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_Story_CO {
+            // Story column
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryCO_cell.identifier,
+                for: indexPath) as! StoryCO_cell
+            (cell as! StoryCO_cell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_Article_CO {
+            // Article column
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleCO_cell.identifier,
+                for: indexPath) as! ArticleCO_cell
+            (cell as! ArticleCO_cell).populate(with: self.getArticle(from: _item))
         }
         
         return cell!
@@ -320,31 +334,4 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
 }
 
 
-
-// MARK: - List stuff
-extension MainFeedViewController {
-    
-    
-    func tableView(_ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        var cell: UITableViewCell!
-        let item = self.getDP_item(indexPath)
-
-        if let _item = item as? DP_Article_WI {
-//            cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.identifier) as! ArticleCell
-//            (cell as! ArticleCell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_Article_WT {
-//            cell = tableView.dequeueReusableCell(withIdentifier: ArticleTextCell.identifier) as! ArticleTextCell
-//            (cell as! ArticleTextCell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_Story_WT {
-//            cell = tableView.dequeueReusableCell(withIdentifier: StoryTextCell.identifier) as! StoryTextCell
-//            (cell as! StoryTextCell).populate(with: self.getArticle(from: _item))
-        }
-        
-        return cell
-    }
-
-    
-}
 

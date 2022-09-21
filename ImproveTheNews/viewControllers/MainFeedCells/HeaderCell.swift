@@ -38,7 +38,7 @@ class HeaderCell: UICollectionViewCell {
         verticalFittingPriority: UILayoutPriority) -> CGSize {
         
         width.constant = self.WIDTH
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1)) // cell height
     }
     
 }
@@ -72,11 +72,12 @@ extension HeaderCell {
         self.titleLabel.text = header.text
         let characterSpacing: Double = 1.5
         self.titleLabel.addCharacterSpacing(kernValue: characterSpacing)
+        
         self.refreshDisplayMode()
     }
     
     private func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
     }
 

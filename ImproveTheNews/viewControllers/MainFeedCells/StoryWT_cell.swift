@@ -99,7 +99,7 @@ extension StoryWT_cell {
             iconsHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             iconsHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
-            iconsHStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16)
+            iconsHStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16) // cell height
         ])
         iconsHStack.addArrangedSubview(self.sourcesContainer)
         
