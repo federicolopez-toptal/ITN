@@ -15,7 +15,7 @@ class MainFeedViewController: BaseViewController {
 
     let navBar = NavBarView()
     let topicSelector = TopicSelectorView()
-    let list = UITableView()
+    var list: UICollectionView!
     
     var dataProvider = [DP_item]()
     
@@ -25,7 +25,6 @@ class MainFeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.list.backgroundColor = self.view.backgroundColor
         
         NotificationCenter.default.addObserver(self,
             selector: #selector(loadData),
@@ -88,23 +87,23 @@ extension MainFeedViewController: TopicSelectorViewDelegate {
     func onTopicSelected(_ index: Int) {
 //        print("Scroll to topic", index)
         
-        if(index==0) {
-            self.list.scrollToRow(at: IndexPath(row: 0, section: 0),
-                        at: .top, animated: true)
-            return
-        }
-        
-        var i = -1
-        for (j, dp) in self.dataProvider.enumerated() {
-            if let _ = dp as? DP_header {
-                i += 1
-                if(i == index) {
-                    self.list.scrollToRow(at: IndexPath(row: j, section: 0),
-                        at: .top, animated: true)
-                    break
-                }
-            }
-        }
+//        if(index==0) {
+//            self.list.scrollToRow(at: IndexPath(row: 0, section: 0),
+//                        at: .top, animated: true)
+//            return
+//        }
+//
+//        var i = -1
+//        for (j, dp) in self.dataProvider.enumerated() {
+//            if let _ = dp as? DP_header {
+//                i += 1
+//                if(i == index) {
+//                    self.list.scrollToRow(at: IndexPath(row: j, section: 0),
+//                        at: .top, animated: true)
+//                    break
+//                }
+//            }
+//        }
         
     }
 
@@ -116,35 +115,31 @@ extension MainFeedViewController {
     private func populateDataProvider() {
 
         /*
-            1st char: Type
-                h   header
-                s   story
-                a   article
-                c   columns
-                
-            // ---------------------------------
-            2nd + 3rd char: Size and/or format
-                li              large + image
-                wi              wide + image
-                wt              wide + text
-                sa, as, aa, ss  story and/or aticles (for columns)
+            VALID (working) items
             
-            // ---------------------------------
-            4th char: count
+            h       simple header
+            sbi     story, big with image
+            awi     article, wide with image
+            awt     article, wide only text
+            swt     story, wide only text
                 
         */
-        let itemsToShow = "h,sli,awi2,awt3,swt,csa"
+        
+        //"h,sli,awi2,awt3,swt,csa"
+        //,sbi,awi2"
+        
+        let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt"
 
         self.dataProvider = [DP_item]()
         for (i, T) in self.data.topics.enumerated() {
 
-            var allItems = itemsToShow.components(separatedBy: ",")
-            if(i==0){ allItems.swapAt(0, 1) }
+            var allItems = itemsToShowPerTopic.components(separatedBy: ",")
+            if(i==0 && allItems.count>1){ allItems.swapAt(0, 1) }
             
             for item in allItems {
-                let type = item.getCharAt(index: 0)
-                let format = item.subString(from: 1, count: 2)
-                let count = item.getCharAt(index: 3)
+                let type = item.getCharAt(index: 0) // 1st char: Data type (h: header, s: story, a: article)
+                let format = item.subString(from: 1, count: 2) // 2nd + 3rd char: Size and/or format
+                let count = item.getCharAt(index: 3) //4th char: Items count
                 
                 if(type == "h") { // header
                     let header = DP_header(text: T.capitalizedName.uppercased(), isHeadlines: (T.name=="news"))
@@ -153,25 +148,11 @@ extension MainFeedViewController {
                     self.addStoryToDataProvider(count: count, format: format, topicIndex: i)
                 } else if(type == "a") {   // article
                     self.addArticleToDataProvider(count: count, format: format, topicIndex: i)
-                } else if(type=="c") { // columns
-                    self.addColumnsToDataProvider(count: count, format: format, topicIndex: i)
                 }
                 
             }
                         
         }
-    }
-    
-    func getNextArticle(topicIndex i: Int, isStory: Bool = false) -> Int? {
-        var result: Int? = nil
-        for (j, A) in self.data.topics[i].articles.enumerated() {
-            if(A.isStory==isStory && !A.used) {
-                self.data.topics[i].articles[j].used = true
-                result = j
-                break
-            }
-        }
-        return result
     }
     
     func addStoryToDataProvider(count: String?, format: String?, topicIndex i: Int) {
@@ -185,12 +166,10 @@ extension MainFeedViewController {
                 if let _format = format {
                     var dpItem: DP_itemPointingData?
                     
-                    if(_format == "li") {
-                        dpItem = DP_Story(T: i, A: _j)
-                    }
-                    
-                    if(_format == "wt") {
-                        dpItem = DP_TextStory(T: i, A: _j)
+                    if(_format == "bi") {
+                        dpItem = DP_Story_BI(T: i, A: _j)
+                    } else if(_format == "wt") {
+                        dpItem = DP_Story_WT(T: i, A: _j)
                     }
                     
                     if let _dpItem = dpItem {
@@ -213,10 +192,10 @@ extension MainFeedViewController {
                     var dpItem: DP_itemPointingData?
 
                     if(_format == "wi") {
-                        dpItem = DP_Article(T: i, A: _j)
+                        dpItem = DP_Article_WI(T: i, A: _j)
                     }
                     if(_format == "wt") {
-                        dpItem = DP_TextArticle(T: i, A: _j)
+                        dpItem = DP_Article_WT(T: i, A: _j)
                     }
 
                     if let _dpItem = dpItem {
@@ -227,57 +206,37 @@ extension MainFeedViewController {
         } //-----
     }
     
-    func addColumnsToDataProvider(count: String?, format: String?, topicIndex i: Int) {
-
-        var mCount = 1
-        if let _count = count {
-            mCount = Int(_count)!
-        }
-
-        for _ in 1...mCount {
-            if let _format = format {
-                var j1: Int?
-                var j2: Int?
-                
-                for (k, F) in _format.enumerated() {
-                    if(F=="s") {
-                        var storyIndex = self.getNextArticle(topicIndex: i, isStory: true)
-                        if(storyIndex == nil) {
-                            storyIndex = self.getNextArticle(topicIndex: i)
-                        }
-                        if(k==0){ j1 = storyIndex } else { j2 = storyIndex }
-                    } else if(F=="a") {
-                        if(k==0){ j1 = self.getNextArticle(topicIndex: i) }
-                        else{ j2 = self.getNextArticle(topicIndex: i) }
-                    }
-                }
-                
-                if(j1==nil && j2==nil){ return }
-                
-                var dpItem: DP_Columns?
-                if(j1 != nil && j2 != nil) {
-                    dpItem = DP_Columns(T1: i, A1: j1!, T2: i, A2: j2)
-                } else if(j1 != nil && j2==nil) {
-                    dpItem = DP_Columns(T1: i, A1: j1!, T2: nil, A2: nil)
-                } else if(j2 != nil && j1==nil) {
-                    dpItem = DP_Columns(T1: i, A1: j2!, T2: nil, A2: nil)
-                }
-                
-                if let _dpItem = dpItem {
-                    self.dataProvider.append(_dpItem)
-                }
+    
+    func getNextArticle(topicIndex i: Int, isStory: Bool = false) -> Int? {
+        var result: Int? = nil
+        for (j, A) in self.data.topics[i].articles.enumerated() {
+            if(A.isStory==isStory && !A.used) {
+                self.data.topics[i].articles[j].used = true
+                result = j
+                break
             }
-            
-            
-        } //-----
+        }
+        return result
     }
     
 }
 
-// MARK: - List stuff
-extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
-    
+// MARK: - CollectionView stuff
+extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
     private func setupList() {
+        let layout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .top)
+        
+        layout.minimumLineSpacing = 0 // vertical separation
+        layout.minimumInteritemSpacing = 0 // horizontal separation
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.estimatedItemSize = CGSize(width: 10, height: 10) // necessary for cell autoHeight
+        /*  UNUSED
+            layout.scrollDirection = .vertical
+            layout.itemSize = CGSize(width: 100, height: 100)
+        */
+        
+        self.list = UICollectionView(frame: .zero, collectionViewLayout: layout)
         self.list.backgroundColor = self.view.backgroundColor
     
         self.view.addSubview(self.list)
@@ -289,18 +248,17 @@ extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 101 + 44) // navBar + topicSelector
         ])
         
-        self.list.separatorStyle = .none
-        self.list.tableFooterView = UIView()
+        // Cells registration
+        self.list.register(HeaderCell.self, forCellWithReuseIdentifier: HeaderCell.identifier)
+        self.list.register(StoryBI_cell.self, forCellWithReuseIdentifier: StoryBI_cell.identifier)
+        self.list.register(ArticleWI_cell.self, forCellWithReuseIdentifier: ArticleWI_cell.identifier)
+        self.list.register(ArticleWT_cell.self, forCellWithReuseIdentifier: ArticleWT_cell.identifier)
+        self.list.register(StoryWT_cell.self, forCellWithReuseIdentifier: StoryWT_cell.identifier)
+        
+//        self.list.register(ColumnsCell.self, forCellReuseIdentifier: ColumnsCell.identifier)
+
         self.list.delegate = self
         self.list.dataSource = self
-        
-        // Cells registration
-        self.list.register(HeaderCell.self, forCellReuseIdentifier: HeaderCell.identifier)
-        self.list.register(StoryCell.self, forCellReuseIdentifier: StoryCell.identifier)
-        self.list.register(ArticleCell.self, forCellReuseIdentifier: ArticleCell.identifier)
-        self.list.register(ArticleTextCell.self, forCellReuseIdentifier: ArticleTextCell.identifier)
-        self.list.register(StoryTextCell.self, forCellReuseIdentifier: StoryTextCell.identifier)
-        self.list.register(ColumnsCell.self, forCellReuseIdentifier: ColumnsCell.identifier)
     }
     
     func refreshList() {
@@ -309,54 +267,48 @@ extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // TableView
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // ------------------------
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.dataProvider.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let dpItem = self.getDP_item(indexPath)
-        if let _height = dpItem.height {
-            return _height
-        } else {
-            return UITableView.automaticDimension
-        }
-    }
-    
-    func tableView(_ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        var cell: UITableViewCell!
+        var cell: UICollectionViewCell!
         let item = self.getDP_item(indexPath)
-
+        
         if let _item = item as? DP_header {
-            cell = tableView.dequeueReusableCell(withIdentifier: HeaderCell.identifier) as! HeaderCell
+            // Header
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderCell.identifier,
+                for: indexPath) as! HeaderCell
             (cell as! HeaderCell).populate(with: _item)
-        } else if let _item = item as? DP_Story {
-            cell = tableView.dequeueReusableCell(withIdentifier: StoryCell.identifier) as! StoryCell
-            (cell as! StoryCell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_Article {
-            cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.identifier) as! ArticleCell
-            (cell as! ArticleCell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_TextArticle {
-            cell = tableView.dequeueReusableCell(withIdentifier: ArticleTextCell.identifier) as! ArticleTextCell
-            (cell as! ArticleTextCell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_TextStory {
-            cell = tableView.dequeueReusableCell(withIdentifier: StoryTextCell.identifier) as! StoryTextCell
-            (cell as! StoryTextCell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_Columns {
-            let articles = self.getArticles(from: _item)
-            cell = tableView.dequeueReusableCell(withIdentifier: ColumnsCell.identifier) as! ColumnsCell
-            (cell as! ColumnsCell).populate(with: articles)
+        } else if let _item = item as? DP_Story_BI {
+            // Big story with image
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryBI_cell.identifier,
+                for: indexPath) as! StoryBI_cell
+            (cell as! StoryBI_cell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_Article_WI {
+            // Wide article with image
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleWI_cell.identifier,
+                for: indexPath) as! ArticleWI_cell
+            (cell as! ArticleWI_cell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_Article_WT {
+            // Wide article (only text)
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleWT_cell.identifier,
+                for: indexPath) as! ArticleWT_cell
+            (cell as! ArticleWT_cell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_Story_WT {
+            // Wide story (only text)
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryWT_cell.identifier,
+                for: indexPath) as! StoryWT_cell
+            (cell as! StoryWT_cell).populate(with: self.getArticle(from: _item))
         }
         
-        return cell
+        return cell!
     }
-    
+
+    // --------------
     private func getDP_item(_ iPath: IndexPath) -> DP_item {
         return self.dataProvider[iPath.row]
     }
@@ -364,18 +316,35 @@ extension MainFeedViewController: UITableViewDelegate, UITableViewDataSource {
     private func getArticle(from item: DP_itemPointingData) -> MainFeedArticle {
         return self.data.topics[item.topicIndex].articles[item.articleIndex]
     }
+
+}
+
+
+
+// MARK: - List stuff
+extension MainFeedViewController {
     
-    private func getArticles(from item: DP_itemPointing_2Data) -> [MainFeedArticle?] {
-        var result = [MainFeedArticle?]()
-        result.append( self.data.topics[item.topicIndex_1].articles[item.articleIndex_1] )
-        if let _i2 = item.topicIndex_2, let _j2 = item.articleIndex_2 {
-            result.append( self.data.topics[_i2].articles[_j2] )
-        } else {
-            result.append(nil)
+    
+    func tableView(_ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        var cell: UITableViewCell!
+        let item = self.getDP_item(indexPath)
+
+        if let _item = item as? DP_Article_WI {
+//            cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.identifier) as! ArticleCell
+//            (cell as! ArticleCell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_Article_WT {
+//            cell = tableView.dequeueReusableCell(withIdentifier: ArticleTextCell.identifier) as! ArticleTextCell
+//            (cell as! ArticleTextCell).populate(with: self.getArticle(from: _item))
+        } else if let _item = item as? DP_Story_WT {
+//            cell = tableView.dequeueReusableCell(withIdentifier: StoryTextCell.identifier) as! StoryTextCell
+//            (cell as! StoryTextCell).populate(with: self.getArticle(from: _item))
         }
         
-        return result
+        return cell
     }
+
     
 }
 

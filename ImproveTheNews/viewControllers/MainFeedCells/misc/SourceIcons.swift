@@ -13,7 +13,7 @@ func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView, limit: 
     
     container.axis = .horizontal
     container.spacing = 5
-    container.backgroundColor = .clear //.yellow
+    //container.backgroundColor = .clear //.yellow
     container.hide()
     REMOVE_ALL_SUBVIEWS(from: container)
     

@@ -17,5 +17,11 @@ extension UILabel {
             range: NSRange(location: 0, length: string.length - 1))
         attributedText = string
     }
+    
+    func reduceFontSizeIfNeededDownTo(scaleFactor: CGFloat) {
+        var clampedScale = scaleFactor.clamp(lower: 0.2, upper: 1.0)
+        self.adjustsFontSizeToFitWidth = true
+        self.minimumScaleFactor = clampedScale
+    }
   
 }

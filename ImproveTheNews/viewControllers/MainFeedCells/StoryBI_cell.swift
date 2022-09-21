@@ -1,5 +1,5 @@
 //
-//  StoryCell.swift
+//  StoryBI_cell.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 09/09/2022.
@@ -9,21 +9,29 @@ import UIKit
 import SDWebImage
 
 
-class StoryCell: UITableViewCell {
+class StoryBI_cell: UICollectionViewCell {
 
-    static let identifier = "StoryCell"
-    static let heigth: CGFloat = 248
-
+    static let identifier = "StoryBI_cell"
+    private let HEIGHT: CGFloat = 248.0
+    private let WIDTH: CGFloat = SCREEN_SIZE().width
+    
+    lazy var width: NSLayoutConstraint = {
+        let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
+        width.isActive = true
+        return width
+    }()
+    
     let mainImageView = UIImageView()
     let gradient = UIImageView()
     let titleLabel = UILabel()
     let sourcesContainer = UIStackView()
     let timeLabel = UILabel()
 
+
+
     // MARK: - Init
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .none
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.buildContent()
     }
     
@@ -31,44 +39,57 @@ class StoryCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func systemLayoutSizeFitting(_ targetSize: CGSize,
+        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+        verticalFittingPriority: UILayoutPriority) -> CGSize {
+        
+        width.constant = self.WIDTH
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
+    }
+    
 }
 
-extension StoryCell {
+extension StoryBI_cell {
     
     private func buildContent() {
-        self.backgroundColor = .white
-        
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.backgroundColor = .lightGray
+        NSLayoutConstraint.activate([
+            self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
+        ])
+        self.contentView.backgroundColor = .white
+    
         self.mainImageView.backgroundColor = .gray
-        self.addSubview(self.mainImageView)
+        self.contentView.addSubview(self.mainImageView)
         self.mainImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.mainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.mainImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.mainImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.mainImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            self.mainImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.mainImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.mainImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.mainImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
         self.mainImageView.contentMode = .scaleAspectFill
         self.mainImageView.clipsToBounds = true
         
         self.gradient.backgroundColor = .clear
-        self.addSubview(self.gradient)
+        self.contentView.addSubview(self.gradient)
         self.gradient.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.gradient.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.gradient.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.gradient.topAnchor.constraint(equalTo: self.topAnchor),
-            self.gradient.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            self.gradient.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.gradient.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.gradient.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.gradient.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
         self.gradient.contentMode = .scaleToFill
         self.gradient.clipsToBounds = true
         
-        let vStack = VSTACK(into: self)
+        let vStack = VSTACK(into: self.contentView)
         vStack.backgroundColor = .clear //.lightGray
         vStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            vStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            vStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
-            vStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            vStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
+            vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
         ])
         
     let roboto_bold = UIFont(name: "Roboto-Bold", size: 13)
@@ -103,8 +124,7 @@ extension StoryCell {
         self.titleLabel.numberOfLines = 3
         self.titleLabel.font = merriweather_bold
         self.titleLabel.text = "Vaccine required for NHS health care workers"
-        self.titleLabel.adjustsFontSizeToFitWidth = true
-        self.titleLabel.minimumScaleFactor = 0.65
+        self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         vStack.addArrangedSubview(self.titleLabel)
         
         ADD_SPACER(to: vStack, height: 10)
@@ -136,7 +156,7 @@ extension StoryCell {
     
 }
 
-extension StoryCell {
+extension StoryBI_cell {
     
     func populate(with story: MainFeedArticle) {
         self.mainImageView.image = nil
@@ -152,7 +172,7 @@ extension StoryCell {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
     
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)

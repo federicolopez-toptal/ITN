@@ -1,5 +1,5 @@
 //
-//  WideArticleCell.swift
+//  ArticleWI_cell.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 13/09/2022.
@@ -7,59 +7,79 @@
 
 import UIKit
 
-class ArticleCell: UITableViewCell {
+class ArticleWI_cell: UICollectionViewCell {
 
-    static let identifier = "ArticleCell"
+    static let identifier = "ArticleWI_cell"
+    //private let HEIGHT: CGFloat = 1.0     Height based on content!
+    private let WIDTH: CGFloat = SCREEN_SIZE().width
 
+    lazy var width: NSLayoutConstraint = {
+        let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
+        width.isActive = true
+        return width
+    }()
+    
     let mainImageView = UIImageView()
     let titleLabel = UILabel()
     let sourcesContainer = UIStackView()
     let sourceTimeLabel = UILabel()
     let bottomLine = UIView()
     let stanceIcon = StanceIconView()
+
     
 
     // MARK: - Init
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .none
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.buildContent()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize,
+        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+        verticalFittingPriority: UILayoutPriority) -> CGSize {
+        
+        width.constant = self.WIDTH
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
+    }
 
 }
 
-extension ArticleCell {
+extension ArticleWI_cell {
     
     private func buildContent() {
-        self.backgroundColor = .white
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            //self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
+        ])
+        self.contentView.backgroundColor = .white
         
-        self.addSubview(bottomLine)
+        self.contentView.addSubview(bottomLine)
         bottomLine.backgroundColor = .black
         bottomLine.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            bottomLine.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            bottomLine.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            bottomLine.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            bottomLine.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            bottomLine.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            bottomLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
             bottomLine.heightAnchor.constraint(equalToConstant: 1.0)
         ])
         
-        let mainHStack = HSTACK(into: self, spacing: 16)
+        let mainHStack = HSTACK(into: self.contentView, spacing: 16)
         mainHStack.backgroundColor = .clear //.cyan
         mainHStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mainHStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            mainHStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            mainHStack.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            mainHStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
-            //mainHStack.heightAnchor.constraint(equalToConstant: 130)
+            mainHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            mainHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            mainHStack.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            mainHStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16)
         ])
         
         let imageVStack = VSTACK(into: mainHStack)
-        imageVStack.backgroundColor = .clear //.cyan
+        imageVStack.backgroundColor = .clear
         
         self.mainImageView.backgroundColor = .darkGray
         imageVStack.addArrangedSubview(self.mainImageView)
@@ -73,7 +93,7 @@ extension ArticleCell {
         ADD_SPACER(to: imageVStack)
 
         let titleVStack = VSTACK(into: mainHStack, spacing: 13)
-        titleVStack.backgroundColor = .clear //.cyan
+        titleVStack.backgroundColor = .clear //.orange
 
     let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 16)
     let roboto = UIFont(name: "Roboto-Regular", size: 13)
@@ -83,8 +103,7 @@ extension ArticleCell {
         self.titleLabel.numberOfLines = 4
         self.titleLabel.font = merriweather_bold
         self.titleLabel.text = "Test title"
-        self.titleLabel.adjustsFontSizeToFitWidth = true
-        self.titleLabel.minimumScaleFactor = 0.65
+        self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         titleVStack.addArrangedSubview(self.titleLabel)
         
         let iconsHStack = HSTACK(into: titleVStack)
@@ -93,13 +112,14 @@ extension ArticleCell {
         self.sourceTimeLabel.text = "Last updated 2 hours ago"
         self.sourceTimeLabel.textColor = .black
         self.sourceTimeLabel.font = roboto
+        self.sourceTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         iconsHStack.addArrangedSubview(self.sourceTimeLabel)
         
         ADD_SPACER(to: iconsHStack, width: 10)
         iconsHStack.addArrangedSubview(self.stanceIcon)
         ADD_SPACER(to: iconsHStack)
         
-        ADD_SPACER(to: titleVStack)
+        //ADD_SPACER(to: titleVStack)
     }
     
     func populate(with article: MainFeedArticle) {
@@ -127,7 +147,7 @@ extension ArticleCell {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)

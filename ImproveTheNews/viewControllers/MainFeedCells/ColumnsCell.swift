@@ -11,7 +11,8 @@ class ColumnsCell: UITableViewCell {
 
     static let identifier = "ColumnsCell"
 
-    let mainHStack = UIStackView()
+    private let mainHStack = UIStackView()
+    private var storyFlags = [false, false]
 
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -32,7 +33,7 @@ extension ColumnsCell {
         self.backgroundColor = .white
         
         self.mainHStack.backgroundColor = .clear //.orange
-        self.mainHStack.spacing = 20
+        self.mainHStack.spacing = 22
         self.addSubview(mainHStack)
         self.mainHStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -42,15 +43,15 @@ extension ColumnsCell {
             self.mainHStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0) //-16
         ])
         
-        let W: CGFloat = (SCREEN_SIZE().width - (16*2) - 20)/2
+        let W: CGFloat = (SCREEN_SIZE().width - (16*2) - 22)/2
         let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 15)
         let roboto_bold = UIFont(name: "Roboto-Bold", size: 10)
         let characterSpacing: Double = 1.35
         
-        for i in 1...2 {
+        for _ in 1...2 {
             let itemVStack = VSTACK(into: self.mainHStack)
             itemVStack.backgroundColor = .green
-            itemVStack.spacing = 12
+            itemVStack.spacing = 10
             NSLayoutConstraint.activate([
                 itemVStack.widthAnchor.constraint(equalToConstant: W)
             ])
@@ -77,7 +78,13 @@ extension ColumnsCell {
             titleLabel.adjustsFontSizeToFitWidth = true
             titleLabel.minimumScaleFactor = 0.65
             itemVStack.addArrangedSubview(titleLabel)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                titleLabel.leadingAnchor.constraint(equalTo: itemVStack.leadingAnchor, constant: 5),
+                titleLabel.trailingAnchor.constraint(equalTo: itemVStack.trailingAnchor, constant: -5),
+            ])
             
+            // ---------
             let gradient = UIImageView()
             gradient.backgroundColor = .clear
             itemVStack.addSubview(gradient)
@@ -85,8 +92,8 @@ extension ColumnsCell {
             NSLayoutConstraint.activate([
                 gradient.leadingAnchor.constraint(equalTo: mainImageView.leadingAnchor),
                 gradient.trailingAnchor.constraint(equalTo: mainImageView.trailingAnchor),
-                gradient.topAnchor.constraint(equalTo: mainImageView.topAnchor),
-                gradient.bottomAnchor.constraint(equalTo: mainImageView.bottomAnchor)
+                gradient.bottomAnchor.constraint(equalTo: mainImageView.bottomAnchor),
+                gradient.heightAnchor.constraint(equalToConstant: 42)
             ])
             gradient.contentMode = .scaleToFill
             gradient.clipsToBounds = true
@@ -106,13 +113,21 @@ extension ColumnsCell {
                 storyLabel.widthAnchor.constraint(equalToConstant: 55),
                 storyLabel.heightAnchor.constraint(equalToConstant: 23),
                 storyLabel.leadingAnchor.constraint(equalTo: itemVStack.leadingAnchor, constant: 6),
-                storyLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 0)
+                storyLabel.bottomAnchor.constraint(equalTo: gradient.bottomAnchor)
             ])
+            
+            // ---------------------
+            let sourcesContainer = UIStackView()
+            sourcesContainer.backgroundColor = .orange
+            itemVStack.addArrangedSubview(sourcesContainer)
+            
+            ADD_SPACER(to: itemVStack)
         }
     }
     
     func populate(with articles: [MainFeedArticle?]) {
         
+        self.storyFlags = [false, false]
         for (i, view) in self.mainHStack.arrangedSubviews.enumerated() {
             let vStack = view as! UIStackView
 
@@ -132,6 +147,19 @@ extension ColumnsCell {
                 
                 let gradient = vStack.subviews[2] as! UIImageView
                 gradient.isHidden = storyLabel.isHidden
+                
+                self.storyFlags[i] = _A.isStory
+                
+                let sourcesContainer = vStack.arrangedSubviews[2] as! UIStackView
+                if(_A.isStory) {
+                    ADD_SOURCE_ICONS(data: _A.storySources, to: sourcesContainer)
+                } else {
+                    var sourcesArray = [String]()
+                    if let _identifier = Sources.shared.search(name: _A.source) {
+                        sourcesArray.append(_identifier)
+                    }
+                    ADD_SOURCE_ICONS(data: sourcesArray, to: sourcesContainer)
+                }
             }
             
         }
@@ -142,7 +170,7 @@ extension ColumnsCell {
     func refreshDisplayMode() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         
-        for view in self.mainHStack.arrangedSubviews {
+        for (i, view) in self.mainHStack.arrangedSubviews.enumerated() {
             let vStack = view as! UIStackView
 
             let imageView = vStack.arrangedSubviews[0] as! UIImageView
@@ -157,19 +185,14 @@ extension ColumnsCell {
             let storyLabel = vStack.subviews[3] as! UILabel
             storyLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0xFF643C) : .white
             storyLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+            
+            if(self.storyFlags[i]) {
+                vStack.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
+            } else {
+                vStack.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+            }
         }
     }
     
-    
-    
-    
-    
-    
-//    func buildCellWidth(article: MainFeedArticle, into vStack: UIStackView) {
-//        let cell = UIView()
-//
-//        cell.backgroundColor = .yellow
-//        vStack.addArrangedSubview(cell)
-//    }
     
 }

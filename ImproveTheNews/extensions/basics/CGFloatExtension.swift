@@ -14,4 +14,12 @@ extension CGFloat {
         return min + (self * (max - min))
     }
     
+    func clamp(lower: CGFloat, upper: CGFloat) -> CGFloat {
+        var result = self
+        if(result<lower){ result = lower }
+        if(result>upper){ result = upper }
+        
+        return result
+    }
+    
 }

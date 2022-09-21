@@ -3,3 +3,6 @@ https://developer.apple.com/documentation/xcode/adding-a-build-configuration-fil
 
 * ADD CUSTOM SETTINGS TO PROJECT
 https://medium.com/@hassanahmedkhan/defining-your-own-settings-in-xcode-build-settings-1bd71539ea4f
+
+* UICollectionView cell items alignment
+https://cocoapods.org/pods/AlignedCollectionViewFlowLayout
