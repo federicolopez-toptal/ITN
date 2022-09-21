@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView, limit: Int = 6) {
+func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView, limit: Int = 6, containerHeight: CGFloat = 18) {
     
     //container.backgroundColor = .clear //.yellow
     container.axis = .horizontal
@@ -19,7 +19,7 @@ func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView, limit: 
     
     container.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-        container.heightAnchor.constraint(equalToConstant: 18)
+        container.heightAnchor.constraint(equalToConstant: containerHeight)
     ])
     
     var count = 0

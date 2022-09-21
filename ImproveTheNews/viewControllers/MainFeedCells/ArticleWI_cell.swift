@@ -107,9 +107,6 @@ extension ArticleWI_cell {
         titleVStack.addArrangedSubview(self.titleLabel)
         
         let iconsHStack = HSTACK(into: titleVStack)
-        NSLayoutConstraint.activate([
-            iconsHStack.heightAnchor.constraint(equalToConstant: 28)
-        ])
         iconsHStack.addArrangedSubview(self.sourcesContainer)
         
         self.sourceTimeLabel.text = "Last updated 2 hours ago"
@@ -137,7 +134,7 @@ extension ArticleWI_cell {
         if let _identifier = Sources.shared.search(name: article.source) {
             sourcesArray.append(_identifier)
         }
-        ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer)
+        ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer, containerHeight: 28)
         
         var source = article.source
         if let _cleanSource = source.components(separatedBy: " #").first {

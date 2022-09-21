@@ -93,10 +93,6 @@ extension ArticleCO_cell {
         
         let sourcesHStack = HSTACK(into: self.mainVStack)
         sourcesHStack.backgroundColor = .clear //.yellow
-        //sourcesHStack.spacing = 5.0
-        NSLayoutConstraint.activate([
-            sourcesHStack.heightAnchor.constraint(equalToConstant: 28)
-        ])
         
         sourcesHStack.addArrangedSubview(self.sourcesContainer)
         
@@ -125,7 +121,7 @@ extension ArticleCO_cell {
         if let _identifier = Sources.shared.search(name: article.source) {
             sourcesArray.append(_identifier)
         }
-        ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer)
+        ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer, containerHeight: 28)
     
         var source = article.source
         if let _cleanSource = source.components(separatedBy: " #").first {

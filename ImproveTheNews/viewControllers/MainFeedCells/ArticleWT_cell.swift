@@ -91,7 +91,6 @@ extension ArticleWT_cell {
             iconsHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             iconsHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
-            iconsHStack.heightAnchor.constraint(equalToConstant: 28),
             iconsHStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16) // cell height
         ])
         iconsHStack.addArrangedSubview(self.sourcesContainer)
@@ -115,7 +114,7 @@ extension ArticleWT_cell {
         if let _identifier = Sources.shared.search(name: article.source) {
             sourcesArray.append(_identifier)
         }
-        ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer)
+        ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer, containerHeight: 28)
         
         var source = article.source
         if let _cleanSource = source.components(separatedBy: " #").first {

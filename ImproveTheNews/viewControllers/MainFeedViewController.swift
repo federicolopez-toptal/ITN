@@ -18,7 +18,6 @@ class MainFeedViewController: BaseViewController {
     var list: UICollectionView!
     
     var dataProvider = [DP_item]()
-    
 
 
 
@@ -85,25 +84,22 @@ class MainFeedViewController: BaseViewController {
 extension MainFeedViewController: TopicSelectorViewDelegate {
 
     func onTopicSelected(_ index: Int) {
-//        print("Scroll to topic", index)
         
-//        if(index==0) {
-//            self.list.scrollToRow(at: IndexPath(row: 0, section: 0),
-//                        at: .top, animated: true)
-//            return
-//        }
-//
-//        var i = -1
-//        for (j, dp) in self.dataProvider.enumerated() {
-//            if let _ = dp as? DP_header {
-//                i += 1
-//                if(i == index) {
-//                    self.list.scrollToRow(at: IndexPath(row: j, section: 0),
-//                        at: .top, animated: true)
-//                    break
-//                }
-//            }
-//        }
+        if(index==0) {
+            self.list.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            return
+        }
+        
+        var i = -1
+        for (j, dp) in self.dataProvider.enumerated() {
+            if let _ = dp as? DP_header {
+                i += 1
+                if(i == index) {
+                    self.list.scrollToItem(at: IndexPath(row: j, section: 0), at: .top, animated: true)
+                    break
+                }
+            }
+        }
         
     }
 
@@ -129,7 +125,7 @@ extension MainFeedViewController {
             
         */
         
-        let itemsToShowPerTopic = "h,sbi,awi2,awt3,sco,aco"
+        let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sco,aco"
 
         self.dataProvider = [DP_item]()
         for (i, T) in self.data.topics.enumerated() {
