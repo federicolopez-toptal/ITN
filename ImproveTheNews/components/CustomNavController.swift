@@ -44,8 +44,8 @@ class CustomNavController: UINavigationController {
         self.loadingView.refreshDisplayMode()
         
         for vc in self.viewControllers {
-            if(vc is MainFeedViewController) {
-                (vc as! MainFeedViewController).refreshDisplayMode()
+            if(vc is BaseViewController) {
+                (vc as! BaseViewController).refreshDisplayMode()
             }
         }
     }

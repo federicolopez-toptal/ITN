@@ -29,3 +29,11 @@ class BaseViewController: UIViewController {
     }
 
 }
+
+extension BaseViewController {
+
+    @objc func refreshDisplayMode() {
+        // nothing for now...
+    }
+
+}

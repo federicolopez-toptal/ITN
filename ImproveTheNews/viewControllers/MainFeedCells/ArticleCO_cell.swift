@@ -128,7 +128,8 @@ extension ArticleCO_cell {
             source = _cleanSource
         }
         self.sourceTimeLabel.text = source + " • " + self.shortenTime(article.time)
-    
+        self.stanceIcon.setValues(article.LR, article.PE)
+        
         self.refreshDisplayMode()
     }
     

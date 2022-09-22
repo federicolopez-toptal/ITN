@@ -69,7 +69,7 @@ class MainFeedViewController: BaseViewController {
         }
     }
     
-    func refreshDisplayMode() {
+    override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
         self.topicSelector.refreshDisplayMode()
         
@@ -316,6 +316,24 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
         }
         
         return cell!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = self.getDP_item(indexPath)
+        let itemIsHeader = item is DP_header
+
+        if(!itemIsHeader) {
+            let article = self.getArticle(from: (item as! DP_itemPointingData))
+            if(article.isStory) {
+                print("STORY", article.title)
+            } else {
+                print("ARTICLE", article.title)
+            }
+            
+            let vc = ArticleViewController()
+            vc.article = article
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
     }
 
     // --------------

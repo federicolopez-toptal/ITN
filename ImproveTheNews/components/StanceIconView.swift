@@ -74,6 +74,9 @@ class StanceIconView: UIView {
         self.thumb2LeadingConstraint = thumb2.leadingAnchor.constraint(equalTo: slider2.leadingAnchor)
         self.thumb2LeadingConstraint?.isActive = true
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewOnTap(sender:)))
+        self.addGestureRecognizer(tapGesture)
+        
         self.setValues(1, 1)
         self.refreshDisplayMode()
     }
@@ -98,6 +101,11 @@ class StanceIconView: UIView {
         
         self.thumb1LeadingConstraint?.constant = positions[mValue1-1]
         self.thumb2LeadingConstraint?.constant = positions[mValue2-1]
+    }
+    
+    //MARK: Event(s)
+    @objc func viewOnTap(sender: UITapGestureRecognizer) {
+        print("LALALA")
     }
 
 }

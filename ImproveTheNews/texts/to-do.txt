@@ -1,1 +1,42 @@
 * Add Crashlytics
+
+* MainFeed user interaction(s)
+    * Click en historia, abrir contenido
+        * STYLE: Big with image
+        * STYLE: Wide, only text
+        * STYLE: Column
+        
+    * Clicn en articulo, abrir contenido
+        * STYLE: Wide with image
+        * STYLE: Wide, only text
+        * STYLE: Column
+        
+* Main menu
+    * Go to Headlines
+    * Bright / Dark mode
+    * Preferences
+        Todo unificado en una misma pantalla
+    * Layout(s)
+    * version (bottom, fixed)
+    * Boton BACK
+
+* Implementar nuevos layouts (con imagenes, solo textos)
+* Implementar banner (inicialmente para youTube)
+
+* Splitted view
+
+* Topic selector (HSlider) - Efecto al hacer click
+
+* Botones de la barra de titulo
+    * Search
+     
+* Opciones de menu
+    * FAQ
+    * How the sliders work
+    * Feedback (gForm)
+    * Privacy policy
+    * Contact
+    * Source filters
+    * Tour
+    
+        * MORE PREFERENCES (flags) queda dentro de PREFERENCES
