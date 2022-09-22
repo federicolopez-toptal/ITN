@@ -7,9 +7,15 @@
 
 import UIKit
 
+
+protocol StanceIconViewDelegate {
+    func onStanceIconTap(sender: StanceIconView)
+}
+
 class StanceIconView: UIView {
 
     private let DIM: CGFloat = 28
+    var delegate: StanceIconViewDelegate?
 
     let slider1 = UIView()
     let slider2 = UIView()
@@ -17,7 +23,7 @@ class StanceIconView: UIView {
     var thumb2LeadingConstraint: NSLayoutConstraint?
     
 
-   // MARK: - Init(s)
+    // MARK: - Init(s)
     init() {
         super.init(frame: CGRect.zero)
         self.layer.cornerRadius = (DIM/2)
@@ -105,7 +111,7 @@ class StanceIconView: UIView {
     
     //MARK: Event(s)
     @objc func viewOnTap(sender: UITapGestureRecognizer) {
-        print("LALALA")
+        self.delegate?.onStanceIconTap(sender: self)
     }
 
 }

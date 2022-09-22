@@ -53,6 +53,11 @@ class MainFeedViewController: BaseViewController {
             self.didAppear = true
             self.loadData()
         }
+        
+        DELAY(2.0) {
+            let popup = NoInternetPopupView()
+            popup.pushFromBottom()
+        }
     }
     
     @objc func loadData() {

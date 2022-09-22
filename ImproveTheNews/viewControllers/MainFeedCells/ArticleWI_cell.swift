@@ -117,6 +117,7 @@ extension ArticleWI_cell {
         
         ADD_SPACER(to: iconsHStack, width: 10)
         iconsHStack.addArrangedSubview(self.stanceIcon)
+        self.stanceIcon.delegate = self
         ADD_SPACER(to: iconsHStack)
         
         //ADD_SPACER(to: titleVStack)
@@ -154,6 +155,16 @@ extension ArticleWI_cell {
         self.sourceTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.stanceIcon.refreshDisplayMode()
         self.bottomLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
+    }
+    
+}
+
+extension ArticleWI_cell: StanceIconViewDelegate {
+    
+    func onStanceIconTap(sender: StanceIconView) {
+        // https://www.figma.com/file/2trQtjl1kAFZOspiVF3RNp/Card%2C-Feed-%26-Navigation?node-id=3516%3A115608
+        
+        print("HERE!")
     }
     
 }

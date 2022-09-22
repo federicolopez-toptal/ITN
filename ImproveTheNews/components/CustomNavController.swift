@@ -14,6 +14,7 @@ class CustomNavController: UINavigationController {
     let loadingView = LoadingView()
     let slidersPanel = SlidersPanel()
     let floatingButton = FloatingButton()
+    let darkView = DarkView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,7 @@ class CustomNavController: UINavigationController {
         self.slidersPanel.buildInto(self.view)
         self.floatingButton.buildInto(self.view, panel: self.slidersPanel)
         self.loadingView.buildInto(self.view)
+        self.darkView.buildInto(self.view)
         
         self.addViewController()
     }
@@ -42,10 +44,17 @@ class CustomNavController: UINavigationController {
     func refreshDisplayMode() {
         self.slidersPanel.refreshDisplayMode()
         self.loadingView.refreshDisplayMode()
-        
+        self.darkView.refreshDisplayMode()
+
         for vc in self.viewControllers {
             if(vc is BaseViewController) {
                 (vc as! BaseViewController).refreshDisplayMode()
+            }
+        }
+        
+        for v in self.view.subviews {
+            if(v is PopupView) {
+                (v as! PopupView).refreshDisplayMode()
             }
         }
     }
