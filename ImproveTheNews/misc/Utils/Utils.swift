@@ -36,3 +36,6 @@ func DELAY(_ time: TimeInterval, callback: @escaping () ->() ) {
     })
 }
 
+func NOTHING() {
+    // 🦗🦗🦗 ...
+}

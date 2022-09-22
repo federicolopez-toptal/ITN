@@ -245,11 +245,16 @@ class SlidersPanel: UIView {
             case 0:
                 constant = self.height
             case 2:
-                constant = self.height - 275
+                constant = self.height - 241
                 
             default:
-                constant = 0
+                constant = 34
         }
+        
+        if let _bottomValue = SAFE_AREA()?.bottom {
+            constant -= _bottomValue
+        }
+        
         
         var alphaTo: CGFloat = 0.0
         

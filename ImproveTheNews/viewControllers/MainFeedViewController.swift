@@ -15,12 +15,12 @@ class MainFeedViewController: BaseViewController {
 
     let navBar = NavBarView()
     let topicSelector = TopicSelectorView()
-    var list: UICollectionView!
+    var list = CustomCollectionView()
     
     var dataProvider = [DP_item]()
 
 
-
+    // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
@@ -54,10 +54,10 @@ class MainFeedViewController: BaseViewController {
             self.loadData()
         }
         
-        DELAY(2.0) {
-            let popup = NoInternetPopupView()
-            popup.pushFromBottom()
-        }
+//        DELAY(2.0) {
+//            let popup = NoInternetPopupView()
+//            popup.pushFromBottom()
+//        }
     }
     
     @objc func loadData() {
@@ -68,7 +68,9 @@ class MainFeedViewController: BaseViewController {
                     self.topicSelector.setTopics(self.data.topicNames())
                     self.populateDataProvider()
                     self.refreshList()
+                    
                     self.hideLoading()
+                    self.list.hideRefresher()
                 }
             }
         }
@@ -227,30 +229,21 @@ extension MainFeedViewController {
 }
 
 // MARK: - CollectionView stuff
-extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
+    CustomCollectionViewDelegate {
 
     private func setupList() {
-        let layout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .top)
-        
-        layout.minimumLineSpacing = 0 // vertical separation
-        layout.minimumInteritemSpacing = 0 // horizontal separation
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.estimatedItemSize = CGSize(width: 10, height: 10) // necessary for cell autoHeight
-        /*  UNUSED
-            layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: 100, height: 100)
-        */
-        
-        self.list = UICollectionView(frame: .zero, collectionViewLayout: layout)
         self.list.backgroundColor = self.view.backgroundColor
-    
+        self.list.customDelegate = self
+        
         self.view.addSubview(self.list)
         self.list.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 101 + 44) // navBar + topicSelector
+            self.list.topAnchor.constraint(equalTo: self.view.topAnchor,
+                constant: NavBarView.HEIGHT() + 44) // navBar + topicSelector
         ])
         
         // Cells registration
@@ -270,6 +263,10 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
         DispatchQueue.main.async {
             self.list.reloadData()
         }
+    }
+    
+    func collectionViewOnRefreshPulled(sender: CustomCollectionView) {
+        self.loadData()
     }
     
     // ------------------------
@@ -330,9 +327,9 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
         if(!itemIsHeader) {
             let article = self.getArticle(from: (item as! DP_itemPointingData))
             if(article.isStory) {
-                print("STORY", article.title)
+//                print("STORY", article.title)
             } else {
-                print("ARTICLE", article.title)
+//                print("ARTICLE", article.title)
             }
             
             let vc = ArticleViewController()

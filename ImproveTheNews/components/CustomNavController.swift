@@ -61,6 +61,35 @@ class CustomNavController: UINavigationController {
     
 }
 
+// MARK: - misc
+extension CustomNavController {
+
+    func hidePanelAndButtonWithAnimation() {
+        UIView.animate(withDuration: 0.5) {
+            self.slidersPanel.alpha = 0
+            self.floatingButton.alpha = 0
+        } completion: { _ in
+            self.slidersPanel.hide()
+            self.floatingButton.hide()
+        }
+
+    }
+    
+    func showPanelAndButtonWithAnimation() {
+        self.slidersPanel.alpha = 0
+        self.slidersPanel.show()
+        self.floatingButton.alpha = 0
+        self.floatingButton.show()
+    
+        UIView.animate(withDuration: 0.5) {
+            self.slidersPanel.alpha = 1
+            self.floatingButton.alpha = 1
+        } completion: { _ in
+        }
+    }
+    
+}
+
 // MARK: - Menu
 extension CustomNavController {
 

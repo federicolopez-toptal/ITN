@@ -1,12 +1,14 @@
 * Add Crashlytics
 
+* Haptic stuff
+
 * MainFeed user interaction(s)
     * Click en historia, abrir contenido
         * STYLE: Big with image
         * STYLE: Wide, only text
         * STYLE: Column
         
-    * Clicn en articulo, abrir contenido
+    * Click en articulo, abrir contenido
         * STYLE: Wide with image
         * STYLE: Wide, only text
         * STYLE: Column
