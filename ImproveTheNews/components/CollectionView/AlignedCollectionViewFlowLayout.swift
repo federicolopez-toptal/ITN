@@ -177,7 +177,6 @@ open class AlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     
     // MARK: - 🅾️ Overrides
-    
     override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
         // 💡 IDEA:
@@ -420,7 +419,7 @@ fileprivate extension UICollectionViewLayoutAttributes {
             frame.origin.y = alignmentAxis.position - frame.size.height
         default:
             center.y = alignmentAxis.position
-        }
+        }        
     }
     
     /// Positions the frame right of the preceding item's frame, leaving a spacing between the frames
@@ -432,6 +431,7 @@ fileprivate extension UICollectionViewLayoutAttributes {
         
         if let precedingItemAttributes = collectionViewLayout.layoutAttributesForItem(at: precedingIndexPath) {
             frame.origin.x = precedingItemAttributes.frame.maxX + itemSpacing
+//            frame.origin.x = precedingItemAttributes.frame.origin.x + SCREEN_SIZE().width + itemSpacing
         }
     }
     
@@ -443,7 +443,8 @@ fileprivate extension UICollectionViewLayoutAttributes {
         let itemSpacing = collectionViewLayout.minimumInteritemSpacing
         
         if let followingItemAttributes = collectionViewLayout.layoutAttributesForItem(at: followingIndexPath) {
-            frame.origin.x = followingItemAttributes.frame.minX - itemSpacing - frame.size.width
+//            frame.origin.x = followingItemAttributes.frame.minX - itemSpacing - frame.size.width
+            frame.origin.x = followingItemAttributes.frame.origin.x - itemSpacing - frame.size.width
         }
     }
     
@@ -459,22 +460,22 @@ fileprivate extension UICollectionViewLayoutAttributes {
         
         switch collectionViewLayout.effectiveHorizontalAlignment {
             
-        case .left:
-            if isRepresentingFirstItemInLine(collectionViewLayout: collectionViewLayout) {
-                align(toAlignmentAxis: alignmentAxis)
-            } else {
-                alignToPrecedingItem(collectionViewLayout: collectionViewLayout)
-            }
-            
-        case .right:
-            if isRepresentingLastItemInLine(collectionViewLayout: collectionViewLayout) {
-                align(toAlignmentAxis: alignmentAxis)
-            } else {
-                alignToFollowingItem(collectionViewLayout: collectionViewLayout)
-            }
-            
-        default:
-            return
+            case .left:
+                if isRepresentingFirstItemInLine(collectionViewLayout: collectionViewLayout) {
+                    align(toAlignmentAxis: alignmentAxis)
+                } else {
+                    alignToPrecedingItem(collectionViewLayout: collectionViewLayout)
+                }
+                
+            case .right:
+                if isRepresentingLastItemInLine(collectionViewLayout: collectionViewLayout) {
+                    align(toAlignmentAxis: alignmentAxis)
+                } else {
+                    alignToFollowingItem(collectionViewLayout: collectionViewLayout)
+                }
+                
+            default:
+                return
         }
     }
     

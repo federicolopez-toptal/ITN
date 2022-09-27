@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F025CB028E12F2900AA866D /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F025CAF28E12F2900AA866D /* Banner.swift */; };
+		1F025CB228E133D800AA866D /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F025CB128E133D800AA866D /* BannerCell.swift */; };
+		1F025CB628E14D0E00AA866D /* questions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F025CB528E14D0E00AA866D /* questions.txt */; };
+		1F165E5028E2A838002DC616 /* MainFeedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F165E4F28E2A838002DC616 /* MainFeedFlowLayout.swift */; };
 		1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A1A9B28D27D3100256785 /* StringExtension.swift */; };
 		1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */; };
 		1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */; };
@@ -81,6 +85,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F025CAF28E12F2900AA866D /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		1F025CB128E133D800AA866D /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
+		1F025CB528E14D0E00AA866D /* questions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = questions.txt; sourceTree = "<group>"; };
+		1F165E4F28E2A838002DC616 /* MainFeedFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedFlowLayout.swift; sourceTree = "<group>"; };
 		1F1A1A9B28D27D3100256785 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
@@ -171,6 +179,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F7E777128E362160024D792 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				1F39574E28DCDE8900DE3C07 /* CustomCollectionView.swift */,
+				1FF61CBA28DAC9F8006DF9AC /* AlignedCollectionViewFlowLayout.swift */,
+				1F165E4F28E2A838002DC616 /* MainFeedFlowLayout.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
 		1F897CE428CC37F100438FC5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,7 +296,7 @@
 			children = (
 				1FD5BDEF28DC0F7A003E650F /* popups */,
 				1F95136028BFC64300A77AB6 /* CustomNavController.swift */,
-				1F39574E28DCDE8900DE3C07 /* CustomCollectionView.swift */,
+				1F7E777128E362160024D792 /* CollectionView */,
 				1FA4CE7628C3DAEE0068DE4A /* LoadingView.swift */,
 				1FA4CE7828C3DCFB0068DE4A /* SlidersPanel.swift */,
 				1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */,
@@ -296,6 +314,7 @@
 				1F95135D28BFC4D300A77AB6 /* to-do.txt */,
 				1F95135728BFB9D300A77AB6 /* url notes.txt */,
 				1FA4CE6128C282A00068DE4A /* misc.txt */,
+				1F025CB528E14D0E00AA866D /* questions.txt */,
 			);
 			path = texts;
 			sourceTree = "<group>";
@@ -304,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				1F897CE428CC37F100438FC5 /* Utils */,
-				1FF61CBA28DAC9F8006DF9AC /* AlignedCollectionViewFlowLayout.swift */,
 				1F90105D28C5B2A300A5BDC9 /* Notifications.swift */,
 				1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */,
 				1FDEB1C728CB7E150029831E /* Layout.swift */,
@@ -370,6 +388,7 @@
 				1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */,
 				1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */,
 				1FF61CBF28DAFC4D006DF9AC /* ArticleCO_cell.swift */,
+				1F025CB128E133D800AA866D /* BannerCell.swift */,
 			);
 			path = MainFeedCells;
 			sourceTree = "<group>";
@@ -389,6 +408,7 @@
 			children = (
 				1FF326C028CA71DA006FF2CE /* MainFeedTopic.swift */,
 				1FF326C228CA720E006FF2CE /* MainFeedArticle.swift */,
+				1F025CAF28E12F2900AA866D /* Banner.swift */,
 			);
 			path = MainFeed;
 			sourceTree = "<group>";
@@ -482,6 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F95135828BFB9D300A77AB6 /* url notes.txt in Resources */,
+				1F025CB628E14D0E00AA866D /* questions.txt in Resources */,
 				1F897CF428CC4C4300438FC5 /* propublica.png in Resources */,
 				1F90105628C5997900A5BDC9 /* Roboto-Bold.ttf in Resources */,
 				1F897CF328CC4C4300438FC5 /* wapo.png in Resources */,
@@ -555,6 +576,7 @@
 			files = (
 				1F90105828C599DC00A5BDC9 /* UIColorExtension.swift in Sources */,
 				1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */,
+				1F165E5028E2A838002DC616 /* MainFeedFlowLayout.swift in Sources */,
 				1FDEB1CB28CB88730029831E /* StoryBI_cell.swift in Sources */,
 				1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */,
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
@@ -567,6 +589,7 @@
 				1FF61CBE28DAE50B006DF9AC /* StoryCO_cell.swift in Sources */,
 				1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */,
 				1FF326C128CA71DA006FF2CE /* MainFeedTopic.swift in Sources */,
+				1F025CB028E12F2900AA866D /* Banner.swift in Sources */,
 				1F2D9FD428D36F6A00CE3008 /* ArticleWT_cell.swift in Sources */,
 				1F39574F28DCDE8900DE3C07 /* CustomCollectionView.swift in Sources */,
 				1F897CE328CC322900438FC5 /* Sources.swift in Sources */,
@@ -581,6 +604,7 @@
 				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */,
 				1FD5BDEE28DC01AA003E650F /* ArticleViewController.swift in Sources */,
 				1F95134328BFB92E00A77AB6 /* SceneDelegate.swift in Sources */,
+				1F025CB228E133D800AA866D /* BannerCell.swift in Sources */,
 				1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */,
 				1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */,
@@ -769,6 +793,9 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ITNFoundation.ITN-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -802,6 +829,9 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ITNFoundation.ITNaggregator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -889,6 +919,9 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ITNFoundation.ITN-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

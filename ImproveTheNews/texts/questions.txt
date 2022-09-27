@@ -1,0 +1,8 @@
+Questions for Ruaridh
+
+MAIN FEED:
+* Articles with markup
+    - Exclamation mark icon=?
+    
+* Banners
+    - La documentacion dice "small" & "large"... ejemplos?

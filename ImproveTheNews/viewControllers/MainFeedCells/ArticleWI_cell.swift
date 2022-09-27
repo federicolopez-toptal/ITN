@@ -10,14 +10,7 @@ import UIKit
 class ArticleWI_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWI_cell"
-    //private let HEIGHT: CGFloat = 1.0     Height based on content!
-    private let WIDTH: CGFloat = SCREEN_SIZE().width
-
-    lazy var width: NSLayoutConstraint = {
-        let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
-        width.isActive = true
-        return width
-    }()
+    //private let HEIGHT: CGFloat = 0.0     Height based on content!
     
     let mainImageView = UIImageView()
     let titleLabel = UILabel()
@@ -31,7 +24,6 @@ class ArticleWI_cell: UICollectionViewCell {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.buildContent()
     }
     
@@ -39,12 +31,12 @@ class ArticleWI_cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func systemLayoutSizeFitting(_ targetSize: CGSize,
-        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-        verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
-        width.constant = self.WIDTH
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
+        let targetSize = CGSize(width: SCREEN_SIZE().width, height: 0)
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        
+        return layoutAttributes
     }
 
 }
@@ -55,6 +47,7 @@ extension ArticleWI_cell {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             //self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
+            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width)
         ])
         self.contentView.backgroundColor = .white
         
@@ -74,7 +67,7 @@ extension ArticleWI_cell {
         NSLayoutConstraint.activate([
             mainHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             mainHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            mainHStack.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            mainHStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
             mainHStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16) // cell height
         ])
         
@@ -154,7 +147,7 @@ extension ArticleWI_cell {
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.sourceTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.stanceIcon.refreshDisplayMode()
-        self.bottomLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
+        self.bottomLine.backgroundColor = .black //DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
     }
     
 }

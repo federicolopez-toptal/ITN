@@ -1,3 +1,10 @@
+iPhone mini (12, 13) screen size (points): 360 x 780
+    Simulator returns 375 x 812
+
+// ----------------------------------------------------------------------
+
+
+
 FROM NIMA:
 
 Hi
@@ -8,3 +15,7 @@ articles will be displayed in three columns if there is no story
 You can still use the old API, as I'm using it under the hood, but also I have developed a new API that works as a translator/transformer for the current API, feel free to use it if you find it useful
 
 http://ec2-18-223-109-255.us-east-2.compute.amazonaws.com/swagger
+
+
+
+

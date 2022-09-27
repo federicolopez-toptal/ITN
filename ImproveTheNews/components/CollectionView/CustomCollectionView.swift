@@ -18,18 +18,20 @@ class CustomCollectionView: UICollectionView {
     var customDelegate: CustomCollectionViewDelegate?
     
     init() {
-        let layout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .top)
         
+//        let layout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .top)
+//        let layout = CustomFlowLayout()
+
+        let layout = MainFeedFlowLayout()
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.minimumLineSpacing = 0 // vertical separation
         layout.minimumInteritemSpacing = 0 // horizontal separation
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.estimatedItemSize = CGSize(width: 10, height: 10) // necessary for cell autoHeight
-        /*  UNUSED
-            layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: 100, height: 100)
-        */
+        layout.scrollDirection = .vertical
+//        layout.itemSize = CGSize(width: 100, height: 100) // UNUSED
     
         super.init(frame: .zero, collectionViewLayout: layout)
+        //self.contentInsetAdjustmentBehavior = .always
         self.setupRefresher()
     }
     

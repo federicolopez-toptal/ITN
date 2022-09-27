@@ -18,6 +18,7 @@ class MainFeedViewController: BaseViewController {
     var list = CustomCollectionView()
     
     var dataProvider = [DP_item]()
+    var column = 1
 
 
     // MARK: - Start
@@ -132,11 +133,15 @@ extension MainFeedViewController {
             
         */
         
-        let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sco,aco"
+        let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt" // sco,aco
+        //"h,sbi,sco,aco3,awt2"
+//        "h,sbi,awi2,awt3,swt,sco2"
+        // "h,sbi,awi2,awt3,swt,sco,aco"
 
         self.dataProvider = [DP_item]()
         for (i, T) in self.data.topics.enumerated() {
 
+            self.column = 1
             var allItems = itemsToShowPerTopic.components(separatedBy: ",")
             if(i==0 && allItems.count>1){ allItems.swapAt(0, 1) }
             
@@ -155,7 +160,11 @@ extension MainFeedViewController {
                 }
                 
             }
-                        
+             
+            if(i==0 && self.data.banners.count>0) {
+                let banner = DP_banner(index: 0)
+                self.dataProvider.append(banner)
+            }
         }
     }
     
@@ -175,7 +184,8 @@ extension MainFeedViewController {
                     } else if(_format == "wt") {
                         dpItem = DP_Story_WT(T: i, A: _j)
                     } else if(_format == "co") {
-                        dpItem = DP_Story_CO(T: i, A: _j)
+                        dpItem = DP_Story_CO(T: i, A: _j, column: self.column)
+                        self.addColumn()
                     }
                     
                     if let _dpItem = dpItem {
@@ -202,7 +212,8 @@ extension MainFeedViewController {
                     } else if(_format == "wt") {
                         dpItem = DP_Article_WT(T: i, A: _j)
                     } else if(_format == "co") {
-                        dpItem = DP_Article_CO(T: i, A: _j)
+                        dpItem = DP_Article_CO(T: i, A: _j, column: self.column)
+                        self.addColumn()
                     }
 
                     if let _dpItem = dpItem {
@@ -211,6 +222,13 @@ extension MainFeedViewController {
                 }
             }
         } //-----
+    }
+    
+    private func addColumn() {
+        self.column += 1
+        if(self.column == 3) {
+            self.column = 1
+        }
     }
     
     
@@ -254,6 +272,7 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
         self.list.register(StoryWT_cell.self, forCellWithReuseIdentifier: StoryWT_cell.identifier)
         self.list.register(StoryCO_cell.self, forCellWithReuseIdentifier: StoryCO_cell.identifier)
         self.list.register(ArticleCO_cell.self, forCellWithReuseIdentifier: ArticleCO_cell.identifier)
+        self.list.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
 
         self.list.delegate = self
         self.list.dataSource = self
@@ -309,12 +328,17 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
             // Story column
             cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryCO_cell.identifier,
                 for: indexPath) as! StoryCO_cell
-            (cell as! StoryCO_cell).populate(with: self.getArticle(from: _item))
+            (cell as! StoryCO_cell).populate(with: self.getArticle(from: _item), column: _item.column)
         } else if let _item = item as? DP_Article_CO {
             // Article column
             cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleCO_cell.identifier,
                 for: indexPath) as! ArticleCO_cell
-            (cell as! ArticleCO_cell).populate(with: self.getArticle(from: _item))
+            (cell as! ArticleCO_cell).populate(with: self.getArticle(from: _item), column: _item.column)
+        } else if let _item = item as? DP_banner {
+            // Banner
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: BannerCell.identifier,
+                for: indexPath) as! BannerCell
+            (cell as! BannerCell).populate(with: self.getBanner(from: _item))
         }
         
         return cell!
@@ -323,8 +347,9 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = self.getDP_item(indexPath)
         let itemIsHeader = item is DP_header
+        let itemIsBanner = item is DP_banner
 
-        if(!itemIsHeader) {
+        if(!itemIsHeader && !itemIsBanner) {
             let article = self.getArticle(from: (item as! DP_itemPointingData))
             if(article.isStory) {
 //                print("STORY", article.title)
@@ -345,6 +370,10 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     
     private func getArticle(from item: DP_itemPointingData) -> MainFeedArticle {
         return self.data.topics[item.topicIndex].articles[item.articleIndex]
+    }
+    
+    private func getBanner(from item: DP_banner) -> Banner {
+        return self.data.banners[item.bannerIndex]
     }
 
 }

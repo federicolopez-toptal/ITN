@@ -11,13 +11,6 @@ class HeaderCell: UICollectionViewCell {
 
     static let identifier = "HeaderCell"
     private let HEIGHT: CGFloat = 45.0
-    private let WIDTH: CGFloat = SCREEN_SIZE().width
-    
-    lazy var width: NSLayoutConstraint = {
-        let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
-        width.isActive = true
-        return width
-    }()
     
     let titleLabel = UILabel()
     
@@ -33,12 +26,12 @@ class HeaderCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func systemLayoutSizeFitting(_ targetSize: CGSize,
-        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-        verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
-        width.constant = self.WIDTH
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1)) // cell height
+        let targetSize = CGSize(width: SCREEN_SIZE().width, height: self.HEIGHT)
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        
+        return layoutAttributes
     }
     
 }
@@ -49,6 +42,7 @@ extension HeaderCell {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.backgroundColor = .lightGray
         NSLayoutConstraint.activate([
+            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width),
             self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
         ])
         self.contentView.backgroundColor = .white

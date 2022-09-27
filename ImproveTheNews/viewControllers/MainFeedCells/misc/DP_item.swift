@@ -40,6 +40,14 @@ class DP_itemPointingData: DP_item {
     }
 }
 
+class DP_banner: DP_item {
+    var bannerIndex: Int
+    
+    init(index B: Int) {
+        self.bannerIndex = B
+    }
+}
+
 // --------
 class DP_Story_BI: DP_itemPointingData { // Big Story with image
     override init(T topicIndex: Int, A articleIndex: Int) {
@@ -51,13 +59,6 @@ class DP_Story_WT: DP_itemPointingData { // wide story (only text)
         super.init(T: topicIndex, A: articleIndex)
     }
 }
-class DP_Story_CO: DP_itemPointingData { // story column
-    override init(T topicIndex: Int, A articleIndex: Int) {
-        super.init(T: topicIndex, A: articleIndex)
-    }
-}
-
-
 class DP_Article_WI: DP_itemPointingData { // Wide article with image
     override init(T topicIndex: Int, A articleIndex: Int) {
         super.init(T: topicIndex, A: articleIndex)
@@ -68,8 +69,19 @@ class DP_Article_WT: DP_itemPointingData { // wide article (only text)
         super.init(T: topicIndex, A: articleIndex)
     }
 }
+
+// --------
+class DP_Story_CO: DP_itemPointingData { // story column
+    var column: Int
+    init(T topicIndex: Int, A articleIndex: Int, column: Int) {
+        self.column = column
+        super.init(T: topicIndex, A: articleIndex)
+    }
+}
 class DP_Article_CO: DP_itemPointingData { // article column
-    override init(T topicIndex: Int, A articleIndex: Int) {
+    var column: Int
+    init(T topicIndex: Int, A articleIndex: Int, column: Int) {
+        self.column = column
         super.init(T: topicIndex, A: articleIndex)
     }
 }

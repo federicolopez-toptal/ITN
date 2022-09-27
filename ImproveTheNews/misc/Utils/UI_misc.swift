@@ -86,5 +86,11 @@ func ADD_SHADOW(to view: UIView, offset: CGSize = CGSize(width: 5, height: 5)) {
 }
 
 func SCREEN_SIZE() -> CGSize {
-    return UIScreen.main.bounds.size
+    var result = UIScreen.main.bounds.size
+    
+//    if(result.width==375 && result.height==812) { // iPhone mini fix (only in simulator?)
+//        result = CGSize(width: 375, height: 780)
+//    }
+
+    return result
 }

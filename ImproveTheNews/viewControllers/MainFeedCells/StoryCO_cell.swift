@@ -10,14 +10,8 @@ import UIKit
 class StoryCO_cell: UICollectionViewCell {
 
     static let identifier = "StoryCO_cell"
-    //private let HEIGHT: CGFloat = 1.0     Height based on content!
-    private let WIDTH: CGFloat = SCREEN_SIZE().width/2
-    
-    lazy var width: NSLayoutConstraint = {
-        let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
-        width.isActive = true
-        return width
-    }()
+    //private let HEIGHT: CGFloat = 0.0     Height based on content!
+    var column: Int = 1
     
     var mainVStack: UIStackView!
     let mainImageView = UIImageView()
@@ -40,12 +34,12 @@ class StoryCO_cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func systemLayoutSizeFitting(_ targetSize: CGSize,
-        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-        verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
-        width.constant = self.WIDTH
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
+        let targetSize = CGSize(width: SCREEN_SIZE().width/2, height: 0)
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        
+        return layoutAttributes
     }
     
 }
@@ -56,6 +50,7 @@ extension StoryCO_cell {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
 //            self.contentView.heightAnchor.constraint(equalToConstant: 200)
+            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width/2)
         ])
         self.contentView.backgroundColor = .white
         
@@ -64,10 +59,14 @@ extension StoryCO_cell {
     let roboto_bold = UIFont(name: "Roboto-Bold", size: 11)
     let characterSpacing: Double = 1.35
     
+        let W: CGFloat = (SCREEN_SIZE().width/2) - 32
+    
         self.mainVStack = VSTACK(into: self.contentView)
         self.mainVStack.backgroundColor = .green
         self.mainVStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            //self.mainVStack.widthAnchor.constraint(equalToConstant: W),
+            
             self.mainVStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
@@ -157,7 +156,9 @@ extension StoryCO_cell {
         ADD_SPACER(to: infoVStack, height: 12)
     }
 
-    func populate(with story: MainFeedArticle) {
+    func populate(with story: MainFeedArticle, column: Int) {
+        self.column = column
+    
         self.mainImageView.image = nil
         if let _url = URL(string: story.imgUrl) {
             self.mainImageView.sd_setImage(with: _url)
@@ -170,8 +171,8 @@ extension StoryCO_cell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.mainVStack.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
+        self.contentView.backgroundColor = .yellow //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        //self.mainVStack.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)

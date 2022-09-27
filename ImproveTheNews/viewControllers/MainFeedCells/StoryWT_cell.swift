@@ -10,14 +10,7 @@ import UIKit
 class StoryWT_cell: UICollectionViewCell {
 
     static let identifier = "StoryWT_cell"
-    //private let HEIGHT: CGFloat = 1.0     Height based on content!
-    private let WIDTH: CGFloat = SCREEN_SIZE().width
-
-    lazy var width: NSLayoutConstraint = {
-        let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
-        width.isActive = true
-        return width
-    }()
+    //private let HEIGHT: CGFloat = 0.0     Height based on content!
 
     let storyLabel = UILabel()
     let titleLabel = UILabel()
@@ -37,12 +30,12 @@ class StoryWT_cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func systemLayoutSizeFitting(_ targetSize: CGSize,
-        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-        verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
-        width.constant = self.WIDTH
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
+        let targetSize = CGSize(width: SCREEN_SIZE().width, height: 0)
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        
+        return layoutAttributes
     }
     
 }
@@ -53,6 +46,7 @@ extension StoryWT_cell {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             //self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
+            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width)
         ])
         self.contentView.backgroundColor = .white
         

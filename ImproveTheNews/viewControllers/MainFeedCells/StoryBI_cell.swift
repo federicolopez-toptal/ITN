@@ -13,13 +13,6 @@ class StoryBI_cell: UICollectionViewCell {
 
     static let identifier = "StoryBI_cell"
     private let HEIGHT: CGFloat = 248.0
-    private let WIDTH: CGFloat = SCREEN_SIZE().width
-    
-    lazy var width: NSLayoutConstraint = {
-        let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
-        width.isActive = true
-        return width
-    }()
     
     let mainImageView = UIImageView()
     let gradient = UIImageView()
@@ -39,12 +32,12 @@ class StoryBI_cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func systemLayoutSizeFitting(_ targetSize: CGSize,
-        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-        verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
-        width.constant = self.WIDTH
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
+        let targetSize = CGSize(width: SCREEN_SIZE().width, height: self.HEIGHT)
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        
+        return layoutAttributes
     }
     
 }
@@ -55,7 +48,8 @@ extension StoryBI_cell {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.backgroundColor = .lightGray
         NSLayoutConstraint.activate([
-            self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT) // cell height
+            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width),
+            self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
         ])
         self.contentView.backgroundColor = .white
     

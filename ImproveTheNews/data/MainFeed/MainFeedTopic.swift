@@ -22,7 +22,6 @@ struct MainFeedTopic {
     var articles: [MainFeedArticle]
     
     
-    
     init (_ json: [Any], _ articles: [Any]) {
         self.name = json[0] as! String
         self.nonCapitalizedName = json[1] as! String

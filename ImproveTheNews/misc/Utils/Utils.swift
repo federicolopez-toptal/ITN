@@ -39,3 +39,9 @@ func DELAY(_ time: TimeInterval, callback: @escaping () ->() ) {
 func NOTHING() {
     // 🦗🦗🦗 ...
 }
+
+func OPEN_URL(_ url: String) {
+    if let _url = URL(string: url) {
+        UIApplication.shared.open(_url)
+    }
+}

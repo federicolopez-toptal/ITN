@@ -17,6 +17,7 @@ class MainFeed {
     var S_articlesToSkipPerTopic = 0
     
     var topics = [MainFeedTopic]()
+    var banners = [Banner]()
     
     func loadData(callback: @escaping (Error?) -> ()) {
         var request = URLRequest(url: URL(string: self.buildUrl())!)
@@ -24,10 +25,17 @@ class MainFeed {
         
         print("MAIN FEED from", request.url!.absoluteString)
         let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+            }
+            
+            
             if let _error = error {
                 print(_error.localizedDescription)
                 callback(_error)
             } else {
+                print("OK!")
+            
                 let mData = ADD_MAIN_NODE(to: data)
                 if let _json = JSON(fromData: mData) {
                     self.parse(_json)
@@ -87,6 +95,8 @@ class MainFeed {
                     self.topics.append(newTopic)
                 } else {
                     // Banner(s)
+                    let banner = Banner(topicInfo)
+                    self.banners.append(banner)
                 }
             }
         }

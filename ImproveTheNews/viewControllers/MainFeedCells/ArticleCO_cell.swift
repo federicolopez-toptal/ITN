@@ -11,13 +11,7 @@ class ArticleCO_cell: UICollectionViewCell {
     
     static let identifier = "ArticleCO_cell"
     //private let HEIGHT: CGFloat = 1.0     Height based on content!
-    private let WIDTH: CGFloat = SCREEN_SIZE().width/2
-    
-    lazy var width: NSLayoutConstraint = {
-        let width = contentView.widthAnchor.constraint(equalToConstant: self.WIDTH)
-        width.isActive = true
-        return width
-    }()
+    var column: Int = 1
     
     var mainVStack: UIStackView!
     let mainImageView = UIImageView()
@@ -38,12 +32,12 @@ class ArticleCO_cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func systemLayoutSizeFitting(_ targetSize: CGSize,
-        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-        verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
-        width.constant = self.WIDTH
-        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: 1))
+        let targetSize = CGSize(width: SCREEN_SIZE().width/2, height: 0)
+        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        
+        return layoutAttributes
     }
     
 }
@@ -54,6 +48,7 @@ extension ArticleCO_cell {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
 //            self.contentView.heightAnchor.constraint(equalToConstant: 200)
+            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width/2)
         ])
         self.contentView.backgroundColor = .white
         
@@ -109,7 +104,9 @@ extension ArticleCO_cell {
         ADD_SPACER(to: self.mainVStack, height: 10)
     }
 
-    func populate(with article: MainFeedArticle) {
+    func populate(with article: MainFeedArticle, column: Int) {
+        self.column = column
+    
         self.mainImageView.image = nil
         if let _url = URL(string: article.imgUrl) {
             self.mainImageView.sd_setImage(with: _url)
