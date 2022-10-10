@@ -1,8 +1,15 @@
-Questions for Ruaridh
+QUESTIONS for Ruaridh
 
 MAIN FEED:
 * Articles with markup
-    - Exclamation mark icon=?
+    - Exclamation mark icon?
     
 * Banners
     - La documentacion dice "small" & "large"... ejemplos?
+
+
+// ---------------------------
+QUESTIONS for Armin
+
+* Banner codes + status - Me sigue incluyendo un banner a pesar de explicitar que no lo quiero mas
+    (Caché de mi lado?)

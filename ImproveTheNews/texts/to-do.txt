@@ -42,3 +42,15 @@
     * Tour
     
         * MORE PREFERENCES (flags) queda dentro de PREFERENCES
+
+
+
+
+
+
+PENDIENTES
+
+Banners
+    Por qué al recargar el feed (y haciendolo bien) me sigue incluyendo el banner?
+    Que onda con el tamaño de las imagenes?
+    Banners sin imagenes

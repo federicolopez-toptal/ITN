@@ -12,9 +12,10 @@ class BannerCell: UICollectionViewCell {
     static let identifier = "BannerCell"
     //private let HEIGHT: CGFloat = 1.0     Height based on content!
     
-    var bannerURL = ""
-    var dontShowAgain = false
-    
+    private var bannerURL = ""
+    private var dontShowAgain = false
+    private var bannerCode = ""
+        
     let mainContainer = UIView()
     let mainImageView = UIImageView()
     var mainImageHeightConstraint: NSLayoutConstraint?
@@ -216,11 +217,19 @@ extension BannerCell {
                     self.mainImageHeightConstraint?.constant = h
                 }
             }
+        } else {
+            self.mainImageHeightConstraint?.constant = 0
         }
         
         self.headerLabel.text = banner.headerText
         self.textLabel.text = banner.mainText
+        
         self.bannerURL = banner.url
+        self.bannerCode = banner.code
+    
+        if self.readStatus() == nil {
+            self.writeStatus(1) // Just show the banner, no user interaction
+        }
     
         self.refreshDisplayMode()
     }
@@ -238,22 +247,66 @@ extension BannerCell {
     
 }
 
+// MARK: - Store settings locally
+extension BannerCell {
+    
+    private func writeStatus(_ num: Int) {
+        let key = LocalKeys.misc.bannerPrefix + self.bannerCode
+        WRITE(key, value: "0" + String(num))
+        self.addThisBannerToCodes()
+    }
+    
+    private func readStatus() -> String? {
+        let key = LocalKeys.misc.bannerPrefix + self.bannerCode
+        return READ(key)
+    }
+    
+    private func addThisBannerToCodes() {
+        if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {
+            var allBannerCodes = _allBannerCodesString.components(separatedBy: ",")
+            
+            var found = false
+            for bCode in allBannerCodes {
+                if(bCode == self.bannerCode) {
+                    found = true
+                    break
+                }
+            }
+            
+            if(!found) {
+                allBannerCodes.append(self.bannerCode)
+                let newStringArray = allBannerCodes.joined(separator: ",")
+                WRITE(LocalKeys.misc.allBannerCodes, value: newStringArray)
+            }
+            
+        } else {
+            WRITE(LocalKeys.misc.allBannerCodes, value: self.bannerCode)
+        }
+    }
+    
+}
+
 // MARK: - Event(s)
 extension BannerCell {
     
     @objc func onCheckButtonTap(_ sender: UIButton) {
         self.checkImage.isHidden = !self.checkImage.isHidden
-        
         self.dontShowAgain = !self.checkImage.isHidden
-        print(self.dontShowAgain)
     }
     
     @objc func onCloseButtonTap(_ sender: UIButton) {
+        if(self.dontShowAgain) {
+            self.writeStatus(3) // Clicked on "Close" - Don't show again ON
+        } else {
+            self.writeStatus(2) // Clicked on "Close" - Don't show again OFF
+        }
         NOTIFY(Notification_reloadMainFeed)
     }
     
     @objc func onImageButtonTap(_ sender: UIButton) {
+        self.writeStatus(4) // Click on image
         OPEN_URL(self.bannerURL)
+        NOTIFY(Notification_reloadMainFeed)
     }
     
 }

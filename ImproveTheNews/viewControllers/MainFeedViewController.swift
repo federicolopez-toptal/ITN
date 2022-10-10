@@ -133,7 +133,11 @@ extension MainFeedViewController {
             
         */
         
-        let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt" // sco,aco
+        let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sco,aco"
+        
+        //let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sco,aco3"
+        
+        //"h,sbi,awi2,awt3,swt" // sco,aco
         //"h,sbi,sco,aco3,awt2"
 //        "h,sbi,awi2,awt3,swt,sco2"
         // "h,sbi,awi2,awt3,swt,sco,aco"
@@ -161,10 +165,10 @@ extension MainFeedViewController {
                 
             }
              
-            if(i==0 && self.data.banners.count>0) {
-                let banner = DP_banner(index: 0)
-                self.dataProvider.append(banner)
-            }
+//            if(i==0 && self.data.banners.count>0) {
+//                let banner = DP_banner(index: 0)
+//                self.dataProvider.append(banner)
+//            }
         }
     }
     
@@ -272,7 +276,9 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
         self.list.register(StoryWT_cell.self, forCellWithReuseIdentifier: StoryWT_cell.identifier)
         self.list.register(StoryCO_cell.self, forCellWithReuseIdentifier: StoryCO_cell.identifier)
         self.list.register(ArticleCO_cell.self, forCellWithReuseIdentifier: ArticleCO_cell.identifier)
+        
         self.list.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
+
 
         self.list.delegate = self
         self.list.dataSource = self
@@ -280,6 +286,7 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func refreshList() {
         DispatchQueue.main.async {
+            (self.list.collectionViewLayout as! CustomFlowLayout).resetCache()
             self.list.reloadData()
         }
     }
@@ -296,52 +303,14 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        var cell: UICollectionViewCell!
-        let item = self.getDP_item(indexPath)
-        
-        if let _item = item as? DP_header {
-            // Header
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderCell.identifier,
-                for: indexPath) as! HeaderCell
-            (cell as! HeaderCell).populate(with: _item)
-        } else if let _item = item as? DP_Story_BI {
-            // Big story with image
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryBI_cell.identifier,
-                for: indexPath) as! StoryBI_cell
-            (cell as! StoryBI_cell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_Article_WI {
-            // Wide article with image
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleWI_cell.identifier,
-                for: indexPath) as! ArticleWI_cell
-            (cell as! ArticleWI_cell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_Article_WT {
-            // Wide article (only text)
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleWT_cell.identifier,
-                for: indexPath) as! ArticleWT_cell
-            (cell as! ArticleWT_cell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_Story_WT {
-            // Wide story (only text)
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryWT_cell.identifier,
-                for: indexPath) as! StoryWT_cell
-            (cell as! StoryWT_cell).populate(with: self.getArticle(from: _item))
-        } else if let _item = item as? DP_Story_CO {
-            // Story column
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryCO_cell.identifier,
-                for: indexPath) as! StoryCO_cell
-            (cell as! StoryCO_cell).populate(with: self.getArticle(from: _item), column: _item.column)
-        } else if let _item = item as? DP_Article_CO {
-            // Article column
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleCO_cell.identifier,
-                for: indexPath) as! ArticleCO_cell
-            (cell as! ArticleCO_cell).populate(with: self.getArticle(from: _item), column: _item.column)
-        } else if let _item = item as? DP_banner {
-            // Banner
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: BannerCell.identifier,
-                for: indexPath) as! BannerCell
-            (cell as! BannerCell).populate(with: self.getBanner(from: _item))
-        }
-        
-        return cell!
+        let cell = self.getCellForIndexPath(indexPath)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        return self.getCellSizeAtIndexPath(indexPath, width: collectionView.bounds.width)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -362,13 +331,14 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
             CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
+    
 
     // --------------
-    private func getDP_item(_ iPath: IndexPath) -> DP_item {
+    func getDP_item(_ iPath: IndexPath) -> DP_item {
         return self.dataProvider[iPath.row]
     }
     
-    private func getArticle(from item: DP_itemPointingData) -> MainFeedArticle {
+    func getArticle(from item: DP_itemPointingData) -> MainFeedArticle {
         return self.data.topics[item.topicIndex].articles[item.articleIndex]
     }
     

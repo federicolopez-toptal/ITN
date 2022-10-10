@@ -10,10 +10,10 @@ import UIKit
 class ArticleWI_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWI_cell"
-    //private let HEIGHT: CGFloat = 0.0     Height based on content!
+    static let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 16)
     
     let mainImageView = UIImageView()
-    let titleLabel = UILabel()
+    let titleLabel = ArticleWI_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()
     let sourceTimeLabel = UILabel()
     let bottomLine = UIView()
@@ -30,25 +30,9 @@ class ArticleWI_cell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        
-        let targetSize = CGSize(width: SCREEN_SIZE().width, height: 0)
-        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
-        
-        return layoutAttributes
-    }
 
-}
-
-extension ArticleWI_cell {
-    
+    // -----------------------------------
     private func buildContent() {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            //self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
-            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width)
-        ])
         self.contentView.backgroundColor = .white
         
         self.contentView.addSubview(bottomLine)
@@ -62,13 +46,12 @@ extension ArticleWI_cell {
         ])
         
         let mainHStack = HSTACK(into: self.contentView, spacing: 16)
-        mainHStack.backgroundColor = .clear //.cyan
+        mainHStack.backgroundColor = .clear //.purple
         mainHStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mainHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             mainHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            mainHStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
-            mainHStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16) // cell height
+            mainHStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
         ])
         
         let imageVStack = VSTACK(into: mainHStack)
@@ -88,15 +71,10 @@ extension ArticleWI_cell {
         let titleVStack = VSTACK(into: mainHStack, spacing: 13)
         titleVStack.backgroundColor = .clear //.orange
 
-    let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 16)
     let roboto = UIFont(name: "Roboto-Regular", size: 13)
 
-        self.titleLabel.backgroundColor = .clear //.yellow
+        self.titleLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.2)
         self.titleLabel.textColor = .black
-        self.titleLabel.numberOfLines = 4
-        self.titleLabel.font = merriweather_bold
-        self.titleLabel.text = "Test title"
-        self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         titleVStack.addArrangedSubview(self.titleLabel)
         
         let iconsHStack = HSTACK(into: titleVStack)
@@ -147,7 +125,28 @@ extension ArticleWI_cell {
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.sourceTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.stanceIcon.refreshDisplayMode()
-        self.bottomLine.backgroundColor = .black //DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
+        self.bottomLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
+    }
+    
+    static func createTitleLabel(text: String) -> UILabel {
+        let result = UILabel()
+        result.numberOfLines = 4
+        result.font = ArticleWI_cell.merriweather_bold
+        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        result.text = text
+        
+        return result
+    }
+    
+    static func calculateHeight(text: String, width: CGFloat) -> CGSize {
+        let imageW: CGFloat = 112
+        let textW: CGFloat = width-(16*3)-imageW
+        let tmpTitleLabel = ArticleWI_cell.createTitleLabel(text: text)
+        let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
+        let sourcesH: CGFloat = 28
+        
+        let H: CGFloat = 16 + textH + 13 + sourcesH + 16
+        return CGSize(width: width, height: H)
     }
     
 }

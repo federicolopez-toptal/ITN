@@ -12,7 +12,7 @@ import SDWebImage
 class StoryBI_cell: UICollectionViewCell {
 
     static let identifier = "StoryBI_cell"
-    private let HEIGHT: CGFloat = 248.0
+    
     
     let mainImageView = UIImageView()
     let gradient = UIImageView()
@@ -32,25 +32,8 @@ class StoryBI_cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        
-        let targetSize = CGSize(width: SCREEN_SIZE().width, height: self.HEIGHT)
-        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
-        
-        return layoutAttributes
-    }
-    
-}
-
-extension StoryBI_cell {
-    
+    // -----------------------------------
     private func buildContent() {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.backgroundColor = .lightGray
-        NSLayoutConstraint.activate([
-            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width),
-            self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
-        ])
         self.contentView.backgroundColor = .white
     
         self.mainImageView.backgroundColor = .gray
@@ -149,10 +132,6 @@ extension StoryBI_cell {
         
     }
     
-}
-
-extension StoryBI_cell {
-    
     func populate(with story: MainFeedArticle) {
         self.mainImageView.image = nil
         if let _url = URL(string: story.imgUrl) {
@@ -172,6 +151,10 @@ extension StoryBI_cell {
     
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
-        self.gradient.image = UIImage(named: DisplayMode.imageName("story.gradient"))
+        self.gradient.image = UIImage(named: DisplayMode.imageName("story.gradient"))    
+    }
+    
+    static func calculateHeight(width: CGFloat) -> CGSize {
+        return CGSize(width: width, height: 248)
     }
 }

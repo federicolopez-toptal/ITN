@@ -10,6 +10,7 @@ import Foundation
 class LocalKeys { // Keys to store local values
     
     static var user = LocalKeys_user()
+    static var misc = LocalKeys_misc()
     static var sliders = LocalKeys_sliders()
     static var preferences = LocalKeys_preferences()
     
@@ -17,6 +18,11 @@ class LocalKeys { // Keys to store local values
     class LocalKeys_user { // For class "UUID"
         let UUID = "user_uuid"
         let JWT = "user_jwt"
+    }
+    
+    class LocalKeys_misc { // misc
+        let allBannerCodes = "misc_allBannerCodes"
+        let bannerPrefix = "banner_"
     }
     
     class LocalKeys_sliders { // For class "SlidersPanel" && "MainFeed"

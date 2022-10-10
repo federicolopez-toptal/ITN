@@ -4,11 +4,15 @@ https://developer.apple.com/documentation/xcode/adding-a-build-configuration-fil
 * ADD CUSTOM SETTINGS TO PROJECT
 https://medium.com/@hassanahmedkhan/defining-your-own-settings-in-xcode-build-settings-1bd71539ea4f
 
+// ---------------------------------------------------------------------------------
 * UICollectionView cell items alignment
 https://cocoapods.org/pods/AlignedCollectionViewFlowLayout
 
 * UICollectionView cell height based on content
 https://medium.com/swift2go/implementing-a-dynamic-height-uicollectionviewcell-in-swift-5-bdd912acd5c8
+https://volodymyrrykhva.medium.com/uicollectionview-cells-with-dynamic-height-using-autolayout-a4e346b7bd2a
+
+// ---------------------------------------------------------------------------------
 
 * Some screen resolutions
 http://www.idev101.com/code/User_Interface/sizes.html

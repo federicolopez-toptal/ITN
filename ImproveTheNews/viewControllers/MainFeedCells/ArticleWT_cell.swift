@@ -10,9 +10,9 @@ import UIKit
 class ArticleWT_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWT_cell"
-    //private let HEIGHT: CGFloat = 0.0     Height based on content!
+    static let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 17)
 
-    let titleLabel = UILabel()
+    let titleLabel = ArticleWT_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()
     let sourceTimeLabel = UILabel()
     let stanceIcon = StanceIconView()
@@ -23,7 +23,6 @@ class ArticleWT_cell: UICollectionViewCell {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.buildContent()
     }
     
@@ -31,24 +30,8 @@ class ArticleWT_cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        
-        let targetSize = CGSize(width: SCREEN_SIZE().width, height: 0)
-        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .fittingSizeLevel, verticalFittingPriority: .fittingSizeLevel)
-        
-        return layoutAttributes
-    }
-    
-}
- 
-extension ArticleWT_cell {
-
+    // -----------------------------------
     private func buildContent() {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            //self.contentView.heightAnchor.constraint(equalToConstant: self.HEIGHT)
-            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width)
-        ])
         self.contentView.backgroundColor = .white
         
         self.contentView.addSubview(bottomLine)
@@ -61,15 +44,10 @@ extension ArticleWT_cell {
             bottomLine.heightAnchor.constraint(equalToConstant: 1.0)
         ])
         
-    let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 17)
     let roboto = UIFont(name: "Roboto-Regular", size: 13)
     
-        self.titleLabel.backgroundColor = .clear //.yellow
+        self.titleLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.3)
         self.titleLabel.textColor = .black
-        self.titleLabel.numberOfLines = 3
-        self.titleLabel.font = merriweather_bold
-        self.titleLabel.text = "Test title"
-        self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -79,13 +57,12 @@ extension ArticleWT_cell {
         ])
         
         let iconsHStack = HSTACK(into: self.contentView)
-        iconsHStack.backgroundColor = .clear //.orange
+        iconsHStack.backgroundColor = .clear //.cyan.withAlphaComponent(0.3)
         iconsHStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             iconsHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             iconsHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
-            iconsHStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16) // cell height
+            iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10)
         ])
         iconsHStack.addArrangedSubview(self.sourcesContainer)
         
@@ -97,6 +74,7 @@ extension ArticleWT_cell {
         
         ADD_SPACER(to: iconsHStack, width: 10)
         iconsHStack.addArrangedSubview(self.stanceIcon)
+        self.stanceIcon.delegate = self
         ADD_SPACER(to: iconsHStack)
     }
 
@@ -126,6 +104,36 @@ extension ArticleWT_cell {
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.sourceTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.stanceIcon.refreshDisplayMode()
+    }
+    
+    
+    
+    static func createTitleLabel(text: String) -> UILabel {
+        let result = UILabel()
+        result.numberOfLines = 4
+        result.font = ArticleWT_cell.merriweather_bold
+        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        result.text = text
+        
+        return result
+    }
+    
+    static func calculateHeight(text: String, width: CGFloat) -> CGSize {
+        let textW: CGFloat = width-(16*2)
+        let tmpTitleLabel = ArticleWT_cell.createTitleLabel(text: text)
+        let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
+        let sourcesH: CGFloat = 28
+        
+        let H: CGFloat = 16 + textH + 10 + sourcesH + 16
+        return CGSize(width: width, height: H)
+    }
+    
+}
+
+extension ArticleWT_cell: StanceIconViewDelegate {
+    
+    func onStanceIconTap(sender: StanceIconView) {
+        print("HERE!")
     }
     
 }

@@ -10,14 +10,14 @@ import UIKit
 class StoryCO_cell: UICollectionViewCell {
 
     static let identifier = "StoryCO_cell"
-    //private let HEIGHT: CGFloat = 0.0     Height based on content!
+    static let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 18)!
     var column: Int = 1
     
     var mainVStack: UIStackView!
     let mainImageView = UIImageView()
     let gradient = UIImageView()
     let storyLabel = UILabel()
-    let titleLabel = UILabel()
+    var titleLabel = StoryCO_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()
     let timeLabel = UILabel()
     
@@ -26,7 +26,6 @@ class StoryCO_cell: UICollectionViewCell {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.buildContent()
     }
     
@@ -34,43 +33,21 @@ class StoryCO_cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        
-        let targetSize = CGSize(width: SCREEN_SIZE().width/2, height: 0)
-        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
-        
-        return layoutAttributes
-    }
-    
-}
-
-extension StoryCO_cell {
-
+    // -----------------------------------
     private func buildContent() {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-//            self.contentView.heightAnchor.constraint(equalToConstant: 200)
-            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width/2)
-        ])
         self.contentView.backgroundColor = .white
         
-    let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 18)
     let roboto = UIFont(name: "Roboto-Regular", size: 13)
     let roboto_bold = UIFont(name: "Roboto-Bold", size: 11)
     let characterSpacing: Double = 1.35
-    
-        let W: CGFloat = (SCREEN_SIZE().width/2) - 32
     
         self.mainVStack = VSTACK(into: self.contentView)
         self.mainVStack.backgroundColor = .green
         self.mainVStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            //self.mainVStack.widthAnchor.constraint(equalToConstant: W),
-            
             self.mainVStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
-            self.mainVStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16) // cell height
+            self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
         ])
         
         self.mainImageView.backgroundColor = .gray
@@ -99,6 +76,7 @@ extension StoryCO_cell {
         self.storyLabel.textColor = .white
         self.storyLabel.text = "STORY"
         self.storyLabel.textAlignment = .center
+        
         self.storyLabel.font = roboto_bold
         self.storyLabel.layer.masksToBounds = true
         self.storyLabel.layer.cornerRadius = 12
@@ -112,23 +90,15 @@ extension StoryCO_cell {
             self.storyLabel.heightAnchor.constraint(equalToConstant: 23)
         ])
         
-        
-
-
         let infoHStack = HSTACK(into: self.mainVStack)
         infoHStack.backgroundColor = .clear //.orange
         ADD_SPACER(to: infoHStack, width: 7)
         let infoVStack = VSTACK(into: infoHStack)
         infoVStack.backgroundColor = .clear //.blue
-        //ADD_SPACER(to: infoVStack, height: 200)
         ADD_SPACER(to: infoHStack, width: 7)
 
-        self.titleLabel.backgroundColor = .clear //.yellow
+        self.titleLabel.backgroundColor = .clear //.orange.withAlphaComponent(0.3)
         self.titleLabel.textColor = UIColor(hex: 0x1D242F)
-        self.titleLabel.numberOfLines = 5
-        self.titleLabel.font = merriweather_bold
-        self.titleLabel.text = "Vaccine required for NHS health care workers"
-        self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         infoVStack.addArrangedSubview(self.titleLabel)
         ADD_SPACER(to: infoVStack, height: 10)
         infoVStack.addArrangedSubview(self.sourcesContainer)
@@ -139,6 +109,7 @@ extension StoryCO_cell {
         
         self.timeLabel.text = "Updated 2 hours ago"
         self.timeLabel.textColor = UIColor(hex: 0x1D242F)
+        self.timeLabel.backgroundColor = .clear //.red
         self.timeLabel.font = roboto
         self.timeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         updateHStack.addArrangedSubview(self.timeLabel)
@@ -152,27 +123,27 @@ extension StoryCO_cell {
         ])
         ADD_SPACER(to: updateHStack)
         
-        
         ADD_SPACER(to: infoVStack, height: 12)
     }
 
     func populate(with story: MainFeedArticle, column: Int) {
         self.column = column
-    
+        
         self.mainImageView.image = nil
         if let _url = URL(string: story.imgUrl) {
             self.mainImageView.sd_setImage(with: _url)
         }
 
-        self.titleLabel.text = story.title
+        self.titleLabel.text =  story.title
         ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
+        self.timeLabel.text = story.time
     
         self.refreshDisplayMode()
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = .yellow //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        //self.mainVStack.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.mainVStack.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
@@ -181,4 +152,33 @@ extension StoryCO_cell {
         self.storyLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.storyLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0xFF643C) : .white
     }
+    
 }
+
+// MARK: - Cell height
+extension StoryCO_cell {
+
+    static func createTitleLabel(text: String) -> UILabel {
+        let result = UILabel()
+        result.numberOfLines = 7
+        result.font = StoryCO_cell.merriweather_bold
+        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        result.text = text
+        
+        return result
+    }
+    
+    static func calculateHeight(text: String, sourcesCount: Int, width: CGFloat) -> CGSize {
+        let imageH: CGFloat = 100
+        let textW: CGFloat = (width/2)-(16*2)-(7*2)
+        let tmpTitleLabel = StoryCO_cell.createTitleLabel(text: text)
+        let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
+        let sourcesH: CGFloat = sourcesCount == 1 ? 0 : 18
+        let timeLabelH: CGFloat = 18
+        
+        let H: CGFloat = 16 + imageH + 5 + textH + 10 + sourcesH + 10 + timeLabelH + 12 + 16
+        return CGSize(width: width/2, height: H)
+    }
+    
+}
+

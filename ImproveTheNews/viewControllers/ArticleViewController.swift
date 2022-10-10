@@ -16,6 +16,8 @@ class ArticleViewController: BaseViewController {
     let webView = WKWebView()
     var article: MainFeedArticle?
 
+
+
     deinit {
         CustomNavController.shared.showPanelAndButtonWithAnimation()
         self.hideLoading()

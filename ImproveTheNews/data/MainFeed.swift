@@ -12,8 +12,8 @@ import UIKit
 class MainFeed {
     
     var topic = "news"
-    var A_articlesPerTopic = 4
-    var B_articlesPerSubtopic = 4
+    var A_articlesPerTopic = 10
+    var B_articlesPerSubtopic = 10
     var S_articlesToSkipPerTopic = 0
     
     var topics = [MainFeedTopic]()
@@ -34,8 +34,6 @@ class MainFeed {
                 print(_error.localizedDescription)
                 callback(_error)
             } else {
-                print("OK!")
-            
                 let mData = ADD_MAIN_NODE(to: data)
                 if let _json = JSON(fromData: mData) {
                     self.parse(_json)
@@ -255,6 +253,19 @@ extension MainFeed {
         }
         
         result += "ST01VB00VC01VA00VM00VE35oB11"
+        
+        
+        // Banner(s)
+        if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {
+            let allBannerCodes = _allBannerCodesString.components(separatedBy: ",")
+            
+            for bCode in allBannerCodes {
+                if let _bannerStatus = READ(LocalKeys.misc.bannerPrefix + bCode) {
+                    result += bCode + _bannerStatus
+                }
+            }
+        }
+        
         return result
     }
 
