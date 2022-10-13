@@ -10,6 +10,10 @@
 		1F025CB028E12F2900AA866D /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F025CAF28E12F2900AA866D /* Banner.swift */; };
 		1F025CB228E133D800AA866D /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F025CB128E133D800AA866D /* BannerCell.swift */; };
 		1F025CB628E14D0E00AA866D /* questions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F025CB528E14D0E00AA866D /* questions.txt */; };
+		1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B000028F5FD35007280FF /* FooterCell.swift */; };
+		1F0B000328F61D14007280FF /* Fonts_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B000228F61D14007280FF /* Fonts_misc.swift */; };
+		1F0BFFFF28F5F2C7007280FF /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */; };
+		1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18C88828F89EF600197F38 /* MenuItemCell.swift */; };
 		1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A1A9B28D27D3100256785 /* StringExtension.swift */; };
 		1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */; };
 		1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */; };
@@ -90,6 +94,10 @@
 		1F025CAF28E12F2900AA866D /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		1F025CB128E133D800AA866D /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
 		1F025CB528E14D0E00AA866D /* questions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = questions.txt; sourceTree = "<group>"; };
+		1F0B000028F5FD35007280FF /* FooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterCell.swift; sourceTree = "<group>"; };
+		1F0B000228F61D14007280FF /* Fonts_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts_misc.swift; sourceTree = "<group>"; };
+		1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
+		1F18C88828F89EF600197F38 /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
 		1F1A1A9B28D27D3100256785 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
@@ -183,6 +191,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F18C88A28F89EFF00197F38 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				1F22E2E828C6E41A007F00D1 /* MenuViewController.swift */,
+				1F18C88828F89EF600197F38 /* MenuItemCell.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		1F18C88B28F8CC0400197F38 /* MainFeed */ = {
+			isa = PBXGroup;
+			children = (
+				1F95136228BFC69200A77AB6 /* MainFeedViewController.swift */,
+				1F23DABA28ECAE4D009D9AB1 /* MainFeedVC_CELLS.swift */,
+				1FDEB1C928CB87FF0029831E /* MainFeedCells */,
+			);
+			path = MainFeed;
+			sourceTree = "<group>";
+		};
 		1F7E777128E362160024D792 /* CustomCollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +225,7 @@
 				1FA4CE6428C2865B0068DE4A /* Utils.swift */,
 				1F897CE728CC3B0F00438FC5 /* UI_misc.swift */,
 				1F897CE528CC380600438FC5 /* Json_misc.swift */,
+				1F0B000228F61D14007280FF /* Fonts_misc.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -286,9 +314,8 @@
 			isa = PBXGroup;
 			children = (
 				1FA4CE6928C2874E0068DE4A /* BaseViewController.swift */,
-				1F22E2E828C6E41A007F00D1 /* MenuViewController.swift */,
-				1F95136228BFC69200A77AB6 /* MainFeedViewController.swift */,
-				1FDEB1C928CB87FF0029831E /* MainFeedCells */,
+				1F18C88A28F89EFF00197F38 /* Menu */,
+				1F18C88B28F8CC0400197F38 /* MainFeed */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 			);
 			path = viewControllers;
@@ -385,9 +412,10 @@
 		1FDEB1C928CB87FF0029831E /* MainFeedCells */ = {
 			isa = PBXGroup;
 			children = (
-				1F23DABA28ECAE4D009D9AB1 /* MainFeedVC_CELLS.swift */,
 				1FA8AA3928D1788B00B6C956 /* misc */,
 				1FA8AA3328D0D50200B6C956 /* HeaderCell.swift */,
+				1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */,
+				1F0B000028F5FD35007280FF /* FooterCell.swift */,
 				1FDEB1CA28CB88730029831E /* StoryBI_cell.swift */,
 				1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */,
 				1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */,
@@ -584,6 +612,7 @@
 				1F90105828C599DC00A5BDC9 /* UIColorExtension.swift in Sources */,
 				1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */,
 				1FDEB1CB28CB88730029831E /* StoryBI_cell.swift in Sources */,
+				1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */,
 				1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */,
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				1FA8AA3628D0E3F500B6C956 /* ArticleWI_cell.swift in Sources */,
@@ -591,8 +620,10 @@
 				1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */,
 				1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */,
 				1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */,
+				1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */,
 				1FD5BDF328DC11DC003E650F /* PopupView.swift in Sources */,
 				1FF61CBE28DAE50B006DF9AC /* StoryCO_cell.swift in Sources */,
+				1F0B000328F61D14007280FF /* Fonts_misc.swift in Sources */,
 				1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */,
 				1FF326C128CA71DA006FF2CE /* MainFeedTopic.swift in Sources */,
 				1F025CB028E12F2900AA866D /* Banner.swift in Sources */,
@@ -621,6 +652,7 @@
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
 				1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */,
 				1FA4CE7528C306590068DE4A /* UIViewExtension.swift in Sources */,
+				1F0BFFFF28F5F2C7007280FF /* MoreCell.swift in Sources */,
 				1F897CE828CC3B0F00438FC5 /* UI_misc.swift in Sources */,
 				1FF61CC028DAFC4D006DF9AC /* ArticleCO_cell.swift in Sources */,
 				1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */,
@@ -791,8 +823,8 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -822,13 +854,13 @@
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ImproveTheNews;
+				INFOPLIST_KEY_CFBundleDisplayName = "ITN Debug";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -912,13 +944,13 @@
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ITN Beta";
+				INFOPLIST_KEY_CFBundleDisplayName = "ITN Debug";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

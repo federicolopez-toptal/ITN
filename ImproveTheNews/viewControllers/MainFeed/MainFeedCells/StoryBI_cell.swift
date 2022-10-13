@@ -154,7 +154,7 @@ class StoryBI_cell: UICollectionViewCell {
         self.gradient.image = UIImage(named: DisplayMode.imageName("story.gradient"))    
     }
     
-    static func calculateHeight(width: CGFloat) -> CGSize {
+    static func getHeight(width: CGFloat) -> CGSize {
         return CGSize(width: width, height: 248)
     }
 }

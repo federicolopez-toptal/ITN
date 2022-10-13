@@ -57,7 +57,7 @@ class ArticleViewController: BaseViewController {
         if(!self.didLayout) {
             self.didLayout = true
             
-            self.navBar.buildInto(self.view)
+            self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.backToFeedIcon])
         }
     }

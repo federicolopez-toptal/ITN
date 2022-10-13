@@ -1,19 +1,21 @@
 MAIN FEED
     - ITN logo tap
+        - Back to main feed screen (first)
     - Banners (temita de la altura)
-    - Boton para cargar mas de un topic
+    - Boton "Show more"
+        - Hacerlo funcional
+    - Pop.ups
+        - Tap on stance icons
+        - Ante problemas de conexion (sin internet)
+        - Problemas de server (json inválido, server caído, etc)
+    
     - Footer
-
-    - Tap on stance icons
-
-
-
-
-
-
-
-
-
+        Agregar link a otras secciones?
+    
+MENU
+    Cerrar
+    Cambiar de Display mode
+    Numero de version
 
 
 
@@ -23,6 +25,10 @@ MAIN FEED
 DONE!
 
 MAIN FEED
+
+    - Footer
+    - ITN logo tap
+        Scroll to top
     - Testear bien lo distintos items en diversos dispositivos
         - iPhone 8
         - iPhone 11

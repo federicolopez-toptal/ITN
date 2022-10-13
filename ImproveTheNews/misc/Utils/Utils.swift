@@ -45,3 +45,9 @@ func OPEN_URL(_ url: String) {
         UIApplication.shared.open(_url)
     }
 }
+
+func SHARE_URL(_ url: String, from vc: UIViewController) {
+    let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+    // iPad fix!
+    vc.present(ac, animated: true)
+}

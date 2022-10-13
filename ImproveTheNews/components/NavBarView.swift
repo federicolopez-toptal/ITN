@@ -19,7 +19,8 @@ enum NavBarViewComponents {
 class NavBarView: UIView {
 
     var displayModeComponents = [Any]()
-
+    
+    private weak var viewController: UIViewController?
     private let buttonsMargin: CGFloat = 5.0
     private var left_x: CGFloat = 15
     private var right_x: CGFloat = 15
@@ -35,7 +36,10 @@ class NavBarView: UIView {
     }
     
     // MARK: - Build component
-    func buildInto(_ container: UIView) {
+    func buildInto(viewController: UIViewController) {
+        self.viewController = viewController
+        let container = viewController.view!
+    
         self.backgroundColor = .red
         container.addSubview(self)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +67,18 @@ class NavBarView: UIView {
                 ])
                 logo.tag = 1
                 self.displayModeComponents.append(logo)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                self.addSubview(button)
+                button.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
             }
             
             if(C == .menuIcon) {
@@ -80,7 +96,7 @@ class NavBarView: UIView {
                 self.displayModeComponents.append(menuIcon)
                 
                 let button = UIButton(type: .system)
-                button.backgroundColor = .clear
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
                 self.addSubview(button)
                 button.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
@@ -225,6 +241,12 @@ extension NavBarView {
     
     @objc func onBackButtonTap(_ sender: UIButton) {
         CustomNavController.shared.popViewController(animated: true)
+    }
+    
+    @objc func onLogoButtonTap(_ sender: UIButton) {
+        if let _vc = self.viewController as? MainFeedViewController {
+            _vc.tapOnLogo()
+        }
     }
     
 }

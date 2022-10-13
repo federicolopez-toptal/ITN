@@ -30,6 +30,12 @@ class DP_header: DP_item {
     }
 }
 
+class DP_more: DP_item {
+}
+
+class DP_footer: DP_item {
+}
+
 class DP_itemPointingData: DP_item {
     var topicIndex: Int
     var articleIndex: Int

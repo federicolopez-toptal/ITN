@@ -57,7 +57,7 @@ class HeaderCell: UICollectionViewCell {
         self.titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
     }
     
-    static func calculateHeight(width: CGFloat) -> CGSize {
+    static func getHeight(width: CGFloat) -> CGSize {
         return CGSize(width: width, height: 45.0)
     }
 

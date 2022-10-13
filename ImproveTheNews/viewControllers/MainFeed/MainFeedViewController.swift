@@ -37,7 +37,7 @@ class MainFeedViewController: BaseViewController {
         if(!self.didLayout) {
             self.didLayout = true
             
-            self.navBar.buildInto(self.view)
+            self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
             
             self.topicSelector.buildInto(self.view)
@@ -55,9 +55,11 @@ class MainFeedViewController: BaseViewController {
             self.loadData()
         }
         
-//        DELAY(2.0) {
-//            let popup = NoInternetPopupView()
-//            popup.pushFromBottom()
+//        DELAY(2.5) {
+////            let popup = NoInternetPopupView()
+////            popup.pushFromBottom()
+//
+//            self.list.scrollToItem(at: IndexPath(row: self.dataProvider.count-1, section: 0), at: .bottom, animated: true)
 //        }
     }
     
@@ -92,7 +94,6 @@ class MainFeedViewController: BaseViewController {
 extension MainFeedViewController: TopicSelectorViewDelegate {
 
     func onTopicSelected(_ index: Int) {
-        
         if(index==0) {
             self.list.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             return
@@ -108,7 +109,10 @@ extension MainFeedViewController: TopicSelectorViewDelegate {
                 }
             }
         }
-        
+    }
+    
+    func tapOnLogo() {
+        self.onTopicSelected(0)
     }
 
 }
@@ -122,6 +126,8 @@ extension MainFeedViewController {
             VALID (working) items
             
             h       simple header
+            m       more (show more)
+            f       footer
             
             sbi     story, big with image
             swt     story, wide only text
@@ -133,7 +139,8 @@ extension MainFeedViewController {
             
         */
         
-        let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sco,aco"
+        let itemsToShowPerTopic = "h,sbi,awi,awt3,sco,aco3,m"
+        // "h,sbi,awi,m,awt3,swt,sco,aco3"
         
         //let itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sco,aco3"
         
@@ -157,12 +164,15 @@ extension MainFeedViewController {
                 if(type == "h") { // header
                     let header = DP_header(text: T.capitalizedName.uppercased(), isHeadlines: (T.name=="news"))
                     self.dataProvider.append(header)
+                } else if(type == "m") {
+                    let more = DP_more()
+                    self.dataProvider.append(more)
                 } else if(type == "s") {   // story
                     self.addStoryToDataProvider(count: count, format: format, topicIndex: i)
                 } else if(type == "a") {   // article
                     self.addArticleToDataProvider(count: count, format: format, topicIndex: i)
                 }
-                
+                            
             }
              
 //            if(i==0 && self.data.banners.count>0) {
@@ -170,6 +180,9 @@ extension MainFeedViewController {
 //                self.dataProvider.append(banner)
 //            }
         }
+        
+        let footer = DP_footer()
+        self.dataProvider.append(footer)
     }
     
     func addStoryToDataProvider(count: String?, format: String?, topicIndex i: Int) {
@@ -270,6 +283,8 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
         
         // Cells registration
         self.list.register(HeaderCell.self, forCellWithReuseIdentifier: HeaderCell.identifier)
+        self.list.register(MoreCell.self, forCellWithReuseIdentifier: MoreCell.identifier)
+        self.list.register(FooterCell.self, forCellWithReuseIdentifier: FooterCell.identifier)
         self.list.register(StoryBI_cell.self, forCellWithReuseIdentifier: StoryBI_cell.identifier)
         self.list.register(ArticleWI_cell.self, forCellWithReuseIdentifier: ArticleWI_cell.identifier)
         self.list.register(ArticleWT_cell.self, forCellWithReuseIdentifier: ArticleWT_cell.identifier)
@@ -310,40 +325,11 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return self.getCellSizeAtIndexPath(indexPath, width: collectionView.bounds.width)
+        return self.getCellSizeAt(indexPath, width: collectionView.bounds.width)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = self.getDP_item(indexPath)
-        let itemIsHeader = item is DP_header
-        let itemIsBanner = item is DP_banner
-
-        if(!itemIsHeader && !itemIsBanner) {
-            let article = self.getArticle(from: (item as! DP_itemPointingData))
-            if(article.isStory) {
-//                print("STORY", article.title)
-            } else {
-//                print("ARTICLE", article.title)
-            }
-            
-            let vc = ArticleViewController()
-            vc.article = article
-            CustomNavController.shared.pushViewController(vc, animated: true)
-        }
-    }
-    
-
-    // --------------
-    func getDP_item(_ iPath: IndexPath) -> DP_item {
-        return self.dataProvider[iPath.row]
-    }
-    
-    func getArticle(from item: DP_itemPointingData) -> MainFeedArticle {
-        return self.data.topics[item.topicIndex].articles[item.articleIndex]
-    }
-    
-    private func getBanner(from item: DP_banner) -> Banner {
-        return self.data.banners[item.bannerIndex]
+        self.tapOnCellAt(indexPath)
     }
 
 }
