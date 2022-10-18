@@ -10,7 +10,7 @@ import UIKit
 class ArticleWI_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWI_cell"
-    static let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 16)
+    static let merriweather_bold = MERRIWEATHER_BOLD(16)
     
     let mainImageView = UIImageView()
     let titleLabel = ArticleWI_cell.createTitleLabel(text: "Lorem ipsum")
@@ -71,7 +71,7 @@ class ArticleWI_cell: UICollectionViewCell {
         let titleVStack = VSTACK(into: mainHStack, spacing: 13)
         titleVStack.backgroundColor = .clear //.orange
 
-    let roboto = UIFont(name: "Roboto-Regular", size: 13)
+    let roboto = ROBOTO(13)
 
         self.titleLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.2)
         self.titleLabel.textColor = .black

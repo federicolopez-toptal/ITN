@@ -115,8 +115,8 @@ extension BannerCell {
         imageButton.addTarget(self, action: #selector(onImageButtonTap(_:)), for: .touchUpInside)
     
     // -------------------------------
-    let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 16)
-    let roboto = UIFont(name: "Roboto-Regular", size: 15)
+    let merriweather_bold = MERRIWEATHER_BOLD(16)
+    let roboto = ROBOTO(15)
     
         self.headerLabel.backgroundColor = .clear
         self.headerLabel.textColor = .black

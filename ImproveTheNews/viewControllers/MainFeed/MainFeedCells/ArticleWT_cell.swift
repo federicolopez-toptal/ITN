@@ -10,7 +10,7 @@ import UIKit
 class ArticleWT_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWT_cell"
-    static let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 17)
+    static let merriweather_bold = MERRIWEATHER_BOLD(17)
 
     let titleLabel = ArticleWT_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()
@@ -44,7 +44,7 @@ class ArticleWT_cell: UICollectionViewCell {
             bottomLine.heightAnchor.constraint(equalToConstant: 1.0)
         ])
         
-    let roboto = UIFont(name: "Roboto-Regular", size: 13)
+    let roboto = ROBOTO(13)
     
         self.titleLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.3)
         self.titleLabel.textColor = .black

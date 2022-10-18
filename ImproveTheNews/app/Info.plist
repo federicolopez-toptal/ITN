@@ -7,7 +7,6 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Regular.ttf</string>
-		<string>Roboto-Medium.ttf</string>
 		<string>Roboto-Bold.ttf</string>
 		<string>Merriweather-Bold.ttf</string>
 	</array>

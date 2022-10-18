@@ -39,7 +39,6 @@
 		1F897CFB28CC4C4300438FC5 /* reuters.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F897CF228CC4C4300438FC5 /* reuters.png */; };
 		1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90104628C583D600A5BDC9 /* LocalKeys.swift */; };
 		1F90105228C598DA00A5BDC9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */; };
-		1F90105428C5992E00A5BDC9 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105328C5992E00A5BDC9 /* Roboto-Medium.ttf */; };
 		1F90105628C5997900A5BDC9 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */; };
 		1F90105828C599DC00A5BDC9 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90105728C599DC00A5BDC9 /* UIColorExtension.swift */; };
 		1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90105B28C5ADE700A5BDC9 /* UIImageExtension.swift */; };
@@ -56,6 +55,8 @@
 		1F95136128BFC64300A77AB6 /* CustomNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95136028BFC64300A77AB6 /* CustomNavController.swift */; };
 		1F95136328BFC69200A77AB6 /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95136228BFC69200A77AB6 /* MainFeedViewController.swift */; };
 		1F95136628BFCB2800A77AB6 /* my references.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F95136528BFCB2800A77AB6 /* my references.txt */; };
+		1F9538D828FF123800251598 /* to-do.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538D728FF123800251598 /* to-do.plist */; };
+		1F9538DA28FF134800251598 /* done.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538D928FF134800251598 /* done.plist */; };
 		1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728528D2AF6E00693B85 /* StanceIconView.swift */; };
 		1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728728D2B7AC00693B85 /* IntExtension.swift */; };
 		1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */; };
@@ -123,7 +124,6 @@
 		1F897CF228CC4C4300438FC5 /* reuters.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reuters.png; sourceTree = "<group>"; };
 		1F90104628C583D600A5BDC9 /* LocalKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalKeys.swift; sourceTree = "<group>"; };
 		1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
-		1F90105328C5992E00A5BDC9 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		1F90105728C599DC00A5BDC9 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		1F90105B28C5ADE700A5BDC9 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
@@ -142,6 +142,8 @@
 		1F95136028BFC64300A77AB6 /* CustomNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavController.swift; sourceTree = "<group>"; };
 		1F95136228BFC69200A77AB6 /* MainFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
 		1F95136528BFCB2800A77AB6 /* my references.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "my references.txt"; sourceTree = "<group>"; };
+		1F9538D728FF123800251598 /* to-do.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "to-do.plist"; sourceTree = "<group>"; };
+		1F9538D928FF134800251598 /* done.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = done.plist; sourceTree = "<group>"; };
 		1FA1728528D2AF6E00693B85 /* StanceIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StanceIconView.swift; sourceTree = "<group>"; };
 		1FA1728728D2B7AC00693B85 /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
@@ -249,7 +251,8 @@
 		1F90105028C5979F00A5BDC9 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
-				1FDEB1CC28CBC5260029831E /* Roboto */,
+				1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */,
+				1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */,
 				1FDEB1CD28CBC54F0029831E /* Merriweather-Bold.ttf */,
 			);
 			path = fonts;
@@ -346,6 +349,8 @@
 				1FA4CE6128C282A00068DE4A /* misc.txt */,
 				1F025CB528E14D0E00AA866D /* questions.txt */,
 				1F94CDC828F494A400135C7A /* next.txt */,
+				1F9538D728FF123800251598 /* to-do.plist */,
+				1F9538D928FF134800251598 /* done.plist */,
 			);
 			path = texts;
 			sourceTree = "<group>";
@@ -425,16 +430,6 @@
 				1F025CB128E133D800AA866D /* BannerCell.swift */,
 			);
 			path = MainFeedCells;
-			sourceTree = "<group>";
-		};
-		1FDEB1CC28CBC5260029831E /* Roboto */ = {
-			isa = PBXGroup;
-			children = (
-				1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */,
-				1F90105328C5992E00A5BDC9 /* Roboto-Medium.ttf */,
-				1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */,
-			);
-			path = Roboto;
 			sourceTree = "<group>";
 		};
 		1FF326BF28CA71C2006FF2CE /* MainFeed */ = {
@@ -537,7 +532,9 @@
 			files = (
 				1F95135828BFB9D300A77AB6 /* url notes.txt in Resources */,
 				1F025CB628E14D0E00AA866D /* questions.txt in Resources */,
+				1F9538DA28FF134800251598 /* done.plist in Resources */,
 				1F897CF428CC4C4300438FC5 /* propublica.png in Resources */,
+				1F9538D828FF123800251598 /* to-do.plist in Resources */,
 				1F90105628C5997900A5BDC9 /* Roboto-Bold.ttf in Resources */,
 				1F897CF328CC4C4300438FC5 /* wapo.png in Resources */,
 				1F897CFB28CC4C4300438FC5 /* reuters.png in Resources */,
@@ -550,7 +547,6 @@
 				1F897CF828CC4C4300438FC5 /* breitbart.png in Resources */,
 				1FA4CE6228C282A00068DE4A /* misc.txt in Resources */,
 				1F897CF628CC4C4300438FC5 /* cbs.png in Resources */,
-				1F90105428C5992E00A5BDC9 /* Roboto-Medium.ttf in Resources */,
 				1F897CF928CC4C4300438FC5 /* wsj.png in Resources */,
 				1F95134A28BFB92F00A77AB6 /* Assets.xcassets in Resources */,
 				1F95134828BFB92E00A77AB6 /* Main.storyboard in Resources */,

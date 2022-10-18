@@ -69,9 +69,9 @@ class StoryBI_cell: UICollectionViewCell {
             vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
         ])
         
-    let roboto_bold = UIFont(name: "Roboto-Bold", size: 13)
-    let roboto = UIFont(name: "Roboto-Regular", size: 13)
-    let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 18)
+    let roboto_bold = ROBOTO_BOLD(13)
+    let roboto = ROBOTO(13)
+    let merriweather_bold = MERRIWEATHER_BOLD(18)
     let characterSpacing: Double = 1.35
         
         let storyHStack = HSTACK(into: vStack)

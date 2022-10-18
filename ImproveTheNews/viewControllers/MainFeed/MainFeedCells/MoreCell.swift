@@ -30,7 +30,7 @@ class MoreCell: UICollectionViewCell {
     private func buildContent() {
         self.contentView.backgroundColor = .white
         
-    let roboto_bold = UIFont(name: "Roboto-Bold", size: 12)
+    let roboto_bold = ROBOTO_BOLD(12)
     
         self.titleLabel.font = roboto_bold
         self.titleLabel.text = "SHOW MORE"

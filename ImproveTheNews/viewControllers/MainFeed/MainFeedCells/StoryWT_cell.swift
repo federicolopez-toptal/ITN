@@ -10,7 +10,7 @@ import UIKit
 class StoryWT_cell: UICollectionViewCell {
 
     static let identifier = "StoryWT_cell"
-    static let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 17)
+    static let merriweather_bold = MERRIWEATHER_BOLD(17)
 
     let storyLabel = UILabel()
     let titleLabel = StoryWT_cell.createTitleLabel(text: "Lorem ipsum")
@@ -33,9 +33,9 @@ class StoryWT_cell: UICollectionViewCell {
     private func buildContent() {
         self.contentView.backgroundColor = .white
         
-    let roboto_bold = UIFont(name: "Roboto-Bold", size: 13)
+    let roboto_bold = ROBOTO_BOLD(13)
     let characterSpacing: Double = 1.35
-    let roboto = UIFont(name: "Roboto-Regular", size: 13)
+    let roboto = ROBOTO(13)
         
         self.storyLabel.backgroundColor = UIColor(hex: 0xFF643C)
         self.storyLabel.textColor = .white

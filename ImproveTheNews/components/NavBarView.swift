@@ -152,7 +152,7 @@ class NavBarView: UIView {
                 backIcon.tag = 4
                 self.displayModeComponents.append(backIcon)
                 
-                let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 18)
+                let merriweather_bold = MERRIWEATHER_BOLD(18)
                 
                 let label = UILabel()
                 label.text = "Back to feed"

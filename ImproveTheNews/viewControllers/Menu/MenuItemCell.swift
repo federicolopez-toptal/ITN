@@ -28,7 +28,7 @@ class MenuItemCell: UITableViewCell {
     private func buildContent() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         
-        let roboto_bold = UIFont(name: "Roboto-Bold", size: 13)
+        let roboto_bold = ROBOTO_BOLD(13)
         
         self.titleLabel.backgroundColor = .clear //.orange
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)

@@ -71,7 +71,7 @@ class SlidersPanel: UIView {
             rowsVStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27)
         ])
         
-        let roboto_bold = UIFont(name: "Roboto-Bold", size: 13)
+        let roboto_bold = ROBOTO_BOLD(13)
         let characterSpacing: Double = 1.5
         
         for i in 1...6 {

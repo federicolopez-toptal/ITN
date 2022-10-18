@@ -10,7 +10,7 @@ import UIKit
 class ArticleCO_cell: UICollectionViewCell {
     
     static let identifier = "ArticleCO_cell"
-    static let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 18)!
+    static let merriweather_bold = MERRIWEATHER_BOLD(18)
     var column: Int = 1
     
     var mainVStack: UIStackView!
@@ -36,9 +36,9 @@ class ArticleCO_cell: UICollectionViewCell {
     private func buildContent() {        
         self.contentView.backgroundColor = .white
         
-    let merriweather_bold = UIFont(name: "Merriweather-Bold", size: 18)
-    let roboto = UIFont(name: "Roboto-Regular", size: 13)
-    let roboto_bold = UIFont(name: "Roboto-Bold", size: 11)
+    let merriweather_bold = MERRIWEATHER_BOLD(18)
+    let roboto = ROBOTO(13)
+    let roboto_bold = ROBOTO_BOLD(11)
     let characterSpacing: Double = 1.35
     
         self.mainVStack = VSTACK(into: self.contentView)
