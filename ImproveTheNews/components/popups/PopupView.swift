@@ -24,11 +24,11 @@ class PopupView: UIView {
         darkView.show()
         self.bottomConstraint?.constant = self.height
         
-        UIView.animate(withDuration: 1.0) {
+        UIView.animate(withDuration: 0.2) {
             darkView.alpha = 1.0
         } completion: { _ in
             self.bottomConstraint?.constant = 0
-            UIView.animate(withDuration: 0.6) {
+            UIView.animate(withDuration: 0.4) {
                 self.superview!.layoutIfNeeded()
             }
         }
@@ -39,11 +39,11 @@ class PopupView: UIView {
         let darkView = CustomNavController.shared.darkView
     
         self.bottomConstraint?.constant = self.height
-        UIView.animate(withDuration: 0.6) {
+        UIView.animate(withDuration: 0.4) {
             self.superview!.layoutIfNeeded()
         }
     
-        UIView.animate(withDuration: 1.0) {
+        UIView.animate(withDuration: 0.2) {
             darkView.alpha = 0.0
         } completion: { _ in
             darkView.hide()

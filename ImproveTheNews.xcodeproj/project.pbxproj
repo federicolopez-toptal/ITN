@@ -20,7 +20,7 @@
 		1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */; };
 		1F22E2E928C6E41A007F00D1 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E828C6E41A007F00D1 /* MenuViewController.swift */; };
 		1F22E2EB28C6E5E0007F00D1 /* UINavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2EA28C6E5E0007F00D1 /* UINavigationControllerExtension.swift */; };
-		1F23DABB28ECAE4D009D9AB1 /* MainFeedVC_CELLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F23DABA28ECAE4D009D9AB1 /* MainFeedVC_CELLS.swift */; };
+		1F23DABB28ECAE4D009D9AB1 /* MainFeed_CELLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F23DABA28ECAE4D009D9AB1 /* MainFeed_CELLS.swift */; };
 		1F2D9FD428D36F6A00CE3008 /* ArticleWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */; };
 		1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */; };
 		1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */; };
@@ -57,6 +57,8 @@
 		1F95136628BFCB2800A77AB6 /* my references.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F95136528BFCB2800A77AB6 /* my references.txt */; };
 		1F9538D828FF123800251598 /* to-do.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538D728FF123800251598 /* to-do.plist */; };
 		1F9538DA28FF134800251598 /* done.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538D928FF134800251598 /* done.plist */; };
+		1F9538DC28FF337A00251598 /* StancePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9538DB28FF337A00251598 /* StancePopupView.swift */; };
+		1F9538DE28FF387800251598 /* Merriweather-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */; };
 		1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728528D2AF6E00693B85 /* StanceIconView.swift */; };
 		1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728728D2B7AC00693B85 /* IntExtension.swift */; };
 		1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */; };
@@ -105,7 +107,7 @@
 		1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMode.swift; sourceTree = "<group>"; };
 		1F22E2E828C6E41A007F00D1 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1F22E2EA28C6E5E0007F00D1 /* UINavigationControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtension.swift; sourceTree = "<group>"; };
-		1F23DABA28ECAE4D009D9AB1 /* MainFeedVC_CELLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedVC_CELLS.swift; sourceTree = "<group>"; };
+		1F23DABA28ECAE4D009D9AB1 /* MainFeed_CELLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_CELLS.swift; sourceTree = "<group>"; };
 		1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWT_cell.swift; sourceTree = "<group>"; };
 		1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryWT_cell.swift; sourceTree = "<group>"; };
 		1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
@@ -144,6 +146,8 @@
 		1F95136528BFCB2800A77AB6 /* my references.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "my references.txt"; sourceTree = "<group>"; };
 		1F9538D728FF123800251598 /* to-do.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "to-do.plist"; sourceTree = "<group>"; };
 		1F9538D928FF134800251598 /* done.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = done.plist; sourceTree = "<group>"; };
+		1F9538DB28FF337A00251598 /* StancePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StancePopupView.swift; sourceTree = "<group>"; };
+		1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Regular.ttf"; sourceTree = "<group>"; };
 		1FA1728528D2AF6E00693B85 /* StanceIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StanceIconView.swift; sourceTree = "<group>"; };
 		1FA1728728D2B7AC00693B85 /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
@@ -206,7 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				1F95136228BFC69200A77AB6 /* MainFeedViewController.swift */,
-				1F23DABA28ECAE4D009D9AB1 /* MainFeedVC_CELLS.swift */,
+				1F23DABA28ECAE4D009D9AB1 /* MainFeed_CELLS.swift */,
 				1FDEB1C928CB87FF0029831E /* MainFeedCells */,
 			);
 			path = MainFeed;
@@ -254,6 +258,7 @@
 				1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */,
 				1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */,
 				1FDEB1CD28CBC54F0029831E /* Merriweather-Bold.ttf */,
+				1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */,
 			);
 			path = fonts;
 			sourceTree = "<group>";
@@ -408,8 +413,9 @@
 			isa = PBXGroup;
 			children = (
 				1FD5BDF228DC11DC003E650F /* PopupView.swift */,
-				1FD5BDF028DC0F91003E650F /* NoInternetPopupView.swift */,
 				1FD5BDF428DC1313003E650F /* DarkView.swift */,
+				1FD5BDF028DC0F91003E650F /* NoInternetPopupView.swift */,
+				1F9538DB28FF337A00251598 /* StancePopupView.swift */,
 			);
 			path = popups;
 			sourceTree = "<group>";
@@ -540,6 +546,7 @@
 				1F897CFB28CC4C4300438FC5 /* reuters.png in Resources */,
 				1F90105228C598DA00A5BDC9 /* Roboto-Regular.ttf in Resources */,
 				1F95135E28BFC4D300A77AB6 /* to-do.txt in Resources */,
+				1F9538DE28FF387800251598 /* Merriweather-Regular.ttf in Resources */,
 				1F897CFA28CC4C4300438FC5 /* slate.png in Resources */,
 				1F94CDC928F494A400135C7A /* next.txt in Resources */,
 				1F95136628BFCB2800A77AB6 /* my references.txt in Resources */,
@@ -615,6 +622,7 @@
 				1FD5BDF528DC1313003E650F /* DarkView.swift in Sources */,
 				1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */,
 				1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */,
+				1F9538DC28FF337A00251598 /* StancePopupView.swift in Sources */,
 				1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */,
 				1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */,
 				1FD5BDF328DC11DC003E650F /* PopupView.swift in Sources */,
@@ -658,7 +666,7 @@
 				1F22E2E928C6E41A007F00D1 /* MenuViewController.swift in Sources */,
 				1FDEB1C828CB7E150029831E /* Layout.swift in Sources */,
 				1F897CE628CC380600438FC5 /* Json_misc.swift in Sources */,
-				1F23DABB28ECAE4D009D9AB1 /* MainFeedVC_CELLS.swift in Sources */,
+				1F23DABB28ECAE4D009D9AB1 /* MainFeed_CELLS.swift in Sources */,
 				1FF326C328CA720E006FF2CE /* MainFeedArticle.swift in Sources */,
 				1FD5BDF128DC0F91003E650F /* NoInternetPopupView.swift in Sources */,
 				1FA8AA3428D0D50200B6C956 /* HeaderCell.swift in Sources */,

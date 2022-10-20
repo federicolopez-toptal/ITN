@@ -192,7 +192,7 @@ class SlidersPanel: UIView {
             slider.isContinuous = false
             slider.minimumTrackTintColor = UIColor(hex: 0xD9DCDF)
             slider.maximumTrackTintColor = UIColor(hex: 0xD9DCDF)
-            slider.setThumbImage(UIImage(named: "slidersThumb"), for: .normal)
+            slider.setThumbImage(UIImage(named: "slidersOrangeThumb"), for: .normal)
 //            slider.thumbTintColor = UIColor(hex: 0xFF643C)
             slider.tag = 20 + i
             slider.setValue(Float(sliderValue), animated: false)

@@ -12,8 +12,8 @@ import UIKit
 class MainFeed {
     
     var topic = "news"
-    var A_articlesPerTopic = 10
-    var B_articlesPerSubtopic = 10
+    var A_articlesPerTopic = 4
+    var B_articlesPerSubtopic = 4
     var S_articlesToSkipPerTopic = 0
     
     var topics = [MainFeedTopic]()

@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol ArticleWT_cell_Delegate {
+    func onStanceIconTap(sender: ArticleWT_cell)
+}
+
 class ArticleWT_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWT_cell"
     static let merriweather_bold = MERRIWEATHER_BOLD(17)
+    var delegate: ArticleWT_cell_Delegate?
 
     let titleLabel = ArticleWT_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()
@@ -18,6 +23,10 @@ class ArticleWT_cell: UICollectionViewCell {
     let stanceIcon = StanceIconView()
     let bottomLine = UIView()
     
+    var LR: Int = 1
+    var PE: Int = 1
+    var sourceName: String = ""
+    var country: String = ""
 
 
     // MARK: - Init
@@ -96,6 +105,12 @@ class ArticleWT_cell: UICollectionViewCell {
         
         self.stanceIcon.setValues(article.LR, article.PE)
         self.refreshDisplayMode()
+        
+        
+        self.LR = article.LR
+        self.PE = article.PE
+        self.sourceName = source
+        self.country = article.country
     }
     
     func refreshDisplayMode() {
@@ -133,7 +148,7 @@ class ArticleWT_cell: UICollectionViewCell {
 extension ArticleWT_cell: StanceIconViewDelegate {
     
     func onStanceIconTap(sender: StanceIconView) {
-        print("HERE!")
+        self.delegate?.onStanceIconTap(sender: self)
     }
     
 }

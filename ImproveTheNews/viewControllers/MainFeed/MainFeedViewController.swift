@@ -56,15 +56,17 @@ class MainFeedViewController: BaseViewController {
         }
         
 //        DELAY(2.5) {
-////            let popup = NoInternetPopupView()
-////            popup.pushFromBottom()
+//            let popup = NoInternetPopupView()
+//            popup.pushFromBottom()
 //
-//            self.list.scrollToItem(at: IndexPath(row: self.dataProvider.count-1, section: 0), at: .bottom, animated: true)
+////            self.list.scrollToItem(at: IndexPath(row: self.dataProvider.count-1, section: 0),
+////                at: .bottom, animated: true)
 //        }
     }
     
-    @objc func loadData() {
-        self.showLoading()
+    @objc func loadData(showLoading: Bool = true) {
+        if(showLoading){ self.showLoading() }
+        
         UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
             Sources.shared.checkIfLoaded { _ in // load sources (if needed)
                 self.data.loadData { (error) in
@@ -112,6 +114,7 @@ extension MainFeedViewController: TopicSelectorViewDelegate {
     }
     
     func tapOnLogo() {
+        self.topicSelector.scrollToZero()
         self.onTopicSelected(0)
     }
 
@@ -307,7 +310,7 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionViewOnRefreshPulled(sender: CustomCollectionView) {
-        self.loadData()
+        self.loadData(showLoading: false)
     }
     
     // ------------------------
@@ -334,5 +337,29 @@ extension MainFeedViewController: UICollectionViewDataSource, UICollectionViewDe
 
 }
 
+// MARK: - Stance icon(s) tap
+extension MainFeedViewController: ArticleWI_cell_Delegate, ArticleWT_cell_Delegate, ArticleCO_cell_Delegate {
+
+    func onStanceIconTap(sender: ArticleWI_cell) {
+        self.showStancePopup(sourceName: sender.sourceName, country: sender.country, LR: sender.LR, PE: sender.PE)
+    }
+    
+    func onStanceIconTap(sender: ArticleWT_cell) {
+        self.showStancePopup(sourceName: sender.sourceName, country: sender.country, LR: sender.LR, PE: sender.PE)
+    }
+    
+    func onStanceIconTap(sender: ArticleCO_cell) {
+        self.showStancePopup(sourceName: sender.sourceName, country: sender.country, LR: sender.LR, PE: sender.PE)
+    }
+    
+    
+        
+    private func showStancePopup(sourceName: String, country: String, LR: Int, PE: Int) {
+        let popup = StancePopupView()
+        popup.populate(sourceName: sourceName, country: country, LR: LR, PE: PE)
+        popup.pushFromBottom()
+    }
+
+}
 
 

@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol ArticleWI_cell_Delegate {
+    func onStanceIconTap(sender: ArticleWI_cell)
+}
+
 class ArticleWI_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWI_cell"
     static let merriweather_bold = MERRIWEATHER_BOLD(16)
+    var delegate: ArticleWI_cell_Delegate?
     
     let mainImageView = UIImageView()
     let titleLabel = ArticleWI_cell.createTitleLabel(text: "Lorem ipsum")
@@ -19,6 +24,10 @@ class ArticleWI_cell: UICollectionViewCell {
     let bottomLine = UIView()
     let stanceIcon = StanceIconView()
 
+    var LR: Int = 1
+    var PE: Int = 1
+    var sourceName: String = ""
+    var country: String = ""
     
 
     // MARK: - Init
@@ -116,6 +125,12 @@ class ArticleWI_cell: UICollectionViewCell {
         
         self.stanceIcon.setValues(article.LR, article.PE)
         self.refreshDisplayMode()
+        
+        
+        self.LR = article.LR
+        self.PE = article.PE
+        self.sourceName = source
+        self.country = article.country
     }
     
     func refreshDisplayMode() {
@@ -153,10 +168,9 @@ class ArticleWI_cell: UICollectionViewCell {
 
 extension ArticleWI_cell: StanceIconViewDelegate {
     
+    // https://www.figma.com/file/2trQtjl1kAFZOspiVF3RNp/Card%2C-Feed-%26-Navigation?node-id=3516%3A115608
     func onStanceIconTap(sender: StanceIconView) {
-        // https://www.figma.com/file/2trQtjl1kAFZOspiVF3RNp/Card%2C-Feed-%26-Navigation?node-id=3516%3A115608
-        
-        print("HERE!")
+        self.delegate?.onStanceIconTap(sender: self)
     }
     
 }

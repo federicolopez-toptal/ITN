@@ -1,5 +1,5 @@
 //
-//  MainFeedVC_CELLS.swift
+//  MainFeed_CELLS.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 04/10/2022.
@@ -94,6 +94,7 @@ extension MainFeedViewController {
             cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleCO_cell.identifier,
                 for: indexPath) as! ArticleCO_cell
             (cell as! ArticleCO_cell).populate(with: self.getArticle(from: _item), column: _item.column)
+            (cell as! ArticleCO_cell).delegate = self
         } else if let _item = dpItem as? DP_Story_BI { // Story, big image
             cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryBI_cell.identifier,
                 for: indexPath) as! StoryBI_cell
@@ -102,10 +103,12 @@ extension MainFeedViewController {
             cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleWI_cell.identifier,
                 for: indexPath) as! ArticleWI_cell
             (cell as! ArticleWI_cell).populate(with: self.getArticle(from: _item))
+            (cell as! ArticleWI_cell).delegate = self
         } else if let _item = dpItem as? DP_Article_WT { // Article, wide text
             cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleWT_cell.identifier,
                 for: indexPath) as! ArticleWT_cell
             (cell as! ArticleWT_cell).populate(with: self.getArticle(from: _item))
+            (cell as! ArticleWT_cell).delegate = self
         } else if let _item = dpItem as? DP_Story_WT { // Story, wide text
             cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryWT_cell.identifier,
                 for: indexPath) as! StoryWT_cell

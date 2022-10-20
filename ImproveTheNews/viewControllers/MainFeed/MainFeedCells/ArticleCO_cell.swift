@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol ArticleCO_cell_Delegate {
+    func onStanceIconTap(sender: ArticleCO_cell)
+}
+
 class ArticleCO_cell: UICollectionViewCell {
     
     static let identifier = "ArticleCO_cell"
     static let merriweather_bold = MERRIWEATHER_BOLD(18)
     var column: Int = 1
+    var delegate: ArticleCO_cell_Delegate?
     
     var mainVStack: UIStackView!
     let mainImageView = UIImageView()
@@ -19,6 +24,11 @@ class ArticleCO_cell: UICollectionViewCell {
     let sourcesContainer = UIStackView()
     let sourceTimeLabel = UILabel()
     let stanceIcon = StanceIconView()
+    
+    var LR: Int = 1
+    var PE: Int = 1
+    var sourceName: String = ""
+    var country: String = ""
     
     
     
@@ -109,6 +119,12 @@ class ArticleCO_cell: UICollectionViewCell {
         self.stanceIcon.setValues(article.LR, article.PE)
 
         self.refreshDisplayMode()
+        
+        
+        self.LR = article.LR
+        self.PE = article.PE
+        self.sourceName = source
+        self.country = article.country
     }
     
     private func shortenTime(_ text: String) -> String {
@@ -158,7 +174,7 @@ extension ArticleCO_cell {
 extension ArticleCO_cell: StanceIconViewDelegate {
     
     func onStanceIconTap(sender: StanceIconView) {
-        print("HERE!")
+        self.delegate?.onStanceIconTap(sender: self)
     }
     
 }

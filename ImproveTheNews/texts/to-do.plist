@@ -2,10 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>misc</key>
+	<key>MainFeed UI</key>
 	<dict>
-		<key>normalizar fuentes</key>
-		<string>utilizar funcion generica para obtener FONTs</string>
+		<key>Click en Stories</key>
+		<string>Abrir el contenido en vista personalizada (no web directa)</string>
+		<key>StanceIcon popup</key>
+		<string>Click on &quot;MORE INFO&quot;</string>
+		<key>Click on &quot;Show more&quot;</key>
+		<string>Cargar la siguiente pantalla para el topic especificado</string>
+		<key>Footer</key>
+		<string>Agregar mas links?</string>
 	</dict>
+	<key>Menu UI</key>
+	<dict>
+		<key>Añadir iconos</key>
+		<string></string>
+		<key>Revisar tipografias/diseño</key>
+		<string></string>
+	</dict>
+	<key>data</key>
+	<dict>
+		<key>MainFeed</key>
+		<string>Completar la generacion de los sliderValues</string>
+		<key>MainFeed timeout</key>
+		<string>Tirar el error correspondiente ante un timeout</string>
+	</dict>
+	<key>misc</key>
+	<dict/>
 </dict>
 </plist>

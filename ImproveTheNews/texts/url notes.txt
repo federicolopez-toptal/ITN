@@ -14,5 +14,8 @@ https://volodymyrrykhva.medium.com/uicollectionview-cells-with-dynamic-height-us
 
 // ---------------------------------------------------------------------------------
 
+* Add custom Fonts
+https://sarunw.com/posts/how-to-add-custom-fonts-to-ios-app/
+
 * Some screen resolutions
 http://www.idev101.com/code/User_Interface/sizes.html

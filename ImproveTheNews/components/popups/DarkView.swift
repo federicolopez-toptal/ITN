@@ -29,13 +29,8 @@ class DarkView: UIView {
             self.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         ])
         self.hide()
-    
         self.refreshDisplayMode()
     }
-    
-}
-
-extension DarkView {
     
     func refreshDisplayMode() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x4A576B).withAlphaComponent(0.4) :
