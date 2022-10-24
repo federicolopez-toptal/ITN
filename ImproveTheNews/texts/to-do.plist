@@ -12,6 +12,8 @@
 		<string>Cargar la siguiente pantalla para el topic especificado</string>
 		<key>Footer</key>
 		<string>Agregar mas links?</string>
+		<key>Banners</key>
+		<string>Chequear todo lo de los banners en detalle</string>
 	</dict>
 	<key>Menu UI</key>
 	<dict>
@@ -28,6 +30,9 @@
 		<string>Tirar el error correspondiente ante un timeout</string>
 	</dict>
 	<key>misc</key>
-	<dict/>
+	<dict>
+		<key>Bajar el minimo iOS</key>
+		<string>La version minima donde la app deberia correr es iOS 13</string>
+	</dict>
 </dict>
 </plist>

@@ -31,6 +31,11 @@ class DP_header: DP_item {
 }
 
 class DP_more: DP_item {
+    var topic: String
+    
+    init(topic: String) {
+        self.topic = topic
+    }
 }
 
 class DP_footer: DP_item {

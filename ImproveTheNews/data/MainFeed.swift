@@ -11,7 +11,10 @@ import UIKit
 
 class MainFeed {
     
-    var topic = "news"
+    static var topicsCount = [String: Int]()
+    
+    
+    var topic = "news" // default topic
     var A_articlesPerTopic = 4
     var B_articlesPerSubtopic = 4
     var S_articlesToSkipPerTopic = 0
@@ -19,7 +22,11 @@ class MainFeed {
     var topics = [MainFeedTopic]()
     var banners = [Banner]()
     
-    func loadData(callback: @escaping (Error?) -> ()) {
+    func loadData(_ topic: String, callback: @escaping (Error?) -> ()) {
+        
+        self.topic = topic
+        self.S_articlesToSkipPerTopic = self.skipForTopic(topic)
+        
         var request = URLRequest(url: URL(string: self.buildUrl())!)
         request.httpMethod = "GET"
         
@@ -37,6 +44,7 @@ class MainFeed {
                 let mData = ADD_MAIN_NODE(to: data)
                 if let _json = JSON(fromData: mData) {
                     self.parse(_json)
+                    self.updateCounting()
                     callback(nil)
                 } else {
                     let _error = CustomError.jsonParseError
@@ -271,7 +279,37 @@ extension MainFeed {
 
 }
 
+// MARK: - Articles per topic count
+extension MainFeed {
 
+    func resetCounting() {
+        MainFeed.topicsCount = [String: Int]()
+    }
+    
+    func updateCounting() {
+        for T in self.topics {
+            var count = 0
+            if let _value = MainFeed.topicsCount[T.name] {
+                count = _value
+            }
+        
+            if(T.name == self.topic) { // main topic for this request
+                MainFeed.topicsCount[T.name] = count + self.A_articlesPerTopic
+            } else { // Subtopic(s)
+                MainFeed.topicsCount[T.name] = count + self.B_articlesPerSubtopic
+            }
+        }
+    }
+    
+    func skipForTopic(_ topic: String) -> Int {
+        var skip = 0
+        if let _value = MainFeed.topicsCount[topic] {
+            skip = _value
+        }
+        
+        return skip
+    }
 
+}
 
 

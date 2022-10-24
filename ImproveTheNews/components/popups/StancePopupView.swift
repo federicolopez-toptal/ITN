@@ -18,9 +18,8 @@ class StancePopupView: PopupView {
     // MARK: - Init(s)
     init() {
         super.init(frame: CGRect.zero)
-        self.height = 340
         
-        print(SAFE_AREA()?.bottom)
+        self.height = 340
         if let _bottom = SAFE_AREA()?.bottom, (_bottom == 0) {
             self.height -= 34
         }

@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol MoreCellDelegate {
+    func onShowMoreButtonTap(sender: MoreCell)
+}
+
 class MoreCell: UICollectionViewCell {
     
     static let identifier = "MoreCell"
     static let buttonHeight: CGFloat = 38.0
+    var delegate: MoreCellDelegate?
+    var topic: String?
     
     let titleLabel = UILabel()
     
@@ -60,7 +66,8 @@ class MoreCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(onShowMoreButtonTap(_:)), for: .touchUpInside)
     }
     
-    func populate(with header: DP_more) {
+    func populate(with info: DP_more) {
+        self.topic = info.topic
         self.refreshDisplayMode()
     }
     
@@ -80,6 +87,6 @@ class MoreCell: UICollectionViewCell {
 // MARK: Events
 extension MoreCell {
     @objc func onShowMoreButtonTap(_ sender: UIButton) {
-        print("LOAD MORE!")
+        self.delegate?.onShowMoreButtonTap(sender: self)
     }
 }
