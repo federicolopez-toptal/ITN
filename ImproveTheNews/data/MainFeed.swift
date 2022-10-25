@@ -44,7 +44,6 @@ class MainFeed {
                 let mData = ADD_MAIN_NODE(to: data)
                 if let _json = JSON(fromData: mData) {
                     self.parse(_json)
-                    self.updateCounting()
                     callback(nil)
                 } else {
                     let _error = CustomError.jsonParseError
@@ -298,6 +297,24 @@ extension MainFeed {
             } else { // Subtopic(s)
                 MainFeed.topicsCount[T.name] = count + self.B_articlesPerSubtopic
             }
+        }
+    }
+    
+    func removeCount() {
+        for T in self.topics {
+            var count = 0
+            if let _value = MainFeed.topicsCount[T.name] {
+                count = _value
+            }
+
+            if(T.name == self.topic) { // main topic for this request
+                count -= self.A_articlesPerTopic
+            } else { // Subtopic(s)
+                count -= self.B_articlesPerSubtopic
+            }
+            if(count<0){ count = 0 }
+            
+            MainFeed.topicsCount[T.name] = count
         }
     }
     

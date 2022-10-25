@@ -11,7 +11,7 @@ class BaseViewController: UIViewController {
 
     var didLayout = false
     var didAppear = false
-
+    
     func showLoading() {
         DispatchQueue.main.async {
             CustomNavController.shared.loadingView.show()

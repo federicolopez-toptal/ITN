@@ -69,6 +69,8 @@ extension MainFeedViewController: MoreCellDelegate {
         if let _topic = sender.topic {
             vc.topic = _topic
         }
+        
+        self.data.updateCounting()
         CustomNavController.shared.pushViewController(vc, animated: true)
     }
 }

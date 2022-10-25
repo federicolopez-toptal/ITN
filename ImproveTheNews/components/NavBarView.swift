@@ -236,7 +236,9 @@ extension NavBarView {
 extension NavBarView {
     
     @objc func onMenuButtonTap(_ sender: UIButton) {
-        CustomNavController.shared.callMenu()
+        //CustomNavController.shared.callMenu()
+        
+        CustomNavController.shared.popViewController(animated: true)
     }
     
     @objc func onBackButtonTap(_ sender: UIButton) {

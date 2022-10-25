@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ArticleCO_cell_Delegate {
+protocol ArticleCO_cell_Delegate: AnyObject {
     func onStanceIconTap(sender: ArticleCO_cell)
 }
 
@@ -16,7 +16,7 @@ class ArticleCO_cell: UICollectionViewCell {
     static let identifier = "ArticleCO_cell"
     static let merriweather_bold = MERRIWEATHER_BOLD(18)
     var column: Int = 1
-    var delegate: ArticleCO_cell_Delegate?
+    weak var delegate: ArticleCO_cell_Delegate?
     
     var mainVStack: UIStackView!
     let mainImageView = UIImageView()

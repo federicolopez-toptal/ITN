@@ -8,14 +8,14 @@
 import UIKit
 
 
-protocol CustomCollectionViewDelegate {
+protocol CustomCollectionViewDelegate: AnyObject {
     func collectionViewOnRefreshPulled(sender: CustomCollectionView)
 }
 
 class CustomCollectionView: UICollectionView {
     
     let refresher = UIRefreshControl()
-    var customDelegate: CustomCollectionViewDelegate?
+    weak var customDelegate: CustomCollectionViewDelegate?
     
     init() {
         let layout = CustomFlowLayout()

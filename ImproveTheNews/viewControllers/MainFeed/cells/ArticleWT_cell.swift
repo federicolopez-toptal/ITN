@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ArticleWT_cell_Delegate {
+protocol ArticleWT_cell_Delegate: AnyObject {
     func onStanceIconTap(sender: ArticleWT_cell)
 }
 
@@ -15,7 +15,7 @@ class ArticleWT_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWT_cell"
     static let merriweather_bold = MERRIWEATHER_BOLD(17)
-    var delegate: ArticleWT_cell_Delegate?
+    weak var delegate: ArticleWT_cell_Delegate?
 
     let titleLabel = ArticleWT_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()

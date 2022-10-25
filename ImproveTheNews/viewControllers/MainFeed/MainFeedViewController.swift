@@ -69,9 +69,12 @@ class MainFeedViewController: BaseViewController {
     // MARK: - Data
     @objc func loadData(showLoading: Bool = true) {
         if(showLoading){ self.showLoading() }
+        let imFirst = self.imFirstViewController()
         
         UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
             Sources.shared.checkIfLoaded { _ in // load sources (if needed)
+                if(imFirst){ self.data.resetCounting() }
+                
                 self.data.loadData(self.topic) { (error) in
                     self.topicSelector.setTopics(self.data.topicNames())
                     self.populateDataProvider()
@@ -84,10 +87,26 @@ class MainFeedViewController: BaseViewController {
         }
     }
     
+    // MARK: - end
+    deinit {
+        if let _prevVC = CustomNavController.shared.viewControllers.last as? MainFeedViewController {
+            _prevVC.data.removeCount()
+        }
+    }
+    
     // MARK: - misc
     func tapOnLogo() { // called from the navBar
         self.topicSelector.scrollToZero()
         self.onTopicSelected(0)
+    }
+    
+    func imFirstViewController() -> Bool {
+        var result = false
+        if let _first = CustomNavController.shared.viewControllers.first {
+            if(_first == self) { result = true }
+        }
+
+        return result
     }
 
 }

@@ -6,6 +6,8 @@
 	<dict>
 		<key>Click en stance icons</key>
 		<string>Mostrar popup con la info respectiva</string>
+		<key>Limpieza de codigo</key>
+		<string>Diferentes features (dataProvider, list, clicks &amp; protocols)</string>
 	</dict>
 	<key>misc</key>
 	<dict>

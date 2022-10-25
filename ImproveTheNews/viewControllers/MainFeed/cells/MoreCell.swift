@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MoreCellDelegate {
+protocol MoreCellDelegate: AnyObject {
     func onShowMoreButtonTap(sender: MoreCell)
 }
 
@@ -15,7 +15,7 @@ class MoreCell: UICollectionViewCell {
     
     static let identifier = "MoreCell"
     static let buttonHeight: CGFloat = 38.0
-    var delegate: MoreCellDelegate?
+    weak var delegate: MoreCellDelegate?
     var topic: String?
     
     let titleLabel = UILabel()

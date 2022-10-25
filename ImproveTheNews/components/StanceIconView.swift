@@ -8,14 +8,14 @@
 import UIKit
 
 
-protocol StanceIconViewDelegate {
+protocol StanceIconViewDelegate: AnyObject {
     func onStanceIconTap(sender: StanceIconView)
 }
 
 class StanceIconView: UIView {
 
     private let DIM: CGFloat = 28
-    var delegate: StanceIconViewDelegate?
+    weak var delegate: StanceIconViewDelegate?
 
     let slider1 = UIView()
     let slider2 = UIView()
