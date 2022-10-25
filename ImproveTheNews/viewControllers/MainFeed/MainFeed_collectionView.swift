@@ -16,14 +16,18 @@ extension MainFeedViewController {
         self.list.backgroundColor = self.view.backgroundColor
         self.list.customDelegate = self
         
+        var topValue: CGFloat = NavBarView.HEIGHT() + TopicSelectorView.HEIGHT()
+        if(self.breadcrumbs != nil) {
+            topValue += BreadcrumbsView.HEIGHT()
+        }
+        
         self.view.addSubview(self.list)
         self.list.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.list.topAnchor.constraint(equalTo: self.view.topAnchor,
-                constant: NavBarView.HEIGHT() + 44) // navBar + topicSelector
+            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topValue) // navBar + topicSelector
         ])
         
         // Cells registration

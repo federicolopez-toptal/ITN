@@ -39,6 +39,7 @@
 		1F897CF928CC4C4300438FC5 /* wsj.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F897CF028CC4C4300438FC5 /* wsj.png */; };
 		1F897CFA28CC4C4300438FC5 /* slate.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F897CF128CC4C4300438FC5 /* slate.png */; };
 		1F897CFB28CC4C4300438FC5 /* reuters.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F897CF228CC4C4300438FC5 /* reuters.png */; };
+		1F8EAED029085FE30015F6F6 /* BreadcrumbsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EAECF29085FE30015F6F6 /* BreadcrumbsView.swift */; };
 		1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90104628C583D600A5BDC9 /* LocalKeys.swift */; };
 		1F90105228C598DA00A5BDC9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */; };
 		1F90105628C5997900A5BDC9 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */; };
@@ -128,6 +129,7 @@
 		1F897CF028CC4C4300438FC5 /* wsj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wsj.png; sourceTree = "<group>"; };
 		1F897CF128CC4C4300438FC5 /* slate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slate.png; sourceTree = "<group>"; };
 		1F897CF228CC4C4300438FC5 /* reuters.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reuters.png; sourceTree = "<group>"; };
+		1F8EAECF29085FE30015F6F6 /* BreadcrumbsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreadcrumbsView.swift; sourceTree = "<group>"; };
 		1F90104628C583D600A5BDC9 /* LocalKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalKeys.swift; sourceTree = "<group>"; };
 		1F90105128C597C200A5BDC9 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		1F90105528C5997900A5BDC9 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				1FEE16EA28C833BF0079BE54 /* NavBarView.swift */,
 				1FEE16EC28C83CED0079BE54 /* TopicSelectorView.swift */,
 				1FA1728528D2AF6E00693B85 /* StanceIconView.swift */,
+				1F8EAECF29085FE30015F6F6 /* BreadcrumbsView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				1F39574F28DCDE8900DE3C07 /* CustomCollectionView.swift in Sources */,
 				1F897CE328CC322900438FC5 /* Sources.swift in Sources */,
 				1FA8AA3228D0D29000B6C956 /* DP_item.swift in Sources */,
+				1F8EAED029085FE30015F6F6 /* BreadcrumbsView.swift in Sources */,
 				1FEE16ED28C83CED0079BE54 /* TopicSelectorView.swift in Sources */,
 				1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */,
 				1F95136128BFC64300A77AB6 /* CustomNavController.swift in Sources */,

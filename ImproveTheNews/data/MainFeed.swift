@@ -129,6 +129,18 @@ class MainFeed {
         return result
     }
     
+    func getMainTopicName() -> String {
+        var result = ""
+        for T in self.topics {
+            if(T.name == self.topic) {
+                result = T.capitalizedName
+                break
+            }
+        }
+        
+        return result
+    }
+    
 }
 
 // MARK: - Slider value(s)

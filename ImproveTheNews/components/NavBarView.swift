@@ -230,15 +230,14 @@ extension NavBarView {
     static func HEIGHT() -> CGFloat {
         return Y_TOP_NOTCH_FIX(101)
     }
+    
 }
 
 // MARK: - Event(s)
 extension NavBarView {
     
     @objc func onMenuButtonTap(_ sender: UIButton) {
-        //CustomNavController.shared.callMenu()
-        
-        CustomNavController.shared.popViewController(animated: true)
+        CustomNavController.shared.callMenu()        
     }
     
     @objc func onBackButtonTap(_ sender: UIButton) {

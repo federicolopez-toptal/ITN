@@ -13,6 +13,7 @@ class MainFeedViewController: BaseViewController {
 
     let navBar = NavBarView()
     let topicSelector = TopicSelectorView()
+    var breadcrumbs: BreadcrumbsView?
     var list = CustomCollectionView()
 
     var topic = "news"
@@ -44,6 +45,12 @@ class MainFeedViewController: BaseViewController {
             self.topicSelector.buildInto(self.view)
             self.topicSelector.delegate = self
             
+            if(!self.imFirstViewController()) {
+                self.breadcrumbs = BreadcrumbsView()
+                self.breadcrumbs?.buildInto(viewController: self)
+                self.breadcrumbs?.delegate = self
+            }
+            
             self.setupList()
         }
     }
@@ -60,6 +67,7 @@ class MainFeedViewController: BaseViewController {
     override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
         self.topicSelector.refreshDisplayMode()
+        self.breadcrumbs?.refreshDisplayMode()
         
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.list.backgroundColor = self.view.backgroundColor
@@ -111,8 +119,8 @@ class MainFeedViewController: BaseViewController {
 
 }
 
-// MARK: - Topic selector
-extension MainFeedViewController: TopicSelectorViewDelegate {
+// MARK: - Topic selector & Breadcrumbs
+extension MainFeedViewController: TopicSelectorViewDelegate, BreadcrumbsViewDelegate {
 
     func onTopicSelected(_ index: Int) {
         if(index==0) {
@@ -130,6 +138,10 @@ extension MainFeedViewController: TopicSelectorViewDelegate {
                 }
             }
         }
+    }
+    
+    func breadcrumbOnTap(sender: BreadcrumbsView) {
+        CustomNavController.shared.popViewController(animated: true)
     }
     
 }
