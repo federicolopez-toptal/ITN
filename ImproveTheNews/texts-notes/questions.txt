@@ -4,8 +4,19 @@ MAIN FEED:
 * Articles with markup
     - Exclamation mark icon?
     
+* Split?
+* Layout solo-texto <- Cómo resolverlo?
+    
+    
+    
 * Banners
-    - La documentacion dice "small" & "large"... ejemplos?
+    - La documentacion dice image "small" & "large"... ejemplos?
+
+
+
+* Footers
+    - Incluir también links a tooooodas las demás secciones?
+
 
 
 // ---------------------------

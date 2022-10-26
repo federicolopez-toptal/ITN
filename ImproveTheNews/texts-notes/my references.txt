@@ -4,7 +4,7 @@ https://improvethenews.atlassian.net/browse/ITN-1520
 * API DOCS
 https://docs.google.com/document/d/1UTdmnjjLTR5UjkQ7UmP-xGlpFN7MkEImYK1Vq3w7RwE/edit
 
-* MAIN FEED
+* MAIN FEED (designs)
 https://www.figma.com/file/2trQtjl1kAFZOspiVF3RNp/Card%2C-Feed-%26-Navigation
 
 * NEW DESIGN (website)

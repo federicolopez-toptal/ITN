@@ -11,6 +11,7 @@ import UIKit
 
 enum MenuITem {
     case displayMode
+    case headlines
 }
 
 class MenuViewController: BaseViewController {
@@ -19,6 +20,7 @@ class MenuViewController: BaseViewController {
     var versionLabel = UILabel()
 
     let dataProvider: [MenuITem] = [ // id(s)
+        .headlines,
         .displayMode
     ]
     
@@ -66,13 +68,13 @@ class MenuViewController: BaseViewController {
             self.versionLabel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -bottomSpace)
         ])
         
-        let closeImage = UIImage(named: DisplayMode.imageName("popup.close"))
+        let closeImage = UIImage(named: "menu.close")
         let closeIcon = UIImageView(image: closeImage)
         self.view.addSubview(closeIcon)
         closeIcon.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            closeIcon.widthAnchor.constraint(equalToConstant: 24),
-            closeIcon.heightAnchor.constraint(equalToConstant: 24),
+            closeIcon.widthAnchor.constraint(equalToConstant: 32),
+            closeIcon.heightAnchor.constraint(equalToConstant: 32),
             closeIcon.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -18),
             closeIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topSpace)
         ])
@@ -111,15 +113,37 @@ extension MenuViewController {
             case .displayMode:
                 result = "go to Bright mode"
                 if(BRIGHT_MODE()){ result = "go to Dark mode" }
+                
+            case .headlines:
+                result = "Headlines"
         }
         
-        return result
+        return result.uppercased()
     }
+    
+    private func getIcon(forItem item: MenuITem) -> UIImage {
+        var icon = "menu.headlines"
+        
+        switch(item) {
+            case .displayMode:
+                icon = "preferences"
+                
+            case .headlines:
+                icon = "headlines"
+        }
+        
+        return UIImage(named: "menu." + icon)!
+    }
+    
+    
     
     private func tapOnItem(_ item: MenuITem) {
         switch(item) {
             case .displayMode:
                 self.changeDisplayMode()
+                
+            case .headlines:
+                self.gotoHeadlines()
         }
     }
     
@@ -140,8 +164,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = self.list.dequeueReusableCell(withIdentifier: MenuItemCell.identifier) as! MenuItemCell
-        let text = self.getText(forItem: self.dataProvider[indexPath.row])
-        cell.titleLabel.text = text
+        let dpItem = self.dataProvider[indexPath.row]
+        
+        cell.titleLabel.text = self.getText(forItem: dpItem)
+        cell.icon.image = self.getIcon(forItem: dpItem)
         
         return cell
     }
@@ -174,6 +200,30 @@ extension MenuViewController {
         CustomNavController.shared.refreshDisplayMode()
         //NOTIFY(Notification_reloadMainFeed)
         self.dismissMe()
+    }
+    
+    func gotoHeadlines() {
+        self.dismissMe()
+        
+        DELAY(0.5) {
+            let count = CustomNavController.shared.viewControllers.count
+        
+            if(count==1) {
+                self.gotoHeadlines_B()
+            } else {
+                CustomNavController.shared.popToRootViewController(animated: true)
+                DELAY(0.3) {
+                    self.gotoHeadlines_B()
+                }
+            }
+        }
+    }
+    
+    private func gotoHeadlines_B() {
+        if let _vc = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
+            _vc.tapOnLogo()
+            _vc.data.resetCounting()
+        }
     }
     
 }

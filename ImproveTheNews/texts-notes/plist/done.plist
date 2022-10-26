@@ -8,6 +8,10 @@
 		<string>Mostrar popup con la info respectiva</string>
 		<key>Limpieza de codigo</key>
 		<string>Diferentes features (dataProvider, list, clicks &amp; protocols)</string>
+		<key>Click on &quot;Show more&quot;</key>
+		<string>Cargar la siguiente pantalla para el topic especificado</string>
+		<key>Breadcrumbs</key>
+		<string>Sencillo: Sólo muestra el topic anterior y ejecuta un Back</string>
 	</dict>
 	<key>misc</key>
 	<dict>

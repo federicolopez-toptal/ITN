@@ -10,8 +10,9 @@ import UIKit
 class MenuItemCell: UITableViewCell {
 
     static let identifier = "MenuItemCell"
-    static let heigth: CGFloat = 45
+    static let heigth: CGFloat = 50
     
+    let icon = UIImageView()
     let titleLabel = UILabel()
     
     // MARK: - Init
@@ -30,15 +31,24 @@ class MenuItemCell: UITableViewCell {
         
         let roboto_bold = ROBOTO_BOLD(13)
         
+        self.addSubview(self.icon)
+        self.icon.image = UIImage(named: "menu.headlines")
+        self.icon.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.icon.widthAnchor.constraint(equalToConstant: 24),
+            self.icon.heightAnchor.constraint(equalToConstant: 24),
+            self.icon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
+            self.icon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
+        
         self.titleLabel.backgroundColor = .clear //.orange
-        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        self.titleLabel.textColor = UIColor(hex: 0x93A0B4)
         self.titleLabel.font = roboto_bold
         self.titleLabel.text = "TEST TOPIC"
         self.addSubview(self.titleLabel)
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.icon.trailingAnchor, constant: 12),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
@@ -52,6 +62,7 @@ class MenuItemCell: UITableViewCell {
             line.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             line.heightAnchor.constraint(equalToConstant: 1.0)
         ])
+        line.hide()
     }
 
 }
