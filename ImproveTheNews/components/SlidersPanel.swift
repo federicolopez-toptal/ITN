@@ -251,7 +251,7 @@ class SlidersPanel: UIView {
                 constant = 34
         }
         
-        if let _bottomValue = SAFE_AREA()?.bottom {
+        if let _bottomValue = SAFE_AREA()?.bottom, (rows>0) {
             constant -= _bottomValue
         }
         

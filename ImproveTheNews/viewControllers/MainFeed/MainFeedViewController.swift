@@ -29,7 +29,7 @@ class MainFeedViewController: BaseViewController {
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         
         NotificationCenter.default.addObserver(self,
-            selector: #selector(loadData),
+            selector: #selector(self.loadDataFromNotification),
             name: Notification_reloadMainFeed, object: nil)
     }
     
@@ -61,6 +61,8 @@ class MainFeedViewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             self.loadData()
+            
+            //CustomNavController.shared.slidersPanel.show(rows: 2, animated: true)
         }
     }
     
@@ -75,7 +77,7 @@ class MainFeedViewController: BaseViewController {
     }
     
     // MARK: - Data
-    @objc func loadData(showLoading: Bool = true) {
+    func loadData(showLoading: Bool = true) {
         if(showLoading){ self.showLoading() }
         let imFirst = self.imFirstViewController()
         
@@ -93,6 +95,9 @@ class MainFeedViewController: BaseViewController {
                 }
             }
         }
+    }
+    @objc func loadDataFromNotification() {
+        self.loadData(showLoading: true)
     }
     
     // MARK: - end
