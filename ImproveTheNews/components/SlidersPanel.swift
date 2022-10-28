@@ -92,7 +92,7 @@ class SlidersPanel: UIView {
                 
                 if(i<3) {
                     var topValue: CGFloat = 54
-                    if(i==2){ topValue += 86 }
+                    if(i==2){ topValue += 86 } //86
                 
                     let square = UIImageView(image: UIImage(named: "slidersPanel.split.square"))
                     self.addSubview(square)
@@ -101,7 +101,7 @@ class SlidersPanel: UIView {
                         square.widthAnchor.constraint(equalToConstant: 15),
                         square.heightAnchor.constraint(equalToConstant: 15),
                         square.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -76),
-                        square.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue),
+                        square.topAnchor.constraint(equalTo: titleHStack.topAnchor, constant: 0),
                     ])
                     
                     let check = UIImageView(image: UIImage(named: "slidersPanel.split.check"))
@@ -111,7 +111,7 @@ class SlidersPanel: UIView {
                         check.widthAnchor.constraint(equalToConstant: 18),
                         check.heightAnchor.constraint(equalToConstant: 14),
                         check.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -71),
-                        check.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue-3),
+                        check.topAnchor.constraint(equalTo: titleHStack.topAnchor, constant: -3),
                     ])
                     check.tag = 40 + i
                     check.hide()
@@ -122,10 +122,10 @@ class SlidersPanel: UIView {
                     self.addSubview(checkButton)
                     checkButton.translatesAutoresizingMaskIntoConstraints = false
                     NSLayoutConstraint.activate([
-                        checkButton.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue-10),
                         checkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -17),
                         checkButton.widthAnchor.constraint(equalToConstant: 100),
                         checkButton.heightAnchor.constraint(equalToConstant: 35),
+                        checkButton.topAnchor.constraint(equalTo: square.topAnchor, constant: -11),
                     ])
                     checkButton.tag = 30 + i
                     checkButton.addTarget(self, action: #selector(onSplitButtonTap(_:)), for: .touchUpInside)
@@ -187,6 +187,7 @@ class SlidersPanel: UIView {
             }
             
             let slider = UISlider()
+            slider.backgroundColor = .clear //.blue.withAlphaComponent(0.3)
             slider.minimumValue = 0
             slider.maximumValue = 99
             slider.isContinuous = false
@@ -241,19 +242,45 @@ class SlidersPanel: UIView {
         self.rowsShown = rows
         var constant: CGFloat = 0
         
+        var bottomValue: CGFloat = 0
+        if let _bottom = SAFE_AREA()?.bottom {
+            bottomValue = _bottom
+        }
+        
         switch(rows) {
             case 0:
                 constant = self.height
+                
             case 2:
                 constant = self.height - 241
+                if(bottomValue>0){ constant -= 34 }
+                else{ constant -= 10 }
+                
+            case 6:
+                constant = 0
+                if(bottomValue==0){ constant = 17 }
                 
             default:
-                constant = 34
+                constant = 0
         }
         
-        if let _bottomValue = SAFE_AREA()?.bottom, (rows>0) {
-            constant -= _bottomValue
-        }
+        
+        
+//        switch(rows) {
+//            case 0:
+//                constant = self.height
+//            case 2:
+//                constant = self.height - 241
+//
+//            default:
+//                constant = 0
+//        }
+        
+//        print("BOTTOM", SAFE_AREA()?.bottom)
+//
+//        if let _bottomValue = SAFE_AREA()?.bottom, (rows>0) {
+//            constant -= _bottomValue
+//        }
         
         
         var alphaTo: CGFloat = 0.0
@@ -301,7 +328,7 @@ class SlidersPanel: UIView {
                 hLine.hide()
             }
             
-            let alphaImage = UIImage(named: "slidersThumb")?.image(alpha: imageAlpha)
+            let alphaImage = UIImage(named: "slidersOrangeThumb")?.image(alpha: imageAlpha)
             slider.setThumbImage(alphaImage, for: .normal)
         }
     }
