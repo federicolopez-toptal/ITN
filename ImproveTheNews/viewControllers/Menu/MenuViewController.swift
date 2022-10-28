@@ -48,7 +48,7 @@ class MenuViewController: BaseViewController {
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topSpace + 45),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -bottomSpace-25)
         ])
-        //self.list.separatorStyle = .none
+        self.list.separatorStyle = .none
         self.list.tableFooterView = UIView()
         self.list.delegate = self
         self.list.dataSource = self
@@ -111,8 +111,8 @@ extension MenuViewController {
         
         switch(item) {
             case .displayMode:
-                result = "go to Bright mode"
-                if(BRIGHT_MODE()){ result = "go to Dark mode" }
+                result = "Light mode"
+                if(BRIGHT_MODE()){ result = "Dark mode" }
                 
             case .headlines:
                 result = "Headlines"
@@ -126,7 +126,8 @@ extension MenuViewController {
         
         switch(item) {
             case .displayMode:
-                icon = "preferences"
+                icon = "gotoLight"
+                if(BRIGHT_MODE()){ icon = "gotoDark" }
                 
             case .headlines:
                 icon = "headlines"
