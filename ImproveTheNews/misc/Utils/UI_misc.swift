@@ -94,3 +94,11 @@ func SCREEN_SIZE() -> CGSize {
 
     return result
 }
+
+func TEXT_IMAGES() -> Bool {
+    return (Layout.current() == .textImages)
+}
+
+func TEXT_ONLY() -> Bool {
+    return (Layout.current() == .textOnly)
+}

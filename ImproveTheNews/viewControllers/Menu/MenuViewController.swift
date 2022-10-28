@@ -12,6 +12,7 @@ import UIKit
 enum MenuITem {
     case displayMode
     case headlines
+    case layout
 }
 
 class MenuViewController: BaseViewController {
@@ -21,7 +22,8 @@ class MenuViewController: BaseViewController {
 
     let dataProvider: [MenuITem] = [ // id(s)
         .headlines,
-        .displayMode
+        .displayMode,
+        .layout
     ]
     
     override func viewDidLoad() {
@@ -116,6 +118,13 @@ extension MenuViewController {
                 
             case .headlines:
                 result = "Headlines"
+                
+            case .layout:
+                result = "Text & Images"
+                if(TEXT_IMAGES()){ result = "Text-Only" }
+                
+            default:
+                result = ""
         }
         
         return result.uppercased()
@@ -131,6 +140,13 @@ extension MenuViewController {
                 
             case .headlines:
                 icon = "headlines"
+                
+            case .layout:
+                icon = "text-images"
+                if(TEXT_IMAGES()){ icon = "text-only" }
+                
+            default:
+                icon = ""
         }
         
         return UIImage(named: "menu." + icon)!
@@ -145,6 +161,12 @@ extension MenuViewController {
                 
             case .headlines:
                 self.gotoHeadlines()
+                
+            case .layout:
+                self.changeLayout()
+                
+            default:
+                NOTHING()
         }
     }
     
@@ -219,12 +241,25 @@ extension MenuViewController {
             }
         }
     }
-    
     private func gotoHeadlines_B() {
         if let _vc = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
             _vc.tapOnLogo()
             _vc.data.resetCounting()
         }
+    }
+    
+    func changeLayout() {
+        var changeTo: Layout = .textOnly
+        if(Layout.current() == .textOnly) {
+            changeTo = .textImages
+        }
+        
+        var newValue = "0"
+        if(changeTo == .textOnly){ newValue = "1" }
+        WRITE(LocalKeys.preferences.layout, value: newValue)
+    
+        NOTIFY(Notification_reloadMainFeed)
+        self.dismissMe()
     }
     
 }

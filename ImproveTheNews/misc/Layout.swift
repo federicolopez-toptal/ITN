@@ -8,19 +8,17 @@
 import Foundation
 
 enum Layout {
-    case denseIntense
+    case textImages
     case textOnly
-    case bigBeautiful
     
     static func current() -> Layout {
         if let _layout = READ(LocalKeys.preferences.layout) {
             let layout = Int(_layout)!
             
-            if(layout == 0){ return .denseIntense }
-            else if(layout == 1){ return .textOnly }
-            else { return .bigBeautiful }
+            if(layout == 0){ return .textImages }
+            else { return .textOnly }
         } else {
-            return .denseIntense // default value
+            return .textImages // default value
         }
     }
 }

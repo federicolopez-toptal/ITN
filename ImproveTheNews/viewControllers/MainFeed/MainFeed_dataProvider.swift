@@ -29,7 +29,11 @@ extension MainFeedViewController {
             
         */
         
-        let itemsToShowPerTopic = "h,sbi,awi,awt3,sco,aco3,m"
+        var itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sco,aco3,m"
+        if(TEXT_ONLY()){
+            itemsToShowPerTopic = "h,swt,awt2,sco,aco3,m"
+        }
+        
         //"h,sbi,awi,m,awt3,swt,sco,aco3"
         //"h,sbi,awi2,awt3,swt,sco,aco3"
         //"h,sbi,awi2,awt3,swt" // sco,aco
