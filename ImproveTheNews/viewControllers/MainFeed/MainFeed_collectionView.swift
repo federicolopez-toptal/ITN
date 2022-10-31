@@ -99,7 +99,11 @@ extension MainFeedViewController {
     
     // size
     func getCellSizeAt(_ indexPath: IndexPath, width: CGFloat) -> CGSize {
-        var size: CGSize!
+        var size = CGSize.zero
+        if(indexPath.row >= self.dataProvider.count) {
+            return size
+        }
+        
         let dpItem = self.getDP_item(indexPath)
 
         if (dpItem is DP_header) { // Header

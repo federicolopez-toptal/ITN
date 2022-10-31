@@ -91,6 +91,7 @@ class MainFeedViewController: BaseViewController {
                     
                     self.hideLoading()
                     self.list.hideRefresher()
+                    self.list.forceUpdateLayoutForVisibleItems()
                 }
             }
         }

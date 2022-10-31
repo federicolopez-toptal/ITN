@@ -64,7 +64,7 @@ class CustomFlowLayout: UICollectionViewFlowLayout {
                 }
             }
         }
-                
+
         return attributes
     }
 

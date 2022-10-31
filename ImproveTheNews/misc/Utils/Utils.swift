@@ -51,3 +51,9 @@ func SHARE_URL(_ url: String, from vc: UIViewController) {
     // iPad fix!
     vc.present(ac, animated: true)
 }
+
+func MAIN_THREAD(_ closure: @escaping () -> () ) {
+    DispatchQueue.main.async {
+        closure()
+    }
+}

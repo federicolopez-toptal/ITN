@@ -61,4 +61,11 @@ class CustomCollectionView: UICollectionView {
         }
     }
     
+    func forceUpdateLayoutForVisibleItems() {
+        MAIN_THREAD {
+            let frame = CGRect(x: 0, y: 0, width: self.contentSize.width, height: self.contentSize.height)
+            let _ = (self.collectionViewLayout as! CustomFlowLayout).layoutAttributesForElements(in: frame)
+        }
+    }
+    
 }

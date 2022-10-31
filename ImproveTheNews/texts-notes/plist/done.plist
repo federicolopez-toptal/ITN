@@ -13,10 +13,19 @@
 		<key>Breadcrumbs</key>
 		<string>Sencillo: Sólo muestra el topic anterior y ejecuta un Back</string>
 	</dict>
+	<key>Menu UI</key>
+	<dict>
+		<key>Añadir iconos</key>
+		<string></string>
+		<key>Revisar tipografias/diseño</key>
+		<string></string>
+	</dict>
 	<key>misc</key>
 	<dict>
 		<key>normalizar fuentes</key>
 		<string>utilizar funcion generica para obtener FONTs</string>
+		<key>Bajar el minimo iOS</key>
+		<string>La version minima donde la app deberia correr es iOS 13</string>
 	</dict>
 </dict>
 </plist>

@@ -14,12 +14,7 @@
 		<string>Chequear todo lo de los banners en detalle</string>
 	</dict>
 	<key>Menu UI</key>
-	<dict>
-		<key>Añadir iconos</key>
-		<string></string>
-		<key>Revisar tipografias/diseño</key>
-		<string></string>
-	</dict>
+	<dict/>
 	<key>data</key>
 	<dict>
 		<key>MainFeed</key>
@@ -28,9 +23,6 @@
 		<string>Tirar el error correspondiente ante un timeout</string>
 	</dict>
 	<key>misc</key>
-	<dict>
-		<key>Bajar el minimo iOS</key>
-		<string>La version minima donde la app deberia correr es iOS 13</string>
-	</dict>
+	<dict/>
 </dict>
 </plist>
