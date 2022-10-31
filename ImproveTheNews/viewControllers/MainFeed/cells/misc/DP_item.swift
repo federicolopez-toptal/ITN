@@ -82,14 +82,14 @@ class DP_Article_WT: DP_itemPointingData { // wide article (only text)
 }
 
 // --------
-class DP_Story_CO: DP_itemPointingData { // story column
+class DP_Story_CI: DP_itemPointingData { // story column (with image)
     var column: Int
     init(T topicIndex: Int, A articleIndex: Int, column: Int) {
         self.column = column
         super.init(T: topicIndex, A: articleIndex)
     }
 }
-class DP_Article_CO: DP_itemPointingData { // article column
+class DP_Story_CT: DP_itemPointingData { // story column (only text)
     var column: Int
     init(T topicIndex: Int, A articleIndex: Int, column: Int) {
         self.column = column
@@ -97,5 +97,19 @@ class DP_Article_CO: DP_itemPointingData { // article column
     }
 }
 
+class DP_Article_CI: DP_itemPointingData { // article column (with image)
+    var column: Int
+    init(T topicIndex: Int, A articleIndex: Int, column: Int) {
+        self.column = column
+        super.init(T: topicIndex, A: articleIndex)
+    }
+}
+class DP_Article_CT: DP_itemPointingData { // article column (only text)
+    var column: Int
+    init(T topicIndex: Int, A articleIndex: Int, column: Int) {
+        self.column = column
+        super.init(T: topicIndex, A: articleIndex)
+    }
+}
 
 

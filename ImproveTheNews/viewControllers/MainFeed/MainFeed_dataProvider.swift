@@ -21,17 +21,19 @@ extension MainFeedViewController {
             
             sbi     story, big with image
             swt     story, wide only text
-            sco     story column
+            sci     story column (with image)
+            sct     story column (only text)
             
             awi     article, wide with image
             awt     article, wide only text
-            aco     article column
+            aci     article column (with image)
+            act     article column (only text)
             
         */
         
-        var itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sco,aco3,m"
+        var itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sci,aci3,m"
         if(TEXT_ONLY()){
-            itemsToShowPerTopic = "h,swt,awt2,sco,aco3,m"
+            itemsToShowPerTopic = "h,swt,awt2,sct,act3,m"
         }
         
         //"h,sbi,awi,m,awt3,swt,sco,aco3"
@@ -49,7 +51,7 @@ extension MainFeedViewController {
             if(i==0 && allItems.count>1){ allItems.swapAt(0, 1) }
             
             for item in allItems {
-                let type = item.getCharAt(index: 0) // 1st char: Data type (h: header, s: story, a: article)
+                let type = item.getCharAt(index: 0) // 1st char: Data type (h: header, s: story, a: article, m: more)
                 let format = item.subString(from: 1, count: 2) // 2nd + 3rd char: Size and/or format
                 let count = item.getCharAt(index: 3) //4th char: Items count
                 
@@ -92,8 +94,11 @@ extension MainFeedViewController {
                         dpItem = DP_Story_BI(T: i, A: _j)
                     } else if(_format == "wt") {
                         dpItem = DP_Story_WT(T: i, A: _j)
-                    } else if(_format == "co") {
-                        dpItem = DP_Story_CO(T: i, A: _j, column: self.column)
+                    } else if(_format == "ci") {
+                        dpItem = DP_Story_CI(T: i, A: _j, column: self.column)
+                        self.addColumn()
+                    } else if(_format == "ct") {
+                        dpItem = DP_Story_CT(T: i, A: _j, column: self.column)
                         self.addColumn()
                     }
                     
@@ -120,8 +125,11 @@ extension MainFeedViewController {
                         dpItem = DP_Article_WI(T: i, A: _j)
                     } else if(_format == "wt") {
                         dpItem = DP_Article_WT(T: i, A: _j)
-                    } else if(_format == "co") {
-                        dpItem = DP_Article_CO(T: i, A: _j, column: self.column)
+                    } else if(_format == "ci") {
+                        dpItem = DP_Article_CI(T: i, A: _j, column: self.column)
+                        self.addColumn()
+                    } else if(_format == "ct") {
+                        dpItem = DP_Article_CT(T: i, A: _j, column: self.column)
                         self.addColumn()
                     }
 

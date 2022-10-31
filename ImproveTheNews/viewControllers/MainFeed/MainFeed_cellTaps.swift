@@ -38,7 +38,8 @@ extension MainFeedViewController {
 
 
 // MARK: - Stance icon(s) tap
-extension MainFeedViewController: ArticleWI_cell_Delegate, ArticleWT_cell_Delegate, ArticleCO_cell_Delegate {
+extension MainFeedViewController: ArticleWI_cell_Delegate, ArticleWT_cell_Delegate,
+                                    ArticleCI_cell_Delegate, ArticleCT_cell_Delegate {
 
     func onStanceIconTap(sender: ArticleWI_cell) {
         self.showStancePopup(sourceName: sender.sourceName, country: sender.country, LR: sender.LR, PE: sender.PE)
@@ -48,7 +49,11 @@ extension MainFeedViewController: ArticleWI_cell_Delegate, ArticleWT_cell_Delega
         self.showStancePopup(sourceName: sender.sourceName, country: sender.country, LR: sender.LR, PE: sender.PE)
     }
     
-    func onStanceIconTap(sender: ArticleCO_cell) {
+    func onStanceIconTap(sender: ArticleCI_cell) {
+        self.showStancePopup(sourceName: sender.sourceName, country: sender.country, LR: sender.LR, PE: sender.PE)
+    }
+    
+    func onStanceIconTap(sender: ArticleCT_cell) {
         self.showStancePopup(sourceName: sender.sourceName, country: sender.country, LR: sender.LR, PE: sender.PE)
     }
     

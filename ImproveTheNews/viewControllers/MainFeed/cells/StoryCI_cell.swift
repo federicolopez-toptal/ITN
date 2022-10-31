@@ -1,5 +1,5 @@
 //
-//  StoryCO_cell.swift
+//  StoryCI_cell.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 21/09/2022.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class StoryCO_cell: UICollectionViewCell {
+class StoryCI_cell: UICollectionViewCell {
 
-    static let identifier = "StoryCO_cell"
+    static let identifier = "StoryCI_cell"
     static let merriweather_bold = MERRIWEATHER_BOLD(18)
     var column: Int = 1
     
@@ -17,7 +17,7 @@ class StoryCO_cell: UICollectionViewCell {
     let mainImageView = UIImageView()
     let gradient = UIImageView()
     let storyLabel = UILabel()
-    var titleLabel = StoryCO_cell.createTitleLabel(text: "Lorem ipsum")
+    var titleLabel = StoryCI_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()
     let timeLabel = UILabel()
     
@@ -156,12 +156,12 @@ class StoryCO_cell: UICollectionViewCell {
 }
 
 // MARK: - Cell height
-extension StoryCO_cell {
+extension StoryCI_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
         result.numberOfLines = 7
-        result.font = StoryCO_cell.merriweather_bold
+        result.font = StoryCI_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
         
@@ -171,7 +171,7 @@ extension StoryCO_cell {
     static func calculateHeight(text: String, sourcesCount: Int, width: CGFloat) -> CGSize {
         let imageH: CGFloat = 100
         let textW: CGFloat = (width/2)-(16*2)-(7*2)
-        let tmpTitleLabel = StoryCO_cell.createTitleLabel(text: text)
+        let tmpTitleLabel = StoryCI_cell.createTitleLabel(text: text)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = sourcesCount == 1 ? 0 : 18
         let timeLabelH: CGFloat = 18

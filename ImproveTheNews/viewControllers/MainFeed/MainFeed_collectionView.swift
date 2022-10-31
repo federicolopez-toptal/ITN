@@ -38,8 +38,10 @@ extension MainFeedViewController {
         self.list.register(ArticleWI_cell.self, forCellWithReuseIdentifier: ArticleWI_cell.identifier)
         self.list.register(ArticleWT_cell.self, forCellWithReuseIdentifier: ArticleWT_cell.identifier)
         self.list.register(StoryWT_cell.self, forCellWithReuseIdentifier: StoryWT_cell.identifier)
-        self.list.register(StoryCO_cell.self, forCellWithReuseIdentifier: StoryCO_cell.identifier)
-        self.list.register(ArticleCO_cell.self, forCellWithReuseIdentifier: ArticleCO_cell.identifier)
+        self.list.register(StoryCI_cell.self, forCellWithReuseIdentifier: StoryCI_cell.identifier)
+        self.list.register(StoryCT_cell.self, forCellWithReuseIdentifier: StoryCT_cell.identifier)
+        self.list.register(ArticleCI_cell.self, forCellWithReuseIdentifier: ArticleCI_cell.identifier)
+        self.list.register(ArticleCT_cell.self, forCellWithReuseIdentifier: ArticleCT_cell.identifier)
         
         self.list.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
 
@@ -106,14 +108,24 @@ extension MainFeedViewController {
             size = MoreCell.getHeight(width: width)
         } else if (dpItem is DP_footer) { // Footer
             size = FooterCell.getHeight(width: width)
-        } else if let _dpItem = dpItem as? DP_Story_CO { // Story column
+        } else if let _dpItem = dpItem as? DP_Story_CI { // Story column (with image)
             let story = self.getArticle(from: _dpItem)
-            size = StoryCO_cell.calculateHeight(text: story.title,
+            size = StoryCI_cell.calculateHeight(text: story.title,
                 sourcesCount: story.storySources.count,
                 width: width)
-        } else if let _dpItem = dpItem as? DP_Article_CO { // Article column
+        } else if let _dpItem = dpItem as? DP_Story_CT { // Story column (only text)
+            let story = self.getArticle(from: _dpItem)
+            size = StoryCT_cell.calculateHeight(text: story.title,
+                sourcesCount: story.storySources.count,
+                width: width)
+        } else if let _dpItem = dpItem as? DP_Article_CI { // Article column (with image)
             let article = self.getArticle(from: _dpItem)
-            size = ArticleCO_cell.calculateHeight(text: article.title,
+            size = ArticleCI_cell.calculateHeight(text: article.title,
+            sourcesCount: article.storySources.count,
+            width: width)
+        } else if let _dpItem = dpItem as? DP_Article_CT { // Article column (only text)
+            let article = self.getArticle(from: _dpItem)
+            size = ArticleCT_cell.calculateHeight(text: article.title,
             sourcesCount: article.storySources.count,
             width: width)
         } else if (dpItem is DP_Story_BI) { // Story, big image
@@ -152,15 +164,24 @@ extension MainFeedViewController {
                 for: indexPath) as! FooterCell
             (cell as! FooterCell).viewController = self
             (cell as! FooterCell).populate(with: _item)
-        } else if let _item = dpItem as? DP_Story_CO { // Story column
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryCO_cell.identifier,
-                for: indexPath) as! StoryCO_cell
-            (cell as! StoryCO_cell).populate(with: self.getArticle(from: _item), column: _item.column)
-        } else if let _item = dpItem as? DP_Article_CO { // Article column
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleCO_cell.identifier,
-                for: indexPath) as! ArticleCO_cell
-            (cell as! ArticleCO_cell).populate(with: self.getArticle(from: _item), column: _item.column)
-            (cell as! ArticleCO_cell).delegate = self
+        } else if let _item = dpItem as? DP_Story_CI { // Story column (with image)
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryCI_cell.identifier,
+                for: indexPath) as! StoryCI_cell
+            (cell as! StoryCI_cell).populate(with: self.getArticle(from: _item), column: _item.column)
+        } else if let _item = dpItem as? DP_Story_CT { // Story column (only text)
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryCT_cell.identifier,
+                for: indexPath) as! StoryCT_cell
+            (cell as! StoryCT_cell).populate(with: self.getArticle(from: _item), column: _item.column)
+        } else if let _item = dpItem as? DP_Article_CI { // Article column (with image)
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleCI_cell.identifier,
+                for: indexPath) as! ArticleCI_cell
+            (cell as! ArticleCI_cell).populate(with: self.getArticle(from: _item), column: _item.column)
+            (cell as! ArticleCI_cell).delegate = self
+        } else if let _item = dpItem as? DP_Article_CT { // Article column (only text)
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: ArticleCT_cell.identifier,
+                for: indexPath) as! ArticleCT_cell
+            (cell as! ArticleCT_cell).populate(with: self.getArticle(from: _item), column: _item.column)
+            (cell as! ArticleCT_cell).delegate = self
         } else if let _item = dpItem as? DP_Story_BI { // Story, big image
             cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryBI_cell.identifier,
                 for: indexPath) as! StoryBI_cell

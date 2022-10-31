@@ -1,26 +1,27 @@
 //
-//  ArticleCO_cell.swift
+//  ArticleCT_cell.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 21/09/2022.
+//  Created by Federico Lopez on 30/10/2022.
 //
 
 import UIKit
 
-protocol ArticleCO_cell_Delegate: AnyObject {
-    func onStanceIconTap(sender: ArticleCO_cell)
+import UIKit
+
+protocol ArticleCT_cell_Delegate: AnyObject {
+    func onStanceIconTap(sender: ArticleCT_cell)
 }
 
-class ArticleCO_cell: UICollectionViewCell {
+class ArticleCT_cell: UICollectionViewCell {
     
-    static let identifier = "ArticleCO_cell"
+    static let identifier = "ArticleCT_cell"
     static let merriweather_bold = MERRIWEATHER_BOLD(18)
     var column: Int = 1
-    weak var delegate: ArticleCO_cell_Delegate?
+    weak var delegate: ArticleCT_cell_Delegate?
     
     var mainVStack: UIStackView!
-    let mainImageView = UIImageView()
-    let titleLabel = ArticleCO_cell.createTitleLabel(text: "Lorem ipsum")
+    let titleLabel = ArticleCI_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()
     let sourceTimeLabel = UILabel()
     let stanceIcon = StanceIconView()
@@ -43,7 +44,7 @@ class ArticleCO_cell: UICollectionViewCell {
     }
     
     // -----------------------------------
-    private func buildContent() {        
+    private func buildContent() {
         self.contentView.backgroundColor = .white
         
     let merriweather_bold = MERRIWEATHER_BOLD(18)
@@ -59,16 +60,6 @@ class ArticleCO_cell: UICollectionViewCell {
             self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
         ])
-
-        self.mainImageView.backgroundColor = .gray
-        self.mainVStack.addArrangedSubview(self.mainImageView)
-        self.mainImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.mainImageView.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        self.mainImageView.contentMode = .scaleAspectFill
-        self.mainImageView.clipsToBounds = true
-        ADD_SPACER(to: self.mainVStack, height: 10)
 
         self.titleLabel.backgroundColor = .clear
         self.titleLabel.textColor = UIColor(hex: 0x1D242F)
@@ -97,12 +88,6 @@ class ArticleCO_cell: UICollectionViewCell {
 
     func populate(with article: MainFeedArticle, column: Int) {
         self.column = column
-    
-        self.mainImageView.image = nil
-        if let _url = URL(string: article.imgUrl) {
-            self.mainImageView.sd_setImage(with: _url)
-        }
-
         self.titleLabel.text = article.title
 
         var sourcesArray = [String]()
@@ -137,19 +122,18 @@ class ArticleCO_cell: UICollectionViewCell {
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.mainVStack.backgroundColor = self.contentView.backgroundColor
-        self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.sourceTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
     }
 }
 
 // MARK: - Cell height
-extension ArticleCO_cell {
+extension ArticleCT_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
         result.numberOfLines = 7
-        result.font = ArticleCO_cell.merriweather_bold
+        result.font = ArticleCI_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
         
@@ -157,24 +141,22 @@ extension ArticleCO_cell {
     }
     
     static func calculateHeight(text: String, sourcesCount: Int, width: CGFloat) -> CGSize {
-        let imageH: CGFloat = 100
         let textW: CGFloat = (width/2)-(16*2)
-        let tmpTitleLabel = ArticleCO_cell.createTitleLabel(text: text)
+        let tmpTitleLabel = ArticleCI_cell.createTitleLabel(text: text)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         
-        let H: CGFloat = 16 + imageH + 10 + textH + 10 + sourcesH + 16
-        
-        //+ imageH + 10 + textH + 10 + sourcesH + 10
+        let H: CGFloat = 16 + textH + 10 + sourcesH + 16
         return CGSize(width: width/2, height: H)
     }
     
 }
 
-extension ArticleCO_cell: StanceIconViewDelegate {
+extension ArticleCT_cell: StanceIconViewDelegate {
     
     func onStanceIconTap(sender: StanceIconView) {
         self.delegate?.onStanceIconTap(sender: self)
     }
     
 }
+
