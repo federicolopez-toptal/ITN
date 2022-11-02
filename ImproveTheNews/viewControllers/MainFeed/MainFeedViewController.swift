@@ -92,6 +92,7 @@ class MainFeedViewController: BaseViewController {
                     self.hideLoading()
                     self.list.hideRefresher()
                     self.list.forceUpdateLayoutForVisibleItems()
+                    self.refreshVLine()
                 }
             }
         }
@@ -120,6 +121,11 @@ class MainFeedViewController: BaseViewController {
         }
 
         return result
+    }
+    
+    func mustSplit() -> Int {
+        let value = READ(LocalKeys.sliders.split)!
+        return Int(value)!
     }
 
 }

@@ -22,11 +22,21 @@ class DP_item {
 class DP_header: DP_item {
     var text: String
     
-    init(text: String, isHeadlines: Bool = false) {
+    init(text: String, isHeadline: Bool = false) {
         var mText = text
-        if(isHeadlines){ mText = "LATEST " + text }
+        if(isHeadline){ mText = "LATEST " + text }
         
         self.text = mText
+    }
+}
+
+class DP_splitHeader: DP_item {
+    var leftText: String
+    var rightText: String
+    
+    init(leftText: String, rightText: String) {
+        self.leftText = leftText
+        self.rightText = rightText
     }
 }
 

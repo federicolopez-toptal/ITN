@@ -15,6 +15,8 @@ protocol CustomCollectionViewDelegate: AnyObject {
 class CustomCollectionView: UICollectionView {
     
     let refresher = UIRefreshControl()
+    let vLineView = UIView()
+    var vLineHeightConstraint: NSLayoutConstraint?
     weak var customDelegate: CustomCollectionViewDelegate?
     
     init() {
@@ -33,6 +35,7 @@ class CustomCollectionView: UICollectionView {
 */
         super.init(frame: .zero, collectionViewLayout: layout)
         self.setupRefresher()
+        self.setupVLine()
     }
     
     required init?(coder: NSCoder) {
@@ -44,6 +47,50 @@ class CustomCollectionView: UICollectionView {
         self.refresher.tintColor = .lightGray
         self.refresher.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         self.addSubview(refresher)
+    }
+    
+    private func setupVLine() {
+        self.addSubview(self.vLineView)
+        self.vLineView.backgroundColor = .systemPink
+        self.vLineView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.vLineHeightConstraint = self.vLineView.heightAnchor.constraint(equalToConstant: 100)
+        NSLayoutConstraint.activate([
+            self.vLineView.widthAnchor.constraint(equalToConstant: 1.5),
+            self.vLineView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.vLineView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.vLineHeightConstraint!
+        ])
+        
+        self.vLineView.hide()
+    }
+    
+    func refreshVLine(lines: [(CGFloat, Bool)]) {
+        var sum: CGFloat = 0
+        
+        REMOVE_ALL_SUBVIEWS(from: self.vLineView)
+        for (i, L) in lines.enumerated() {
+            let color = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+            
+            if(L.1) {
+                let newLine = UIView()
+                newLine.backgroundColor = color
+                self.vLineView.addSubview(newLine)
+                newLine.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    newLine.leadingAnchor.constraint(equalTo: self.vLineView.leadingAnchor),
+                    newLine.trailingAnchor.constraint(equalTo: self.vLineView.trailingAnchor),
+                    newLine.topAnchor.constraint(equalTo: self.vLineView.topAnchor, constant: sum),
+                    newLine.heightAnchor.constraint(equalToConstant: L.0)
+                ])
+            }
+
+            sum += L.0
+        }
+                
+        self.vLineView.backgroundColor = .clear
+        self.vLineHeightConstraint?.constant = sum
+        self.vLineView.show()
     }
     
     @objc func refresh(_ sender: UIRefreshControl!) {

@@ -16,6 +16,7 @@ extension MainFeedViewController {
             VALID (working) items
             
             h       simple header
+            hsp     header split
             m       more (show more)
             f       footer
             
@@ -32,32 +33,39 @@ extension MainFeedViewController {
         */
         
         var itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sci,aci3,m"
-        if(TEXT_ONLY()){
-            itemsToShowPerTopic = "h,swt,awt2,sct,act3,m"
+        if(TEXT_ONLY()){ itemsToShowPerTopic = "h,swt,awt2,sct,act3,m" }
+        
+        let mustSplit = self.mustSplit()
+        if(mustSplit > 0) {
+            itemsToShowPerTopic = "h,hsp,aci20,m"
+            if(TEXT_ONLY()){ itemsToShowPerTopic = "h,hsp,act8,m" }
         }
         
-        //"h,sbi,awi,m,awt3,swt,sco,aco3"
-        //"h,sbi,awi2,awt3,swt,sco,aco3"
-        //"h,sbi,awi2,awt3,swt" // sco,aco
-        //"h,sbi,sco,aco3,awt2"
-        //"h,sbi,awi2,awt3,swt,sco2"
-        // "h,sbi,awi2,awt3,swt,sco,aco"
+            //"h,sbi,awi,m,awt3,swt,sco,aco3"
+            //"h,sbi,awi2,awt3,swt,sco,aco3"
+            //"h,sbi,awi2,awt3,swt" // sco,aco
+            //"h,sbi,sco,aco3,awt2"
+            //"h,sbi,awi2,awt3,swt,sco2"
+            // "h,sbi,awi2,awt3,swt,sco,aco"
 
         self.dataProvider = [DP_item]()
         for (i, T) in self.data.topics.enumerated() {
 
             self.column = 1
             var allItems = itemsToShowPerTopic.components(separatedBy: ",")
-            if(i==0 && allItems.count>1){ allItems.swapAt(0, 1) }
+            if(mustSplit==0 && i==0 && allItems.count>1 && Layout.current() == .textImages){ allItems.swapAt(0, 1) }
             
             for item in allItems {
                 let type = item.getCharAt(index: 0) // 1st char: Data type (h: header, s: story, a: article, m: more)
                 let format = item.subString(from: 1, count: 2) // 2nd + 3rd char: Size and/or format
-                let count = item.getCharAt(index: 3) //4th char: Items count
+                var count = item.getCharAt(index: 3) //4th char: Items count
+                if let subCount = item.getCharAt(index: 4), count != nil {
+                    count! += subCount
+                }
                 
                 if(type == "h") { // header
-                    let header = DP_header(text: T.capitalizedName.uppercased(), isHeadlines: (T.name=="news"))
-                    self.dataProvider.append(header)
+                    let hText = T.capitalizedName.uppercased()
+                    self.addHeader(format: format, isHeadline: (T.name=="news"), headlineText: hText)
                 } else if(type == "m") {
                     let more = DP_more(topic: T.name)
                     self.dataProvider.append(more)
@@ -77,6 +85,23 @@ extension MainFeedViewController {
         
         let footer = DP_footer()
         self.dataProvider.append(footer)
+    }
+    
+    func addHeader(format: String?, isHeadline: Bool, headlineText: String) {
+        if(format == nil) {
+            let header = DP_header(text: headlineText, isHeadline: isHeadline)
+            self.dataProvider.append(header)
+        } else if(format == "sp") {
+            var L = "LEFT"
+            var R = "RIGHT"
+            if(self.mustSplit() == 2){
+                L = "CRITICAL"
+                R = "PRO"
+            }
+        
+            let header = DP_splitHeader(leftText: L, rightText: R)
+            self.dataProvider.append(header)
+        }
     }
     
     func addStoryToDataProvider(count: String?, format: String?, topicIndex i: Int) {

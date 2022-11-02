@@ -90,69 +90,69 @@ class SlidersPanel: UIView {
                 
                 ADD_SPACER(to: titleHStack)
                 
-//                if(i<3) {
-//                    var topValue: CGFloat = 54
-//                    if(i==2){ topValue += 86 } //86
-//
-//                    let square = UIImageView(image: UIImage(named: "slidersPanel.split.square"))
-//                    self.addSubview(square)
-//                    square.translatesAutoresizingMaskIntoConstraints = false
-//                    NSLayoutConstraint.activate([
-//                        square.widthAnchor.constraint(equalToConstant: 15),
-//                        square.heightAnchor.constraint(equalToConstant: 15),
-//                        square.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -76),
-//                        square.topAnchor.constraint(equalTo: titleHStack.topAnchor, constant: 0),
-//                    ])
-//
-//                    let check = UIImageView(image: UIImage(named: "slidersPanel.split.check"))
-//                    self.addSubview(check)
-//                    check.translatesAutoresizingMaskIntoConstraints = false
-//                    NSLayoutConstraint.activate([
-//                        check.widthAnchor.constraint(equalToConstant: 18),
-//                        check.heightAnchor.constraint(equalToConstant: 14),
-//                        check.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -71),
-//                        check.topAnchor.constraint(equalTo: titleHStack.topAnchor, constant: -3),
-//                    ])
-//                    check.tag = 40 + i
-//                    check.hide()
-//
-//                    let checkButton = UIButton(type: .system)
-//                    checkButton.backgroundColor = .clear
-//                    checkButton.alpha = 0.5
-//                    self.addSubview(checkButton)
-//                    checkButton.translatesAutoresizingMaskIntoConstraints = false
-//                    NSLayoutConstraint.activate([
-//                        checkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -17),
-//                        checkButton.widthAnchor.constraint(equalToConstant: 100),
-//                        checkButton.heightAnchor.constraint(equalToConstant: 35),
-//                        checkButton.topAnchor.constraint(equalTo: square.topAnchor, constant: -11),
-//                    ])
-//                    checkButton.tag = 30 + i
-//                    checkButton.addTarget(self, action: #selector(onSplitButtonTap(_:)), for: .touchUpInside)
-//
-//                    let splitLabel = UILabel()
-//                    splitLabel.text = "SPLIT"
-//                    splitLabel.font = roboto_bold
-//                    splitLabel.textColor = UIColor(hex: 0x1D242F)
-//                    splitLabel.addCharacterSpacing(kernValue: characterSpacing)
-//                    titleHStack.addArrangedSubview(splitLabel)
-//                    splitLabel.tag = 3
-//                    self.displayModeComponents.append(splitLabel)
-//
-//                    let hLine = UIView()
-//                    hLine.backgroundColor = UIColor(hex: 0xFF643C)
-//                    self.addSubview(hLine)
-//                    hLine.translatesAutoresizingMaskIntoConstraints = false
-//                    NSLayoutConstraint.activate([
-//                        hLine.widthAnchor.constraint(equalToConstant: 6),
-//                        hLine.heightAnchor.constraint(equalToConstant: 20),
-//                        hLine.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-//                        hLine.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue + 52),
-//                    ])
-//                    hLine.layer.cornerRadius = 3.0
-//                    hLine.tag = 50 + i
-//                    hLine.hide()
-//                }
+                if(i<3) {
+                    var topValue: CGFloat = 54
+                    if(i==2){ topValue += 86 } //86
+
+                    let square = UIImageView(image: UIImage(named: "slidersPanel.split.square"))
+                    self.addSubview(square)
+                    square.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        square.widthAnchor.constraint(equalToConstant: 15),
+                        square.heightAnchor.constraint(equalToConstant: 15),
+                        square.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -76),
+                        square.topAnchor.constraint(equalTo: titleHStack.topAnchor, constant: 0),
+                    ])
+
+                    let check = UIImageView(image: UIImage(named: "slidersPanel.split.check"))
+                    self.addSubview(check)
+                    check.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        check.widthAnchor.constraint(equalToConstant: 18),
+                        check.heightAnchor.constraint(equalToConstant: 14),
+                        check.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -71),
+                        check.topAnchor.constraint(equalTo: titleHStack.topAnchor, constant: -3),
+                    ])
+                    check.tag = 40 + i
+                    check.hide()
+
+                    let checkButton = UIButton(type: .system)
+                    checkButton.backgroundColor = .clear
+                    checkButton.alpha = 0.5
+                    self.addSubview(checkButton)
+                    checkButton.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        checkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -17),
+                        checkButton.widthAnchor.constraint(equalToConstant: 100),
+                        checkButton.heightAnchor.constraint(equalToConstant: 35),
+                        checkButton.topAnchor.constraint(equalTo: square.topAnchor, constant: -11),
+                    ])
+                    checkButton.tag = 30 + i
+                    checkButton.addTarget(self, action: #selector(onSplitButtonTap(_:)), for: .touchUpInside)
+
+                    let splitLabel = UILabel()
+                    splitLabel.text = "SPLIT"
+                    splitLabel.font = roboto_bold
+                    splitLabel.textColor = UIColor(hex: 0x1D242F)
+                    splitLabel.addCharacterSpacing(kernValue: characterSpacing)
+                    titleHStack.addArrangedSubview(splitLabel)
+                    splitLabel.tag = 3
+                    self.displayModeComponents.append(splitLabel)
+
+                    let hLine = UIView()
+                    hLine.backgroundColor = UIColor(hex: 0xFF643C)
+                    self.addSubview(hLine)
+                    hLine.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        hLine.widthAnchor.constraint(equalToConstant: 6),
+                        hLine.heightAnchor.constraint(equalToConstant: 20),
+                        hLine.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                        hLine.topAnchor.constraint(equalTo: self.topAnchor, constant: topValue + 52),
+                    ])
+                    hLine.layer.cornerRadius = 3.0
+                    hLine.tag = 50 + i
+                    hLine.hide()
+                }
             
             ADD_SPACER(to: rowsVStack, height: 6)
             
@@ -306,31 +306,31 @@ class SlidersPanel: UIView {
     }
     
     private func checkSplitComponents() {
-//        for i in 1...2 {
-//            // update check
-//            if(i==self.split) {
-//                self.viewWithTag(40+i)?.show()
-//            } else {
-//                self.viewWithTag(40+i)?.hide()
-//            }
-//
-//            // update slider thumb
-//            var imageAlpha = 1.0
-//            let slider = self.viewWithTag(20 + i) as! UISlider
-//            let hLine = self.viewWithTag(50 + i)!
-//
-//            if(i==self.split) {
-//                imageAlpha = 0.0
-//                slider.isUserInteractionEnabled = false
-//                hLine.show()
-//            } else {
-//                slider.isUserInteractionEnabled = true
-//                hLine.hide()
-//            }
-//
-//            let alphaImage = UIImage(named: "slidersOrangeThumb")?.image(alpha: imageAlpha)
-//            slider.setThumbImage(alphaImage, for: .normal)
-//        }
+        for i in 1...2 {
+            // update check
+            if(i==self.split) {
+                self.viewWithTag(40+i)?.show()
+            } else {
+                self.viewWithTag(40+i)?.hide()
+            }
+
+            // update slider thumb
+            var imageAlpha = 1.0
+            let slider = self.viewWithTag(20 + i) as! UISlider
+            let hLine = self.viewWithTag(50 + i)!
+
+            if(i==self.split) {
+                imageAlpha = 0.0
+                slider.isUserInteractionEnabled = false
+                hLine.show()
+            } else {
+                slider.isUserInteractionEnabled = true
+                hLine.hide()
+            }
+
+            let alphaImage = UIImage(named: "slidersOrangeThumb")?.image(alpha: imageAlpha)
+            slider.setThumbImage(alphaImage, for: .normal)
+        }
     }
     
 }

@@ -32,6 +32,7 @@ extension MainFeedViewController {
         
         // Cells registration
         self.list.register(HeaderCell.self, forCellWithReuseIdentifier: HeaderCell.identifier)
+        self.list.register(SplitHeaderCell.self, forCellWithReuseIdentifier: SplitHeaderCell.identifier)
         self.list.register(MoreCell.self, forCellWithReuseIdentifier: MoreCell.identifier)
         self.list.register(FooterCell.self, forCellWithReuseIdentifier: FooterCell.identifier)
         self.list.register(StoryBI_cell.self, forCellWithReuseIdentifier: StoryBI_cell.identifier)
@@ -55,6 +56,56 @@ extension MainFeedViewController {
         DispatchQueue.main.async {
             (self.list.collectionViewLayout as! CustomFlowLayout).resetCache()
             self.list.reloadData()
+        }
+    }
+    
+    func refreshVLine() {
+        MAIN_THREAD {
+            if(self.mustSplit()==0) {
+                self.list.vLineView.hide()
+                return
+            }
+        
+            var lines = [(CGFloat, Bool)]()
+            
+            for (i, dp) in self.dataProvider.enumerated() {
+                var mustDraw = true
+                let iPath = IndexPath(row: i, section: 0)
+                var H = self.getCellSizeAt(iPath, width: self.list.bounds.width).height
+                let dpItem = self.getDP_item(iPath)
+                
+                if (dpItem is DP_header || dpItem is DP_footer || dpItem is DP_more){
+                    mustDraw = false
+                    lines.append( (H, mustDraw) )
+                } else if(dpItem is DP_splitHeader) {
+                    lines.append( (H, mustDraw) )
+                } else {
+                    var column = 1
+                    if let _dp = dpItem as? DP_Article_CI { column = _dp.column }
+                    else if let _dp = dpItem as? DP_Article_CT { column = _dp.column }
+                    else if let _dp = dpItem as? DP_Story_CI { column = _dp.column }
+                    else if let _dp = dpItem as? DP_Story_CT { column = _dp.column }
+                    
+                    if(column == 1) {
+                        if(i+1 < self.dataProvider.count) {
+                            let nextIPath = IndexPath(row: i+1, section: 0)
+                            let nextDpItem = self.getDP_item(nextIPath)
+                            if(nextDpItem is DP_Article_CI || nextDpItem is DP_Article_CT ||
+                                nextDpItem is DP_Story_CI || nextDpItem is DP_Story_CT) {
+                            
+                                let nextH = self.getCellSizeAt(nextIPath, width: self.list.bounds.width).height
+                                if(nextH > H){ H = nextH }
+                            }
+                        }
+                        
+                        lines.append( (H, mustDraw) )
+                    } else {
+                        NOTHING()
+                    }
+                }
+            }
+            
+            self.list.refreshVLine(lines: lines)
         }
     }
     
@@ -108,6 +159,8 @@ extension MainFeedViewController {
 
         if (dpItem is DP_header) { // Header
             size = HeaderCell.getHeight(width: width)
+        } else if (dpItem is DP_splitHeader) { // Split header
+            size = SplitHeaderCell.getHeight(width: width)
         } else if (dpItem is DP_more) { // More
             size = MoreCell.getHeight(width: width)
         } else if (dpItem is DP_footer) { // Footer
@@ -158,6 +211,10 @@ extension MainFeedViewController {
             cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderCell.identifier,
                 for: indexPath) as! HeaderCell
             (cell as! HeaderCell).populate(with: _item)
+        } else if let _item = dpItem as? DP_splitHeader { // Split header
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: SplitHeaderCell.identifier,
+                for: indexPath) as! SplitHeaderCell
+            (cell as! SplitHeaderCell).populate(with: _item)
         } else if let _item = dpItem as? DP_more  { // More
             cell = self.list.dequeueReusableCell(withReuseIdentifier: MoreCell.identifier,
                 for: indexPath) as! MoreCell
