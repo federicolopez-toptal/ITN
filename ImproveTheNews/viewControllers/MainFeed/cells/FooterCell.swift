@@ -171,11 +171,11 @@ extension FooterCell {
         var url: String?
         switch(tag) {
             case 1:
-                url = "https://twitter.com/improvethenews"
+                url = "https://mobile.twitter.com/improvethenews?s=20&t=oDcqiWUkosy7MIlZ4M8elA"
             case 2:
-                url = "https://www.linkedin.com/company/improvethenews/"
+                url = "https://www.linkedin.com/mwlite/company/improvethenews"
             case 3:
-                url = "https://www.facebook.com/Improve-the-News-104135748200889/"
+                url = "https://m.facebook.com/Improve-the-News-104135748200889"
             case 4:
                 url = "https://www.reddit.com/r/improvethenews/"
   

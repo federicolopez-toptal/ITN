@@ -133,7 +133,7 @@ class NavBarView: UIView {
                     button.widthAnchor.constraint(equalTo: searchIcon.widthAnchor, constant: self.buttonsMargin * 2),
                     button.heightAnchor.constraint(equalTo: searchIcon.heightAnchor, constant: self.buttonsMargin * 2)
                 ])
-                //button.addTarget(self, action: #selector(onMenuButtonTap(_:)), for: .touchUpInside)
+                button.addTarget(self, action: #selector(onSearchButtonTap(_:)), for: .touchUpInside)
                 
                 self.right_x += 24 + 15
             }
@@ -248,6 +248,13 @@ extension NavBarView {
         if let _vc = self.viewController as? MainFeedViewController {
             _vc.tapOnLogo()
         }
+    }
+    
+    @objc func onSearchButtonTap(_ sender: UIButton) {
+        let vc = SearchViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        CustomNavController.shared.present(vc, animated: true)
     }
     
 }

@@ -21,6 +21,7 @@ class MainFeedViewController: BaseViewController {
     var dataProvider = [DP_item]()
     
     var column = 1 //...
+    var prevMustSplit: Int?
 
 
     // MARK: - Start
@@ -40,7 +41,7 @@ class MainFeedViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.logo, .menuIcon]) //.searchIcon
+            self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
             
             self.topicSelector.buildInto(self.view)
             self.topicSelector.delegate = self
@@ -93,6 +94,11 @@ class MainFeedViewController: BaseViewController {
                     self.list.hideRefresher()
                     self.list.forceUpdateLayoutForVisibleItems()
                     self.refreshVLine()
+                    
+                    if(self.prevMustSplit != nil) {
+                        if(self.prevMustSplit != self.mustSplit()) { self.tapOnLogo() }
+                    }
+                    self.prevMustSplit = self.mustSplit()
                 }
             }
         }
@@ -110,8 +116,10 @@ class MainFeedViewController: BaseViewController {
     
     // MARK: - misc
     func tapOnLogo() { // called from the navBar
-        self.topicSelector.scrollToZero()
-        self.onTopicSelected(0)
+        MAIN_THREAD {
+            self.topicSelector.scrollToZero()
+            self.onTopicSelected(0)
+        }
     }
     
     func imFirstViewController() -> Bool {

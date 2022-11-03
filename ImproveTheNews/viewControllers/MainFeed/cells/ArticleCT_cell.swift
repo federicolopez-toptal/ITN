@@ -124,6 +124,7 @@ class ArticleCT_cell: UICollectionViewCell {
         self.mainVStack.backgroundColor = self.contentView.backgroundColor
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.sourceTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.stanceIcon.refreshDisplayMode()
     }
 }
 

@@ -87,11 +87,6 @@ func ADD_SHADOW(to view: UIView, offset: CGSize = CGSize(width: 5, height: 5)) {
 
 func SCREEN_SIZE() -> CGSize {
     var result = UIScreen.main.bounds.size
-    
-//    if(result.width==375 && result.height==812) { // iPhone mini fix (only in simulator?)
-//        result = CGSize(width: 375, height: 780)
-//    }
-
     return result
 }
 
@@ -101,4 +96,8 @@ func TEXT_IMAGES() -> Bool {
 
 func TEXT_ONLY() -> Bool {
     return (Layout.current() == .textOnly)
+}
+
+func HIDE_KEYBOARD(view: UIView) {
+    view.endEditing(true)
 }

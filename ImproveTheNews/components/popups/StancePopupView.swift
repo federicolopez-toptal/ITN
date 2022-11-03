@@ -201,7 +201,7 @@ class StancePopupView: PopupView {
         self.stanceIcon.setValues(LR, PE)
         self.titleLabel.text = sourceName + " Bias"
         self.descriptionLabel.text = "The " + sourceName + " is from " + self.country(country) +
-            " and has a " + self.LR_text(LR) + " and from " + self.PE_text(PE) + " stance"
+            " and has a " + self.LR_text(LR) + " and " + self.PE_text(PE) + " stance"
             
         // sliders
         for i in 1...2 {

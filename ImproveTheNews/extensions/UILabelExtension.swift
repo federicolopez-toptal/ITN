@@ -29,5 +29,11 @@ extension UILabel {
         self.sizeToFit()
         return self.frame.size.height
     }
+    
+    func calculateWidthFor(height: CGFloat) -> CGFloat {
+        self.frame = CGRect(x: 0, y: 0, width: 10, height: height)
+        self.sizeToFit()
+        return self.frame.size.width
+    }
   
 }

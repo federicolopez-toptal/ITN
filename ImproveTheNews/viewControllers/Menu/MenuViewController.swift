@@ -13,6 +13,7 @@ enum MenuITem {
     case displayMode
     case headlines
     case layout
+    case preferences
 }
 
 class MenuViewController: BaseViewController {
@@ -23,6 +24,7 @@ class MenuViewController: BaseViewController {
     let dataProvider: [MenuITem] = [ // id(s)
         .headlines,
         .displayMode,
+        .preferences,
         .layout
     ]
     
@@ -123,6 +125,9 @@ extension MenuViewController {
                 result = "Text & Images"
                 if(TEXT_IMAGES()){ result = "Text-Only" }
                 
+            case .preferences:
+                result = "Preferences"
+                
             default:
                 result = ""
         }
@@ -145,6 +150,9 @@ extension MenuViewController {
                 icon = "text-images"
                 if(TEXT_IMAGES()){ icon = "text-only" }
                 
+            case .preferences:
+                icon = "preferences"
+                
             default:
                 icon = ""
         }
@@ -164,6 +172,9 @@ extension MenuViewController {
                 
             case .layout:
                 self.changeLayout()
+                
+            case .preferences:
+                self.presentPreferences()
                 
             default:
                 NOTHING()
@@ -210,6 +221,13 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Menu action(s)
 extension MenuViewController {
     
+    func presentPreferences() {
+        let vc = PreferencesViewController()
+        //vc.modalTransitionStyle = .coverVertical
+        CustomNavController.shared.viewControllers = [vc]
+        self.dismissMe()
+    }
+    
     func changeDisplayMode() {
         var changeTo: DisplayMode = .bright
         if(DisplayMode.current() == .bright) {
@@ -225,6 +243,7 @@ extension MenuViewController {
         self.dismissMe()
     }
     
+    // ---------
     func gotoHeadlines() {
         self.dismissMe()
         
@@ -248,6 +267,7 @@ extension MenuViewController {
         }
     }
     
+    // ---------
     func changeLayout() {
         var changeTo: Layout = .textOnly
         if(Layout.current() == .textOnly) {
