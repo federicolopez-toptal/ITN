@@ -64,5 +64,9 @@ class MenuItemCell: UITableViewCell {
         ])
         line.hide()
     }
+    
+    func refreshDisplayMode() {
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+    }
 
 }

@@ -9,12 +9,15 @@ import UIKit
 
 class PreferencesViewController: BaseViewController {
 
+    let navBar = NavBarView()
     var list = UITableView()
 
-    // MARK: - Init
+
+
+    // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .yellow //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
     }
     
     override func viewDidLayoutSubviews() {
@@ -22,6 +25,10 @@ class PreferencesViewController: BaseViewController {
         
         if(!self.didLayout) {
             self.didLayout = true
+            
+            self.navBar.buildInto(viewController: self)
+            self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
+            
             self.buildContent()
         }
     }
@@ -34,7 +41,7 @@ class PreferencesViewController: BaseViewController {
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
-            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
         self.refreshDisplayMode()

@@ -11,25 +11,33 @@ class CustomNavController: UINavigationController {
 
     static var shared: CustomNavController!
 
-    let loadingView = LoadingView()
+    let menu = MenuView()
+    let loading = LoadingView()
     let slidersPanel = SlidersPanel()
     let floatingButton = FloatingButton()
     let darkView = DarkView()
 
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if(CustomNavController.shared == nil){ CustomNavController.shared = self }
-        
         self.isNavigationBarHidden = true
+        
         self.slidersPanel.buildInto(self.view)
         self.floatingButton.buildInto(self.view, panel: self.slidersPanel)
-        self.loadingView.buildInto(self.view)
+        self.loading.buildInto(self.view)
         self.darkView.buildInto(self.view)
         
-        self.addViewController()
+        self.addInitialViewController() // Start!
     }
     
-    private func addViewController() {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if(!self.menu.built){ self.menu.buildInto(self.view) }
+    }
+    
+    private func addInitialViewController() {
         let vc = MainFeedViewController()
         self.setViewControllers([vc], animated: false)
     }
@@ -43,8 +51,9 @@ class CustomNavController: UINavigationController {
 
     func refreshDisplayMode() {
         self.slidersPanel.refreshDisplayMode()
-        self.loadingView.refreshDisplayMode()
+        self.loading.refreshDisplayMode()
         self.darkView.refreshDisplayMode()
+        self.menu.refreshDisplayMode()
 
         for vc in self.viewControllers {
             if(vc is BaseViewController) {
@@ -61,7 +70,7 @@ class CustomNavController: UINavigationController {
     
 }
 
-// MARK: - misc
+// MARK: - Sliders panel + Floating button
 extension CustomNavController {
 
     func hidePanelAndButtonWithAnimation() {
@@ -93,16 +102,27 @@ extension CustomNavController {
 // MARK: - Menu
 extension CustomNavController {
 
-    func callMenu() {
-        let menuVC = MenuViewController()
-        self.customPushViewController(menuVC)
+    func showMenu() {
+        self.darkView.alpha = 0
+        self.darkView.show()
+        self.menu.menuLeadingConstraint?.constant = 0
+        UIView.animate(withDuration: 0.3) {
+            self.darkView.alpha = 1.0
+            self.view.layoutIfNeeded()
+        }
 
         self.slidersPanel.hide()
         self.floatingButton.hide()
     }
     
     func dismissMenu() {
-        self.customPopViewController()
+        self.menu.menuLeadingConstraint?.constant = -self.menu.MENU_WIDTH
+        UIView.animate(withDuration: 0.3) {
+            self.darkView.alpha = 0
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.darkView.hide()
+        }
     
         self.slidersPanel.show()
         self.floatingButton.show()
