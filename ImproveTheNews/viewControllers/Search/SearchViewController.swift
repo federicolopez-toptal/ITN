@@ -130,19 +130,22 @@ class SearchViewController: BaseViewController {
     }
     
     func loadTopic(_ topic: String) {
-        CustomNavController.shared.dismiss(animated: true)
-        
+        let vc = MainFeedViewController()
+        vc.topic = topic
+        CustomNavController.shared.viewControllers = [vc]
+
         DELAY(0.1) {
-            for vc in CustomNavController.shared.viewControllers.reversed() {
-                if let _vc = vc as? MainFeedViewController {
-                    _vc.data.updateCounting()
-                    break
-                }
-            }
+            CustomNavController.shared.dismiss(animated: true)
+//            for vc in CustomNavController.shared.viewControllers.reversed() {
+//                if let _vc = vc as? MainFeedViewController {
+//                    _vc.data.updateCounting()
+//                    break
+//                }
+//            }
         
-            let vc = MainFeedViewController()
-            vc.topic = topic
-            CustomNavController.shared.pushViewController(vc, animated: true)
+            
+            
+            //CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
 

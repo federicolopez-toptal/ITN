@@ -140,10 +140,16 @@ extension MenuView {
         CustomNavController.shared.dismissMenu()
     }
     
+    // ---------
     func presentPreferences() {
         let vc = PreferencesViewController()
         CustomNavController.shared.viewControllers = [vc]
-        self.dismissMe()
+        
+        DELAY(0.2) {
+            self.dismissMe()
+            CustomNavController.shared.slidersPanel.hide()
+            CustomNavController.shared.floatingButton.hide()
+        }
     }
     
     func changeDisplayMode() {
@@ -165,16 +171,32 @@ extension MenuView {
     func gotoHeadlines() {
         self.dismissMe()
         
-        DELAY(0.5) {
-            let count = CustomNavController.shared.viewControllers.count
+        var firstIsMainFeed = false
+        if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
+            if(firstVC.topic == "news"){ firstIsMainFeed = true }
+        }
         
-            if(count==1) {
-                self.gotoHeadlines_B()
-            } else {
-                CustomNavController.shared.popToRootViewController(animated: true)
-                DELAY(0.3) {
+        if(firstIsMainFeed) {
+            DELAY(0.5) {
+                let count = CustomNavController.shared.viewControllers.count
+            
+                if(count==1) {
                     self.gotoHeadlines_B()
+                } else {
+                    CustomNavController.shared.popToRootViewController(animated: true)
+                    DELAY(0.3) {
+                        self.gotoHeadlines_B()
+                    }
                 }
+            }
+        } else {
+            let vc = MainFeedViewController()
+            CustomNavController.shared.viewControllers = [vc]
+            
+            DELAY(0.2) {
+                self.dismissMe()
+                CustomNavController.shared.slidersPanel.show()
+                CustomNavController.shared.floatingButton.show()
             }
         }
     }
@@ -195,9 +217,22 @@ extension MenuView {
         var newValue = "0"
         if(changeTo == .textOnly){ newValue = "1" }
         WRITE(LocalKeys.preferences.layout, value: newValue)
-    
         NOTIFY(Notification_reloadMainFeed)
-        self.dismissMe()
+
+        
+        let firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeedViewController
+        if(firstIsMainFeed) {
+            self.dismissMe()
+        } else {
+            let vc = MainFeedViewController()
+            CustomNavController.shared.viewControllers = [vc]
+            
+            DELAY(0.2) {
+                self.dismissMe()
+                CustomNavController.shared.slidersPanel.show()
+                CustomNavController.shared.floatingButton.show()
+            }
+        }
     }
     
 }

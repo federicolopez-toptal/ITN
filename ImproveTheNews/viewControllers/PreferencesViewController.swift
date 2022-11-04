@@ -44,11 +44,25 @@ class PreferencesViewController: BaseViewController {
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
+        let tmpLabel = UILabel()
+        tmpLabel.backgroundColor = .green
+        tmpLabel.numberOfLines = 2
+        tmpLabel.textAlignment = .center
+        tmpLabel.font = ROBOTO_BOLD(18)
+        tmpLabel.text = "screen\ncontent"
+        self.view.addSubview(tmpLabel)
+        tmpLabel.activateConstraints([
+            tmpLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            tmpLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
+        
         self.refreshDisplayMode()
     }
     
     override func refreshDisplayMode() {
-        self.list.backgroundColor = .systemPink
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.list.backgroundColor = self.view.backgroundColor
+        self.navBar.refreshDisplayMode()
     }
     
 }

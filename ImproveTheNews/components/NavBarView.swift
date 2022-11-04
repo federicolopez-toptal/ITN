@@ -251,7 +251,7 @@ extension NavBarView {
     }
     
     @objc func onSearchButtonTap(_ sender: UIButton) {
-        let vc = SearchViewController()
+        let vc = SearchViewController()        
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         CustomNavController.shared.present(vc, animated: true)

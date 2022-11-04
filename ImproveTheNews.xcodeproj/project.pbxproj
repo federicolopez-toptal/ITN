@@ -326,7 +326,7 @@
 				1F95135F28BFC61A00A77AB6 /* components */,
 				1F95135628BFB97C00A77AB6 /* viewControllers */,
 				1F95135528BFB96F00A77AB6 /* resources */,
-				1F95136428BFCB0700A77AB6 /* texts-notes */,
+				1F95136428BFCB0700A77AB6 /* texts & notes */,
 				1FD23407291572B800B85AE9 /* trash */,
 			);
 			path = ImproveTheNews;
@@ -359,8 +359,8 @@
 			children = (
 				1FA4CE6928C2874E0068DE4A /* BaseViewController.swift */,
 				1F18C88B28F8CC0400197F38 /* MainFeed */,
-				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */,
+				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F70BE72291457960061E3FA /* Search */,
 			);
 			path = viewControllers;
@@ -385,7 +385,7 @@
 			path = components;
 			sourceTree = "<group>";
 		};
-		1F95136428BFCB0700A77AB6 /* texts-notes */ = {
+		1F95136428BFCB0700A77AB6 /* texts & notes */ = {
 			isa = PBXGroup;
 			children = (
 				1F95136528BFCB2800A77AB6 /* my references.txt */,
@@ -396,7 +396,7 @@
 				1F94CDC828F494A400135C7A /* next.txt */,
 				1F8EAED1290984000015F6F6 /* plist */,
 			);
-			path = "texts-notes";
+			path = "texts & notes";
 			sourceTree = "<group>";
 		};
 		1FA4CE6328C2864F0068DE4A /* misc */ = {
@@ -452,8 +452,8 @@
 			isa = PBXGroup;
 			children = (
 				1FD2340329155F1700B85AE9 /* MenuView.swift */,
-				1FD23405291565F100B85AE9 /* MenuView_misc.swift */,
 				1F18C88828F89EF600197F38 /* MenuItemCell.swift */,
+				1FD23405291565F100B85AE9 /* MenuView_misc.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";

@@ -17,5 +17,10 @@ extension UIView {
     func show() {
         self.isHidden = false
     }
+    
+    func activateConstraints(_ constraints: [NSLayoutConstraint]) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate(constraints)
+    }
 
 }
