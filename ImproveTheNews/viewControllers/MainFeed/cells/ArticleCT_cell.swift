@@ -54,8 +54,7 @@ class ArticleCT_cell: UICollectionViewCell {
     
         self.mainVStack = VSTACK(into: self.contentView)
         self.mainVStack.backgroundColor = .green
-        self.mainVStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.mainVStack.activateConstraints([
             self.mainVStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)

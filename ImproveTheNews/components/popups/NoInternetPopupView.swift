@@ -20,8 +20,7 @@ class NoInternetPopupView: PopupView {
         
         self.backgroundColor = .systemPink
         navControllerView.addSubview(self)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: navControllerView.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: navControllerView.trailingAnchor),
             self.heightAnchor.constraint(equalToConstant: self.height),
@@ -30,8 +29,7 @@ class NoInternetPopupView: PopupView {
         
         let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("popup.close")))
         self.addSubview(closeIcon)
-        closeIcon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        closeIcon.activateConstraints([
             closeIcon.widthAnchor.constraint(equalToConstant: 24),
             closeIcon.heightAnchor.constraint(equalToConstant: 24),
             closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
@@ -41,8 +39,7 @@ class NoInternetPopupView: PopupView {
         let closeIconButton = UIButton(type: .system)
         closeIconButton.backgroundColor = .clear
         self.addSubview(closeIconButton)
-        closeIconButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        closeIconButton.activateConstraints([
             closeIconButton.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -5),
             closeIconButton.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: -5),
             closeIconButton.widthAnchor.constraint(equalTo: closeIcon.widthAnchor, constant: 10),

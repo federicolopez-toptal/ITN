@@ -52,10 +52,8 @@ class CustomCollectionView: UICollectionView {
     private func setupVLine() {
         self.addSubview(self.vLineView)
         self.vLineView.backgroundColor = .systemPink
-        self.vLineView.translatesAutoresizingMaskIntoConstraints = false
-        
         self.vLineHeightConstraint = self.vLineView.heightAnchor.constraint(equalToConstant: 100)
-        NSLayoutConstraint.activate([
+        self.vLineView.activateConstraints([
             self.vLineView.widthAnchor.constraint(equalToConstant: 1.5),
             self.vLineView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.vLineView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -76,8 +74,7 @@ class CustomCollectionView: UICollectionView {
                 let newLine = UIView()
                 newLine.backgroundColor = color
                 self.vLineView.addSubview(newLine)
-                newLine.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                newLine.activateConstraints([
                     newLine.leadingAnchor.constraint(equalTo: self.vLineView.leadingAnchor),
                     newLine.trailingAnchor.constraint(equalTo: self.vLineView.trailingAnchor),
                     newLine.topAnchor.constraint(equalTo: self.vLineView.topAnchor, constant: sum),

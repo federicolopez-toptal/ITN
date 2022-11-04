@@ -36,8 +36,7 @@ class PreferencesViewController: BaseViewController {
     // MARK: - misc
     func buildContent() {
         self.view.addSubview(self.list)
-        self.list.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),

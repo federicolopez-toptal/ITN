@@ -46,9 +46,9 @@ class SearchTextView: UIView {
         let bgColorView = UIView()
         bgColorView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D2530) : UIColor(hex: 0xEFEFEF)
         self.addSubview(bgColorView)
-        bgColorView.translatesAutoresizingMaskIntoConstraints = false
         self.bgColorViewTrailingConstraint = bgColorView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -42)
-        NSLayoutConstraint.activate([
+        
+        bgColorView.activateConstraints([
             bgColorView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bgColorView.topAnchor.constraint(equalTo: self.topAnchor),
             bgColorView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -58,8 +58,7 @@ class SearchTextView: UIView {
         
         // ----------------------
         self.addSubview(self.closeIcon)
-        self.closeIcon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.closeIcon.activateConstraints([
             self.closeIcon.widthAnchor.constraint(equalToConstant: 32),
             self.closeIcon.heightAnchor.constraint(equalToConstant: 32),
             self.closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -6),
@@ -69,8 +68,7 @@ class SearchTextView: UIView {
         let closeButton = UIButton(type: .system)
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
         self.addSubview(closeButton)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        closeButton.activateConstraints([
             closeButton.leadingAnchor.constraint(equalTo: self.closeIcon.leadingAnchor, constant: -5),
             closeButton.topAnchor.constraint(equalTo: self.closeIcon.topAnchor, constant: -5),
             closeButton.trailingAnchor.constraint(equalTo: self.closeIcon.trailingAnchor, constant: 5),
@@ -79,8 +77,7 @@ class SearchTextView: UIView {
         closeButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
 
         bgColorView.addSubview(self.lupa)
-        self.lupa.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.lupa.activateConstraints([
             self.lupa.leadingAnchor.constraint(equalTo: bgColorView.leadingAnchor, constant: 11),
             self.lupa.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor),
             self.lupa.widthAnchor.constraint(equalToConstant: 24),
@@ -91,8 +88,7 @@ class SearchTextView: UIView {
         self.placeHolderLabel.font = roboto
         self.placeHolderLabel.textColor = UIColor(hex: 0x93A0B4)
         bgColorView.addSubview(self.placeHolderLabel)
-        self.placeHolderLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.placeHolderLabel.activateConstraints([
             self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.lupa.trailingAnchor, constant: 4),
             self.placeHolderLabel.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor),
         ])
@@ -108,8 +104,7 @@ class SearchTextView: UIView {
         self.searchTextField.spellCheckingType = .no
         self.searchTextField.keyboardType = .asciiCapable
         bgColorView.addSubview(self.searchTextField)
-        self.searchTextField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.searchTextField.activateConstraints([
             self.searchTextField.leadingAnchor.constraint(equalTo: self.lupa.trailingAnchor, constant: 4),
             self.searchTextField.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor),
             self.searchTextField.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -42)

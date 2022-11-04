@@ -27,8 +27,7 @@ class BreadcrumbsView: UIView {
         let container = viewController.view!
         
         container.addSubview(self)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.topAnchor.constraint(equalTo: container.topAnchor, constant: NavBarView.HEIGHT() + TopicSelectorView.HEIGHT()),
             self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
@@ -40,8 +39,7 @@ class BreadcrumbsView: UIView {
         let backIcon = UIImageView(image: UIImage(named: "breadcrumbBack"))
         backIcon.backgroundColor = .clear //.green
         self.addSubview(backIcon)
-        backIcon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        backIcon.activateConstraints([
             backIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 11),
             backIcon.widthAnchor.constraint(equalToConstant: 16),
             backIcon.heightAnchor.constraint(equalToConstant: 16),
@@ -52,8 +50,7 @@ class BreadcrumbsView: UIView {
         self.breadcrumbLabel.text = self.getPrevTopicName()
         self.breadcrumbLabel.textColor = UIColor(hex: 0x93A0B4)
         self.addSubview(self.breadcrumbLabel)
-        self.breadcrumbLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.breadcrumbLabel.activateConstraints([
             self.breadcrumbLabel.leadingAnchor.constraint(equalTo: backIcon.trailingAnchor, constant: 4),
             self.breadcrumbLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
@@ -61,8 +58,7 @@ class BreadcrumbsView: UIView {
         let areaButton = UIButton(type: .system)
         areaButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
         self.addSubview(areaButton)
-        areaButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        areaButton.activateConstraints([
             areaButton.leadingAnchor.constraint(equalTo: backIcon.leadingAnchor, constant: -5),
             areaButton.trailingAnchor.constraint(equalTo: self.breadcrumbLabel.trailingAnchor, constant: 15),
             areaButton.topAnchor.constraint(equalTo: self.breadcrumbLabel.topAnchor, constant: -5),
@@ -72,8 +68,7 @@ class BreadcrumbsView: UIView {
 
         self.bottomLine.backgroundColor = .red
         self.addSubview(self.bottomLine)
-        self.bottomLine.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.bottomLine.activateConstraints([
             self.bottomLine.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.bottomLine.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.bottomLine.heightAnchor.constraint(equalToConstant: 1),

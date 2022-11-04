@@ -369,6 +369,7 @@
 		1F95135F28BFC61A00A77AB6 /* components */ = {
 			isa = PBXGroup;
 			children = (
+				1FD5BDF428DC1313003E650F /* DarkView.swift */,
 				1FD5BDEF28DC0F7A003E650F /* popups */,
 				1F95136028BFC64300A77AB6 /* CustomNavController.swift */,
 				1F7E777128E362160024D792 /* CustomCollectionView */,
@@ -470,7 +471,6 @@
 			isa = PBXGroup;
 			children = (
 				1FD5BDF228DC11DC003E650F /* PopupView.swift */,
-				1FD5BDF428DC1313003E650F /* DarkView.swift */,
 				1FD5BDF028DC0F91003E650F /* NoInternetPopupView.swift */,
 				1F9538DB28FF337A00251598 /* StancePopupView.swift */,
 			);

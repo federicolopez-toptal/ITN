@@ -46,8 +46,7 @@ class StoryWT_cell: UICollectionViewCell {
         self.storyLabel.layer.cornerRadius = 12
         self.storyLabel.addCharacterSpacing(kernValue: characterSpacing)
         self.contentView.addSubview(self.storyLabel)
-        self.storyLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.storyLabel.activateConstraints([
             self.storyLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
             self.storyLabel.widthAnchor.constraint(equalToConstant: 65),
             self.storyLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
@@ -57,8 +56,7 @@ class StoryWT_cell: UICollectionViewCell {
         self.titleLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.3)
         self.titleLabel.textColor = .black
         self.contentView.addSubview(self.titleLabel)
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.titleLabel.activateConstraints([
             self.titleLabel.topAnchor.constraint(equalTo: self.storyLabel.bottomAnchor, constant: 8),
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
@@ -66,8 +64,7 @@ class StoryWT_cell: UICollectionViewCell {
         
         let iconsHStack = HSTACK(into: self.contentView, spacing: 5.0)
         iconsHStack.backgroundColor = .clear //.orange.withAlphaComponent(0.3)
-        iconsHStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        iconsHStack.activateConstraints([
             iconsHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             iconsHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
@@ -83,8 +80,7 @@ class StoryWT_cell: UICollectionViewCell {
         
         let arrow = UIImageView(image: UIImage(named: "story.lastUpdated.arrow"))
         iconsHStack.addArrangedSubview(arrow)
-        arrow.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        arrow.activateConstraints([
             arrow.widthAnchor.constraint(equalToConstant: 18),
             arrow.heightAnchor.constraint(equalToConstant: 18)
         ])

@@ -42,8 +42,7 @@ class NavBarView: UIView {
     
         self.backgroundColor = .red
         container.addSubview(self)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.topAnchor.constraint(equalTo: container.topAnchor),
             self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
@@ -58,8 +57,7 @@ class NavBarView: UIView {
                 // ITN logo
                 let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.logo")))
                 self.addSubview(logo)
-                logo.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                logo.activateConstraints([
                     logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
                     logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(59)),
                     logo.widthAnchor.constraint(equalToConstant: 163),
@@ -71,8 +69,7 @@ class NavBarView: UIView {
                 let button = UIButton(type: .system)
                 button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
                 self.addSubview(button)
-                button.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                button.activateConstraints([
                     button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
                     button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
                     button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
@@ -85,8 +82,7 @@ class NavBarView: UIView {
                 // Menu
                 let menuIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.menu")))
                 self.addSubview(menuIcon)
-                menuIcon.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                menuIcon.activateConstraints([
                     menuIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x),
                     menuIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
                     menuIcon.widthAnchor.constraint(equalToConstant: 24),
@@ -98,8 +94,7 @@ class NavBarView: UIView {
                 let button = UIButton(type: .system)
                 button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
                 self.addSubview(button)
-                button.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                button.activateConstraints([
                     button.leadingAnchor.constraint(equalTo: menuIcon.leadingAnchor, constant: -self.buttonsMargin),
                     button.topAnchor.constraint(equalTo: menuIcon.topAnchor, constant: -self.buttonsMargin),
                     button.widthAnchor.constraint(equalTo: menuIcon.widthAnchor, constant: self.buttonsMargin * 2),
@@ -113,8 +108,7 @@ class NavBarView: UIView {
             if(C == .searchIcon) {
                 let searchIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.search")))
                 self.addSubview(searchIcon)
-                searchIcon.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                searchIcon.activateConstraints([
                     searchIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
                     searchIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
                     searchIcon.widthAnchor.constraint(equalToConstant: 24),
@@ -126,8 +120,7 @@ class NavBarView: UIView {
                 let button = UIButton(type: .system)
                 button.backgroundColor = .clear
                 self.addSubview(button)
-                button.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                button.activateConstraints([
                     button.leadingAnchor.constraint(equalTo: searchIcon.leadingAnchor, constant: -self.buttonsMargin),
                     button.topAnchor.constraint(equalTo: searchIcon.topAnchor, constant: -self.buttonsMargin),
                     button.widthAnchor.constraint(equalTo: searchIcon.widthAnchor, constant: self.buttonsMargin * 2),
@@ -142,8 +135,7 @@ class NavBarView: UIView {
                 // Menu
                 let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
                 self.addSubview(backIcon)
-                backIcon.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                backIcon.activateConstraints([
                     backIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x),
                     backIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
                     backIcon.widthAnchor.constraint(equalToConstant: 24),
@@ -159,8 +151,7 @@ class NavBarView: UIView {
                 label.textColor = .black
                 label.font = merriweather_bold
                 self.addSubview(label)
-                label.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                label.activateConstraints([
                     label.leadingAnchor.constraint(equalTo: backIcon.trailingAnchor, constant: 3),
                     label.centerYAnchor.constraint(equalTo: backIcon.centerYAnchor)
                 ])
@@ -170,8 +161,7 @@ class NavBarView: UIView {
                 let button = UIButton(type: .system)
                 button.backgroundColor = .clear
                 self.addSubview(button)
-                button.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
+                button.activateConstraints([
                     button.leadingAnchor.constraint(equalTo: backIcon.leadingAnchor, constant: -self.buttonsMargin),
                     button.topAnchor.constraint(equalTo: backIcon.topAnchor, constant: -self.buttonsMargin),
                     button.widthAnchor.constraint(equalToConstant: 150),

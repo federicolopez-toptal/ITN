@@ -13,12 +13,11 @@ class PopupView: UIView {
     var bottomConstraint: NSLayoutConstraint?
 
     deinit {
-//        print("Popup removed")
+//        print("Popup removed") // testing
     }
 
-
+    // MARK: - Show
     func pushFromBottom() {
-        
         let darkView = CustomNavController.shared.darkView
         darkView.alpha = 0
         darkView.show()
@@ -35,6 +34,7 @@ class PopupView: UIView {
         
     }
 
+    // MARK: - Hide
     func dismissMe() {
         let darkView = CustomNavController.shared.darkView
     

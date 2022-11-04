@@ -36,8 +36,7 @@ class HeaderCell: UICollectionViewCell {
         self.titleLabel.font = roboto_bold
         self.titleLabel.text = "TEST TOPIC"
         self.contentView.addSubview(self.titleLabel)
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)

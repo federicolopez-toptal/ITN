@@ -40,9 +40,8 @@ class MenuView: UIView {
         container.addSubview(self)
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         
-        self.translatesAutoresizingMaskIntoConstraints = false
         self.menuLeadingConstraint = self.leadingAnchor.constraint(equalTo: container.leadingAnchor)
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.menuLeadingConstraint!,
             self.topAnchor.constraint(equalTo: container.topAnchor),
             self.bottomAnchor.constraint(equalTo: container.bottomAnchor),
@@ -57,8 +56,7 @@ class MenuView: UIView {
         
         self.addSubview(self.list)
         self.list.backgroundColor = self.backgroundColor
-        self.list.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.list.topAnchor.constraint(equalTo: self.topAnchor, constant: topSpace + 45),
@@ -79,8 +77,7 @@ class MenuView: UIView {
         self.versionLabel.text = vInfo
         self.versionLabel.textAlignment = .center
         self.versionLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.3)
-        self.versionLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.versionLabel.activateConstraints([
             self.versionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.versionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace)
         ])
@@ -88,8 +85,7 @@ class MenuView: UIView {
         let closeImage = UIImage(named: "menu.close")
         let closeIcon = UIImageView(image: closeImage)
         self.addSubview(closeIcon)
-        closeIcon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        closeIcon.activateConstraints([
             closeIcon.widthAnchor.constraint(equalToConstant: 32),
             closeIcon.heightAnchor.constraint(equalToConstant: 32),
             closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -18),
@@ -99,8 +95,7 @@ class MenuView: UIView {
         let closeButton = UIButton(type: .system)
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
         self.addSubview(closeButton)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        closeButton.activateConstraints([
             closeButton.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -5),
             closeButton.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: -5),
             closeButton.trailingAnchor.constraint(equalTo: closeIcon.trailingAnchor, constant: 5),

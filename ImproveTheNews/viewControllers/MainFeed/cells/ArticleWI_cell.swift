@@ -46,8 +46,7 @@ class ArticleWI_cell: UICollectionViewCell {
         
         self.contentView.addSubview(bottomLine)
         bottomLine.backgroundColor = .black
-        bottomLine.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        bottomLine.activateConstraints([
             bottomLine.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             bottomLine.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             bottomLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
@@ -56,8 +55,7 @@ class ArticleWI_cell: UICollectionViewCell {
         
         let mainHStack = HSTACK(into: self.contentView, spacing: 16)
         mainHStack.backgroundColor = .clear //.purple
-        mainHStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        mainHStack.activateConstraints([
             mainHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             mainHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             mainHStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
@@ -68,8 +66,7 @@ class ArticleWI_cell: UICollectionViewCell {
         
         self.mainImageView.backgroundColor = .darkGray
         imageVStack.addArrangedSubview(self.mainImageView)
-        self.mainImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.mainImageView.activateConstraints([
             self.mainImageView.widthAnchor.constraint(equalToConstant: 112),
             self.mainImageView.heightAnchor.constraint(equalToConstant: 75)
         ])

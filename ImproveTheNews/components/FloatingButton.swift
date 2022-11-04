@@ -27,8 +27,7 @@ class FloatingButton: UIView {
 
         self.backgroundColor = .clear //.yellow
         container.addSubview(self)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
             self.heightAnchor.constraint(equalToConstant: 80),
             self.widthAnchor.constraint(equalToConstant: 80),
@@ -37,8 +36,7 @@ class FloatingButton: UIView {
         
         let image = UIImageView(image: UIImage(named: "floatingButton"))
         self.addSubview(image)
-        image.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        image.activateConstraints([
             image.heightAnchor.constraint(equalToConstant: 64),
             image.widthAnchor.constraint(equalToConstant: 64),
             image.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -48,8 +46,7 @@ class FloatingButton: UIView {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear
         self.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        button.activateConstraints([
             button.heightAnchor.constraint(equalToConstant: 64),
             button.widthAnchor.constraint(equalToConstant: 64),
             button.trailingAnchor.constraint(equalTo: self.trailingAnchor),

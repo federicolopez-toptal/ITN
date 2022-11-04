@@ -32,8 +32,7 @@ class SplitHeaderCell: UICollectionViewCell {
         
         let hStack = HSTACK(into: self.contentView)
         hStack.backgroundColor = .clear
-        hStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        hStack.activateConstraints([
             hStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             hStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             hStack.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
@@ -42,16 +41,14 @@ class SplitHeaderCell: UICollectionViewCell {
         self.leftLabel.textAlignment = .center
         self.leftLabel.font = merriweather_bold
         hStack.addArrangedSubview(self.leftLabel)
-        self.leftLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.leftLabel.activateConstraints([
             self.leftLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.5)
         ])
             
         self.rightLabel.textAlignment = .center
         self.rightLabel.font = merriweather_bold
         hStack.addArrangedSubview(self.rightLabel)
-        self.rightLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.rightLabel.activateConstraints([
             self.rightLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.5)
         ])
     }

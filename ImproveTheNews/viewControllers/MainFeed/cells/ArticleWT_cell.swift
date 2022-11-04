@@ -45,8 +45,7 @@ class ArticleWT_cell: UICollectionViewCell {
         
         self.contentView.addSubview(bottomLine)
         bottomLine.backgroundColor = .black
-        bottomLine.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        bottomLine.activateConstraints([
             bottomLine.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             bottomLine.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             bottomLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
@@ -58,8 +57,7 @@ class ArticleWT_cell: UICollectionViewCell {
         self.titleLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.3)
         self.titleLabel.textColor = .black
         self.contentView.addSubview(self.titleLabel)
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
@@ -67,8 +65,7 @@ class ArticleWT_cell: UICollectionViewCell {
         
         let iconsHStack = HSTACK(into: self.contentView)
         iconsHStack.backgroundColor = .clear //.cyan.withAlphaComponent(0.3)
-        iconsHStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        iconsHStack.activateConstraints([
             iconsHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             iconsHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10)

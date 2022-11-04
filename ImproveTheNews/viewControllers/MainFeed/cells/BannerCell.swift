@@ -52,16 +52,14 @@ extension BannerCell {
     
     private func buildContent() {
 
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.contentView.activateConstraints([
 //            self.contentView.heightAnchor.constraint(equalToConstant: 200)
             self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width)
         ])
         self.contentView.backgroundColor = .white
         
         self.contentView.addSubview(self.mainContainer)
-        self.mainContainer.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.mainContainer.activateConstraints([
             self.mainContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
@@ -71,8 +69,7 @@ extension BannerCell {
         let sideLine = UIView()
         sideLine.backgroundColor = UIColor(hex: 0xFF643C)
         self.mainContainer.addSubview(sideLine)
-        sideLine.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        sideLine.activateConstraints([
             sideLine.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor),
             sideLine.topAnchor.constraint(equalTo: self.mainContainer.topAnchor),
             sideLine.bottomAnchor.constraint(equalTo: self.mainContainer.bottomAnchor),
@@ -81,8 +78,7 @@ extension BannerCell {
         
         let vStack = VSTACK(into: self.mainContainer, spacing: 10)
         vStack.backgroundColor = .clear //.systemPink
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        vStack.activateConstraints([
             vStack.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 20),
             vStack.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -19),
             vStack.topAnchor.constraint(equalTo: self.mainContainer.topAnchor, constant: 16),
@@ -91,9 +87,8 @@ extension BannerCell {
                 
         self.mainImageView.backgroundColor = .darkGray
         vStack.addArrangedSubview(self.mainImageView)
-        self.mainImageView.translatesAutoresizingMaskIntoConstraints = false
         self.mainImageHeightConstraint = self.mainImageView.heightAnchor.constraint(equalToConstant: 10)
-        NSLayoutConstraint.activate([
+        self.mainImageView.activateConstraints([
             self.mainImageView.leadingAnchor.constraint(equalTo: vStack.leadingAnchor),
             self.mainImageView.trailingAnchor.constraint(equalTo: vStack.trailingAnchor),
             self.mainImageView.topAnchor.constraint(equalTo: vStack.topAnchor),
@@ -105,8 +100,7 @@ extension BannerCell {
         let imageButton = UIButton(type: .system)
         imageButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         vStack.addSubview(imageButton)
-        imageButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        imageButton.activateConstraints([
             imageButton.leadingAnchor.constraint(equalTo: self.mainImageView.leadingAnchor, constant: -5),
             imageButton.topAnchor.constraint(equalTo: self.mainImageView.topAnchor, constant: -5),
             imageButton.bottomAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5),
@@ -137,8 +131,7 @@ extension BannerCell {
         let hStack = HSTACK(into: vStack, spacing: 10)
         hStack.backgroundColor = .clear //.orange
         vStack.addArrangedSubview(hStack)
-        hStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        hStack.activateConstraints([
             hStack.heightAnchor.constraint(equalToConstant: 18)
         ])
 
@@ -159,8 +152,7 @@ extension BannerCell {
         // -------------------------------
         self.checkImage.image = UIImage(named: "slidersPanel.split.check")
         hStack.addSubview(self.checkImage)
-        self.checkImage.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.checkImage.activateConstraints([
             self.checkImage.widthAnchor.constraint(equalToConstant: 18),
             self.checkImage.heightAnchor.constraint(equalToConstant: 14),
             self.checkImage.leadingAnchor.constraint(equalTo: hStack.leadingAnchor, constant: 5),
@@ -171,8 +163,7 @@ extension BannerCell {
         let checkButton = UIButton(type: .system)
         checkButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         hStack.addSubview(checkButton)
-        checkButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        checkButton.activateConstraints([
             checkButton.leadingAnchor.constraint(equalTo: square.leadingAnchor, constant: -5),
             checkButton.topAnchor.constraint(equalTo: square.topAnchor, constant: -5),
             checkButton.bottomAnchor.constraint(equalTo: square.bottomAnchor, constant: 5),
@@ -184,8 +175,7 @@ extension BannerCell {
         self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
         self.closeIcon.backgroundColor = .clear //.systemPink
         vStack.addSubview(self.closeIcon)
-        self.closeIcon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.closeIcon.activateConstraints([
             self.closeIcon.widthAnchor.constraint(equalToConstant: 24),
             self.closeIcon.heightAnchor.constraint(equalToConstant: 24),
             self.closeIcon.trailingAnchor.constraint(equalTo: vStack.trailingAnchor, constant: 0),
@@ -195,8 +185,7 @@ extension BannerCell {
         let closeButton = UIButton(type: .system)
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         vStack.addSubview(closeButton)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        closeButton.activateConstraints([
             closeButton.leadingAnchor.constraint(equalTo: self.closeIcon.leadingAnchor, constant: -5),
             closeButton.trailingAnchor.constraint(equalTo: self.closeIcon.trailingAnchor, constant: 5),
             closeButton.topAnchor.constraint(equalTo: self.closeIcon.topAnchor, constant: -5),

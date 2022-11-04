@@ -29,8 +29,7 @@ class StancePopupView: PopupView {
         
         self.backgroundColor = .systemPink
         navControllerView.addSubview(self)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: navControllerView.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: navControllerView.trailingAnchor),
             self.heightAnchor.constraint(equalToConstant: self.height),
@@ -39,8 +38,7 @@ class StancePopupView: PopupView {
         
         let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("popup.close")))
         self.addSubview(closeIcon)
-        closeIcon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        closeIcon.activateConstraints([
             closeIcon.widthAnchor.constraint(equalToConstant: 24),
             closeIcon.heightAnchor.constraint(equalToConstant: 24),
             closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
@@ -50,8 +48,7 @@ class StancePopupView: PopupView {
         let closeIconButton = UIButton(type: .system)
         closeIconButton.backgroundColor = .clear
         self.addSubview(closeIconButton)
-        closeIconButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        closeIconButton.activateConstraints([
             closeIconButton.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -5),
             closeIconButton.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: -5),
             closeIconButton.widthAnchor.constraint(equalTo: closeIcon.widthAnchor, constant: 10),
@@ -62,8 +59,7 @@ class StancePopupView: PopupView {
         // ------------------
         let titleHStack = HSTACK(into: self, spacing: 7)
         titleHStack.backgroundColor = .clear //.systemPink
-        titleHStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        titleHStack.activateConstraints([
             titleHStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             titleHStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             titleHStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 22),
@@ -83,8 +79,7 @@ class StancePopupView: PopupView {
         self.descriptionLabel.backgroundColor = .clear //.systemPink
         self.descriptionLabel.numberOfLines = 3
         self.descriptionLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
-        self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.descriptionLabel.activateConstraints([
             self.descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             self.descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.descriptionLabel.topAnchor.constraint(equalTo: titleHStack.bottomAnchor, constant: 15)
@@ -95,8 +90,7 @@ class StancePopupView: PopupView {
         let vStack = VSTACK(into: self)
         vStack.backgroundColor = .clear //.yellow
         self.addSubview(vStack)
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        vStack.activateConstraints([
             vStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             vStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             vStack.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 30)
@@ -141,16 +135,14 @@ class StancePopupView: PopupView {
         moreInfoLabel.font = ROBOTO(16)
         moreInfoLabel.backgroundColor = .clear //.black
         self.addSubview(moreInfoLabel)
-        moreInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        moreInfoLabel.activateConstraints([
             moreInfoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             moreInfoLabel.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 16)
         ])
         
         let moreInfoIcon = UIImageView(image: UIImage(named: "infoIcon"))
         self.addSubview(moreInfoIcon)
-        moreInfoIcon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        moreInfoIcon.activateConstraints([
             moreInfoIcon.widthAnchor.constraint(equalToConstant: 20),
             moreInfoIcon.heightAnchor.constraint(equalToConstant: 20),
             moreInfoIcon.trailingAnchor.constraint(equalTo: moreInfoLabel.leadingAnchor, constant: -7),
@@ -160,8 +152,7 @@ class StancePopupView: PopupView {
         let moreInfoButton = UIButton(type: .system)
         moreInfoButton.backgroundColor = .clear //.green.withAlphaComponent(0.25)
         self.addSubview(moreInfoButton)
-        moreInfoButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        moreInfoButton.activateConstraints([
             moreInfoButton.leadingAnchor.constraint(equalTo: moreInfoIcon.leadingAnchor, constant: -5),
             moreInfoButton.trailingAnchor.constraint(equalTo: moreInfoLabel.trailingAnchor, constant: 5),
             moreInfoButton.topAnchor.constraint(equalTo: moreInfoIcon.topAnchor, constant: -5),

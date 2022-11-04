@@ -30,8 +30,7 @@ class ArticleViewController: BaseViewController {
         
         self.view.addSubview(self.line)
         self.line.backgroundColor = .red
-        self.line.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.line.activateConstraints([
             self.line.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.line.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.line.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
@@ -39,8 +38,7 @@ class ArticleViewController: BaseViewController {
         ])
         
         self.view.addSubview(self.webView)
-        self.webView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.webView.activateConstraints([
             self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.webView.topAnchor.constraint(equalTo: self.line.bottomAnchor),

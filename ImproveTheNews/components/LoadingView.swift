@@ -23,8 +23,7 @@ class LoadingView: UIView {
         self.backgroundColor = .black.withAlphaComponent(0.5)
         self.layer.cornerRadius = 15
         container.addSubview(self)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             self.centerYAnchor.constraint(equalTo: container.centerYAnchor),
             self.widthAnchor.constraint(equalToConstant: 70),

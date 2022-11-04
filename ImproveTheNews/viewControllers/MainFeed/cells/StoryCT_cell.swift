@@ -41,8 +41,7 @@ class StoryCT_cell: UICollectionViewCell {
     
         self.mainVStack = VSTACK(into: self.contentView)
         self.mainVStack.backgroundColor = .green
-        self.mainVStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.mainVStack.activateConstraints([
             self.mainVStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
@@ -59,8 +58,7 @@ class StoryCT_cell: UICollectionViewCell {
         self.storyLabel.layer.cornerRadius = 12
         self.storyLabel.addCharacterSpacing(kernValue: characterSpacing)
         self.mainVStack.addSubview(self.storyLabel)
-        self.storyLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.storyLabel.activateConstraints([
             self.storyLabel.leadingAnchor.constraint(equalTo: self.mainVStack.leadingAnchor, constant: 6),
             self.storyLabel.widthAnchor.constraint(equalToConstant: 65),
             self.storyLabel.heightAnchor.constraint(equalToConstant: 23),
@@ -93,8 +91,7 @@ class StoryCT_cell: UICollectionViewCell {
         
         let arrow = UIImageView(image: UIImage(named: "story.lastUpdated.arrow"))
         updateHStack.addArrangedSubview(arrow)
-        arrow.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        arrow.activateConstraints([
             arrow.widthAnchor.constraint(equalToConstant: 18),
             arrow.heightAnchor.constraint(equalToConstant: 18)
         ])

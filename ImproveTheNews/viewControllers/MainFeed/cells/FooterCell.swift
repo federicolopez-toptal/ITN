@@ -36,8 +36,7 @@ class FooterCell: UICollectionViewCell {
         self.contentView.backgroundColor = .white
 
         self.contentView.addSubview(self.logoImageView)
-        self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.logoImageView.activateConstraints([
             self.logoImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
             self.logoImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 28),
             self.logoImageView.widthAnchor.constraint(equalToConstant: 163),
@@ -48,8 +47,7 @@ class FooterCell: UICollectionViewCell {
         self.subTitle.numberOfLines = 2
         self.subTitle.font = ROBOTO(14)
         self.contentView.addSubview(self.subTitle)
-        self.subTitle.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.subTitle.activateConstraints([
             self.subTitle.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
             self.subTitle.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -55),
             self.subTitle.topAnchor.constraint(equalTo: self.logoImageView.bottomAnchor, constant: 18)
@@ -58,16 +56,14 @@ class FooterCell: UICollectionViewCell {
         self.shareLabel.text = "SHARE"
         self.shareLabel.font = ROBOTO_BOLD(12)
         self.contentView.addSubview(self.shareLabel)
-        self.shareLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.shareLabel.activateConstraints([
             self.shareLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
             self.shareLabel.topAnchor.constraint(equalTo: self.subTitle.bottomAnchor, constant: 18)
         ])
         
         let shareIcon = UIImageView(image: UIImage(named: "footerShareIcon"))
         self.contentView.addSubview(shareIcon)
-        shareIcon.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        shareIcon.activateConstraints([
             shareIcon.leadingAnchor.constraint(equalTo: self.shareLabel.trailingAnchor, constant: 8),
             shareIcon.centerYAnchor.constraint(equalTo: self.shareLabel.centerYAnchor),
             shareIcon.widthAnchor.constraint(equalToConstant: 23),
@@ -77,8 +73,7 @@ class FooterCell: UICollectionViewCell {
         let shareButton = UIButton(type: .system)
         shareButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
         self.contentView.addSubview(shareButton)
-        shareButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        shareButton.activateConstraints([
             shareButton.leadingAnchor.constraint(equalTo: self.shareLabel.leadingAnchor, constant: -5),
             shareButton.topAnchor.constraint(equalTo: shareIcon.topAnchor, constant: -5),
             shareButton.trailingAnchor.constraint(equalTo: shareIcon.trailingAnchor, constant: 5),
@@ -87,8 +82,7 @@ class FooterCell: UICollectionViewCell {
         shareButton.addTarget(self, action: #selector(onShareButtonTap(_:)), for: .touchUpInside)
         
         self.contentView.addSubview(self.line)
-        self.line.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.line.activateConstraints([
             self.line.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.line.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.line.heightAnchor.constraint(equalToConstant: 1.0),
@@ -99,8 +93,7 @@ class FooterCell: UICollectionViewCell {
         self.copyrightLabel.numberOfLines = 2
         self.copyrightLabel.font = ROBOTO(12)
         self.contentView.addSubview(self.copyrightLabel)
-        self.copyrightLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.copyrightLabel.activateConstraints([
             self.copyrightLabel.topAnchor.constraint(equalTo: self.line.bottomAnchor, constant: 18),
             self.copyrightLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
             self.copyrightLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
@@ -108,8 +101,7 @@ class FooterCell: UICollectionViewCell {
         
         let socialStack = HSTACK(into: self.contentView, spacing: 8)
         socialStack.backgroundColor = .clear //.yellow
-        socialStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        socialStack.activateConstraints([
             socialStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
             socialStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
             socialStack.topAnchor.constraint(equalTo: self.copyrightLabel.bottomAnchor, constant: 18)
@@ -125,8 +117,7 @@ class FooterCell: UICollectionViewCell {
             socialButton.backgroundColor = .clear //.black
             socialButton.setImage(UIImage(named: "footerSocial_\(i)")?.withRenderingMode(.alwaysOriginal), for: .normal)
             socialStack.addArrangedSubview(socialButton)
-            socialButton.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
+            socialButton.activateConstraints([
                 socialButton.widthAnchor.constraint(equalToConstant: 30),
                 socialButton.heightAnchor.constraint(equalToConstant: 30)
             ])

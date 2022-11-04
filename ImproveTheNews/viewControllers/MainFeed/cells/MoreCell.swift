@@ -44,8 +44,7 @@ class MoreCell: UICollectionViewCell {
         self.titleLabel.layer.masksToBounds = true
         self.titleLabel.layer.cornerRadius = MoreCell.buttonHeight/2
         self.contentView.addSubview(self.titleLabel)
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.titleLabel.activateConstraints([
             self.titleLabel.widthAnchor.constraint(equalToConstant: 101),
             self.titleLabel.heightAnchor.constraint(equalToConstant: MoreCell.buttonHeight),
             self.titleLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
@@ -56,8 +55,7 @@ class MoreCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear //.red.withAlphaComponent(0.25)
         self.contentView.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        button.activateConstraints([
             button.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             button.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             button.widthAnchor.constraint(equalTo: self.titleLabel.widthAnchor, constant: margin*2),

@@ -27,13 +27,12 @@ class SearchViewController: BaseViewController {
     // MARK: - misc
     func buildContent() {
     
-        let topValue: CGFloat = Y_TOP_NOTCH_FIX(65)
+        let topValue: CGFloat = Y_TOP_NOTCH_FIX(48) //65
         let robotoBold = ROBOTO_BOLD(12)
     
         self.searchText.delegate = self
         self.searchText.buildInto(viewController: self)
-        self.searchText.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.searchText.activateConstraints([
             self.searchText.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 11),
             self.searchText.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -11),
             self.searchText.heightAnchor.constraint(equalToConstant: 48),
@@ -45,16 +44,14 @@ class SearchViewController: BaseViewController {
         self.subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.subTitleLabel.addCharacterSpacing(kernValue: 1.5)
         self.view.addSubview(self.subTitleLabel)
-        self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.subTitleLabel.activateConstraints([
             self.subTitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 11),
             self.subTitleLabel.topAnchor.constraint(equalTo: self.searchText.bottomAnchor, constant: 25)
         ])
         
         self.tagsContainer.backgroundColor = .clear
         self.view.addSubview(self.tagsContainer)
-        self.tagsContainer.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.tagsContainer.activateConstraints([
             self.tagsContainer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 11),
             self.tagsContainer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -11),
             self.tagsContainer.topAnchor.constraint(equalTo: self.subTitleLabel.bottomAnchor, constant: 20),
@@ -97,8 +94,7 @@ class SearchViewController: BaseViewController {
             }
 
             self.tagsContainer.addSubview(label)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
+            label.activateConstraints([
                 label.leadingAnchor.constraint(equalTo: self.tagsContainer.leadingAnchor, constant: val_x),
                 label.topAnchor.constraint(equalTo: self.tagsContainer.topAnchor, constant: val_y),
                 label.widthAnchor.constraint(equalToConstant: W),
@@ -109,8 +105,7 @@ class SearchViewController: BaseViewController {
             button.tag = 200 + i
             button.backgroundColor = .clear //.blue.withAlphaComponent(0.5)
             self.tagsContainer.addSubview(button)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
+            button.activateConstraints([
                 button.leadingAnchor.constraint(equalTo: label.leadingAnchor),
                 button.trailingAnchor.constraint(equalTo: label.trailingAnchor),
                 button.topAnchor.constraint(equalTo: label.topAnchor),

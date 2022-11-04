@@ -21,20 +21,20 @@ class DarkView: UIView {
     func buildInto(_ container: UIView) {
         container.addSubview(self)
         self.backgroundColor = .black
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             self.topAnchor.constraint(equalTo: container.topAnchor),
             self.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         ])
+        
         self.hide()
         self.refreshDisplayMode()
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x4A576B).withAlphaComponent(0.4) :
-            UIColor(hex: 0x1D242F).withAlphaComponent(0.3)
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x4A576B).withAlphaComponent(0.6) :
+            UIColor(hex: 0x1D242F).withAlphaComponent(0.4)
     }
 
 }

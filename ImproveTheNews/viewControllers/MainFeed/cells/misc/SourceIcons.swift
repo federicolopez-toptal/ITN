@@ -18,8 +18,7 @@ func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView,
     container.hide()
     REMOVE_ALL_SUBVIEWS(from: container)
     
-    container.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
+    container.activateConstraints([
         container.heightAnchor.constraint(equalToConstant: containerHeight)
     ])
     
@@ -36,8 +35,7 @@ func ADD_SOURCE_ICONS(data sources: [String], to container: UIStackView,
             let newIcon = UIImageView()
             newIcon.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
             iconContainer.addSubview(newIcon)
-            newIcon.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
+            newIcon.activateConstraints([
                 newIcon.widthAnchor.constraint(equalToConstant: 18),
                 newIcon.heightAnchor.constraint(equalToConstant: 18),
                 newIcon.centerYAnchor.constraint(equalTo: container.centerYAnchor)

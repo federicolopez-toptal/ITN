@@ -43,8 +43,7 @@ class StoryCI_cell: UICollectionViewCell {
     
         self.mainVStack = VSTACK(into: self.contentView)
         self.mainVStack.backgroundColor = .green
-        self.mainVStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.mainVStack.activateConstraints([
             self.mainVStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
@@ -52,8 +51,7 @@ class StoryCI_cell: UICollectionViewCell {
         
         self.mainImageView.backgroundColor = .gray
         self.mainVStack.addArrangedSubview(self.mainImageView)
-        self.mainImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.mainImageView.activateConstraints([
             self.mainImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
         self.mainImageView.contentMode = .scaleAspectFill
@@ -62,8 +60,7 @@ class StoryCI_cell: UICollectionViewCell {
 
         self.gradient.backgroundColor = .clear
         self.mainVStack.addSubview(self.gradient)
-        self.gradient.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.gradient.activateConstraints([
             self.gradient.leadingAnchor.constraint(equalTo: self.mainVStack.leadingAnchor),
             self.gradient.trailingAnchor.constraint(equalTo: self.mainVStack.trailingAnchor),
             self.gradient.heightAnchor.constraint(equalToConstant: 45),
@@ -82,8 +79,7 @@ class StoryCI_cell: UICollectionViewCell {
         self.storyLabel.layer.cornerRadius = 12
         self.storyLabel.addCharacterSpacing(kernValue: characterSpacing)
         self.mainVStack.addSubview(self.storyLabel)
-        self.storyLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.storyLabel.activateConstraints([
             self.storyLabel.leadingAnchor.constraint(equalTo: self.mainVStack.leadingAnchor, constant: 6),
             self.storyLabel.bottomAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 0),
             self.storyLabel.widthAnchor.constraint(equalToConstant: 65),
@@ -116,8 +112,7 @@ class StoryCI_cell: UICollectionViewCell {
         
         let arrow = UIImageView(image: UIImage(named: "story.lastUpdated.arrow"))
         updateHStack.addArrangedSubview(arrow)
-        arrow.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        arrow.activateConstraints([
             arrow.widthAnchor.constraint(equalToConstant: 18),
             arrow.heightAnchor.constraint(equalToConstant: 18)
         ])

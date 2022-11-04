@@ -27,16 +27,14 @@ class StanceIconView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         self.layer.cornerRadius = (DIM/2)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.activateConstraints([
             self.widthAnchor.constraint(equalToConstant: DIM),
             self.heightAnchor.constraint(equalToConstant: DIM)
         ])
         
         slider1.backgroundColor = UIColor(hex: 0x93A0B4)
         self.addSubview(slider1)
-        slider1.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        slider1.activateConstraints([
             slider1.widthAnchor.constraint(equalToConstant: 15),
             slider1.heightAnchor.constraint(equalToConstant: 1),
             slider1.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -47,8 +45,7 @@ class StanceIconView: UIView {
         thumb1.layer.cornerRadius = 3.5
         thumb1.backgroundColor = .orange
         slider1.addSubview(thumb1)
-        thumb1.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        thumb1.activateConstraints([
             thumb1.widthAnchor.constraint(equalToConstant: 7),
             thumb1.heightAnchor.constraint(equalToConstant: 7),
             thumb1.centerYAnchor.constraint(equalTo: slider1.centerYAnchor)
@@ -59,8 +56,7 @@ class StanceIconView: UIView {
         // ----------------
         slider2.backgroundColor = UIColor(hex: 0x93A0B4)
         self.addSubview(slider2)
-        slider2.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        slider2.activateConstraints([
             slider2.widthAnchor.constraint(equalToConstant: 15),
             slider2.heightAnchor.constraint(equalToConstant: 1),
             slider2.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -71,8 +67,7 @@ class StanceIconView: UIView {
         thumb2.layer.cornerRadius = 3.5
         thumb2.backgroundColor = .orange
         slider2.addSubview(thumb2)
-        thumb2.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        thumb2.activateConstraints([
             thumb2.widthAnchor.constraint(equalToConstant: 7),
             thumb2.heightAnchor.constraint(equalToConstant: 7),
             thumb2.centerYAnchor.constraint(equalTo: slider2.centerYAnchor)

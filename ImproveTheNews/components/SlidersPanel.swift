@@ -40,9 +40,8 @@ class SlidersPanel: UIView {
         self.layer.cornerRadius = 20
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         container.addSubview(self)
-        self.translatesAutoresizingMaskIntoConstraints = false
-    self.bottomConstraint = self.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        NSLayoutConstraint.activate([
+        self.bottomConstraint = self.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+        self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             self.heightAnchor.constraint(equalToConstant: self.height),
@@ -52,8 +51,7 @@ class SlidersPanel: UIView {
         //Handle
         let handle = UIImageView(image: UIImage(named: "slidersPanel.handle.bright"))
         self.addSubview(handle)
-        handle.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        handle.activateConstraints([
             handle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             handle.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             handle.widthAnchor.constraint(equalToConstant: 50),
@@ -64,8 +62,7 @@ class SlidersPanel: UIView {
         // Rows container
         let rowsVStack = VSTACK(into: self, spacing: 5.0)
         rowsVStack.backgroundColor = .clear
-        rowsVStack.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        rowsVStack.activateConstraints([
             rowsVStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 55),
             rowsVStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 27),
             rowsVStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27)
@@ -96,8 +93,7 @@ class SlidersPanel: UIView {
 
                     let square = UIImageView(image: UIImage(named: "slidersPanel.split.square"))
                     self.addSubview(square)
-                    square.translatesAutoresizingMaskIntoConstraints = false
-                    NSLayoutConstraint.activate([
+                    square.activateConstraints([
                         square.widthAnchor.constraint(equalToConstant: 15),
                         square.heightAnchor.constraint(equalToConstant: 15),
                         square.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -76),
@@ -106,8 +102,7 @@ class SlidersPanel: UIView {
 
                     let check = UIImageView(image: UIImage(named: "slidersPanel.split.check"))
                     self.addSubview(check)
-                    check.translatesAutoresizingMaskIntoConstraints = false
-                    NSLayoutConstraint.activate([
+                    check.activateConstraints([
                         check.widthAnchor.constraint(equalToConstant: 18),
                         check.heightAnchor.constraint(equalToConstant: 14),
                         check.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -71),
@@ -120,8 +115,7 @@ class SlidersPanel: UIView {
                     checkButton.backgroundColor = .clear
                     checkButton.alpha = 0.5
                     self.addSubview(checkButton)
-                    checkButton.translatesAutoresizingMaskIntoConstraints = false
-                    NSLayoutConstraint.activate([
+                    checkButton.activateConstraints([
                         checkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -17),
                         checkButton.widthAnchor.constraint(equalToConstant: 100),
                         checkButton.heightAnchor.constraint(equalToConstant: 35),
@@ -142,8 +136,7 @@ class SlidersPanel: UIView {
                     let hLine = UIView()
                     hLine.backgroundColor = UIColor(hex: 0xFF643C)
                     self.addSubview(hLine)
-                    hLine.translatesAutoresizingMaskIntoConstraints = false
-                    NSLayoutConstraint.activate([
+                    hLine.activateConstraints([
                         hLine.widthAnchor.constraint(equalToConstant: 6),
                         hLine.heightAnchor.constraint(equalToConstant: 20),
                         hLine.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -205,8 +198,7 @@ class SlidersPanel: UIView {
         
         self.coverView.backgroundColor = self.backgroundColor
         self.addSubview(self.coverView)
-        self.coverView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        self.coverView.activateConstraints([
             self.coverView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             self.coverView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
             self.coverView.topAnchor.constraint(equalTo: self.topAnchor, constant: 228),
