@@ -10,7 +10,8 @@ import UIKit
 class CustomNavController: UINavigationController {
 
     static var shared: CustomNavController!
-
+    var didLayout = false
+    
     let menu = MenuView()
     let loading = LoadingView()
     let slidersPanel = SlidersPanel()
@@ -34,7 +35,10 @@ class CustomNavController: UINavigationController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if(!self.menu.built){ self.menu.buildInto(self.view) }
+        if(!self.didLayout) {
+            self.didLayout = true
+            self.menu.buildInto(self.view)
+        }
     }
     
     private func addInitialViewController() {

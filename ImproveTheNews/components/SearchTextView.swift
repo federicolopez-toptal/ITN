@@ -61,7 +61,7 @@ class SearchTextView: UIView {
         self.closeIcon.activateConstraints([
             self.closeIcon.widthAnchor.constraint(equalToConstant: 32),
             self.closeIcon.heightAnchor.constraint(equalToConstant: 32),
-            self.closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -6),
+            self.closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             self.closeIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         

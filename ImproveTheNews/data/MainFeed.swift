@@ -271,7 +271,30 @@ extension MainFeed {
             result += "0" // default value: Dark mode
         }
         
-        result += "ST01VB00VC01VA00VM00VE35oB11"
+        // More Preferences: Show stories
+        result += "ST"
+        if let _showStories = READ(LocalKeys.preferences.showStories) {
+            result += _showStories
+        } else {
+            result += "01" // default value: True
+        }
+        // More Preferences: Show stance icons
+        result += "VB"
+        if let _showStanceIcons = READ(LocalKeys.preferences.showStanceIcons) {
+            result += _showStanceIcons
+        } else {
+            result += "01" // default value: True
+        }
+        // More Preferences: Show stance info popup
+        result += "VC"
+        if let _showStancePopups = READ(LocalKeys.preferences.showStancePopups) {
+            result += _showStancePopups
+        } else {
+            result += "01" // default value: True
+        }
+
+
+        result += "VA00VM00VE35oB11"
         
         
         // Banner(s)

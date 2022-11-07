@@ -35,6 +35,10 @@ class LocalKeys { // Keys to store local values
     class LocalKeys_preferences {
         let displayMode = "pref_displayMode"
         let layout = "pref_layout"
+        
+        let showStanceIcons = "pref_showStanceIcons"
+        let showStancePopups = "pref_showStancePopups"
+        let showStories = "pref_showStories"
     }
     
 }

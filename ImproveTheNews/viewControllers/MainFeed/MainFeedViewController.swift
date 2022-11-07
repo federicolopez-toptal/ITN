@@ -132,8 +132,11 @@ class MainFeedViewController: BaseViewController {
     }
     
     func mustSplit() -> Int {
-        let value = READ(LocalKeys.sliders.split)!
-        return Int(value)!
+        if let _value = READ(LocalKeys.sliders.split) {
+            return Int(_value)!
+        } else {
+            return 0
+        }
     }
 
 }

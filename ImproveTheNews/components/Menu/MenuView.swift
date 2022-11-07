@@ -11,7 +11,6 @@ class MenuView: UIView {
 
     let MENU_WIDTH: CGFloat = 280
 
-    var built = false
     var menuLeadingConstraint: NSLayoutConstraint?
     var list = UITableView()
     var versionLabel = UILabel()
@@ -34,9 +33,6 @@ class MenuView: UIView {
     }
     
     func buildInto(_ container: UIView) {
-        if(self.built) { return }
-        
-        self.built = true
         container.addSubview(self)
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         
@@ -117,7 +113,7 @@ class MenuView: UIView {
             let cell = self.tableView(self.list, cellForRowAt: IndexPath(row: i, section: 0)) as! MenuItemCell
             cell.refreshDisplayMode()
         }
-        
+
         self.list.reloadData()
     }
 

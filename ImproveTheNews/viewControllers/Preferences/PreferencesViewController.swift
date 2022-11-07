@@ -7,10 +7,16 @@
 
 import UIKit
 
+
 class PreferencesViewController: BaseViewController {
 
     let navBar = NavBarView()
     var list = UITableView()
+    var firstTime = false
+
+    let dataProvider: [PreferenceItem] = [ // Items order
+        .checkboxes
+    ]
 
 
 
@@ -30,6 +36,7 @@ class PreferencesViewController: BaseViewController {
             self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
             
             self.buildContent()
+            self.firstTime = true
         }
     }
     
@@ -42,19 +49,14 @@ class PreferencesViewController: BaseViewController {
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+        self.list.separatorStyle = .none
+        self.list.tableFooterView = UIView()
         
-        let tmpLabel = UILabel()
-        tmpLabel.backgroundColor = .green
-        tmpLabel.numberOfLines = 2
-        tmpLabel.textAlignment = .center
-        tmpLabel.font = ROBOTO_BOLD(18)
-        tmpLabel.text = "screen\ncontent"
-        self.view.addSubview(tmpLabel)
-        tmpLabel.activateConstraints([
-            tmpLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            tmpLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
+        self.list.register(PrefCheckboxes_cell.self, forCellReuseIdentifier: PrefCheckboxes_cell.identifier)
         
+        self.list.delegate = self
+        self.list.dataSource = self
+
         self.refreshDisplayMode()
     }
     
@@ -62,6 +64,38 @@ class PreferencesViewController: BaseViewController {
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.list.backgroundColor = self.view.backgroundColor
         self.navBar.refreshDisplayMode()
+        
+        if(!self.firstTime){ return }
+        for (i, _) in self.dataProvider.enumerated() {
+            let indexPath = IndexPath(row: i, section: 0)
+            if let cell = self.getCellForIndexPath(indexPath) as? PrefCheckboxes_cell {
+                cell.refreshDisplayMode()
+            }
+        }
+        
+        self.list.reloadData()
     }
     
+}
+
+// MARK: - UITableView
+extension PreferencesViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataProvider.count
+    }
+    
+    func tableView(_ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        return self.getCellForIndexPath(indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.getCellHeight(indexPath)
+    }
 }

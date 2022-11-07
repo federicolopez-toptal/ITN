@@ -27,7 +27,7 @@ class SearchViewController: BaseViewController {
     // MARK: - misc
     func buildContent() {
     
-        let topValue: CGFloat = Y_TOP_NOTCH_FIX(48) //65
+        let topValue: CGFloat = Y_TOP_NOTCH_FIX(56)
         let robotoBold = ROBOTO_BOLD(12)
     
         self.searchText.delegate = self
