@@ -16,6 +16,8 @@
 		<string>Agregar mas links?</string>
 		<key>Banners</key>
 		<string>Chequear todo lo de los banners en detalle</string>
+		<key>TopicSelector</key>
+		<string>Ocultarlo cuando no haya mas subtopics</string>
 	</dict>
 	<key>Menu UI</key>
 	<dict/>

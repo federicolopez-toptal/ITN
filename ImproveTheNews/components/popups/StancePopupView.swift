@@ -276,7 +276,7 @@ class StancePopupView: PopupView {
     }
     
     @objc func onMoreInfoButtonTap(_ sender: UIButton) {
-        print("MORE INFO!")
+        FUTURE_IMPLEMENTATION("Redirect to info regarding sliders")
     }
     
 }

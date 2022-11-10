@@ -133,3 +133,12 @@ extension CustomNavController {
     }
 
 }
+
+// MARK: - misc
+extension CustomNavController {
+    
+    func infoAlert(message msg: String) {
+        ALERT(vc: self, title: "⚠️ Info", message: msg)
+    }
+    
+}

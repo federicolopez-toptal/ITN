@@ -101,3 +101,19 @@ func TEXT_ONLY() -> Bool {
 func HIDE_KEYBOARD(view: UIView) {
     view.endEditing(true)
 }
+
+func ALERT(vc: UIViewController, title: String? = nil, message: String) {
+    MAIN_THREAD {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+        }
+        
+        alert.addAction(okAction)
+        vc.present(alert, animated: true) {
+        }
+    }
+}
+
+func FUTURE_IMPLEMENTATION(_ text: String) {
+    CustomNavController.shared.infoAlert(message: "Future implementation: " + text)
+}
