@@ -79,7 +79,14 @@ class ArticleCT_cell: UICollectionViewCell {
 
         ADD_SPACER(to: sourcesHStack, width: 5)
         sourcesHStack.addArrangedSubview(self.stanceIcon)
-        self.stanceIcon.delegate = self
+        self.stanceIcon.alpha = 1.0
+        if(READ(LocalKeys.preferences.showStanceIcons)=="00") {
+            self.stanceIcon.alpha = 0
+        }
+        self.stanceIcon.delegate = nil
+        if(READ(LocalKeys.preferences.showStancePopups)=="01") {
+            self.stanceIcon.delegate = self
+        }
         ADD_SPACER(to: sourcesHStack)
 
         ADD_SPACER(to: self.mainVStack, height: 16)
