@@ -86,7 +86,14 @@ struct SourceIcon {
     var name: String
     
     init(_ json: [String: Any]) {
-        self.identifier = (json["shortname"] as! String).lowercased()
+        self.identifier = ""
+        if let _identifier = json["shortname"] as? String {
+            self.identifier = _identifier.lowercased()
+        } else {
+            if let _identifier = json["label"] as? String {
+                self.identifier = _identifier.lowercased()
+            }
+        }        
         self.name = (json["name"] as! String).lowercased()
         
         if let _icon = json["icon"] as? String {
