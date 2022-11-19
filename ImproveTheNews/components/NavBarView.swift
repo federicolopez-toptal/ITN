@@ -55,17 +55,17 @@ class NavBarView: UIView {
         for C in components {
             if(C == .logo) {
                 // ITN logo
-                let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.logo")))
+                let logo = UIImageView(image: UIImage(named: ("navBar.circleLogo")))
                 self.addSubview(logo)
                 logo.activateConstraints([
                     logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-                    logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(59)),
-                    logo.widthAnchor.constraint(equalToConstant: 163),
-                    logo.heightAnchor.constraint(equalToConstant: 27)
+                    logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(50)),
+                    logo.widthAnchor.constraint(equalToConstant: 44),
+                    logo.heightAnchor.constraint(equalToConstant: 44)
                 ])
                 logo.tag = 1
                 self.displayModeComponents.append(logo)
-                
+
                 let button = UIButton(type: .system)
                 button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
                 self.addSubview(button)
@@ -76,6 +76,29 @@ class NavBarView: UIView {
                     button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
                 ])
                 button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
+                
+                
+//                let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.logo")))
+//                self.addSubview(logo)
+//                logo.activateConstraints([
+//                    logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+//                    logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(59)),
+//                    logo.widthAnchor.constraint(equalToConstant: 163),
+//                    logo.heightAnchor.constraint(equalToConstant: 27)
+//                ])
+//                logo.tag = 1
+//                self.displayModeComponents.append(logo)
+//
+//                let button = UIButton(type: .system)
+//                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+//                self.addSubview(button)
+//                button.activateConstraints([
+//                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
+//                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
+//                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
+//                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
+//                ])
+//                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
             }
             
             if(C == .menuIcon) {
@@ -186,7 +209,7 @@ class NavBarView: UIView {
                 let imgView = C as! UIImageView
                 switch(imgView.tag) {
                     case 1: // logo
-                        imgView.image = UIImage(named: DisplayMode.imageName("navBar.logo"))
+                        imgView.image = UIImage(named: DisplayMode.imageName("navBar.circleLogo"))
                     case 2: // menu
                         imgView.image = UIImage(named: DisplayMode.imageName("navBar.menu"))
                     case 3: // search

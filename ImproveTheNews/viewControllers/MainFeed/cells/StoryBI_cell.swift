@@ -16,6 +16,7 @@ class StoryBI_cell: UICollectionViewCell {
     
     let mainImageView = UIImageView()
     let gradient = UIImageView()
+    let gradientBottom = UIView()
     let titleLabel = UILabel()
     let sourcesContainer = UIStackView()
     let timeLabel = UILabel()
@@ -47,17 +48,6 @@ class StoryBI_cell: UICollectionViewCell {
         self.mainImageView.contentMode = .scaleAspectFill
         self.mainImageView.clipsToBounds = true
         
-        self.gradient.backgroundColor = .clear
-        self.contentView.addSubview(self.gradient)
-        self.gradient.activateConstraints([
-            self.gradient.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            self.gradient.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            self.gradient.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            self.gradient.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-        ])
-        self.gradient.contentMode = .scaleToFill
-        self.gradient.clipsToBounds = true
-        
         let vStack = VSTACK(into: self.contentView)
         vStack.backgroundColor = .clear //.lightGray
         vStack.activateConstraints([
@@ -66,10 +56,10 @@ class StoryBI_cell: UICollectionViewCell {
             vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
         ])
         
-    let roboto_bold = ROBOTO_BOLD(13)
+    let roboto_bold = ROBOTO_BOLD(11)
     let roboto = ROBOTO(13)
     let merriweather_bold = MERRIWEATHER_BOLD(18)
-    let characterSpacing: Double = 1.35
+    let characterSpacing: Double = 1.0 //35
         
         let storyHStack = HSTACK(into: vStack)
 
@@ -125,6 +115,29 @@ class StoryBI_cell: UICollectionViewCell {
         ADD_SPACER(to: vStack, height: 10)
         //----------------------------------------
         
+        self.gradient.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.contentView.addSubview(self.gradient)
+        self.gradient.activateConstraints([
+            self.gradient.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.gradient.topAnchor.constraint(equalTo: storyLabel.topAnchor, constant: -20),
+            self.gradient.heightAnchor.constraint(equalToConstant: 80),
+            self.gradient.widthAnchor.constraint(equalTo: self.contentView.widthAnchor)
+        ])
+        self.gradient.contentMode = .scaleToFill
+        self.gradient.clipsToBounds = true
+        
+        self.gradientBottom.backgroundColor = .red
+        //self.gradientBottom.alpha = self.gradient.alpha
+        self.contentView.addSubview(gradientBottom)
+        self.gradientBottom.activateConstraints([
+            self.gradientBottom.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.gradientBottom.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.gradientBottom.topAnchor.constraint(equalTo: self.gradient.bottomAnchor),
+            self.gradientBottom.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+        ])
+        
+        
+        vStack.superview?.bringSubviewToFront(vStack)
     }
     
     func populate(with story: MainFeedArticle) {
@@ -137,6 +150,16 @@ class StoryBI_cell: UICollectionViewCell {
         self.timeLabel.text = "Last updated " + story.time
         ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
         
+        let sourcesHeight: CGFloat = 18
+        let titleHeight: CGFloat = self.titleLabel.calculateHeightFor(width: SCREEN_SIZE().width - 16 - 16)
+        let storyLabelHeight: CGFloat = 23
+        let topMargin: CGFloat = 40
+        let H: CGFloat = 16 + 10 + sourcesHeight + 10 + titleHeight + 8 + storyLabelHeight + topMargin
+        //self.gradientTopConstraint?.constant = H
+        
+        
+        
+        
         self.refreshDisplayMode()
     }
     
@@ -146,10 +169,15 @@ class StoryBI_cell: UICollectionViewCell {
     
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
-        self.gradient.image = UIImage(named: DisplayMode.imageName("story.gradient"))    
+        
+        self.gradient.image = UIImage(named: DisplayMode.imageName("story.shortGradient"))
+        self.gradientBottom.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E242F) : UIColor(hex: 0xE9EAEB)
+        self.gradient.alpha = 1.0
+        //self.gradientBottom.alpha = self.gradient.alpha
     }
     
     static func getHeight(width: CGFloat) -> CGSize {
         return CGSize(width: width, height: 248)
     }
+    
 }
