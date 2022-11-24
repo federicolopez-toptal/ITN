@@ -15,7 +15,7 @@ class StoryCT_cell: UICollectionViewCell {
     
     var mainVStack: UIStackView!
     let storyLabel = UILabel()
-    var titleLabel = StoryCI_cell.createTitleLabel(text: "Lorem ipsum")
+    var titleLabel = StoryCT_cell.createTitleLabel(text: "Lorem ipsum")
     let sourcesContainer = UIStackView()
     let timeLabel = UILabel()
     
@@ -104,7 +104,11 @@ class StoryCT_cell: UICollectionViewCell {
         self.column = column
         
         self.titleLabel.text =  story.title
-        ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
+        if( READ(LocalKeys.preferences.showSourceIcons) == "01" ) {
+            ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
+        } else {
+            ADD_SOURCE_ICONS(data: [], to: self.sourcesContainer)
+        }
         self.timeLabel.text = story.time
     
         self.refreshDisplayMode()
@@ -127,7 +131,7 @@ extension StoryCT_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 7
+        result.numberOfLines = 8
         result.font = StoryCI_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text

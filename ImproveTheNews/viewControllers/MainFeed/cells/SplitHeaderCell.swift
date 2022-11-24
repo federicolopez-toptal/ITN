@@ -38,19 +38,28 @@ class SplitHeaderCell: UICollectionViewCell {
             hStack.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
         
-        self.leftLabel.textAlignment = .center
+        // LEFT
+        let hSubStack1 = HSTACK(into: hStack)
+        hSubStack1.backgroundColor = .clear
+        hSubStack1.activateConstraints([
+            hSubStack1.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.5)
+        ])
+        ADD_SPACER(to: hSubStack1, width: 16)
+        self.leftLabel.textAlignment = .left
         self.leftLabel.font = merriweather_bold
-        hStack.addArrangedSubview(self.leftLabel)
-        self.leftLabel.activateConstraints([
-            self.leftLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.5)
-        ])
+        hSubStack1.addArrangedSubview(self.leftLabel)
             
-        self.rightLabel.textAlignment = .center
-        self.rightLabel.font = merriweather_bold
-        hStack.addArrangedSubview(self.rightLabel)
-        self.rightLabel.activateConstraints([
-            self.rightLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.5)
+        // RIGHT
+        let hSubStack2 = HSTACK(into: hStack)
+        hSubStack2.backgroundColor = .clear
+        hSubStack2.activateConstraints([
+            hSubStack2.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.5)
         ])
+        ADD_SPACER(to: hSubStack2, width: 16)
+        self.rightLabel.textAlignment = .left
+        self.rightLabel.font = merriweather_bold
+        hSubStack2.addArrangedSubview(self.rightLabel)
+        
     }
     
     func populate(with header: DP_splitHeader) {

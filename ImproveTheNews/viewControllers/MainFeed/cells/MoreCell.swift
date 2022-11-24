@@ -45,7 +45,7 @@ class MoreCell: UICollectionViewCell {
         self.titleLabel.layer.cornerRadius = MoreCell.buttonHeight/2
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.widthAnchor.constraint(equalToConstant: 101),
+            self.titleLabel.widthAnchor.constraint(equalToConstant: 115),
             self.titleLabel.heightAnchor.constraint(equalToConstant: MoreCell.buttonHeight),
             self.titleLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)

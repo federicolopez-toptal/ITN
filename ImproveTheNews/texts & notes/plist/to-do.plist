@@ -18,6 +18,8 @@
 		<string>Chequear todo lo de los banners en detalle</string>
 		<key>TopicSelector</key>
 		<string>Ocultarlo cuando no haya mas subtopics</string>
+		<key>vacio</key>
+		<string>De vez en cuando, el feed queda todo vacio</string>
 	</dict>
 	<key>Menu UI</key>
 	<dict/>

@@ -148,7 +148,12 @@ class StoryBI_cell: UICollectionViewCell {
         
         self.titleLabel.text = story.title
         self.timeLabel.text = "Last updated " + story.time
-        ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
+        
+        if( READ(LocalKeys.preferences.showSourceIcons) == "01" ) {
+            ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
+        } else {
+            ADD_SOURCE_ICONS(data: [], to: self.sourcesContainer)
+        }
         
         let sourcesHeight: CGFloat = 18
         let titleHeight: CGFloat = self.titleLabel.calculateHeightFor(width: SCREEN_SIZE().width - 16 - 16)

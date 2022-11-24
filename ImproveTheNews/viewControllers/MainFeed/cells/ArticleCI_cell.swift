@@ -88,11 +88,11 @@ class ArticleCI_cell: UICollectionViewCell {
         ADD_SPACER(to: sourcesHStack, width: 5)
         sourcesHStack.addArrangedSubview(self.stanceIcon)
         self.stanceIcon.alpha = 1.0
-        if(READ(LocalKeys.preferences.showStanceIcons)=="00") {
+        if(!PREFS_SHOW_STANCE_ICONS()) {
             self.stanceIcon.alpha = 0
         }
         self.stanceIcon.delegate = nil
-        if(READ(LocalKeys.preferences.showStancePopups)=="01") {
+        if(PREFS_SHOW_STANCE_POPUPS()) {
             self.stanceIcon.delegate = self
         }
         ADD_SPACER(to: sourcesHStack)
@@ -114,8 +114,12 @@ class ArticleCI_cell: UICollectionViewCell {
         if let _identifier = Sources.shared.search(name: article.source) {
             sourcesArray.append(_identifier)
         }
-        ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer, containerHeight: 28)
-
+        if( READ(LocalKeys.preferences.showSourceIcons) == "01" ) {
+            ADD_SOURCE_ICONS(data: sourcesArray, to: self.sourcesContainer, containerHeight: 28)
+        } else {
+            ADD_SOURCE_ICONS(data: [], to: self.sourcesContainer, containerHeight: 28)
+        }
+        
         var source = article.source
         if let _cleanSource = source.components(separatedBy: " #").first {
             source = _cleanSource
@@ -154,7 +158,7 @@ extension ArticleCI_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 7
+        result.numberOfLines = 8
         result.font = ArticleCI_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text

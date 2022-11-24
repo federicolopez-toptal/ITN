@@ -36,6 +36,7 @@ class LocalKeys { // Keys to store local values
         let displayMode = "pref_displayMode"
         let layout = "pref_layout"
         
+        let showSourceIcons = "pref_showSourceIcons"
         let showStanceIcons = "pref_showStanceIcons"
         let showStancePopups = "pref_showStancePopups"
         let showStories = "pref_showStories"

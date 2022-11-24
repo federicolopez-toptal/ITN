@@ -57,3 +57,26 @@ func MAIN_THREAD(_ closure: @escaping () -> () ) {
         closure()
     }
 }
+
+
+// ---------------------------------------------
+func PREF(key: String) -> Bool {
+    if( READ(key) == "01" ) {
+        return true
+    } else {
+        return false
+    }
+}
+
+func PREFS_SHOW_SOURCE_ICONS() -> Bool {
+    return PREF(key: LocalKeys.preferences.showSourceIcons)
+}
+func PREFS_SHOW_STANCE_ICONS() -> Bool {
+    return PREF(key: LocalKeys.preferences.showStanceIcons)
+}
+func PREFS_SHOW_STANCE_POPUPS() -> Bool {
+    return PREF(key: LocalKeys.preferences.showStancePopups)
+}
+func PREFS_SHOW_STORIES() -> Bool {
+    return PREF(key: LocalKeys.preferences.showStories)
+}

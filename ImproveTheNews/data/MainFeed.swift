@@ -292,9 +292,15 @@ extension MainFeed {
         } else {
             result += "01" // default value: True
         }
+        // More Preferences: Show newspaper flags
+        result += "VA"
+        if let _showFlags = READ(LocalKeys.preferences.showSourceIcons) {
+            result += _showFlags
+        } else {
+            result += "01" // default value: True
+        }
 
-
-        result += "VA00VM00VE35oB11"
+        result += "VM00VE35oB11"
         
         
         // Banner(s)

@@ -91,8 +91,12 @@ class StoryWT_cell: UICollectionViewCell {
     func populate(with story: MainFeedArticle) {
         self.titleLabel.text = story.title
         self.timeLabel.text = "Last updated " + story.time
-        ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
-
+        if( READ(LocalKeys.preferences.showSourceIcons) == "01" ) {
+            ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
+        } else {
+            ADD_SOURCE_ICONS(data: [], to: self.sourcesContainer)
+        }
+        
         self.refreshDisplayMode()
     }
     
@@ -108,7 +112,7 @@ class StoryWT_cell: UICollectionViewCell {
     
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 4
+        result.numberOfLines = 6
         result.font = StoryWT_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
