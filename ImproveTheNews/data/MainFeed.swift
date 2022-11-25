@@ -300,6 +300,16 @@ extension MainFeed {
             result += "01" // default value: True
         }
 
+        // Source Filters
+        if let _sourceFilters = READ(LocalKeys.preferences.sourceFilters) {
+            if(_sourceFilters.count > 1) {
+                if let filters = _sourceFilters.subString(from: 1, count: _sourceFilters.count-1) {
+                    result += filters.replacingOccurrences(of: ",", with: "00")
+                }
+            }
+        }
+
+
         result += "VM00VE35oB11"
         
         

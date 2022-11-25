@@ -28,6 +28,8 @@
 		1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */; };
 		1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */; };
 		1F39574F28DCDE8900DE3C07 /* CustomCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F39574E28DCDE8900DE3C07 /* CustomCollectionView.swift */; };
+		1F3E5E3C292FC2BF00FA090B /* SourceFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */; };
+		1F3E5E3E292FD24E00FA090B /* FilterTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */; };
 		1F47CD8D290F5476003F0003 /* StoryCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */; };
 		1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */; };
 		1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */; };
@@ -130,6 +132,8 @@
 		1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryWT_cell.swift; sourceTree = "<group>"; };
 		1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		1F39574E28DCDE8900DE3C07 /* CustomCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionView.swift; sourceTree = "<group>"; };
+		1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFilterViewController.swift; sourceTree = "<group>"; };
+		1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTextView.swift; sourceTree = "<group>"; };
 		1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCT_cell.swift; sourceTree = "<group>"; };
 		1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCT_cell.swift; sourceTree = "<group>"; };
 		1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -368,6 +372,7 @@
 				1FD2340829159EFD00B85AE9 /* Preferences */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F70BE72291457960061E3FA /* Search */,
+				1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -389,6 +394,7 @@
 				1F8EAECF29085FE30015F6F6 /* BreadcrumbsView.swift */,
 				1F70BE702913FD940061E3FA /* SearchTextView.swift */,
 				1F2306BB291987D600755D71 /* OnOffView.swift */,
+				1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -740,11 +746,13 @@
 				1FD2340C2915A17500B85AE9 /* PrefCheckboxes_cell.swift in Sources */,
 				1FA4CE6F28C2D47F0068DE4A /* BundleExtension.swift in Sources */,
 				1FA8AA3828D1778F00B6C956 /* SourceIcons.swift in Sources */,
+				1F3E5E3C292FC2BF00FA090B /* SourceFilterViewController.swift in Sources */,
 				1FA4CE7928C3DCFB0068DE4A /* SlidersPanel.swift in Sources */,
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
 				1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */,
 				1FA4CE7528C306590068DE4A /* UIViewExtension.swift in Sources */,
 				1F0BFFFF28F5F2C7007280FF /* MoreCell.swift in Sources */,
+				1F3E5E3E292FD24E00FA090B /* FilterTextView.swift in Sources */,
 				1F897CE828CC3B0F00438FC5 /* UI_misc.swift in Sources */,
 				1FF61CC028DAFC4D006DF9AC /* ArticleCI_cell.swift in Sources */,
 				1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */,

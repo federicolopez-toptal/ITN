@@ -13,7 +13,7 @@ class Sources {
 
     var all: [SourceIcon]?
     private let sourcesUrl = API_BASE_URL() + "/news.json" //"/php/api/news/sources.php"
-
+    // example: https://www.improvemynews.com/news.json
 
 
     func checkIfLoaded(callback: @escaping (Bool) -> ()) {
@@ -56,9 +56,16 @@ class Sources {
         let mainNode = json["data"] as! [Any]
         self.all = [SourceIcon]()
         
+        var filters: [String] = READ(LocalKeys.preferences.sourceFilters)?.components(separatedBy: ",") ?? []
+        
         for obj in mainNode {
-            let newSource = SourceIcon(obj as! [String: Any])
-            self.all?.append(newSource)
+            var newSource = SourceIcon(obj as! [String: Any])
+            if(newSource.hasCode()) {
+                if(filters.contains(newSource.code!)) {
+                    newSource.state = false
+                }
+                self.all?.append(newSource)
+            }
         }
     }
     
@@ -69,12 +76,21 @@ class Sources {
     
     func search(name: String) -> String? {
         if let _cleanName = name.components(separatedBy: " #").first {
-            if let _found = self.all?.first(where: { $0.name == _cleanName.lowercased() }) {
+            if let _found = self.all?.first(where: { $0.name.lowercased() == _cleanName.lowercased() }) {
                 return _found.identifier
             }
         }
         
         return nil
+    }
+    
+    func updateSourceState(_ code: String, _ state: Bool) {
+        for (i, icon) in self.all!.enumerated() {
+            if(icon.code == code) {
+                self.all![i].state = state
+                break
+            }
+        }
     }
     
 }
@@ -84,6 +100,9 @@ struct SourceIcon {
     var identifier: String
     var url: String?
     var name: String
+    var paywall: Bool
+    var code: String?
+    var state: Bool = true
     
     init(_ json: [String: Any]) {
         self.identifier = ""
@@ -94,7 +113,7 @@ struct SourceIcon {
                 self.identifier = _identifier.lowercased()
             }
         }        
-        self.name = (json["name"] as! String).lowercased()
+        self.name = (json["name"] as! String) //.lowercased()
         
         if let _icon = json["icon"] as? String {
             if(!_icon.isEmpty) {
@@ -104,6 +123,31 @@ struct SourceIcon {
                 }
                 self.url = value
             }
+        }
+        
+        self.paywall = false
+        if let _paywall = json["paywall"] as? String {
+            if(_paywall == "1"){ self.paywall = true }
+        }
+        
+        if let _code = json["API codes"] as? String {
+            if(_code.count>2) {
+                self.code = _code.subString(from: 0, count: 2)
+            } else {
+                self.code = _code
+            }
+        }        
+    }
+    
+    func hasCode() -> Bool {
+        if let _code = self.code {
+            if(_code.isEmpty) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
         }
     }
 }

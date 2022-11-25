@@ -10,7 +10,7 @@ import UIKit
 class PrefCheckboxes_cell: UITableViewCell {
 
     static let identifier = "PrefCheckboxes_cell"
-    static let heigth: CGFloat = 250
+    static let heigth: CGFloat = 300
 
     private let settings = [
         ("Show source icons", LocalKeys.preferences.showSourceIcons),
@@ -21,7 +21,8 @@ class PrefCheckboxes_cell: UITableViewCell {
 
     let mainContainer = UIView()
     let titleLabel = UILabel()
-
+    let sourcesButton = UIButton(type: .custom)
+    let sourcesLabel = UILabel()
 
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,6 +54,7 @@ class PrefCheckboxes_cell: UITableViewCell {
             self.titleLabel.topAnchor.constraint(equalTo: self.mainContainer.topAnchor, constant: 28),
         ])
         self.addSettings()
+        
         self.refreshDisplayMode()
     }
     
@@ -91,6 +93,24 @@ class PrefCheckboxes_cell: UITableViewCell {
             check.tag = 50 + i
             hStack.addArrangedSubview(check)
         }
+        
+        self.mainContainer.addSubview(self.sourcesButton)
+        self.sourcesButton.activateConstraints([
+            self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 30),
+            self.sourcesButton.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -10),
+            self.sourcesButton.heightAnchor.constraint(equalToConstant: 35),
+            self.sourcesButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 20)
+        ])
+        self.sourcesButton.layer.cornerRadius = 4
+        self.sourcesButton.addTarget(self, action: #selector(sourcesButtonTap(_:)), for: .touchUpInside)
+        
+        self.sourcesLabel.font = ROBOTO_BOLD(11)
+        self.sourcesLabel.text = "SHOW SOURCE FILTERS"
+        self.mainContainer.addSubview(self.sourcesLabel)
+        self.sourcesLabel.activateConstraints([
+            self.sourcesLabel.centerXAnchor.constraint(equalTo: self.sourcesButton.centerXAnchor),
+            self.sourcesLabel.centerYAnchor.constraint(equalTo: self.sourcesButton.centerYAnchor)
+        ])
     }
     
     
@@ -110,6 +130,16 @@ class PrefCheckboxes_cell: UITableViewCell {
             let onOff = hStack.arrangedSubviews[1] as! OnOffView
             onOff.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : .white
         }
+        
+        self.sourcesButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x283241) : UIColor(hex: 0xB4BDCA)
+        self.sourcesLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : .white
+    }
+    
+    // MARK: - Event(s)
+    @objc func sourcesButtonTap(_ sender: UIButton) {
+        let vc = SourceFilterViewController()
+        vc.modalPresentationStyle = .fullScreen
+        CustomNavController.shared.present(vc, animated: true)
     }
 
 }

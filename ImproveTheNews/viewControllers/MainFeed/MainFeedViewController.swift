@@ -62,7 +62,9 @@ class MainFeedViewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             self.loadData()
+            
             //CustomNavController.shared.slidersPanel.show(rows: 2, animated: true)
+            
         }
     }
     
