@@ -12,6 +12,7 @@ import SDWebImage
 class SourceFilterViewController: BaseViewController {
     
     var dataProvider = [SourceIcon]()
+    var sourcesLoaded = false
     
     let titleLabel = UILabel()
     let sTitleLabel = UILabel()
@@ -20,18 +21,30 @@ class SourceFilterViewController: BaseViewController {
     let contentView = UIView()
     
 
-    override func viewDidLoad() {
-        super.viewDidLoad()        
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         if(!self.didLayout) {
+            Sources.shared.checkIfLoaded { _ in // load sources (if needed)
+                self.sourcesLoaded = true
+                MAIN_THREAD {
+                    self.searchForText("")
+                }
+            }
+        
             self.didLayout = true
             self.buildContent()
         }
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        if(!self.didAppear) {
+//            self.didAppear = true
+//            self.loadSources()
+//        }
+//    }
 
     // MARK: - misc
     func buildContent() {
@@ -104,7 +117,7 @@ class SourceFilterViewController: BaseViewController {
         self.scrollView.activateConstraints([
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.scrollView.topAnchor.constraint(equalTo: paywallLabel.bottomAnchor, constant: 20),
+            self.scrollView.topAnchor.constraint(equalTo: paywallLabel.bottomAnchor, constant: 10),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -bottomSpace)
         ])
         
@@ -123,7 +136,7 @@ class SourceFilterViewController: BaseViewController {
         ])
     
         self.refreshDisplayMode()
-        self.searchForText("")
+        if(self.sourcesLoaded){ self.searchForText("") }
     }
     
     override func refreshDisplayMode() {
@@ -152,6 +165,8 @@ extension SourceFilterViewController: FilterTextViewDelegate {
                 obj.name.lowercased().contains(text.lowercased())
             }
         }
+        
+        self.dataProvider = self.dataProvider.sorted(by: { $0.name < $1.name })
         //print("FILTER", self.dataProvider.count)
         //---------------------
         REMOVE_ALL_SUBVIEWS(from: self.contentView)

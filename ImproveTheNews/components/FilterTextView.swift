@@ -58,7 +58,7 @@ class FilterTextView: UIView {
 
         self.mainTextField.font = roboto
         self.mainTextField.textColor = UIColor(hex: 0xFF643C)
-        self.mainTextField.returnKeyType = .search
+        self.mainTextField.returnKeyType = .done
         self.mainTextField.autocapitalizationType = .none
         self.mainTextField.autocorrectionType = .no
         self.mainTextField.smartDashesType = .no

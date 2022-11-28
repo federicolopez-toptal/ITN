@@ -62,9 +62,7 @@ class MainFeedViewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             self.loadData()
-            
-            //CustomNavController.shared.slidersPanel.show(rows: 2, animated: true)
-            
+            self.testFeature()
         }
     }
     
@@ -86,17 +84,17 @@ class MainFeedViewController: BaseViewController {
         UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
             Sources.shared.checkIfLoaded { _ in // load sources (if needed)
                 if(imFirst){ self.data.resetCounting() }
-                
+
                 self.data.loadData(self.topic) { (error) in
                     self.topicSelector.setTopics(self.data.topicNames())
                     self.populateDataProvider()
                     self.refreshList()
-                    
+
                     self.hideLoading()
                     self.list.hideRefresher()
                     self.list.forceUpdateLayoutForVisibleItems()
                     self.refreshVLine()
-                    
+
                     if(self.prevMustSplit != nil) {
                         if(self.prevMustSplit != self.mustSplit()) { self.tapOnLogo() }
                     }
@@ -170,6 +168,12 @@ extension MainFeedViewController: TopicSelectorViewDelegate, BreadcrumbsViewDele
     
 }
 
-
-
-
+extension MainFeedViewController {
+    
+    // Called from viewDidAppear, for testing purposes
+    func testFeature() {
+//        let vc = SourceFilterViewController()
+//        vc.modalPresentationStyle = .fullScreen
+//        CustomNavController.shared.present(vc, animated: true)
+    }
+}
