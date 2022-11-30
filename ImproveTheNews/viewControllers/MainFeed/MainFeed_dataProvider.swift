@@ -32,22 +32,41 @@ extension MainFeedViewController {
             
         */
         
-        var itemsToShowPerTopic = "h,sbi,awi2,awt3,swt,sci,aci3,m"
-        if(TEXT_ONLY()){ itemsToShowPerTopic = "h,swt,awt2,sct,act3,m" }
+        let LOADMORE_LIMIT = 5
+        var itemsToShowPerTopic = ""
+        
+        if(TEXT_IMAGES()) {
+            itemsToShowPerTopic = "h,"
+            for _ in 1...LOADMORE_LIMIT {
+                itemsToShowPerTopic += "sbi,awi2,awt3,swt,sci,aci3,"
+            }
+            itemsToShowPerTopic += "m"
+        } else if(TEXT_ONLY()){
+            itemsToShowPerTopic = "h,"
+            for _ in 1...LOADMORE_LIMIT {
+                itemsToShowPerTopic += "swt,awt2,sct,act3,"
+            }
+            itemsToShowPerTopic += "m"
+        }
         
         let mustSplit = self.mustSplit()
         if(mustSplit > 0) {
-            itemsToShowPerTopic = "h,hsp,aci20,m"
-            if(TEXT_ONLY()){ itemsToShowPerTopic = "h,hsp,act8,m" }
+            if(TEXT_IMAGES()) {
+                itemsToShowPerTopic = "h,hsp"
+                for _ in 1...LOADMORE_LIMIT {
+                    itemsToShowPerTopic += "aci8,"
+                }
+                itemsToShowPerTopic += "m"
+            } else if(TEXT_ONLY()){
+                itemsToShowPerTopic = "h,hsp"
+                for _ in 1...LOADMORE_LIMIT {
+                    itemsToShowPerTopic += "act8,"
+                }
+                itemsToShowPerTopic += "m"
+            }
         }
-        
-            //"h,sbi,awi,m,awt3,swt,sco,aco3"
-            //"h,sbi,awi2,awt3,swt,sco,aco3"
-            //"h,sbi,awi2,awt3,swt" // sco,aco
-            //"h,sbi,sco,aco3,awt2"
-            //"h,sbi,awi2,awt3,swt,sco2"
-            // "h,sbi,awi2,awt3,swt,sco,aco"
 
+        self.data.resetCounting()
         self.dataProvider = [DP_item]()
         for (i, T) in self.data.topics.enumerated() {
 
@@ -94,7 +113,7 @@ extension MainFeedViewController {
         } else if(format == "sp") {
             var L = "LEFT"
             var R = "RIGHT"
-            if(self.mustSplit() == 2){
+            if(self.mustSplit() == 2) {
                 L = "CRITICAL"
                 R = "PRO"
             }
@@ -129,6 +148,7 @@ extension MainFeedViewController {
                     
                     if let _dpItem = dpItem {
                         self.dataProvider.append(_dpItem)
+                        self.data.addCountTo(topic: self.data.topics[i].name)
                     }
                 }
             }
@@ -160,6 +180,7 @@ extension MainFeedViewController {
 
                     if let _dpItem = dpItem {
                         self.dataProvider.append(_dpItem)
+                        self.data.addCountTo(topic: self.data.topics[i].name)
                     }
                 }
             }

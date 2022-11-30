@@ -194,7 +194,7 @@ extension MenuView {
     private func gotoHeadlines_B() {
         if let _vc = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
             _vc.tapOnLogo()
-            _vc.data.resetCounting()
+            //_vc.data.resetCounting() !!!
         }
     }
     

@@ -13,13 +13,14 @@ class MainFeedViewController: BaseViewController {
 
     let navBar = NavBarView()
     let topicSelector = TopicSelectorView()
-    var breadcrumbs: BreadcrumbsView?
     var list = CustomCollectionView()
 
     var topic = "news"
-    let data = MainFeed()
+    let data = MainFeedv2()
     var dataProvider = [DP_item]()
     
+    //!!!
+    var breadcrumbs: BreadcrumbsView?
     var column = 1 //...
     var prevMustSplit: Int?
 
@@ -79,11 +80,11 @@ class MainFeedViewController: BaseViewController {
     // MARK: - Data
     func loadData(showLoading: Bool = true) {
         if(showLoading){ self.showLoading() }
-        let imFirst = self.imFirstViewController()
+        //let imFirst = self.imFirstViewController() !!!
         
         UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
             Sources.shared.checkIfLoaded { _ in // load sources (if needed)
-                if(imFirst){ self.data.resetCounting() }
+                //if(imFirst){ self.data.resetCounting() } !!!
 
                 self.data.loadData(self.topic) { (error) in
                     self.topicSelector.setTopics(self.data.topicNames())
@@ -109,9 +110,9 @@ class MainFeedViewController: BaseViewController {
     
     // MARK: - end
     deinit {
-        if let _prevVC = CustomNavController.shared.viewControllers.last as? MainFeedViewController {
-            _prevVC.data.removeCount()
-        }
+//        if let _prevVC = CustomNavController.shared.viewControllers.last as? MainFeedViewController {
+//            _prevVC.data.removeCount() !!!
+//        }
     }
     
     // MARK: - misc

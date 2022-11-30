@@ -72,12 +72,44 @@ extension MainFeedViewController: ArticleWI_cell_Delegate, ArticleWT_cell_Delega
 extension MainFeedViewController: MoreCellDelegate {
     
     func onShowMoreButtonTap(sender: MoreCell) {
-        let vc = MainFeedViewController()
+//        let vc = MainFeedViewController()
+//        if let _topic = sender.topic {
+//            vc.topic = _topic
+//        }
+//
+//        //self.data.updateCounting() !!!
+//        CustomNavController.shared.pushViewController(vc, animated: true)
+
+        self.showLoading()
+
         if let _topic = sender.topic {
-            vc.topic = _topic
+            print("TOPIC", _topic)
+            self.data.loadMoreData(topic: _topic) { error in
+                self.populateDataProvider()
+                self.refreshList()
+                
+                self.hideLoading()
+                self.list.hideRefresher()
+                self.list.forceUpdateLayoutForVisibleItems()
+                self.refreshVLine()
+            }
         }
         
-        self.data.updateCounting()
-        CustomNavController.shared.pushViewController(vc, animated: true)
     }
 }
+
+/*
+self.topicSelector.setTopics(self.data.topicNames())
+                    self.populateDataProvider()
+                    self.refreshList()
+
+                    self.hideLoading()
+                    self.list.hideRefresher()
+                    self.list.forceUpdateLayoutForVisibleItems()
+                    self.refreshVLine()
+
+                    if(self.prevMustSplit != nil) {
+                        if(self.prevMustSplit != self.mustSplit()) { self.tapOnLogo() }
+                    }
+                    self.prevMustSplit = self.mustSplit()
+*/

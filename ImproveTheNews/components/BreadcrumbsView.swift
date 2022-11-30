@@ -98,18 +98,20 @@ extension BreadcrumbsView {
     }
     
     func getPrevTopicName() -> String {
-        var result = ""
-    
-        if let _nav = CustomNavController.shared {
-            let count = _nav.viewControllers.count
-            if(count>1) {
-                if let _prev = _nav.viewControllers[count-2] as? MainFeedViewController {
-                    result = _prev.data.getMainTopicName()
-                }
-            }
-        }
+//        var result = "" !!!
+//
+//        if let _nav = CustomNavController.shared {
+//            let count = _nav.viewControllers.count
+//            if(count>1) {
+//                if let _prev = _nav.viewControllers[count-2] as? MainFeedViewController {
+//                    result = _prev.data.getMainTopicName()
+//                }
+//            }
+//        }
+//
+//        return result
         
-        return result
+        return "Previous"
     }
 
 }
