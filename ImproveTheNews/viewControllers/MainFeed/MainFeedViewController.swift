@@ -20,7 +20,6 @@ class MainFeedViewController: BaseViewController {
     var dataProvider = [DP_item]()
     
     //!!!
-    var breadcrumbs: BreadcrumbsView?
     var column = 1 //...
     var prevMustSplit: Int?
 
@@ -42,16 +41,14 @@ class MainFeedViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
+            self.navBar.addComponents([.logo])
+            if(!self.imFirstViewController()) {
+                self.navBar.addComponents([.back])
+            }
+            self.navBar.addComponents([.menuIcon, .searchIcon])
             
             self.topicSelector.buildInto(self.view)
             self.topicSelector.delegate = self
-            
-            if(!self.imFirstViewController()) {
-                self.breadcrumbs = BreadcrumbsView()
-                self.breadcrumbs?.buildInto(viewController: self)
-                self.breadcrumbs?.delegate = self
-            }
             
             self.setupList()
         }
@@ -70,7 +67,6 @@ class MainFeedViewController: BaseViewController {
     override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
         self.topicSelector.refreshDisplayMode()
-        self.breadcrumbs?.refreshDisplayMode()
         
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.list.backgroundColor = self.view.backgroundColor
@@ -87,6 +83,10 @@ class MainFeedViewController: BaseViewController {
                 //if(imFirst){ self.data.resetCounting() } !!!
 
                 self.data.loadData(self.topic) { (error) in
+                    if(self.data.topics.count == 0) {
+                        print("FEED VACIO!!!")
+                    }
+                
                     self.topicSelector.setTopics(self.data.topicNames())
                     self.populateDataProvider()
                     self.refreshList()
@@ -118,8 +118,9 @@ class MainFeedViewController: BaseViewController {
     // MARK: - misc
     func tapOnLogo() { // called from the navBar
         MAIN_THREAD {
-            self.topicSelector.scrollToZero()
-            self.onTopicSelected(0)
+//            self.topicSelector.scrollToZero()
+//            self.onTopicSelected(0)
+            
         }
     }
     
@@ -139,6 +140,10 @@ class MainFeedViewController: BaseViewController {
             return 0
         }
     }
+    
+    func scrollToZero() {
+        self.list.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
 
 }
 
@@ -147,21 +152,33 @@ extension MainFeedViewController: TopicSelectorViewDelegate, BreadcrumbsViewDele
 
     func onTopicSelected(_ index: Int) {
         if(index==0) {
-            self.list.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-            return
-        }
-        
-        var i = -1
-        for (j, dp) in self.dataProvider.enumerated() {
-            if let _ = dp as? DP_header {
-                i += 1
-                if(i == index) {
-                    self.list.scrollToItem(at: IndexPath(row: j, section: 0), at: .top, animated: true)
-                    break
-                }
-            }
+            self.scrollToZero()
+        } else {
+            let vc = MainFeedViewController()
+            let topic = self.data.topics[index].name
+            vc.topic = topic
+            CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
+
+    // OLD SCROLLING BEHAVIOR
+//    func onTopicSelected(_ index: Int) {
+//        if(index==0) {
+//            self.list.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+//            return
+//        }
+//
+//        var i = -1
+//        for (j, dp) in self.dataProvider.enumerated() {
+//            if let _ = dp as? DP_header {
+//                i += 1
+//                if(i == index) {
+//                    self.list.scrollToItem(at: IndexPath(row: j, section: 0), at: .top, animated: true)
+//                    break
+//                }
+//            }
+//        }
+//    }
     
     func breadcrumbOnTap(sender: BreadcrumbsView) {
         CustomNavController.shared.popViewController(animated: true)

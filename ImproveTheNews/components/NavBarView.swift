@@ -12,6 +12,7 @@ enum NavBarViewComponents {
     case logo
     case menuIcon
     case searchIcon
+    case back
     case backToFeedIcon
 }
 
@@ -76,29 +77,6 @@ class NavBarView: UIView {
                     button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
                 ])
                 button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
-                
-                
-//                let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.logo")))
-//                self.addSubview(logo)
-//                logo.activateConstraints([
-//                    logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-//                    logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(59)),
-//                    logo.widthAnchor.constraint(equalToConstant: 163),
-//                    logo.heightAnchor.constraint(equalToConstant: 27)
-//                ])
-//                logo.tag = 1
-//                self.displayModeComponents.append(logo)
-//
-//                let button = UIButton(type: .system)
-//                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
-//                self.addSubview(button)
-//                button.activateConstraints([
-//                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
-//                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
-//                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
-//                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
-//                ])
-//                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
             }
             
             if(C == .menuIcon) {
@@ -129,6 +107,7 @@ class NavBarView: UIView {
             }
             
             if(C == .searchIcon) {
+                // Search
                 let searchIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.search")))
                 self.addSubview(searchIcon)
                 searchIcon.activateConstraints([
@@ -155,7 +134,7 @@ class NavBarView: UIView {
             }
             
             if(C == .backToFeedIcon) {
-                // Menu
+                // Back to feed (from the article content)
                 let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
                 self.addSubview(backIcon)
                 backIcon.activateConstraints([
@@ -194,6 +173,33 @@ class NavBarView: UIView {
                 
                 self.left_x += 24 + 110 + 15
             }
+            
+            if(C == .back) {
+                // Back
+                let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
+                self.addSubview(backIcon)
+                backIcon.activateConstraints([
+                    backIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x),
+                    backIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    backIcon.widthAnchor.constraint(equalToConstant: 24),
+                    backIcon.heightAnchor.constraint(equalToConstant: 24)
+                ])
+                backIcon.tag = 5
+                self.displayModeComponents.append(backIcon)
+
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: backIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: backIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.trailingAnchor.constraint(equalTo: backIcon.trailingAnchor, constant: self.buttonsMargin),
+                    button.bottomAnchor.constraint(equalTo: backIcon.bottomAnchor, constant: self.buttonsMargin)
+                ])
+                button.addTarget(self, action: #selector(onBackButtonTap(_:)), for: .touchUpInside)
+                
+                self.left_x += 24 + 15
+            }
         }
         
         self.refreshDisplayMode()
@@ -214,7 +220,9 @@ class NavBarView: UIView {
                         imgView.image = UIImage(named: DisplayMode.imageName("navBar.menu"))
                     case 3: // search
                         imgView.image = UIImage(named: DisplayMode.imageName("navBar.search"))
-                    case 4: // back
+                    case 4: // back (+ text)
+                        imgView.image = UIImage(named: DisplayMode.imageName("back.button"))
+                    case 6: // back
                         imgView.image = UIImage(named: DisplayMode.imageName("back.button"))
                     
                     default:
@@ -259,7 +267,8 @@ extension NavBarView {
     
     @objc func onLogoButtonTap(_ sender: UIButton) {
         if let _vc = self.viewController as? MainFeedViewController {
-            _vc.tapOnLogo()
+            //_vc.tapOnLogo()
+            _vc.scrollToZero()
         }
     }
     

@@ -17,10 +17,7 @@ extension MainFeedViewController {
         self.list.customDelegate = self
         
         var topValue: CGFloat = NavBarView.HEIGHT() + TopicSelectorView.HEIGHT()
-        if(self.breadcrumbs != nil) {
-            topValue += BreadcrumbsView.HEIGHT()
-        }
-        
+
         self.view.addSubview(self.list)
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),

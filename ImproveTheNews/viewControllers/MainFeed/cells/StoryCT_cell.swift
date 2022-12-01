@@ -36,7 +36,7 @@ class StoryCT_cell: UICollectionViewCell {
         self.contentView.backgroundColor = .white
         
     let roboto = ROBOTO(13)
-    let roboto_bold = ROBOTO_BOLD(13)
+    let roboto_bold = ROBOTO_BOLD(11)
     let characterSpacing: Double = 1.35
     
         self.mainVStack = VSTACK(into: self.contentView)

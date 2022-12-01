@@ -33,7 +33,7 @@ class StoryWT_cell: UICollectionViewCell {
     private func buildContent() {
         self.contentView.backgroundColor = .white
         
-    let roboto_bold = ROBOTO_BOLD(13)
+    let roboto_bold = ROBOTO_BOLD(11)
     let characterSpacing: Double = 1.35
     let roboto = ROBOTO(13)
         

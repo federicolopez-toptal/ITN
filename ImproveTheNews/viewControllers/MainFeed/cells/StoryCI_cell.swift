@@ -38,7 +38,7 @@ class StoryCI_cell: UICollectionViewCell {
         self.contentView.backgroundColor = .white
         
     let roboto = ROBOTO(13)
-    let roboto_bold = ROBOTO_BOLD(13)
+    let roboto_bold = ROBOTO_BOLD(11)
     let characterSpacing: Double = 1.35
     
         self.mainVStack = VSTACK(into: self.contentView)
@@ -73,7 +73,6 @@ class StoryCI_cell: UICollectionViewCell {
         self.storyLabel.textColor = .white
         self.storyLabel.text = "STORY"
         self.storyLabel.textAlignment = .center
-        
         self.storyLabel.font = roboto_bold
         self.storyLabel.layer.masksToBounds = true
         self.storyLabel.layer.cornerRadius = 12
