@@ -135,7 +135,7 @@ class ArticleWT_cell: UICollectionViewCell {
     
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 6
+        result.numberOfLines = 8
         result.font = ArticleWT_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text

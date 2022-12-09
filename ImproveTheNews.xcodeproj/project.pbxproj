@@ -26,6 +26,7 @@
 		1F22E2EB28C6E5E0007F00D1 /* UINavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2EA28C6E5E0007F00D1 /* UINavigationControllerExtension.swift */; };
 		1F2306BC291987D600755D71 /* OnOffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2306BB291987D600755D71 /* OnOffView.swift */; };
 		1F23DABB28ECAE4D009D9AB1 /* MainFeed_collectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F23DABA28ECAE4D009D9AB1 /* MainFeed_collectionView.swift */; };
+		1F2D3228294230CA00BA1B00 /* CircleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */; };
 		1F2D9FD428D36F6A00CE3008 /* ArticleWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */; };
 		1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */; };
 		1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */; };
@@ -38,6 +39,7 @@
 		1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */; };
 		1F70BE712913FD940061E3FA /* SearchTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE702913FD940061E3FA /* SearchTextView.swift */; };
 		1F70BE74291457B70061E3FA /* Search_topics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE73291457B70061E3FA /* Search_topics.swift */; };
+		1F88B406293FC67E0024904E /* TourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F88B405293FC67E0024904E /* TourView.swift */; };
 		1F897CE328CC322900438FC5 /* Sources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F897CE228CC322900438FC5 /* Sources.swift */; };
 		1F897CE628CC380600438FC5 /* Json_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F897CE528CC380600438FC5 /* Json_misc.swift */; };
 		1F897CE828CC3B0F00438FC5 /* UI_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F897CE728CC3B0F00438FC5 /* UI_misc.swift */; };
@@ -132,6 +134,7 @@
 		1F22E2EA28C6E5E0007F00D1 /* UINavigationControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtension.swift; sourceTree = "<group>"; };
 		1F2306BB291987D600755D71 /* OnOffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnOffView.swift; sourceTree = "<group>"; };
 		1F23DABA28ECAE4D009D9AB1 /* MainFeed_collectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_collectionView.swift; sourceTree = "<group>"; };
+		1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnimation.swift; sourceTree = "<group>"; };
 		1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWT_cell.swift; sourceTree = "<group>"; };
 		1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryWT_cell.swift; sourceTree = "<group>"; };
 		1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
@@ -144,6 +147,7 @@
 		1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1F70BE702913FD940061E3FA /* SearchTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextView.swift; sourceTree = "<group>"; };
 		1F70BE73291457B70061E3FA /* Search_topics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search_topics.swift; sourceTree = "<group>"; };
+		1F88B405293FC67E0024904E /* TourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourView.swift; sourceTree = "<group>"; };
 		1F897CE228CC322900438FC5 /* Sources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources.swift; sourceTree = "<group>"; };
 		1F897CE528CC380600438FC5 /* Json_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json_misc.swift; sourceTree = "<group>"; };
 		1F897CE728CC3B0F00438FC5 /* UI_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI_misc.swift; sourceTree = "<group>"; };
@@ -384,21 +388,20 @@
 		1F95135F28BFC61A00A77AB6 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				1FD5BDF428DC1313003E650F /* DarkView.swift */,
+				1FBCA44D294122B700FBF997 /* CustomNavController */,
 				1FD5BDEF28DC0F7A003E650F /* popups */,
-				1F95136028BFC64300A77AB6 /* CustomNavController.swift */,
 				1F7E777128E362160024D792 /* CustomCollectionView */,
-				1FA4CE7628C3DAEE0068DE4A /* LoadingView.swift */,
+				1FD2340229155F0000B85AE9 /* Menu */,
+				1FBCA44E294122D000FBF997 /* TextFields */,
 				1FA4CE7828C3DCFB0068DE4A /* SlidersPanel.swift */,
 				1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */,
 				1FEE16EA28C833BF0079BE54 /* NavBarView.swift */,
-				1FD2340229155F0000B85AE9 /* Menu */,
 				1FEE16EC28C83CED0079BE54 /* TopicSelectorView.swift */,
 				1FA1728528D2AF6E00693B85 /* StanceIconView.swift */,
 				1F8EAECF29085FE30015F6F6 /* BreadcrumbsView.swift */,
-				1F70BE702913FD940061E3FA /* SearchTextView.swift */,
 				1F2306BB291987D600755D71 /* OnOffView.swift */,
-				1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */,
+				1F88B405293FC67E0024904E /* TourView.swift */,
+				1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -465,6 +468,25 @@
 				1FA8AA3728D1778F00B6C956 /* SourceIcons.swift */,
 			);
 			path = misc;
+			sourceTree = "<group>";
+		};
+		1FBCA44D294122B700FBF997 /* CustomNavController */ = {
+			isa = PBXGroup;
+			children = (
+				1F95136028BFC64300A77AB6 /* CustomNavController.swift */,
+				1FD5BDF428DC1313003E650F /* DarkView.swift */,
+				1FA4CE7628C3DAEE0068DE4A /* LoadingView.swift */,
+			);
+			path = CustomNavController;
+			sourceTree = "<group>";
+		};
+		1FBCA44E294122D000FBF997 /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				1F70BE702913FD940061E3FA /* SearchTextView.swift */,
+				1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */,
+			);
+			path = TextFields;
 			sourceTree = "<group>";
 		};
 		1FD2340229155F0000B85AE9 /* Menu */ = {
@@ -719,6 +741,7 @@
 				1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */,
 				1F9538DC28FF337A00251598 /* StancePopupView.swift in Sources */,
 				1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */,
+				1F2D3228294230CA00BA1B00 /* CircleAnimation.swift in Sources */,
 				1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */,
 				1FD5BDF328DC11DC003E650F /* PopupView.swift in Sources */,
 				1FF61CBE28DAE50B006DF9AC /* StoryCI_cell.swift in Sources */,
@@ -745,6 +768,7 @@
 				1F1788AD2937CBC1003F528E /* TrashCode.swift in Sources */,
 				1FD5BDEE28DC01AA003E650F /* ArticleViewController.swift in Sources */,
 				1F95134328BFB92E00A77AB6 /* SceneDelegate.swift in Sources */,
+				1F88B406293FC67E0024904E /* TourView.swift in Sources */,
 				1F025CB228E133D800AA866D /* BannerCell.swift in Sources */,
 				1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */,
 				1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */,
@@ -926,7 +950,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -962,7 +986,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -1052,7 +1076,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

@@ -11,6 +11,7 @@ class CustomNavController: UINavigationController {
 
     static var shared: CustomNavController!
     var didLayout = false
+    var showTour = false
     
     let menu = MenuView()
     let loading = LoadingView()
@@ -119,13 +120,13 @@ extension CustomNavController {
         self.floatingButton.hide()
     }
     
-    func dismissMenu() {
+    func dismissMenu(showDarkBackground: Bool = false) {
         self.menu.menuLeadingConstraint?.constant = -self.menu.MENU_WIDTH
         UIView.animate(withDuration: 0.3) {
-            self.darkView.alpha = 0
+            if(!showDarkBackground){ self.darkView.alpha = 0 }
             self.view.layoutIfNeeded()
         } completion: { _ in
-            self.darkView.hide()
+            if(!showDarkBackground){ self.darkView.hide() }
         }
     
         self.slidersPanel.show()

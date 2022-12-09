@@ -28,6 +28,7 @@ class MainFeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.preferencesSetDefaultValues()
         
         NotificationCenter.default.addObserver(self,
             selector: #selector(self.loadDataFromNotification),
@@ -100,6 +101,14 @@ class MainFeedViewController: BaseViewController {
                         if(self.prevMustSplit != self.mustSplit()) { self.tapOnLogo() }
                     }
                     self.prevMustSplit = self.mustSplit()
+                    
+                    // TOUR
+                    if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
+                        WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
+                        CustomNavController.shared.showTour = false
+                        self.startTour()
+                    }
+                    
                 }
             }
         }
@@ -118,9 +127,8 @@ class MainFeedViewController: BaseViewController {
     // MARK: - misc
     func tapOnLogo() { // called from the navBar
         MAIN_THREAD {
-//            self.topicSelector.scrollToZero()
-//            self.onTopicSelected(0)
-            
+            self.topicSelector.scrollToZero()
+            self.scrollToZero()
         }
     }
     
@@ -187,6 +195,39 @@ extension MainFeedViewController: TopicSelectorViewDelegate, BreadcrumbsViewDele
 }
 
 extension MainFeedViewController {
+    
+    func preferencesSetDefaultValues() {
+        // show stories
+        if(READ(LocalKeys.preferences.showStories)==nil) {
+            WRITE(LocalKeys.preferences.showStories, value: "01")
+        }
+    
+        // show source icons
+        if(READ(LocalKeys.preferences.showSourceIcons)==nil) {
+            WRITE(LocalKeys.preferences.showSourceIcons, value: "01")
+        }
+        
+        // show stance icons
+        if(READ(LocalKeys.preferences.showStanceIcons)==nil) {
+            WRITE(LocalKeys.preferences.showStanceIcons, value: "01")
+        }
+        
+        // stance popups
+        if(READ(LocalKeys.preferences.showStancePopups)==nil) {
+            WRITE(LocalKeys.preferences.showStancePopups, value: "01")
+        }
+        
+    }
+    
+    func startTour() {
+        MAIN_THREAD {
+            CustomNavController.shared.slidersPanel.makeSureIsClosed()
+            CustomNavController.shared.slidersPanel.forceSplitOff()
+        
+            let tour = TourView(buildInto: CustomNavController.shared.view)
+            tour.start()
+        }
+    }
     
     // Called from viewDidAppear, for testing purposes
     func testFeature() {

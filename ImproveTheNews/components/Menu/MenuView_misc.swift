@@ -14,6 +14,7 @@ enum MenuITem {
     case headlines
     case layout
     case preferences
+    case tour
 }
 
 // ------------
@@ -36,6 +37,9 @@ extension MenuView {
                 
             case .preferences:
                 result = "Preferences"
+                
+            case .tour:
+                result = "Tour"
                 
             default:
                 result = ""
@@ -62,6 +66,9 @@ extension MenuView {
             case .preferences:
                 icon = "preferences"
                 
+            case .tour:
+                icon = "tour"
+                
             default:
                 icon = ""
         }
@@ -84,6 +91,9 @@ extension MenuView {
                 
             case .preferences:
                 self.presentPreferences()
+                
+            case .tour:
+                self.startTour()
                 
             default:
                 NOTHING()

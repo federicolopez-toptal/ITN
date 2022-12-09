@@ -55,7 +55,7 @@ class FloatingButton: UIView {
         button.addTarget(self, action: #selector(floatingButtonOnTap(_:)), for: .touchUpInside)
     }
     
-    @objc func floatingButtonOnTap(_ sender: UIButton) {
+    @objc func floatingButtonOnTap(_ sender: UIButton?) {
         self.panel?.floatingButtonOnTap()
     }
 

@@ -18,6 +18,7 @@ class MenuView: UIView {
     let dataProvider: [MenuITem] = [ // Items order
         .headlines,
         .displayMode,
+        .tour,
         .preferences,
         .layout
     ]
@@ -223,6 +224,22 @@ extension MenuView {
                 CustomNavController.shared.floatingButton.show()
             }
         }
+    }
+    
+    // ---------
+    func startTour() {
+        CustomNavController.shared.showTour = true
+        CustomNavController.shared.slidersPanel.makeSureIsClosed()
+        CustomNavController.shared.slidersPanel.forceSplitOff()
+        
+        let vc = MainFeedViewController()
+        CustomNavController.shared.viewControllers = [vc]
+        
+        DELAY(0.3) {
+            self.dismissMe()
+        }
+        
+        // TODO: Llamar al Tour sin recargar las news (si ya estaban cargadas)
     }
     
 }

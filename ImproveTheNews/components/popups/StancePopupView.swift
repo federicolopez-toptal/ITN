@@ -102,7 +102,7 @@ class StancePopupView: PopupView {
             vStack.addArrangedSubview(sliderHStack)
             
             let leftLabel = UILabel()
-            leftLabel.text = (i==0) ? "LEFT" : "CRITICAL"
+            leftLabel.text = (i==1) ? "LEFT" : "CRITICAL"
             leftLabel.textColor = UIColor(hex: 0x93A0B4)
             leftLabel.font = ROBOTO(13)
             leftLabel.addCharacterSpacing(kernValue: characterSpacing)
@@ -111,7 +111,7 @@ class StancePopupView: PopupView {
             ADD_SPACER(to: sliderHStack)
             
             let rightLabel = UILabel()
-            rightLabel.text = (i==0) ? "RIGHT" : "PRO"
+            rightLabel.text = (i==1) ? "RIGHT" : "PRO"
             rightLabel.textColor = UIColor(hex: 0x93A0B4)
             rightLabel.font = ROBOTO(13)
             rightLabel.addCharacterSpacing(kernValue: characterSpacing)

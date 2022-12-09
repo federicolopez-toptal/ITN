@@ -20,6 +20,8 @@
 		<string>Ocultarlo cuando no haya mas subtopics</string>
 		<key>vacio</key>
 		<string>De vez en cuando, el feed queda todo vacio</string>
+		<key>Tour</key>
+		<string>https://www.figma.com/file/XI89THoqFGuLmzLCx1OGBC/Onboarding?t=UTqcemQ2BOYPe0Zd-0</string>
 	</dict>
 	<key>Menu UI</key>
 	<dict/>

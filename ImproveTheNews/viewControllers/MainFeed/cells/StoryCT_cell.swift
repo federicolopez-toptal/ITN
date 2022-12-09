@@ -131,7 +131,7 @@ extension StoryCT_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 8
+        result.numberOfLines = 10
         result.font = StoryCI_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text

@@ -239,6 +239,90 @@ extension MainFeedv2 {
     }
     
     // ----------------------------------------------
+    /*
+        Example:
+        >> LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11yT04
+    
+        Sliders panel values (00 to 99)
+            LR  Left-Right
+            PE  Pro-Establishment
+            NU  Nuance (from writing style)
+            DE  Depth (Breezy/Detailed)
+            SL  Shelft-Life
+            RE  Recency
+            
+        SS  Slider status
+            1st digit
+                0   No split
+                1   LR split
+                2   PE split
+                
+            2nd digit
+                0   sliders panel closed
+                1   sliders panel showing 2 rows
+                2   sliders panel showing all 6 rows
+                
+        LA  Layout selection
+            1st digit
+                0   Dense & Intense
+                1   Text only
+                2   Big & Beautiful
+            
+            2nd digit
+                0   Dark mode
+                1   Bright mode
+                
+        MORE PREFERENCES
+            ST  Show stories
+                00 no
+                01 yes
+                
+            VA Show newspaper flags
+                00 yes
+                01 no
+                
+            VB  Show newspaper stance icons
+                00  yes
+                01  no
+                
+            VC  Show newspaper info popup
+                00 yes
+                01 no
+                
+            VM  Show markups
+                00  yes
+                01  no
+                
+        VE VERSION code
+            1st digit
+                2   website
+                3   iOS
+                4   android
+                
+            2nd digit
+                minor version number
+                example: From version "1.5.0" -> 5
+                
+        oB  ONBOARDING status
+            1st digit
+                1   hidden
+                2   shown
+                
+            2nd digit
+                current step (0...6)
+                10 if never cancelled
+                
+        BANNER(s)
+            yT  YouTube banner
+                01  Banner shown, no user interaction
+                02  User tapped on "close"
+                03  User check "Don't show again", then tap on "close"
+                04  User interaction (tap on banner, opened video)
+                
+        Example:
+        >> LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11yT04
+    */
+    
     private func sliderValues() -> String {
         var result = ""
         
@@ -323,8 +407,15 @@ extension MainFeedv2 {
         }
 
 
-        result += "VM00VE35oB11"
+        result += "VM00VE35" //oB11"
         
+        // Onboarding
+        result += "oB"
+        if let _onboarding = READ(LocalKeys.preferences.onBoardingState) {
+            result += _onboarding
+        } else {
+            result += "10" // default value: Hidden + Step 0
+        }
         
         // Banner(s)
         if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {

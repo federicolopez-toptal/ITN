@@ -363,7 +363,6 @@ extension SlidersPanel {
         }
         
         self.checkSplitComponents()
-//        print("SPLIT", self.split)
         WRITE(LocalKeys.sliders.split, value: String(self.split))
         NOTIFY(Notification_reloadMainFeed)
     }
@@ -375,6 +374,20 @@ extension SlidersPanel {
             self.show(rows: 0, animated: true)
         } else if(self.rowsShown==6) {
             self.show(rows: 2, animated: true)
+        }
+    }
+    
+    func makeSureIsClosed() {
+        if(self.rowsShown > 0) {
+            self.show(rows: 0, animated: true)
+        }
+    }
+    
+    func forceSplitOff() {
+        if(self.split != 0) {
+            self.split = 0
+            self.checkSplitComponents()
+            WRITE(LocalKeys.sliders.split, value: String(self.split))
         }
     }
     
