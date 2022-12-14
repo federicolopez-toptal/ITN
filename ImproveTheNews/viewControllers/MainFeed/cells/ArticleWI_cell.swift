@@ -14,7 +14,7 @@ protocol ArticleWI_cell_Delegate: AnyObject {
 class ArticleWI_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWI_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(16)
+    static let merriweather_bold = MERRIWEATHER_BOLD(15)
     weak var delegate: ArticleWI_cell_Delegate?
     
     let mainImageView = UIImageView()
@@ -116,6 +116,7 @@ class ArticleWI_cell: UICollectionViewCell {
         }
         
         self.titleLabel.text = article.title
+        self.titleLabel.setLineSpacing(lineSpacing: 2.0)
         
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: article.source) {

@@ -14,7 +14,7 @@ protocol ArticleCI_cell_Delegate: AnyObject {
 class ArticleCI_cell: UICollectionViewCell {
     
     static let identifier = "ArticleCI_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(18)
+    static let merriweather_bold = MERRIWEATHER_BOLD(16)
     var column: Int = 1
     weak var delegate: ArticleCI_cell_Delegate?
     
@@ -109,7 +109,8 @@ class ArticleCI_cell: UICollectionViewCell {
         }
 
         self.titleLabel.text = article.title
-
+        self.titleLabel.setLineSpacing(lineSpacing: 2.0)
+        
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: article.source) {
             sourcesArray.append(_identifier)
@@ -158,7 +159,7 @@ extension ArticleCI_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 10
+        result.numberOfLines = 15
         result.font = ArticleCI_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text

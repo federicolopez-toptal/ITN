@@ -10,7 +10,7 @@ import UIKit
 class StoryCI_cell: UICollectionViewCell {
 
     static let identifier = "StoryCI_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(18)
+    static let merriweather_bold = MERRIWEATHER_BOLD(16)
     var column: Int = 1
     
     var mainVStack: UIStackView!
@@ -129,6 +129,8 @@ class StoryCI_cell: UICollectionViewCell {
         }
 
         self.titleLabel.text =  story.title
+        self.titleLabel.setLineSpacing(lineSpacing: 2.0)
+        
         if( READ(LocalKeys.preferences.showSourceIcons) == "01" ) {
             ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
         } else {
@@ -158,7 +160,7 @@ extension StoryCI_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 10
+        result.numberOfLines = 15
         result.font = StoryCI_cell.merriweather_bold
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
