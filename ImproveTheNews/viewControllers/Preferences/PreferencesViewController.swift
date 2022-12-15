@@ -15,7 +15,8 @@ class PreferencesViewController: BaseViewController {
     var firstTime = false
 
     let dataProvider: [PreferenceItem] = [ // Items order
-        .checkboxes
+        .checkboxes,
+        .sliders
     ]
 
 
@@ -53,6 +54,7 @@ class PreferencesViewController: BaseViewController {
         self.list.tableFooterView = UIView()
         
         self.list.register(PrefCheckboxes_cell.self, forCellReuseIdentifier: PrefCheckboxes_cell.identifier)
+        self.list.register(PrefSliders_cell.self, forCellReuseIdentifier: PrefSliders_cell.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -71,6 +73,9 @@ class PreferencesViewController: BaseViewController {
             if let cell = self.getCellForIndexPath(indexPath) as? PrefCheckboxes_cell {
                 cell.refreshDisplayMode()
             }
+//            else if let cell = self.getCellForIndexPath(indexPath) as? PrefSliders_cell {
+//                cell.refreshDisplayMode()
+//            }
         }
         
         self.list.reloadData()

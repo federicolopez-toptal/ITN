@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TO DO</key>
+	<dict>
+		<key>MAIN_FEED</key>
+		<dict>
+			<key>Footer</key>
+			<string>Agregar mas links</string>
+			<key>StanceIcon popup</key>
+			<string>Click on &quot;MORE INFO&quot;</string>
+			<key>Click on Stories</key>
+			<string>Abrir el contenido en vista personalizada (no web directa)</string>
+			<key>Feed vacio</key>
+			<string>De vez en cuando, el feed queda todo vacio - Qué mostrar?</string>
+			<key>Banners</key>
+			<string>Chequear todo lo de los banners en detalle</string>
+			<key>TopicSelector</key>
+			<string>Ocultarlo cuando no haya mas subtopics</string>
+		</dict>
+		<key>MENU</key>
+		<dict>
+			<key>Items</key>
+			<string>Agregar items restantes</string>
+		</dict>
+		<key>DATA</key>
+		<dict>
+			<key>MainFeed</key>
+			<string>Completar la generacion de los sliderValues</string>
+			<key>Timeout</key>
+			<string>Tirar el error correspondiente ante un timeout</string>
+		</dict>
+	</dict>
+	<key>DONE</key>
+	<dict/>
+</dict>
+</plist>

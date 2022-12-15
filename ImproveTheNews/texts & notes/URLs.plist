@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FIGMA</key>
+	<dict>
+		<key>SEARCH</key>
+		<string>https://www.figma.com/file/2trQtjl1kAFZOspiVF3RNp/Card%2C-Feed-%26-Navigation?node-id=2295%3A88890</string>
+		<key>PREFERENCES</key>
+		<string>https://www.figma.com/file/bsHo1TXWWWoQ3l0PUzXN4l/Ancillary-pages?node-id=293%3A1946</string>
+		<key>TOUR</key>
+		<string>https://www.figma.com/file/XI89THoqFGuLmzLCx1OGBC/Onboarding?t=UTqcemQ2BOYPe0Zd-0</string>
+		<key>MENU</key>
+		<string>https://www.figma.com/file/2trQtjl1kAFZOspiVF3RNp/Card%2C-Feed-%26-Navigation?node-id=1260%3A56888</string>
+	</dict>
+</dict>
+</plist>

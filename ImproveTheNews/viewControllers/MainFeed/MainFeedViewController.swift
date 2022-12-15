@@ -234,5 +234,12 @@ extension MainFeedViewController {
 //        let vc = SourceFilterViewController()
 //        vc.modalPresentationStyle = .fullScreen
 //        CustomNavController.shared.present(vc, animated: true)
+
+        DELAY(1.0) {
+            let vc = PreferencesViewController()
+            CustomNavController.shared.viewControllers = [vc]
+            self.hideLoading()
+        }
+        
     }
 }

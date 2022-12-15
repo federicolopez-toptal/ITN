@@ -11,8 +11,10 @@ import UIKit
 
 enum PreferenceItem {
     case checkboxes
+    case sliders
 }
 
+// MARK: - Cell(s)
 extension PreferencesViewController {
 
     func getCellForIndexPath(_ indexPath: IndexPath) -> UITableViewCell {
@@ -22,6 +24,9 @@ extension PreferencesViewController {
         if(item == .checkboxes) {
             cell = self.list.dequeueReusableCell(withIdentifier: PrefCheckboxes_cell.identifier,
                 for: indexPath) as! PrefCheckboxes_cell
+        } else if(item == .sliders) {
+            cell = self.list.dequeueReusableCell(withIdentifier: PrefSliders_cell.identifier,
+                for: indexPath) as! PrefSliders_cell
         }
         
         return cell
@@ -33,6 +38,8 @@ extension PreferencesViewController {
         
         if(item == .checkboxes) {
             result = PrefCheckboxes_cell.heigth
+        } else if (item == .sliders) {
+            result = PrefSliders_cell.calculateHeight()
         }
         
         return result

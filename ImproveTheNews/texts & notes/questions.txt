@@ -3,12 +3,7 @@ QUESTIONS for Ruaridh
 MAIN FEED:
 * Articles with markup
     - Exclamation mark icon?
-    
-* Split?
-* Layout solo-texto <- Cómo resolverlo?
-    
-    
-    
+        
 * Banners
     - La documentacion dice image "small" & "large"... ejemplos?
 

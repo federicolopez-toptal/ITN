@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+
 extension UILabel {
   
     func addCharacterSpacing(kernValue: Double = 1.15) {

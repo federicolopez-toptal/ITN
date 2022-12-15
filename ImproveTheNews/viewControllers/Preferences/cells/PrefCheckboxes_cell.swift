@@ -16,7 +16,7 @@ class PrefCheckboxes_cell: UITableViewCell {
         ("Show source icons", LocalKeys.preferences.showSourceIcons),
         ("Show newspaper stance icon", LocalKeys.preferences.showStanceIcons),
         ("Enable newspaper info popups", LocalKeys.preferences.showStancePopups),
-        ("Show stories", LocalKeys.preferences.showStories),
+        ("Show stories", LocalKeys.preferences.showStories)
     ]
 
     let mainContainer = UIView()
@@ -46,11 +46,11 @@ class PrefCheckboxes_cell: UITableViewCell {
             self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
         ])
         
-        self.titleLabel.font = MERRIWEATHER(20)
+        self.titleLabel.font = MERRIWEATHER(17)
         self.titleLabel.text = "Site preferences"
         self.mainContainer.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 30),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
             self.titleLabel.topAnchor.constraint(equalTo: self.mainContainer.topAnchor, constant: 28),
         ])
         self.addSettings()
@@ -64,8 +64,8 @@ class PrefCheckboxes_cell: UITableViewCell {
         vStack.spacing = 12
         vStack.tag = 22
         vStack.activateConstraints([
-            vStack.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 30),
-            vStack.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -10),
+            vStack.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
+            vStack.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16),
             vStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 25)
         ])
     
@@ -74,7 +74,7 @@ class PrefCheckboxes_cell: UITableViewCell {
             hStack.backgroundColor = .clear //.green
             
             let itemText = UILabel()
-            itemText.font = ROBOTO(14)
+            itemText.font = ROBOTO(15)
             itemText.text = data.0
             itemText.textColor = .white
             hStack.addArrangedSubview(itemText)
@@ -96,8 +96,8 @@ class PrefCheckboxes_cell: UITableViewCell {
         
         self.mainContainer.addSubview(self.sourcesButton)
         self.sourcesButton.activateConstraints([
-            self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 30),
-            self.sourcesButton.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -10),
+            self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
+            self.sourcesButton.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16),
             self.sourcesButton.heightAnchor.constraint(equalToConstant: 35),
             self.sourcesButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 20)
         ])

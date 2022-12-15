@@ -62,7 +62,9 @@ class CustomNavController: UINavigationController {
 
         for vc in self.viewControllers {
             if(vc is BaseViewController) {
-                (vc as! BaseViewController).refreshDisplayMode()
+                DELAY(0.1) { // delay to avoid layout weird behavior
+                    (vc as! BaseViewController).refreshDisplayMode()
+                }
             }
         }
         
