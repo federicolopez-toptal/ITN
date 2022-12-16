@@ -330,6 +330,19 @@ class SlidersPanel: UIView {
 // MARK: - Event(s)
 extension SlidersPanel {
     
+    func reloadSliderValues() {
+        for (i, key) in LocalKeys.sliders.allKeys.enumerated() {
+            if let slider = self.viewWithTag(20+i+1) as? UISlider {
+                var newValue = LocalKeys.sliders.defaultValues[i]
+                if let _value = READ(LocalKeys.sliders.allKeys[i]) {
+                    newValue = Int(_value)!
+                }
+                
+                slider.setValue(Float(newValue), animated: false)
+            }
+        }
+    }
+    
     @objc func sliderOnValueChange(_ sender: UISlider) {
         let tag = sender.tag - 20
         let newValue = Int(round(sender.value))

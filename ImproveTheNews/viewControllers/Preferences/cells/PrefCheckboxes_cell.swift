@@ -46,7 +46,7 @@ class PrefCheckboxes_cell: UITableViewCell {
             self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
         ])
         
-        self.titleLabel.font = MERRIWEATHER(17)
+        self.titleLabel.font = MERRIWEATHER_BOLD(17)
         self.titleLabel.text = "Site preferences"
         self.mainContainer.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([

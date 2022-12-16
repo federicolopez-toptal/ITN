@@ -14,8 +14,10 @@ class PrefSliders_cell: UITableViewCell {
     
     let mainContainer = UIView()
     let titleLabel = UILabel()
+    let sliderRowsHeight: CGFloat = 190
+    let buttonsHeight: CGFloat = 35
     
-    
+    var allSliders = [UISlider]()
 
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -30,6 +32,7 @@ class PrefSliders_cell: UITableViewCell {
     
     private func buildContent() {
         self.backgroundColor = .systemPink
+        self.allSliders = [UISlider]()
         
         self.contentView.addSubview(self.mainContainer)
         self.mainContainer.activateConstraints([
@@ -39,7 +42,7 @@ class PrefSliders_cell: UITableViewCell {
             self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
         ])
         
-        self.titleLabel.font = MERRIWEATHER(17)
+        self.titleLabel.font = MERRIWEATHER_BOLD(17)
         self.titleLabel.text = "Slider preferences"
         self.mainContainer.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
@@ -51,43 +54,66 @@ class PrefSliders_cell: UITableViewCell {
         //-----
         let paragraph_01 = HyperlinkLabel.parrafo(text: self.texts(1), linkTexts: self.linkTexts(1),
             urls: self.urls(1), onTap: self.onLinkTap(_:))
-        self.place(label: paragraph_01, below: self.titleLabel)
+        self.place(view: paragraph_01, below: self.titleLabel)
         
         //-----
         let title2 = self.orangeTitle(text: "What spin do you want?")
-        self.place(label: title2, below: paragraph_01)
+        self.place(view: title2, below: paragraph_01)
         
         let paragraph_02 = HyperlinkLabel.parrafo(text: self.texts(2), linkTexts: self.linkTexts(2),
             urls: self.urls(2), onTap: self.onLinkTap(_:))
-        self.place(label: paragraph_02, below: title2)
+        self.place(view: paragraph_02, below: title2)
+        
+        let sliders1 = self.sliderRows(1)
+        self.place(view: sliders1, below: paragraph_02)
         
         //-----
         let title3 = self.orangeTitle(text: "What writing style do you want?")
-        self.place(label: title3, below: paragraph_02)
+        self.place(view: title3, below: sliders1)
         
         let paragraph_03 = HyperlinkLabel.parrafo(text: self.texts(3), linkTexts: self.linkTexts(3),
             urls: self.urls(3), onTap: self.onLinkTap(_:))
-        self.place(label: paragraph_03, below: title3)
+        self.place(view: paragraph_03, below: title3)
+        
+        let sliders2 = self.sliderRows(2)
+        self.place(view: sliders2, below: paragraph_03)
         
         //-----
         let title4 = self.orangeTitle(text: "Do you want evergreen or fresh?")
-        self.place(label: title4, below: paragraph_03)
+        self.place(view: title4, below: sliders2)
         
         let paragraph_04 = HyperlinkLabel.parrafo(text: self.texts(4), linkTexts: self.linkTexts(4),
             urls: self.urls(4), onTap: self.onLinkTap(_:))
-        self.place(label: paragraph_04, below: title4)
+        self.place(view: paragraph_04, below: title4)
+        
+        let sliders3 = self.sliderRows(3)
+        self.place(view: sliders3, below: paragraph_04)
         
         //-----
+        let saveButton = self.longButton(color: UIColor(hex: 0xFF643C), tag: 100)
+        self.place(view: saveButton, below: sliders3, extraMargin: 40)
+        self.setText("SAVE SLIDER PREFERENCES", toButton: saveButton)
+        
+        let resetButton = self.longButton(color: DARK_MODE() ? UIColor(hex: 0x283241) : UIColor(hex: 0xB4BDCA), tag: 200)
+        self.place(view: resetButton, below: saveButton)
+        self.setText("RESET TO DEFAULT SETTINGS", toButton: resetButton)
+        
+        
         let W = SCREEN_SIZE().width - 32 - 32
         let vMargin: CGFloat = 20
         PrefSliders_cell.height = 12 + 28 + self.titleLabel.calculateHeightFor(width: W) + vMargin +
                             paragraph_01.calculateHeightFor(width: W) + vMargin +
                             title2.calculateHeightFor(width: W) + vMargin +
                             paragraph_02.calculateHeightFor(width: W) + vMargin +
+                            self.sliderRowsHeight + vMargin +
                             title3.calculateHeightFor(width: W) + vMargin +
                             paragraph_03.calculateHeightFor(width: W) + vMargin +
+                            self.sliderRowsHeight + vMargin +
                             title4.calculateHeightFor(width: W) + vMargin +
                             paragraph_04.calculateHeightFor(width: W) +
+                            self.sliderRowsHeight + vMargin +
+                            self.buttonsHeight + (vMargin*3) +
+                            self.buttonsHeight + (vMargin*2) +
                             12 + 28
         
 //        let red = UIView()
@@ -98,35 +124,12 @@ class PrefSliders_cell: UITableViewCell {
         //-----
         self.refreshDisplayMode()
     }
-    
-    func orangeTitle(text: String) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = UIColor(hex: 0xFF643C)
-        label.font = MERRIWEATHER(17)
-        return label
-    }
-    
-    func place(label: UILabel, below: UIView) {
-        self.mainContainer.addSubview(label)
-        label.activateConstraints([
-            label.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16),
-            label.topAnchor.constraint(equalTo: below.bottomAnchor, constant: 20),
-        ])
-    }
-    
-    
 
     // MARK: - misc
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202D).withAlphaComponent(0.4) : UIColor(hex: 0xF4F6F8)
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-    }
-
-    func onLinkTap(_ url: URL) {
-        OPEN_URL(url.absoluteString)
     }
     
     static func calculateHeight() -> CGFloat {
@@ -135,9 +138,176 @@ class PrefSliders_cell: UITableViewCell {
 
 }
 
-
-
+// MARK: - UI build
 extension PrefSliders_cell {
+
+    func orangeTitle(text: String) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.textColor = UIColor(hex: 0xFF643C)
+        label.font = MERRIWEATHER_BOLD(17)
+        return label
+    }
+    
+    func place(view: UIView, below: UIView, extraMargin: CGFloat = 0) {
+        self.mainContainer.addSubview(view)
+        view.activateConstraints([
+            view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
+            view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16),
+            view.topAnchor.constraint(equalTo: below.bottomAnchor, constant: 20 + extraMargin),
+        ])
+    }
+    
+    func longButton(color: UIColor, tag: Int) -> UIButton {
+        let button = UIButton(type: .system)
+        button.backgroundColor = color
+        button.layer.cornerRadius = 4
+        button.activateConstraints([
+            button.heightAnchor.constraint(equalToConstant: self.buttonsHeight)
+        ])
+        button.tag = tag
+        button.addTarget(self, action: #selector(onLongButtonTap(sender:)), for: .touchUpInside)
+        
+        return button
+    }
+    func setText(_ text: String, toButton button: UIButton) {
+        let label = UILabel()
+        label.font = ROBOTO_BOLD(11)
+        label.textColor = .white
+        label.text = text
+        self.mainContainer.addSubview(label)
+        label.activateConstraints([
+            label.centerXAnchor.constraint(equalTo: button.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: button.centerYAnchor)
+        ])
+        label.isUserInteractionEnabled = false
+    }
+    
+    func sliderRows(_ index: Int) -> UIView {
+        let view = UIView()
+        view.backgroundColor = .clear //.systemPink
+        self.mainContainer.addSubview(view)
+        view.activateConstraints([
+            view.heightAnchor.constraint(equalToConstant: self.sliderRowsHeight)
+        ])
+        
+        let roboto_bold = ROBOTO_BOLD(13)
+        let characterSpacing: Double = 1.5
+        let titles = [
+                        ["POLITICAL STANCE", "ESTABLISHMENT STANCE"],
+                        ["WRITING STYLE", "DEPTH"],
+                        ["SHELF-LIFE", "RECENCY"]
+                    ]
+                    
+        let legends = [
+                        ["LEFT", "RIGHT", "CRITICAL", "PRO"],
+                        ["PROVOCATIVE", "NUANCED", "BREEZY", "DETAILED"],
+                        ["SHORT", "LONG", "EVERGREEN", "LATEST"]
+                    ]
+        
+        var indexCode = 0
+        if(index==2){ indexCode=2 }
+        else if(index==3){ indexCode=4 }
+        
+        var valY: CGFloat = 0
+        for j in 1...2 {
+            let _2titles = titles[index-1]
+            let _4legends = legends[index-1]
+            
+            let titleLabel = UILabel()
+            titleLabel.text = _2titles[j-1]
+            titleLabel.font = roboto_bold
+            titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+            titleLabel.addCharacterSpacing(kernValue: characterSpacing)
+            view.addSubview(titleLabel)
+            titleLabel.activateConstraints([
+                titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: valY)
+            ])
+            
+            let hStack = HSTACK(into: view)
+            hStack.activateConstraints([
+                hStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                hStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                hStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+            ])
+            
+            var k = 0
+            if(j==2){k=2}
+            
+            let leftLabel = UILabel()
+            leftLabel.text = _4legends[k]
+            leftLabel.font = roboto_bold
+            leftLabel.textColor = UIColor(hex: 0x93A0B4)
+            leftLabel.addCharacterSpacing(kernValue: characterSpacing)
+            hStack.addArrangedSubview(leftLabel)
+//            print(leftLabel.text)
+            
+            ADD_SPACER(to: hStack)
+            
+            let rightLabel = UILabel()
+            rightLabel.text = _4legends[k+1]
+            rightLabel.font = roboto_bold
+            rightLabel.textColor = UIColor(hex: 0x93A0B4)
+            rightLabel.addCharacterSpacing(kernValue: characterSpacing)
+            hStack.addArrangedSubview(rightLabel)
+//            print(rightLabel.text)
+            
+            let slider = UISlider()
+            slider.backgroundColor = .clear //.blue.withAlphaComponent(0.3)
+            slider.minimumValue = 0
+            slider.maximumValue = 99
+            slider.isContinuous = false
+            slider.minimumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x545B67) : UIColor(hex: 0xD3D3D4)
+            slider.maximumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x545B67) : UIColor(hex: 0xD3D3D4)
+            slider.setThumbImage(UIImage(named: "slidersOrangeThumb"), for: .normal)
+            //slider.tag = 20 + i
+            //slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
+            view.addSubview(slider)
+            slider.activateConstraints([
+                slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2),
+                slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -2),
+                slider.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 8)
+            ])
+            self.allSliders.append(slider)
+            
+            let i = indexCode+(j-1)
+            var value = LocalKeys.sliders.defaultValues[i]
+            if let _value = READ(LocalKeys.sliders.allKeys[i]) {
+                value = Int(_value)!
+            }
+            
+//            print( sliderCodes[indexCode+(j-1)] )
+//            print(value)
+//            print("--------")
+            
+            slider.setValue(Float(value), animated: false)
+            
+            
+            valY = 100
+        }
+        
+        return view
+    }
+
+}
+
+// MARK: - Data
+extension PrefSliders_cell {
+
+    func saveSliderValues() {
+        for (i, key) in LocalKeys.sliders.allKeys.enumerated() {
+            let slider = self.allSliders[i]
+            let newValue = Int(round(slider.value))
+            let strValue = String(format: "%02d", newValue)
+            
+            WRITE(key, value: strValue)
+            CustomNavController.shared.slidersPanel.reloadSliderValues()
+            
+            //NOTIFY(Notification_reloadMainFeed)
+        }
+    }
 
     func texts(_ index: Int) -> String {
         switch index {
@@ -177,4 +347,26 @@ extension PrefSliders_cell {
         }
     }
 
+}
+
+// MARK: - Event(s)
+extension PrefSliders_cell {
+    
+    func onLinkTap(_ url: URL) {
+        OPEN_URL(url.absoluteString)
+    }
+    
+    @objc func onLongButtonTap(sender: UIButton?) {
+        if(sender?.tag == 100) {
+            // Save
+            self.saveSliderValues()
+        } else if(sender?.tag == 200) {
+            // Reset all sliders
+            for (i, value) in LocalKeys.sliders.defaultValues.enumerated() {
+                self.allSliders[i].setValue(Float(value), animated: true)
+            }
+            self.saveSliderValues()
+        }
+    }
+    
 }
