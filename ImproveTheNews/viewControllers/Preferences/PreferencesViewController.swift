@@ -81,6 +81,10 @@ class PreferencesViewController: BaseViewController {
         self.list.reloadData()
     }
     
+    func scrollToSliders() {
+        self.list.scrollToRow(at: IndexPath(row: 1, section: 0), at: .top, animated: true)
+    }
+    
 }
 
 // MARK: - UITableView

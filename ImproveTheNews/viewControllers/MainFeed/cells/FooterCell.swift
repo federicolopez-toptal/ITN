@@ -14,7 +14,10 @@ class FooterCell: UICollectionViewCell {
     
     let logoImageView = UIImageView()
     let subTitle = UILabel()
+    
     let shareLabel = UILabel()
+    let howWorksLabel = UILabel()
+    
     let line = UIView()
     let copyrightLabel = UILabel()
     let followLabel = UILabel()
@@ -53,6 +56,7 @@ class FooterCell: UICollectionViewCell {
             self.subTitle.topAnchor.constraint(equalTo: self.logoImageView.bottomAnchor, constant: 18)
         ])
         
+    // SHARE
         self.shareLabel.text = "SHARE"
         self.shareLabel.font = ROBOTO_BOLD(12)
         self.contentView.addSubview(self.shareLabel)
@@ -81,12 +85,33 @@ class FooterCell: UICollectionViewCell {
         ])
         shareButton.addTarget(self, action: #selector(onShareButtonTap(_:)), for: .touchUpInside)
         
+    //HOW THE SLIDERS WORK
+        self.howWorksLabel.text = "HOW THE SLIDERS WORK"
+        self.howWorksLabel.font = ROBOTO_BOLD(12)
+        self.contentView.addSubview(self.howWorksLabel)
+        self.howWorksLabel.activateConstraints([
+            self.howWorksLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
+            self.howWorksLabel.topAnchor.constraint(equalTo: self.shareLabel.bottomAnchor, constant: 10)
+        ])
+
+        let howWorksButton = UIButton(type: .system)
+        howWorksButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        self.contentView.addSubview(howWorksButton)
+        howWorksButton.activateConstraints([
+            howWorksButton.leadingAnchor.constraint(equalTo: self.howWorksLabel.leadingAnchor, constant: -5),
+            howWorksButton.topAnchor.constraint(equalTo: howWorksLabel.topAnchor, constant: -5),
+            howWorksButton.trailingAnchor.constraint(equalTo: howWorksLabel.trailingAnchor, constant: 5),
+            howWorksButton.bottomAnchor.constraint(equalTo: howWorksLabel.bottomAnchor, constant: 5)
+        ])
+        howWorksButton.addTarget(self, action: #selector(onHowWorksButtonTap(_:)), for: .touchUpInside)
+        
+        
         self.contentView.addSubview(self.line)
         self.line.activateConstraints([
             self.line.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.line.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.line.heightAnchor.constraint(equalToConstant: 1.0),
-            self.line.topAnchor.constraint(equalTo: self.shareLabel.bottomAnchor, constant: 20)
+            self.line.topAnchor.constraint(equalTo: self.howWorksLabel.bottomAnchor, constant: 20)
         ])
         
         self.copyrightLabel.text = "© 2022 Improve The News Foundation, all Rights Reserved"
@@ -135,10 +160,12 @@ class FooterCell: UICollectionViewCell {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202E) : UIColor(hex: 0xE8E9EA)
         self.logoImageView.image = UIImage(named: DisplayMode.imageName("navBar.logo"))
         self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
-        self.shareLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
         self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x212E43) : UIColor(hex: 0xC3C9CF)
         self.copyrightLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+        
+        self.shareLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+        self.howWorksLabel.textColor = self.shareLabel.textColor
     }
     
     static func getHeight(width: CGFloat) -> CGSize {
@@ -177,6 +204,17 @@ extension FooterCell {
         
         if let _url = url {
             OPEN_URL(_url)
+        }
+    }
+    
+    @objc func onHowWorksButtonTap(_ sender: UIButton) {
+        let vc = PreferencesViewController()
+        CustomNavController.shared.viewControllers = [vc]
+        
+        DELAY(0.2) {
+            CustomNavController.shared.slidersPanel.hide()
+            CustomNavController.shared.floatingButton.hide()
+            vc.scrollToSliders()
         }
     }
     

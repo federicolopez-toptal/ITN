@@ -241,5 +241,9 @@ extension MainFeedViewController {
 //            self.hideLoading()
 //        }
         
+//        DELAY(4.5) {
+//            self.list.scrollToItem(at: IndexPath(row: self.dataProvider.count-1, section: 0), at: .bottom, animated: true)
+//        }
+        
     }
 }
