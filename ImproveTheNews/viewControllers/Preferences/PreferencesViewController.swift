@@ -38,6 +38,8 @@ class PreferencesViewController: BaseViewController {
             
             self.buildContent()
             self.firstTime = true
+            
+            CustomNavController.shared.slidersPanel.show(rows: 0)
         }
     }
     
