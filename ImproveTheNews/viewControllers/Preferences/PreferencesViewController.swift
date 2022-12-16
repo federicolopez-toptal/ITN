@@ -81,6 +81,7 @@ class PreferencesViewController: BaseViewController {
         }
         
         self.list.reloadData()
+        CustomNavController.shared.floatingButton.hide()
     }
     
     func scrollToSliders() {
