@@ -226,8 +226,7 @@ extension MainFeedViewController {
                 for: indexPath) as! SplitHeaderCell
             (cell as! SplitHeaderCell).populate(with: _item)
         } else if let _item = dpItem as? DP_more  { // More
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: MoreCell.identifier,
-                for: indexPath) as! MoreCell
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: MoreCell.identifier, for: indexPath) as! MoreCell
             (cell as! MoreCell).populate(with: _item)
             (cell as! MoreCell).delegate = self
         } else if let _item = dpItem as? DP_footer {

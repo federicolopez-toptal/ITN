@@ -19,6 +19,8 @@ class MainFeedViewController: BaseViewController {
     let data = MainFeedv2()
     var dataProvider = [DP_item]()
     
+    var topicsCompleted = [String: Bool]()
+    
     //!!!
     var column = 1 //...
     var prevMustSplit: Int?
@@ -77,6 +79,7 @@ class MainFeedViewController: BaseViewController {
     // MARK: - Data
     func loadData(showLoading: Bool = true) {
         if(showLoading){ self.showLoading() }
+        self.topicsCompleted = [String: Bool]()
         //let imFirst = self.imFirstViewController() !!!
         
         UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
@@ -230,6 +233,11 @@ extension MainFeedViewController {
         }
     }
     
+    
+    
+    
+    
+    
     // Called from viewDidAppear, for testing purposes
     func testFeature() {
 //        let vc = SourceFilterViewController()
@@ -246,6 +254,6 @@ extension MainFeedViewController {
 //            self.list.scrollToItem(at: IndexPath(row: self.dataProvider.count-1, section: 0), at: .bottom, animated: true)
 //        }
         
-        print("SCREEN HEIGHT", SCREEN_SIZE().height)
+        //print("SCREEN HEIGHT", SCREEN_SIZE().height)
     }
 }

@@ -84,7 +84,11 @@ extension MainFeedViewController: MoreCellDelegate {
 
         if let _topic = sender.topic {
             print("TOPIC", _topic)
-            self.data.loadMoreData(topic: _topic) { error in
+            self.data.loadMoreData(topic: _topic) { (error, articlesAdded) in
+                if(articlesAdded == 0) { // No more articles
+                    self.topicsCompleted[_topic] = true
+                }
+                
                 self.populateDataProvider()
                 self.refreshList()
                 

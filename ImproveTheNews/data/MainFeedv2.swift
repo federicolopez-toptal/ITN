@@ -53,7 +53,7 @@ class MainFeedv2 {
         task.resume()
     }
     
-    func loadMoreData(topic T: String, callback: @escaping (Error?) -> ()) {
+    func loadMoreData(topic T: String, callback: @escaping (Error?, Int?) -> ()) {
         
         var S_value = self.skipForTopic(T)
         if(T != self.topic){ S_value += 1 }
@@ -70,15 +70,15 @@ class MainFeedv2 {
             
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(_error)
+                callback(_error, nil)
             } else {
                 let mData = ADD_MAIN_NODE(to: data)
                 if let _json = JSON(fromData: mData) {
-                    self.addArticlesTo(topic: T, json: _json)
-                    callback(nil)
+                    let articlesAdded = self.addArticlesTo(topic: T, json: _json)
+                    callback(nil, articlesAdded)
                 } else {
                     let _error = CustomError.jsonParseError
-                    callback(_error)
+                    callback(_error, nil)
                 }
             }
         }
@@ -119,8 +119,9 @@ extension MainFeedv2 {
         }
     }
     
-    private func addArticlesTo(topic T: String, json: [String: Any]) {
+    private func addArticlesTo(topic T: String, json: [String: Any]) -> Int {
         
+        var articlesAdded = 0
         let mainNode = json["data"] as! [Any]
         
         for obj in mainNode {
@@ -139,6 +140,7 @@ extension MainFeedv2 {
                     for A in articles {
                         let newArticle = MainFeedArticle(A as! [Any])
                         self.topics[topicIndex].articles.append(newArticle)
+                        articlesAdded += 1
                     }
 
                     break
@@ -152,6 +154,8 @@ extension MainFeedv2 {
                 self.topics[t].articles[a].used = false
             }
         }
+        
+        return articlesAdded
     }
     
     private func indexForTopic(_ topic: String) -> Int {

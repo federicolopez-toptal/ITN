@@ -19,7 +19,8 @@ class MoreCell: UICollectionViewCell {
     var topic: String?
     
     let titleLabel = UILabel()
-    
+    var titleLabelWidthConstraint: NSLayoutConstraint?
+    let button = UIButton(type: .system)
     
     
     // MARK: - Init
@@ -45,27 +46,40 @@ class MoreCell: UICollectionViewCell {
         self.titleLabel.layer.cornerRadius = MoreCell.buttonHeight/2
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.widthAnchor.constraint(equalToConstant: 115),
             self.titleLabel.heightAnchor.constraint(equalToConstant: MoreCell.buttonHeight),
             self.titleLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
+        self.titleLabelWidthConstraint = self.titleLabel.widthAnchor.constraint(equalToConstant: 115)
+        self.titleLabelWidthConstraint?.isActive = true
         
         let margin: CGFloat = 5
-        let button = UIButton(type: .system)
-        button.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-        self.contentView.addSubview(button)
-        button.activateConstraints([
-            button.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            button.widthAnchor.constraint(equalTo: self.titleLabel.widthAnchor, constant: margin*2),
-            button.heightAnchor.constraint(equalTo: self.titleLabel.heightAnchor, constant: margin*2)
+        self.button.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        self.contentView.addSubview(self.button)
+        self.button.activateConstraints([
+            self.button.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.button.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            self.button.widthAnchor.constraint(equalTo: self.titleLabel.widthAnchor, constant: margin*2),
+            self.button.heightAnchor.constraint(equalTo: self.titleLabel.heightAnchor, constant: margin*2)
         ])
-        button.addTarget(self, action: #selector(onShowMoreButtonTap(_:)), for: .touchUpInside)
+        self.button.addTarget(self, action: #selector(onShowMoreButtonTap(_:)), for: .touchUpInside)
+        self.button.addTarget(self, action: #selector(onShowMoreButtonTap(_:)), for: .touchUpInside)
     }
     
     func populate(with info: DP_more) {
         self.topic = info.topic
+        if(!info.completed) {
+            self.titleLabel.text = "SHOW MORE"
+            self.titleLabel.alpha = 1.0
+            self.titleLabelWidthConstraint?.constant = 115
+            self.button.isEnabled = true
+        } else {
+            self.titleLabel.text = "NO MORE ARTICLES FOR THIS TOPIC"
+            self.titleLabel.alpha = 0.5
+            self.titleLabelWidthConstraint?.constant = 230
+            self.button.isEnabled = false
+        }
+        
         self.refreshDisplayMode()
     }
     

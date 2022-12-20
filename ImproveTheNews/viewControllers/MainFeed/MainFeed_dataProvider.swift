@@ -32,7 +32,7 @@ extension MainFeedViewController {
             
         */
         
-        let LOADMORE_LIMIT = 5
+        let LOADMORE_LIMIT = 20
         var itemsToShowPerTopic = ""
         
         if(TEXT_IMAGES()) {
@@ -86,7 +86,11 @@ extension MainFeedViewController {
                     let hText = T.capitalizedName.uppercased()
                     self.addHeader(format: format, isHeadline: (T.name=="news"), headlineText: hText)
                 } else if(type == "m") {
-                    let more = DP_more(topic: T.name)
+                    var completed = false
+                    if let _completed = self.topicsCompleted[T.name] {
+                        completed = true
+                    }
+                    let more = DP_more(topic: T.name, completed: completed)
                     self.dataProvider.append(more)
                 } else if(type == "s") {   // story
                     self.addStoryToDataProvider(count: count, format: format, topicIndex: i)

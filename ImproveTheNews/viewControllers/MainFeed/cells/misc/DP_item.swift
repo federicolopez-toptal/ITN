@@ -42,9 +42,15 @@ class DP_splitHeader: DP_item {
 
 class DP_more: DP_item {
     var topic: String
+    var completed: Bool = false
     
     init(topic: String) {
         self.topic = topic
+    }
+    
+    init(topic: String, completed: Bool) {
+        self.topic = topic
+        self.completed = completed
     }
 }
 
