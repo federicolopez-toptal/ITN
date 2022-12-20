@@ -14,6 +14,8 @@
 			<string>Abrir el contenido en vista personalizada (no web directa)</string>
 			<key>Feed vacio</key>
 			<string>De vez en cuando, el feed queda todo vacio - Qué mostrar?</string>
+			<key>Show more buttons</key>
+			<string>Debería haber un límite a la cantidad de clicks para un mismo topic</string>
 			<key>Banners</key>
 			<string>Chequear todo lo de los banners en detalle</string>
 			<key>TopicSelector</key>

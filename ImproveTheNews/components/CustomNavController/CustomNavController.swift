@@ -28,6 +28,8 @@ class CustomNavController: UINavigationController {
         
         self.slidersPanel.buildInto(self.view)
         self.floatingButton.buildInto(self.view, panel: self.slidersPanel)
+        self.slidersPanel.floatingButton = self.floatingButton
+        
         self.loading.buildInto(self.view)
         self.darkView.buildInto(self.view)
         

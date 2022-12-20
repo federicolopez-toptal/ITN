@@ -11,6 +11,7 @@ import UIKit
 class FloatingButton: UIView {
 
     private weak var panel: SlidersPanel?
+    var bottomConstraint: NSLayoutConstraint?
 
     // MARK: - Init(s)
     init() {
@@ -30,9 +31,17 @@ class FloatingButton: UIView {
         self.activateConstraints([
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
             self.heightAnchor.constraint(equalToConstant: 80),
-            self.widthAnchor.constraint(equalToConstant: 80),
-            self.bottomAnchor.constraint(equalTo: panel.topAnchor, constant: -21)
+            self.widthAnchor.constraint(equalToConstant: 80)
         ])
+        
+        self.bottomConstraint = self.bottomAnchor.constraint(equalTo: panel.topAnchor, constant: -21)
+        self.bottomConstraint?.isActive = true
+        
+//        if(self.isIphone7()) {
+//            self.bottomAnchor.constraint(equalTo: panel.topAnchor, constant: 0).isActive = true
+//        } else {
+//            self.bottomAnchor.constraint(equalTo: panel.topAnchor, constant: -21).isActive = true
+//        }
         
         let image = UIImageView(image: UIImage(named: "floatingButton"))
         self.addSubview(image)
@@ -60,3 +69,4 @@ class FloatingButton: UIView {
     }
 
 }
+

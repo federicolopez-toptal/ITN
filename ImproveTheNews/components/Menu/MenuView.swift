@@ -160,7 +160,7 @@ extension MenuView {
     }
     
     // ---------
-    func gotoHeadlines() {
+    func gotoHeadlines(delayTime: TimeInterval = 0.5) {
         self.dismissMe()
         
         var firstIsMainFeed = false
@@ -169,7 +169,7 @@ extension MenuView {
         }
         
         if(firstIsMainFeed) {
-            DELAY(0.5) {
+            DELAY(delayTime) {
                 let count = CustomNavController.shared.viewControllers.count
             
                 if(count==1) {

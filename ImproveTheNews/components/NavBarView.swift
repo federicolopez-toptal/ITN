@@ -267,8 +267,8 @@ extension NavBarView {
     
     @objc func onLogoButtonTap(_ sender: UIButton) {
         if let _vc = self.viewController as? MainFeedViewController {
-            //_vc.tapOnLogo()
-            _vc.scrollToZero()
+            _vc.tapOnLogo()
+            //_vc.scrollToZero()
         }
     }
     

@@ -126,10 +126,11 @@ class MainFeedViewController: BaseViewController {
     
     // MARK: - misc
     func tapOnLogo() { // called from the navBar
-        MAIN_THREAD {
-            self.topicSelector.scrollToZero()
-            self.scrollToZero()
-        }
+        CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
+//        MAIN_THREAD {
+////            self.topicSelector.scrollToZero()
+////            self.scrollToZero()
+//        }
     }
     
     func imFirstViewController() -> Bool {
@@ -245,5 +246,6 @@ extension MainFeedViewController {
 //            self.list.scrollToItem(at: IndexPath(row: self.dataProvider.count-1, section: 0), at: .bottom, animated: true)
 //        }
         
+        print("SCREEN HEIGHT", SCREEN_SIZE().height)
     }
 }

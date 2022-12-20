@@ -11,6 +11,7 @@ class SlidersPanel: UIView {
 
     private let height: CGFloat = 615
     private var bottomConstraint: NSLayoutConstraint?
+    weak var floatingButton: FloatingButton?
 
     private let titles = ["Political stance", "Establishment stance",
         "Writing style", "Depth", "Shelf-life", "Recency"]
@@ -295,6 +296,18 @@ class SlidersPanel: UIView {
         if(rows == 2){ panelState = "1" }
         else if(rows == 6){ panelState = "2" }
         WRITE(LocalKeys.sliders.panelState, value: panelState)
+        
+        if(self.isIphone7()) {
+            var newValue: CGFloat = -21
+            if(rows==2){ newValue = -15 }
+            else if(rows==6){ newValue = 23 }
+        
+            floatingButton?.bottomConstraint?.constant = newValue
+            UIView.animate(withDuration: 0.4) {
+                self.floatingButton?.superview?.layoutIfNeeded()
+            } completion: { (succeed) in
+            }
+        }
     }
     
     private func checkSplitComponents() {
@@ -442,6 +455,20 @@ extension SlidersPanel {
                 slider.maximumTrackTintColor = UIColor(hex: 0xD9DCDF)
             }
         }
+    }
+    
+}
+
+// MARK: - misc
+extension SlidersPanel {
+    
+    private func isIphone7() -> Bool { // Small patch for this particular display size
+        var result = false
+        if(SCREEN_SIZE().height == 667) {
+            result = true
+        }
+
+        return result
     }
     
 }
