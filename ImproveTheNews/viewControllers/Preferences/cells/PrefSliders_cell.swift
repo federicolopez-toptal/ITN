@@ -16,6 +16,7 @@ class PrefSliders_cell: UITableViewCell {
     let titleLabel = UILabel()
     let sliderRowsHeight: CGFloat = 190
     let buttonsHeight: CGFloat = 35
+    var saveButton = UIButton()
     
     var allSliders = [UISlider]()
 
@@ -90,9 +91,11 @@ class PrefSliders_cell: UITableViewCell {
         self.place(view: sliders3, below: paragraph_04)
         
         //-----
-        let saveButton = self.longButton(color: UIColor(hex: 0xFF643C), tag: 100)
-        self.place(view: saveButton, below: sliders3, extraMargin: 40)
-        self.setText("SAVE SLIDER PREFERENCES", toButton: saveButton)
+        self.saveButton = self.longButton(color: UIColor(hex: 0xFF643C), tag: 100)
+        self.place(view: self.saveButton, below: sliders3, extraMargin: 40)
+        self.setText("SAVE SLIDER PREFERENCES", toButton: self.saveButton)
+        self.saveButton.isEnabled = false
+        self.saveButton.alpha = 0.5
         
         let resetButton = self.longButton(color: DARK_MODE() ? UIColor(hex: 0x283241) : UIColor(hex: 0xB4BDCA), tag: 200)
         self.place(view: resetButton, below: saveButton)
@@ -175,6 +178,7 @@ extension PrefSliders_cell {
         label.font = ROBOTO_BOLD(11)
         label.textColor = .white
         label.text = text
+        label.tag = button.tag + 1
         self.mainContainer.addSubview(label)
         label.activateConstraints([
             label.centerXAnchor.constraint(equalTo: button.centerXAnchor),
@@ -242,7 +246,6 @@ extension PrefSliders_cell {
             leftLabel.textColor = UIColor(hex: 0x93A0B4)
             leftLabel.addCharacterSpacing(kernValue: characterSpacing)
             hStack.addArrangedSubview(leftLabel)
-//            print(leftLabel.text)
             
             ADD_SPACER(to: hStack)
             
@@ -252,7 +255,6 @@ extension PrefSliders_cell {
             rightLabel.textColor = UIColor(hex: 0x93A0B4)
             rightLabel.addCharacterSpacing(kernValue: characterSpacing)
             hStack.addArrangedSubview(rightLabel)
-//            print(rightLabel.text)
             
             let slider = UISlider()
             slider.backgroundColor = .clear //.blue.withAlphaComponent(0.3)
@@ -263,7 +265,7 @@ extension PrefSliders_cell {
             slider.maximumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x545B67) : UIColor(hex: 0xD3D3D4)
             slider.setThumbImage(UIImage(named: "slidersOrangeThumb"), for: .normal)
             //slider.tag = 20 + i
-            //slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
+            slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
             view.addSubview(slider)
             slider.activateConstraints([
                 slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2),
@@ -278,13 +280,7 @@ extension PrefSliders_cell {
                 value = Int(_value)!
             }
             
-//            print( sliderCodes[indexCode+(j-1)] )
-//            print(value)
-//            print("--------")
-            
             slider.setValue(Float(value), animated: false)
-            
-            
             valY = 100
         }
         
@@ -304,8 +300,6 @@ extension PrefSliders_cell {
             
             WRITE(key, value: strValue)
             CustomNavController.shared.slidersPanel.reloadSliderValues()
-            
-            //NOTIFY(Notification_reloadMainFeed)
         }
     }
 
@@ -360,13 +354,31 @@ extension PrefSliders_cell {
         if(sender?.tag == 100) {
             // Save
             self.saveSliderValues()
+            self.saveButton.isEnabled = false
+            self.saveButton.alpha = 0.5
+            
+            if let label = self.mainContainer.viewWithTag(sender!.tag+1) as? UILabel {
+                label.text = "SAVED!"
+                DELAY(1.5) {
+                    label.text = "SAVE SLIDER PREFERENCES"
+                }
+            }
+            
         } else if(sender?.tag == 200) {
             // Reset all sliders
             for (i, value) in LocalKeys.sliders.defaultValues.enumerated() {
                 self.allSliders[i].setValue(Float(value), animated: true)
             }
             self.saveSliderValues()
+            
+            self.saveButton.isEnabled = false
+            self.saveButton.alpha = 0.5
         }
+    }
+    
+    @objc func sliderOnValueChange(_ sender: UISlider) {
+        self.saveButton.isEnabled = true
+        self.saveButton.alpha = 1.0
     }
     
 }

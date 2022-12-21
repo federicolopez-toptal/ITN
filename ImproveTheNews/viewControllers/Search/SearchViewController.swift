@@ -131,16 +131,9 @@ class SearchViewController: BaseViewController {
 
         DELAY(0.1) {
             CustomNavController.shared.dismiss(animated: true)
-//            for vc in CustomNavController.shared.viewControllers.reversed() {
-//                if let _vc = vc as? MainFeedViewController {
-//                    _vc.data.updateCounting()
-//                    break
-//                }
-//            }
-        
             
-            
-            //CustomNavController.shared.pushViewController(vc, animated: true)
+            CustomNavController.shared.slidersPanel.show()
+            CustomNavController.shared.floatingButton.show()
         }
     }
 

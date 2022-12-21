@@ -84,7 +84,7 @@ class SearchTextView: UIView {
             self.lupa.heightAnchor.constraint(equalToConstant: 24)
         ])
 
-        self.placeHolderLabel.text = "Headlines, stories & article splits"
+        self.placeHolderLabel.text = "Search topics" // "Headlines, stories & article splits"
         self.placeHolderLabel.font = roboto
         self.placeHolderLabel.textColor = UIColor(hex: 0x93A0B4)
         bgColorView.addSubview(self.placeHolderLabel)
