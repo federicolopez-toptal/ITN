@@ -163,14 +163,14 @@ extension HyperlinkLabel {
         onTap: @escaping (URL) -> Void) -> HyperlinkLabel {
         
         let attributedString = NSMutableAttributedString(string: text, attributes: [
-            .font: MERRIWEATHER(14),
+            .font: ROBOTO(14),
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         ])
 
         for (i, url) in urls.enumerated() {
             let attributes: [NSAttributedString.Key: Any] = [
                 .hyperlink: URL(string: url)!,
-                .font: MERRIWEATHER_BOLD(14)
+                .font: ROBOTO_BOLD(15)
             ]
             let urlAttributedString = NSAttributedString(string: linkTexts[i], attributes: attributes)
             let range = (attributedString.string as NSString).range(of: "[\(i)]")

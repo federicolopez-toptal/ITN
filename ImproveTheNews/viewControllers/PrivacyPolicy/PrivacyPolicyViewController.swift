@@ -14,6 +14,8 @@ class PrivacyPolicyViewController: BaseViewController {
     let contentView = UIView()
     var VStack: UIStackView!
     
+    
+    
     // MARK: - Init
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -62,10 +64,17 @@ class PrivacyPolicyViewController: BaseViewController {
             self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 13),
             self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -13),
             self.VStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 13),
-            self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -13),
+            self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -26),
             //VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
         ])
-
+    
+        self.refreshDisplayMode()
+        self.addContent()
+    }
+    
+    func addContent() {
+        REMOVE_ALL_SUBVIEWS(from: VStack)
+    
         self.addTitle("Privacy Policy")
         ADD_SPACER(to: self.VStack, height: 1)
         for i in 1...12 {
@@ -75,12 +84,11 @@ class PrivacyPolicyViewController: BaseViewController {
             }
             self.addParagraph( self.paragraphs(i), linkTexts: self.linkTexts(i), urls: self.urls(i) )
         }
-        
-        self.refreshDisplayMode()
     }
     
     func addTitle(_ text: String) {
         let label = UILabel()
+        label.tag = 10
         label.text = text
         label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         label.numberOfLines = 0
@@ -100,14 +108,6 @@ class PrivacyPolicyViewController: BaseViewController {
     }
     
     func addParagraph(_ text: String, linkTexts: [String], urls: [String]) {
-//        let label = UILabel()
-//        label.text = text
-//        label.textAlignment = .left
-//        label.tag = 12
-//        label.numberOfLines = 0
-//        label.font = MERRIWEATHER(14)
-//        self.VStack.addArrangedSubview(label)
-        
         let label = HyperlinkLabel.parrafo2(text: text, linkTexts: linkTexts, urls: urls, onTap: self.onLinkTap(_:))
         self.VStack.addArrangedSubview(label)
     }
@@ -118,17 +118,9 @@ class PrivacyPolicyViewController: BaseViewController {
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.scrollView.backgroundColor = self.view.backgroundColor
         self.contentView.backgroundColor = self.view.backgroundColor
-//
-//        for v in self.VStack.arrangedSubviews {
-//            if let _label = v as? UILabel {
-//                switch(_label.tag) {
-//                    case 11:
-//                        _label.textColor = .orange
-//                    default:
-//                        _label.textColor = .black
-//                }
-//            }
-//        }
+        self.navBar.refreshDisplayMode()
+
+        self.addContent()
         
 //        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
 //        self.sTitleLabel.textColor = self.titleLabel.textColor

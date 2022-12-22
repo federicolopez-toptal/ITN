@@ -62,9 +62,15 @@ class FooterCell: UICollectionViewCell {
             
         let howWorksLabel = self.addItem("HOW THE SLIDERS WORK", below: shareLabel,
             separation: 10, action: #selector(self.onHowWorksButtonTap(_:)))
-            
-        let feedbackLabel = self.addItem("FEEDBACK", below: howWorksLabel,
+        
+        let faqLabel = self.addItem("FAQ", below: howWorksLabel,
+            separation: 10, action: #selector(self.onFAQButtonTap(_:)))
+        
+        let feedbackLabel = self.addItem("FEEDBACK", below: faqLabel,
             separation: 10, action: #selector(self.onFeedbackButtonTap(_:)))
+            
+        let privacyLabel = self.addItem("PRIVACY POLICY", below: feedbackLabel,
+            separation: 10, action: #selector(self.onPrivacyPolicyButtonTap(_:)))
     // ---------------
     
         self.contentView.addSubview(self.line)
@@ -72,7 +78,7 @@ class FooterCell: UICollectionViewCell {
             self.line.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.line.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.line.heightAnchor.constraint(equalToConstant: 1.0),
-            self.line.topAnchor.constraint(equalTo: feedbackLabel.bottomAnchor, constant: 20)
+            self.line.topAnchor.constraint(equalTo: privacyLabel.bottomAnchor, constant: 20)
         ])
         
         self.copyrightLabel.text = "© 2022 Improve The News Foundation, all Rights Reserved"
@@ -171,7 +177,7 @@ class FooterCell: UICollectionViewCell {
     }
     
     static func getHeight(width: CGFloat) -> CGSize {
-        return CGSize(width: width, height: 320)
+        return CGSize(width: width, height: 360)
     }
 }
 
@@ -227,6 +233,26 @@ extension FooterCell {
             CustomNavController.shared.slidersPanel.hide()
             CustomNavController.shared.floatingButton.hide()
         }
+    }
+    
+    @objc func onPrivacyPolicyButtonTap(_ sender: UIButton) {
+        let vc = PrivacyPolicyViewController()
+        CustomNavController.shared.viewControllers = [vc]
+        
+        DELAY(0.2) {
+            CustomNavController.shared.slidersPanel.hide()
+            CustomNavController.shared.floatingButton.hide()
+        }
+    }
+    
+    @objc func onFAQButtonTap(_ sender: UIButton) {
+//        let vc = PrivacyPolicyViewController()
+//        CustomNavController.shared.viewControllers = [vc]
+//
+//        DELAY(0.2) {
+//            CustomNavController.shared.slidersPanel.hide()
+//            CustomNavController.shared.floatingButton.hide()
+//        }
     }
     
 }
