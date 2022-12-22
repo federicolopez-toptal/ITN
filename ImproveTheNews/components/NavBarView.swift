@@ -266,10 +266,12 @@ extension NavBarView {
     }
     
     @objc func onLogoButtonTap(_ sender: UIButton) {
-        if let _vc = self.viewController as? MainFeedViewController {
-            _vc.tapOnLogo()
-            //_vc.scrollToZero()
-        }
+//        if let _vc = self.viewController as? MainFeedViewController {
+//            _vc.tapOnLogo()
+//            //_vc.scrollToZero()
+//        }
+
+        CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
     }
     
     @objc func onSearchButtonTap(_ sender: UIButton) {

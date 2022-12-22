@@ -36,15 +36,6 @@ class SourceFilterViewController: BaseViewController {
             self.buildContent()
         }
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        if(!self.didAppear) {
-//            self.didAppear = true
-//            self.loadSources()
-//        }
-//    }
 
     // MARK: - misc
     func buildContent() {

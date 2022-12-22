@@ -130,10 +130,6 @@ class MainFeedViewController: BaseViewController {
     // MARK: - misc
     func tapOnLogo() { // called from the navBar
         CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
-//        MAIN_THREAD {
-////            self.topicSelector.scrollToZero()
-////            self.scrollToZero()
-//        }
     }
     
     func imFirstViewController() -> Bool {
@@ -233,6 +229,16 @@ extension MainFeedViewController {
         }
     }
     
+    func showPrivacyPolicy() {
+        let vc = PrivacyPolicyViewController()
+        CustomNavController.shared.viewControllers = [vc]
+        
+        DELAY(0.2) {
+            CustomNavController.shared.slidersPanel.hide()
+            CustomNavController.shared.floatingButton.hide()
+        }
+    }
+    
     
     
     
@@ -253,7 +259,11 @@ extension MainFeedViewController {
 //        DELAY(4.5) {
 //            self.list.scrollToItem(at: IndexPath(row: self.dataProvider.count-1, section: 0), at: .bottom, animated: true)
 //        }
-        
+//
         //print("SCREEN HEIGHT", SCREEN_SIZE().height)
+        
+        DELAY(1.0) {
+            self.showPrivacyPolicy()
+        }
     }
 }
