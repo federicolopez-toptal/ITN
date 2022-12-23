@@ -121,9 +121,6 @@ class PrivacyPolicyViewController: BaseViewController {
         self.navBar.refreshDisplayMode()
 
         self.addContent()
-        
-//        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-//        self.sTitleLabel.textColor = self.titleLabel.textColor
     }
     
     func onLinkTap(_ url: URL) {

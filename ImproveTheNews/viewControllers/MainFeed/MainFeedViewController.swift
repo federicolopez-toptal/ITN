@@ -233,15 +233,15 @@ extension MainFeedViewController {
         self.list.scrollToItem(at: IndexPath(row: self.dataProvider.count-1, section: 0), at: .bottom, animated: true)
     }
     
-//    func showPrivacyPolicy() {
-//        let vc = PrivacyPolicyViewController()
-//        CustomNavController.shared.viewControllers = [vc]
-//        
-//        DELAY(0.2) {
-//            CustomNavController.shared.slidersPanel.hide()
-//            CustomNavController.shared.floatingButton.hide()
-//        }
-//    }
+    func showFAQ() {
+        let vc = FAQViewController()
+        CustomNavController.shared.viewControllers = [vc]
+        
+        DELAY(0.2) {
+            CustomNavController.shared.slidersPanel.hide()
+            CustomNavController.shared.floatingButton.hide()
+        }
+    }
     
 }
     
@@ -251,12 +251,12 @@ extension MainFeedViewController {
     // Called from viewDidAppear, for testing purposes
     func testFeature() {
 
-        DELAY(4.5) {
-            self.scrollToBottom()
-        }
-        
-//        DELAY(1.0) {
-//            self.showPrivacyPolicy()
+//        DELAY(4.5) {
+//            self.scrollToBottom()
 //        }
+        
+        DELAY(1.0) {
+            self.showFAQ()
+        }
     }
 }

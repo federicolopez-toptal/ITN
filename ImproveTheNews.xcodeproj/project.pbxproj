@@ -79,6 +79,7 @@
 		1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */; };
 		1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */; };
 		1F9E28C32954B22900041303 /* PrivacyPolicy_content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28C22954B22900041303 /* PrivacyPolicy_content.swift */; };
+		1F9E28C52954DC0200041303 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28C42954DC0200041303 /* FAQViewController.swift */; };
 		1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728528D2AF6E00693B85 /* StanceIconView.swift */; };
 		1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728728D2B7AC00693B85 /* IntExtension.swift */; };
 		1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */; };
@@ -194,6 +195,7 @@
 		1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		1F9E28C22954B22900041303 /* PrivacyPolicy_content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicy_content.swift; sourceTree = "<group>"; };
+		1F9E28C42954DC0200041303 /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		1FA1728528D2AF6E00693B85 /* StanceIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StanceIconView.swift; sourceTree = "<group>"; };
 		1FA1728728D2B7AC00693B85 /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				1F9E28C12954B1FD00041303 /* PrivacyPolicy */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */,
+				1F9E28C42954DC0200041303 /* FAQViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 				1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */,
 				1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */,
 				1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */,
+				1F9E28C52954DC0200041303 /* FAQViewController.swift in Sources */,
 				1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */,
 				1FD23406291565F100B85AE9 /* MenuView_misc.swift in Sources */,
 				1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */,

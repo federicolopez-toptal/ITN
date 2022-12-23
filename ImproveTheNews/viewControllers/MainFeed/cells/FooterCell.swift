@@ -246,13 +246,13 @@ extension FooterCell {
     }
     
     @objc func onFAQButtonTap(_ sender: UIButton) {
-//        let vc = PrivacyPolicyViewController()
-//        CustomNavController.shared.viewControllers = [vc]
-//
-//        DELAY(0.2) {
-//            CustomNavController.shared.slidersPanel.hide()
-//            CustomNavController.shared.floatingButton.hide()
-//        }
+        let vc = FAQViewController()
+        CustomNavController.shared.viewControllers = [vc]
+
+        DELAY(0.2) {
+            CustomNavController.shared.slidersPanel.hide()
+            CustomNavController.shared.floatingButton.hide()
+        }
     }
     
 }
