@@ -63,10 +63,10 @@ class FooterCell: UICollectionViewCell {
         let howWorksLabel = self.addItem("HOW THE SLIDERS WORK", below: shareLabel,
             separation: 10, action: #selector(self.onHowWorksButtonTap(_:)))
         
-        let faqLabel = self.addItem("FAQ", below: howWorksLabel,
-            separation: 10, action: #selector(self.onFAQButtonTap(_:)))
+//        let faqLabel = self.addItem("FAQ", below: howWorksLabel,
+//            separation: 10, action: #selector(self.onFAQButtonTap(_:)))
         
-        let feedbackLabel = self.addItem("FEEDBACK", below: faqLabel,
+        let feedbackLabel = self.addItem("FEEDBACK", below: howWorksLabel, //faqLabel,
             separation: 10, action: #selector(self.onFeedbackButtonTap(_:)))
             
         let privacyLabel = self.addItem("PRIVACY POLICY", below: feedbackLabel,
@@ -177,7 +177,7 @@ class FooterCell: UICollectionViewCell {
     }
     
     static func getHeight(width: CGFloat) -> CGSize {
-        return CGSize(width: width, height: 360)
+        return CGSize(width: width, height: 360) //380
     }
 }
 
