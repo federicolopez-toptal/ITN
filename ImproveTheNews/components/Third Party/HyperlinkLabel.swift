@@ -163,7 +163,7 @@ extension HyperlinkLabel {
         onTap: @escaping (URL) -> Void) -> HyperlinkLabel {
         
         let attributedString = NSMutableAttributedString(string: text, attributes: [
-            .font: ROBOTO(14),
+            .font: ROBOTO(15),
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         ])
 
@@ -178,7 +178,7 @@ extension HyperlinkLabel {
         }
 
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .justified
+        paragraphStyle.alignment = .left
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle,
             range: NSRange(location: 0, length: attributedString.length))
         

@@ -251,11 +251,12 @@ extension MainFeedViewController {
     // Called from viewDidAppear, for testing purposes
     func testFeature() {
 
-        DELAY(4.5) {
-            self.scrollToBottom()
-        }
+//        DELAY(4.5) {
+//            self.scrollToBottom()
+//        }
         
 //        DELAY(1.0) {
+//            self.hideLoading()
 //            self.showFAQ()
 //        }
     }
