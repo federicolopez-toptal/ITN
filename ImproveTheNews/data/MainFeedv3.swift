@@ -1,26 +1,26 @@
 //
-//  MainFeedv2.swift
+//  MainFeedv3.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 29/11/2022.
+//  Created by Federico Lopez on 28/12/2022.
 //
 
 import Foundation
 import UIKit
 
 
-
 // Main Feed for the new navigation
-class MainFeedv2 {
+class MainFeedv3 {
 
     var topic = "news"
     var topics = [MainFeedTopic]()
-    var banners = [Banner]()
+    var banner: Banner? = nil
     var topicsCount = [String: Int]()   // For all counting (articles/stories) related
     
     
     
     func loadData(_ topic: String, callback: @escaping (Error?) -> ()) {
+        self.banner = nil
         self.topic = topic
         
         let strUrl = self.buildUrl(topic: topic, A: 11, B: 11, S: 0)
@@ -88,7 +88,7 @@ class MainFeedv2 {
 
 
 // MARK: - Data related
-extension MainFeedv2 {
+extension MainFeedv3 {
     
     private func parse(_ json: [String: Any]) {
         
@@ -109,9 +109,7 @@ extension MainFeedv2 {
                     let newTopic = MainFeedTopic(topicInfo, articles)
                     self.topics.append(newTopic)
                 } else {
-                    // Banner(s)
-                    let banner = Banner(topicInfo)
-                    self.banners.append(banner)
+                    if(self.banner == nil) { self.banner = Banner(topicInfo) }
                 }
             }
         }
@@ -184,7 +182,7 @@ extension MainFeedv2 {
 
 
 // MARK: - Counting (Stories/Articles per Topic)
-extension MainFeedv2 {
+extension MainFeedv3 {
     
     func resetCounting() {
         // Called from MainFeed_dataProvider/populateDataProvider
@@ -214,7 +212,7 @@ extension MainFeedv2 {
 
 
 // MARK: - Utilities
-extension MainFeedv2 {
+extension MainFeedv3 {
 
     private func buildUrl(topic: String, A: Int, B: Int, S: Int) -> String {
         /*

@@ -68,11 +68,6 @@ class DP_itemPointingData: DP_item {
 }
 
 class DP_banner: DP_item {
-    var bannerIndex: Int
-    
-    init(index B: Int) {
-        self.bannerIndex = B
-    }
 }
 
 // --------

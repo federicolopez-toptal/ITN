@@ -10,27 +10,31 @@ import UIKit
 class BannerCell: UICollectionViewCell {
     
     static let identifier = "BannerCell"
-    //private let HEIGHT: CGFloat = 1.0     Height based on content!
-    
-    private var bannerURL = ""
-    private var dontShowAgain = false
-    private var bannerCode = ""
         
     let mainContainer = UIView()
     let mainImageView = UIImageView()
-    var mainImageHeightConstraint: NSLayoutConstraint?
+    var imageHeightConstraint: NSLayoutConstraint?
+    
+    
+    
+    
     let headerLabel = UILabel()
     let textLabel = UILabel()
     let dontShowAgainLabel = UILabel()
     let checkImage = UIImageView()
     let closeIcon = UIImageView()
     
+    private var bannerURL = ""
+    private var dontShowAgain = false
+    private var bannerCode = ""
+    
+    
+    
     
     
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.buildContent()
     }
     
@@ -38,64 +42,49 @@ class BannerCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        
-        let targetSize = CGSize(width: SCREEN_SIZE().width, height: 0)
-        layoutAttributes.frame.size = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
-        
-        return layoutAttributes
-    }
-    
-}
-
-extension BannerCell {
-    
     private func buildContent() {
-
-        self.contentView.activateConstraints([
-//            self.contentView.heightAnchor.constraint(equalToConstant: 200)
-            self.contentView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width)
-        ])
         self.contentView.backgroundColor = .white
         
         self.contentView.addSubview(self.mainContainer)
         self.mainContainer.activateConstraints([
             self.mainContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
-            self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5)
+            self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 25),
+            self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
         
-        let sideLine = UIView()
-        sideLine.backgroundColor = UIColor(hex: 0xFF643C)
-        self.mainContainer.addSubview(sideLine)
-        sideLine.activateConstraints([
-            sideLine.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor),
-            sideLine.topAnchor.constraint(equalTo: self.mainContainer.topAnchor),
-            sideLine.bottomAnchor.constraint(equalTo: self.mainContainer.bottomAnchor),
-            sideLine.widthAnchor.constraint(equalToConstant: 4)
+        let vLine = UIView()
+        vLine.backgroundColor = UIColor(hex: 0xFF643C)
+        self.mainContainer.addSubview(vLine)
+        vLine.activateConstraints([
+            vLine.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor),
+            vLine.topAnchor.constraint(equalTo: self.mainContainer.topAnchor),
+            vLine.bottomAnchor.constraint(equalTo: self.mainContainer.bottomAnchor),
+            vLine.widthAnchor.constraint(equalToConstant: 4)
         ])
         
         let vStack = VSTACK(into: self.mainContainer, spacing: 10)
-        vStack.backgroundColor = .clear //.systemPink
+        vStack.backgroundColor = .yellow.withAlphaComponent(0.25)
         vStack.activateConstraints([
-            vStack.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 20),
-            vStack.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -19),
+            vStack.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 15+4),
+            vStack.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -15),
             vStack.topAnchor.constraint(equalTo: self.mainContainer.topAnchor, constant: 16),
-            vStack.bottomAnchor.constraint(equalTo: self.mainContainer.bottomAnchor, constant: -10)
+            vStack.bottomAnchor.constraint(equalTo: self.mainContainer.bottomAnchor, constant: -16)
         ])
-                
-        self.mainImageView.backgroundColor = .darkGray
+    
+        self.mainImageView.backgroundColor = .systemPink
         vStack.addArrangedSubview(self.mainImageView)
-        self.mainImageHeightConstraint = self.mainImageView.heightAnchor.constraint(equalToConstant: 10)
+        self.imageHeightConstraint = self.mainImageView.heightAnchor.constraint(equalToConstant: 10)
         self.mainImageView.activateConstraints([
             self.mainImageView.leadingAnchor.constraint(equalTo: vStack.leadingAnchor),
             self.mainImageView.trailingAnchor.constraint(equalTo: vStack.trailingAnchor),
             self.mainImageView.topAnchor.constraint(equalTo: vStack.topAnchor),
-            self.mainImageHeightConstraint!
+            self.imageHeightConstraint!
         ])
-        self.mainImageView.contentMode = .scaleAspectFill
-        self.mainImageView.clipsToBounds = true
+        self.mainImageView.contentMode = .scaleAspectFit // non-stretched
+        
+    self.refreshDisplayMode()
+    return
         
         let imageButton = UIButton(type: .system)
         imageButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
@@ -196,42 +185,73 @@ extension BannerCell {
         ADD_SPACER(to: vStack)
     }
     
-    func populate(with banner: Banner) {
+    func populate(with banner: Banner?) {
+        guard let _banner = banner else {
+            return
+        }
+        
         self.mainImageView.image = nil
-        if let _url = URL(string: banner.imgUrl) {
+        if let _url = URL(string: _banner.imgUrl) {
             self.mainImageView.sd_setImage(with: _url) { (img, error, cacheType, url) in
                 if let _img = img {
-                    let w: CGFloat = SCREEN_SIZE().width - 16 - 16 - 20 - 19
-                    let h = (_img.size.height * w)/_img.size.width
-                    self.mainImageHeightConstraint?.constant = h
+                    var mustRefresh = false
+                    if(Banner.imageHeight == nil) {
+                        mustRefresh = true
+                    }
+                
+                    let W: CGFloat = SCREEN_SIZE().width - 16-16-19-15
+                    let H = (_img.size.height * W)/_img.size.width
+                    Banner.imageHeight = H
+                    self.imageHeightConstraint?.constant = H
+                    
+                    if(mustRefresh) { NOTIFY(Notification_refreshMainFeed) }
                 }
             }
         } else {
-            self.mainImageHeightConstraint?.constant = 0
+            self.imageHeightConstraint?.constant = 0
         }
         
-        self.headerLabel.text = banner.headerText
-        self.textLabel.text = banner.mainText
         
-        self.bannerURL = banner.url
-        self.bannerCode = banner.code
+        
     
-        if self.readStatus() == nil {
-            self.writeStatus(1) // Just show the banner, no user interaction
-        }
+        
     
-        self.refreshDisplayMode()
+        
+        
+    
+    return
+//        self.headerLabel.text = banner.headerText
+//        self.textLabel.text = banner.mainText
+//
+//        self.bannerURL = banner.url
+//        self.bannerCode = banner.code
+//
+//        if self.readStatus() == nil {
+//            self.writeStatus(1) // Just show the banner, no user interaction
+//        }
+//
+//        self.refreshDisplayMode()
     }
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xEAEBEC)
+        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         
+    return
         self.headerLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.textLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.dontShowAgainLabel.textColor = self.textLabel.textColor
         self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
+    }
+    
+    static func calculateHeight(width: CGFloat) -> CGSize {
+        var H: CGFloat = 25+16+16
+        if let _imageHeight = Banner.imageHeight {
+            H += _imageHeight
+        }
+        
+        return CGSize(width: width, height: H)
     }
     
 }

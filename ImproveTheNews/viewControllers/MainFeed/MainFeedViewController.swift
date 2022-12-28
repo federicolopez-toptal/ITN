@@ -16,14 +16,13 @@ class MainFeedViewController: BaseViewController {
     var list = CustomCollectionView()
 
     var topic = "news"
-    let data = MainFeedv2()
+    let data = MainFeedv3()
     var dataProvider = [DP_item]()
     
     var topicsCompleted = [String: Bool]()
-    
-    //!!!
-    var column = 1 //...
+    var column = 1
     var prevMustSplit: Int?
+
 
 
     // MARK: - Start
@@ -35,6 +34,12 @@ class MainFeedViewController: BaseViewController {
         NotificationCenter.default.addObserver(self,
             selector: #selector(self.loadDataFromNotification),
             name: Notification_reloadMainFeed, object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.refreshDataFromNotification),
+            name: Notification_refreshMainFeed, object: nil)
+        
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -118,6 +123,9 @@ class MainFeedViewController: BaseViewController {
     }
     @objc func loadDataFromNotification() {
         self.loadData(showLoading: true)
+    }
+    @objc func refreshDataFromNotification() {
+        self.refreshList()
     }
     
     // MARK: - end

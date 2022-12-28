@@ -197,6 +197,8 @@ extension MainFeedViewController {
         } else if let _dpItem = dpItem as? DP_Story_WT { // Story, wide text
             let story = self.getArticle(from: _dpItem)
             size = StoryWT_cell.calculateHeight(text: story.title, width: width)
+        } else if let _dpItem = dpItem as? DP_banner { // Banner
+            size = BannerCell.calculateHeight(width: width)
         }
         
         return size
@@ -209,7 +211,6 @@ extension MainFeedViewController {
         let dpItem = self.getDP_item(indexPath)
         
         if let _item = dpItem as? DP_header { // Header
-            
             if(indexPath.row == 1) {
                 cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderZeroCell.identifier,
                 for: indexPath) as! HeaderZeroCell
@@ -229,7 +230,7 @@ extension MainFeedViewController {
             cell = self.list.dequeueReusableCell(withReuseIdentifier: MoreCell.identifier, for: indexPath) as! MoreCell
             (cell as! MoreCell).populate(with: _item)
             (cell as! MoreCell).delegate = self
-        } else if let _item = dpItem as? DP_footer {
+        } else if let _item = dpItem as? DP_footer { // Footer
             cell = self.list.dequeueReusableCell(withReuseIdentifier: FooterCell.identifier,
                 for: indexPath) as! FooterCell
             (cell as! FooterCell).viewController = self
@@ -270,6 +271,10 @@ extension MainFeedViewController {
             cell = self.list.dequeueReusableCell(withReuseIdentifier: StoryWT_cell.identifier,
                 for: indexPath) as! StoryWT_cell
             (cell as! StoryWT_cell).populate(with: self.getArticle(from: _item))
+        } else if let _item = dpItem as? DP_banner { // Banner
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: BannerCell.identifier,
+                for: indexPath) as! BannerCell
+            (cell as! BannerCell).populate(with: self.getBanner(from: _item))
         }
             
         return cell
@@ -283,8 +288,8 @@ extension MainFeedViewController {
         return self.data.topics[item.topicIndex].articles[item.articleIndex]
     }
     
-    func getBanner(from item: DP_banner) -> Banner {
-        return self.data.banners[item.bannerIndex]
+    func getBanner(from item: DP_banner) -> Banner? {
+        return self.data.banner
     }
 
 }

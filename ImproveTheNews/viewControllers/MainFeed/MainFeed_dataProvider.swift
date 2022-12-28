@@ -86,6 +86,8 @@ extension MainFeedViewController {
                     let hText = T.capitalizedName.uppercased()
                     self.addHeader(format: format, isHeadline: (T.name=="news"), headlineText: hText)
                 } else if(type == "m") {
+                    self.insertBanner(index: i)
+                
                     var completed = false
                     if let _completed = self.topicsCompleted[T.name] {
                         completed = true
@@ -99,15 +101,18 @@ extension MainFeedViewController {
                 }
                             
             }
-             
-//            if(i==0 && self.data.banners.count>0) {
-//                let banner = DP_banner(index: 0)
-//                self.dataProvider.append(banner)
-//            }
+            //self.insertBanner(index: i)
         }
         
         let footer = DP_footer()
         self.dataProvider.append(footer)
+    }
+    
+    func insertBanner(index: Int) {
+        if(index==0 && self.data.banner != nil) {
+            let dpBanner = DP_banner()
+            self.dataProvider.append(dpBanner)
+        }
     }
     
     func addHeader(format: String?, isHeadline: Bool, headlineText: String) {

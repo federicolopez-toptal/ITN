@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct Banner {
-    
+class Banner {
+
+    static var imageHeight: CGFloat? = nil
+
     var headerText: String
     var mainText: String
     var colorScheme: Int
