@@ -198,7 +198,15 @@ extension MainFeedViewController {
             let story = self.getArticle(from: _dpItem)
             size = StoryWT_cell.calculateHeight(text: story.title, width: width)
         } else if let _dpItem = dpItem as? DP_banner { // Banner
-            size = BannerCell.calculateHeight(width: width)
+            let banner = self.getBanner(from: _dpItem)
+            var headerText = ""
+            var mainText = ""
+            if let _banner = banner {
+                headerText = _banner.headerText
+                mainText = _banner.mainText
+            }
+            
+            size = BannerCell.calculateHeight(headerText: headerText, text: mainText, width: width)
         }
         
         return size

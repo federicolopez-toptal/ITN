@@ -23,6 +23,7 @@ class LocalKeys { // Keys to store local values
     class LocalKeys_misc { // misc
         let allBannerCodes = "misc_allBannerCodes"
         let bannerPrefix = "banner_"
+        let bannerDontShowAgain = "bannerDontShowAgain"
     }
     
     class LocalKeys_sliders { // For class "SlidersPanel" && "MainFeed"

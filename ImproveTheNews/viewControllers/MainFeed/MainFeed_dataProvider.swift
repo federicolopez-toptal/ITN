@@ -101,7 +101,7 @@ extension MainFeedViewController {
                 }
                             
             }
-            //self.insertBanner(index: i)
+            //self.insertBanner(index: i) // End of topic, after "Show more"
         }
         
         let footer = DP_footer()
@@ -109,7 +109,12 @@ extension MainFeedViewController {
     }
     
     func insertBanner(index: Int) {
-        if(index==0 && self.data.banner != nil) {
+        var mustShow = true
+        if let _value = READ(LocalKeys.misc.bannerDontShowAgain), (_value == "1") {
+            mustShow = false
+        }
+        
+        if(index==0 && (self.data.banner != nil) && mustShow) {
             let dpBanner = DP_banner()
             self.dataProvider.append(dpBanner)
         }

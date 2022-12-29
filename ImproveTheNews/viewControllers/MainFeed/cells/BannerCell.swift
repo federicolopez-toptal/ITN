@@ -15,20 +15,15 @@ class BannerCell: UICollectionViewCell {
     let mainImageView = UIImageView()
     var imageHeightConstraint: NSLayoutConstraint?
     
-    
-    
-    
-    let headerLabel = UILabel()
-    let textLabel = UILabel()
+    let headerLabel = BannerCell.createHeaderLabel(text: "Lorem ipsum")
+    let textLabel = BannerCell.createTextLabel(text: "Lorem ipsum")
     let dontShowAgainLabel = UILabel()
     let checkImage = UIImageView()
     let closeIcon = UIImageView()
     
     private var bannerURL = ""
-    private var dontShowAgain = false
     private var bannerCode = ""
-    
-    
+    private var dontShowAgain = false
     
     
     
@@ -64,7 +59,7 @@ class BannerCell: UICollectionViewCell {
         ])
         
         let vStack = VSTACK(into: self.mainContainer, spacing: 10)
-        vStack.backgroundColor = .yellow.withAlphaComponent(0.25)
+        vStack.backgroundColor = .clear //.yellow.withAlphaComponent(0.25)
         vStack.activateConstraints([
             vStack.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 15+4),
             vStack.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -15),
@@ -82,63 +77,44 @@ class BannerCell: UICollectionViewCell {
             self.imageHeightConstraint!
         ])
         self.mainImageView.contentMode = .scaleAspectFit // non-stretched
-        
-    self.refreshDisplayMode()
-    return
-        
+            
         let imageButton = UIButton(type: .system)
         imageButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         vStack.addSubview(imageButton)
         imageButton.activateConstraints([
-            imageButton.leadingAnchor.constraint(equalTo: self.mainImageView.leadingAnchor, constant: -5),
-            imageButton.topAnchor.constraint(equalTo: self.mainImageView.topAnchor, constant: -5),
-            imageButton.bottomAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5),
-            imageButton.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor, constant: 5),
+            imageButton.leadingAnchor.constraint(equalTo: self.mainImageView.leadingAnchor, constant: 0),
+            imageButton.topAnchor.constraint(equalTo: self.mainImageView.topAnchor, constant: 0),
+            imageButton.bottomAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 0),
+            imageButton.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor, constant: 0),
         ])
         imageButton.addTarget(self, action: #selector(onImageButtonTap(_:)), for: .touchUpInside)
     
-    // -------------------------------
-    let merriweather_bold = MERRIWEATHER_BOLD(16)
-    let roboto = ROBOTO(15)
-    
-        self.headerLabel.backgroundColor = .clear
-        self.headerLabel.textColor = .black
-        self.headerLabel.numberOfLines = 4
-        self.headerLabel.font = merriweather_bold
-        self.headerLabel.text = "Test title"
-        self.headerLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        // -----------------------------
         vStack.addArrangedSubview(self.headerLabel)
-        
-        self.textLabel.backgroundColor = .clear
-        self.textLabel.textColor = .black
-        self.textLabel.numberOfLines = 4
-        self.textLabel.font = roboto
-        self.textLabel.text = "Test title"
-        self.textLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         vStack.addArrangedSubview(self.textLabel)
-        
+    
+        // -----------------------------
         let hStack = HSTACK(into: vStack, spacing: 10)
         hStack.backgroundColor = .clear //.orange
         vStack.addArrangedSubview(hStack)
         hStack.activateConstraints([
             hStack.heightAnchor.constraint(equalToConstant: 18)
         ])
-
+        
         let square = UIImageView(image: UIImage(named: "banner.check.square"))
         hStack.addArrangedSubview(square)
         NSLayoutConstraint.activate([
             square.widthAnchor.constraint(equalToConstant: 18),
             square.heightAnchor.constraint(equalToConstant: 18)
         ])
-
+        
         self.dontShowAgainLabel.textColor = .black
         self.dontShowAgainLabel.backgroundColor = .clear //.yellow
-        self.dontShowAgainLabel.font = roboto
+        self.dontShowAgainLabel.font = ROBOTO(15)
         self.dontShowAgainLabel.numberOfLines = 1
         self.dontShowAgainLabel.text = "Don't show this again"
         hStack.addArrangedSubview(self.dontShowAgainLabel)
         
-        // -------------------------------
         self.checkImage.image = UIImage(named: "slidersPanel.split.check")
         hStack.addSubview(self.checkImage)
         self.checkImage.activateConstraints([
@@ -160,7 +136,6 @@ class BannerCell: UICollectionViewCell {
         ])
         checkButton.addTarget(self, action: #selector(onCheckButtonTap(_:)), for: .touchUpInside)
         
-        // -------------------------------
         self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
         self.closeIcon.backgroundColor = .clear //.systemPink
         vStack.addSubview(self.closeIcon)
@@ -168,7 +143,7 @@ class BannerCell: UICollectionViewCell {
             self.closeIcon.widthAnchor.constraint(equalToConstant: 24),
             self.closeIcon.heightAnchor.constraint(equalToConstant: 24),
             self.closeIcon.trailingAnchor.constraint(equalTo: vStack.trailingAnchor, constant: 0),
-            self.closeIcon.bottomAnchor.constraint(equalTo: vStack.bottomAnchor, constant: -5),
+            self.closeIcon.bottomAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 5),
         ])
         
         let closeButton = UIButton(type: .system)
@@ -182,7 +157,8 @@ class BannerCell: UICollectionViewCell {
         ])
         closeButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
         
-        ADD_SPACER(to: vStack)
+        
+        self.refreshDisplayMode()
     }
     
     func populate(with banner: Banner?) {
@@ -190,63 +166,76 @@ class BannerCell: UICollectionViewCell {
             return
         }
         
+        _banner.trace()
         self.mainImageView.image = nil
-        if let _url = URL(string: _banner.imgUrl) {
-            self.mainImageView.sd_setImage(with: _url) { (img, error, cacheType, url) in
-                if let _img = img {
-                    var mustRefresh = false
-                    if(Banner.imageHeight == nil) {
-                        mustRefresh = true
-                    }
-                
-                    let W: CGFloat = SCREEN_SIZE().width - 16-16-19-15
-                    let H = (_img.size.height * W)/_img.size.width
-                    Banner.imageHeight = H
-                    self.imageHeightConstraint?.constant = H
+        if(Layout.current() == .textImages) {
+            if let _url = URL(string: _banner.imgUrl) {
+                self.mainImageView.sd_setImage(with: _url) { (img, error, cacheType, url) in
+                    if let _img = img {
+                        var mustRefresh = false
+                        if(Banner.imageHeight == nil) {
+                            mustRefresh = true
+                        }
                     
-                    if(mustRefresh) { NOTIFY(Notification_refreshMainFeed) }
+                        let W: CGFloat = SCREEN_SIZE().width - 16-16-19-15
+                        let H = (_img.size.height * W)/_img.size.width
+                        
+                        if(Banner.imageHeight != nil) {
+                            if(Banner.imageHeight != H) {
+                                mustRefresh = true
+                            }
+                        }
+                        Banner.imageHeight = H
+                        self.imageHeightConstraint?.constant = H
+                        
+                        if(mustRefresh) { NOTIFY(Notification_refreshMainFeed) }
+                    }
                 }
+            } else {
+                self.imageHeightConstraint?.constant = 0
+                Banner.imageHeight = nil
             }
         } else {
             self.imageHeightConstraint?.constant = 0
         }
         
+        self.bannerURL = _banner.url
+        self.bannerCode = _banner.code
         
-        
+        self.headerLabel.text = _banner.headerText
+        self.textLabel.text = _banner.mainText
     
-        
-    
-        
-        
-    
-    return
-//        self.headerLabel.text = banner.headerText
-//        self.textLabel.text = banner.mainText
-//
-//        self.bannerURL = banner.url
-//        self.bannerCode = banner.code
-//
 //        if self.readStatus() == nil {
 //            self.writeStatus(1) // Just show the banner, no user interaction
 //        }
-//
-//        self.refreshDisplayMode()
+
+        self.refreshDisplayMode()
     }
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
-        
-    return
         self.headerLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.textLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.dontShowAgainLabel.textColor = self.textLabel.textColor
+        
+        
+    return
         self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
     }
     
-    static func calculateHeight(width: CGFloat) -> CGSize {
-        var H: CGFloat = 25+16+16
+    static func calculateHeight(headerText: String, text: String, width: CGFloat) -> CGSize {
+        let W: CGFloat = width-16-16-19-15
+        
+        let tmpHeader = BannerCell.createHeaderLabel(text: headerText)
+        let headerHeight = tmpHeader.calculateHeightFor(width: W)
+        
+        let tmpText = BannerCell.createTextLabel(text: text)
+        let textHeight = tmpText.calculateHeightFor(width: W)
+        
+        let hStackHeight: CGFloat = 18
+        var H: CGFloat = 25+16+10+headerHeight+10+textHeight+10+hStackHeight+16
         if let _imageHeight = Banner.imageHeight {
             H += _imageHeight
         }
@@ -255,6 +244,36 @@ class BannerCell: UICollectionViewCell {
     }
     
 }
+
+// MARK: - UI Util(s)
+extension BannerCell {
+
+    static func createHeaderLabel(text: String) -> UILabel {
+        let result = UILabel()
+        result.backgroundColor = .clear
+        result.textColor = .black
+        result.numberOfLines = 4
+        result.font = MERRIWEATHER_BOLD(16)
+        result.text = text
+        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        
+        return result
+    }
+    
+    static func createTextLabel(text: String) -> UILabel {
+        let result = UILabel()
+        result.backgroundColor = .clear
+        result.textColor = .black
+        result.numberOfLines = 4
+        result.font = ROBOTO(15)
+        result.text = text
+        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        
+        return result
+    }
+    
+}
+
 
 // MARK: - Store settings locally
 extension BannerCell {
@@ -298,24 +317,27 @@ extension BannerCell {
 // MARK: - Event(s)
 extension BannerCell {
     
+    @objc func onImageButtonTap(_ sender: UIButton) {
+        self.writeStatus(4) // Click on image
+        OPEN_URL(self.bannerURL)
+        //NOTIFY(Notification_reloadMainFeed)
+    }
+
     @objc func onCheckButtonTap(_ sender: UIButton) {
         self.checkImage.isHidden = !self.checkImage.isHidden
         self.dontShowAgain = !self.checkImage.isHidden
     }
-    
+
     @objc func onCloseButtonTap(_ sender: UIButton) {
         if(self.dontShowAgain) {
             self.writeStatus(3) // Clicked on "Close" - Don't show again ON
+            WRITE(LocalKeys.misc.bannerDontShowAgain, value: "1")
         } else {
             self.writeStatus(2) // Clicked on "Close" - Don't show again OFF
         }
         NOTIFY(Notification_reloadMainFeed)
     }
     
-    @objc func onImageButtonTap(_ sender: UIButton) {
-        self.writeStatus(4) // Click on image
-        OPEN_URL(self.bannerURL)
-        NOTIFY(Notification_reloadMainFeed)
-    }
+    
     
 }

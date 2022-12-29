@@ -31,4 +31,10 @@ class Banner {
         self.url = json[8] as! String
     }
     
+    func trace() {
+        print("BANNER")
+        print(self.headerText, self.mainText, self.colorScheme, self.type, self.code, self.imgSize, self.imgUrl, self.url)
+        print("--------------------------")
+    }
+    
 }
