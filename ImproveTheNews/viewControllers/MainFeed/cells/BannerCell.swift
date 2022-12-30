@@ -332,10 +332,12 @@ extension BannerCell {
         if(self.dontShowAgain) {
             self.writeStatus(3) // Clicked on "Close" - Don't show again ON
             WRITE(LocalKeys.misc.bannerDontShowAgain, value: "1")
+            
+            NOTIFY(Notification_reloadMainFeed)
         } else {
             self.writeStatus(2) // Clicked on "Close" - Don't show again OFF
+            NOTIFY(Notification_removeBanner)
         }
-        NOTIFY(Notification_reloadMainFeed)
     }
     
     

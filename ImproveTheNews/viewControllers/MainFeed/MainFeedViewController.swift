@@ -39,6 +39,10 @@ class MainFeedViewController: BaseViewController {
             selector: #selector(self.refreshDataFromNotification),
             name: Notification_refreshMainFeed, object: nil)
         
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.removeBannerFromNotification),
+            name: Notification_removeBanner, object: nil)
+        
         
     }
     
@@ -126,6 +130,18 @@ class MainFeedViewController: BaseViewController {
     }
     @objc func refreshDataFromNotification() {
         self.refreshList()
+        self.list.forceUpdateLayoutForVisibleItems()
+    }
+    @objc func removeBannerFromNotification() {
+        for (i, dpObj) in self.dataProvider.enumerated() {
+            if(dpObj is DP_banner) {
+                self.dataProvider.remove(at: i)
+                break
+            }
+        }
+        
+        self.refreshList()
+        self.list.forceUpdateLayoutForVisibleItems()
     }
     
     // MARK: - end

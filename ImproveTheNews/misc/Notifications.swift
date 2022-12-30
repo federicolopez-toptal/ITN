@@ -8,7 +8,8 @@
 import Foundation
 
 let Notification_reloadMainFeed = Notification.Name("ReloadMainFeed")   // Reload the main feed!
-let Notification_refreshMainFeed = Notification.Name("RefreshMainFeed") // Refresh the main feed!
+let Notification_refreshMainFeed = Notification.Name("RefreshMainFeed") // Refresh the main feed
+let Notification_removeBanner = Notification.Name("RemoveBanner")       // Remove banner + reload main feed
 
 
 func NOTIFY(_ name: Notification.Name) {
