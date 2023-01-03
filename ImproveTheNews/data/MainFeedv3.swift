@@ -17,6 +17,7 @@ class MainFeedv3 {
     var banner: Banner? = nil
     var topicsCount = [String: Int]()   // For all counting (articles/stories) related
     
+    var prevS: Int = 0
     
     
     func loadData(_ topic: String, callback: @escaping (Error?) -> ()) {
@@ -27,6 +28,7 @@ class MainFeedv3 {
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
         
+        self.prevS = 0
         print("MAIN FEED from", request.url!.absoluteString)
         let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
@@ -56,32 +58,43 @@ class MainFeedv3 {
         var S_value = self.skipForTopic(T)
         if(T != self.topic){ S_value += 1 }
         
-        let strUrl = self.buildUrl(topic: T, A: 11, B: 0, S: S_value )
-        var request = URLRequest(url: URL(string: strUrl)!)
-        request.httpMethod = "GET"
+//        if(S_value-self.prevS <= 2) {
+//            callback(nil, 0)
+//        } else {
+            let strUrl = self.buildUrl(topic: T, A: 11, B: 0, S: S_value )
+            var request = URLRequest(url: URL(string: strUrl)!)
+            request.httpMethod = "GET"
                 
-        print("LOAD MORE \(T) from", request.url!.absoluteString)
-        let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
-            if(error as? URLError)?.code == .timedOut {
-                print("TIME OUT!!!")
-            }
-            
-            if let _error = error {
-                print(_error.localizedDescription)
-                callback(_error, nil)
-            } else {
-                let mData = ADD_MAIN_NODE(to: data)
-                if let _json = JSON(fromData: mData) {
-                    let articlesAdded = self.addArticlesTo(topic: T, json: _json)
-                    callback(nil, articlesAdded)
-                } else {
-                    let _error = CustomError.jsonParseError
+            print("LOAD MORE \(T) from", request.url!.absoluteString)
+            let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
+                if(error as? URLError)?.code == .timedOut {
+                    print("TIME OUT!!!")
+                }
+                
+                if let _error = error {
+                    print(_error.localizedDescription)
                     callback(_error, nil)
+                } else {
+                    let mData = ADD_MAIN_NODE(to: data)
+                    if let _json = JSON(fromData: mData) {
+                        let articlesAdded = self.addArticlesTo(topic: T, json: _json)
+                        
+                        let diff = S_value - self.prevS
+                        if(diff <= 2) {
+                            callback(nil, 0)
+                        } else {
+                            self.prevS = S_value
+                            callback(nil, articlesAdded)
+                        }
+                    } else {
+                        let _error = CustomError.jsonParseError
+                        callback(_error, nil)
+                    }
                 }
             }
-        }
-        
-        task.resume()
+            
+            task.resume()
+//        }
     }
 
 }

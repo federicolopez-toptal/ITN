@@ -96,31 +96,32 @@ class MainFeedViewController: BaseViewController {
                 //if(imFirst){ self.data.resetCounting() } !!!
 
                 self.data.loadData(self.topic) { (error) in
-                    if(self.data.topics.count == 0) {
-                        print("FEED VACIO!!!")
-                    }
-                
-                    self.topicSelector.setTopics(self.data.topicNames())
-                    self.populateDataProvider()
-                    self.refreshList()
-
-                    self.hideLoading()
-                    self.list.hideRefresher()
-                    self.list.forceUpdateLayoutForVisibleItems()
-                    self.refreshVLine()
-
-                    if(self.prevMustSplit != nil) {
-                        if(self.prevMustSplit != self.mustSplit()) { self.tapOnLogo() }
-                    }
-                    self.prevMustSplit = self.mustSplit()
+                    MAIN_THREAD {/* --- */
+                        if(self.data.topics.count == 0) {
+                            print("FEED VACIO!!!")
+                        }
                     
-                    // TOUR
-                    if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
-                        WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
-                        CustomNavController.shared.showTour = false
-                        self.startTour()
-                    }
-                    
+                        self.topicSelector.setTopics(self.data.topicNames())
+                        self.populateDataProvider()
+                        self.refreshList()
+
+                        self.hideLoading()
+                        self.list.hideRefresher()
+                        self.list.forceUpdateLayoutForVisibleItems()
+                        self.refreshVLine()
+
+                        if(self.prevMustSplit != nil) {
+                            if(self.prevMustSplit != self.mustSplit()) { self.tapOnLogo() }
+                        }
+                        self.prevMustSplit = self.mustSplit()
+                        
+                        // TOUR
+                        if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
+                            WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
+                            CustomNavController.shared.showTour = false
+                            self.startTour()
+                        }
+                    /* --- */ }
                 }
             }
         }
