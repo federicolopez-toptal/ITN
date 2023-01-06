@@ -46,7 +46,7 @@ class StoryCI_cell: UICollectionViewCell {
         self.mainVStack.activateConstraints([
             self.mainVStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
+            self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16+5)
         ])
         
         self.mainImageView.backgroundColor = .gray
@@ -143,6 +143,7 @@ class StoryCI_cell: UICollectionViewCell {
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+            //.green.withAlphaComponent(0.5)
         self.mainVStack.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
@@ -176,7 +177,7 @@ extension StoryCI_cell {
         let sourcesH: CGFloat = sourcesCount == 1 ? 0 : 18
         let timeLabelH: CGFloat = 18
         
-        let H: CGFloat = 16 + imageH + 5 + textH + 10 + sourcesH + 10 + timeLabelH + 12 + 16
+        let H: CGFloat = 16+5 + imageH + 5 + textH + 10 + sourcesH + 10 + timeLabelH + 12 + 16
         return CGSize(width: width/2, height: H)
     }
     

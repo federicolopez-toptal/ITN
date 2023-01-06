@@ -15,7 +15,7 @@ class ArticleViewController: BaseViewController {
     let line = UIView()
     let webView = WKWebView()
     var article: MainFeedArticle?
-
+    let rating = RatingView()
 
 
     deinit {
@@ -37,12 +37,14 @@ class ArticleViewController: BaseViewController {
             self.line.heightAnchor.constraint(equalToConstant: 1)
         ])
         
+        self.rating.buildInto(viewController: self, url: article!.url)
+        
         self.view.addSubview(self.webView)
         self.webView.activateConstraints([
             self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.webView.topAnchor.constraint(equalTo: self.line.bottomAnchor),
-            self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.webView.bottomAnchor.constraint(equalTo: self.rating.topAnchor)
         ])
         self.webView.navigationDelegate = self
         

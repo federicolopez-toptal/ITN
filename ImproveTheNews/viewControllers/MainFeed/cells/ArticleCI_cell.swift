@@ -45,18 +45,14 @@ class ArticleCI_cell: UICollectionViewCell {
     // -----------------------------------
     private func buildContent() {        
         self.contentView.backgroundColor = .white
-        
-    let merriweather_bold = MERRIWEATHER_BOLD(18)
-    let roboto = ROBOTO(13)
-    let roboto_bold = ROBOTO_BOLD(11)
-    let characterSpacing: Double = 1.35
+        let roboto = ROBOTO(13)
     
         self.mainVStack = VSTACK(into: self.contentView)
         self.mainVStack.backgroundColor = .green
         self.mainVStack.activateConstraints([
             self.mainVStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainVStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16)
+            self.mainVStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16+5)
         ])
 
         self.mainImageView.backgroundColor = .gray
@@ -146,6 +142,7 @@ class ArticleCI_cell: UICollectionViewCell {
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+            //.orange.withAlphaComponent(0.5)
         self.mainVStack.backgroundColor = self.contentView.backgroundColor
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
@@ -174,7 +171,7 @@ extension ArticleCI_cell {
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         
-        let H: CGFloat = 16 + imageH + 10 + textH + 10 + sourcesH + 16        
+        let H: CGFloat = 16+5 + imageH + 10 + textH + 10 + sourcesH + 16 + 12
         return CGSize(width: width/2, height: H)
     }
     

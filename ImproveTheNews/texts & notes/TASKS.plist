@@ -14,12 +14,6 @@
 			<string>Abrir el contenido en vista personalizada (no web directa)</string>
 			<key>Feed vacio</key>
 			<string>De vez en cuando, el feed queda todo vacio - Qué mostrar?</string>
-			<key>Show more buttons</key>
-			<string>Debería haber un límite a la cantidad de clicks para un mismo topic</string>
-			<key>Banners</key>
-			<string>Chequear todo lo de los banners en detalle</string>
-			<key>TopicSelector</key>
-			<string>Ocultarlo cuando no haya mas subtopics</string>
 		</dict>
 		<key>MENU</key>
 		<dict>
@@ -34,7 +28,5 @@
 			<string>Tirar el error correspondiente ante un timeout</string>
 		</dict>
 	</dict>
-	<key>DONE</key>
-	<dict/>
 </dict>
 </plist>

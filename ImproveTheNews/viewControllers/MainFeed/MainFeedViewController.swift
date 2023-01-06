@@ -43,7 +43,6 @@ class MainFeedViewController: BaseViewController {
             selector: #selector(self.removeBannerFromNotification),
             name: Notification_removeBanner, object: nil)
         
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,11 +52,11 @@ class MainFeedViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.logo])
-            if(!self.imFirstViewController()) {
-                self.navBar.addComponents([.back])
+            if(self.imFirstViewController()) {
+                self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
+            } else {
+                self.navBar.addComponents([.back, .title])
             }
-            self.navBar.addComponents([.menuIcon, .searchIcon])
             
             self.topicSelector.buildInto(self.view)
             self.topicSelector.delegate = self
@@ -101,6 +100,7 @@ class MainFeedViewController: BaseViewController {
                             print("FEED VACIO!!!")
                         }
                     
+                        self.navBar.setTitle(self.getTopicName(topic: self.topic))
                         self.topicSelector.setTopics(self.data.topicNames())
                         self.populateDataProvider()
                         self.refreshList()
@@ -177,6 +177,19 @@ class MainFeedViewController: BaseViewController {
     func scrollToZero() {
         self.list.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
+
+    func getTopicName(topic: String) -> String {
+        var result = ""
+        for T in self.data.topics {
+            if(T.name == topic) {
+                result = T.capitalizedName
+                break
+            }
+        }
+        
+        return result
+    }
+
 
 }
 

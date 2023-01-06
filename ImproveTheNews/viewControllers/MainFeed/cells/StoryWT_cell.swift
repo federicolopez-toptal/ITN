@@ -102,6 +102,7 @@ class StoryWT_cell: UICollectionViewCell {
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
+        //.systemPink.withAlphaComponent(0.5)
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         
@@ -128,7 +129,7 @@ class StoryWT_cell: UICollectionViewCell {
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 18
         
-        let H: CGFloat = 16 + storyLabelH + 8 + textH + 10 + sourcesH + 16
+        let H: CGFloat = 16 + storyLabelH + 8 + textH + 10 + sourcesH + 16 + 5
         return CGSize(width: width, height: H)
     }
     

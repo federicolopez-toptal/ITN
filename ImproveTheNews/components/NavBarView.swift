@@ -14,6 +14,7 @@ enum NavBarViewComponents {
     case searchIcon
     case back
     case backToFeedIcon
+    case title
 }
 
 
@@ -174,6 +175,23 @@ class NavBarView: UIView {
                 self.left_x += 24 + 110 + 15
             }
             
+            if(C == .title) {
+                let merriweather_bold = MERRIWEATHER_BOLD(18)
+                
+                let label = UILabel()
+                label.text = " "
+                label.textColor = .black
+                label.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+                label.font = merriweather_bold
+                self.addSubview(label)
+                label.activateConstraints([
+                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                    label.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                ])
+                label.tag = 7
+                self.displayModeComponents.append(label)
+            }
+            
             if(C == .back) {
                 // Back
                 let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
@@ -184,7 +202,7 @@ class NavBarView: UIView {
                     backIcon.widthAnchor.constraint(equalToConstant: 24),
                     backIcon.heightAnchor.constraint(equalToConstant: 24)
                 ])
-                backIcon.tag = 5
+                backIcon.tag = 6
                 self.displayModeComponents.append(backIcon)
 
                 let button = UIButton(type: .system)
@@ -205,7 +223,7 @@ class NavBarView: UIView {
         self.refreshDisplayMode()
     }
     
-    // MARK: - Display mode
+    // MARK: - misc
     func refreshDisplayMode() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         
@@ -235,11 +253,19 @@ class NavBarView: UIView {
                 switch(label.tag) {
                     case 5: // BACK TO FEED
                         label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+                    case 7: // TITLE
+                        label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
                         
                     default:
                         NOTHING()
                 }
             }
+        }
+    }
+    
+    func setTitle(_ text: String) {
+        if let _label = self.viewWithTag(7) as? UILabel {
+            _label.text = text
         }
     }
 
