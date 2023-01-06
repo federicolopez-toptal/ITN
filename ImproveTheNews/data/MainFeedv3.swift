@@ -80,7 +80,7 @@ class MainFeedv3 {
                         let articlesAdded = self.addArticlesTo(topic: T, json: _json)
                         
                         let diff = S_value - self.prevS
-                        if(diff <= 2) {
+                        if(diff <= 5) {
                             callback(nil, 0)
                         } else {
                             self.prevS = S_value

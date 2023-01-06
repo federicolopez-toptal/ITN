@@ -32,6 +32,10 @@ class RatingView: UIView {
     func buildInto(viewController: UIViewController, url: String) {
         self.url = url
     
+        if(SAFE_AREA()!.bottom > 0) {
+            self.HEIGHT += 15
+        }
+    
         viewController.view.addSubview(self)
         self.bottomConstraint = self.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
         self.activateConstraints([
@@ -46,8 +50,8 @@ class RatingView: UIView {
         self.label.textColor = .white
         self.addSubview(self.label)
         self.label.activateConstraints([
-            self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            self.label.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14),
+            self.label.topAnchor.constraint(equalTo: self.topAnchor, constant: 22)
         ])
         
         let button = UIButton(type: .system)
@@ -55,7 +59,7 @@ class RatingView: UIView {
         button.layer.cornerRadius = 4
         self.addSubview(button)
         button.activateConstraints([
-            button.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            button.centerYAnchor.constraint(equalTo: self.label.centerYAnchor),
             button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -46),
             button.widthAnchor.constraint(equalToConstant: 74),
             button.heightAnchor.constraint(equalToConstant: 35)
@@ -103,10 +107,10 @@ class RatingView: UIView {
         self.starsContainer.backgroundColor = .clear //.green
         self.addSubview(self.starsContainer)
         self.starsContainer.activateConstraints([
-            self.starsContainer.leadingAnchor.constraint(equalTo: self.label.trailingAnchor, constant: 10),
-            self.starsContainer.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.starsContainer.heightAnchor.constraint(equalToConstant: 24),
-            self.starsContainer.widthAnchor.constraint(equalToConstant: 140)
+            self.starsContainer.leadingAnchor.constraint(equalTo: self.label.trailingAnchor, constant: 14),
+            self.starsContainer.centerYAnchor.constraint(equalTo: self.label.centerYAnchor),
+            self.starsContainer.heightAnchor.constraint(equalToConstant: 20),
+            self.starsContainer.widthAnchor.constraint(equalToConstant: 120)
         ])
         self.starsContainer.isUserInteractionEnabled = true
         
@@ -115,15 +119,15 @@ class RatingView: UIView {
             let star = UIImageView(image: UIImage(named: DisplayMode.imageName("star")))
             self.starsContainer.addSubview(star)
             star.activateConstraints([
-                star.widthAnchor.constraint(equalToConstant: 24),
-                star.heightAnchor.constraint(equalToConstant: 24),
+                star.widthAnchor.constraint(equalToConstant: 20),
+                star.heightAnchor.constraint(equalToConstant: 20),
                 star.leadingAnchor.constraint(equalTo: self.starsContainer.leadingAnchor, constant: valX),
                 star.topAnchor.constraint(equalTo: self.starsContainer.topAnchor)
             ])
             star.isUserInteractionEnabled = false
             star.tag = 30 + i
             
-            valX += 24 + 5
+            valX += 20 + 5
         }
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onStarsPan(_:)))
@@ -201,7 +205,7 @@ extension RatingView {
         var val_X: CGFloat = 0
         var starsCount = 0
         for _ in 1...5 {
-            val_X += 24
+            val_X += 20
             if(currentX >= val_X) {
                 starsCount += 1
             }
@@ -221,7 +225,7 @@ extension RatingView {
                 starsCount += 1
             }
             
-            val_X += 24
+            val_X += 20
             val_X += 5
         }
         
