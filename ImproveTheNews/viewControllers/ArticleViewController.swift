@@ -58,7 +58,8 @@ class ArticleViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.backToFeedIcon])
+            self.navBar.addComponents([.backToFeedIcon, .share])
+            self.navBar.setShareUrl(self.article!.url, vc: self)
         }
     }
     

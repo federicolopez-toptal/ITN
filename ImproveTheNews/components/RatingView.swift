@@ -18,6 +18,7 @@ class RatingView: UIView {
     let buttonLabel = UILabel()
     let starsContainer = UIView()
     let loading = UIActivityIndicatorView(style: .medium)
+    let thanksLabel = UILabel()
     
     var bottomConstraint: NSLayoutConstraint? = nil
     
@@ -43,6 +44,16 @@ class RatingView: UIView {
             self.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor),
             self.heightAnchor.constraint(equalToConstant: self.HEIGHT),
             self.bottomConstraint!
+        ])
+    
+        let line = UIView()
+        line.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.2) : UIColor(hex: 0xE2E3E3)
+        self.addSubview(line)
+        line.activateConstraints([
+            line.topAnchor.constraint(equalTo: self.topAnchor),
+            line.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            line.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            line.heightAnchor.constraint(equalToConstant: 1),
         ])
     
         self.label.text = "Rate article"
@@ -80,7 +91,7 @@ class RatingView: UIView {
             closeIcon.widthAnchor.constraint(equalToConstant: 24),
             closeIcon.heightAnchor.constraint(equalToConstant: 24),
             closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 14),
-            closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
+            closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
         ])
         
         let closeButton = UIButton(type: .custom)
@@ -103,6 +114,16 @@ class RatingView: UIView {
         self.loading.startAnimating()
         self.loading.hide()
         
+        self.thanksLabel.text = "Thank you!"
+        self.thanksLabel.font = MERRIWEATHER_BOLD(13)
+        self.thanksLabel.textColor = .white
+        self.thanksLabel.textAlignment = .center
+        self.addSubview(self.thanksLabel)
+        self.thanksLabel.activateConstraints([
+            self.thanksLabel.centerXAnchor.constraint(equalTo: button.centerXAnchor),
+            self.thanksLabel.centerYAnchor.constraint(equalTo: button.centerYAnchor)
+        ])
+        self.thanksLabel.hide()
         
         self.starsContainer.backgroundColor = .clear //.green
         self.addSubview(self.starsContainer)
@@ -174,15 +195,20 @@ extension RatingView {
             }
             
             if(success) {
-                DELAY(0.5) {
-                    MAIN_THREAD {
-                        self.setArticleAsRated()
+                MAIN_THREAD {
+                    sender.hide()
+                    self.setArticleAsRated()
+                    self.thanksLabel.show()
+                    
+                    DELAY(2.0) {
                         self.close()
                     }
                 }
             } else {
-                sender.alpha = 1.0
-                self.buttonLabel.text = "RATE"
+                MAIN_THREAD {
+                    sender.alpha = 1.0
+                    self.buttonLabel.text = "RATE"
+                }
             }
             
         }

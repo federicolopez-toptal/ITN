@@ -15,6 +15,7 @@ enum NavBarViewComponents {
     case back
     case backToFeedIcon
     case title
+    case share
 }
 
 
@@ -26,6 +27,9 @@ class NavBarView: UIView {
     private let buttonsMargin: CGFloat = 5.0
     private var left_x: CGFloat = 15
     private var right_x: CGFloat = 15
+    
+    private var shareUrl: String? = nil
+    private weak var vc: UIViewController? = nil
     
 
     // MARK: - Init(s)
@@ -218,6 +222,33 @@ class NavBarView: UIView {
                 
                 self.left_x += 24 + 15
             }
+            
+            if(C == .share) {
+                // Search
+                let shareIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("share")))
+                self.addSubview(shareIcon)
+                shareIcon.activateConstraints([
+                    shareIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    shareIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    shareIcon.widthAnchor.constraint(equalToConstant: 24),
+                    shareIcon.heightAnchor.constraint(equalToConstant: 24)
+                ])
+                shareIcon.tag = 8
+                self.displayModeComponents.append(shareIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: shareIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: shareIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: shareIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: shareIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onShareButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += 24 + 15
+            }
         }
         
         self.refreshDisplayMode()
@@ -242,6 +273,8 @@ class NavBarView: UIView {
                         imgView.image = UIImage(named: DisplayMode.imageName("back.button"))
                     case 6: // back
                         imgView.image = UIImage(named: DisplayMode.imageName("back.button"))
+                    case 8: // share
+                        imgView.image = UIImage(named: DisplayMode.imageName("share"))
                     
                     default:
                         NOTHING()
@@ -267,6 +300,11 @@ class NavBarView: UIView {
         if let _label = self.viewWithTag(7) as? UILabel {
             _label.text = text
         }
+    }
+    
+    func setShareUrl(_ url: String, vc: UIViewController) {
+        self.shareUrl = url
+        self.vc = vc
     }
 
 }
@@ -306,5 +344,12 @@ extension NavBarView {
         vc.modalTransitionStyle = .crossDissolve
         CustomNavController.shared.present(vc, animated: true)
     }
+    
+    @objc func onShareButtonTap(_ sender: UIButton) {
+        if let _url = self.shareUrl, let _vc = self.vc {
+            SHARE_URL(_url, from: _vc)
+        }
+    }
+    
     
 }
