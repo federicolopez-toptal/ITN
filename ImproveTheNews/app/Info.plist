@@ -10,6 +10,7 @@
 		<string>Roboto-Bold.ttf</string>
 		<string>Merriweather-Bold.ttf</string>
 		<string>Merriweather-Regular.ttf</string>
+		<string>Merriweather-Italic.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

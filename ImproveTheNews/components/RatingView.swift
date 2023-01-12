@@ -116,7 +116,7 @@ class RatingView: UIView {
         
         self.thanksLabel.text = "Thank you!"
         self.thanksLabel.font = MERRIWEATHER_BOLD(13)
-        self.thanksLabel.textColor = .white
+        self.thanksLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.thanksLabel.textAlignment = .center
         self.addSubview(self.thanksLabel)
         self.thanksLabel.activateConstraints([

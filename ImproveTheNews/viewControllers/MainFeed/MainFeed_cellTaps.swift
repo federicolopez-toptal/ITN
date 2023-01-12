@@ -22,8 +22,10 @@ extension MainFeedViewController {
             let article = self.getArticle(from: (item as! DP_itemPointingData))
 
             if(article.isStory) {
-                //print("STORY", article.title)
-                FUTURE_IMPLEMENTATION("Show the Story content screen here")                
+                // FUTURE_IMPLEMENTATION("Show the Story content screen here")
+                let vc = StoryViewController()
+                vc.story = article
+                CustomNavController.shared.pushViewController(vc, animated: true)
             } else {
                 let vc = ArticleViewController()
                 vc.article = article

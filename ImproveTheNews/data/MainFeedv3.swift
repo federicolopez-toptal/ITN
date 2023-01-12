@@ -242,7 +242,7 @@ extension MainFeedv3 {
         result += ".A" + String(A)
         result += ".B" + String(B)
         result += ".S" + String(S)
-        result += "&sliders=" + self.sliderValues()
+        result += "&sliders=" + MainFeedv3.sliderValues()  //self.sliderValues()
         result += "&uid=" + UUID.shared.getValue()
         result += "&v=I" + Bundle.main.releaseVersionNumber!
         result += "&dev=" + UIDevice.current.modelName.replacingOccurrences(of: " ", with: "_")
@@ -336,7 +336,7 @@ extension MainFeedv3 {
         >> LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11yT04
     */
     
-    private func sliderValues() -> String {
+    static func sliderValues() -> String {
         var result = ""
         
         // Sliders panel values (6 in total)

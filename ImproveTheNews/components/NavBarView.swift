@@ -139,6 +139,7 @@ class NavBarView: UIView {
             }
             
             if(C == .backToFeedIcon) {
+                self.left_x -= 10
                 // Back to feed (from the article content)
                 let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
                 self.addSubview(backIcon)
@@ -197,6 +198,7 @@ class NavBarView: UIView {
             }
             
             if(C == .back) {
+                self.left_x -= 10
                 // Back
                 let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
                 self.addSubview(backIcon)
