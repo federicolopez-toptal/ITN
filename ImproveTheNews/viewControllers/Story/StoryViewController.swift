@@ -175,17 +175,17 @@ extension StoryViewController {
         
         self.addFactsStructure()
         self.facts = story.facts
-        self.groupSources()
-        self.populateFacts()
+        self.groupSources()     // works with self.facts
+        self.populateFacts()    // works with self.facts
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
         self.VStack.backgroundColor = .clear
 
-        DELAY(1.0) {
-            self.scrollToBottom()
-        }
+//        DELAY(1.0) {
+//            self.scrollToBottom()
+//        }
     }
 
     // ------------------------------------------
@@ -193,29 +193,29 @@ extension StoryViewController {
         let VStack = self.view.viewWithTag(140) as! UIStackView
         //VStack.backgroundColor = .systemPink
         REMOVE_ALL_SUBVIEWS(from: VStack)
-        ADD_SPACER(to: VStack, height: 15)
+        ADD_SPACER(to: VStack, height: 20)
         
         if(self.facts.count==0) {
             let noFactsLabel = UILabel()
-            noFactsLabel.font = MERRIWEATHER_BOLD(18)
-            noFactsLabel.text = "No facts available"
+            noFactsLabel.font = MERRIWEATHER_BOLD(19)
+            noFactsLabel.text = "  No facts available"
             noFactsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(noFactsLabel)
         } else {
             let FactsLabel = UILabel()
-            FactsLabel.font = MERRIWEATHER_BOLD(18)
-            FactsLabel.text = "Facts"
+            FactsLabel.font = MERRIWEATHER_BOLD(19)
+            FactsLabel.text = "  Facts"
             FactsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(FactsLabel)
             
-            ADD_SPACER(to: VStack, height: 12)
+            ADD_SPACER(to: VStack, height: 16)
             
             var lastSourceIndex = -1
             for (i, F) in self.facts.enumerated() {
                 let HStack = HSTACK(into: VStack)
                 //HStack.backgroundColor = .green
                 
-                ADD_SPACER(to: HStack, width: 15)
+                ADD_SPACER(to: HStack, width: 20)
 
                 let dot = UIView()
                 dot.backgroundColor = UIColor(hex: 0xFF643C)
@@ -223,7 +223,7 @@ extension StoryViewController {
                 dot.activateConstraints([
                     dot.widthAnchor.constraint(equalToConstant: 8),
                     dot.heightAnchor.constraint(equalToConstant: 8),
-                    dot.leadingAnchor.constraint(equalTo: HStack.leadingAnchor),
+                    dot.leadingAnchor.constraint(equalTo: HStack.leadingAnchor, constant: 4),
                     dot.topAnchor.constraint(equalTo: HStack.topAnchor, constant: 5)
                 ])
 
@@ -242,7 +242,7 @@ extension StoryViewController {
                 }
             }
             
-            ADD_SPACER(to: VStack, height: 15)
+            ADD_SPACER(to: VStack, height: 20)
             //////////////////////////////////////
             let showMoreLabel = UILabel()
             showMoreLabel.textColor = UIColor(hex: 0xFF643C)
@@ -262,7 +262,7 @@ extension StoryViewController {
             ])
             showMoreButton.addTarget(self, action: #selector(showMoreButtonOnTap(_:)), for: .touchUpInside)
             //////////////////////////////////////
-            ADD_SPACER(to: VStack, height: 15)
+            ADD_SPACER(to: VStack, height: 30)
             let line = UIView()
             line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
             VStack.addArrangedSubview(line)
@@ -273,17 +273,23 @@ extension StoryViewController {
             //////////////////////////////////////
             let SourcesLabel = UILabel()
             SourcesLabel.font = MERRIWEATHER_BOLD(18)
-            SourcesLabel.text = "Sources"
+            SourcesLabel.text = "  Sources"
             SourcesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(SourcesLabel)
             ADD_SPACER(to: VStack, height: 15)
             
-            let VStack_sources = VSTACK(into: VStack)
-            VStack_sources.spacing = 5
+            let HStack_sources = HSTACK(into: VStack)
+            //HStack_sources.backgroundColor = .green
+            ADD_SPACER(to: HStack_sources, width: 8)
+            
+            let VStack_sources = VSTACK(into: HStack_sources)
+            VStack_sources.spacing = 10
             //VStack_sources.backgroundColor = .blue
+            
+            ADD_SPACER(to: HStack_sources, width: 8)
             //------------------------------------------
-            let HSep: CGFloat = 8
-            let W: CGFloat = SCREEN_SIZE().width - 13 - 13 - 13 - 13 - HSep
+            let HSep: CGFloat = 12
+            let W: CGFloat = SCREEN_SIZE().width - 12 - 12 - 13 - 13 - 8 - 8 - HSep
             let sourceHeight: CGFloat = 18
             
             var row = 1
@@ -363,11 +369,13 @@ extension StoryViewController {
     }
     
     private func addFactsStructure() {
+        ADD_SPACER(to: self.VStack, height: 1)
+    
         let HStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: HStack, width: 13)
+        ADD_SPACER(to: HStack, width: 12)
         let VStack_borders = VSTACK(into: HStack)
-        ADD_SPACER(to: HStack, width: 13)
-        VStack_borders.layer.borderWidth = 7.0
+        ADD_SPACER(to: HStack, width: 12)
+        VStack_borders.layer.borderWidth = 8.0
         VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x1D2530).cgColor : UIColor(hex: 0xE1E3E3).cgColor
 
         let innerHStack = HSTACK(into: VStack_borders)
@@ -459,8 +467,8 @@ extension StoryViewController: UIGestureRecognizerDelegate {
     }
     
     func attrText(_ text: String, index: Int) -> NSAttributedString {
-        let font = UIFont(name: "Merriweather", size: 14)
-        let fontItalic = UIFont(name: "Merriweather-Italic", size: 14)
+        let font = UIFont(name: "Merriweather-Bold", size: 15)
+        let fontItalic = UIFont(name: "Merriweather-Italic", size: 15)
         //let fontItalic = UIFont(name: "Merriweather-LightItalic", size: 14)
         let extraText = " [" + String(index) + "]"
         let mText = text + extraText
