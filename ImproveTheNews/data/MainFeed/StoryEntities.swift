@@ -13,6 +13,8 @@ struct Fact {
     var source_title: String = ""    // source name
     var source_url: String = ""      // source url
     
+    var sourceIndex: Int = -1
+    
     init(_ json: [String: Any]) {
         if let _title = json["title"] as? String {
             self.title = _title

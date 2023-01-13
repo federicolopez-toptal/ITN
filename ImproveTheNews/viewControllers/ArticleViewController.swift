@@ -17,9 +17,11 @@ class ArticleViewController: BaseViewController {
     var article: MainFeedArticle?
     let rating = RatingView()
 
+    var showComponentsOnClose = true
+
 
     deinit {
-        CustomNavController.shared.showPanelAndButtonWithAnimation()
+        if(self.showComponentsOnClose){ CustomNavController.shared.showPanelAndButtonWithAnimation() }
         self.hideLoading()
     }
 

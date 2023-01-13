@@ -13,6 +13,7 @@ class StoryViewController: BaseViewController {
     
     var story: MainFeedArticle?
     var storyData = StoryContent()
+    var groupedSources = [(String, String)]()
     
     let navBar = NavBarView()
     let line = UIView()
@@ -20,6 +21,8 @@ class StoryViewController: BaseViewController {
     let contentView = UIView()
     var VStack: UIStackView!
     
+    var show3 = true
+    var facts: [Fact]!
     var imageHeightConstraint: NSLayoutConstraint? = nil
     
     
@@ -123,7 +126,6 @@ extension StoryViewController {
     
     private func loadContent() {
         self.showLoading()
-        
         self.storyData.load(url: self.story!.url) { (story) in
             MAIN_THREAD {
                 self.hideLoading()
@@ -132,6 +134,25 @@ extension StoryViewController {
                 if let _story = story {
                     self.addContent(_story)
                 }
+            }
+        }
+    }
+    
+    private func groupSources() {
+        self.groupedSources = [(String, String)]()
+        for (i, F) in self.facts.enumerated() {
+            var found = false
+            for (j, S) in self.groupedSources.enumerated() {
+                if(S.0==F.source_title && S.1==F.source_url) {
+                    found = true
+                    self.facts[i].sourceIndex = j
+                    break
+                }
+            }
+            
+            if(!found) {
+                self.groupedSources.append( (F.source_title, F.source_url) )
+                self.facts[i].sourceIndex = self.groupedSources.count-1
             }
         }
     }
@@ -152,13 +173,15 @@ extension StoryViewController {
             self.addTime(time: story.time)
         }
         
-        self.addFacts()
-        self.populateFacts(facts: story.facts)
+        self.addFactsStructure()
+        self.facts = story.facts
+        self.groupSources()
+        self.populateFacts()
         
         // TMP //------------------------------------------
-//        self.scrollView.backgroundColor = .clear
-//        self.contentView.backgroundColor = .clear
-//        self.VStack.backgroundColor = .clear
+        self.scrollView.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
+        self.VStack.backgroundColor = .clear
 
         DELAY(1.0) {
             self.scrollToBottom()
@@ -166,13 +189,13 @@ extension StoryViewController {
     }
 
     // ------------------------------------------
-    private func populateFacts(facts: [Fact]) {
+    private func populateFacts() {
         let VStack = self.view.viewWithTag(140) as! UIStackView
-        VStack.backgroundColor = .systemPink
+        //VStack.backgroundColor = .systemPink
         REMOVE_ALL_SUBVIEWS(from: VStack)
         ADD_SPACER(to: VStack, height: 15)
         
-        if(facts.count==0) {
+        if(self.facts.count==0) {
             let noFactsLabel = UILabel()
             noFactsLabel.font = MERRIWEATHER_BOLD(18)
             noFactsLabel.text = "No facts available"
@@ -187,9 +210,10 @@ extension StoryViewController {
             
             ADD_SPACER(to: VStack, height: 12)
             
-            for (i, F) in facts.enumerated() {
+            var lastSourceIndex = -1
+            for (i, F) in self.facts.enumerated() {
                 let HStack = HSTACK(into: VStack)
-                HStack.backgroundColor = .green
+                //HStack.backgroundColor = .green
                 
                 ADD_SPACER(to: HStack, width: 15)
 
@@ -207,13 +231,46 @@ extension StoryViewController {
                 contentLabel.numberOfLines = 0
                 contentLabel.font = MERRIWEATHER(14)
                 //contentLabel.text = F.title
-                contentLabel.attributedText = self.attrText(F.title, index: i+1)
+                contentLabel.attributedText = self.attrText(F.title, index: F.sourceIndex+1)
                 HStack.addArrangedSubview(contentLabel)
                 
                 ADD_SPACER(to: VStack, height: 5) // separation from next item
+                
+                if(self.show3 && i==2) {
+                    lastSourceIndex =  F.sourceIndex
+                    break
+                }
             }
             
             ADD_SPACER(to: VStack, height: 15)
+            //////////////////////////////////////
+            let showMoreLabel = UILabel()
+            showMoreLabel.textColor = UIColor(hex: 0xFF643C)
+            showMoreLabel.textAlignment = .center
+            showMoreLabel.font = ROBOTO(15)
+            showMoreLabel.text = self.show3 ? "Show more" : "Show fewer facts"
+            VStack.addArrangedSubview(showMoreLabel)
+            
+            let showMoreButton = UIButton(type: .custom)
+            //showMoreButton.backgroundColor = .red.withAlphaComponent(0.5)
+            VStack.addSubview(showMoreButton)
+            showMoreButton.activateConstraints([
+                showMoreButton.heightAnchor.constraint(equalToConstant: 22),
+                showMoreButton.widthAnchor.constraint(equalToConstant: 180),
+                showMoreButton.centerXAnchor.constraint(equalTo: showMoreLabel.centerXAnchor),
+                showMoreButton.centerYAnchor.constraint(equalTo: showMoreLabel.centerYAnchor)
+            ])
+            showMoreButton.addTarget(self, action: #selector(showMoreButtonOnTap(_:)), for: .touchUpInside)
+            //////////////////////////////////////
+            ADD_SPACER(to: VStack, height: 15)
+            let line = UIView()
+            line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
+            VStack.addArrangedSubview(line)
+            line.activateConstraints([
+                line.heightAnchor.constraint(equalToConstant: 1)
+            ])
+            ADD_SPACER(to: VStack, height: 20)
+            //////////////////////////////////////
             let SourcesLabel = UILabel()
             SourcesLabel.font = MERRIWEATHER_BOLD(18)
             SourcesLabel.text = "Sources"
@@ -223,7 +280,7 @@ extension StoryViewController {
             
             let VStack_sources = VSTACK(into: VStack)
             VStack_sources.spacing = 5
-            VStack_sources.backgroundColor = .blue
+            //VStack_sources.backgroundColor = .blue
             //------------------------------------------
             let HSep: CGFloat = 8
             let W: CGFloat = SCREEN_SIZE().width - 13 - 13 - 13 - 13 - HSep
@@ -232,13 +289,13 @@ extension StoryViewController {
             var row = 1
             var val_X: CGFloat = 0
             //------------------------------------------
-            for (i, F) in facts.enumerated() {
+            for (i, S) in self.groupedSources.enumerated() {
                 let sourceLabel = UILabel()
                 sourceLabel.font = ROBOTO(15)
-                sourceLabel.backgroundColor = .blue
+                //sourceLabel.backgroundColor = .blue
                 sourceLabel.textColor = UIColor(hex: 0xFF643C)
-                sourceLabel.text = "[" + String(i+1) + "] " + F.source_title
-                print("SOURCE:", sourceLabel.text)
+                sourceLabel.text = "[" + String(i+1) + "] " + S.0
+                //print("SOURCE:", sourceLabel.text)
                 
                 sourceLabel.heightAnchor.constraint(equalToConstant: sourceHeight).isActive = true
                 let labelWidth = sourceLabel.calculateWidthFor(height: sourceHeight)
@@ -264,7 +321,7 @@ extension StoryViewController {
                 if(VStack_sources.arrangedSubviews.count < row) {
                     HStack_row = HSTACK(into: VStack_sources)
                     HStack_row.spacing = HSep
-                    HStack_row.backgroundColor = .yellow
+                    //HStack_row.backgroundColor = .yellow
                     
                     if(row>1) {
                         val_X += labelWidth
@@ -274,17 +331,38 @@ extension StoryViewController {
                 }
                 
                 HStack_row.addArrangedSubview(sourceLabel)
-                if(i+1 == facts.count) { // last item
+                
+                var isLast = false
+                if(self.show3 && i==lastSourceIndex){ isLast = true }
+                if( (i+1 == self.groupedSources.count) || isLast) { // last item
                     ADD_SPACER(to: HStack_row)
                 }
+                
+                let sourceButton = UIButton(type: .system)
+                //sourceLabel.backgroundColor = .blue.withAlphaComponent(0.3)
+                HStack_row.addSubview(sourceButton)
+                sourceButton.activateConstraints([
+                    sourceButton.leadingAnchor.constraint(equalTo: sourceLabel.leadingAnchor),
+                    sourceButton.trailingAnchor.constraint(equalTo: sourceLabel.trailingAnchor),
+                    sourceButton.topAnchor.constraint(equalTo: sourceLabel.topAnchor),
+                    sourceButton.bottomAnchor.constraint(equalTo: sourceLabel.bottomAnchor)
+                ])
+                sourceButton.tag = 200 + i
+                sourceButton.addTarget(self, action: #selector(sourceButtonOnTap(_:)), for: .touchUpInside)
+                
+                if(isLast) {
+                    break
+                }
             }
+
+            ADD_SPACER(to: VStack, height: 15)
         }
         
         ADD_SPACER(to: VStack, height: 15)
-        print("--------------------")
+        //print("--------------------")
     }
     
-    private func addFacts() {
+    private func addFactsStructure() {
         let HStack = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack, width: 13)
         let VStack_borders = VSTACK(into: HStack)
@@ -412,24 +490,42 @@ extension StoryViewController: UIGestureRecognizerDelegate {
     
     private func prettifyText(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, paths: [String], linkedSubstrings: [String], accented: [String]) -> NSAttributedString {
 
-    let nonBoldFontAttribute: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font:font!, NSAttributedString.Key.foregroundColor: UIColor.label]
-    let boldFontAttribute = [NSAttributedString.Key.font:boldFont!]
-    let accentedAttribute:  [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor(hex: 0xD3592D), NSAttributedString.Key.strokeWidth: -5]
-    
-    let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
-    for i in 0 ..< boldPartsOfString.count {
-        boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
-    }
-    for l in 0..<paths.count {
-        let sbstrRange = fullString.range(of: linkedSubstrings[l])
-        boldString.addAttribute(.link, value: paths[l], range: sbstrRange)
-    }
-    for a in 0..<accented.count {
-        let sbstrRange = fullString.range(of: accented[a])
+        let nonBoldFontAttribute: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font:font!, NSAttributedString.Key.foregroundColor: UIColor.label]
+        let boldFontAttribute = [NSAttributedString.Key.font:boldFont!]
+        let accentedAttribute:  [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor(hex: 0xD3592D), NSAttributedString.Key.strokeWidth: -5]
         
-        boldString.addAttributes(accentedAttribute, range: sbstrRange)
+        let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
+        for i in 0 ..< boldPartsOfString.count {
+            boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
+        }
+        for l in 0..<paths.count {
+            let sbstrRange = fullString.range(of: linkedSubstrings[l])
+            boldString.addAttribute(.link, value: paths[l], range: sbstrRange)
+        }
+        for a in 0..<accented.count {
+            let sbstrRange = fullString.range(of: accented[a])
+            
+            boldString.addAttributes(accentedAttribute, range: sbstrRange)
+        }
+        return boldString
     }
-    return boldString
-}
     
+}
+
+// MARK: - Event(s)
+extension StoryViewController {
+    @objc func sourceButtonOnTap(_ sender: UIButton) {
+        let tag = sender.tag - 200
+        let url = self.groupedSources[tag].1
+        
+        let vc = ArticleViewController()
+        vc.article = MainFeedArticle(url: url)
+        vc.showComponentsOnClose = false
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    @objc func showMoreButtonOnTap(_ sender: UIButton) {
+        self.show3 = !self.show3
+        self.populateFacts()
+    }
 }

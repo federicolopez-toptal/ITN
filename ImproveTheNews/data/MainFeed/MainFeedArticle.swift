@@ -64,6 +64,20 @@ struct MainFeedArticle {
         
     }
     
+    init(url: String) {
+        self.source = ""
+        self.time = ""
+        self.title = ""
+        self.url = url
+        self.imgUrl = ""
+        self.LR = 1
+        self.PE = 1
+        self.country = ""
+        self.markups = [Markup]()
+        self.isStory = false
+        self.storySources = [String]()
+    }
+    
 }
 
 struct Markup {
