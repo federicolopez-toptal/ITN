@@ -17,61 +17,63 @@ struct MainFeedStory {
     var time: String = ""
     
     var facts = [Fact]()
+    var spins = [Spin]()
     
     
     init (_ json: [String: Any]) {
     // main fields
         let mainNode = json["storyData"] as! [String: Any]
         
-        if let _id = mainNode["id"] as? Int {
-            self.id = String(_id)
-        }
-        
-        if let _title = mainNode["title"] as? String {
-            self.title = _title
-        }
-        
-        if let _time = mainNode["time"] as? String {
-            self.time = _time
-        }
+        self.id = getSTRING(mainNode["id"], defaultValue: "1")
+        self.title = getSTRING(mainNode["title"], defaultValue: "Title not available")
+        self.time = getSTRING(mainNode["time"])
         
         if let _imageObj = mainNode["image"] as? [String: Any] {
-            self.image_src = _imageObj["src"] as! String
+            self.image_src = getSTRING(_imageObj["src"])
             if let _imageCreditObj = _imageObj["credit"] as? [String: String] {
-                self.image_credit_title = _imageCreditObj["title"]!
-                self.image_credit_url = _imageCreditObj["url"]!
+                self.image_credit_title = getSTRING(_imageCreditObj["title"])
+                self.image_credit_title = getSTRING(_imageCreditObj["url"])
             }
         }
     
     // Facts
-        let factsNode = self.removeNullFrom(json["facts"])
+        let factsNode = removeNULL(from: json["facts"])
         self.facts = [Fact]()
         for F in factsNode {
             let newFact = Fact(F)
-            if(!newFact.source_title.isEmpty && !newFact.source_url.isEmpty) { // Only facts with sources
+            if(!newFact.source_title.isEmpty && !newFact.source_url.isEmpty) { // Only facts with a source
                 self.facts.append(newFact)
             }
         }
+        
+    // Spins
+        let spinsNode = removeNULL(from: json["spinSection"])
+        self.spins = [Spin]()
+        for S in spinsNode {
+            let newSpin = Spin(S)
+            self.spins.append(newSpin)
+        }
     }
-    
-    
-    
 }
 
 // MARK: - Utils
-extension MainFeedStory {
+func removeNULL(from node: Any?) -> [[String: Any]] {
+    let array = node as! [Any?]
+    var filteredArray = [Any?]()
     
-    private func removeNullFrom(_ node: Any?) -> [[String: Any]] {
-        let array = node as! [Any?]
-        var filteredArray = [Any?]()
-        
-        for obj in array {
-            if let _ = obj as? [String: Any] {
-                filteredArray.append(obj)
-            }
+    for obj in array {
+        if let _ = obj as? [String: Any] {
+            filteredArray.append(obj)
         }
-        
-        return filteredArray as! [[String: Any]]
     }
     
+    return filteredArray as! [[String: Any]]
+}
+
+func getSTRING(_ fieldValue: Any?, defaultValue: String = "") -> String {
+    if let _value = fieldValue as? String {
+        return _value
+    } else {
+        return defaultValue
+    }
 }

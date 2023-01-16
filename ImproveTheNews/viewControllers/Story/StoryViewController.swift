@@ -23,6 +23,7 @@ class StoryViewController: BaseViewController {
     
     var show3 = true
     var facts: [Fact]!
+    var spins: [Spin]!
     var imageHeightConstraint: NSLayoutConstraint? = nil
     
     
@@ -174,9 +175,11 @@ extension StoryViewController {
         }
         
         self.addFactsStructure()
-        self.facts = story.facts
-        self.groupSources()     // works with self.facts
-        self.populateFacts()    // works with self.facts
+            self.facts = story.facts
+            self.groupSources()     // works with self.facts
+            self.populateFacts()    // works with self.facts
+        
+        self.addSpins(story.spins)
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
@@ -189,6 +192,177 @@ extension StoryViewController {
     }
 
     // ------------------------------------------
+    private func addSpins(_ spins: [Spin]) {
+        self.spins = spins
+        ADD_SPACER(to: self.VStack, height: 12)
+    
+        let HStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: HStack, width: 12)
+        let innerHStack = VSTACK(into: HStack)
+        ADD_SPACER(to: HStack, width: 12)
+        
+       if(spins.count == 0) {
+            let noSpinsLabel = UILabel()
+            noSpinsLabel.font = MERRIWEATHER_BOLD(19)
+            noSpinsLabel.text = "No spin available"
+            noSpinsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            innerHStack.addArrangedSubview(noSpinsLabel)
+        } else {
+            let SpinsLabel = UILabel()
+            SpinsLabel.font = MERRIWEATHER_BOLD(19)
+            SpinsLabel.text = "Spin"
+            SpinsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            innerHStack.addArrangedSubview(SpinsLabel)
+            
+            ADD_SPACER(to: innerHStack, height: 12)
+            for (i, S) in spins.enumerated() {
+                let titleLabel = UILabel()
+                titleLabel.font = MERRIWEATHER_BOLD(19)
+                titleLabel.text = S.title
+                titleLabel.numberOfLines = 0
+                titleLabel.textColor = UIColor(hex: 0xFF643C)
+                innerHStack.addArrangedSubview(titleLabel)
+                
+                ADD_SPACER(to: innerHStack, height: 10)
+                let descriptionLabel = UILabel()
+                descriptionLabel.font = ROBOTO(16)
+                descriptionLabel.numberOfLines = 0
+                descriptionLabel.text = S.description
+                descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                innerHStack.addArrangedSubview(descriptionLabel)
+                
+                if(!S.image.isEmpty && !S.subTitle.isEmpty && !S.media_title.isEmpty) {
+                    ADD_SPACER(to: innerHStack, height: 16)
+                    let HStack_image = HSTACK(into: innerHStack)
+                    //HStack_image.backgroundColor = .orange
+
+                    let VStack_image = VSTACK(into: HStack_image)
+                    //VStack_image.backgroundColor = .yellow
+                    let imageView = UIImageView()
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.clipsToBounds = true
+                    imageView.backgroundColor = .darkGray
+                    VStack_image.addArrangedSubview(imageView)
+                    imageView.activateConstraints([
+                        imageView.widthAnchor.constraint(equalToConstant: 146),
+                        imageView.heightAnchor.constraint(equalToConstant: 98)
+                    ])
+                    imageView.sd_setImage(with: URL(string: S.image))
+                    ADD_SPACER(to: VStack_image) // V fill
+
+                    ADD_SPACER(to: HStack_image, width: 12)
+
+                    let VStack_data = VSTACK(into: HStack_image)
+                    //VStack_data.backgroundColor = .green
+                    let subTitleLabel = UILabel()
+                    subTitleLabel.font = MERRIWEATHER_BOLD(15)
+                    subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+                    subTitleLabel.numberOfLines = 0
+                    subTitleLabel.text = S.subTitle
+                    VStack_data.addArrangedSubview(subTitleLabel)
+                    ADD_SPACER(to: VStack_data, height: 8)
+                    
+                    let HStack_source = HSTACK(into: VStack_data)
+                    HStack_source.activateConstraints([
+                        HStack_source.heightAnchor.constraint(equalToConstant: 28)
+                    ])
+                    //HStack_source.backgroundColor = .systemPink
+
+                    if(!S.media_country_code.isEmpty) {
+                        let VStack_flag = VSTACK(into: HStack_source)
+                        //VStack_flag.backgroundColor = .green
+                        let flagImageView = UIImageView()
+                        
+                        if let _image = UIImage(named: S.media_country_code.uppercased() + "64.png") {
+                            flagImageView.image = _image
+                        } else {
+                            flagImageView.image = UIImage(named: "noFlag.png")
+                        }
+                        
+                        ADD_SPACER(to: VStack_flag, height: 4)
+                        VStack_flag.addArrangedSubview(flagImageView)
+                        flagImageView.activateConstraints([
+                            flagImageView.widthAnchor.constraint(equalToConstant: 20),
+                            flagImageView.heightAnchor.constraint(equalToConstant: 20)
+                        ])
+                        ADD_SPACER(to: VStack_flag, height: 4)
+                        
+                        ADD_SPACER(to: HStack_source, width: 2)
+                    }
+                    
+                    if(!S.media_label.isEmpty) {
+                        let sourcesContainer = UIStackView()
+                        HStack_source.addArrangedSubview(sourcesContainer)
+                        ADD_SOURCE_ICONS(data: [S.media_label], to: sourcesContainer, containerHeight: 28)
+                    }
+
+                    let sourceLabel = UILabel()
+                    sourceLabel.text = S.media_name
+                    sourceLabel.font = ROBOTO(13)
+                    sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                    HStack_source.addArrangedSubview(sourceLabel)
+                    ADD_SPACER(to: HStack_source, width: 8)
+                    
+                    let stanceIcon = StanceIconView()
+                    HStack_source.addArrangedSubview(stanceIcon)
+                    stanceIcon.setValues(S.LR, S.CP)
+                    ADD_SPACER(to: HStack_source) // H fill
+                    
+                    ADD_SPACER(to: VStack_data) // V fill
+                    
+                    let mainButton = UIButton(type: .custom)
+                    //mainButton.backgroundColor = .red.withAlphaComponent(0.25)
+                    HStack_image.addSubview(mainButton)
+                    mainButton.activateConstraints([
+                        mainButton.leadingAnchor.constraint(equalTo: HStack_image.leadingAnchor),
+                        mainButton.trailingAnchor.constraint(equalTo: HStack_image.trailingAnchor),
+                        mainButton.topAnchor.constraint(equalTo: HStack_image.topAnchor),
+                        mainButton.bottomAnchor.constraint(equalTo: HStack_image.bottomAnchor)
+                    ])
+                    mainButton.tag = 300+i
+                    mainButton.addTarget(self, action: #selector(spinOnTap(_:)), for: .touchUpInside)
+                    
+                    let miniButton = UIButton(type: .custom)
+                    //miniButton.backgroundColor = .red.withAlphaComponent(0.25)
+                    HStack_image.addSubview(miniButton)
+                    miniButton.activateConstraints([
+                        miniButton.leadingAnchor.constraint(equalTo: stanceIcon.leadingAnchor),
+                        miniButton.trailingAnchor.constraint(equalTo: stanceIcon.trailingAnchor),
+                        miniButton.topAnchor.constraint(equalTo: stanceIcon.topAnchor),
+                        miniButton.bottomAnchor.constraint(equalTo: stanceIcon.bottomAnchor)
+                    ])
+                    miniButton.tag = 400+i
+                    miniButton.addTarget(self, action: #selector(spinStanceIconOnTap(_:)), for: .touchUpInside)
+                    
+                    ADD_SPACER(to: innerHStack, height: 20) // Space to next item
+                    let line = UIView()
+                    //line.backgroundColor = .black
+                    innerHStack.addArrangedSubview(line)
+                    line.activateConstraints([
+                        line.heightAnchor.constraint(equalToConstant: 2.0)
+                    ])
+                        // Dashes
+                        line.clipsToBounds = true
+                        let dash_long: CGFloat = 5
+                        let dash_sep: CGFloat = 2
+                        var val_x: CGFloat = 0
+                        let dash_color = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                        while(val_x < SCREEN_SIZE().width) {
+                            let dash = UIView()
+                            dash.backgroundColor = dash_color
+                            line.addSubview(dash)
+                            dash.frame = CGRect(x: val_x, y: 0, width: dash_long, height: 2.0)
+                            
+                            val_x += dash_long + dash_sep
+                        }
+                    
+                    ADD_SPACER(to: innerHStack, height: 20) // Space to next item
+                }
+                
+            }
+        }
+    }
+    
     private func populateFacts() {
         let VStack = self.view.viewWithTag(140) as! UIStackView
         //VStack.backgroundColor = .systemPink
@@ -535,5 +709,25 @@ extension StoryViewController {
     @objc func showMoreButtonOnTap(_ sender: UIButton) {
         self.show3 = !self.show3
         self.populateFacts()
+    }
+    
+    @objc func spinOnTap(_ sender: UIButton) {
+        let tag = sender.tag - 300
+        let spin = self.spins[tag]
+        
+        let vc = ArticleViewController()
+        vc.article = MainFeedArticle(url: spin.url)
+        vc.showComponentsOnClose = false
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    @objc func spinStanceIconOnTap(_ sender: UIButton) {
+        let tag = sender.tag - 400
+        let spin = self.spins[tag]
+        
+        let popup = StancePopupView()
+        popup.populate(sourceName: spin.media_name, country: spin.media_country_code,
+            LR: spin.LR, PE: spin.CP)
+        popup.pushFromBottom()
     }
 }
