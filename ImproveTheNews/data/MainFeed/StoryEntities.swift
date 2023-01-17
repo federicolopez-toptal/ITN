@@ -7,6 +7,38 @@
 
 import Foundation
 
+
+struct StoryArticle {
+
+    var id: String = "1"
+    var title: String = ""
+    var url: String = ""
+    var image: String = ""
+    var timeRelative: String = ""
+    var time: Int = 0
+    var media_title: String = ""
+    var media_country_code: String = ""
+    
+    init(_ json: [String: Any]) {
+        self.id = getSTRING(json["id"], defaultValue: "1")
+        self.title = getSTRING(json["title"], defaultValue: "")
+        self.url = getSTRING(json["url"])
+        self.image = getSTRING(json["image"])
+        self.timeRelative = getSTRING(json["timeRelative"])
+        
+        if let _time = json["time"] as? Int {
+            self.time = _time
+        }
+        
+        if let _mediaObj = json["media"] as? [String: Any] {
+            self.media_title = getSTRING(_mediaObj["title"])
+            self.media_country_code = getSTRING(_mediaObj["country_code"])
+        }
+        
+    }
+}
+
+
 struct Spin {
 
     var title: String = ""

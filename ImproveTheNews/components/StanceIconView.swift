@@ -22,6 +22,9 @@ class StanceIconView: UIView {
     var thumb1LeadingConstraint: NSLayoutConstraint?
     var thumb2LeadingConstraint: NSLayoutConstraint?
     
+    private var value1: Int = 1
+    private var value2: Int = 1
+    
 
     // MARK: - Init(s)
     init() {
@@ -100,8 +103,15 @@ class StanceIconView: UIView {
         let mValue2 = value2.clamp(lower: 1, upper: 5)
         let positions: [CGFloat] = [0, 2, 4, 6, 8]
         
+        self.value1 = mValue1
+        self.value2 = mValue2
+        
         self.thumb1LeadingConstraint?.constant = positions[mValue1-1]
         self.thumb2LeadingConstraint?.constant = positions[mValue2-1]
+    }
+    
+    func getValues() -> (Int, Int) {
+        return (self.value1, self.value2)
     }
     
     //MARK: Event(s)

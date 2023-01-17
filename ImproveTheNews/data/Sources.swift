@@ -103,6 +103,8 @@ struct SourceIcon {
     var paywall: Bool
     var code: String?
     var state: Bool = true
+    var LR: Int = 1
+    var PE: Int = 1
     
     init(_ json: [String: Any]) {
         self.identifier = ""
@@ -136,7 +138,14 @@ struct SourceIcon {
             } else {
                 self.code = _code
             }
-        }        
+        }
+        
+        if let _LR = json["lr"] as? String {
+            self.LR = Int(_LR)!
+        }
+        if let _PE = json["pe"] as? String {
+            self.PE = Int(_PE)!
+        }
     }
     
     func hasCode() -> Bool {

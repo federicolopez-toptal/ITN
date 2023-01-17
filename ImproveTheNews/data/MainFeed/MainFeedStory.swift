@@ -18,6 +18,7 @@ struct MainFeedStory {
     
     var facts = [Fact]()
     var spins = [Spin]()
+    var articles = [StoryArticle]()
     
     
     init (_ json: [String: Any]) {
@@ -52,6 +53,14 @@ struct MainFeedStory {
         for S in spinsNode {
             let newSpin = Spin(S)
             self.spins.append(newSpin)
+        }
+        
+    // Articles
+        let articlesNode = removeNULL(from: json["articles"])
+        self.articles = [StoryArticle]()
+        for A in articlesNode {
+            let newArticle = StoryArticle(A)
+            self.articles.append(newArticle)
         }
     }
 }

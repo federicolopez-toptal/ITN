@@ -24,6 +24,7 @@ class StoryViewController: BaseViewController {
     var show3 = true
     var facts: [Fact]!
     var spins: [Spin]!
+    var articles: [StoryArticle]!
     var imageHeightConstraint: NSLayoutConstraint? = nil
     
     
@@ -180,6 +181,7 @@ extension StoryViewController {
             self.populateFacts()    // works with self.facts
         
         self.addSpins(story.spins)
+        self.addArticles(story.articles)
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
@@ -192,6 +194,173 @@ extension StoryViewController {
     }
 
     // ------------------------------------------
+    private func addArticles(_ articles: [StoryArticle]) {
+        self.articles = articles
+        ADD_SPACER(to: self.VStack, height: 12)
+    
+        let HStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: HStack, width: 12)
+        let innerHStack = VSTACK(into: HStack)
+        ADD_SPACER(to: HStack, width: 12)
+        
+       if(articles.count == 0) {
+            let noArticlesLabel = UILabel()
+            noArticlesLabel.font = MERRIWEATHER_BOLD(19)
+            noArticlesLabel.text = "No articles available"
+            noArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            innerHStack.addArrangedSubview(noArticlesLabel)
+        } else {
+            let ArticlesLabel = UILabel()
+            ArticlesLabel.font = MERRIWEATHER_BOLD(19)
+            ArticlesLabel.text = "Articles on this story"
+            ArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            innerHStack.addArrangedSubview(ArticlesLabel)
+            
+            ADD_SPACER(to: innerHStack, height: 12)
+            for (i, A) in articles.enumerated() {
+                if(!A.image.isEmpty && !A.title.isEmpty && !A.media_title.isEmpty) {
+                    ADD_SPACER(to: innerHStack, height: 16)
+                    let HStack_image = HSTACK(into: innerHStack)
+                    //HStack_image.backgroundColor = .orange
+
+                    let VStack_image = VSTACK(into: HStack_image)
+                    //VStack_image.backgroundColor = .yellow
+                    let imageView = UIImageView()
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.clipsToBounds = true
+                    imageView.backgroundColor = .darkGray
+                    VStack_image.addArrangedSubview(imageView)
+                    imageView.activateConstraints([
+                        imageView.widthAnchor.constraint(equalToConstant: 146),
+                        imageView.heightAnchor.constraint(equalToConstant: 98)
+                    ])
+                    imageView.sd_setImage(with: URL(string: A.image))
+                    ADD_SPACER(to: VStack_image) // V fill
+
+                    ADD_SPACER(to: HStack_image, width: 12)
+
+                    let VStack_data = VSTACK(into: HStack_image)
+                    //VStack_data.backgroundColor = .green
+                    let subTitleLabel = UILabel()
+                    subTitleLabel.font = MERRIWEATHER_BOLD(15)
+                    subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+                    subTitleLabel.numberOfLines = 0
+                    subTitleLabel.text = A.title
+                    VStack_data.addArrangedSubview(subTitleLabel)
+                    ADD_SPACER(to: VStack_data, height: 8)
+                    
+                    let HStack_source = HSTACK(into: VStack_data)
+                    HStack_source.activateConstraints([
+                        HStack_source.heightAnchor.constraint(equalToConstant: 28)
+                    ])
+                    //HStack_source.backgroundColor = .systemPink
+
+                    if(!A.media_country_code.isEmpty) {
+                        let VStack_flag = VSTACK(into: HStack_source)
+                        //VStack_flag.backgroundColor = .green
+                        let flagImageView = UIImageView()
+                        
+                        if let _image = UIImage(named: A.media_country_code.uppercased() + "64.png") {
+                            flagImageView.image = _image
+                        } else {
+                            flagImageView.image = UIImage(named: "noFlag.png")
+                        }
+                        
+                        ADD_SPACER(to: VStack_flag, height: 4)
+                        VStack_flag.addArrangedSubview(flagImageView)
+                        flagImageView.activateConstraints([
+                            flagImageView.widthAnchor.constraint(equalToConstant: 20),
+                            flagImageView.heightAnchor.constraint(equalToConstant: 20)
+                        ])
+                        ADD_SPACER(to: VStack_flag, height: 4)
+                        
+                        ADD_SPACER(to: HStack_source, width: 2)
+                    }
+                         
+                    var LR = 1
+                    var PE = 1
+                         
+                    let sourceName = A.media_title.components(separatedBy: " #").first!
+                    let sourceIconObj = self.getSourceIcon(name: sourceName) { (icon) in
+                        if let _icon = icon {
+                            let sourcesContainer = UIStackView()
+                            HStack_source.addArrangedSubview(sourcesContainer)
+                            ADD_SOURCE_ICONS(data: [_icon.identifier],
+                                to: sourcesContainer, containerHeight: 28)
+                                
+                            LR = _icon.LR
+                            PE = _icon.PE
+                        }
+                    }
+                    
+                    let sourceLabel = UILabel()
+                    sourceLabel.text = sourceName
+                    sourceLabel.font = ROBOTO(13)
+                    sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                    HStack_source.addArrangedSubview(sourceLabel)
+                    ADD_SPACER(to: HStack_source, width: 8)
+
+                    let stanceIcon = StanceIconView()
+                    stanceIcon.tag = 767
+                    HStack_source.addArrangedSubview(stanceIcon)
+                    stanceIcon.setValues(LR, PE)
+                    ADD_SPACER(to: HStack_source) // H fill
+
+                    ADD_SPACER(to: VStack_data) // V fill
+
+                    let mainButton = UIButton(type: .custom)
+                    //mainButton.backgroundColor = .red.withAlphaComponent(0.25)
+                    HStack_image.addSubview(mainButton)
+                    mainButton.activateConstraints([
+                        mainButton.leadingAnchor.constraint(equalTo: HStack_image.leadingAnchor),
+                        mainButton.trailingAnchor.constraint(equalTo: HStack_image.trailingAnchor),
+                        mainButton.topAnchor.constraint(equalTo: HStack_image.topAnchor),
+                        mainButton.bottomAnchor.constraint(equalTo: HStack_image.bottomAnchor)
+                    ])
+                    mainButton.tag = 300+i
+                    mainButton.addTarget(self, action: #selector(articleOnTap(_:)), for: .touchUpInside)
+
+                    let miniButton = UIButton(type: .custom)
+                    //miniButton.backgroundColor = .red.withAlphaComponent(0.25)
+                    HStack_image.addSubview(miniButton)
+                    miniButton.activateConstraints([
+                        miniButton.leadingAnchor.constraint(equalTo: stanceIcon.leadingAnchor),
+                        miniButton.trailingAnchor.constraint(equalTo: stanceIcon.trailingAnchor),
+                        miniButton.topAnchor.constraint(equalTo: stanceIcon.topAnchor),
+                        miniButton.bottomAnchor.constraint(equalTo: stanceIcon.bottomAnchor)
+                    ])
+                    miniButton.tag = 400+i
+                    miniButton.addTarget(self, action: #selector(articleStanceIconOnTap(_:)), for: .touchUpInside)
+//
+                    ADD_SPACER(to: innerHStack, height: 20) // Space to next item
+//                    let line = UIView()
+//                    //line.backgroundColor = .black
+//                    innerHStack.addArrangedSubview(line)
+//                    line.activateConstraints([
+//                        line.heightAnchor.constraint(equalToConstant: 2.0)
+//                    ])
+//                        // Dashes
+//                        line.clipsToBounds = true
+//                        let dash_long: CGFloat = 5
+//                        let dash_sep: CGFloat = 2
+//                        var val_x: CGFloat = 0
+//                        let dash_color = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+//                        while(val_x < SCREEN_SIZE().width) {
+//                            let dash = UIView()
+//                            dash.backgroundColor = dash_color
+//                            line.addSubview(dash)
+//                            dash.frame = CGRect(x: val_x, y: 0, width: dash_long, height: 2.0)
+//
+//                            val_x += dash_long + dash_sep
+//                        }
+//
+//                    ADD_SPACER(to: innerHStack, height: 20) // Space to next item
+                }
+            }
+            // --- //
+        }
+    }
+    
     private func addSpins(_ spins: [Spin]) {
         self.spins = spins
         ADD_SPACER(to: self.VStack, height: 12)
@@ -692,6 +861,20 @@ extension StoryViewController: UIGestureRecognizerDelegate {
         return boldString
     }
     
+    func getSourceIcon(name: String, callback: @escaping (SourceIcon?) -> ()) {
+        Sources.shared.checkIfLoaded { _ in // load sources (if needed)
+            let id = Sources.shared.search(name: name)
+            if let _id = id {
+                let obj = Sources.shared.search(identifier: _id)
+                if let _obj = obj {
+                    callback(_obj)
+                }
+            }
+            
+            callback(nil)
+        }
+    }
+    
 }
 
 // MARK: - Event(s)
@@ -728,6 +911,33 @@ extension StoryViewController {
         let popup = StancePopupView()
         popup.populate(sourceName: spin.media_name, country: spin.media_country_code,
             LR: spin.LR, PE: spin.CP)
+        popup.pushFromBottom()
+    }
+    
+    @objc func articleOnTap(_ sender: UIButton) {
+        let tag = sender.tag - 300
+        let article = self.articles[tag]
+        let vc = ArticleViewController()
+        vc.article = MainFeedArticle(url: article.url)
+        vc.showComponentsOnClose = false
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    @objc func articleStanceIconOnTap(_ sender: UIButton) {
+        let tag = sender.tag - 400
+        let article = self.articles[tag]
+        
+        var LR = 1
+        var PE = 2
+        if let stanceView = sender.superview?.viewWithTag(767) as? StanceIconView {
+            LR = stanceView.getValues().0
+            PE = stanceView.getValues().1
+        }
+        
+        
+        let popup = StancePopupView()
+        popup.populate(sourceName: article.media_title, country: article.media_country_code,
+            LR: LR, PE: PE)
         popup.pushFromBottom()
     }
 }
