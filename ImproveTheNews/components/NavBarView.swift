@@ -195,6 +195,17 @@ class NavBarView: UIView {
                 ])
                 label.tag = 7
                 self.displayModeComponents.append(label)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: label.leadingAnchor, constant: -20),
+                    button.topAnchor.constraint(equalTo: label.topAnchor, constant: -self.buttonsMargin),
+                    button.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: 20),
+                    button.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: self.buttonsMargin)
+                ])
+                button.addTarget(self, action: #selector(onTitleButtonTap(_:)), for: .touchUpInside)
             }
             
             if(C == .back) {
@@ -353,5 +364,10 @@ extension NavBarView {
         }
     }
     
+    @objc func onTitleButtonTap(_ sender: UIButton) {
+        if let _vc = CustomNavController.shared.viewControllers.last as? MainFeedViewController {
+            _vc.scrollToZero()
+        }
+    }
     
 }

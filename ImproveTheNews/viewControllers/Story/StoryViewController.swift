@@ -385,9 +385,15 @@ extension StoryViewController {
             
             ADD_SPACER(to: innerHStack, height: 12)
             for (i, S) in spins.enumerated() {
+                var _title = S.title
+                if(_title.isEmpty) {
+                    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    _title = "Narrative " + letters.getCharAt(index: i)!
+                }
+                
                 let titleLabel = UILabel()
                 titleLabel.font = MERRIWEATHER_BOLD(19)
-                titleLabel.text = S.title
+                titleLabel.text = _title
                 titleLabel.numberOfLines = 0
                 titleLabel.textColor = UIColor(hex: 0xFF643C)
                 innerHStack.addArrangedSubview(titleLabel)
