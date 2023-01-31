@@ -104,7 +104,7 @@ class FooterCell: UICollectionViewCell {
         socialStack.addArrangedSubview(self.followLabel)
         
         ADD_SPACER(to: socialStack, width: 5)
-        for i in 1...4 {
+        for i in 1...3 { //4 {
             let socialButton = UIButton(type: .system)
             socialButton.backgroundColor = .clear //.black
             socialButton.setImage(UIImage(named: "footerSocial_\(i)")?.withRenderingMode(.alwaysOriginal), for: .normal)
