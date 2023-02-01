@@ -15,12 +15,31 @@ class MenuView: UIView {
     var list = UITableView()
     var versionLabel = UILabel()
     
-    let dataProvider: [MenuITem] = [ // Items order
+    var isShowingMore = false
+    
+    var dataProvider = [MenuITem]()
+    
+    let dataProvider_A: [MenuITem] = [ // Items order
         .headlines,
         .displayMode,
         .tour,
         .preferences,
-        .layout
+        .layout,
+        .more
+    ]
+    
+    let dataProvider_B: [MenuITem] = [ // Items order
+        .headlines,
+        .displayMode,
+        .tour,
+        .preferences,
+        .layout,
+        .more,
+        
+        .sliders,
+        .faq,
+        .feedback,
+        .privacy
     ]
     
     
@@ -102,6 +121,8 @@ class MenuView: UIView {
         
         // -------------------
         self.menuLeadingConstraint?.constant = -self.MENU_WIDTH
+        
+        self.dataProvider = self.dataProvider_A
         self.refreshDisplayMode()
     }
     
@@ -242,6 +263,50 @@ extension MenuView {
         // TODO: Llamar al Tour sin recargar las news (si ya estaban cargadas)
     }
     
+    // ---------
+    func showMore() {
+        self.isShowingMore = !self.isShowingMore
+        
+        if(self.isShowingMore) {
+            self.dataProvider = self.dataProvider_B
+        } else {
+            self.dataProvider = self.dataProvider_A
+        }
+        self.refreshDisplayMode()
+    }
+    
+    // ---------
+    func showContent(_ item: MenuITem) {
+        self.dismissMe()
+        CustomNavController.shared.slidersPanel.hide()
+        CustomNavController.shared.floatingButton.hide()
+        
+        switch(item) {
+            case .sliders:
+                let vc = PreferencesViewController()
+                CustomNavController.shared.viewControllers = [vc]
+                DELAY(0.3) {
+                    vc.scrollToSliders()
+                }
+
+            // -----
+            case .faq:
+                let vc = FAQViewController()
+                CustomNavController.shared.viewControllers = [vc]
+            
+            case .feedback:
+                let vc = FeedbackFormViewController()
+                CustomNavController.shared.viewControllers = [vc]
+            
+            case .privacy:
+                let vc = PrivacyPolicyViewController()
+                CustomNavController.shared.viewControllers = [vc]
+
+            default:
+                NOTHING()
+        }
+    }
+    
 }
 
 // MARK: - UITableView
@@ -275,6 +340,30 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = self.dataProvider[indexPath.row]
         self.tapOnItem(item)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let item = self.dataProvider[indexPath.row]
+        var animation: Animation?
+        
+        // Animation (only for subitems in "more")
+        if(self.isShowingMore) {
+            if(!self.dataProvider_A.contains(item)) {
+                animation = AnimationFactory.makeMoveDownWithFade(rowHeight: MenuItemCell.heigth, duration: 0.35, delayFactor: 0)
+            }
+        }
+//        else {
+//            print("Here!", indexPath.row, item)
+//            if(!self.dataProvider_A.contains(item)) {
+//                animation = AnimationFactory.makeMoveUpWithFade(rowHeight: MenuItemCell.heigth, duration: 0.35, delayFactor: 0)
+//            }
+//        }
+        
+        if let _animation = animation {
+            let animator = Animator(animation: _animation)
+            animator.animate(cell: cell, at: indexPath, in: tableView)
+        }
+        
     }
     
 }

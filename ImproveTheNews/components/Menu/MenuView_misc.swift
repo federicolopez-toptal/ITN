@@ -15,6 +15,12 @@ enum MenuITem {
     case layout
     case preferences
     case tour
+    case more
+    
+    case sliders
+    case faq
+    case feedback
+    case privacy
 }
 
 // ------------
@@ -41,6 +47,21 @@ extension MenuView {
             case .tour:
                 result = "Tour"
                 
+            case .more: // ▼ ▲
+                result = "More..."
+
+            case .sliders:
+                result = "      How the sliders work"
+                
+            case .faq:
+                result = "      FAQ"
+                
+            case .feedback:
+                result = "      Feedback"
+                
+            case .privacy:
+                result = "      Privacy policy"
+                
             default:
                 result = ""
         }
@@ -48,7 +69,7 @@ extension MenuView {
         return result.uppercased()
     }
     
-    func getIcon(forItem item: MenuITem) -> UIImage {
+    func getIcon(forItem item: MenuITem) -> UIImage? {
         var icon = "menu.headlines"
         
         switch(item) {
@@ -68,12 +89,15 @@ extension MenuView {
                 
             case .tour:
                 icon = "tour"
-                
+            
+//            case .more:
+//                icon = "more"
+            
             default:
                 icon = ""
         }
         
-        return UIImage(named: "menu." + icon)!
+        return UIImage(named: "menu." + icon)
     }
     
     
@@ -94,6 +118,12 @@ extension MenuView {
                 
             case .tour:
                 self.startTour()
+                
+            case .more:
+                self.showMore()
+                
+            case .sliders, .faq, .feedback, .privacy:
+                self.showContent(item)
                 
             default:
                 NOTHING()

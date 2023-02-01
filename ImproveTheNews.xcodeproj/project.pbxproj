@@ -103,6 +103,13 @@
 		1FA8AA3428D0D50200B6C956 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8AA3328D0D50200B6C956 /* HeaderCell.swift */; };
 		1FA8AA3628D0E3F500B6C956 /* ArticleWI_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */; };
 		1FA8AA3828D1778F00B6C956 /* SourceIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8AA3728D1778F00B6C956 /* SourceIcons.swift */; };
+		1FC73904298961C8003EB38D /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC73903298961C8003EB38D /* Animations.swift */; };
+		1FC73906298961EA003EB38D /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC73905298961EA003EB38D /* Animator.swift */; };
+		1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7390829896216003EB38D /* UITableView+Ext.swift */; };
+		1FC7390B298A05A8003EB38D /* SignInUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7390A298A05A8003EB38D /* SignInUpViewController.swift */; };
+		1FC7390D298A144D003EB38D /* FormTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7390C298A144D003EB38D /* FormTextView.swift */; };
+		1FC73910298A1501003EB38D /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7390F298A1501003EB38D /* SignInView.swift */; };
+		1FC73912298A1515003EB38D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC73911298A1515003EB38D /* SignUpView.swift */; };
 		1FD2340429155F1700B85AE9 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2340329155F1700B85AE9 /* MenuView.swift */; };
 		1FD23406291565F100B85AE9 /* MenuView_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD23405291565F100B85AE9 /* MenuView_misc.swift */; };
 		1FD2340A2915A07800B85AE9 /* Preferences_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD234092915A07800B85AE9 /* Preferences_misc.swift */; };
@@ -422,6 +429,13 @@
 		1FA8AA3328D0D50200B6C956 /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWI_cell.swift; sourceTree = "<group>"; };
 		1FA8AA3728D1778F00B6C956 /* SourceIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceIcons.swift; sourceTree = "<group>"; };
+		1FC73903298961C8003EB38D /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		1FC73905298961EA003EB38D /* Animator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		1FC7390829896216003EB38D /* UITableView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
+		1FC7390A298A05A8003EB38D /* SignInUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUpViewController.swift; sourceTree = "<group>"; };
+		1FC7390C298A144D003EB38D /* FormTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextView.swift; sourceTree = "<group>"; };
+		1FC7390F298A1501003EB38D /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		1FC73911298A1515003EB38D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		1FD2340329155F1700B85AE9 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		1FD23405291565F100B85AE9 /* MenuView_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView_misc.swift; sourceTree = "<group>"; };
 		1FD234092915A07800B85AE9 /* Preferences_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences_misc.swift; sourceTree = "<group>"; };
@@ -673,6 +687,7 @@
 			isa = PBXGroup;
 			children = (
 				1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */,
+				1FC7390729896205003EB38D /* AnimatedCells */,
 			);
 			path = "Third Party";
 			sourceTree = "<group>";
@@ -810,6 +825,7 @@
 				1F70BE72291457960061E3FA /* Search */,
 				1F9E28C12954B1FD00041303 /* PrivacyPolicy */,
 				1F7B9EBC296DEF5800D99C5D /* Story */,
+				1FC7390E298A149C003EB38D /* SignInUp */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */,
 				1F9E28C42954DC0200041303 /* FAQViewController.swift */,
@@ -929,8 +945,29 @@
 			children = (
 				1F70BE702913FD940061E3FA /* SearchTextView.swift */,
 				1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */,
+				1FC7390C298A144D003EB38D /* FormTextView.swift */,
 			);
 			path = TextFields;
+			sourceTree = "<group>";
+		};
+		1FC7390729896205003EB38D /* AnimatedCells */ = {
+			isa = PBXGroup;
+			children = (
+				1FC7390829896216003EB38D /* UITableView+Ext.swift */,
+				1FC73903298961C8003EB38D /* Animations.swift */,
+				1FC73905298961EA003EB38D /* Animator.swift */,
+			);
+			path = AnimatedCells;
+			sourceTree = "<group>";
+		};
+		1FC7390E298A149C003EB38D /* SignInUp */ = {
+			isa = PBXGroup;
+			children = (
+				1FC7390A298A05A8003EB38D /* SignInUpViewController.swift */,
+				1FC7390F298A1501003EB38D /* SignInView.swift */,
+				1FC73911298A1515003EB38D /* SignUpView.swift */,
+			);
+			path = SignInUp;
 			sourceTree = "<group>";
 		};
 		1FD2340229155F0000B85AE9 /* Menu */ = {
@@ -1583,15 +1620,18 @@
 				1F9E28C32954B22900041303 /* PrivacyPolicy_content.swift in Sources */,
 				1F106AED29071E30004B9943 /* MainFeed_cellTaps.swift in Sources */,
 				1F47CD8D290F5476003F0003 /* StoryCT_cell.swift in Sources */,
+				1FC7390D298A144D003EB38D /* FormTextView.swift in Sources */,
 				1FDEB1CB28CB88730029831E /* StoryBI_cell.swift in Sources */,
 				1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */,
 				1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */,
+				1FC73910298A1501003EB38D /* SignInView.swift in Sources */,
 				1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */,
 				1F9E28C52954DC0200041303 /* FAQViewController.swift in Sources */,
 				1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */,
 				1FD23406291565F100B85AE9 /* MenuView_misc.swift in Sources */,
 				1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */,
 				1F2A2354294A5B4D00CA16D7 /* HeaderZeroCell.swift in Sources */,
+				1FC73912298A1515003EB38D /* SignUpView.swift in Sources */,
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */,
 				1FA8AA3628D0E3F500B6C956 /* ArticleWI_cell.swift in Sources */,
@@ -1602,6 +1642,7 @@
 				1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */,
 				1F2D3228294230CA00BA1B00 /* CircleAnimation.swift in Sources */,
 				1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */,
+				1FC7390B298A05A8003EB38D /* SignInUpViewController.swift in Sources */,
 				1FD5BDF328DC11DC003E650F /* PopupView.swift in Sources */,
 				1FF61CBE28DAE50B006DF9AC /* StoryCI_cell.swift in Sources */,
 				1F0B000328F61D14007280FF /* Fonts_misc.swift in Sources */,
@@ -1623,6 +1664,7 @@
 				1FEE16EB28C833BF0079BE54 /* NavBarView.swift in Sources */,
 				1FD2340429155F1700B85AE9 /* MenuView.swift in Sources */,
 				1F7B9EC0296E032D00D99C5D /* MainFeedStory.swift in Sources */,
+				1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */,
 				1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */,
 				1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */,
 				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */,
@@ -1638,12 +1680,14 @@
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
 				1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */,
 				1FD2340C2915A17500B85AE9 /* PrefCheckboxes_cell.swift in Sources */,
+				1FC73906298961EA003EB38D /* Animator.swift in Sources */,
 				1FA4CE6F28C2D47F0068DE4A /* BundleExtension.swift in Sources */,
 				1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */,
 				1FA8AA3828D1778F00B6C956 /* SourceIcons.swift in Sources */,
 				1F3E5E3C292FC2BF00FA090B /* SourceFilterViewController.swift in Sources */,
 				1FA4CE7928C3DCFB0068DE4A /* SlidersPanel.swift in Sources */,
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
+				1FC73904298961C8003EB38D /* Animations.swift in Sources */,
 				1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */,
 				1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */,
 				1F7B9EBE296DEFBA00D99C5D /* StoryContent.swift in Sources */,
@@ -1818,7 +1862,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -1854,7 +1898,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -1944,7 +1988,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

@@ -16,6 +16,7 @@ enum NavBarViewComponents {
     case backToFeedIcon
     case title
     case share
+    case user
 }
 
 
@@ -262,6 +263,33 @@ class NavBarView: UIView {
                 
                 self.right_x += 24 + 15
             }
+            
+            if(C == .user) {
+                // User
+                let userIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.user")))
+                self.addSubview(userIcon)
+                userIcon.activateConstraints([
+                    userIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    userIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    userIcon.widthAnchor.constraint(equalToConstant: 24),
+                    userIcon.heightAnchor.constraint(equalToConstant: 24)
+                ])
+                userIcon.tag = 9
+                self.displayModeComponents.append(userIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: userIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: userIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: userIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: userIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onUserButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += 24 + 15
+            }
         }
         
         self.refreshDisplayMode()
@@ -288,6 +316,8 @@ class NavBarView: UIView {
                         imgView.image = UIImage(named: DisplayMode.imageName("back.button"))
                     case 8: // share
                         imgView.image = UIImage(named: DisplayMode.imageName("share"))
+                    case 9: // user
+                        imgView.image = UIImage(named: DisplayMode.imageName("navBar.user"))
                     
                     default:
                         NOTHING()
@@ -368,6 +398,13 @@ extension NavBarView {
         if let _vc = CustomNavController.shared.viewControllers.last as? MainFeedViewController {
             _vc.scrollToZero()
         }
+    }
+    
+    @objc func onUserButtonTap(_ sender: UIButton) {
+        let vc = SignInUpViewController()
+//        vc.modalPresentationStyle = .fullScreen
+//        vc.modalTransitionStyle = .coverVertical
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
 }

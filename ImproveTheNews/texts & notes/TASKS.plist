@@ -8,12 +8,10 @@
 		<dict>
 			<key>Footer</key>
 			<string>Agregar mas links</string>
-			<key>StanceIcon popup</key>
-			<string>Click on &quot;MORE INFO&quot;</string>
-			<key>Click on Stories</key>
-			<string>Abrir el contenido en vista personalizada (no web directa)</string>
 			<key>Feed vacio</key>
 			<string>De vez en cuando, el feed queda todo vacio - Qué mostrar?</string>
+			<key>Popups</key>
+			<string>Para problemas de conexion/timeout</string>
 		</dict>
 		<key>MENU</key>
 		<dict>
