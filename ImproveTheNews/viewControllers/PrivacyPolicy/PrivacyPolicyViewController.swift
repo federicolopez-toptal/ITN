@@ -38,7 +38,7 @@ class PrivacyPolicyViewController: BaseViewController {
         
         self.scrollView.activateConstraints([
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+            self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])

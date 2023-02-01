@@ -12,7 +12,12 @@ class SignInUpViewController: BaseViewController {
     let navBar = NavBarView()
     var signIn = SignInView()
     var signUp = SignUpView()
-    //    let emailText = FilterTextView()
+    
+    
+    // MARK: - End
+    deinit {
+        self.signIn.removeKeyboardObservers()
+    }
     
     // MARK: - Init
     override func viewDidLayoutSubviews() {
@@ -56,9 +61,19 @@ class SignInUpViewController: BaseViewController {
 
 extension SignInUpViewController: SignInViewDelegate, SignUpViewDelegate {
     
+    // Sign in
     func SignInViewOnTabTap() {
         self.signIn.hide()
         self.signUp.show()
+    }
+    
+    func SignInViewShowLoading(state: Bool) {
+        if(state) {
+            self.showLoading()
+        } else {
+            self.hideLoading()
+        }
+        
     }
     
     func SignUpViewOnTabTap() {

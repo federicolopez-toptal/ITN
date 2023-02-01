@@ -56,5 +56,12 @@ extension UILabel {
         
         self.attributedText = attributedString
     }
+    
+    func addUnderline() {
+        let attributedString = NSMutableAttributedString.init(string: self.text!)
+        attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range:
+            NSRange.init(location: 0, length: attributedString.length));
+        self.attributedText = attributedString
+    }
   
 }

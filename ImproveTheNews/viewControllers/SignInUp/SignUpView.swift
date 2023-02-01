@@ -28,7 +28,7 @@ class SignUpView: UIView {
         self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            self.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 100),
+            self.topAnchor.constraint(equalTo: containerView.topAnchor, constant: NavBarView.HEIGHT()),
             self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
         
