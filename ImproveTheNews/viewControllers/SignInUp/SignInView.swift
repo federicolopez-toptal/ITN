@@ -321,7 +321,7 @@ extension SignInView {
     }
     
     @objc func forgotPassButtonTap(_ sender: UIButton) {
-        print("Forgot pass")
+        FUTURE_IMPLEMENTATION("Show \"Forgot password\" form")
     }
     
     @objc func mainActionButtonTap(_ sender: UIButton) {
@@ -333,6 +333,8 @@ extension SignInView {
             CustomNavController.shared.infoAlert(message: "Please, enter your password")
         } else {
             self.delegate?.SignInViewShowLoading(state: true)
+            FUTURE_IMPLEMENTATION("Connect with the API for authentication")
+            
             DELAY(3.0) {
                 self.delegate?.SignInViewShowLoading(state: false)
             }

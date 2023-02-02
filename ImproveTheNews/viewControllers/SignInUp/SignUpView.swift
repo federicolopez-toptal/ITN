@@ -24,6 +24,7 @@ class SignUpView: UIView {
 
     let emailText = FormTextView()
     let passText = FormTextView()
+    let pass2Text = FormTextView()
     let mainActionButton = UIButton(type: .custom)
 
 
@@ -154,8 +155,16 @@ class SignUpView: UIView {
         titleLabel.font = MERRIWEATHER_BOLD(18)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel)
-        ADD_SPACER(to: VStack_form, height: 30)
+        ADD_SPACER(to: VStack_form, height: 6)
 
+        let signUpNoteLabel = UILabel()
+        signUpNoteLabel.text = "Sign up for an Improve The News account"
+        signUpNoteLabel.numberOfLines = 0
+        signUpNoteLabel.font = ROBOTO(14)
+        signUpNoteLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        VStack_form.addArrangedSubview(signUpNoteLabel)
+        ADD_SPACER(to: VStack_form, height: 22)
+        
         let emailLabel = UILabel()
         emailLabel.text = "Email"
         emailLabel.font = ROBOTO(14)
@@ -177,10 +186,24 @@ class SignUpView: UIView {
         ADD_SPACER(to: VStack_form, height: 12)
         
         self.passText.buildInto(vstack: VStack_form)
-        self.passText.customize(keyboardType: .asciiCapable, returnType: .done,
+        self.passText.customize(keyboardType: .asciiCapable, returnType: .next,
             charactersLimit: 20, placeHolderText: "Choose Password", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F))
         self.passText.setPasswordMode(true)
         self.passText.delegate = self
+        ADD_SPACER(to: VStack_form, height: 20)
+        
+        let pass2Label = UILabel()
+        pass2Label.text = "Confirm password"
+        pass2Label.font = ROBOTO(14)
+        pass2Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        VStack_form.addArrangedSubview(pass2Label)
+        ADD_SPACER(to: VStack_form, height: 12)
+        
+        self.pass2Text.buildInto(vstack: VStack_form)
+        self.pass2Text.customize(keyboardType: .asciiCapable, returnType: .done,
+            charactersLimit: 20, placeHolderText: "Confirm password", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F))
+        self.pass2Text.setPasswordMode(true)
+        self.pass2Text.delegate = self
         ADD_SPACER(to: VStack_form, height: 14)
         
         let passNoteLabel = UILabel()
@@ -372,8 +395,14 @@ extension SignUpView {
             CustomNavController.shared.infoAlert(message: "Please, enter a valid email")
         } else if(self.passText.text().isEmpty) {
             CustomNavController.shared.infoAlert(message: "Please, enter your password")
+        } else if(!VALIDATE_PASS(self.passText.text())) {
+            CustomNavController.shared.infoAlert(message: "Please, enter a valid password")
+        } else if(self.passText.text() != self.pass2Text.text()) {
+            CustomNavController.shared.infoAlert(message: "The password and the confirmation must match")
         } else {
             self.delegate?.SignUpViewShowLoading(state: true)
+            FUTURE_IMPLEMENTATION("Connect with the API for authentication")
+            
             DELAY(3.0) {
                 self.delegate?.SignUpViewShowLoading(state: false)
             }
@@ -391,6 +420,8 @@ extension SignUpView: FormTextViewDelegate {
     func FormTextView_onReturnTap(sender: FormTextView) {
         if(sender == self.emailText) {
             self.passText.focus()
+        } else if(sender == self.passText) {
+            self.pass2Text.focus()
         } else {
             HIDE_KEYBOARD(view: self)
         }
@@ -438,8 +469,30 @@ extension SignUpView {
 
 func VALIDATE_PASS(_ text: String) -> Bool {
     // password must contain minimum 8 characters, at least one letter and one number
-    let regExpr = "[A-Za-z0-9]{8,}"
-    let predicate = NSPredicate(format:"SELF MATCHES %@", regExpr)
-    return predicate.evaluate(with: text)
+    
+    var result = false
+    if(text.count >= 8) {
+        let _text = text.lowercased()
+        let _letters = "abcdefghijklmnopqrstuvwxyz"
+        let _numbers = "0123456789"
+        
+        var L = false
+        var N = false
+        for i in _text {
+            let currentChar = String(i)
+            if(_letters.contains(currentChar)) {
+                L = true
+            }
+            if(_numbers.contains(currentChar)) {
+                N = true
+            }
+        }
+        
+        if(L && N) {
+            result = true
+        }
+    }
+    
+    return result
 }
 
