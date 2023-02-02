@@ -9,16 +9,23 @@ import UIKit
 
 protocol SignUpViewDelegate: AnyObject {
     func SignUpViewOnTabTap()
+    func SignUpViewShowLoading(state: Bool)
 }
 
 
 class SignUpView: UIView {
 
     weak var delegate: SignUpViewDelegate?
-    
+
     let scrollView = UIScrollView()
+    var scrollViewBottomConstraint: NSLayoutConstraint!
     let contentView = UIView()
     var VStack: UIStackView!
+
+    let emailText = FormTextView()
+    let passText = FormTextView()
+    let mainActionButton = UIButton(type: .custom)
+
 
     // MARK: - Init
     func buildInto(view containerView: UIView) {
@@ -34,12 +41,12 @@ class SignUpView: UIView {
         
         self.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
-
+        self.scrollViewBottomConstraint = self.scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         self.scrollView.activateConstraints([
             self.scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.scrollView.topAnchor.constraint(equalTo: self.topAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            self.scrollViewBottomConstraint
         ])
 
             let H = self.contentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
@@ -57,17 +64,18 @@ class SignUpView: UIView {
         ])
         
         self.VStack = VSTACK(into: self.contentView)
-        self.VStack.backgroundColor = .yellow
+        self.VStack.backgroundColor = .clear //.yellow
         self.VStack.spacing = 0
         self.VStack.activateConstraints([
             self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
             self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
             self.VStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
-            self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -26),
+            self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0),
             //self.VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
         ])
         
         self.buildForm()
+        self.addKeyboardObservers()
         self.refreshDisplayMode()
     }
     
@@ -96,17 +104,6 @@ class SignUpView: UIView {
         tab1Label.activateConstraints([
             tab1Label.widthAnchor.constraint(equalToConstant: (SCREEN_SIZE().width/2)-1)
         ])
-        
-        let tabButton = UIButton(type: .custom)
-        tabButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-        hStack.addSubview(tabButton)
-        tabButton.activateConstraints([
-            tabButton.leadingAnchor.constraint(equalTo: tab1Label.leadingAnchor),
-            tabButton.trailingAnchor.constraint(equalTo: tab1Label.trailingAnchor),
-            tabButton.topAnchor.constraint(equalTo: tab1Label.topAnchor),
-            tabButton.bottomAnchor.constraint(equalTo: tab1Label.bottomAnchor)
-        ])
-        tabButton.addTarget(self, action: #selector(tabButtonOnTap(_:)), for: .touchUpInside)
 
         let vLine = UIView()
         vLine.backgroundColor = .red
@@ -123,6 +120,17 @@ class SignUpView: UIView {
         tab2Label.textColor = UIColor(hex: 0xFF643C)
         hStack.addArrangedSubview(tab2Label)
 
+        let tabButton = UIButton(type: .custom)
+        tabButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        hStack.addSubview(tabButton)
+        tabButton.activateConstraints([
+            tabButton.leadingAnchor.constraint(equalTo: tab1Label.leadingAnchor),
+            tabButton.trailingAnchor.constraint(equalTo: tab1Label.trailingAnchor),
+            tabButton.topAnchor.constraint(equalTo: tab1Label.topAnchor),
+            tabButton.bottomAnchor.constraint(equalTo: tab1Label.bottomAnchor)
+        ])
+        tabButton.addTarget(self, action: #selector(tabButtonOnTap(_:)), for: .touchUpInside)
+
         let HLine2 = UIView()
         HLine2.backgroundColor = .red
         VStack.addSubview(HLine2)
@@ -138,30 +146,158 @@ class SignUpView: UIView {
         let HStack_form = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack_form, width: 16)
         let VStack_form = VSTACK(into: HStack_form)
-        //VStack_form.backgroundColor = .green
+        VStack_form.backgroundColor = .clear //.green
         ADD_SPACER(to: HStack_form, width: 16)
 
         let titleLabel = UILabel()
         titleLabel.text = "Sign up"
         titleLabel.font = MERRIWEATHER_BOLD(18)
+        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel)
-        ADD_SPACER(to: VStack_form, height: 20)
+        ADD_SPACER(to: VStack_form, height: 30)
 
         let emailLabel = UILabel()
         emailLabel.text = "Email"
         emailLabel.font = ROBOTO(14)
+        emailLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(emailLabel)
+        ADD_SPACER(to: VStack_form, height: 12)
         
-        ADD_SPACER(to: VStack_form, height: 16)
+        self.emailText.buildInto(vstack: VStack_form)
+        self.emailText.customize(keyboardType: .emailAddress, returnType: .next,
+            charactersLimit: 50, placeHolderText: "Your Email", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F) )
+        self.emailText.delegate = self
+        ADD_SPACER(to: VStack_form, height: 20)
+        
+        let passLabel = UILabel()
+        passLabel.text = "Password"
+        passLabel.font = ROBOTO(14)
+        passLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        VStack_form.addArrangedSubview(passLabel)
+        ADD_SPACER(to: VStack_form, height: 12)
+        
+        self.passText.buildInto(vstack: VStack_form)
+        self.passText.customize(keyboardType: .asciiCapable, returnType: .done,
+            charactersLimit: 20, placeHolderText: "Choose Password", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F))
+        self.passText.setPasswordMode(true)
+        self.passText.delegate = self
+        ADD_SPACER(to: VStack_form, height: 14)
+        
+        let passNoteLabel = UILabel()
+        passNoteLabel.textColor = UIColor(hex: 0x93A0B4)
+        passNoteLabel.font = ROBOTO(14)
+        passNoteLabel.numberOfLines = 0
+        passNoteLabel.text = "* Password must contain minimum eight characters, at least one letter and one number."
+        VStack_form.addArrangedSubview(passNoteLabel)
+        ADD_SPACER(to: VStack_form, height: 14)
+        
+        self.mainActionButton.backgroundColor = UIColor(hex: 0xFF643C)
+        self.mainActionButton.layer.cornerRadius = 4.0
+        VStack_form.addArrangedSubview(self.mainActionButton)
+        mainActionButton.activateConstraints([
+            self.mainActionButton.heightAnchor.constraint(equalToConstant: 52)
+        ])
+        self.mainActionButton.addTarget(self, action: #selector(mainActionButtonTap(_:)), for: .touchUpInside)
+        ADD_SPACER(to: VStack_form, height: 24)
+        
+        let mainActionLabel = UILabel()
+        mainActionLabel.text = "SIGN IN"
+        mainActionLabel.textColor = .white
+        mainActionLabel.font = ROBOTO_BOLD(13)
+        VStack_form.addSubview(mainActionLabel)
+        mainActionLabel.activateConstraints([
+            mainActionLabel.centerXAnchor.constraint(equalTo: self.mainActionButton.centerXAnchor),
+            mainActionLabel.centerYAnchor.constraint(equalTo: self.mainActionButton.centerYAnchor)
+        ])
+        
+        let HStack_question = HSTACK(into: VStack_form)
+        
+        ADD_SPACER(to: HStack_question)
+        let questionLabel1 = UILabel()
+        questionLabel1.font = ROBOTO(16)
+        questionLabel1.text = "Already have an account? - "
+        questionLabel1.textColor = UIColor(hex: 0x93A0B4)
+        HStack_question.addArrangedSubview(questionLabel1)
+        
+        let questionLabel2 = UILabel()
+        questionLabel2.font = ROBOTO(16)
+        questionLabel2.text = "Click here to sign in!"
+        questionLabel2.textColor = UIColor(hex: 0xFF643C)
+        questionLabel2.addUnderline()
+        HStack_question.addArrangedSubview(questionLabel2)
+        ADD_SPACER(to: HStack_question)
+        
+        let questionButton = UIButton(type: .custom)
+        questionButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        HStack_question.addSubview(questionButton)
+        questionButton.activateConstraints([
+            questionButton.leadingAnchor.constraint(equalTo: questionLabel2.leadingAnchor),
+            questionButton.trailingAnchor.constraint(equalTo: questionLabel2.trailingAnchor),
+            questionButton.topAnchor.constraint(equalTo: questionLabel2.topAnchor),
+            questionButton.bottomAnchor.constraint(equalTo: questionLabel2.bottomAnchor)
+        ])
+        questionButton.addTarget(self, action: #selector(tabButtonOnTap(_:)), for: .touchUpInside)
+        ADD_SPACER(to: VStack_form, height: 30)
+        
+        let HStackRect = HSTACK(into: VStack_form)
+        HStackRect.backgroundColor = .clear //.yellow
+        HStackRect.layer.borderWidth = 8
+        HStackRect.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x2C3541).cgColor : UIColor(hex: 0xEAEBEC).cgColor
+        ADD_SPACER(to: HStackRect, width: 24)
+        let VStackRect = VSTACK(into: HStackRect)
+        ADD_SPACER(to: HStackRect, width: 24)
+        
+        ADD_SPACER(to: VStackRect, height: 30)
+        let rectTitle = UILabel()
+        rectTitle.font = MERRIWEATHER_BOLD(18)
+        rectTitle.numberOfLines = 0
+        rectTitle.backgroundColor = .clear //.systemPink
+        rectTitle.text = "Why you should sign up to Improve The News"
+        rectTitle.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        VStackRect.addArrangedSubview(rectTitle)
+
+        ADD_SPACER(to: VStackRect, height: 10)
+        for i in 1...3 {
+            ADD_SPACER(to: VStackRect, height: 16)
+            
+            let HStackItem = HSTACK(into: VStackRect)
+            
+            let VStackImage = VSTACK(into: HStackItem)
+            let checkImage = UIImageView(image: UIImage(named: "slidersPanel.split.check"))
+            VStackImage.addArrangedSubview(checkImage)
+            checkImage.activateConstraints([
+                checkImage.widthAnchor.constraint(equalToConstant: 18),
+                checkImage.heightAnchor.constraint(equalToConstant: 14)
+            ])
+            ADD_SPACER(to: VStackImage)
+            ADD_SPACER(to: HStackItem, width: 12)
+            
+            var text = ""
+            switch(i) {
+                case 1:
+                    text = "Your news diet is shared across all your devices"
+                case 2:
+                    text = "One-click sharing to multiple social networks"
+                default:
+                    text = "You can hold news outlets accountable by raising flags about articles"
+            }
+            
+            let itemLabel = UILabel()
+            itemLabel.font = ROBOTO(16)
+            itemLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+            itemLabel.numberOfLines = 0
+            itemLabel.text = text
+            HStackItem.addArrangedSubview(itemLabel)
+        }
+        ADD_SPACER(to: VStackRect, height: 30)
+        ADD_SPACER(to: VStack_form, height: 50)
+        
+        // --------
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentViewOnTap(_:)))
+        self.contentView.addGestureRecognizer(tapGesture)
+                
     }
 
-}
-
-// MARK: - Events
-extension SignUpView {
-    @objc func tabButtonOnTap(_ sender: UIButton) {
-        self.delegate?.SignUpViewOnTabTap()
-    }
 }
 
 // MARK: - UI
@@ -170,7 +306,7 @@ extension SignUpView {
     func refreshDisplayMode() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.scrollView.backgroundColor = self.backgroundColor
-        self.contentView.backgroundColor = self.backgroundColor
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
 
         for v in self.VStack.arrangedSubviews {
             self.setColorToView(v)
@@ -201,3 +337,109 @@ extension SignUpView {
         }
     }
 }
+
+// MARK: Form stuff
+extension SignUpView {
+
+    func validateForm() -> Bool {
+        if(VALIDATE_EMAIL(self.emailText.text()) && VALIDATE_PASS(self.passText.text())) {
+            return true
+        }
+        return false
+    }
+    
+}
+
+// MARK: - Events
+extension SignUpView {
+    
+    @objc func tabButtonOnTap(_ sender: UIButton) {
+        self.delegate?.SignUpViewOnTabTap()
+    }
+    
+    @objc func contentViewOnTap(_ sender: UITapGestureRecognizer) {
+        HIDE_KEYBOARD(view: self)
+    }
+    
+    @objc func forgotPassButtonTap(_ sender: UIButton) {
+        print("Forgot pass")
+    }
+    
+    @objc func mainActionButtonTap(_ sender: UIButton) {
+        if(self.emailText.text().isEmpty) {
+            CustomNavController.shared.infoAlert(message: "Please, enter your email")
+        } else if(!VALIDATE_EMAIL(self.emailText.text())) {
+            CustomNavController.shared.infoAlert(message: "Please, enter a valid email")
+        } else if(self.passText.text().isEmpty) {
+            CustomNavController.shared.infoAlert(message: "Please, enter your password")
+        } else {
+            self.delegate?.SignUpViewShowLoading(state: true)
+            DELAY(3.0) {
+                self.delegate?.SignUpViewShowLoading(state: false)
+            }
+        }
+    }
+    
+}
+
+// MARK: - FormTextView
+extension SignUpView: FormTextViewDelegate {
+    
+    func FormTextView_onTextChange(sender: FormTextView, text: String) {
+    }
+    
+    func FormTextView_onReturnTap(sender: FormTextView) {
+        if(sender == self.emailText) {
+            self.passText.focus()
+        } else {
+            HIDE_KEYBOARD(view: self)
+        }
+    }
+    
+}
+
+// MARK: - Keyboard stuff
+extension SignUpView {
+
+    func addKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent(n:)),
+            name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent(n:)),
+            name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self,
+            name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self,
+            name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardEvent(n: Notification) {
+        let H = getKeyboardHeight(fromNotification: n)
+        
+        if(n.name==UIResponder.keyboardWillShowNotification){
+            self.scrollViewBottomConstraint.constant = 0 - H
+        } else if(n.name==UIResponder.keyboardWillHideNotification) {
+            self.scrollViewBottomConstraint.constant = 0
+        }
+        
+        self.layoutIfNeeded()
+    }
+    
+    func getKeyboardHeight(fromNotification notification: Notification) -> CGFloat {
+        if let H = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
+            return H
+        } else {
+            return 300
+        }
+    }
+
+}
+
+func VALIDATE_PASS(_ text: String) -> Bool {
+    // password must contain minimum 8 characters, at least one letter and one number
+    let regExpr = "[A-Za-z0-9]{8,}"
+    let predicate = NSPredicate(format:"SELF MATCHES %@", regExpr)
+    return predicate.evaluate(with: text)
+}
+

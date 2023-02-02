@@ -395,10 +395,4 @@ extension SignInView {
 
 }
 
-func VALIDATE_PASS(_ text: String) -> Bool {
-    // password must contain minimum 8 characters, at least one letter and one number
-    let regExpr = "[A-Za-z0-9]{8,}"
-    let predicate = NSPredicate(format:"SELF MATCHES %@", regExpr)
-    return predicate.evaluate(with: text)
-}
 

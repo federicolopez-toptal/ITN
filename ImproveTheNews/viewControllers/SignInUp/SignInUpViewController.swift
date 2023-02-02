@@ -76,9 +76,19 @@ extension SignInUpViewController: SignInViewDelegate, SignUpViewDelegate {
         
     }
     
+    // Sign up
     func SignUpViewOnTabTap() {
         self.signIn.show()
         self.signUp.hide()
+    }
+    
+    func SignUpViewShowLoading(state: Bool) {
+        if(state) {
+            self.showLoading()
+        } else {
+            self.hideLoading()
+        }
+        
     }
     
 }
