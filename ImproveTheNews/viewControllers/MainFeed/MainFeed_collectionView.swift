@@ -58,7 +58,7 @@ extension MainFeedViewController {
     
     func refreshVLine() {
         MAIN_THREAD {
-            if(self.mustSplit()==0) {
+            if(MUST_SPLIT()==0) {
                 self.list.vLineView.hide()
                 return
             }

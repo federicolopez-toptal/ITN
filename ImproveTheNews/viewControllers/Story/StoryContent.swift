@@ -20,10 +20,6 @@ class StoryContent {
                 self.getStoryData(storyID: _storyID) { (story) in
                     callback(story)
                 }
-            
-//                self.getStoryData(storyID: _storyID, filter: "", splitValue: mustSplit ? "01" : "00") { (storyData, facts, spins, articles, version) in
-//
-//                }
             }
         }
     }
@@ -78,7 +74,7 @@ extension StoryContent {
         
         var url = storyData_url.replacingOccurrences(of: "<ID>", with: storyID)
         url = url.replacingOccurrences(of: "<FILTERS>", with: MainFeedv3.sliderValues())
-        url += "&split=" + self.mustSplit()
+        url += "&split=00" // + self.mustSplit()
         print("URL story", url)
         
         var request = URLRequest(url: URL(string: url)!)
@@ -131,12 +127,13 @@ extension StoryContent {
         task.resume()
     }
     
-    private func mustSplit() -> String {
-        if let _value = READ(LocalKeys.sliders.split) {
-            return "01"
-        } else {
-            return "00"
-        }
-    }
+//    private func mustSplit() -> String {
+//        var result = "00"
+//        if let _value = READ(LocalKeys.sliders.split) {
+//            result = "0" + _value
+//        }
+//        
+//        return result
+//    }
     
 }

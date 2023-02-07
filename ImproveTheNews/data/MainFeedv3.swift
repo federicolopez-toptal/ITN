@@ -56,7 +56,7 @@ class MainFeedv3 {
     func loadMoreData(topic T: String, callback: @escaping (Error?, Int?) -> ()) {
         
         var S_value = self.skipForTopic(T)
-        if(T != self.topic){ S_value += 1 }
+        //if(T != self.topic){ S_value += 1 }
         
 //        if(S_value-self.prevS <= 2) {
 //            callback(nil, 0)
@@ -238,9 +238,18 @@ extension MainFeedv3 {
                 &uid=3978511592857187948&v=I1.5.0&dev=iPhone_X
         */
         
+        var _A = A
+        var _B = B
+        if(MUST_SPLIT()>0){
+            _A = 12
+            if(B>0) {
+                _B = 12
+            }
+        }
+        
         var result = API_BASE_URL() + "/appserver.php/?topic=" + topic
-        result += ".A" + String(A)
-        result += ".B" + String(B)
+        result += ".A" + String(_A)
+        result += ".B" + String(_B)
         result += ".S" + String(S)
         result += "&sliders=" + MainFeedv3.sliderValues()  //self.sliderValues()
         result += "&uid=" + UUID.shared.getValue()
@@ -379,11 +388,16 @@ extension MainFeedv3 {
         
         // More Preferences: Show stories
         result += "ST"
-        if let _showStories = READ(LocalKeys.preferences.showStories) {
-            result += _showStories
+        if(MUST_SPLIT()>0) {
+            result += "00"
         } else {
-            result += "01" // default value: True
+            if let _showStories = READ(LocalKeys.preferences.showStories) {
+                result += _showStories
+            } else {
+                result += "01" // default value: True
+            }
         }
+        
         // More Preferences: Show stance icons
         result += "VB"
         if let _showStanceIcons = READ(LocalKeys.preferences.showStanceIcons) {

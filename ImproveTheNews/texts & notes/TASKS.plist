@@ -4,6 +4,8 @@
 <dict>
 	<key>TO DO</key>
 	<dict>
+		<key>textos largos</key>
+		<string>Normalizar como los obtengo</string>
 		<key>MAIN_FEED</key>
 		<dict>
 			<key>Footer</key>

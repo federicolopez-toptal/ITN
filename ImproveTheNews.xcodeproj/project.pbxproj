@@ -39,6 +39,7 @@
 		1F47CD8D290F5476003F0003 /* StoryCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */; };
 		1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */; };
 		1F56F727294B9D2900654CDB /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */; };
+		1F5A0FFF2992D59700DD8CB3 /* Data_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */; };
 		1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */; };
 		1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */; };
 		1F70BE712913FD940061E3FA /* SearchTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE702913FD940061E3FA /* SearchTextView.swift */; };
@@ -363,6 +364,7 @@
 		1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCT_cell.swift; sourceTree = "<group>"; };
 		1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCT_cell.swift; sourceTree = "<group>"; };
 		1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
+		1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_misc.swift; sourceTree = "<group>"; };
 		1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1F70BE702913FD940061E3FA /* SearchTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextView.swift; sourceTree = "<group>"; };
@@ -727,6 +729,7 @@
 				1F897CE728CC3B0F00438FC5 /* UI_misc.swift */,
 				1F897CE528CC380600438FC5 /* Json_misc.swift */,
 				1F0B000228F61D14007280FF /* Fonts_misc.swift */,
+				1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1674,6 +1677,7 @@
 				1F88B406293FC67E0024904E /* TourView.swift in Sources */,
 				1F025CB228E133D800AA866D /* BannerCell.swift in Sources */,
 				1F56F727294B9D2900654CDB /* HyperlinkLabel.swift in Sources */,
+				1F5A0FFF2992D59700DD8CB3 /* Data_misc.swift in Sources */,
 				1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */,
 				1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */,

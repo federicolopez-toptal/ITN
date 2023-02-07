@@ -49,7 +49,7 @@ extension MainFeedViewController {
             itemsToShowPerTopic += "m"
         }
         
-        let mustSplit = self.mustSplit()
+        let mustSplit = MUST_SPLIT()
         if(mustSplit > 0) {
             if(TEXT_IMAGES()) {
                 itemsToShowPerTopic = "h,hsp"
@@ -127,7 +127,7 @@ extension MainFeedViewController {
         } else if(format == "sp") {
             var L = "LEFT"
             var R = "RIGHT"
-            if(self.mustSplit() == 2) {
+            if(MUST_SPLIT() == 2) {
                 L = "CRITICAL"
                 R = "PRO"
             }

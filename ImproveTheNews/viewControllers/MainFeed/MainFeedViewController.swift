@@ -111,9 +111,9 @@ class MainFeedViewController: BaseViewController {
                         self.refreshVLine()
 
                         if(self.prevMustSplit != nil) {
-                            if(self.prevMustSplit != self.mustSplit()) { self.tapOnLogo() }
+                            if(self.prevMustSplit != MUST_SPLIT()) { self.tapOnLogo() }
                         }
-                        self.prevMustSplit = self.mustSplit()
+                        self.prevMustSplit = MUST_SPLIT()
                         
                         // TOUR
                         if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
@@ -164,14 +164,6 @@ class MainFeedViewController: BaseViewController {
         }
 
         return result
-    }
-    
-    func mustSplit() -> Int {
-        if let _value = READ(LocalKeys.sliders.split) {
-            return Int(_value)!
-        } else {
-            return 0
-        }
     }
     
     func scrollToZero() {
