@@ -205,13 +205,13 @@ extension StoryViewController {
         
        if(articles.count == 0) {
             let noArticlesLabel = UILabel()
-            noArticlesLabel.font = MERRIWEATHER_BOLD(19)
+            noArticlesLabel.font = MERRIWEATHER_BOLD(17)
             noArticlesLabel.text = "No articles available"
             noArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(noArticlesLabel)
         } else {
             let ArticlesLabel = UILabel()
-            ArticlesLabel.font = MERRIWEATHER_BOLD(19)
+            ArticlesLabel.font = MERRIWEATHER_BOLD(17)
             ArticlesLabel.text = "Articles on this story"
             ArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(ArticlesLabel)
@@ -231,8 +231,8 @@ extension StoryViewController {
                     imageView.backgroundColor = .darkGray
                     VStack_image.addArrangedSubview(imageView)
                     imageView.activateConstraints([
-                        imageView.widthAnchor.constraint(equalToConstant: 146),
-                        imageView.heightAnchor.constraint(equalToConstant: 98)
+                        imageView.widthAnchor.constraint(equalToConstant: 146 * 0.8),
+                        imageView.heightAnchor.constraint(equalToConstant: 98 * 0.8)
                     ])
                     imageView.sd_setImage(with: URL(string: A.image))
                     ADD_SPACER(to: VStack_image) // V fill
@@ -242,7 +242,7 @@ extension StoryViewController {
                     let VStack_data = VSTACK(into: HStack_image)
                     //VStack_data.backgroundColor = .green
                     let subTitleLabel = UILabel()
-                    subTitleLabel.font = MERRIWEATHER_BOLD(15)
+                    subTitleLabel.font = MERRIWEATHER_BOLD(14)
                     subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
                     subTitleLabel.numberOfLines = 0
                     subTitleLabel.text = A.title
@@ -295,7 +295,7 @@ extension StoryViewController {
                     
                     let sourceLabel = UILabel()
                     sourceLabel.text = sourceName
-                    sourceLabel.font = ROBOTO(13)
+                    sourceLabel.font = ROBOTO(12)
                     sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
                     HStack_source.addArrangedSubview(sourceLabel)
                     ADD_SPACER(to: HStack_source, width: 8)
@@ -372,13 +372,13 @@ extension StoryViewController {
         
        if(spins.count == 0) {
             let noSpinsLabel = UILabel()
-            noSpinsLabel.font = MERRIWEATHER_BOLD(19)
+            noSpinsLabel.font = MERRIWEATHER_BOLD(17)
             noSpinsLabel.text = "No spin available"
             noSpinsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(noSpinsLabel)
         } else {
             let SpinsLabel = UILabel()
-            SpinsLabel.font = MERRIWEATHER_BOLD(19)
+            SpinsLabel.font = MERRIWEATHER_BOLD(17)
             SpinsLabel.text = "Spin"
             SpinsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(SpinsLabel)
@@ -392,7 +392,7 @@ extension StoryViewController {
                 }
                 
                 let titleLabel = UILabel()
-                titleLabel.font = MERRIWEATHER_BOLD(19)
+                titleLabel.font = MERRIWEATHER_BOLD(17)
                 titleLabel.text = _title
                 titleLabel.numberOfLines = 0
                 titleLabel.textColor = UIColor(hex: 0xFF643C)
@@ -400,7 +400,7 @@ extension StoryViewController {
                 
                 ADD_SPACER(to: innerHStack, height: 10)
                 let descriptionLabel = UILabel()
-                descriptionLabel.font = ROBOTO(16)
+                descriptionLabel.font = ROBOTO(14)
                 descriptionLabel.numberOfLines = 0
                 descriptionLabel.text = S.description
                 descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
@@ -419,8 +419,8 @@ extension StoryViewController {
                     imageView.backgroundColor = .darkGray
                     VStack_image.addArrangedSubview(imageView)
                     imageView.activateConstraints([
-                        imageView.widthAnchor.constraint(equalToConstant: 146),
-                        imageView.heightAnchor.constraint(equalToConstant: 98)
+                        imageView.widthAnchor.constraint(equalToConstant: 146 * 0.8),
+                        imageView.heightAnchor.constraint(equalToConstant: 98 * 0.8)
                     ])
                     imageView.sd_setImage(with: URL(string: S.image))
                     ADD_SPACER(to: VStack_image) // V fill
@@ -430,7 +430,7 @@ extension StoryViewController {
                     let VStack_data = VSTACK(into: HStack_image)
                     //VStack_data.backgroundColor = .green
                     let subTitleLabel = UILabel()
-                    subTitleLabel.font = MERRIWEATHER_BOLD(15)
+                    subTitleLabel.font = MERRIWEATHER_BOLD(13)
                     subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
                     subTitleLabel.numberOfLines = 0
                     subTitleLabel.text = S.subTitle
@@ -473,7 +473,7 @@ extension StoryViewController {
 
                     let sourceLabel = UILabel()
                     sourceLabel.text = S.media_name
-                    sourceLabel.font = ROBOTO(13)
+                    sourceLabel.font = ROBOTO(12)
                     sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
                     HStack_source.addArrangedSubview(sourceLabel)
                     ADD_SPACER(to: HStack_source, width: 8)
@@ -546,13 +546,13 @@ extension StoryViewController {
         
         if(self.facts.count==0) {
             let noFactsLabel = UILabel()
-            noFactsLabel.font = MERRIWEATHER_BOLD(19)
+            noFactsLabel.font = MERRIWEATHER_BOLD(17)
             noFactsLabel.text = "  No facts available"
             noFactsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(noFactsLabel)
         } else {
             let FactsLabel = UILabel()
-            FactsLabel.font = MERRIWEATHER_BOLD(19)
+            FactsLabel.font = MERRIWEATHER_BOLD(17)
             FactsLabel.text = "  Facts"
             FactsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(FactsLabel)
@@ -578,12 +578,12 @@ extension StoryViewController {
 
                 let contentLabel = UILabel()
                 contentLabel.numberOfLines = 0
-                contentLabel.font = MERRIWEATHER(14)
+                contentLabel.font = MERRIWEATHER(12)
                 //contentLabel.text = F.title
                 contentLabel.attributedText = self.attrText(F.title, index: F.sourceIndex+1)
                 HStack.addArrangedSubview(contentLabel)
                 
-                ADD_SPACER(to: VStack, height: 5) // separation from next item
+                ADD_SPACER(to: VStack, height: 15) // separation from next item
                 
                 if(self.show3 && i==2) {
                     lastSourceIndex =  F.sourceIndex
@@ -621,7 +621,7 @@ extension StoryViewController {
             ADD_SPACER(to: VStack, height: 20)
             //////////////////////////////////////
             let SourcesLabel = UILabel()
-            SourcesLabel.font = MERRIWEATHER_BOLD(18)
+            SourcesLabel.font = MERRIWEATHER_BOLD(17)
             SourcesLabel.text = "  Sources"
             SourcesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(SourcesLabel)
@@ -761,6 +761,7 @@ extension StoryViewController {
                 self.imageHeightConstraint?.constant = H
             }
         }
+        ADD_SPACER(to: self.VStack, height: 4)
     }
 
     private func addTitle(text: String) {
@@ -774,6 +775,8 @@ extension StoryViewController {
         ADD_SPACER(to: HStack, width: 13)
         HStack.addArrangedSubview(titleLabel)
         ADD_SPACER(to: HStack, width: 13)
+        
+        ADD_SPACER(to: self.VStack, height: 1)
     }
 
     private func addPill() {
@@ -796,6 +799,7 @@ extension StoryViewController {
         ])
         
         ADD_SPACER(to: HStack)
+        ADD_SPACER(to: self.VStack, height: 0)
     }
 
 }
@@ -816,8 +820,8 @@ extension StoryViewController: UIGestureRecognizerDelegate {
     }
     
     func attrText(_ text: String, index: Int) -> NSAttributedString {
-        let font = UIFont(name: "Merriweather-Bold", size: 15)
-        let fontItalic = UIFont(name: "Merriweather-Italic", size: 15)
+        let font = UIFont(name: "Merriweather", size: 13)
+        let fontItalic = UIFont(name: "Merriweather-Italic", size: 13)
         //let fontItalic = UIFont(name: "Merriweather-LightItalic", size: 14)
         let extraText = " [" + String(index) + "]"
         let mText = text + extraText

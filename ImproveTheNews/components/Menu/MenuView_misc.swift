@@ -51,16 +51,16 @@ extension MenuView {
                 result = "More..."
 
             case .sliders:
-                result = "      How the sliders work"
+                result = "How the sliders work"
                 
             case .faq:
-                result = "      FAQ"
+                result = "FAQ"
                 
             case .feedback:
-                result = "      Feedback"
+                result = "Feedback"
                 
             case .privacy:
-                result = "      Privacy policy"
+                result = "Privacy policy"
                 
             default:
                 result = ""
@@ -90,11 +90,23 @@ extension MenuView {
             case .tour:
                 icon = "tour"
             
-//            case .more:
-//                icon = "more"
+            case .more:
+                icon = "more2"
             
-            default:
-                icon = ""
+            case .sliders:
+                icon = "sliders"
+            
+            case .faq:
+                icon = "faq"
+                
+            case .feedback:
+                icon = "feedback"
+            
+            case .privacy:
+                icon = "policy"
+            
+//            default:
+//                icon = ""
         }
         
         return UIImage(named: "menu." + icon)

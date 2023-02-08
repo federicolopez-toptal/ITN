@@ -329,6 +329,12 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = self.getText(forItem: dpItem)
         cell.icon.image = self.getIcon(forItem: dpItem)
         
+        var gap: CGFloat = 0
+        if(!self.dataProvider_A.contains(dpItem)) {
+            gap = 25
+        }
+        cell.setLeftGap(gap)
+        
         return cell
     }
     

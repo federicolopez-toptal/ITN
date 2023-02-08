@@ -14,6 +14,7 @@ class MenuItemCell: UITableViewCell {
     
     let icon = UIImageView()
     let titleLabel = UILabel()
+    var gapWidthContraint: NSLayoutConstraint?
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,12 +32,24 @@ class MenuItemCell: UITableViewCell {
         
         let roboto_bold = ROBOTO_BOLD(13)
         
+        let gap = UIView()
+        gap.backgroundColor = .clear //.systemPink
+        self.addSubview(gap)
+        gap.activateConstraints([
+            gap.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
+            gap.heightAnchor.constraint(equalToConstant: 30),
+            gap.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
+        self.gapWidthContraint = gap.widthAnchor.constraint(equalToConstant: 1)
+        self.gapWidthContraint?.isActive = true
+        
+        
         self.addSubview(self.icon)
         self.icon.image = UIImage(named: "menu.headlines")
         self.icon.activateConstraints([
             self.icon.widthAnchor.constraint(equalToConstant: 24),
             self.icon.heightAnchor.constraint(equalToConstant: 24),
-            self.icon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
+            self.icon.leadingAnchor.constraint(equalTo: gap.trailingAnchor, constant: 0),
             self.icon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
@@ -64,6 +77,10 @@ class MenuItemCell: UITableViewCell {
     
     func refreshDisplayMode() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+    }
+    
+    func setLeftGap(_ value: CGFloat) {
+        self.gapWidthContraint?.constant = value
     }
 
 }
