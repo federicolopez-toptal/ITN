@@ -20,6 +20,7 @@ class FeedbackFormViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         
         self.view.addSubview(self.line)
@@ -50,7 +51,8 @@ class FeedbackFormViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.logo, .menuIcon, .searchIcon])            
+            self.navBar.addComponents([.back, .title])
+            self.navBar.setTitle("Feedback")            
         }
     }
     
@@ -86,4 +88,14 @@ extension FeedbackFormViewController: WKNavigationDelegate {
         self.hideLoading()
     }
 
+}
+
+extension FeedbackFormViewController: UIGestureRecognizerDelegate {
+    
+    // to swipe BACK
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+        shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
+    }
 }

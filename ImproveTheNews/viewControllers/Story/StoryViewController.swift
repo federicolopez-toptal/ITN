@@ -27,12 +27,7 @@ class StoryViewController: BaseViewController {
     var articles: [StoryArticle]!
     var imageHeightConstraint: NSLayoutConstraint? = nil
     
-    
-    
-    
-    
     deinit {
-        CustomNavController.shared.showPanelAndButtonWithAnimation()
         self.hideLoading()
     }
     
@@ -44,7 +39,7 @@ class StoryViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.backToFeedIcon])
+            self.navBar.addComponents([.backToFeed])
             
             self.buildContent()
         }

@@ -23,6 +23,7 @@ class MainFeedViewController: BaseViewController {
     var column = 1
     var prevMustSplit: Int?
 
+    var mustReloadOnShow = false
 
 
     // MARK: - Start
@@ -42,6 +43,10 @@ class MainFeedViewController: BaseViewController {
         NotificationCenter.default.addObserver(self,
             selector: #selector(self.removeBannerFromNotification),
             name: Notification_removeBanner, object: nil)
+            
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.setReloadMainFeedOnShow),
+            name: Notification_reloadMainFeedOnShow, object: nil)
         
     }
     
@@ -72,6 +77,15 @@ class MainFeedViewController: BaseViewController {
             self.didAppear = true
             self.loadData()
             self.testFeature()
+        }
+        
+        if(self.mustReloadOnShow) {
+            self.mustReloadOnShow = false
+            self.loadData(showLoading: true)
+        }
+        
+        if(CustomNavController.shared.slidersPanel.isHidden && CustomNavController.shared.floatingButton.isHidden) {
+            CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
     }
     
@@ -126,6 +140,7 @@ class MainFeedViewController: BaseViewController {
             }
         }
     }
+    // MARK: - For local notifications
     @objc func loadDataFromNotification() {
         self.loadData(showLoading: true)
     }
@@ -143,6 +158,9 @@ class MainFeedViewController: BaseViewController {
         
         self.refreshList()
         self.list.forceUpdateLayoutForVisibleItems()
+    }
+    @objc func setReloadMainFeedOnShow() {
+        self.mustReloadOnShow = true
     }
     
     // MARK: - end

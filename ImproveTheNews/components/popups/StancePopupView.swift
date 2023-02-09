@@ -277,15 +277,17 @@ class StancePopupView: PopupView {
     
     @objc func onMoreInfoButtonTap(_ sender: UIButton) {
         //FUTURE_IMPLEMENTATION("Redirect to info regarding sliders")
-        let vc = PreferencesViewController()
-        CustomNavController.shared.viewControllers = [vc]
         
-        DELAY(0.2) {
-            CustomNavController.shared.slidersPanel.hide()
-            CustomNavController.shared.floatingButton.hide()
-            vc.scrollToSliders()
-            
-            self.dismissMe()
+        self.dismissMe()
+        CustomNavController.shared.slidersPanel.hide()
+        CustomNavController.shared.floatingButton.hide()
+        
+        DELAY(0.3) {
+            let vc = PreferencesViewController()
+            CustomNavController.shared.pushViewController(vc, animated: true)
+            DELAY(0.3) {
+                vc.scrollToSliders()
+            }
         }
     }
     

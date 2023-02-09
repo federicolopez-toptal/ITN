@@ -15,8 +15,12 @@ class PrivacyPolicyViewController: BaseViewController {
     var VStack: UIStackView!
     
     
-    
     // MARK: - Init
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -24,7 +28,8 @@ class PrivacyPolicyViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
+            self.navBar.addComponents([.back, .title])
+            self.navBar.setTitle("Privacy Policy")
             
             self.buildContent()
         }
@@ -75,8 +80,8 @@ class PrivacyPolicyViewController: BaseViewController {
     func addContent() {
         REMOVE_ALL_SUBVIEWS(from: VStack)
     
-        self.addTitle("Privacy Policy")
-        ADD_SPACER(to: self.VStack, height: 1)
+        //self.addTitle("Privacy Policy")
+        //ADD_SPACER(to: self.VStack, height: 1)
         for i in 1...12 {
             self.addSubTitle( self.subTitles(i) )
             if(i==8) {
@@ -126,8 +131,18 @@ class PrivacyPolicyViewController: BaseViewController {
     func onLinkTap(_ url: URL) {
         if(url.absoluteString=="local://feedbackForm") {
             let vc = FeedbackFormViewController()
-            CustomNavController.shared.viewControllers = [vc]
+            CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
 
+}
+
+extension PrivacyPolicyViewController: UIGestureRecognizerDelegate {
+    
+    // to swipe BACK
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+        shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
+    }
 }

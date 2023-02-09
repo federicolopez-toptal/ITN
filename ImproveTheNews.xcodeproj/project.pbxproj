@@ -699,7 +699,6 @@
 			children = (
 				1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */,
 				1F70BE73291457B70061E3FA /* Search_topics.swift */,
-				1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -829,6 +828,7 @@
 				1F9E28C12954B1FD00041303 /* PrivacyPolicy */,
 				1F7B9EBC296DEF5800D99C5D /* Story */,
 				1FC7390E298A149C003EB38D /* SignInUp */,
+				1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */,
 				1F9E28C42954DC0200041303 /* FAQViewController.swift */,

@@ -138,6 +138,11 @@ class MenuView: UIView {
 
         self.list.reloadData()
     }
+    
+    private func dismissMe() {
+        self.refreshDisplayMode()
+        CustomNavController.shared.dismissMenu()
+    }
 
 }
 
@@ -145,38 +150,6 @@ class MenuView: UIView {
 extension MenuView {
     
     @objc func onCloseButtonTap(_ sender: UIButton) {
-        self.dismissMe()
-    }
-    
-    private func dismissMe() {
-        self.refreshDisplayMode()
-        CustomNavController.shared.dismissMenu()
-    }
-    
-    // ---------
-    func presentPreferences() {
-        let vc = PreferencesViewController()
-        CustomNavController.shared.viewControllers = [vc]
-        
-        DELAY(0.2) {
-            self.dismissMe()
-            CustomNavController.shared.slidersPanel.hide()
-            CustomNavController.shared.floatingButton.hide()
-        }
-    }
-    
-    func changeDisplayMode() {
-        var changeTo: DisplayMode = .bright
-        if(DisplayMode.current() == .bright) {
-            changeTo = .dark
-        }
-
-        var newValue = "0"
-        if(changeTo == .bright){ newValue = "1" }
-        WRITE(LocalKeys.preferences.displayMode, value: newValue)
-
-        CustomNavController.shared.refreshDisplayMode()
-        //NOTIFY(Notification_reloadMainFeed)
         self.dismissMe()
     }
     
@@ -217,6 +190,33 @@ extension MenuView {
         if let _vc = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
             _vc.scrollToZero()
         }
+    }
+    
+    // ---------
+    func presentPreferences() {
+        self.dismissMe()
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
+
+        DELAY(0.5) {
+            let vc = PreferencesViewController()
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
+    }
+    
+    // ---------
+    func changeDisplayMode() {
+        var changeTo: DisplayMode = .bright
+        if(DisplayMode.current() == .bright) {
+            changeTo = .dark
+        }
+
+        var newValue = "0"
+        if(changeTo == .bright){ newValue = "1" }
+        WRITE(LocalKeys.preferences.displayMode, value: newValue)
+
+        CustomNavController.shared.refreshDisplayMode()
+        //NOTIFY(Notification_reloadMainFeed)
+        self.dismissMe()
     }
     
     // ---------
@@ -278,13 +278,12 @@ extension MenuView {
     // ---------
     func showContent(_ item: MenuITem) {
         self.dismissMe()
-        CustomNavController.shared.slidersPanel.hide()
-        CustomNavController.shared.floatingButton.hide()
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         
         switch(item) {
             case .sliders:
                 let vc = PreferencesViewController()
-                CustomNavController.shared.viewControllers = [vc]
+                CustomNavController.shared.pushViewController(vc, animated: true)
                 DELAY(0.3) {
                     vc.scrollToSliders()
                 }
@@ -292,15 +291,15 @@ extension MenuView {
             // -----
             case .faq:
                 let vc = FAQViewController()
-                CustomNavController.shared.viewControllers = [vc]
+                CustomNavController.shared.pushViewController(vc, animated: true)
             
             case .feedback:
                 let vc = FeedbackFormViewController()
-                CustomNavController.shared.viewControllers = [vc]
+                CustomNavController.shared.pushViewController(vc, animated: true)
             
             case .privacy:
                 let vc = PrivacyPolicyViewController()
-                CustomNavController.shared.viewControllers = [vc]
+                CustomNavController.shared.pushViewController(vc, animated: true)
 
             default:
                 NOTHING()

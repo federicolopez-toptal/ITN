@@ -301,6 +301,8 @@ extension PrefSliders_cell {
             WRITE(key, value: strValue)
             CustomNavController.shared.slidersPanel.reloadSliderValues()
         }
+        
+        NOTIFY(Notification_reloadMainFeedOnShow)
     }
 
     func texts(_ index: Int) -> String {

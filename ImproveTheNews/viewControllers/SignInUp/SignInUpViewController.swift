@@ -20,6 +20,11 @@ class SignInUpViewController: BaseViewController {
     }
     
     // MARK: - Init
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
@@ -30,8 +35,7 @@ class SignInUpViewController: BaseViewController {
             self.navBar.addComponents([.back])
 
             self.buildContent()
-            CustomNavController.shared.slidersPanel.hide()
-            CustomNavController.shared.floatingButton.hide()
+            CustomNavController.shared.hidePanelAndButtonWithAnimation()
         }
     }
     
@@ -48,13 +52,6 @@ class SignInUpViewController: BaseViewController {
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.navBar.refreshDisplayMode()
         self.signIn.refreshDisplayMode()
-    }
-    
-    // MARK: - DeInit
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        CustomNavController.shared.slidersPanel.show()
-        CustomNavController.shared.floatingButton.show()
     }
 
 }
@@ -91,4 +88,14 @@ extension SignInUpViewController: SignInViewDelegate, SignUpViewDelegate {
         
     }
     
+}
+
+extension SignInUpViewController: UIGestureRecognizerDelegate {
+    
+    // to swipe BACK
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+        shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
+    }
 }

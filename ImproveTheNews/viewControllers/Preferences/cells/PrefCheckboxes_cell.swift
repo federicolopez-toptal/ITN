@@ -153,7 +153,7 @@ extension PrefCheckboxes_cell: OnOffViewDelegate {
         if(newValue){ WRITE(key, value: "01") }
         else{ WRITE(key, value: "00") }
         
-//        NOTIFY(Notification_reloadMainFeed)
+        NOTIFY(Notification_reloadMainFeedOnShow)
     }
     
 }

@@ -19,11 +19,10 @@ class PreferencesViewController: BaseViewController {
         .sliders
     ]
 
-
-
     // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
+        CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
     }
     
@@ -34,7 +33,8 @@ class PreferencesViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
+            self.navBar.addComponents([.back, .title])
+            self.navBar.setTitle("Preferences")
             
             self.buildContent()
             self.firstTime = true
@@ -109,5 +109,15 @@ extension PreferencesViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.getCellHeight(indexPath)
+    }
+}
+
+extension PreferencesViewController: UIGestureRecognizerDelegate {
+    
+    // to swipe BACK
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+        shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
     }
 }

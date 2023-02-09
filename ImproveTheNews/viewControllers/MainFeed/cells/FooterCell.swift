@@ -215,43 +215,38 @@ extension FooterCell {
     }
     
     @objc func onHowWorksButtonTap(_ sender: UIButton) {
-        let vc = PreferencesViewController()
-        CustomNavController.shared.viewControllers = [vc]
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         
-        DELAY(0.2) {
-            CustomNavController.shared.slidersPanel.hide()
-            CustomNavController.shared.floatingButton.hide()
-            vc.scrollToSliders()
+        DELAY(0.5) {
+            let vc = PreferencesViewController()
+            CustomNavController.shared.pushViewController(vc, animated: true)
+            DELAY(0.3) {
+                vc.scrollToSliders()
+            }
         }
     }
     
     @objc func onFeedbackButtonTap(_ sender: UIButton) {
-        let vc = FeedbackFormViewController()
-        CustomNavController.shared.viewControllers = [vc]
-        
-        DELAY(0.2) {
-            CustomNavController.shared.slidersPanel.hide()
-            CustomNavController.shared.floatingButton.hide()
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
+        DELAY(0.5) {
+            let vc = FeedbackFormViewController()
+            CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
     
     @objc func onPrivacyPolicyButtonTap(_ sender: UIButton) {
-        let vc = PrivacyPolicyViewController()
-        CustomNavController.shared.viewControllers = [vc]
-        
-        DELAY(0.2) {
-            CustomNavController.shared.slidersPanel.hide()
-            CustomNavController.shared.floatingButton.hide()
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
+        DELAY(0.5) {
+            let vc = PrivacyPolicyViewController()
+            CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
     
     @objc func onFAQButtonTap(_ sender: UIButton) {
-        let vc = FAQViewController()
-        CustomNavController.shared.viewControllers = [vc]
-
-        DELAY(0.2) {
-            CustomNavController.shared.slidersPanel.hide()
-            CustomNavController.shared.floatingButton.hide()
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
+        DELAY(0.5) {
+            let vc = FAQViewController()
+            CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
     

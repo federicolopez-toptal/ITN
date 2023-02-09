@@ -315,6 +315,8 @@ extension SourceFilterViewController: FilterTextViewDelegate {
         
         WRITE(LocalKeys.preferences.sourceFilters, value: value)
         print("Writing", value)
+        
+        NOTIFY(Notification_reloadMainFeedOnShow)
     }
     
 }

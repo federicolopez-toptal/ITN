@@ -13,10 +13,11 @@ enum NavBarViewComponents {
     case menuIcon
     case searchIcon
     case back
-    case backToFeedIcon
+    case backToFeed
     case title
     case share
     case user
+    case closeModal
 }
 
 
@@ -139,7 +140,7 @@ class NavBarView: UIView {
                 self.right_x += 24 + 15
             }
             
-            if(C == .backToFeedIcon) {
+            if(C == .backToFeed) {
                 self.left_x -= 10
                 // Back to feed (from the article content)
                 let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
@@ -290,6 +291,33 @@ class NavBarView: UIView {
                 
                 self.right_x += 24 + 15
             }
+            
+            if(C == .closeModal) {
+                // Close a modal
+                let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("popup.close")))
+                self.addSubview(closeIcon)
+                closeIcon.activateConstraints([
+                    closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    closeIcon.widthAnchor.constraint(equalToConstant: 24),
+                    closeIcon.heightAnchor.constraint(equalToConstant: 24)
+                ])
+                closeIcon.tag = 10
+                self.displayModeComponents.append(closeIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: closeIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: closeIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onCloseModalButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += 24 + 15
+            }
         }
         
         self.refreshDisplayMode()
@@ -318,6 +346,8 @@ class NavBarView: UIView {
                         imgView.image = UIImage(named: DisplayMode.imageName("share"))
                     case 9: // user
                         imgView.image = UIImage(named: DisplayMode.imageName("navBar.user"))
+                    case 10: // close
+                        imgView.image = UIImage(named: DisplayMode.imageName("popup.close"))
                     
                     default:
                         NOTHING()
@@ -378,6 +408,10 @@ extension NavBarView {
 //            //_vc.scrollToZero()
 //        }
 
+        if(CustomNavController.shared.presentedViewController != nil) {
+            CustomNavController.shared.dismiss(animated: true)
+        }
+
         CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
     }
     
@@ -405,6 +439,10 @@ extension NavBarView {
 //        vc.modalPresentationStyle = .fullScreen
 //        vc.modalTransitionStyle = .coverVertical
         CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    @objc func onCloseModalButtonTap(_ sender: UIButton) {
+        CustomNavController.shared.dismiss(animated: true)
     }
     
 }

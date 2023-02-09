@@ -18,6 +18,11 @@ class FAQViewController: BaseViewController {
     var heightConstraints = [NSLayoutConstraint]()
     
     // MARK: - Init
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -25,7 +30,8 @@ class FAQViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.logo, .menuIcon, .searchIcon])
+            self.navBar.addComponents([.back, .title])
+            self.navBar.setTitle("FAQ's")
             
             self.buildContent()
         }
@@ -59,7 +65,7 @@ class FAQViewController: BaseViewController {
         ])
 
         self.titleLabel.font = MERRIWEATHER_BOLD(24)
-        self.titleLabel.text = "FAQ’s"
+        self.titleLabel.text = ""
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 13),
@@ -73,7 +79,8 @@ class FAQViewController: BaseViewController {
         self.VStack.activateConstraints([
             self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 13),
             self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -13),
-            self.VStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 24),
+            self.VStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 0),
+            //self.VStack.topAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 13),
             self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -26),
             //VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
         ])
@@ -400,10 +407,10 @@ extension FAQViewController {
         if(url.absoluteString.contains("local://")) {
             if(url.absoluteString.contains("feedbackForm")) {
                 let vc = FeedbackFormViewController()
-                CustomNavController.shared.viewControllers = [vc]
+                CustomNavController.shared.pushViewController(vc, animated: true)
             } else if(url.absoluteString.contains("privacyPolicy")) {
                 let vc = PrivacyPolicyViewController()
-                CustomNavController.shared.viewControllers = [vc]
+                CustomNavController.shared.pushViewController(vc, animated: true)
             }
         } else {
             OPEN_URL(url.absoluteString)
@@ -412,3 +419,12 @@ extension FAQViewController {
     
 }
 
+extension FAQViewController: UIGestureRecognizerDelegate {
+    
+    // to swipe BACK
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+        shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
+    }
+}
