@@ -18,6 +18,7 @@ enum NavBarViewComponents {
     case share
     case user
     case closeModal
+    case headlines
 }
 
 
@@ -318,6 +319,33 @@ class NavBarView: UIView {
                 
                 self.right_x += 24 + 15
             }
+            
+            if(C == .headlines) {
+                // Back to headlines
+                let ITNicon = UIImageView(image: UIImage(named: "navBar.circleLogo"))
+                self.addSubview(ITNicon)
+                ITNicon.activateConstraints([
+                    ITNicon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    ITNicon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    ITNicon.widthAnchor.constraint(equalToConstant: 24),
+                    ITNicon.heightAnchor.constraint(equalToConstant: 24)
+                ])
+                //ITNicon.tag = 10
+                self.displayModeComponents.append(ITNicon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: ITNicon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: ITNicon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: ITNicon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: ITNicon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onHeadlinesButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += 24 + 15
+            }
         }
         
         self.refreshDisplayMode()
@@ -444,5 +472,10 @@ extension NavBarView {
     @objc func onCloseModalButtonTap(_ sender: UIButton) {
         CustomNavController.shared.dismiss(animated: true)
     }
+    
+    @objc func onHeadlinesButtonTap(_ sender: UIButton) {
+        CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
+    }
+    
     
 }

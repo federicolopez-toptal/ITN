@@ -29,6 +29,8 @@ class MainFeedViewController: BaseViewController {
     // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
+        CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
+        
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.preferencesSetDefaultValues()
         
@@ -60,7 +62,7 @@ class MainFeedViewController: BaseViewController {
             if(self.imFirstViewController()) {
                 self.navBar.addComponents([.logo, .menuIcon, .searchIcon, .user])
             } else {
-                self.navBar.addComponents([.back, .title])
+                self.navBar.addComponents([.back, .title, .headlines])
             }
             
             self.topicSelector.buildInto(self.view)
@@ -307,5 +309,15 @@ extension MainFeedViewController {
 //            self.hideLoading()
 //            self.showFAQ()
 //        }
+    }
+}
+
+extension MainFeedViewController: UIGestureRecognizerDelegate {
+    
+    // to swipe BACK
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+        shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
     }
 }
