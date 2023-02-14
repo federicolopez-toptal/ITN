@@ -35,6 +35,10 @@ class SearchTextView: UIView {
     }
     
     // MARK: - misc
+    func text() -> String {
+        return self.searchTextField.text!
+    }
+    
     func buildInto(viewController: UIViewController) {
         
         let roboto = ROBOTO(14)

@@ -27,11 +27,21 @@ class StancePopupView: PopupView {
         let navControllerView = CustomNavController.shared.view!
         self.bottomConstraint = self.bottomAnchor.constraint(equalTo: navControllerView.bottomAnchor)
         
+        var W: CGFloat = SCREEN_SIZE().width
+        if(IPAD()) {
+            W = 550
+        }
+        
         self.backgroundColor = .systemPink
+        if(IPAD()) {
+            self.layer.cornerRadius = 20
+            self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
+        
         navControllerView.addSubview(self)
         self.activateConstraints([
-            self.leadingAnchor.constraint(equalTo: navControllerView.leadingAnchor),
-            self.trailingAnchor.constraint(equalTo: navControllerView.trailingAnchor),
+            self.widthAnchor.constraint(equalToConstant: W),
+            self.centerXAnchor.constraint(equalTo: navControllerView.centerXAnchor),
             self.heightAnchor.constraint(equalToConstant: self.height),
             self.bottomConstraint!
         ])

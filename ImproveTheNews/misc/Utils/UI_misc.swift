@@ -86,7 +86,7 @@ func ADD_SHADOW(to view: UIView, offset: CGSize = CGSize(width: 5, height: 5)) {
 }
 
 func SCREEN_SIZE() -> CGSize {
-    var result = UIScreen.main.bounds.size
+    let result = UIScreen.main.bounds.size
     return result
 }
 

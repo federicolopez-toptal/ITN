@@ -276,7 +276,7 @@ extension StoryViewController {
                     var PE = 1
                          
                     let sourceName = A.media_title.components(separatedBy: " #").first!
-                    let sourceIconObj = self.getSourceIcon(name: sourceName) { (icon) in
+                    self.getSourceIcon(name: sourceName) { (icon) in
                         if let _icon = icon {
                             let sourcesContainer = UIStackView()
                             HStack_source.addArrangedSubview(sourcesContainer)
@@ -506,7 +506,7 @@ extension StoryViewController {
                     
                     ADD_SPACER(to: innerHStack, height: 20) // Space to next item
                     let line = UIView()
-                    //line.backgroundColor = .black
+                    line.backgroundColor = .clear //.systemPink
                     innerHStack.addArrangedSubview(line)
                     line.activateConstraints([
                         line.heightAnchor.constraint(equalToConstant: 2.0)
@@ -517,7 +517,11 @@ extension StoryViewController {
                         let dash_sep: CGFloat = 2
                         var val_x: CGFloat = 0
                         let dash_color = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
-                        while(val_x < SCREEN_SIZE().width) {
+                        
+                        var maxDim = SCREEN_SIZE().width
+                        if(SCREEN_SIZE().height > maxDim){ maxDim = SCREEN_SIZE().height }
+                        
+                        while(val_x < maxDim) {
                             let dash = UIView()
                             dash.backgroundColor = dash_color
                             line.addSubview(dash)
@@ -745,17 +749,42 @@ extension StoryViewController {
     private func addImage(imageUrl: String) {
         let imageView = UIImageView()
         imageView.backgroundColor = .darkGray
-        self.VStack.addArrangedSubview(imageView)
-        self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 200)
-        self.imageHeightConstraint?.isActive = true
         
-        imageView.sd_setImage(with: URL(string: imageUrl)) { (img, error, cacheType, url) in
-            if let _img = img {
-                let W: CGFloat = SCREEN_SIZE().width
-                let H = (_img.size.height * W)/_img.size.width
-                self.imageHeightConstraint?.constant = H
+        if(IPAD()) {
+        
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            let HStack = HSTACK(into: self.VStack)
+            ADD_SPACER(to: HStack, width: 13)
+            HStack.addArrangedSubview(imageView)
+            ADD_SPACER(to: HStack, width: 13)
+                    
+            self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 200)
+            self.imageHeightConstraint?.isActive = true
+            
+            imageView.sd_setImage(with: URL(string: imageUrl)) { (img, error, cacheType, url) in
+                if let _img = img {
+                    let W: CGFloat = SCREEN_SIZE().width - 26
+                    var H = (_img.size.height * W)/_img.size.width
+                    if(H>450){ H = 450 }
+                    
+                    self.imageHeightConstraint?.constant = H
+                }
+            }
+        } else {
+            self.VStack.addArrangedSubview(imageView)
+            self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 200)
+            self.imageHeightConstraint?.isActive = true
+            
+            imageView.sd_setImage(with: URL(string: imageUrl)) { (img, error, cacheType, url) in
+                if let _img = img {
+                    let W: CGFloat = SCREEN_SIZE().width
+                    let H = (_img.size.height * W)/_img.size.width
+                    self.imageHeightConstraint?.constant = H
+                }
             }
         }
+        
         ADD_SPACER(to: self.VStack, height: 4)
     }
 

@@ -94,8 +94,6 @@ class FAQViewController: BaseViewController {
         self.heightConstraints = [NSLayoutConstraint]()
         
         for i in 1...15 {
-            var img: UIImage? = nil
-                
             self.addSection(title: self.titles(i), content: self.contents(i),
                 linkTexts: self.linkedTexts(i), urls: self.urls(i), index: i)
         }
@@ -137,7 +135,7 @@ class FAQViewController: BaseViewController {
         titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         titleLabel.numberOfLines = 0
         titleLabel.text = tText
-        //titleLabel.backgroundColor = .yellow
+        titleLabel.backgroundColor = .clear //.yellow
         titleHStack.addArrangedSubview(titleLabel)
         
         ADD_SPACER(to: titleHStack, backgroundColor: .clear, width: 50)
@@ -178,7 +176,13 @@ class FAQViewController: BaseViewController {
         else if(index==6){ image = UIImage(named: "einstein") }
         
         if let _image = image {
-            let W: CGFloat = SCREEN_SIZE().width - 13 - 13 - 15 - 15
+            var W: CGFloat = SCREEN_SIZE().width - 13 - 13 - 15 - 15
+            if(IPAD()) {
+                if(SCREEN_SIZE().height < W){
+                    W = SCREEN_SIZE().height - 13 - 13 - 15 - 15
+                }
+            }
+            
             var H: CGFloat = 0
             if(index == 5) {
                 H = (W * 175)/468
@@ -189,17 +193,23 @@ class FAQViewController: BaseViewController {
             let imgView = UIImageView(image: _image)
             sectionView.addSubview(imgView)
             imgView.activateConstraints([
-                imgView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: 15),
-                imgView.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -15),
-                imgView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 15),
-                imgView.heightAnchor.constraint(equalToConstant: H)
+                imgView.widthAnchor.constraint(equalToConstant: W),
+                imgView.heightAnchor.constraint(equalToConstant: H),
+                imgView.centerXAnchor.constraint(equalTo: sectionView.centerXAnchor),
+                imgView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 15)
             ])
         }
         
         self.updateSectionHeight(index: self.VStack.arrangedSubviews.count, open: false)
     }
     func updateSectionHeight(index: Int, open: Bool, animate: Bool = false) {
-        let W: CGFloat = SCREEN_SIZE().width - 13 - 13 - 15 - 15 - 50
+        var W: CGFloat = SCREEN_SIZE().width - 13 - 13 - 15 - 15 - 50
+        if(IPAD()) {
+            if(SCREEN_SIZE().height < W){
+                W = SCREEN_SIZE().height - 13 - 13 - 15 - 15
+            }
+        }
+        
         let sectionView = self.VStack.arrangedSubviews[index-1]
         let vLine = sectionView.subviews[0]
         let hStack = sectionView.subviews[1] as! UIStackView

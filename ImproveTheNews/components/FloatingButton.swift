@@ -26,28 +26,23 @@ class FloatingButton: UIView {
     func buildInto(_ container: UIView, panel: SlidersPanel) {
         self.panel = panel
 
+        let size: CGFloat = 80
         self.backgroundColor = .clear //.yellow
         container.addSubview(self)
         self.activateConstraints([
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
-            self.heightAnchor.constraint(equalToConstant: 80),
-            self.widthAnchor.constraint(equalToConstant: 80)
+            self.heightAnchor.constraint(equalToConstant: size),
+            self.widthAnchor.constraint(equalToConstant: size)
         ])
         
         self.bottomConstraint = self.bottomAnchor.constraint(equalTo: panel.topAnchor, constant: -21)
         self.bottomConstraint?.isActive = true
         
-//        if(self.isIphone7()) {
-//            self.bottomAnchor.constraint(equalTo: panel.topAnchor, constant: 0).isActive = true
-//        } else {
-//            self.bottomAnchor.constraint(equalTo: panel.topAnchor, constant: -21).isActive = true
-//        }
-        
         let image = UIImageView(image: UIImage(named: "floatingButton"))
         self.addSubview(image)
         image.activateConstraints([
-            image.heightAnchor.constraint(equalToConstant: 64),
-            image.widthAnchor.constraint(equalToConstant: 64),
+            image.heightAnchor.constraint(equalToConstant: size-16),
+            image.widthAnchor.constraint(equalToConstant: size-16),
             image.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             image.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])

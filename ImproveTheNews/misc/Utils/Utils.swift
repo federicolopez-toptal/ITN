@@ -51,7 +51,14 @@ func OPEN_URL(_ url: String) {
 
 func SHARE_URL(_ url: String, from vc: UIViewController) {
     let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-    // iPad fix!
+    
+    if(IPAD()) {
+        ac.popoverPresentationController?.sourceView = vc.view
+        ac.popoverPresentationController?.sourceRect = CGRect(x: SCREEN_SIZE().width/2,
+            y: SCREEN_SIZE().height/2, width: 0, height: 0)
+        ac.popoverPresentationController?.permittedArrowDirections = []
+    }
+    
     vc.present(ac, animated: true)
 }
 

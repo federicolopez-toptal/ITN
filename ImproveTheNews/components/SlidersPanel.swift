@@ -37,14 +37,20 @@ class SlidersPanel: UIView {
     // MARK: - Build component
     func buildInto(_ container: UIView) {
         // Panel (self)
+        var W: CGFloat = SCREEN_SIZE().width
+        if(IPAD()){ W = 400 }
+        
+        var T: CGFloat = 0
+        if(IPAD()){ T = -16 }
+        
         self.backgroundColor = .white
         self.layer.cornerRadius = 20
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         container.addSubview(self)
         self.bottomConstraint = self.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         self.activateConstraints([
-            self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            self.widthAnchor.constraint(equalToConstant: W),
+            self.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: T),
             self.heightAnchor.constraint(equalToConstant: self.height),
             self.bottomConstraint!
         ])
@@ -344,7 +350,7 @@ class SlidersPanel: UIView {
 extension SlidersPanel {
     
     func reloadSliderValues() {
-        for (i, key) in LocalKeys.sliders.allKeys.enumerated() {
+        for (i, _) in LocalKeys.sliders.allKeys.enumerated() {
             if let slider = self.viewWithTag(20+i+1) as? UISlider {
                 var newValue = LocalKeys.sliders.defaultValues[i]
                 if let _value = READ(LocalKeys.sliders.allKeys[i]) {

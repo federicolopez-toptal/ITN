@@ -117,6 +117,18 @@ class SearchViewController: BaseViewController {
         }
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        let text = self.searchText.text()
+
+        if(text.isEmpty) {
+            self.subTitleLabel.text = "POPULAR TOPICS"
+            self.showPopularTopics()
+        } else {
+            self.subTitleLabel.text = "TOPIC RESULTS"
+            self.searchForText(text)
+        }
+    }
+    
     @objc func tagButtonOnTap(_ sender: UIButton) {
         let tag = sender.tag - 100
         let label = self.tagsContainer.viewWithTag(tag) as! UILabel

@@ -9,15 +9,18 @@ import UIKit
 
 class CustomNavController: UINavigationController {
 
-    static var shared: CustomNavController!
+    static var shared: CustomNavController! // singleton
+    
+    // flags
     var didLayout = false
     var showTour = false
     
+    // UI components
     let menu = MenuView()
-    let loading = LoadingView()
+    let loading = LoadingView()             // ready for iPad
     let slidersPanel = SlidersPanel()
-    let floatingButton = FloatingButton()
-    let darkView = DarkView()
+    let floatingButton = FloatingButton()   // ready for iPad
+    let darkView = DarkView()               // ready for iPad
 
 
 

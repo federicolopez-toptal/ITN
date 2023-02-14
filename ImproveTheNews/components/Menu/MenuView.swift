@@ -9,7 +9,7 @@ import UIKit
 
 class MenuView: UIView {
 
-    let MENU_WIDTH: CGFloat = 280
+    var MENU_WIDTH: CGFloat = 280
 
     var menuLeadingConstraint: NSLayoutConstraint?
     var list = UITableView()
@@ -47,6 +47,7 @@ class MenuView: UIView {
     // MARK: - Init(s)
     init() {
         super.init(frame: CGRect.zero)
+        if(IPAD()){ MENU_WIDTH = 340 }
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -259,8 +260,6 @@ extension MenuView {
         DELAY(0.3) {
             self.dismissMe()
         }
-        
-        // TODO: Llamar al Tour sin recargar las news (si ya estaban cargadas)
     }
     
     // ---------
@@ -357,12 +356,6 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
                 animation = AnimationFactory.makeMoveDownWithFade(rowHeight: MenuItemCell.heigth, duration: 0.35, delayFactor: 0)
             }
         }
-//        else {
-//            print("Here!", indexPath.row, item)
-//            if(!self.dataProvider_A.contains(item)) {
-//                animation = AnimationFactory.makeMoveUpWithFade(rowHeight: MenuItemCell.heigth, duration: 0.35, delayFactor: 0)
-//            }
-//        }
         
         if let _animation = animation {
             let animator = Animator(animation: _animation)
