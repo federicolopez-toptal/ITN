@@ -89,7 +89,7 @@ extension MainFeedViewController {
                     self.insertBanner(index: i)
                 
                     var completed = false
-                    if let _completed = self.topicsCompleted[T.name] {
+                    if let _ = self.topicsCompleted[T.name] {
                         completed = true
                     }
                     let more = DP_more(topic: T.name, completed: completed)

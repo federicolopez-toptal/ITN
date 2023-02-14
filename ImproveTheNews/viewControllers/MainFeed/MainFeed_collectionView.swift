@@ -16,7 +16,7 @@ extension MainFeedViewController {
         self.list.backgroundColor = self.view.backgroundColor
         self.list.customDelegate = self
         
-        var topValue: CGFloat = NavBarView.HEIGHT() + TopicSelectorView.HEIGHT()
+        let topValue: CGFloat = NavBarView.HEIGHT() + TopicSelectorView.HEIGHT()
 
         self.view.addSubview(self.list)
         self.list.activateConstraints([
@@ -65,7 +65,7 @@ extension MainFeedViewController {
         
             var lines = [(CGFloat, Bool)]()
             
-            for (i, dp) in self.dataProvider.enumerated() {
+            for (i, _) in self.dataProvider.enumerated() {
                 var mustDraw = true
                 let iPath = IndexPath(row: i, section: 0)
                 var H = self.getCellSizeAt(iPath, width: self.list.bounds.width).height

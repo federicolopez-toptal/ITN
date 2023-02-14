@@ -67,6 +67,17 @@ func VALIDATE_EMAIL(_ email:String) -> Bool {
     return emailPred.evaluate(with: email)
 }
 
+func IPAD() -> Bool {
+    let idiom = UIScreen.main.traitCollection.userInterfaceIdiom
+    
+    switch(idiom) {
+        case .pad:
+            return true
+        default:
+            return false
+    }
+}
+
 // ---------------------------------------------
 func PREF(key: String) -> Bool {
     if( READ(key) == "01" ) {

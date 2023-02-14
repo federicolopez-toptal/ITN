@@ -49,6 +49,10 @@ class MainFeedViewController: BaseViewController {
         NotificationCenter.default.addObserver(self,
             selector: #selector(self.setReloadMainFeedOnShow),
             name: Notification_reloadMainFeedOnShow, object: nil)
+            
+        NotificationCenter.default.addObserver(self, selector: #selector(onDeviceOrientationChanged),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil)
         
     }
     
@@ -164,6 +168,16 @@ class MainFeedViewController: BaseViewController {
     @objc func setReloadMainFeedOnShow() {
         self.mustReloadOnShow = true
     }
+    
+    @objc func onDeviceOrientationChanged() {
+        if(IPAD()) {
+            print("Orientation changed!")
+            
+            self.refreshList()
+            self.list.forceUpdateLayoutForVisibleItems()
+        }
+    }
+    
     
     // MARK: - end
     deinit {

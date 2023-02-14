@@ -48,7 +48,7 @@ extension MenuView {
                 result = "Tour"
                 
             case .more: // ▼ ▲
-                result = "More..."
+                result = "More"
 
             case .sliders:
                 result = "How the sliders work"

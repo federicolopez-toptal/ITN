@@ -67,7 +67,7 @@ class CustomCollectionView: UICollectionView {
         var sum: CGFloat = 0
         
         REMOVE_ALL_SUBVIEWS(from: self.vLineView)
-        for (i, L) in lines.enumerated() {
+        for (_, L) in lines.enumerated() {
             let color = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
             
             if(L.1) {
