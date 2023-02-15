@@ -201,6 +201,7 @@ extension StoryViewController {
        if(articles.count == 0) {
             let noArticlesLabel = UILabel()
             noArticlesLabel.font = MERRIWEATHER_BOLD(17)
+            if(IPAD()){ noArticlesLabel.font = MERRIWEATHER_BOLD(19) }
             noArticlesLabel.text = "No articles available"
             noArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(noArticlesLabel)
@@ -208,6 +209,7 @@ extension StoryViewController {
             let ArticlesLabel = UILabel()
             ArticlesLabel.font = MERRIWEATHER_BOLD(17)
             ArticlesLabel.text = "Articles on this story"
+            if(IPAD()){ ArticlesLabel.font = MERRIWEATHER_BOLD(19) }
             ArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(ArticlesLabel)
             
@@ -368,12 +370,14 @@ extension StoryViewController {
        if(spins.count == 0) {
             let noSpinsLabel = UILabel()
             noSpinsLabel.font = MERRIWEATHER_BOLD(17)
+            if(IPAD()){ noSpinsLabel.font = MERRIWEATHER_BOLD(19) }
             noSpinsLabel.text = "No spin available"
             noSpinsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(noSpinsLabel)
         } else {
             let SpinsLabel = UILabel()
             SpinsLabel.font = MERRIWEATHER_BOLD(17)
+            if(IPAD()){ SpinsLabel.font = MERRIWEATHER_BOLD(19) }
             SpinsLabel.text = "Spin"
             SpinsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(SpinsLabel)
@@ -546,12 +550,14 @@ extension StoryViewController {
         if(self.facts.count==0) {
             let noFactsLabel = UILabel()
             noFactsLabel.font = MERRIWEATHER_BOLD(17)
+            if(IPAD()){ noFactsLabel.font = MERRIWEATHER_BOLD(19) }
             noFactsLabel.text = "  No facts available"
             noFactsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(noFactsLabel)
         } else {
             let FactsLabel = UILabel()
             FactsLabel.font = MERRIWEATHER_BOLD(17)
+            if(IPAD()){ FactsLabel.font = MERRIWEATHER_BOLD(19) }
             FactsLabel.text = "  Facts"
             FactsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(FactsLabel)
@@ -621,6 +627,7 @@ extension StoryViewController {
             //////////////////////////////////////
             let SourcesLabel = UILabel()
             SourcesLabel.font = MERRIWEATHER_BOLD(17)
+            if(IPAD()){ SourcesLabel.font = MERRIWEATHER_BOLD(19) }
             SourcesLabel.text = "  Sources"
             SourcesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(SourcesLabel)

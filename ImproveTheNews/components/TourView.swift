@@ -75,6 +75,7 @@ class TourView: UIView {
             self.circleAnim.show()
         } else if(num==5) {
             self.circleAnim.trailingConstraint?.constant = -20
+            if(IPAD()){ self.circleAnim.trailingConstraint?.constant = -30 }
             self.circleAnim.bottomConstraint?.constant = -148
             
             if let bottom = SAFE_AREA()?.bottom, (bottom == 0) {
@@ -114,8 +115,20 @@ extension TourView {
         rect.activateConstraints([
             rect.widthAnchor.constraint(equalToConstant: width),
             rect.heightAnchor.constraint(equalToConstant: height),
-            rect.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+            
         ])
+        if(!IPAD()) {
+            rect.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        } else {
+            if(index == 4) {
+                rect.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
+            } else if(index == 5) {
+                rect.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -65).isActive = true
+            } else {
+                rect.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+            }
+        }
+        
         rect.tag = index
         
         if(index<4) {

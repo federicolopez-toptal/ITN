@@ -155,10 +155,21 @@ extension PrefSliders_cell {
     func place(view: UIView, below: UIView, extraMargin: CGFloat = 0) {
         self.mainContainer.addSubview(view)
         view.activateConstraints([
-            view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
-            view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16),
-            view.topAnchor.constraint(equalTo: below.bottomAnchor, constant: 20 + extraMargin),
+            view.topAnchor.constraint(equalTo: below.bottomAnchor, constant: 20 + extraMargin)
         ])
+        
+        if(!IPAD()) {
+            view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16).isActive = true
+            view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16).isActive = true
+        } else {
+            if(view is UIButton) {
+                view.widthAnchor.constraint(equalToConstant: 400).isActive = true
+                view.centerXAnchor.constraint(equalTo: self.mainContainer.centerXAnchor).isActive = true
+            } else {
+                view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16).isActive = true
+                view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16).isActive = true
+            }
+        }
     }
     
     func longButton(color: UIColor, tag: Int) -> UIButton {
@@ -213,6 +224,9 @@ extension PrefSliders_cell {
         if(index==2){ indexCode=2 }
         else if(index==3){ indexCode=4 }
         
+        var margin: CGFloat = 0
+        if(IPAD()){ margin = 60 }
+        
         var valY: CGFloat = 0
         for j in 1...2 {
             let _2titles = titles[index-1]
@@ -225,15 +239,15 @@ extension PrefSliders_cell {
             titleLabel.addCharacterSpacing(kernValue: characterSpacing)
             view.addSubview(titleLabel)
             titleLabel.activateConstraints([
-                titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
+                titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin),
                 titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: valY)
             ])
             
             let hStack = HSTACK(into: view)
             hStack.activateConstraints([
-                hStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                hStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                hStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
+                hStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin),
                 hStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
             ])
             
@@ -268,8 +282,8 @@ extension PrefSliders_cell {
             slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
             view.addSubview(slider)
             slider.activateConstraints([
-                slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2),
-                slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -2),
+                slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2+margin),
+                slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -2-margin),
                 slider.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 8)
             ])
             self.allSliders.append(slider)

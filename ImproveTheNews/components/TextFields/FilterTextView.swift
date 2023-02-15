@@ -35,6 +35,10 @@ class FilterTextView: UIView {
     }
     
     // MARK: - misc
+    func text() -> String {
+        return self.mainTextField.text!
+    }
+    
     func buildInto(viewController: UIViewController) {
         
         let roboto = ROBOTO(14)

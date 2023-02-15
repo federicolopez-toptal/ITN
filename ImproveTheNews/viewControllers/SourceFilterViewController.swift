@@ -36,6 +36,10 @@ class SourceFilterViewController: BaseViewController {
             self.buildContent()
         }
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.searchForText(self.filterText.text())
+    }
 
     // MARK: - misc
     func buildContent() {
