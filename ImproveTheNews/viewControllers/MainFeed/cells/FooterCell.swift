@@ -17,6 +17,7 @@ class FooterCell: UICollectionViewCell {
     let line = UIView()
     let copyrightLabel = UILabel()
     let followLabel = UILabel()
+    let bottomView = UIView()
     
     let ITEMS_FONT = ROBOTO_BOLD(12)
     
@@ -117,6 +118,15 @@ class FooterCell: UICollectionViewCell {
             socialButton.addTarget(self, action: #selector(onSocialButtonTap(_:)), for: .touchUpInside)
         }
         ADD_SPACER(to: socialStack)
+        
+        self.bottomView.backgroundColor = .green
+        self.contentView.addSubview(self.bottomView)
+        self.bottomView.activateConstraints([
+            self.bottomView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.bottomView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.bottomView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 34),
+            self.bottomView.heightAnchor.constraint(equalToConstant: 34)
+        ])
     }
     
     func addItem(_ text: String, below: UIView, separation: CGFloat, icon: String? = nil, action: Selector) -> UILabel {
@@ -163,6 +173,7 @@ class FooterCell: UICollectionViewCell {
     
     private func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202E) : UIColor(hex: 0xE8E9EA)
+        self.bottomView.backgroundColor = self.contentView.backgroundColor
         self.logoImageView.image = UIImage(named: DisplayMode.imageName("navBar.logo"))
         self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
         self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x212E43) : UIColor(hex: 0xC3C9CF)
