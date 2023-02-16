@@ -114,7 +114,8 @@ extension MainFeedViewController {
             mustShow = false
         }
         
-        if(index==0 && (self.data.banner != nil) && mustShow) {
+        print("MUST_SPLIT", MUST_SPLIT())
+        if(index==0 && (self.data.banner != nil) && mustShow && MUST_SPLIT()==0) {
             let dpBanner = DP_banner()
             self.dataProvider.append(dpBanner)
         }
