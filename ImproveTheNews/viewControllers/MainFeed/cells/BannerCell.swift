@@ -168,7 +168,7 @@ class BannerCell: UICollectionViewCell {
         
         _banner.trace()
         self.mainImageView.image = nil
-        if(Layout.current() == .textImages) {
+//        if(Layout.current() == .textImages) {
             if let _url = URL(string: _banner.imgUrl) {
                 self.mainImageView.sd_setImage(with: _url) { (img, error, cacheType, url) in
                     if let _img = img {
@@ -195,9 +195,9 @@ class BannerCell: UICollectionViewCell {
                 self.imageHeightConstraint?.constant = 0
                 Banner.imageHeight = nil
             }
-        } else {
-            self.imageHeightConstraint?.constant = 0
-        }
+//        } else {
+//            self.imageHeightConstraint?.constant = 0
+//        }
         
         self.bannerURL = _banner.url
         self.bannerCode = _banner.code
