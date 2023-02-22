@@ -46,6 +46,39 @@ struct MainFeedTopic {
         }
     }
     
+    func hasAvailableArticles() -> Bool {
+        var result = false
+        if let _ = self.articles.first(where: { $0.used == false }) {
+            result = true
+        }
+        
+        return result
+    }
+    
+    mutating func nextAvailableArticle(isStory storyFlag: Bool) -> MainFeedArticle? {
+        var result: MainFeedArticle? = nil
+        
+        for (i, A) in self.articles.enumerated() {
+            if(A.used==false && A.isStory==storyFlag) {
+                self.articles[i].used = true
+                result = A
+                break
+            }
+        }
+        
+        if(result==nil) { // ignore "storyFlag"
+            for (i, A) in self.articles.enumerated() {
+                if(A.used==false) {
+                    self.articles[i].used = true
+                    result = A
+                    break
+                }
+            }
+        }
+        
+        return result
+    }
+    
 }
 
 struct TopicPath {

@@ -43,7 +43,6 @@ extension MainFeedViewController {
         
         self.list.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
 
-
         self.list.delegate = self
         self.list.dataSource = self
     }
@@ -51,7 +50,11 @@ extension MainFeedViewController {
     // MARK: - misc
     func refreshList() {
         DispatchQueue.main.async {
-            (self.list.collectionViewLayout as! CustomFlowLayout).resetCache()
+            if(!IPAD()) {
+                (self.list.collectionViewLayout as! CustomFlowLayout).resetCache()
+            } else {
+                (self.list.collectionViewLayout as! CustomIPadFlowLayout).resetCache()
+            }
             self.list.reloadData()
         }
     }

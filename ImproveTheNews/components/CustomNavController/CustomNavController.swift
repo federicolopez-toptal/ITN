@@ -48,8 +48,13 @@ class CustomNavController: UINavigationController {
     }
     
     private func addInitialViewController() {
-        let vc = MainFeedViewController()
-        self.setViewControllers([vc], animated: false)
+        if(!IPAD()) {
+            let vc = MainFeedViewController()
+            self.setViewControllers([vc], animated: false)
+        } else {
+            let vc = MainFeed_v2ViewController()
+            self.setViewControllers([vc], animated: false)
+        }
     }
     
 //    override func viewDidAppear(_ animated: Bool) {

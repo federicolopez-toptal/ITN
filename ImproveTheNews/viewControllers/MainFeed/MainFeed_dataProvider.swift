@@ -36,11 +36,16 @@ extension MainFeedViewController {
         var itemsToShowPerTopic = ""
         
         if(TEXT_IMAGES()) {
-            itemsToShowPerTopic = "h,"
-            for _ in 1...LOADMORE_LIMIT {
-                itemsToShowPerTopic += "sbi,awi2,awt3,swt,sci,aci3,"
-            }
-            itemsToShowPerTopic += "m"
+//            if(!IPAD()) {
+                itemsToShowPerTopic = "h,"
+                for _ in 1...LOADMORE_LIMIT {
+                    itemsToShowPerTopic += "sbi,awi2,awt3,swt,sci,aci3,"
+                }
+                itemsToShowPerTopic += "m"
+//            } else {
+//                itemsToShowPerTopic = "h,"
+//                itemsToShowPerTopic += "m"
+//            }
         } else if(TEXT_ONLY()){
             itemsToShowPerTopic = "h,"
             for _ in 1...LOADMORE_LIMIT {
@@ -72,7 +77,9 @@ extension MainFeedViewController {
 
             self.column = 1
             var allItems = itemsToShowPerTopic.components(separatedBy: ",")
-            if(mustSplit==0 && i==0 && allItems.count>1 && Layout.current() == .textImages){ allItems.swapAt(0, 1) }
+            if(mustSplit==0 && i==0 && allItems.count>1 && Layout.current() == .textImages && !IPAD()){
+                allItems.swapAt(0, 1)
+            }
             
             for item in allItems {
                 let type = item.getCharAt(index: 0) // 1st char: Data type (h: header, s: story, a: article, m: more)
@@ -106,6 +113,10 @@ extension MainFeedViewController {
         
         let footer = DP_footer()
         self.dataProvider.append(footer)
+        
+        //!!!
+        print(self.dataProvider)
+        print("")
     }
     
     func insertBanner(index: Int) {
@@ -114,8 +125,7 @@ extension MainFeedViewController {
             mustShow = false
         }
         
-        print("MUST_SPLIT", MUST_SPLIT())
-        if(index==0 && (self.data.banner != nil) && mustShow && MUST_SPLIT()==0) {
+        if(index==0 && (self.data.banner != nil) && mustShow && MUST_SPLIT()==0 && !IPAD()) { //!!
             let dpBanner = DP_banner()
             self.dataProvider.append(dpBanner)
         }
