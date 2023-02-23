@@ -30,6 +30,7 @@ extension MainFeed_v2ViewController {
         self.list.register(iPadHeaderCell.self, forCellReuseIdentifier: iPadHeaderCell.identifier)
         self.list.register(iPadGroupItem_topCell.self, forCellReuseIdentifier: iPadGroupItem_topCell.identifier)
         self.list.register(iPadGroupItem_rowCell.self, forCellReuseIdentifier: iPadGroupItem_rowCell.identifier)
+        self.list.register(iPadMoreCell.self, forCellReuseIdentifier: iPadMoreCell.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -79,35 +80,13 @@ extension MainFeed_v2ViewController {
             if(dpItem is DataProviderHeaderItem) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadHeaderCell.identifier) as! iPadHeaderCell
                 (cell as! iPadHeaderCell).populate(with: (dpItem as! DataProviderHeaderItem))
+            } else if(dpItem is DataProviderMoreItem) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadMoreCell.identifier) as! iPadMoreCell
+                (cell as! iPadMoreCell).populate(with: (dpItem as! DataProviderMoreItem))
+                (cell as! iPadMoreCell).delegate = self
             }
         }
     
-    
-//        var cell: GroupItemCell!
-//        let item = self.dataProvider[indexPath.row]
-//
-//        if(item is DataProviderGroupItem) {
-//            if(item is iPadGroupItem_top) {
-//                cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_topCell.identifier)
-//                    as! iPadGroupItem_topCell
-//                cell.populate(with: item as! DataProviderGroupItem)
-//            }
-//        }
-//
-//        if(item is iPadGroupItem_header) {
-//            cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_headerCell.identifier)
-//                as! iPadGroupItem_headerCell
-//            (cell as! iPadGroupItem_headerCell).customPopulate("SARASA")
-//        } else if(item is iPadGroupItem_top) {
-//            cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_topCell.identifier)
-//                as! iPadGroupItem_topCell
-//            cell.populate(with: item)
-//        } else if(item is iPadGroupItem_row) {
-//            cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_rowCell.identifier)
-//                as! iPadGroupItem_rowCell
-//            cell.populate(with: item)
-//        }
-//
         return cell
     }
     
@@ -122,8 +101,33 @@ extension MainFeed_v2ViewController {
             result = 675
         } else if(dpItem is iPadGroupItem_row) {
             result = 350+16
+        } else if(dpItem is DataProviderMoreItem) {
+            result = 80
         }
         
         return result
+    }
+}
+
+extension MainFeed_v2ViewController: iPadMoreCellDelegate {
+    func onShowMoreButtonTap(sender: iPadMoreCell) {
+        self.showLoading()
+
+        let topic = sender.topic
+        self.data.loadMoreData(topic: topic) { (error, articlesAdded) in
+            if(articlesAdded == 0) { // No more articles
+                self.topicsCompleted[topic] = true
+            }
+            
+            self.populateDataProvider()
+            self.refreshList()
+            
+            self.hideLoading()
+            self.list.hideRefresher()
+            self.refreshList()
+//            self.list.forceUpdateLayoutForVisibleItems()
+//            self.refreshVLine()
+        }
+
     }
 }

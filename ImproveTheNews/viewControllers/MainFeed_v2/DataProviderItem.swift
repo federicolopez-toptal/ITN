@@ -26,6 +26,16 @@ class DataProviderHeaderItem: DataProviderItem {
     }
 }
 
+class DataProviderMoreItem: DataProviderItem {
+    var topic = "news"
+    var completed = false
+    
+    init(topic: String, completed: Bool) {
+        self.topic = topic
+        self.completed = completed
+    }
+}
+
 // ------------------------------------------------------
 class iPadGroupItem_top: DataProviderGroupItem {
 

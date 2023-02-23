@@ -87,6 +87,7 @@
 		1F9538DC28FF337A00251598 /* StancePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9538DB28FF337A00251598 /* StancePopupView.swift */; };
 		1F9538DE28FF387800251598 /* Merriweather-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */; };
 		1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */; };
+		1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */; };
 		1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B4ADC2967745A00BE8850 /* RatingView.swift */; };
 		1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */; };
 		1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */; };
@@ -429,6 +430,7 @@
 		1F9538DB28FF337A00251598 /* StancePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StancePopupView.swift; sourceTree = "<group>"; };
 		1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Regular.ttf"; sourceTree = "<group>"; };
 		1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadHeaderCell.swift; sourceTree = "<group>"; };
+		1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadMoreCell.swift; sourceTree = "<group>"; };
 		1F9B4ADC2967745A00BE8850 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
@@ -718,10 +720,12 @@
 		1F38213F29A6DF1F004D4D29 /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				1F38214229A6E504004D4D29 /* CellViews */,
 				1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */,
 				1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */,
 				1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */,
 				1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */,
+				1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -1017,7 +1021,6 @@
 				1FC287DC29A64EF90017433B /* MainFeed_v2_dataProvider.swift */,
 				1FC287E029A652F40017433B /* DataProviderItem.swift */,
 				1F38213F29A6DF1F004D4D29 /* cells */,
-				1F38214229A6E504004D4D29 /* CellViews */,
 			);
 			path = MainFeed_v2;
 			sourceTree = "<group>";
@@ -1721,6 +1724,7 @@
 				1FD5BDF328DC11DC003E650F /* PopupView.swift in Sources */,
 				1FF61CBE28DAE50B006DF9AC /* StoryCI_cell.swift in Sources */,
 				1F0B000328F61D14007280FF /* Fonts_misc.swift in Sources */,
+				1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */,
 				1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */,
 				1FF326C128CA71DA006FF2CE /* MainFeedTopic.swift in Sources */,
 				1F025CB028E12F2900AA866D /* Banner.swift in Sources */,

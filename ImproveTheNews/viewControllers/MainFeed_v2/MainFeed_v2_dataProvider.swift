@@ -28,6 +28,7 @@ extension MainFeed_v2ViewController {
                 
                 if(IPAD()) {
                     if(itemInTopic==1) {
+                        // "Header" item
                         let header = DataProviderHeaderItem(title: _T.capitalizedName)
                         self.dataProvider.append(header)
                     
@@ -41,6 +42,7 @@ extension MainFeed_v2ViewController {
                     let storyFlag = newGroupItem.storyFlags[j-1]
                     if let _A = _T.nextAvailableArticle(isStory: storyFlag) {
                         newGroupItem.articles.append(_A)
+                        self.data.addCountTo(topic: _T.name)
                     } else {
                         break
                     }
@@ -49,6 +51,14 @@ extension MainFeed_v2ViewController {
                 self.dataProvider.append(newGroupItem)
                 itemInTopic += 1
             }
+            
+            // "Load more" item
+            var isCompleted = false
+            if let _ = self.topicsCompleted[_T.name] {
+                isCompleted = true
+            }
+            let loadMore = DataProviderMoreItem(topic: _T.name, completed: isCompleted)
+            self.dataProvider.append(loadMore)
         }
     }
     // --------------------------------

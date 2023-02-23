@@ -108,8 +108,7 @@ class MainFeedViewController: BaseViewController {
         
         UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
             Sources.shared.checkIfLoaded { _ in // load sources (if needed)
-                //if(imFirst){ self.data.resetCounting() } !!!
-
+            
                 self.data.loadData(self.topic) { (error) in
                     MAIN_THREAD {/* --- */
                         if(self.data.topics.count == 0) {

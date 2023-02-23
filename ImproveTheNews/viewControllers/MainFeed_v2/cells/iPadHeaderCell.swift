@@ -31,8 +31,8 @@ class iPadHeaderCell: UITableViewCell {
         ])
     }
     
-    func populate(with group: DataProviderHeaderItem) {
-        self.titleLabel.text = group.title
+    func populate(with item: DataProviderHeaderItem) {
+        self.titleLabel.text = item.title
         self.refreshDisplayMode()
     }
     
