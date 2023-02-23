@@ -99,7 +99,7 @@ class PrefCheckboxes_cell: UITableViewCell {
             self.sourcesButton.heightAnchor.constraint(equalToConstant: 35),
             self.sourcesButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 20)
         ])
-        if(!IPAD()) {
+        if(IPHONE()) {
             self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16).isActive = true
             self.sourcesButton.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16).isActive = true
         } else {

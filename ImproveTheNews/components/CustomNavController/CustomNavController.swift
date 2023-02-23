@@ -17,10 +17,10 @@ class CustomNavController: UINavigationController {
     
     // UI components
     let menu = MenuView()
-    let loading = LoadingView()             // ready for iPad
+    let loading = LoadingView()
     let slidersPanel = SlidersPanel()
-    let floatingButton = FloatingButton()   // ready for iPad
-    let darkView = DarkView()               // ready for iPad
+    let floatingButton = FloatingButton()
+    let darkView = DarkView()
 
 
 
@@ -48,21 +48,17 @@ class CustomNavController: UINavigationController {
     }
     
     private func addInitialViewController() {
-        if(!IPAD()) {
-            let vc = MainFeedViewController()
-            self.setViewControllers([vc], animated: false)
-        } else {
-            let vc = MainFeed_v2ViewController()
-            self.setViewControllers([vc], animated: false)
-        }
-    }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        DELAY(1.0) {
-//            self.slidersPanel.show(rows: 2, animated: true)
+//        if(IPHONE()) {
+//            let vc = MainFeedViewController()
+//            self.setViewControllers([vc], animated: false)
+//        } else {
+//            let vc = MainFeed_v2ViewController()
+//            self.setViewControllers([vc], animated: false)
 //        }
-//    }
+        
+        let vc = MainFeed_v2ViewController()
+        self.setViewControllers([vc], animated: false)
+    }
 
     func refreshDisplayMode() {
         self.slidersPanel.refreshDisplayMode()

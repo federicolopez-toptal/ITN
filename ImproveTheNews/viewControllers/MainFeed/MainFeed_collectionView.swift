@@ -50,7 +50,7 @@ extension MainFeedViewController {
     // MARK: - misc
     func refreshList() {
         DispatchQueue.main.async {
-            if(!IPAD()) {
+            if(IPHONE()) {
                 (self.list.collectionViewLayout as! CustomFlowLayout).resetCache()
             } else {
                 (self.list.collectionViewLayout as! CustomIPadFlowLayout).resetCache()

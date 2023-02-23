@@ -117,7 +117,7 @@ extension TourView {
             rect.heightAnchor.constraint(equalToConstant: height),
             
         ])
-        if(!IPAD()) {
+        if(IPHONE()) {
             rect.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         } else {
             if(index == 4) {

@@ -32,6 +32,10 @@
 		1F2D9FD428D36F6A00CE3008 /* ArticleWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */; };
 		1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */; };
 		1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */; };
+		1F38213E29A6DA32004D4D29 /* MainFeed_v2_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */; };
+		1F38214129A6DF45004D4D29 /* iPadGroupItem_topCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */; };
+		1F38214429A6E52C004D4D29 /* ArticleBigImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38214329A6E52C004D4D29 /* ArticleBigImageView.swift */; };
+		1F38214629A6EA71004D4D29 /* CustomCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38214529A6EA71004D4D29 /* CustomCellView.swift */; };
 		1F39574F28DCDE8900DE3C07 /* CustomCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F39574E28DCDE8900DE3C07 /* CustomCollectionView.swift */; };
 		1F3DDED1296EEE4F003DCD2F /* StoryEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DDED0296EEE4F003DCD2F /* StoryEntities.swift */; };
 		1F3E5E3C292FC2BF00FA090B /* SourceFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */; };
@@ -363,6 +367,10 @@
 		1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWT_cell.swift; sourceTree = "<group>"; };
 		1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryWT_cell.swift; sourceTree = "<group>"; };
 		1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
+		1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2_list.swift; sourceTree = "<group>"; };
+		1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_topCell.swift; sourceTree = "<group>"; };
+		1F38214329A6E52C004D4D29 /* ArticleBigImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleBigImageView.swift; sourceTree = "<group>"; };
+		1F38214529A6EA71004D4D29 /* CustomCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellView.swift; sourceTree = "<group>"; };
 		1F39574E28DCDE8900DE3C07 /* CustomCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionView.swift; sourceTree = "<group>"; };
 		1F3DDED0296EEE4F003DCD2F /* StoryEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEntities.swift; sourceTree = "<group>"; };
 		1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFilterViewController.swift; sourceTree = "<group>"; };
@@ -697,6 +705,23 @@
 			path = MainFeed;
 			sourceTree = "<group>";
 		};
+		1F38213F29A6DF1F004D4D29 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
+		1F38214229A6E504004D4D29 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				1F38214529A6EA71004D4D29 /* CustomCellView.swift */,
+				1F38214329A6E52C004D4D29 /* ArticleBigImageView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		1F56F728294B9D2F00654CDB /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -971,10 +996,13 @@
 			isa = PBXGroup;
 			children = (
 				1FC287D429A645A50017433B /* MainFeed_v2ViewController.swift */,
-				1FC287D629A648010017433B /* MainFeed_v2_misc.swift */,
+				1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */,
 				1FC287DC29A64EF90017433B /* MainFeed_v2_dataProvider.swift */,
+				1FC287D629A648010017433B /* MainFeed_v2_misc.swift */,
 				1FC287DA29A64BC90017433B /* CustomFeedList.swift */,
 				1FC287E029A652F40017433B /* DataProviderGroupItem.swift */,
+				1F38213F29A6DF1F004D4D29 /* cells */,
+				1F38214229A6E504004D4D29 /* views */,
 			);
 			path = MainFeed_v2;
 			sourceTree = "<group>";
@@ -1651,11 +1679,13 @@
 				1F47CD8D290F5476003F0003 /* StoryCT_cell.swift in Sources */,
 				1FC7390D298A144D003EB38D /* FormTextView.swift in Sources */,
 				1FDEB1CB28CB88730029831E /* StoryBI_cell.swift in Sources */,
+				1F38214629A6EA71004D4D29 /* CustomCellView.swift in Sources */,
 				1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */,
 				1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */,
 				1FC73910298A1501003EB38D /* SignInView.swift in Sources */,
 				1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */,
 				1F9E28C52954DC0200041303 /* FAQViewController.swift in Sources */,
+				1F38213E29A6DA32004D4D29 /* MainFeed_v2_list.swift in Sources */,
 				1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */,
 				1FD23406291565F100B85AE9 /* MenuView_misc.swift in Sources */,
 				1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */,
@@ -1679,11 +1709,13 @@
 				1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */,
 				1FF326C128CA71DA006FF2CE /* MainFeedTopic.swift in Sources */,
 				1F025CB028E12F2900AA866D /* Banner.swift in Sources */,
+				1F38214429A6E52C004D4D29 /* ArticleBigImageView.swift in Sources */,
 				1F7B9EBB296DEC7200D99C5D /* StoryViewController.swift in Sources */,
 				1F2D9FD428D36F6A00CE3008 /* ArticleWT_cell.swift in Sources */,
 				1F39574F28DCDE8900DE3C07 /* CustomCollectionView.swift in Sources */,
 				1FF6FBAA2912F10F00673146 /* SplitHeaderCell.swift in Sources */,
 				1F70BE74291457B70061E3FA /* Search_topics.swift in Sources */,
+				1F38214129A6DF45004D4D29 /* iPadGroupItem_topCell.swift in Sources */,
 				1F897CE328CC322900438FC5 /* Sources.swift in Sources */,
 				1FC287D729A648010017433B /* MainFeed_v2_misc.swift in Sources */,
 				1FA8AA3228D0D29000B6C956 /* DP_item.swift in Sources */,

@@ -77,7 +77,7 @@ extension MainFeedViewController {
 
             self.column = 1
             var allItems = itemsToShowPerTopic.components(separatedBy: ",")
-            if(mustSplit==0 && i==0 && allItems.count>1 && Layout.current() == .textImages && !IPAD()){
+            if(mustSplit==0 && i==0 && allItems.count>1 && Layout.current() == .textImages && IPHONE()){
                 allItems.swapAt(0, 1)
             }
             
@@ -125,7 +125,7 @@ extension MainFeedViewController {
             mustShow = false
         }
         
-        if(index==0 && (self.data.banner != nil) && mustShow && MUST_SPLIT()==0 && !IPAD()) { //!!
+        if(index==0 && (self.data.banner != nil) && mustShow && MUST_SPLIT()==0 && IPHONE()) { //!!
             let dpBanner = DP_banner()
             self.dataProvider.append(dpBanner)
         }

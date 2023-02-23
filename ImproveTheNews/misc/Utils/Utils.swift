@@ -85,6 +85,25 @@ func IPAD() -> Bool {
     }
 }
 
+func IPHONE() -> Bool {
+    let idiom = UIScreen.main.traitCollection.userInterfaceIdiom
+    
+    switch(idiom) {
+        case .phone:
+            return true
+        default:
+            return false
+    }
+}
+
+func CLEAN_SOURCE(from input: String) -> String {
+    var result = input
+    if let _cleanSource = input.components(separatedBy: " #").first {
+        result = _cleanSource
+    }
+    return result
+}
+
 // ---------------------------------------------
 func PREF(key: String) -> Bool {
     if( READ(key) == "01" ) {

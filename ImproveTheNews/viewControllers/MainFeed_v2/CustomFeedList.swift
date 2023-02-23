@@ -7,14 +7,49 @@
 
 import UIKit
 
+
+protocol CustomFeedListDelegate: AnyObject {
+    func feedListOnRefreshPulled(sender: CustomFeedList)
+}
+
+//----------------------------------
 class CustomFeedList: UITableView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    let refresher = UIRefreshControl()
+    weak var customDelegate: CustomFeedListDelegate?
 
+    // MARK: - Start
+    init() {
+        super.init(frame: .zero, style: .plain)
+        self.setupRefresher()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - misc
+    private func setupRefresher() {
+        self.alwaysBounceVertical = true
+        self.refresher.tintColor = .lightGray
+        self.refresher.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        self.addSubview(refresher)
+    }
+    
+    func hideRefresher() {
+        DispatchQueue.main.async {
+            if(!self.refresher.isRefreshing){ return }
+            self.refresher.endRefreshing()
+        }
+    }
+
+}
+
+extension CustomFeedList {
+
+    // MARK: - Event(s)
+    @objc func refresh(_ sender: UIRefreshControl!) {
+        self.refresher.beginRefreshing()
+        self.customDelegate?.feedListOnRefreshPulled(sender: self)
+    }
+    
 }

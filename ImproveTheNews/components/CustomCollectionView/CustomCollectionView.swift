@@ -20,7 +20,7 @@ class CustomCollectionView: UICollectionView {
     weak var customDelegate: CustomCollectionViewDelegate?
     
     init() {
-        if(!IPAD()) {
+        if(IPHONE()) {
             let layout = CustomFlowLayout()
 
             layout.minimumLineSpacing = 0 // vertical separation
@@ -111,16 +111,13 @@ class CustomCollectionView: UICollectionView {
         DispatchQueue.main.async {
             if(!self.refresher.isRefreshing){ return }
             self.refresher.endRefreshing()
-//            UIView.animate(withDuration: 0.5) {
-//                self.refresher.layoutIfNeeded()
-//            }
         }
     }
     
     func forceUpdateLayoutForVisibleItems() {
         MAIN_THREAD {
             let frame = CGRect(x: 0, y: 0, width: self.contentSize.width, height: self.contentSize.height)
-            if(!IPAD()) {
+            if(IPHONE()) {
                 let _ = (self.collectionViewLayout as! CustomFlowLayout).layoutAttributesForElements(in: frame)
             } else {
                 let _ = (self.collectionViewLayout as! CustomIPadFlowLayout).layoutAttributesForElements(in: frame)

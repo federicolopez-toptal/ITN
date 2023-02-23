@@ -158,7 +158,7 @@ extension PrefSliders_cell {
             view.topAnchor.constraint(equalTo: below.bottomAnchor, constant: 20 + extraMargin)
         ])
         
-        if(!IPAD()) {
+        if(IPHONE()) {
             view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16).isActive = true
             view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16).isActive = true
         } else {

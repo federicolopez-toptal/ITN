@@ -29,8 +29,7 @@ class MainFeed_v2ViewController: BaseViewController {
         
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.preferencesSetDefaultValues()
-        
-        // add notification observers
+        self.addNotificationObservers()
     }
     
     override func viewDidLayoutSubviews() {
@@ -49,7 +48,7 @@ class MainFeed_v2ViewController: BaseViewController {
             self.topicSelector.buildInto(self.view)
             self.topicSelector.delegate = self
             
-            //self.setupList()
+            self.setupList()
         }
     }
     
@@ -72,6 +71,7 @@ class MainFeed_v2ViewController: BaseViewController {
         }
     }
     
+    // MARK: - UI
     override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
         self.topicSelector.refreshDisplayMode()
@@ -81,7 +81,17 @@ class MainFeed_v2ViewController: BaseViewController {
         self.list.reloadData()
     }
     
-    // MARK: - Data
+    func refreshList() {
+        DispatchQueue.main.async {
+            self.list.reloadData()
+        }
+    }
+
+}
+
+// MARK: - Data
+extension MainFeed_v2ViewController {
+    
     func loadData(showLoading: Bool = true) {
         if(showLoading){ self.showLoading() }
         self.topicsCompleted = [String: Bool]()
@@ -98,10 +108,10 @@ class MainFeed_v2ViewController: BaseViewController {
                         self.navBar.setTitle(self.getTopicName(topic: self.topic))
                         self.topicSelector.setTopics(self.data.topicNames())
                         self.populateDataProvider()
-//                        self.refreshList()
+                        self.refreshList()
 
                         self.hideLoading()
-//                        self.list.hideRefresher()
+                        self.list.hideRefresher()
 //                        self.list.forceUpdateLayoutForVisibleItems()
 //                        self.refreshVLine()
 
@@ -124,3 +134,22 @@ class MainFeed_v2ViewController: BaseViewController {
     }
 
 }
+
+// MARK: - Notifications
+extension MainFeed_v2ViewController {
+    
+    @objc func onStanceIconTap(_ notification: Notification) {
+        if let _info = notification.userInfo as? [String: Any] {
+            let source = _info["source"] as! String
+            let country = _info["country"] as! String
+            let LR = _info["LR"] as! Int
+            let PE = _info["PE"] as! Int
+            
+            let popup = StancePopupView()
+            popup.populate(sourceName: source, country: country, LR: LR, PE: PE)
+            popup.pushFromBottom()
+        }
+    }
+    
+}
+

@@ -13,7 +13,10 @@ let Notification_removeBanner = Notification.Name("RemoveBanner")               
 let Notification_reloadMainFeedOnShow = Notification.Name("ReloadMainFeedOnSHow")   // Reload main feed on show viewController
 
 
+let Notification_stanceIconTap = Notification.Name("StanceIconTap")                 // User taps on a Stance icon
 
-func NOTIFY(_ name: Notification.Name) {
-    NotificationCenter.default.post(name: name, object: nil)
+
+
+func NOTIFY(_ name: Notification.Name, userInfo: [AnyHashable: Any]? = nil) {
+    NotificationCenter.default.post(name: name, object: nil, userInfo: userInfo)
 }

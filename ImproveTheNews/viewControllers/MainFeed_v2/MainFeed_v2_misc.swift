@@ -9,7 +9,14 @@ import Foundation
 import UIKit
 
 
+// MARK: - miscs/utils
 extension MainFeed_v2ViewController {
+    
+    func addNotificationObservers() {
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.onStanceIconTap),
+            name: Notification_stanceIconTap, object: nil)
+    }
     
     func imFirstViewController() -> Bool {
         var result = false
@@ -32,11 +39,6 @@ extension MainFeed_v2ViewController {
         return result
     }
     
-    func scrollToZero() {
-        self.list.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-    }
-    
-    // Preferences default values
     func preferencesSetDefaultValues() {
         // show stories
         if(READ(LocalKeys.preferences.showStories)==nil) {
@@ -62,9 +64,18 @@ extension MainFeed_v2ViewController {
     
 }
 
+// MARK: UI
+extension MainFeed_v2ViewController {
+    
+    func scrollToZero() {
+        self.list.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
+    
+}
+
+// MARK: To swipe BACK
 extension MainFeed_v2ViewController: UIGestureRecognizerDelegate {
   
-    // to swipe BACK
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
         shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         
@@ -73,7 +84,7 @@ extension MainFeed_v2ViewController: UIGestureRecognizerDelegate {
     
 }
 
-// MARK: - Topic selector & Breadcrumbs
+// MARK: - Topic selector
 extension MainFeed_v2ViewController: TopicSelectorViewDelegate {
 
     func onTopicSelected(_ index: Int) {
@@ -88,3 +99,12 @@ extension MainFeed_v2ViewController: TopicSelectorViewDelegate {
     }
     
 }
+
+// MARK: - List/Pull to Refresh
+extension MainFeed_v2ViewController: CustomFeedListDelegate {
+    func feedListOnRefreshPulled(sender: CustomFeedList) {
+        self.loadData(showLoading: false)
+    }
+}
+
+
