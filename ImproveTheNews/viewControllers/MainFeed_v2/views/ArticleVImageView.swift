@@ -1,15 +1,15 @@
 //
-//  ArticleBigImageView.swift
+//  ArticleVImageView.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 22/02/2023.
+//  Created by Federico Lopez on 23/02/2023.
 //
 
 import UIKit
 import SDWebImage
 
 
-class ArticleBigImageView: CustomCellView {
+class ArticleVImageView: CustomCellView {
 
     private var article: MainFeedArticle!
 
@@ -29,9 +29,8 @@ class ArticleBigImageView: CustomCellView {
         var articleSource: UIStackView? = nil
         var articleSourceTime = UILabel()
         let stanceIcon = StanceIconView()
-        
-        
-    
+
+
     // MARK: - Start
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -47,7 +46,7 @@ class ArticleBigImageView: CustomCellView {
             self.mainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.mainImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.mainImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.mainImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            self.mainImageView.heightAnchor.constraint(equalToConstant: 175)
         ])
         
         let vStack = VSTACK(into: self)
@@ -55,24 +54,30 @@ class ArticleBigImageView: CustomCellView {
         vStack.activateConstraints([
             vStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: IPAD_INNER_MARGIN),
             vStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -IPAD_INNER_MARGIN),
-            vStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -IPAD_INNER_MARGIN * 1.5)
+            vStack.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: IPAD_INNER_MARGIN),
+            vStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -IPAD_INNER_MARGIN)
         ])
-        
-        let hStack_pill = HSTACK(into: vStack)
-        hStack_pill.addArrangedSubview(self.pill)
-        ADD_SPACER(to: hStack_pill)
-        
+                
+        vStack.addArrangedSubview(self.titleLabel)
+        self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
+
+        self.addSubview(self.pill)
+        self.pill.activateConstraints([
+            self.pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: IPAD_INNER_MARGIN),
+            self.pill.bottomAnchor.constraint(equalTo: self.mainImageView.bottomAnchor)
+        ])
+
         self.gradient.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         self.addSubview(self.gradient)
         self.gradient.activateConstraints([
             self.gradient.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.gradient.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.gradient.topAnchor.constraint(equalTo: self.pill.topAnchor, constant: -20),
-            self.gradient.heightAnchor.constraint(equalToConstant: 80),
-            self.gradient.widthAnchor.constraint(equalTo: self.widthAnchor)
+            self.gradient.heightAnchor.constraint(equalToConstant: 80)
         ])
         self.gradient.contentMode = .scaleToFill
         self.gradient.clipsToBounds = true
-        
+
         self.addSubview(gradientBottom)
         self.gradientBottom.activateConstraints([
             self.gradientBottom.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -80,11 +85,12 @@ class ArticleBigImageView: CustomCellView {
             self.gradientBottom.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.gradientBottom.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
-        vStack.superview?.bringSubviewToFront(vStack)
         
-        ADD_SPACER(to: vStack, height: 10)
-        vStack.addArrangedSubview(self.titleLabel)
-    
+        vStack.superview?.bringSubviewToFront(vStack)
+        self.pill.superview?.bringSubviewToFront(self.pill)
+
+
+
     // STORY
         ADD_SPACER(to: vStack, height: 14)
         self.storySourcesRow = HSTACK(into: vStack)
@@ -130,7 +136,8 @@ class ArticleBigImageView: CustomCellView {
             self.articleSourceRow!.addArrangedSubview(self.stanceIcon)
             self.stanceIcon.delegate = self
             ADD_SPACER(to: self.articleSourceRow!)
-            
+        
+        ADD_SPACER(to: vStack)
         // -----------------
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewOnTap(_:)))
         self.addGestureRecognizer(tapGesture)
@@ -147,7 +154,7 @@ class ArticleBigImageView: CustomCellView {
             CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
-    
+
     // MARK: Overrides
     override func populate(_ article: MainFeedArticle) {
         self.article = article
@@ -170,8 +177,8 @@ class ArticleBigImageView: CustomCellView {
             self.storyTimeLabel.text = "Last updated " + article.time
         } else {
             self.pill.alpha  = 0
-            self.gradient.alpha = 0.8
-            self.gradientBottom.alpha = 0.8
+            self.gradient.alpha = 0
+            self.gradientBottom.alpha = 0
         
             var sourcesArray = [String]()
             if let _identifier = Sources.shared.search(name: article.source) {
@@ -197,11 +204,13 @@ class ArticleBigImageView: CustomCellView {
         
         self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.articleSourceTime.textColor = self.storyTimeLabel.textColor
+        
+        //self.backgroundColor = .systemPink
     }
-    
+
 }
 
-extension ArticleBigImageView: StanceIconViewDelegate {
+extension ArticleVImageView: StanceIconViewDelegate {
     func onStanceIconTap(sender: StanceIconView) {
         let info: [String : Any] = [
             "LR": self.article.LR,

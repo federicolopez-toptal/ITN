@@ -26,14 +26,13 @@ extension MainFeed_v2ViewController {
             while(_T.hasAvailableArticles()) {
                 var newItem: DataProviderGroupItem!
                 
-                newItem = iPadGroupItem_top()
-//                if(IPAD()) {
-//                    if(itemInTopic==1) {
-//                        newItem = iPadGroupItem_top()
-//                    } else {
-//                        newItem = iPadGroupItem_row()
-//                    }
-//                }
+                if(IPAD()) {
+                    if(itemInTopic==1) {
+                        newItem = iPadGroupItem_top()
+                    } else {
+                        newItem = iPadGroupItem_row()
+                    }
+                }
                 
                 for j in 1...newItem.MaxNumOfItems { // fill the "newItem"
                     let storyFlag = newItem.storyFlags[j-1]

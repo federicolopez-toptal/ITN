@@ -132,6 +132,10 @@
 		1FDEB1C828CB7E150029831E /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDEB1C728CB7E150029831E /* Layout.swift */; };
 		1FDEB1CB28CB88730029831E /* StoryBI_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDEB1CA28CB88730029831E /* StoryBI_cell.swift */; };
 		1FDEB1CE28CBC54F0029831E /* Merriweather-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FDEB1CD28CBC54F0029831E /* Merriweather-Bold.ttf */; };
+		1FE9169F29A79805007F8AAF /* ArticleHImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE9169E29A79805007F8AAF /* ArticleHImageView.swift */; };
+		1FE916A129A7A32A007F8AAF /* ArticleVImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A029A7A32A007F8AAF /* ArticleVImageView.swift */; };
+		1FE916A329A7AEF1007F8AAF /* GroupItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */; };
+		1FE916A529A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */; };
 		1FEE16EB28C833BF0079BE54 /* NavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE16EA28C833BF0079BE54 /* NavBarView.swift */; };
 		1FEE16ED28C83CED0079BE54 /* TopicSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE16EC28C83CED0079BE54 /* TopicSelectorView.swift */; };
 		1FF326C128CA71DA006FF2CE /* MainFeedTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF326C028CA71DA006FF2CE /* MainFeedTopic.swift */; };
@@ -469,6 +473,10 @@
 		1FDEB1C728CB7E150029831E /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		1FDEB1CA28CB88730029831E /* StoryBI_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryBI_cell.swift; sourceTree = "<group>"; };
 		1FDEB1CD28CBC54F0029831E /* Merriweather-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Bold.ttf"; sourceTree = "<group>"; };
+		1FE9169E29A79805007F8AAF /* ArticleHImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleHImageView.swift; sourceTree = "<group>"; };
+		1FE916A029A7A32A007F8AAF /* ArticleVImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleVImageView.swift; sourceTree = "<group>"; };
+		1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupItemCell.swift; sourceTree = "<group>"; };
+		1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_rowCell.swift; sourceTree = "<group>"; };
 		1FEE16EA28C833BF0079BE54 /* NavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarView.swift; sourceTree = "<group>"; };
 		1FEE16EC28C83CED0079BE54 /* TopicSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSelectorView.swift; sourceTree = "<group>"; };
 		1FF326C028CA71DA006FF2CE /* MainFeedTopic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedTopic.swift; sourceTree = "<group>"; };
@@ -708,7 +716,9 @@
 		1F38213F29A6DF1F004D4D29 /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */,
 				1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */,
+				1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -718,6 +728,8 @@
 			children = (
 				1F38214529A6EA71004D4D29 /* CustomCellView.swift */,
 				1F38214329A6E52C004D4D29 /* ArticleBigImageView.swift */,
+				1FE9169E29A79805007F8AAF /* ArticleHImageView.swift */,
+				1FE916A029A7A32A007F8AAF /* ArticleVImageView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1732,7 +1744,9 @@
 				1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */,
 				1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */,
 				1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */,
+				1FE9169F29A79805007F8AAF /* ArticleHImageView.swift in Sources */,
 				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */,
+				1FE916A329A7AEF1007F8AAF /* GroupItemCell.swift in Sources */,
 				1F1788AD2937CBC1003F528E /* TrashCode.swift in Sources */,
 				1FD5BDEE28DC01AA003E650F /* ArticleViewController.swift in Sources */,
 				1F95134328BFB92E00A77AB6 /* SceneDelegate.swift in Sources */,
@@ -1755,6 +1769,7 @@
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
 				1FC73904298961C8003EB38D /* Animations.swift in Sources */,
 				1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */,
+				1FE916A129A7A32A007F8AAF /* ArticleVImageView.swift in Sources */,
 				1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */,
 				1F7B9EBE296DEFBA00D99C5D /* StoryContent.swift in Sources */,
 				1FA4CE7528C306590068DE4A /* UIViewExtension.swift in Sources */,
@@ -1764,6 +1779,7 @@
 				1F3DDED1296EEE4F003DCD2F /* StoryEntities.swift in Sources */,
 				1FF61CC028DAFC4D006DF9AC /* ArticleCI_cell.swift in Sources */,
 				1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */,
+				1FE916A529A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift in Sources */,
 				1F95136328BFC69200A77AB6 /* MainFeedViewController.swift in Sources */,
 				1FA4CE7328C2DDFD0068DE4A /* ErrorExtension.swift in Sources */,
 				1FA4CE6528C2865B0068DE4A /* Utils.swift in Sources */,

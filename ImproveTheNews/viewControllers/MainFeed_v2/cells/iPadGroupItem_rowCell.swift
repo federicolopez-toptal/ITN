@@ -1,15 +1,15 @@
 //
-//  iPadGroupItem_topCell.swift
+//  iPadGroupItem_rowCell.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 22/02/2023.
+//  Created by Federico Lopez on 23/02/2023.
 //
 
 import UIKit
 
-class iPadGroupItem_topCell: GroupItemCell {
+class iPadGroupItem_rowCell: GroupItemCell {
 
-    static let identifier = "iPadGroupItem_topCell"
+    static let identifier = "iPadGroupItem_rowCell"
 
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -57,27 +57,6 @@ class iPadGroupItem_topCell: GroupItemCell {
             view3.widthAnchor.constraint(equalTo: view1.widthAnchor)
         ])
         self.subViews.append(view3)
-
-        let view4 = ArticleHImageView()
-        self.contentView.addSubview(view4)
-        view4.activateConstraints([
-            view4.leadingAnchor.constraint(equalTo: view1.leadingAnchor),
-            view4.topAnchor.constraint(equalTo: view3.bottomAnchor, constant: margin),
-            view4.heightAnchor.constraint(equalToConstant: 120),
-            view4.widthAnchor.constraint(equalTo: view1.widthAnchor)
-        ])
-        self.subViews.append(view4)
-
-        let view5 = ArticleVImageView()
-        self.contentView.addSubview(view5)
-        view5.activateConstraints([
-            view5.leadingAnchor.constraint(equalTo: view2.leadingAnchor),
-            view5.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: IPAD_ITEMS_SEP),
-            view5.heightAnchor.constraint(equalToConstant: 326),
-            view5.widthAnchor.constraint(equalTo: view2.widthAnchor)
-        ])
-        self.subViews.append(view5)
-        
     }
 
 }

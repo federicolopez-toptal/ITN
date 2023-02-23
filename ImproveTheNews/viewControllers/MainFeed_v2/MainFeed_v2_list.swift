@@ -28,6 +28,7 @@ extension MainFeed_v2ViewController {
         ])
         
         self.list.register(iPadGroupItem_topCell.self, forCellReuseIdentifier: iPadGroupItem_topCell.identifier)
+        self.list.register(iPadGroupItem_rowCell.self, forCellReuseIdentifier: iPadGroupItem_rowCell.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -46,14 +47,43 @@ extension MainFeed_v2ViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_topCell.identifier) as! iPadGroupItem_topCell
-        cell.populate(with: self.dataProvider[indexPath.row])
-        
+        let cell = self.getCell(indexPath)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 1000 //(IPAD_ITEMS_SEP*3) + 100 + 50 + 50
+        return self.getHeight(indexPath)
     }
     
+}
+
+extension MainFeed_v2ViewController {
+    
+    func getCell(_ indexPath: IndexPath) -> UITableViewCell {
+        var cell: GroupItemCell!
+        let item = self.dataProvider[indexPath.row]
+        
+        if(item is iPadGroupItem_top) {
+            cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_topCell.identifier) as! iPadGroupItem_topCell
+            cell.populate(with: item)
+        } else if(item is iPadGroupItem_row) {
+            cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_rowCell.identifier) as! iPadGroupItem_rowCell
+            cell.populate(with: item)
+        }
+        
+        return cell
+    }
+    
+    func getHeight(_ indexPath: IndexPath) -> CGFloat {
+        let item = self.dataProvider[indexPath.row]
+        var result: CGFloat = 0
+        
+        if(item is iPadGroupItem_top) {
+            result = 750
+        } else if(item is iPadGroupItem_row) {
+            result = 750
+        }
+        
+        return result
+    }
 }

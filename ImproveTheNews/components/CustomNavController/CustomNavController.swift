@@ -48,16 +48,13 @@ class CustomNavController: UINavigationController {
     }
     
     private func addInitialViewController() {
-//        if(IPHONE()) {
-//            let vc = MainFeedViewController()
-//            self.setViewControllers([vc], animated: false)
-//        } else {
-//            let vc = MainFeed_v2ViewController()
-//            self.setViewControllers([vc], animated: false)
-//        }
-        
-        let vc = MainFeed_v2ViewController()
-        self.setViewControllers([vc], animated: false)
+        if(IPHONE()) {
+            let vc = MainFeedViewController()
+            self.setViewControllers([vc], animated: false)
+        } else {
+            let vc = MainFeed_v2ViewController()
+            self.setViewControllers([vc], animated: false)
+        }
     }
 
     func refreshDisplayMode() {
