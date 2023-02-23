@@ -86,6 +86,7 @@
 		1F9538D828FF123800251598 /* TASKS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538D728FF123800251598 /* TASKS.plist */; };
 		1F9538DC28FF337A00251598 /* StancePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9538DB28FF337A00251598 /* StancePopupView.swift */; };
 		1F9538DE28FF387800251598 /* Merriweather-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */; };
+		1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */; };
 		1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B4ADC2967745A00BE8850 /* RatingView.swift */; };
 		1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */; };
 		1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */; };
@@ -112,7 +113,7 @@
 		1FC287D729A648010017433B /* MainFeed_v2_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287D629A648010017433B /* MainFeed_v2_misc.swift */; };
 		1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287DA29A64BC90017433B /* CustomFeedList.swift */; };
 		1FC287DD29A64EF90017433B /* MainFeed_v2_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287DC29A64EF90017433B /* MainFeed_v2_dataProvider.swift */; };
-		1FC287E129A652F40017433B /* DataProviderGroupItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287E029A652F40017433B /* DataProviderGroupItem.swift */; };
+		1FC287E129A652F40017433B /* DataProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287E029A652F40017433B /* DataProviderItem.swift */; };
 		1FC73904298961C8003EB38D /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC73903298961C8003EB38D /* Animations.swift */; };
 		1FC73906298961EA003EB38D /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC73905298961EA003EB38D /* Animator.swift */; };
 		1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7390829896216003EB38D /* UITableView+Ext.swift */; };
@@ -427,6 +428,7 @@
 		1F9538D728FF123800251598 /* TASKS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TASKS.plist; sourceTree = "<group>"; };
 		1F9538DB28FF337A00251598 /* StancePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StancePopupView.swift; sourceTree = "<group>"; };
 		1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Regular.ttf"; sourceTree = "<group>"; };
+		1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadHeaderCell.swift; sourceTree = "<group>"; };
 		1F9B4ADC2967745A00BE8850 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
@@ -453,7 +455,7 @@
 		1FC287D629A648010017433B /* MainFeed_v2_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2_misc.swift; sourceTree = "<group>"; };
 		1FC287DA29A64BC90017433B /* CustomFeedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeedList.swift; sourceTree = "<group>"; };
 		1FC287DC29A64EF90017433B /* MainFeed_v2_dataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2_dataProvider.swift; sourceTree = "<group>"; };
-		1FC287E029A652F40017433B /* DataProviderGroupItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderGroupItem.swift; sourceTree = "<group>"; };
+		1FC287E029A652F40017433B /* DataProviderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderItem.swift; sourceTree = "<group>"; };
 		1FC73903298961C8003EB38D /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		1FC73905298961EA003EB38D /* Animator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		1FC7390829896216003EB38D /* UITableView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
@@ -717,13 +719,14 @@
 			isa = PBXGroup;
 			children = (
 				1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */,
+				1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */,
 				1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */,
 				1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
 		};
-		1F38214229A6E504004D4D29 /* views */ = {
+		1F38214229A6E504004D4D29 /* CellViews */ = {
 			isa = PBXGroup;
 			children = (
 				1F38214529A6EA71004D4D29 /* CustomCellView.swift */,
@@ -731,7 +734,7 @@
 				1FE9169E29A79805007F8AAF /* ArticleHImageView.swift */,
 				1FE916A029A7A32A007F8AAF /* ArticleVImageView.swift */,
 			);
-			path = views;
+			path = CellViews;
 			sourceTree = "<group>";
 		};
 		1F56F728294B9D2F00654CDB /* Third Party */ = {
@@ -1009,12 +1012,12 @@
 			children = (
 				1FC287D429A645A50017433B /* MainFeed_v2ViewController.swift */,
 				1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */,
-				1FC287DC29A64EF90017433B /* MainFeed_v2_dataProvider.swift */,
 				1FC287D629A648010017433B /* MainFeed_v2_misc.swift */,
 				1FC287DA29A64BC90017433B /* CustomFeedList.swift */,
-				1FC287E029A652F40017433B /* DataProviderGroupItem.swift */,
+				1FC287DC29A64EF90017433B /* MainFeed_v2_dataProvider.swift */,
+				1FC287E029A652F40017433B /* DataProviderItem.swift */,
 				1F38213F29A6DF1F004D4D29 /* cells */,
-				1F38214229A6E504004D4D29 /* views */,
+				1F38214229A6E504004D4D29 /* CellViews */,
 			);
 			path = MainFeed_v2;
 			sourceTree = "<group>";
@@ -1738,8 +1741,9 @@
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
 				1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */,
 				1FEE16EB28C833BF0079BE54 /* NavBarView.swift in Sources */,
+				1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */,
 				1FD2340429155F1700B85AE9 /* MenuView.swift in Sources */,
-				1FC287E129A652F40017433B /* DataProviderGroupItem.swift in Sources */,
+				1FC287E129A652F40017433B /* DataProviderItem.swift in Sources */,
 				1F7B9EC0296E032D00D99C5D /* MainFeedStory.swift in Sources */,
 				1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */,
 				1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */,

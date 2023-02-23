@@ -24,26 +24,29 @@ extension MainFeed_v2ViewController {
             // Per topic...
             var itemInTopic = 1
             while(_T.hasAvailableArticles()) {
-                var newItem: DataProviderGroupItem!
+                var newGroupItem: DataProviderGroupItem!
                 
                 if(IPAD()) {
                     if(itemInTopic==1) {
-                        newItem = iPadGroupItem_top()
+                        let header = DataProviderHeaderItem(title: _T.capitalizedName)
+                        self.dataProvider.append(header)
+                    
+                        newGroupItem = iPadGroupItem_top()
                     } else {
-                        newItem = iPadGroupItem_row()
+                        newGroupItem = iPadGroupItem_row()
                     }
                 }
                 
-                for j in 1...newItem.MaxNumOfItems { // fill the "newItem"
-                    let storyFlag = newItem.storyFlags[j-1]
+                for j in 1...newGroupItem.MaxNumOfItems { // fill the "newItem"
+                    let storyFlag = newGroupItem.storyFlags[j-1]
                     if let _A = _T.nextAvailableArticle(isStory: storyFlag) {
-                        newItem.articles.append(_A)
+                        newGroupItem.articles.append(_A)
                     } else {
                         break
                     }
                 }
                 
-                self.dataProvider.append(newItem)
+                self.dataProvider.append(newGroupItem)
                 itemInTopic += 1
             }
         }

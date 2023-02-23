@@ -15,7 +15,7 @@ class MainFeed_v2ViewController: BaseViewController {
 
     var topic = "news"
     let data = MainFeedv3()
-    var dataProvider = [DataProviderGroupItem]()
+    var dataProvider = [DataProviderItem]()
 
     var topicsCompleted = [String: Bool]()
     var mustReloadOnShow = false

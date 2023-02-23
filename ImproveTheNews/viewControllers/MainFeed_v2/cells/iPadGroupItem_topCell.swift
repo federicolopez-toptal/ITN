@@ -26,7 +26,6 @@ class iPadGroupItem_topCell: GroupItemCell {
         let margin = IPAD_ITEMS_SEP
         let columnWith: CGFloat = 300
         
-        
         let view2 = ArticleBigImageView()
         self.contentView.addSubview(view2)
         view2.activateConstraints([
@@ -53,7 +52,7 @@ class iPadGroupItem_topCell: GroupItemCell {
         view3.activateConstraints([
             view3.leadingAnchor.constraint(equalTo: view1.leadingAnchor),
             view3.topAnchor.constraint(equalTo: view1.bottomAnchor, constant: margin),
-            view3.heightAnchor.constraint(equalToConstant: 120),
+            view3.heightAnchor.constraint(equalToConstant: 130),
             view3.widthAnchor.constraint(equalTo: view1.widthAnchor)
         ])
         self.subViews.append(view3)
@@ -63,7 +62,7 @@ class iPadGroupItem_topCell: GroupItemCell {
         view4.activateConstraints([
             view4.leadingAnchor.constraint(equalTo: view1.leadingAnchor),
             view4.topAnchor.constraint(equalTo: view3.bottomAnchor, constant: margin),
-            view4.heightAnchor.constraint(equalToConstant: 120),
+            view4.heightAnchor.constraint(equalToConstant: 130),
             view4.widthAnchor.constraint(equalTo: view1.widthAnchor)
         ])
         self.subViews.append(view4)
@@ -73,7 +72,7 @@ class iPadGroupItem_topCell: GroupItemCell {
         view5.activateConstraints([
             view5.leadingAnchor.constraint(equalTo: view2.leadingAnchor),
             view5.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: IPAD_ITEMS_SEP),
-            view5.heightAnchor.constraint(equalToConstant: 326),
+            view5.heightAnchor.constraint(equalToConstant: 350),
             view5.widthAnchor.constraint(equalTo: view2.widthAnchor)
         ])
         self.subViews.append(view5)

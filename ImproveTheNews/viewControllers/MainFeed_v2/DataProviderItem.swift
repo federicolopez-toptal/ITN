@@ -1,5 +1,5 @@
 //
-//  DataProviderGroupItem.swift
+//  DataProviderItem.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 22/02/2023.
@@ -7,12 +7,23 @@
 
 import Foundation
 
-// MARK: Base class
-class DataProviderGroupItem {
+// MARK: Basic classes
+class DataProviderItem {
+}
+
+class DataProviderGroupItem: DataProviderItem {
     var MaxNumOfItems = 1
     var storyFlags = [Bool]()
     
     var articles = [MainFeedArticle]()
+}
+
+class DataProviderHeaderItem: DataProviderItem {
+    var title: String = ""
+    
+    init(title: String) {
+        self.title = title
+    }
 }
 
 // ------------------------------------------------------
