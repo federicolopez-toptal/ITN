@@ -137,15 +137,28 @@ class SearchViewController: BaseViewController {
     }
     
     func loadTopic(_ topic: String) {
-        let vc = MainFeedViewController()
-        vc.topic = topic
-        CustomNavController.shared.viewControllers = [vc]
+        if(IPHONE()) {
+            let vc = MainFeedViewController()
+            vc.topic = topic
+            CustomNavController.shared.viewControllers = [vc]
 
-        DELAY(0.1) {
-            CustomNavController.shared.dismiss(animated: true)
-            
-            CustomNavController.shared.slidersPanel.show()
-            CustomNavController.shared.floatingButton.show()
+            DELAY(0.1) {
+                CustomNavController.shared.dismiss(animated: true)
+                
+                CustomNavController.shared.slidersPanel.show()
+                CustomNavController.shared.floatingButton.show()
+            }
+        } else {
+            let vc = MainFeed_v2ViewController()
+            vc.topic = topic
+            CustomNavController.shared.viewControllers = [vc]
+
+            DELAY(0.1) {
+                CustomNavController.shared.dismiss(animated: true)
+                
+                CustomNavController.shared.slidersPanel.show()
+                CustomNavController.shared.floatingButton.show()
+            }
         }
     }
 

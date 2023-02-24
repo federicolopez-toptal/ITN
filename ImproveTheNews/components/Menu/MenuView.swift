@@ -158,38 +158,75 @@ extension MenuView {
     func gotoHeadlines(delayTime: TimeInterval = 0.5) {
         self.dismissMe()
         
-        var firstIsMainFeed = false
-        if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
-            if(firstVC.topic == "news"){ firstIsMainFeed = true }
-        }
-        
-        if(firstIsMainFeed) {
-            DELAY(delayTime) {
-                let count = CustomNavController.shared.viewControllers.count
+        if(IPHONE()) {
+            var firstIsMainFeed = false
+            if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
+                if(firstVC.topic == "news"){ firstIsMainFeed = true }
+            }
             
-                if(count==1) {
-                    self.gotoHeadlines_B()
-                } else {
-                    CustomNavController.shared.popToRootViewController(animated: true)
-                    DELAY(0.3) {
+            if(firstIsMainFeed) {
+                DELAY(delayTime) {
+                    let count = CustomNavController.shared.viewControllers.count
+                
+                    if(count==1) {
                         self.gotoHeadlines_B()
+                    } else {
+                        CustomNavController.shared.popToRootViewController(animated: true)
+                        DELAY(0.3) {
+                            self.gotoHeadlines_B()
+                        }
                     }
+                }
+            } else {
+                let vc = MainFeedViewController()
+                CustomNavController.shared.viewControllers = [vc]
+                
+                DELAY(0.2) {
+                    self.dismissMe()
+                    CustomNavController.shared.slidersPanel.show()
+                    CustomNavController.shared.floatingButton.show()
                 }
             }
         } else {
-            let vc = MainFeedViewController()
-            CustomNavController.shared.viewControllers = [vc]
+            var firstIsMainFeed = false
+            if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeed_v2ViewController {
+                if(firstVC.topic == "news"){ firstIsMainFeed = true }
+            }
             
-            DELAY(0.2) {
-                self.dismissMe()
-                CustomNavController.shared.slidersPanel.show()
-                CustomNavController.shared.floatingButton.show()
+            if(firstIsMainFeed) {
+                DELAY(delayTime) {
+                    let count = CustomNavController.shared.viewControllers.count
+                
+                    if(count==1) {
+                        self.gotoHeadlines_B()
+                    } else {
+                        CustomNavController.shared.popToRootViewController(animated: true)
+                        DELAY(0.3) {
+                            self.gotoHeadlines_B()
+                        }
+                    }
+                }
+            } else {
+                let vc = MainFeed_v2ViewController()
+                CustomNavController.shared.viewControllers = [vc]
+                
+                DELAY(0.2) {
+                    self.dismissMe()
+                    CustomNavController.shared.slidersPanel.show()
+                    CustomNavController.shared.floatingButton.show()
+                }
             }
         }
     }
     private func gotoHeadlines_B() {
-        if let _vc = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
-            _vc.scrollToZero()
+        if(IPHONE()) {
+            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
+                _vc.scrollToZero()
+            }
+        } else {
+            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeed_v2ViewController {
+                _vc.scrollToZero()
+            }
         }
     }
     
@@ -254,8 +291,13 @@ extension MenuView {
         CustomNavController.shared.slidersPanel.makeSureIsClosed()
         CustomNavController.shared.slidersPanel.forceSplitOff()
         
-        let vc = MainFeedViewController()
-        CustomNavController.shared.viewControllers = [vc]
+        if(IPHONE()) {
+            let vc = MainFeedViewController()
+            CustomNavController.shared.viewControllers = [vc]
+        } else {
+            let vc = MainFeed_v2ViewController()
+            CustomNavController.shared.viewControllers = [vc]
+        }
         
         DELAY(0.3) {
             self.dismissMe()

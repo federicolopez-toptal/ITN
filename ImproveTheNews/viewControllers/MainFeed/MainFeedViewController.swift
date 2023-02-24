@@ -164,13 +164,6 @@ class MainFeedViewController: BaseViewController {
         self.mustReloadOnShow = true
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        if(IPAD()) {
-            self.refreshList()
-            self.list.forceUpdateLayoutForVisibleItems()
-        }
-    }
-    
     // MARK: - end
     deinit {
 //        if let _prevVC = CustomNavController.shared.viewControllers.last as? MainFeedViewController {

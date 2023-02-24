@@ -322,7 +322,7 @@ class NavBarView: UIView {
             
             if(C == .headlines) {
                 // Back to headlines
-                let ITNicon = UIImageView(image: UIImage(named: "navBar.circleLogo"))
+                let ITNicon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.home")))
                 self.addSubview(ITNicon)
                 ITNicon.activateConstraints([
                     ITNicon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),

@@ -36,16 +36,11 @@ extension MainFeedViewController {
         var itemsToShowPerTopic = ""
         
         if(TEXT_IMAGES()) {
-//            if(!IPAD()) {
-                itemsToShowPerTopic = "h,"
-                for _ in 1...LOADMORE_LIMIT {
-                    itemsToShowPerTopic += "sbi,awi2,awt3,swt,sci,aci3,"
-                }
-                itemsToShowPerTopic += "m"
-//            } else {
-//                itemsToShowPerTopic = "h,"
-//                itemsToShowPerTopic += "m"
-//            }
+            itemsToShowPerTopic = "h,"
+            for _ in 1...LOADMORE_LIMIT {
+                itemsToShowPerTopic += "sbi,awi2,awt3,swt,sci,aci3,"
+            }
+            itemsToShowPerTopic += "m"
         } else if(TEXT_ONLY()){
             itemsToShowPerTopic = "h,"
             for _ in 1...LOADMORE_LIMIT {
@@ -113,10 +108,6 @@ extension MainFeedViewController {
         
         let footer = DP_footer()
         self.dataProvider.append(footer)
-        
-        //!!!
-        print(self.dataProvider)
-        print("")
     }
     
     func insertBanner(index: Int) {

@@ -21,7 +21,6 @@ class MainFeed_v2ViewController: BaseViewController {
     var mustReloadOnShow = false
 
 
-
     // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,12 +119,12 @@ extension MainFeed_v2ViewController {
 //                        }
 //                        self.prevMustSplit = MUST_SPLIT()
                         
-//                        // TOUR
-//                        if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
-//                            WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
-//                            CustomNavController.shared.showTour = false
-//                            self.startTour()
-//                        }
+                        // TOUR
+                        if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
+                            WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
+                            CustomNavController.shared.showTour = false
+                            self.startTour()
+                        }
                         
                     /* --- */ }
                 }
@@ -133,23 +132,5 @@ extension MainFeed_v2ViewController {
         }
     }
 
-}
-
-// MARK: - Notifications
-extension MainFeed_v2ViewController {
-    
-    @objc func onStanceIconTap(_ notification: Notification) {
-        if let _info = notification.userInfo as? [String: Any] {
-            let source = _info["source"] as! String
-            let country = _info["country"] as! String
-            let LR = _info["LR"] as! Int
-            let PE = _info["PE"] as! Int
-            
-            let popup = StancePopupView()
-            popup.populate(sourceName: source, country: country, LR: LR, PE: PE)
-            popup.pushFromBottom()
-        }
-    }
-    
 }
 
