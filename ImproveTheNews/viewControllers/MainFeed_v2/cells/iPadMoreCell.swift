@@ -41,9 +41,9 @@ class iPadMoreCell: UITableViewCell {
         self.loadMoreLabel.activateConstraints([
             self.loadMoreLabel.heightAnchor.constraint(equalToConstant: 38),
             self.loadMoreLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            self.loadMoreLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.loadMoreLabel.widthAnchor.constraint(equalToConstant: 115)
-            
+            self.loadMoreLabel.widthAnchor.constraint(equalToConstant: 115),
+            //self.loadMoreLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            self.loadMoreLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
         
         self.noMoreLabel.font = ROBOTO_BOLD(12)

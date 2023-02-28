@@ -40,6 +40,14 @@ class DP_splitHeader: DP_item {
     }
 }
 
+class DP_spacer: DP_item {
+    var height: CGFloat = 5.0
+    
+    init(height: CGFloat) {
+        self.height = height
+    }
+}
+
 class DP_more: DP_item {
     var topic: String
     var completed: Bool = false

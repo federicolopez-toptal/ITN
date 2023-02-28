@@ -270,17 +270,33 @@ extension MenuView {
         NOTIFY(Notification_reloadMainFeed)
 
         
-        let firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeedViewController
-        if(firstIsMainFeed) {
-            self.dismissMe()
-        } else {
-            let vc = MainFeedViewController()
-            CustomNavController.shared.viewControllers = [vc]
-            
-            DELAY(0.2) {
+        if(IPHONE()) {
+            let firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeedViewController
+            if(firstIsMainFeed) {
                 self.dismissMe()
-                CustomNavController.shared.slidersPanel.show()
-                CustomNavController.shared.floatingButton.show()
+            } else {
+                let vc = MainFeedViewController()
+                CustomNavController.shared.viewControllers = [vc]
+                
+                DELAY(0.2) {
+                    self.dismissMe()
+                    CustomNavController.shared.slidersPanel.show()
+                    CustomNavController.shared.floatingButton.show()
+                }
+            }
+        } else {
+            let firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeed_v2ViewController
+            if(firstIsMainFeed) {
+                self.dismissMe()
+            } else {
+                let vc = MainFeed_v2ViewController()
+                CustomNavController.shared.viewControllers = [vc]
+                
+                DELAY(0.2) {
+                    self.dismissMe()
+                    CustomNavController.shared.slidersPanel.show()
+                    CustomNavController.shared.floatingButton.show()
+                }
             }
         }
     }

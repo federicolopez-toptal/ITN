@@ -63,6 +63,18 @@ class DataProvideriPadGroup_top: DataProviderGroupItem {
     
 }
 
+class DataProvideriPadGroup_topText: DataProviderGroupItem {
+
+    override init() {
+        super.init()
+        self.articles = [MainFeedArticle]()
+        
+        self.MaxNumOfItems = 5
+        self.storyFlags = [true, true, false, false, false]
+    }
+    
+}
+
 class DataProvideriPadGroup_row: DataProviderGroupItem {
 
     override init() {
@@ -75,7 +87,31 @@ class DataProvideriPadGroup_row: DataProviderGroupItem {
     
 }
 
+class DataProvideriPadGroup_rowText: DataProviderGroupItem {
+
+    override init() {
+        super.init()
+        self.articles = [MainFeedArticle]()
+        
+        self.MaxNumOfItems = 3
+        self.storyFlags = [false, false, false]
+    }
+    
+}
+
 class iPadGroupItem_split: DataProviderGroupItem {
+
+    override init() {
+        super.init()
+        self.articles = [MainFeedArticle]()
+        
+        self.MaxNumOfItems = 2
+        self.storyFlags = [false, false]
+    }
+    
+}
+
+class iPadGroupItem_splitText: DataProviderGroupItem {
 
     override init() {
         super.init()

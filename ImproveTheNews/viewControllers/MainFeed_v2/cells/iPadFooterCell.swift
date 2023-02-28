@@ -18,6 +18,7 @@ class iPadFooterCell: UITableViewCell {
     
     let line = UIView()
     let copyrightLabel = UILabel()
+    let bottomView = UIView()
     
 
     // MARK: - Start
@@ -145,11 +146,21 @@ class iPadFooterCell: UITableViewCell {
             self.copyrightLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
         ])
         
+        self.bottomView.backgroundColor = .green
+        self.contentView.addSubview(self.bottomView)
+        self.bottomView.activateConstraints([
+            self.bottomView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.bottomView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.bottomView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 34),
+            self.bottomView.heightAnchor.constraint(equalToConstant: 34)
+        ])
+        
         self.refreshDisplayMode()
     }
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202E) : UIColor(hex: 0xE8E9EA)
+        self.bottomView.backgroundColor = self.contentView.backgroundColor
         self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
         self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
         self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x212E43) : UIColor(hex: 0xC3C9CF)

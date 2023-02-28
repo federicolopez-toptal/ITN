@@ -17,7 +17,9 @@ class StoryWT_cell: UICollectionViewCell {
     let sourcesContainer = UIStackView()
     let timeLabel = UILabel()
 
-
+    static var extraHeight: CGFloat = 8.0
+    var marginViewHeightConstraint: NSLayoutConstraint? = nil
+    let marginView = UIView()
 
     // MARK: - Init
     override init(frame: CGRect) {
@@ -33,6 +35,12 @@ class StoryWT_cell: UICollectionViewCell {
     private func buildContent() {
         self.contentView.backgroundColor = .white
         
+        if(MUST_SPLIT()==0) {
+            StoryWT_cell.extraHeight = 0
+        } else {
+            StoryWT_cell.extraHeight = 8
+        }
+        
     let roboto_bold = ROBOTO_BOLD(11)
     let characterSpacing: Double = 1.35
     let roboto = ROBOTO(13)
@@ -47,7 +55,7 @@ class StoryWT_cell: UICollectionViewCell {
         self.storyLabel.addCharacterSpacing(kernValue: characterSpacing)
         self.contentView.addSubview(self.storyLabel)
         self.storyLabel.activateConstraints([
-            self.storyLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
+            self.storyLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16+StoryWT_cell.extraHeight),
             self.storyLabel.widthAnchor.constraint(equalToConstant: 65),
             self.storyLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.storyLabel.heightAnchor.constraint(equalToConstant: 23)
@@ -85,10 +93,26 @@ class StoryWT_cell: UICollectionViewCell {
             arrow.heightAnchor.constraint(equalToConstant: 18)
         ])
         
+        self.contentView.addSubview(self.marginView)
+        self.marginViewHeightConstraint = self.marginView.heightAnchor.constraint(equalToConstant: StoryWT_cell.extraHeight)
+        self.marginView.activateConstraints([
+            self.marginView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.marginView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.marginView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.marginViewHeightConstraint!
+        ])
+        
         ADD_SPACER(to: iconsHStack)
     }
     
     func populate(with story: MainFeedArticle) {
+        if(MUST_SPLIT()==0) {
+            StoryWT_cell.extraHeight = 0
+        } else {
+            StoryWT_cell.extraHeight = 8
+        }
+        self.marginViewHeightConstraint?.constant = StoryWT_cell.extraHeight
+        
         self.titleLabel.text = story.title
         self.timeLabel.text = "Last updated " + story.time
         if( READ(LocalKeys.preferences.showSourceIcons) == "01" ) {
@@ -102,12 +126,14 @@ class StoryWT_cell: UICollectionViewCell {
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
-        //.systemPink.withAlphaComponent(0.5)
+        self.marginView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         
         self.storyLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0xFF643C) : .white
         self.storyLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        
+//        self.contentView.backgroundColor = .systemPink
     }
     
     
@@ -129,7 +155,7 @@ class StoryWT_cell: UICollectionViewCell {
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 18
         
-        let H: CGFloat = 16 + storyLabelH + 8 + textH + 10 + sourcesH + 16 + 5
+        let H: CGFloat = 16 + storyLabelH + 8 + textH + 10 + sourcesH + 16 + 5 + StoryWT_cell.extraHeight
         return CGSize(width: width, height: H)
     }
     

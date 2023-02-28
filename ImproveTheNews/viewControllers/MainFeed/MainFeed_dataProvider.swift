@@ -19,6 +19,7 @@ extension MainFeedViewController {
             hsp     header split
             m       more (show more)
             f       footer
+            _       small spacer
             
             sbi     story, big with image
             swt     story, wide only text
@@ -52,15 +53,17 @@ extension MainFeedViewController {
         let mustSplit = MUST_SPLIT()
         if(mustSplit > 0) {
             if(TEXT_IMAGES()) {
-                itemsToShowPerTopic = "h,hsp"
+                itemsToShowPerTopic = "h,hsp,"
                 for _ in 1...LOADMORE_LIMIT {
-                    itemsToShowPerTopic += "aci8,"
+                    //itemsToShowPerTopic += "aci8,_,swt,_,swt,_"
+                    itemsToShowPerTopic += "aci8,swt2,"
                 }
+                //itemsToShowPerTopic += "swt,"
                 itemsToShowPerTopic += "m"
             } else if(TEXT_ONLY()){
-                itemsToShowPerTopic = "h,hsp"
+                itemsToShowPerTopic = "h,hsp,"
                 for _ in 1...LOADMORE_LIMIT {
-                    itemsToShowPerTopic += "act8,"
+                    itemsToShowPerTopic += "act8,swt2,"
                 }
                 itemsToShowPerTopic += "m"
             }
@@ -87,7 +90,10 @@ extension MainFeedViewController {
                 if(type == "h") { // header
                     let hText = T.capitalizedName.uppercased()
                     self.addHeader(format: format, isHeadline: (T.name=="news"), headlineText: hText)
-                } else if(type == "m") {
+                } else if(type == "_") {
+                    let spacer = DP_spacer(height: 10)
+                    self.dataProvider.append(spacer)
+                }else if(type == "m") {
                     self.insertBanner(index: i)
                 
                     var completed = false

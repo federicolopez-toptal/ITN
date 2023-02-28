@@ -388,14 +388,19 @@ extension MainFeedv3 {
         
         // More Preferences: Show stories
         result += "ST"
-        if(MUST_SPLIT()>0) {
-            result += "00"
+//        if(MUST_SPLIT()>0) {
+//            result += "00"
+//        } else {
+//            if let _showStories = READ(LocalKeys.preferences.showStories) {
+//                result += _showStories
+//            } else {
+//                result += "01" // default value: True
+//            }
+//        }
+        if let _showStories = READ(LocalKeys.preferences.showStories) {
+            result += _showStories
         } else {
-            if let _showStories = READ(LocalKeys.preferences.showStories) {
-                result += _showStories
-            } else {
-                result += "01" // default value: True
-            }
+            result += "01" // default value: True
         }
         
         // More Preferences: Show stance icons

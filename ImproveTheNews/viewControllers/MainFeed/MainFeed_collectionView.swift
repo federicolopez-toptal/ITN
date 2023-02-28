@@ -40,8 +40,8 @@ extension MainFeedViewController {
         self.list.register(StoryCT_cell.self, forCellWithReuseIdentifier: StoryCT_cell.identifier)
         self.list.register(ArticleCI_cell.self, forCellWithReuseIdentifier: ArticleCI_cell.identifier)
         self.list.register(ArticleCT_cell.self, forCellWithReuseIdentifier: ArticleCT_cell.identifier)
-        
         self.list.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
+        self.list.register(SpacerCell.self, forCellWithReuseIdentifier: SpacerCell.identifier)
 
         self.list.delegate = self
         self.list.dataSource = self
@@ -70,7 +70,9 @@ extension MainFeedViewController {
                 var H = self.getCellSizeAt(iPath, width: self.list.bounds.width).height
                 let dpItem = self.getDP_item(iPath)
                 
-                if (dpItem is DP_header || dpItem is DP_footer || dpItem is DP_more){
+                if (dpItem is DP_header || dpItem is DP_footer || dpItem is DP_more
+                    || dpItem is DP_Story_WT || dpItem is DP_spacer){
+                    
                     mustDraw = false
                     lines.append( (H, mustDraw) )
                 } else if(dpItem is DP_splitHeader) {
@@ -163,6 +165,9 @@ extension MainFeedViewController {
             size = SplitHeaderCell.getHeight(width: width)
         } else if (dpItem is DP_more) { // More
             size = MoreCell.getHeight(width: width)
+        } else if (dpItem is DP_spacer) { // Spacer
+            size = CGSize(width: width, height: (dpItem as! DP_spacer).height)
+            print("SIZE", size)
         } else if (dpItem is DP_footer) { // Footer
             size = FooterCell.getHeight(width: width)
         } else if let _dpItem = dpItem as? DP_Story_CI { // Story column (with image)
@@ -233,6 +238,9 @@ extension MainFeedViewController {
             cell = self.list.dequeueReusableCell(withReuseIdentifier: SplitHeaderCell.identifier,
                 for: indexPath) as! SplitHeaderCell
             (cell as! SplitHeaderCell).populate(with: _item)
+        } else if let _item = dpItem as? DP_spacer  { // Spacer
+            cell = self.list.dequeueReusableCell(withReuseIdentifier: SpacerCell.identifier, for: indexPath) as! SpacerCell
+            (cell as! SpacerCell).refreshDisplayMode()
         } else if let _item = dpItem as? DP_more  { // More
             cell = self.list.dequeueReusableCell(withReuseIdentifier: MoreCell.identifier, for: indexPath) as! MoreCell
             (cell as! MoreCell).populate(with: _item)

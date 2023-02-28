@@ -60,7 +60,7 @@ class MainFeedViewController: BaseViewController {
             
             self.navBar.buildInto(viewController: self)
             if(self.imFirstViewController()) {
-                self.navBar.addComponents([.logo, .menuIcon, .searchIcon, .user])
+                self.navBar.addComponents([.logo, .menuIcon, .searchIcon]) //.user
             } else {
                 self.navBar.addComponents([.back, .title, .headlines])
             }
