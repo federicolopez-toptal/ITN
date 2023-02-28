@@ -25,7 +25,11 @@ class DataProviderSplitHeaderItem: DataProviderItem {
 }
 
 class DataProviderBannerItem: DataProviderItem {
-    
+    /* ... */
+}
+
+class DataProviderFooterItem: DataProviderItem {
+    /* ... */
 }
 
 class DataProviderMoreItem: DataProviderItem {

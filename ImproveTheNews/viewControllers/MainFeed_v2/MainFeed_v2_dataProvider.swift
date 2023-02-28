@@ -89,7 +89,8 @@ extension MainFeed_v2ViewController {
         }
         
         // Footer
-        
+        let footer = DataProviderFooterItem()
+        self.dataProvider.append(footer)
     }
     // --------------------------------
 

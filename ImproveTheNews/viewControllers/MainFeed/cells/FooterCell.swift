@@ -82,7 +82,7 @@ class FooterCell: UICollectionViewCell {
             self.line.topAnchor.constraint(equalTo: privacyLabel.bottomAnchor, constant: 20)
         ])
         
-        self.copyrightLabel.text = "© 2022 Improve The News Foundation, all Rights Reserved"
+        self.copyrightLabel.text = "© 2023 Improve The News Foundation, all Rights Reserved"
         self.copyrightLabel.numberOfLines = 2
         self.copyrightLabel.font = ROBOTO(12)
         self.contentView.addSubview(self.copyrightLabel)

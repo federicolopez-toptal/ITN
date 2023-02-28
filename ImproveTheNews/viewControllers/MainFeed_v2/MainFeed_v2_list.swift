@@ -34,6 +34,7 @@ extension MainFeed_v2ViewController {
         self.list.register(iPadGroupItem_splitCell.self, forCellReuseIdentifier: iPadGroupItem_splitCell.identifier)
         self.list.register(iPadSplitHeaderCell.self, forCellReuseIdentifier: iPadSplitHeaderCell.identifier)
         self.list.register(iPadBannerCell.self, forCellReuseIdentifier: iPadBannerCell.identifier)
+        self.list.register(iPadFooterCell.self, forCellReuseIdentifier: iPadFooterCell.identifier)
         
         
         self.list.delegate = self
@@ -97,6 +98,10 @@ extension MainFeed_v2ViewController {
             } else if(dpItem is DataProviderBannerItem) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadBannerCell.identifier) as! iPadBannerCell
                 (cell as! iPadBannerCell).populate(with: self.data.banner!)
+            } else if(dpItem is DataProviderFooterItem) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadFooterCell.identifier) as! iPadFooterCell
+                (cell as! iPadFooterCell).viewController = self
+                (cell as! iPadFooterCell).refreshDisplayMode()
             }
         }
     
@@ -122,6 +127,8 @@ extension MainFeed_v2ViewController {
             result = 350
         } else if(dpItem is DataProviderBannerItem) {
             result = iPadBannerCell.heightFor(banner: self.data.banner!)
+        } else if(dpItem is DataProviderFooterItem) {
+            result = 330
         }
         
         return result

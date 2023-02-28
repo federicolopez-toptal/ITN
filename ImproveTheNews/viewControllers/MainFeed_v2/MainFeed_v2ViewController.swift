@@ -127,10 +127,18 @@ extension MainFeed_v2ViewController {
                             self.startTour()
                         }
                         
+                        DELAY(0.5) {
+                            //self.scrollToBottom()
+                        }
                     /* --- */ }
                 }
             }
         }
+    }
+    
+    func scrollToBottom() {
+        let indexPath = IndexPath(row: self.dataProvider.count-1, section: 0)
+        self.list.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
 
 }
