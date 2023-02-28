@@ -18,6 +18,7 @@ class MainFeed_v2ViewController: BaseViewController {
     var dataProvider = [DataProviderItem]()
 
     var topicsCompleted = [String: Bool]()
+    var prevMustSplit: Int?
     var mustReloadOnShow = false
 
 
@@ -111,13 +112,13 @@ extension MainFeed_v2ViewController {
 
                         self.hideLoading()
                         self.list.hideRefresher()
-//                        self.list.forceUpdateLayoutForVisibleItems()
-//                        self.refreshVLine()
 
-//                        if(self.prevMustSplit != nil) {
-//                            if(self.prevMustSplit != MUST_SPLIT()) { self.tapOnLogo() }
-//                        }
-//                        self.prevMustSplit = MUST_SPLIT()
+                        if(self.prevMustSplit != nil) {
+                            if(self.prevMustSplit != MUST_SPLIT()) {
+                                CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
+                            }
+                        }
+                        self.prevMustSplit = MUST_SPLIT()
                         
                         // TOUR
                         if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {

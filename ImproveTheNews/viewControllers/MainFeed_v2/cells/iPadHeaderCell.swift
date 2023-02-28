@@ -23,7 +23,7 @@ class iPadHeaderCell: UITableViewCell {
     }
 
     private func buildContent() {
-        self.titleLabel.font = MERRIWEATHER_BOLD(25)
+        self.titleLabel.font = MERRIWEATHER_BOLD(27)
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: IPAD_INNER_MARGIN),

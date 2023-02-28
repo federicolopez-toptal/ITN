@@ -11,6 +11,18 @@ let IPAD_ITEMS_SEP: CGFloat = 16
 let IPAD_INNER_MARGIN: CGFloat = 16
 
 
+func ROBOTO_TEXT() -> UILabel {
+    let result = UILabel()
+    
+    result.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+    result.textColor = UIColor(hex: 0x1D242F)
+    result.numberOfLines = 0
+    result.font = ROBOTO_BOLD(22)
+    result.text = "Lorem ipsum"
+    
+    return result
+}
+
 func ARTICLE_TITLE() -> UILabel {
     let result = UILabel()
     

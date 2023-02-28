@@ -31,6 +31,10 @@ extension MainFeed_v2ViewController {
         self.list.register(iPadGroupItem_topCell.self, forCellReuseIdentifier: iPadGroupItem_topCell.identifier)
         self.list.register(iPadGroupItem_rowCell.self, forCellReuseIdentifier: iPadGroupItem_rowCell.identifier)
         self.list.register(iPadMoreCell.self, forCellReuseIdentifier: iPadMoreCell.identifier)
+        self.list.register(iPadGroupItem_splitCell.self, forCellReuseIdentifier: iPadGroupItem_splitCell.identifier)
+        self.list.register(iPadSplitHeaderCell.self, forCellReuseIdentifier: iPadSplitHeaderCell.identifier)
+        self.list.register(iPadBannerCell.self, forCellReuseIdentifier: iPadBannerCell.identifier)
+        
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -67,12 +71,15 @@ extension MainFeed_v2ViewController {
         let dpItem = self.dataProvider[indexPath.row]
     
         if let _dpGroupItem = dpItem as? DataProviderGroupItem { // Group(s)
-            if(_dpGroupItem is iPadGroupItem_top) {
+            if(_dpGroupItem is DataProvideriPadGroup_top) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_topCell.identifier)
                     as! iPadGroupItem_topCell
-            } else if(_dpGroupItem is iPadGroupItem_row) {
+            } else if(_dpGroupItem is DataProvideriPadGroup_row) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_rowCell.identifier)
                     as! iPadGroupItem_rowCell
+            } else if(_dpGroupItem is iPadGroupItem_split) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_splitCell.identifier)
+                    as! iPadGroupItem_splitCell
             }
             
             (cell as! GroupItemCell).populate(with: _dpGroupItem)
@@ -84,6 +91,12 @@ extension MainFeed_v2ViewController {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadMoreCell.identifier) as! iPadMoreCell
                 (cell as! iPadMoreCell).populate(with: (dpItem as! DataProviderMoreItem))
                 (cell as! iPadMoreCell).delegate = self
+            } else if(dpItem is DataProviderSplitHeaderItem) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadSplitHeaderCell.identifier) as! iPadSplitHeaderCell
+                (cell as! iPadSplitHeaderCell).populate()
+            } else if(dpItem is DataProviderBannerItem) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadBannerCell.identifier) as! iPadBannerCell
+                (cell as! iPadBannerCell).populate(with: self.data.banner!)
             }
         }
     
@@ -97,12 +110,18 @@ extension MainFeed_v2ViewController {
         
         if(dpItem is DataProviderHeaderItem) {
             result = 60
-        } else if(dpItem is iPadGroupItem_top) {
+        } else if(dpItem is DataProviderSplitHeaderItem) {
+            result = 60
+        } else if(dpItem is DataProvideriPadGroup_top) {
             result = 675
-        } else if(dpItem is iPadGroupItem_row) {
+        } else if(dpItem is DataProvideriPadGroup_row) {
             result = 350+16
         } else if(dpItem is DataProviderMoreItem) {
             result = 80
+        } else if(dpItem is iPadGroupItem_split) {
+            result = 350
+        } else if(dpItem is DataProviderBannerItem) {
+            result = iPadBannerCell.heightFor(banner: self.data.banner!)
         }
         
         return result

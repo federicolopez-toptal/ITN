@@ -11,19 +11,21 @@ import Foundation
 class DataProviderItem {
 }
 
-class DataProviderGroupItem: DataProviderItem {
-    var MaxNumOfItems = 1
-    var storyFlags = [Bool]()
-    
-    var articles = [MainFeedArticle]()
-}
-
+// ------------------------------------------------------
 class DataProviderHeaderItem: DataProviderItem {
     var title: String = ""
     
     init(title: String) {
         self.title = title
     }
+}
+
+class DataProviderSplitHeaderItem: DataProviderItem {
+    /* ... */
+}
+
+class DataProviderBannerItem: DataProviderItem {
+    
 }
 
 class DataProviderMoreItem: DataProviderItem {
@@ -37,7 +39,15 @@ class DataProviderMoreItem: DataProviderItem {
 }
 
 // ------------------------------------------------------
-class iPadGroupItem_top: DataProviderGroupItem {
+class DataProviderGroupItem: DataProviderItem {
+    var MaxNumOfItems = 1
+    var storyFlags = [Bool]()
+    
+    var articles = [MainFeedArticle]()
+}
+// ----------------- //
+
+class DataProvideriPadGroup_top: DataProviderGroupItem {
 
     override init() {
         super.init()
@@ -49,7 +59,7 @@ class iPadGroupItem_top: DataProviderGroupItem {
     
 }
 
-class iPadGroupItem_row: DataProviderGroupItem {
+class DataProvideriPadGroup_row: DataProviderGroupItem {
 
     override init() {
         super.init()
@@ -57,6 +67,18 @@ class iPadGroupItem_row: DataProviderGroupItem {
         
         self.MaxNumOfItems = 3
         self.storyFlags = [false, false, false]
+    }
+    
+}
+
+class iPadGroupItem_split: DataProviderGroupItem {
+
+    override init() {
+        super.init()
+        self.articles = [MainFeedArticle]()
+        
+        self.MaxNumOfItems = 2
+        self.storyFlags = [false, false]
     }
     
 }

@@ -20,6 +20,16 @@ extension MainFeed_v2ViewController {
         
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
+            if(MUST_SPLIT()>0) {
+                var _articles = [MainFeedArticle]()
+                for _A in _T.articles {
+                    if(!_A.isStory) {
+                        _articles.append(_A)
+                    }
+                }
+                
+                _T.articles = _articles
+            }
             
             // Per topic...
             var itemInTopic = 1
@@ -27,14 +37,29 @@ extension MainFeed_v2ViewController {
                 var newGroupItem: DataProviderGroupItem!
                 
                 if(IPAD()) {
-                    if(itemInTopic==1) {
-                        // "Header" item
-                        let header = DataProviderHeaderItem(title: _T.capitalizedName)
-                        self.dataProvider.append(header)
-                    
-                        newGroupItem = iPadGroupItem_top()
+                    if(MUST_SPLIT()==0) {
+                        if(itemInTopic==1) {
+                            // "Header" item
+                            let header = DataProviderHeaderItem(title: _T.capitalizedName)
+                            self.dataProvider.append(header)
+                        
+                            newGroupItem = DataProvideriPadGroup_top()
+                        } else {
+                            newGroupItem = DataProvideriPadGroup_row()
+                        }
                     } else {
-                        newGroupItem = iPadGroupItem_row()
+                        // Split
+                        if(itemInTopic==1) {
+                            // "Header" (topic)
+                            let header = DataProviderHeaderItem(title: _T.capitalizedName)
+                            self.dataProvider.append(header)
+                            
+                            // "Header" (split)
+                            let splitHeader = DataProviderSplitHeaderItem()
+                            self.dataProvider.append(splitHeader)
+                        }
+                        
+                        newGroupItem = iPadGroupItem_split()
                     }
                 }
                 
@@ -52,6 +77,8 @@ extension MainFeed_v2ViewController {
                 itemInTopic += 1
             }
             
+            if(i==0) { self.insertBanner() } // Banner (if apply)
+            
             // "Load more" item
             var isCompleted = false
             if let _ = self.topicsCompleted[_T.name] {
@@ -60,7 +87,22 @@ extension MainFeed_v2ViewController {
             let loadMore = DataProviderMoreItem(topic: _T.name, completed: isCompleted)
             self.dataProvider.append(loadMore)
         }
+        
+        // Footer
+        
     }
     // --------------------------------
 
+
+    private func insertBanner() {
+        var mustShow = true
+        if let _value = READ(LocalKeys.misc.bannerDontShowAgain), (_value == "1") {
+            mustShow = false
+        }
+    
+        if(self.data.banner != nil && mustShow && MUST_SPLIT()==0) {
+            let banner = DataProviderBannerItem()
+            self.dataProvider.append(banner)
+        }
+    }
 }

@@ -24,6 +24,10 @@ extension MainFeed_v2ViewController {
         NotificationCenter.default.addObserver(self,
             selector: #selector(self.setReloadMainFeedOnShow),
             name: Notification_reloadMainFeedOnShow, object: nil)
+            
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.removeBannerFromNotification),
+            name: Notification_removeBanner, object: nil)
     }
 
     @objc func setReloadMainFeedOnShow() {
@@ -45,6 +49,17 @@ extension MainFeed_v2ViewController {
             popup.populate(sourceName: source, country: country, LR: LR, PE: PE)
             popup.pushFromBottom()
         }
+    }
+    
+    @objc func removeBannerFromNotification() {
+        for (i, dpObj) in self.dataProvider.enumerated() {
+            if(dpObj is DataProviderBannerItem) {
+                self.dataProvider.remove(at: i)
+                break
+            }
+        }
+        
+        self.refreshList()
     }
 
 }

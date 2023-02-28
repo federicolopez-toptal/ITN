@@ -1,16 +1,20 @@
 //
-//  iPadGroupItem_rowCell.swift
+//  iPadGroupItem_splitCell.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 23/02/2023.
+//  Created by Federico Lopez on 27/02/2023.
 //
 
 import UIKit
 
-class iPadGroupItem_rowCell: GroupItemCell {
+class iPadGroupItem_splitCell: GroupItemCell {
 
-    static let identifier = "iPadGroupItem_rowCell"
+    static let identifier = "iPadGroupItem_splitCell"
 
+    let vLine = UIView()
+    
+    
+    
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,7 +23,7 @@ class iPadGroupItem_rowCell: GroupItemCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func buildContent() {
         self.subViews = [CustomCellView]()
         let margin = IPAD_ITEMS_SEP
@@ -49,12 +53,18 @@ class iPadGroupItem_rowCell: GroupItemCell {
         ])
         self.subViews.append(view2)
         
-        let view3 = ArticleVImageView()
-        hStack.addArrangedSubview(view3)
-        view3.activateConstraints([
-            view3.heightAnchor.constraint(equalToConstant: 350)
+        self.contentView.addSubview(self.vLine)
+        self.vLine.activateConstraints([
+            self.vLine.widthAnchor.constraint(equalToConstant: 1.5),
+            self.vLine.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.vLine.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.vLine.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
-        self.subViews.append(view3)
+    }
+
+    override func refreshDisplayMode() {
+        super.refreshDisplayMode()
+        self.vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
     }
 
 }
