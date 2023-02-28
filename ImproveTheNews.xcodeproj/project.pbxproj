@@ -101,6 +101,7 @@
 		1F9EDD5129AEA40B007A97A6 /* iPadGroupItem_splitStoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9EDD5029AEA40B007A97A6 /* iPadGroupItem_splitStoriesCell.swift */; };
 		1F9EDD5329AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9EDD5229AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift */; };
 		1F9EDD5529AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9EDD5429AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift */; };
+		1F9EDD5729AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9EDD5629AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift */; };
 		1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728528D2AF6E00693B85 /* StanceIconView.swift */; };
 		1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728728D2B7AC00693B85 /* IntExtension.swift */; };
 		1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */; };
@@ -453,6 +454,7 @@
 		1F9EDD5029AEA40B007A97A6 /* iPadGroupItem_splitStoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_splitStoriesCell.swift; sourceTree = "<group>"; };
 		1F9EDD5229AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_splitCell.swift; sourceTree = "<group>"; };
 		1F9EDD5429AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_splitCellText.swift; sourceTree = "<group>"; };
+		1F9EDD5629AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_splitStoriesCellText.swift; sourceTree = "<group>"; };
 		1FA1728528D2AF6E00693B85 /* StanceIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StanceIconView.swift; sourceTree = "<group>"; };
 		1FA1728728D2B7AC00693B85 /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
@@ -738,19 +740,20 @@
 		1F38213F29A6DF1F004D4D29 /* cells */ = {
 			isa = PBXGroup;
 			children = (
-				1F38214229A6E504004D4D29 /* CellViews */,
 				1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */,
+				1F38214229A6E504004D4D29 /* CellViews */,
 				1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */,
 				1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */,
 				1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */,
 				1F9EDD4A29AE8FE2007A97A6 /* iPadGroupItem_topCellText.swift */,
 				1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */,
 				1F9EDD4E29AE9842007A97A6 /* iPadGroupItem_rowCellText.swift */,
-				1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */,
-				1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */,
 				1F9EDD5229AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift */,
 				1F9EDD5429AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift */,
 				1F9EDD5029AEA40B007A97A6 /* iPadGroupItem_splitStoriesCell.swift */,
+				1F9EDD5629AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift */,
+				1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */,
+				1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */,
 				1F9EDD4629AE5819007A97A6 /* iPadFooterCell.swift */,
 			);
 			path = cells;
@@ -1795,6 +1798,7 @@
 				1F5A0FFF2992D59700DD8CB3 /* Data_misc.swift in Sources */,
 				1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */,
 				1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */,
+				1F9EDD5729AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */,
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
 				1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */,

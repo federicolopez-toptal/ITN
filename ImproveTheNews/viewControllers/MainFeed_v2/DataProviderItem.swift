@@ -99,7 +99,7 @@ class DataProvideriPadGroup_rowText: DataProviderGroupItem {
     
 }
 
-class iPadGroupItem_split: DataProviderGroupItem {
+class DataProvideriPadGroupItem_split: DataProviderGroupItem {
 
     override init() {
         super.init()
@@ -111,7 +111,7 @@ class iPadGroupItem_split: DataProviderGroupItem {
     
 }
 
-class iPadGroupItem_splitText: DataProviderGroupItem {
+class DataProvideriPadGroupItem_splitText: DataProviderGroupItem {
 
     override init() {
         super.init()
@@ -122,3 +122,28 @@ class iPadGroupItem_splitText: DataProviderGroupItem {
     }
     
 }
+
+class DataProvideriPadGroupItem_splitStory: DataProviderGroupItem {
+
+    override init() {
+        super.init()
+        self.articles = [MainFeedArticle]()
+        
+        self.MaxNumOfItems = 4
+        self.storyFlags = [true, true, true, true]
+    }
+    
+}
+
+class DataProvideriPadGroupItem_splitStoryText: DataProviderGroupItem {
+
+    override init() {
+        super.init()
+        self.articles = [MainFeedArticle]()
+        
+        self.MaxNumOfItems = 4
+        self.storyFlags = [true, true, true, true]
+    }
+    
+}
+

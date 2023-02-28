@@ -55,6 +55,15 @@ struct MainFeedTopic {
         return result
     }
     
+    func stillHasStories() -> Bool {
+        var result = false
+        if let _ = self.articles.first(where: { $0.used == false && $0.isStory == true }) {
+            result = true
+        }
+        
+        return result
+    }
+    
     mutating func nextAvailableArticle(isStory storyFlag: Bool) -> MainFeedArticle? {
         var result: MainFeedArticle? = nil
         

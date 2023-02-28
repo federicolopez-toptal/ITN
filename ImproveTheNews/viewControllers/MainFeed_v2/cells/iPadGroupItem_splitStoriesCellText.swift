@@ -1,5 +1,5 @@
 //
-//  iPadGroupItem_splitStoriesCell.swift
+//  iPadGroupItem_splitStoriesCellText.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 28/02/2023.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class iPadGroupItem_splitStoriesCell: GroupItemCell {
+class iPadGroupItem_splitStoriesCellText: GroupItemCell {
 
-    static let identifier = "iPadGroupItem_splitStoriesCell"
+    static let identifier = "iPadGroupItem_splitStoriesCellText"
 
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,11 +35,11 @@ class iPadGroupItem_splitStoriesCell: GroupItemCell {
         ])
         
         for _ in 1...4 {
-            let view = ArticleBigImageView()
+            let view = ArticleBigTextView()
             
             vStack.addArrangedSubview(view)
             view.activateConstraints([
-                view.heightAnchor.constraint(equalToConstant: 350)
+                view.heightAnchor.constraint(equalToConstant: 190)
             ])
             self.subViews.append(view)
         }
@@ -50,6 +50,8 @@ class iPadGroupItem_splitStoriesCell: GroupItemCell {
         let margin = IPAD_ITEMS_SEP
         let _count = CGFloat(count)
         
-        return (350 * _count) + (margin*(_count+1))
+        return (190 * _count) + (margin*(_count+1))
     }
+
+
 }

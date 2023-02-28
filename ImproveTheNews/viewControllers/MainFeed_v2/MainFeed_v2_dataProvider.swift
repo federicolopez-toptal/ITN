@@ -23,6 +23,7 @@ extension MainFeed_v2ViewController {
             
             // Per topic...
             var itemInTopic = 1
+            var customCount = 0
             while(_T.hasAvailableArticles()) {
                 var newGroupItem: DataProviderGroupItem!
                 
@@ -44,19 +45,23 @@ extension MainFeed_v2ViewController {
                                 // "Header" (topic)
                                 let header = DataProviderHeaderItem(title: _T.capitalizedName)
                                 self.dataProvider.append(header)
-                                
+                            }
+                            
+                            if(customCount == 0) {
                                 // "Header" (split)
                                 let splitHeader = DataProviderSplitHeaderItem()
                                 self.dataProvider.append(splitHeader)
                             }
                             
-                            newGroupItem = iPadGroupItem_split()
-                            
-//                            if(itemInTopic < 7) {
-//                                newGroupItem = iPadGroupItem_split()
-//                            } else {
-//                                newGroupItem = iPadGroupItem_split()
-//                            }
+                            if(customCount==4 && _T.stillHasStories()) {
+                                // Stories
+                                newGroupItem = DataProvideriPadGroupItem_splitStory()
+                                customCount = 0
+                            } else {
+                                newGroupItem = DataProvideriPadGroupItem_split()
+                                customCount += 1
+                            }
+                                                        
                         }
                     } else {
                         // TEXT ONLY
@@ -76,13 +81,23 @@ extension MainFeed_v2ViewController {
                                 // "Header" (topic)
                                 let header = DataProviderHeaderItem(title: _T.capitalizedName)
                                 self.dataProvider.append(header)
-                                
+                            }
+                            
+                            if(customCount == 0) {
                                 // "Header" (split)
                                 let splitHeader = DataProviderSplitHeaderItem()
                                 self.dataProvider.append(splitHeader)
                             }
                             
-                            newGroupItem = iPadGroupItem_splitText()
+                            if(customCount==4 && _T.stillHasStories()) {
+                                // Stories
+                                newGroupItem = DataProvideriPadGroupItem_splitStoryText()
+                                customCount = 0
+                            } else {
+                                newGroupItem = DataProvideriPadGroupItem_splitText()
+                                customCount += 1
+                            }
+                            
                         }
                     }
                 }

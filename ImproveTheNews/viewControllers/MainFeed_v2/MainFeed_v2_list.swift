@@ -39,7 +39,9 @@ extension MainFeed_v2ViewController {
         self.list.register(iPadGroupItem_topCellText.self, forCellReuseIdentifier: iPadGroupItem_topCellText.identifier)
         self.list.register(iPadGroupItem_rowCellText.self, forCellReuseIdentifier: iPadGroupItem_rowCellText.identifier)
         self.list.register(iPadGroupItem_splitCellText.self, forCellReuseIdentifier: iPadGroupItem_splitCellText.identifier)
-        
+        self.list.register(iPadGroupItem_splitStoriesCell.self, forCellReuseIdentifier: iPadGroupItem_splitStoriesCell.identifier)
+        self.list.register(iPadGroupItem_splitStoriesCellText.self,
+            forCellReuseIdentifier: iPadGroupItem_splitStoriesCellText.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -82,10 +84,10 @@ extension MainFeed_v2ViewController {
             } else if(_dpGroupItem is DataProvideriPadGroup_row) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_rowCell.identifier)
                     as! iPadGroupItem_rowCell
-            } else if(_dpGroupItem is iPadGroupItem_split) {
+            } else if(_dpGroupItem is DataProvideriPadGroupItem_split) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_splitCell.identifier)
                     as! iPadGroupItem_splitCell
-            } else if(_dpGroupItem is iPadGroupItem_splitText) {
+            } else if(_dpGroupItem is DataProvideriPadGroupItem_splitText) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_splitCellText.identifier)
                     as! iPadGroupItem_splitCellText
             } else if(_dpGroupItem is DataProvideriPadGroup_topText) {
@@ -94,6 +96,12 @@ extension MainFeed_v2ViewController {
             } else if(_dpGroupItem is DataProvideriPadGroup_rowText) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_rowCellText.identifier)
                     as! iPadGroupItem_rowCellText
+            } else if(_dpGroupItem is DataProvideriPadGroupItem_splitStory) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_splitStoriesCell.identifier)
+                    as! iPadGroupItem_splitStoriesCell
+            } else if(_dpGroupItem is DataProvideriPadGroupItem_splitStoryText) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_splitStoriesCellText.identifier)
+                    as! iPadGroupItem_splitStoriesCellText
             }
             
             // ...
@@ -143,14 +151,20 @@ extension MainFeed_v2ViewController {
             result = 250+16
         } else if(dpItem is DataProviderMoreItem) {
             result = 95
-        } else if(dpItem is iPadGroupItem_split) {
+        } else if(dpItem is DataProvideriPadGroupItem_split) {
             result = 350
-        } else if(dpItem is iPadGroupItem_splitText) {
+        } else if(dpItem is DataProvideriPadGroupItem_splitText) {
             result = 220
         } else if(dpItem is DataProviderBannerItem) {
             result = iPadBannerCell.heightFor(banner: self.data.banner!)
         } else if(dpItem is DataProviderFooterItem) {
             result = 330
+        } else if(dpItem is DataProvideriPadGroupItem_splitStory) {
+            let count = (dpItem as! DataProvideriPadGroupItem_splitStory).articles.count
+            result = iPadGroupItem_splitStoriesCell.getHeightForCount(count)
+        } else if(dpItem is DataProvideriPadGroupItem_splitStoryText) {
+            let count = (dpItem as! DataProvideriPadGroupItem_splitStoryText).articles.count
+            result = iPadGroupItem_splitStoriesCellText.getHeightForCount(count)
         }
         
         return result
