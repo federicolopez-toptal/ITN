@@ -18,6 +18,7 @@ extension MainFeed_v2ViewController {
         self.data.resetCounting()
         self.dataProvider = [DataProviderGroupItem]()
         
+        if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
             

@@ -106,7 +106,12 @@ class ArticleHImageView: CustomCellView {
             if let _identifier = Sources.shared.search(name: article.source) {
                 sourcesArray.append(_identifier)
             }
-            ADD_SOURCE_ICONS(data: sourcesArray, to: self.articleSource!, containerHeight: 28)
+            
+            if(PREFS_SHOW_SOURCE_ICONS()) {
+                ADD_SOURCE_ICONS(data: sourcesArray, to: self.articleSource!, containerHeight: 28)
+            } else {
+                ADD_SOURCE_ICONS(data: [], to: self.articleSource!, containerHeight: 28)
+            }
             
             self.articleSourceTime.text = CLEAN_SOURCE(from: article.source) + " • " + article.time
             self.stanceIcon.setValues(article.LR, article.PE)

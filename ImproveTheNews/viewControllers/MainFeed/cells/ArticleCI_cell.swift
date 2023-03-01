@@ -84,7 +84,7 @@ class ArticleCI_cell: UICollectionViewCell {
         ADD_SPACER(to: sourcesHStack, width: 5)
         sourcesHStack.addArrangedSubview(self.stanceIcon)
         self.stanceIcon.alpha = 1.0
-        if(!PREFS_SHOW_STANCE_ICONS()) {
+        if(PREFS_SHOW_STANCE_ICONS()==false) {
             self.stanceIcon.alpha = 0
         }
         self.stanceIcon.delegate = nil

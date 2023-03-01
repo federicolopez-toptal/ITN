@@ -170,7 +170,12 @@ class ArticleVImageView: CustomCellView {
             self.gradient.alpha = 1.0
             self.gradientBottom.alpha = 1.0
             
-            ADD_SOURCE_ICONS(data: article.storySources, to: self.storySources!)
+            if(PREFS_SHOW_SOURCE_ICONS()) {
+                ADD_SOURCE_ICONS(data: article.storySources, to: self.storySources!)
+            } else {
+                ADD_SOURCE_ICONS(data: [], to: self.storySources!)
+            }
+                
             self.storySourcesRow!.alpha = 1
             self.articleSourceRow!.alpha = 0
             
@@ -184,7 +189,13 @@ class ArticleVImageView: CustomCellView {
             if let _identifier = Sources.shared.search(name: article.source) {
                 sourcesArray.append(_identifier)
             }
-            ADD_SOURCE_ICONS(data: sourcesArray, to: self.articleSource!, containerHeight: 28)
+            
+            if(PREFS_SHOW_SOURCE_ICONS()) {
+                ADD_SOURCE_ICONS(data: sourcesArray, to: self.articleSource!, containerHeight: 28)
+            } else {
+                ADD_SOURCE_ICONS(data: [], to: self.articleSource!, containerHeight: 28)
+            }
+            
             self.storySourcesRow!.alpha = 0
             self.articleSourceRow!.alpha = 1
             

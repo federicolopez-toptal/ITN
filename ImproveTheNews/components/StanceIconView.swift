@@ -108,6 +108,11 @@ class StanceIconView: UIView {
         
         self.thumb1LeadingConstraint?.constant = positions[mValue1-1]
         self.thumb2LeadingConstraint?.constant = positions[mValue2-1]
+        
+        self.alpha = 1.0
+        if(PREFS_SHOW_STANCE_ICONS() == false) {
+            self.alpha = 0
+        }
     }
     
     func getValues() -> (Int, Int) {
@@ -116,7 +121,10 @@ class StanceIconView: UIView {
     
     //MARK: Event(s)
     @objc func viewOnTap(sender: UITapGestureRecognizer) {
-        self.delegate?.onStanceIconTap(sender: self)
+        print("PREFS_SHOW_STANCE_POPUPS", PREFS_SHOW_STANCE_POPUPS())
+        if(PREFS_SHOW_STANCE_POPUPS()) {
+            self.delegate?.onStanceIconTap(sender: self)
+        }
     }
 
 }

@@ -134,7 +134,15 @@ extension CustomNavController {
             if(!showDarkBackground){ self.darkView.hide() }
         }
     
+        var showComponents = false
         if let _ = self.viewControllers.first as? MainFeedViewController {
+            showComponents = true
+        }
+        if let _ = self.viewControllers.first as? MainFeed_v2ViewController {
+            showComponents = true
+        }
+        
+        if(showComponents) {
             self.slidersPanel.show()
             self.floatingButton.show()
         }
