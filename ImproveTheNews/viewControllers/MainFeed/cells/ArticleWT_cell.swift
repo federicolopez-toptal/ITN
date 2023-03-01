@@ -14,7 +14,7 @@ protocol ArticleWT_cell_Delegate: AnyObject {
 class ArticleWT_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWT_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(16)
+    static let merriweather_bold = MERRIWEATHER_BOLD(13)
     weak var delegate: ArticleWT_cell_Delegate?
 
     let titleLabel = ArticleWT_cell.createTitleLabel(text: "Lorem ipsum")
@@ -96,7 +96,7 @@ class ArticleWT_cell: UICollectionViewCell {
 
     func populate(with article: MainFeedArticle) {
         self.titleLabel.text = article.title
-        self.titleLabel.setLineSpacing(lineSpacing: 2.0)
+        self.titleLabel.setLineSpacing(lineSpacing: 3.5)
         
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: article.source) {

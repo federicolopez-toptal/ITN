@@ -16,7 +16,7 @@ protocol ArticleCT_cell_Delegate: AnyObject {
 class ArticleCT_cell: UICollectionViewCell {
     
     static let identifier = "ArticleCT_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(18)
+    static let merriweather_bold = MERRIWEATHER_BOLD(13)
     var column: Int = 1
     weak var delegate: ArticleCT_cell_Delegate?
     
@@ -94,7 +94,9 @@ class ArticleCT_cell: UICollectionViewCell {
 
     func populate(with article: MainFeedArticle, column: Int) {
         self.column = column
+
         self.titleLabel.text = article.title
+        self.titleLabel.setLineSpacing(lineSpacing: 3.5)
 
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: article.source) {

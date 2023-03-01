@@ -51,8 +51,7 @@ extension UILabel {
             attributedString = NSMutableAttributedString(string: labelText)
         }
         
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle,
-            range:NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
         
         self.attributedText = attributedString
     }

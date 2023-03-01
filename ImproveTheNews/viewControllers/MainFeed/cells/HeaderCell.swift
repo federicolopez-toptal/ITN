@@ -29,7 +29,7 @@ class HeaderCell: UICollectionViewCell {
     private func buildContent() {
         self.contentView.backgroundColor = .white
         
-    let roboto_bold = ROBOTO_BOLD(13)
+    let roboto_bold = ROBOTO_BOLD(12)
         
         self.titleLabel.backgroundColor = .clear //.orange
         self.titleLabel.textColor = .black

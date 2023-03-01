@@ -10,7 +10,7 @@ import UIKit
 class StoryCT_cell: UICollectionViewCell {
 
     static let identifier = "StoryCT_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(18)
+    static let merriweather_bold = MERRIWEATHER_BOLD(13)
     var column: Int = 1
     
     var mainVStack: UIStackView!
@@ -104,6 +104,8 @@ class StoryCT_cell: UICollectionViewCell {
         self.column = column
         
         self.titleLabel.text =  story.title
+        self.titleLabel.setLineSpacing(lineSpacing: 3.5)
+        
         if( READ(LocalKeys.preferences.showSourceIcons) == "01" ) {
             ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
         } else {

@@ -14,7 +14,7 @@ protocol ArticleWI_cell_Delegate: AnyObject {
 class ArticleWI_cell: UICollectionViewCell {
 
     static let identifier = "ArticleWI_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(15)
+    static let merriweather_bold = MERRIWEATHER_BOLD(13)
     weak var delegate: ArticleWI_cell_Delegate?
     
     let mainImageView = UIImageView()
@@ -77,7 +77,7 @@ class ArticleWI_cell: UICollectionViewCell {
         let titleVStack = VSTACK(into: mainHStack, spacing: 13)
         titleVStack.backgroundColor = .clear //.orange
 
-    let roboto = ROBOTO(13)
+    let roboto = ROBOTO(12)
 
         self.titleLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.2)
         self.titleLabel.textColor = .black
@@ -116,7 +116,7 @@ class ArticleWI_cell: UICollectionViewCell {
         }
         
         self.titleLabel.text = article.title
-        self.titleLabel.setLineSpacing(lineSpacing: 2.0)
+        self.titleLabel.setLineSpacing(lineSpacing: 3.5)
         
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: article.source) {
@@ -158,7 +158,7 @@ class ArticleWI_cell: UICollectionViewCell {
         let result = UILabel()
         result.numberOfLines = 8
         result.font = ArticleWI_cell.merriweather_bold
-        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        //result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
         
         return result
