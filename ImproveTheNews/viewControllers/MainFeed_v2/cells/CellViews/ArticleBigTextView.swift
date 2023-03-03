@@ -32,6 +32,8 @@ class ArticleBigTextView: CustomCellView {
         var articleSourceTime = UILabel()
         let stanceIcon = StanceIconView()
         
+    var sourcesLimit: Int = 6
+        
         
     
     // MARK: - Start
@@ -45,6 +47,10 @@ class ArticleBigTextView: CustomCellView {
     
     func setFontSize(_ size: CGFloat) {
         self.titleLabel.font = MERRIWEATHER_BOLD(size)
+    }
+    
+    func setSourcesLimit(_ limit: Int) {
+        self.sourcesLimit = limit
     }
     
     private func buildContent() {
@@ -152,7 +158,7 @@ class ArticleBigTextView: CustomCellView {
             self.pill.alpha = 1.0
             
             if(PREFS_SHOW_SOURCE_ICONS()) {
-                ADD_SOURCE_ICONS(data: article.storySources, to: self.storySources!)
+                ADD_SOURCE_ICONS(data: article.storySources, to: self.storySources!, limit: self.sourcesLimit)
             } else {
                 ADD_SOURCE_ICONS(data: [], to: self.storySources!)
             }
@@ -183,6 +189,7 @@ class ArticleBigTextView: CustomCellView {
             self.articleSourceRow!.alpha = 1
             
             self.articleSourceTime.text = CLEAN_SOURCE(from: article.source) + " • " + article.time
+            self.articleSourceTime.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
             self.stanceIcon.setValues(article.LR, article.PE)
         }
         
@@ -199,6 +206,7 @@ class ArticleBigTextView: CustomCellView {
         
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.storyTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         self.articleSourceTime.textColor = self.storyTimeLabel.textColor
         
         

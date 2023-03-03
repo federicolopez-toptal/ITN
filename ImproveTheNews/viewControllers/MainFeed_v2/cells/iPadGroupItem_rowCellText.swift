@@ -37,7 +37,8 @@ class iPadGroupItem_rowCellText: GroupItemCell {
         ])
         
         let view1 = ArticleBigTextView()
-        view1.setFontSize(24)
+        view1.setFontSize(20)
+        view1.setSourcesLimit(3)
         hStack.addArrangedSubview(view1)
         view1.activateConstraints([
             view1.heightAnchor.constraint(equalToConstant: rowHeight)
@@ -45,7 +46,8 @@ class iPadGroupItem_rowCellText: GroupItemCell {
         self.subViews.append(view1)
         
         let view2 = ArticleBigTextView()
-        view2.setFontSize(24)
+        view2.setFontSize(20)
+        view2.setSourcesLimit(3)
         hStack.addArrangedSubview(view2)
         view2.activateConstraints([
             view2.heightAnchor.constraint(equalToConstant: rowHeight)
@@ -53,7 +55,8 @@ class iPadGroupItem_rowCellText: GroupItemCell {
         self.subViews.append(view2)
         
         let view3 = ArticleBigTextView()
-        view3.setFontSize(24)
+        view3.setFontSize(20)
+        view3.setSourcesLimit(3)
         hStack.addArrangedSubview(view3)
         view3.activateConstraints([
             view3.heightAnchor.constraint(equalToConstant: rowHeight)

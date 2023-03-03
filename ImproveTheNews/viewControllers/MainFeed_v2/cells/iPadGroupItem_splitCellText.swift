@@ -36,22 +36,22 @@ class iPadGroupItem_splitCellText: GroupItemCell {
             hStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: margin),
             hStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -margin),
             hStack.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            hStack.heightAnchor.constraint(equalToConstant: 220)
+            hStack.heightAnchor.constraint(equalToConstant: 180)
         ])
         
         let view1 = ArticleBigTextView()
-        view1.setFontSize(24)
+        view1.setFontSize(20)
         hStack.addArrangedSubview(view1)
         view1.activateConstraints([
-            view1.heightAnchor.constraint(equalToConstant: 220)
+            view1.heightAnchor.constraint(equalToConstant: 180)
         ])
         self.subViews.append(view1)
         
         let view2 = ArticleBigTextView()
-        view2.setFontSize(24)
+        view2.setFontSize(20)
         hStack.addArrangedSubview(view2)
         view2.activateConstraints([
-            view2.heightAnchor.constraint(equalToConstant: 220)
+            view2.heightAnchor.constraint(equalToConstant: 180)
         ])
         self.subViews.append(view2)
         

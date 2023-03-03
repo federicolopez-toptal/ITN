@@ -124,12 +124,17 @@ extension StoryViewController {
     private func loadContent() {
         self.showLoading()
         self.storyData.load(url: self.story!.url) { (story) in
-            MAIN_THREAD {
-                self.hideLoading()
-                self.scrollView.show()
-                
-                if let _story = story {
-                    self.addContent(_story)
+            if(story == nil) {
+                // Empty story content
+                print("Story vacio!")
+            } else {
+                MAIN_THREAD {
+                    self.hideLoading()
+                    self.scrollView.show()
+                    
+                    if let _story = story {
+                        self.addContent(_story)
+                    }
                 }
             }
         }
@@ -176,7 +181,11 @@ extension StoryViewController {
             self.populateFacts()    // works with self.facts
         
         self.addSpins(story.spins)
-        self.addArticles(story.articles)
+        if(story.splitType.isEmpty) {
+            self.addArticles(story.articles)
+        } else {
+            self.addSplitArticles(type: story.splitType, story.articles)
+        }
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
@@ -356,6 +365,206 @@ extension StoryViewController {
             }
             // --- //
         }
+    }
+    
+    private func addSplitArticles(type: String, _ articles: [StoryArticle]) {
+        self.articles = articles
+        ADD_SPACER(to: self.VStack, height: 12)
+
+        let HStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: HStack, width: 12)
+        let innerHStack = VSTACK(into: HStack)
+        ADD_SPACER(to: HStack, width: 12)
+        
+       if(articles.count == 0) {
+            let noArticlesLabel = UILabel()
+            noArticlesLabel.font = MERRIWEATHER_BOLD(17)
+            if(IPAD()){ noArticlesLabel.font = MERRIWEATHER_BOLD(19) }
+            noArticlesLabel.text = "No articles available"
+            noArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            innerHStack.addArrangedSubview(noArticlesLabel)
+        } else {
+            var title = "Political split"
+            if(type.uppercased() == "PE") {
+                title = "Establishment split"
+            }
+        
+            let ArticlesLabel = UILabel()
+            ArticlesLabel.font = MERRIWEATHER_BOLD(17)
+            ArticlesLabel.text = title
+            if(IPAD()){ ArticlesLabel.font = MERRIWEATHER_BOLD(19) }
+            ArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            innerHStack.addArrangedSubview(ArticlesLabel)
+            ADD_SPACER(to: innerHStack, height: 15)
+            
+            let headers = HSTACK(into: innerHStack)
+            headers.spacing = 20
+            headers.backgroundColor = .clear //.orange
+            headers.distribution = .fillEqually
+            for i in 1...2 {
+                var text = ""
+                if(type.uppercased() == "PE") {
+                    if(i==1) { text = "CRITICAL" }
+                    else { text = "PRO" }
+                } else {
+                    if(i==1) { text = "LEFT" }
+                    else { text = "RIGHT" }
+                }
+                
+                let headerLabel = UILabel()
+                headerLabel.text = text
+                headerLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+                headerLabel.font = ROBOTO_BOLD(14)
+                headers.addArrangedSubview(headerLabel)
+            }
+            innerHStack.addArrangedSubview(headers)
+            
+            var column = 1
+            for (i, A) in articles.enumerated() {
+                if(!A.image.isEmpty && !A.title.isEmpty && !A.media_title.isEmpty) {
+                    if(column==1){
+                        ADD_SPACER(to: innerHStack, height: 16)
+                    }
+                    
+                    let hStackColumns: UIStackView!
+                    if(column == 1) {
+                        hStackColumns = HSTACK(into: innerHStack)
+                        hStackColumns.spacing = 20
+                        hStackColumns.distribution = .fillEqually
+                    } else {
+                        hStackColumns = innerHStack.arrangedSubviews.last as! UIStackView
+                    }
+                    
+                    let newItem = articleColumnView(A, i: i)
+                    hStackColumns.addArrangedSubview(newItem)
+                    
+                    column += 1
+                    if(column == 3){
+                        column = 1
+                    }
+                    
+                    if(i==articles.count-1) {
+                        let line = UIView()
+                        line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                        innerHStack.addSubview(line)
+                        line.activateConstraints([
+                            line.widthAnchor.constraint(equalToConstant: 1.5),
+                            line.centerXAnchor.constraint(equalTo: innerHStack.centerXAnchor),
+                            line.topAnchor.constraint(equalTo: headers.topAnchor),
+                            line.bottomAnchor.constraint(equalTo: newItem.bottomAnchor)
+                        ])
+                    }
+                    
+                    
+                }
+            }
+        }
+    }
+    
+    private func articleColumnView(_ A: StoryArticle, i: Int) -> UIView {
+        let vStack = UIStackView()
+        vStack.axis = .vertical
+        
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .darkGray
+        vStack.addArrangedSubview(imageView)
+        imageView.activateConstraints([
+            imageView.heightAnchor.constraint(equalToConstant: 98 * 0.8)
+        ])
+        imageView.sd_setImage(with: URL(string: A.image))
+        ADD_SPACER(to: vStack, height: 8)
+        
+        let subTitleLabel = UILabel()
+        subTitleLabel.font = MERRIWEATHER_BOLD(14)
+        subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+        subTitleLabel.numberOfLines = 0
+        subTitleLabel.text = A.title
+        vStack.addArrangedSubview(subTitleLabel)
+        ADD_SPACER(to: vStack, height: 8)
+        
+        let HStack_source = HSTACK(into: vStack)
+        HStack_source.activateConstraints([
+            HStack_source.heightAnchor.constraint(equalToConstant: 28)
+        ])
+        if(!A.media_country_code.isEmpty) {
+            let VStack_flag = VSTACK(into: HStack_source)
+            //VStack_flag.backgroundColor = .green
+            let flagImageView = UIImageView()
+            
+            if let _image = UIImage(named: A.media_country_code.uppercased() + "64.png") {
+                flagImageView.image = _image
+            } else {
+                flagImageView.image = UIImage(named: "noFlag.png")
+            }
+            
+            ADD_SPACER(to: VStack_flag, height: 4)
+            VStack_flag.addArrangedSubview(flagImageView)
+            flagImageView.activateConstraints([
+                flagImageView.widthAnchor.constraint(equalToConstant: 20),
+                flagImageView.heightAnchor.constraint(equalToConstant: 20)
+            ])
+            ADD_SPACER(to: VStack_flag, height: 4)
+            ADD_SPACER(to: HStack_source, width: 2)
+        }
+        
+        var LR = 1
+        var PE = 1
+                    
+        let sourceName = A.media_title.components(separatedBy: " #").first!
+        self.getSourceIcon(name: sourceName) { (icon) in
+            if let _icon = icon {
+                let sourcesContainer = UIStackView()
+                HStack_source.addArrangedSubview(sourcesContainer)
+                ADD_SOURCE_ICONS(data: [_icon.identifier],
+                    to: sourcesContainer, containerHeight: 28)
+                    
+                LR = _icon.LR
+                PE = _icon.PE
+            }
+        }
+        
+        let sourceLabel = UILabel()
+        sourceLabel.text = sourceName
+        sourceLabel.font = ROBOTO(12)
+        sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        HStack_source.addArrangedSubview(sourceLabel)
+        ADD_SPACER(to: HStack_source, width: 8)
+
+        let stanceIcon = StanceIconView()
+        stanceIcon.tag = 767
+        HStack_source.addArrangedSubview(stanceIcon)
+        stanceIcon.setValues(LR, PE)
+        ADD_SPACER(to: HStack_source) // H fill
+        ADD_SPACER(to: vStack) // V fill
+        
+        let mainButton = UIButton(type: .custom)
+        mainButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        vStack.addSubview(mainButton)
+        mainButton.activateConstraints([
+            mainButton.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+            mainButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            mainButton.topAnchor.constraint(equalTo: imageView.topAnchor),
+            mainButton.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
+        ])
+        mainButton.tag = 300+i
+        mainButton.addTarget(self, action: #selector(articleOnTap(_:)), for: .touchUpInside)
+
+        let miniButton = UIButton(type: .custom)
+        miniButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        vStack.addSubview(miniButton)
+        miniButton.activateConstraints([
+            miniButton.leadingAnchor.constraint(equalTo: stanceIcon.leadingAnchor),
+            miniButton.trailingAnchor.constraint(equalTo: stanceIcon.trailingAnchor),
+            miniButton.topAnchor.constraint(equalTo: stanceIcon.topAnchor),
+            miniButton.bottomAnchor.constraint(equalTo: stanceIcon.bottomAnchor)
+        ])
+        miniButton.tag = 400+i
+        miniButton.addTarget(self, action: #selector(articleStanceIconOnTap(_:)), for: .touchUpInside)
+        
+        ADD_SPACER(to: vStack, height: 20) // Space to next item
+        return vStack
     }
     
     private func addSpins(_ spins: [Spin]) {

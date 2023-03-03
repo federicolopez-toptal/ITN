@@ -29,18 +29,18 @@ class iPadGroupItem_topCellText: GroupItemCell {
         let sizeSmall: CGFloat = 120
         
         let view2 = ArticleBigTextView()
-        view2.setFontSize(24)
+        view2.setFontSize(20)
+        view2.setSourcesLimit(3)
         self.contentView.addSubview(view2)
         view2.activateConstraints([
             view2.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -margin),
             view2.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: margin),
             view2.widthAnchor.constraint(equalToConstant: columnWith),
             view2.heightAnchor.constraint(equalToConstant: sizeBig)
-            
         ])
         
         let view1 = ArticleBigTextView()
-        view1.setFontSize(30)
+        view1.setFontSize(24)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: margin),
@@ -52,7 +52,7 @@ class iPadGroupItem_topCellText: GroupItemCell {
         self.subViews.append(view2)
 
         let view3 = ArticleBigTextView()
-        view3.setFontSize(24)
+        view3.setFontSize(20)
         self.contentView.addSubview(view3)
         view3.activateConstraints([
             view3.leadingAnchor.constraint(equalTo: view1.leadingAnchor),
@@ -63,7 +63,7 @@ class iPadGroupItem_topCellText: GroupItemCell {
         self.subViews.append(view3)
 
         let view4 = ArticleBigTextView()
-        view4.setFontSize(24)
+        view4.setFontSize(20)
         self.contentView.addSubview(view4)
         view4.activateConstraints([
             view4.leadingAnchor.constraint(equalTo: view1.leadingAnchor),
@@ -74,7 +74,7 @@ class iPadGroupItem_topCellText: GroupItemCell {
         self.subViews.append(view4)
 
         let view5 = ArticleBigTextView()
-        view5.setFontSize(24)
+        view5.setFontSize(20)
         self.contentView.addSubview(view5)
         view5.activateConstraints([
             view5.leadingAnchor.constraint(equalTo: view2.leadingAnchor),

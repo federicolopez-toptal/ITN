@@ -15,6 +15,7 @@ struct MainFeedStory {
     var image_credit_title: String = "Not available"
     var image_credit_url: String = ""
     var time: String = ""
+    var splitType: String = ""
     
     var facts = [Fact]()
     var spins = [Spin]()
@@ -22,6 +23,8 @@ struct MainFeedStory {
     
     
     init (_ json: [String: Any]) {
+        print(json)
+    
     // main fields
         let mainNode = json["storyData"] as! [String: Any]
         
@@ -62,7 +65,14 @@ struct MainFeedStory {
             let newArticle = StoryArticle(A)
             self.articles.append(newArticle)
         }
+        
+    // SplitType
+        if let _type = json["splitType"] as? String {
+            self.splitType = _type
+        }
+                
     }
+
 }
 
 // MARK: - Utils

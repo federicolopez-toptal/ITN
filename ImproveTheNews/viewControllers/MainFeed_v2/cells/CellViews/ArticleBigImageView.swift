@@ -173,6 +173,7 @@ class ArticleBigImageView: CustomCellView {
             self.articleSourceRow!.alpha = 0
             
             self.storyTimeLabel.text = "Last updated " + article.time
+            self.storyTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         } else {
             self.pill.alpha  = 0
             self.gradient.alpha = 0.8
@@ -193,6 +194,7 @@ class ArticleBigImageView: CustomCellView {
             self.articleSourceRow!.alpha = 1
             
             self.articleSourceTime.text = CLEAN_SOURCE(from: article.source) + " • " + article.time
+            self.articleSourceTime.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
             self.stanceIcon.setValues(article.LR, article.PE)
         }
         

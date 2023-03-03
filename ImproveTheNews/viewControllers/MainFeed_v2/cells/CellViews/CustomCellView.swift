@@ -17,7 +17,7 @@ func ROBOTO_TEXT() -> UILabel {
     result.backgroundColor = .clear //.red.withAlphaComponent(0.25)
     result.textColor = UIColor(hex: 0x1D242F)
     result.numberOfLines = 0
-    result.font = ROBOTO_BOLD(22)
+    result.font = ROBOTO_BOLD(18)
     result.text = "Lorem ipsum"
     
     return result

@@ -40,6 +40,7 @@
 		1F3DDED1296EEE4F003DCD2F /* StoryEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DDED0296EEE4F003DCD2F /* StoryEntities.swift */; };
 		1F3E5E3C292FC2BF00FA090B /* SourceFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */; };
 		1F3E5E3E292FD24E00FA090B /* FilterTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */; };
+		1F41FCCC29B24AFC002081AE /* FAQ_content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F41FCCB29B24AFC002081AE /* FAQ_content.swift */; };
 		1F47CD8D290F5476003F0003 /* StoryCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */; };
 		1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */; };
 		1F56F727294B9D2900654CDB /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */; };
@@ -391,6 +392,7 @@
 		1F3DDED0296EEE4F003DCD2F /* StoryEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEntities.swift; sourceTree = "<group>"; };
 		1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFilterViewController.swift; sourceTree = "<group>"; };
 		1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTextView.swift; sourceTree = "<group>"; };
+		1F41FCCB29B24AFC002081AE /* FAQ_content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_content.swift; sourceTree = "<group>"; };
 		1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCT_cell.swift; sourceTree = "<group>"; };
 		1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCT_cell.swift; sourceTree = "<group>"; };
 		1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
@@ -913,12 +915,11 @@
 				1FD2340829159EFD00B85AE9 /* Preferences */,
 				1F70BE72291457960061E3FA /* Search */,
 				1F9E28C12954B1FD00041303 /* PrivacyPolicy */,
+				1FBD090529B24A5A00AC20F5 /* FAQ */,
 				1F7B9EBC296DEF5800D99C5D /* Story */,
 				1FC7390E298A149C003EB38D /* SignInUp */,
-				1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */,
-				1F9E28C42954DC0200041303 /* FAQViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -1040,6 +1041,15 @@
 			path = TextFields;
 			sourceTree = "<group>";
 		};
+		1FBD090529B24A5A00AC20F5 /* FAQ */ = {
+			isa = PBXGroup;
+			children = (
+				1F9E28C42954DC0200041303 /* FAQViewController.swift */,
+				1F41FCCB29B24AFC002081AE /* FAQ_content.swift */,
+			);
+			path = FAQ;
+			sourceTree = "<group>";
+		};
 		1FC287D329A645660017433B /* MainFeed_v2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1099,6 +1109,7 @@
 				1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */,
 				1FD234092915A07800B85AE9 /* Preferences_misc.swift */,
 				1FFA5522294B7A9900663966 /* cells */,
+				1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1750,6 +1761,7 @@
 				1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */,
 				1F2D3228294230CA00BA1B00 /* CircleAnimation.swift in Sources */,
 				1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */,
+				1F41FCCC29B24AFC002081AE /* FAQ_content.swift in Sources */,
 				1FC7390B298A05A8003EB38D /* SignInUpViewController.swift in Sources */,
 				1FD5BDF328DC11DC003E650F /* PopupView.swift in Sources */,
 				1FF61CBE28DAE50B006DF9AC /* StoryCI_cell.swift in Sources */,
@@ -1994,7 +2006,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2030,7 +2042,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2120,7 +2132,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

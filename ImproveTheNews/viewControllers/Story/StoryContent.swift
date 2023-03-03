@@ -74,7 +74,8 @@ extension StoryContent {
         
         var url = storyData_url.replacingOccurrences(of: "<ID>", with: storyID)
         url = url.replacingOccurrences(of: "<FILTERS>", with: MainFeedv3.sliderValues())
-        url += "&split=00" // + self.mustSplit()
+        url += "&split=" + String(MUST_SPLIT()) + "0"
+        //url += "&split=00" // + self.mustSplit()
         print("URL story", url)
         
         var request = URLRequest(url: URL(string: url)!)
@@ -86,39 +87,8 @@ extension StoryContent {
                 callback(nil)
             } else {
                 if let json = JSON(fromData: data) {
-                    //Story content
-                    //let storyDataJson = json["storyData"] as! [String: Any]
-                    let story = MainFeedStory(json)
-                    
+                    let story = MainFeedStory(json) //Story content
                     callback(story)
-                    
-//
-//                                      let storyFactsArray = self.removeNullFrom(json["facts"])
-
-//                    let storySpinsArray = self.removeNullFrom(json["spinSection"])
-//                    let storyArticles = self.removeNullFrom(json["articles"])
-//                    let version = json["version"] as! String
-//                    let storyData = StoryData(storyDataJson)
-//
-                    //                    var facts = [StoryFact]()
-                    //                    for F in storyFactsArray {
-                    //                        let newFact = StoryFact(F)
-                    //                        facts.append(newFact)
-                    //                    }
-//
-//                    var spins = [StorySpin]()
-//                    for SP in storySpinsArray {
-//                        let newSpin = StorySpin(SP)
-//                        spins.append(newSpin)
-//                    }
-//
-//                    var articles = [StoryArticle]()
-//                    for A in storyArticles {
-//                        let newArt = StoryArticle(A)
-//                        articles.append(newArt)
-//                    }
-//
-//                    callback(storyData, facts, spins, articles, version)
                 } else {
                     callback(nil)
                 }
@@ -126,14 +96,5 @@ extension StoryContent {
         }
         task.resume()
     }
-    
-//    private func mustSplit() -> String {
-//        var result = "00"
-//        if let _value = READ(LocalKeys.sliders.split) {
-//            result = "0" + _value
-//        }
-//        
-//        return result
-//    }
     
 }

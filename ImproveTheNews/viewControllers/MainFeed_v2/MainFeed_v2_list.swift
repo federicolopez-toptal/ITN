@@ -138,7 +138,7 @@ extension MainFeed_v2ViewController {
         if(dpItem is DataProviderHeaderItem) {
             result = 60
         } else if(dpItem is DataProviderSplitHeaderItem) {
-            result = 75
+            result = 50
         } else if(dpItem is DataProvideriPadGroup_top) {
             let count = (dpItem as! DataProvideriPadGroup_top).articles.count
             result = iPadGroupItem_topCell.getHeightForCount(count)
@@ -154,7 +154,7 @@ extension MainFeed_v2ViewController {
         } else if(dpItem is DataProvideriPadGroupItem_split) {
             result = 350
         } else if(dpItem is DataProvideriPadGroupItem_splitText) {
-            result = 220
+            result = 180
         } else if(dpItem is DataProviderBannerItem) {
             result = iPadBannerCell.heightFor(banner: self.data.banner!)
         } else if(dpItem is DataProviderFooterItem) {

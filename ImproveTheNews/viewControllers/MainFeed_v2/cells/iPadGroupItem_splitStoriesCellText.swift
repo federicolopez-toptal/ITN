@@ -36,6 +36,7 @@ class iPadGroupItem_splitStoriesCellText: GroupItemCell {
         
         for _ in 1...4 {
             let view = ArticleBigTextView()
+            view.setFontSize(24)
             
             vStack.addArrangedSubview(view)
             view.activateConstraints([
