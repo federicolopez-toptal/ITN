@@ -19,13 +19,14 @@ class TourView: UIView {
     
     let circleAnim = CircleAnimation()
     
-    
     // MARK: - Init(s)
     init(buildInto container: UIView) {
         super.init(frame: CGRect.zero)
         
         self.backgroundColor = .black.withAlphaComponent(0.25)
+        //self.isUserInteractionEnabled = false
         container.addSubview(self)
+        
         self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
@@ -145,6 +146,7 @@ extension TourView {
                     splitButtonMargin += bottom
                 }
             }
+            
             rect.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -splitButtonMargin).isActive = true
         }
         
@@ -284,7 +286,7 @@ extension TourView {
             splitButtonMargin -= 55
         
             let buttonArea = UIButton(type: .custom)
-            buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+            buttonArea.backgroundColor = .clear //.green.withAlphaComponent(0.25)
             self.addSubview(buttonArea)
             buttonArea.activateConstraints([
                 buttonArea.widthAnchor.constraint(equalToConstant: 110),

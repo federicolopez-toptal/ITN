@@ -102,7 +102,16 @@ extension MainFeed_v2ViewController {
                 self.data.loadData(self.topic) { (error) in
                     MAIN_THREAD {/* --- */
                         if(self.data.topics.count == 0) {
-                            print("FEED VACIO!!!")
+                            self.hideLoading()
+                            self.list.hideRefresher()
+                        
+                            ALERT(vc: self, title: "Server error",
+                                message: "There was an error retrieving your news. Please try again later", onCompletion: {
+                                DELAY(1.0) {
+                                    self.loadData(showLoading: true)
+                                }
+                            })
+                            return
                         }
                     
                         self.navBar.setTitle(self.getTopicName(topic: self.topic))

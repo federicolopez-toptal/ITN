@@ -20,6 +20,8 @@ class StoryContent {
                 self.getStoryData(storyID: _storyID) { (story) in
                     callback(story)
                 }
+            } else {
+                callback(nil)
             }
         }
     }

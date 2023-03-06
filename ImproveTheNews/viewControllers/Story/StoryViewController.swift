@@ -126,7 +126,10 @@ extension StoryViewController {
         self.storyData.load(url: self.story!.url) { (story) in
             if(story == nil) {
                 // Empty story content
-                print("Story vacio!")
+                ALERT(vc: self, title: "Server error",
+                message: "There was an error while retrieving your story. Please try again later", onCompletion: {
+                    CustomNavController.shared.popViewController(animated: true)
+                })
             } else {
                 MAIN_THREAD {
                     self.hideLoading()

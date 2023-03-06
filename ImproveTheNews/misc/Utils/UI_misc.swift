@@ -102,15 +102,15 @@ func HIDE_KEYBOARD(view: UIView) {
     view.endEditing(true)
 }
 
-func ALERT(vc: UIViewController, title: String? = nil, message: String) {
+func ALERT(vc: UIViewController, title: String? = nil, message: String, onCompletion: @escaping ()->() ) {
     MAIN_THREAD {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+            onCompletion()
         }
         
         alert.addAction(okAction)
-        vc.present(alert, animated: true) {
-        }
+        vc.present(alert, animated: true)
     }
 }
 
