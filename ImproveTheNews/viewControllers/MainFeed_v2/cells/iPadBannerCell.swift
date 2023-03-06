@@ -250,7 +250,10 @@ extension iPadBannerCell {
     
     @objc func onImageButtonTap(_ sender: UIButton) {
         self.writeStatus(4) // Click on image
-        OPEN_URL(self.bannerURL)
+        
+        var url = self.bannerURL
+        if(url.isEmpty){ url = "https://www.youtube.com/watch?v=PRLF17Pb6vo" }
+        OPEN_URL(url)
     }
     
     @objc func onCloseButtonTap(_ sender: UIButton) {

@@ -128,7 +128,11 @@ extension StoryViewController {
                 // Empty story content
                 ALERT(vc: self, title: "Server error",
                 message: "There was an error while retrieving your story. Please try again later", onCompletion: {
-                    CustomNavController.shared.popViewController(animated: true)
+                    //CustomNavController.shared.popViewController(animated: true)
+                    
+                    DELAY(1.0) {
+                        self.loadContent()
+                    }
                 })
             } else {
                 MAIN_THREAD {
@@ -862,7 +866,31 @@ extension StoryViewController {
             var row = 1
             var val_X: CGFloat = 0
             //------------------------------------------
-            for (i, S) in self.groupedSources.enumerated() {
+            var groupedSourcesCopy = [(String, String)]()
+            let letters = "abcdefghijklmnopqrstuvwxyz"
+            
+            for S in self.groupedSources {
+                var total = 0
+                var current = -1
+                for _tmp in self.groupedSources {
+                    if(_tmp.0 == S.0) {
+                        if(_tmp.1 == S.1) {
+                            current = total
+                        }
+                        total += 1
+                    }
+                }
+                
+                var title = S.0
+                let url = S.1
+                
+                if(total>1) {
+                    title = S.0 + " (" + letters.getCharAt(index: current)! + ")"
+                }
+                groupedSourcesCopy.append( (title, url) )
+            }
+            
+            for (i, S) in groupedSourcesCopy.enumerated() {
                 let sourceLabel = UILabel()
                 sourceLabel.font = ROBOTO(15)
                 //sourceLabel.backgroundColor = .blue

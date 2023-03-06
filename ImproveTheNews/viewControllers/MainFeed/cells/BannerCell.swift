@@ -319,8 +319,10 @@ extension BannerCell {
     
     @objc func onImageButtonTap(_ sender: UIButton) {
         self.writeStatus(4) // Click on image
-        OPEN_URL(self.bannerURL)
-        //NOTIFY(Notification_reloadMainFeed)
+        
+        var url = self.bannerURL
+        if(url.isEmpty){ url = "https://www.youtube.com/watch?v=PRLF17Pb6vo" }
+        OPEN_URL(url)
     }
 
     @objc func onCheckButtonTap(_ sender: UIButton) {

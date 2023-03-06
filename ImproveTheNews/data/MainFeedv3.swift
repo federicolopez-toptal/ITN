@@ -18,6 +18,7 @@ class MainFeedv3 {
     var topicsCount = [String: Int]()   // For all counting (articles/stories) related
     
     var prevS: Int = 0
+    var titles = [String]()
     
     
     func loadData(_ topic: String, callback: @escaping (Error?) -> ()) {
@@ -54,8 +55,9 @@ class MainFeedv3 {
     }
     
     func loadMoreData(topic T: String, callback: @escaping (Error?, Int?) -> ()) {
-        
         var S_value = self.skipForTopic(T)
+        print("must SKIP", S_value)
+        
         //if(T != self.topic){ S_value += 1 }
         
 //        if(S_value-self.prevS <= 2) {
@@ -79,8 +81,22 @@ class MainFeedv3 {
                     if let _json = JSON(fromData: mData) {
                         let articlesAdded = self.addArticlesTo(topic: T, json: _json)
                         
+                        /*
+                        print("articlesAdded:", articlesAdded)
+                        
                         let diff = S_value - self.prevS
-                        if(diff <= 5) {
+                        print("DIFF", diff)
+                        if(diff <= 1) {
+                            callback(nil, 0)
+                        } else {
+                            self.prevS = S_value
+                            callback(nil, articlesAdded)
+                        }
+                        */
+                        
+                        print("new articles added: ", articlesAdded)
+                        
+                        if(articlesAdded < 5) {
                             callback(nil, 0)
                         } else {
                             self.prevS = S_value
@@ -107,6 +123,7 @@ extension MainFeedv3 {
         
         let mainNode = json["data"] as! [Any]
         self.topics = [MainFeedTopic]()
+        self.titles = [String]()
         
         for obj in mainNode {
             let _obj = obj as! [Any]
@@ -146,10 +163,18 @@ extension MainFeedv3 {
                 if(!isBanner) {
                     let topicIndex = self.indexForTopic(T)
                     let articles = _obj[1] as! [Any]
+                    
                     for A in articles {
-                        let newArticle = MainFeedArticle(A as! [Any])
-                        self.topics[topicIndex].articles.append(newArticle)
-                        articlesAdded += 1
+                        if let _title = (A as! [Any])[2] as? String {
+                            let found = self.topics[topicIndex].articles.first { $0.title == _title }
+                            print("Found", found)
+                            
+                            if(found == nil) { // not found
+                                let newArticle = MainFeedArticle(A as! [Any])
+                                self.topics[topicIndex].articles.append(newArticle)
+                                articlesAdded += 1
+                            }
+                        }
                     }
 
                     break

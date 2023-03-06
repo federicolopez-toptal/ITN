@@ -23,8 +23,6 @@ struct MainFeedStory {
     
     
     init (_ json: [String: Any]) {
-        print(json)
-    
     // main fields
         let mainNode = json["storyData"] as! [String: Any]
         

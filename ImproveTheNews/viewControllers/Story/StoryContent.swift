@@ -18,9 +18,11 @@ class StoryContent {
         self.getStoryID(slug: slug) { (storyID) in
             if let _storyID = storyID {
                 self.getStoryData(storyID: _storyID) { (story) in
+                    if(story==nil){ print("ERROR: getStoryData") }
                     callback(story)
                 }
             } else {
+                print("ERROR: getStoryID")
                 callback(nil)
             }
         }

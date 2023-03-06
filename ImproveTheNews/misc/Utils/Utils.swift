@@ -26,10 +26,9 @@ func READ(_ key: String) -> String? {
 }
 
 func API_BASE_URL() -> String {
-    let dict = Bundle.main.infoDictionary!
-    return dict["API_BASE_URL"] as! String
-    
-//    return "https://www.improvethenews.org"
+//    let dict = Bundle.main.infoDictionary!
+//    return dict["API_BASE_URL"] as! String
+    return "https://www.improvethenews.org"
 //    return "https://www.improvemynews.com"
 }
 
