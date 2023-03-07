@@ -28,8 +28,8 @@ func READ(_ key: String) -> String? {
 func API_BASE_URL() -> String {
 //    let dict = Bundle.main.infoDictionary!
 //    return dict["API_BASE_URL"] as! String
-    return "https://www.improvethenews.org"
 //    return "https://www.improvemynews.com"
+    return "https://www.improvethenews.org"
 }
 
 func DELAY(_ time: TimeInterval, callback: @escaping () ->() ) {
@@ -126,4 +126,4 @@ func PREFS_SHOW_STORIES() -> Bool {
 }
 
 
-let LOAD_MORE_LIMIT = 17
+let LOAD_MORE_LIMIT = 15
