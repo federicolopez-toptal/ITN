@@ -180,8 +180,12 @@ extension StoryViewController {
         
 //        print(self.story!.time)
 //        print(story.time)
-        if(!self.story!.time.isEmpty) {
-            self.addTime(time: self.story!.time)
+        
+//        if(!self.story!.time.isEmpty) { // self.story
+//            self.addTime(time: self.story!.time)
+//        }
+        if(story.time.isEmpty) { // self.story
+            self.addTime(time: story.time)
         }
         
         self.addFactsStructure()

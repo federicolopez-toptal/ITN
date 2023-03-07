@@ -64,6 +64,17 @@ struct MainFeedTopic {
         return result
     }
     
+    func singleArticlesAvailable() -> Int {
+        var count = 0
+        self.articles.forEach {
+            if($0.used==false && $0.isStory==false) {
+                count += 1
+            }
+        }
+        
+        return count
+    }
+    
     mutating func nextAvailableArticle(isStory storyFlag: Bool) -> MainFeedArticle? {
         var result: MainFeedArticle? = nil
         
@@ -83,6 +94,29 @@ struct MainFeedTopic {
                     break
                 }
             }
+        }
+        
+        return result
+    }
+    
+    // ----------------
+    mutating func has_2_articles() -> Bool {
+        var result = false
+        var count = 0
+        var index = -1
+        for (i, A) in self.articles.enumerated() {
+            if(A.used == false && A.isStory==false) {
+                index = i
+                count += 1
+                if(count==2) {
+                    result = true
+                    break
+                }
+            }
+        }
+        
+        if(count==1 && index > -1) {
+            self.articles[index].used = true
         }
         
         return result

@@ -56,14 +56,14 @@ extension MainFeedViewController {
                 itemsToShowPerTopic = "h,hsp,"
                 for _ in 1...LOADMORE_LIMIT {
                     //itemsToShowPerTopic += "aci8,_,swt,_,swt,_"
-                    itemsToShowPerTopic += "aci8,swt2,"
+                    itemsToShowPerTopic += "aci8,swt4,"
                 }
                 //itemsToShowPerTopic += "swt,"
                 itemsToShowPerTopic += "m"
             } else if(TEXT_ONLY()){
                 itemsToShowPerTopic = "h,hsp,"
                 for _ in 1...LOADMORE_LIMIT {
-                    itemsToShowPerTopic += "act8,swt2,"
+                    itemsToShowPerTopic += "act8,swt4,"
                 }
                 itemsToShowPerTopic += "m"
             }

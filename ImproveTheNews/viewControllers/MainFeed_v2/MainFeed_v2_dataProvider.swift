@@ -26,7 +26,7 @@ extension MainFeed_v2ViewController {
             var itemInTopic = 1
             var customCount = 0
             while(_T.hasAvailableArticles()) {
-                var newGroupItem: DataProviderGroupItem!
+                var newGroupItem: DataProviderGroupItem?
                 
                 if(IPAD()) {
                     if(TEXT_IMAGES()) {
@@ -48,21 +48,27 @@ extension MainFeed_v2ViewController {
                                 self.dataProvider.append(header)
                             }
                             
-                            if(customCount == 0) {
-                                // "Header" (split)
-                                let splitHeader = DataProviderSplitHeaderItem()
-                                self.dataProvider.append(splitHeader)
-                            }
                             
                             if(customCount==4 && _T.stillHasStories()) {
-                                // Stories
                                 newGroupItem = DataProvideriPadGroupItem_splitStory()
                                 customCount = 0
                             } else {
-                                newGroupItem = DataProvideriPadGroupItem_split()
-                                customCount += 1
+                                if(_T.has_2_articles()) {
+                                    if(customCount == 0) {
+                                        // "Header" (split)
+                                        let splitHeader = DataProviderSplitHeaderItem()
+                                        self.dataProvider.append(splitHeader)
+                                    }
+                                
+                                    newGroupItem = DataProvideriPadGroupItem_split()
+                                    customCount += 1
+                                } else {
+                                    if(_T.stillHasStories()) {
+                                        newGroupItem = DataProvideriPadGroupItem_splitStory()
+                                        customCount = 0
+                                    }
+                                }
                             }
-                                                        
                         }
                     } else {
                         // TEXT ONLY
@@ -84,41 +90,47 @@ extension MainFeed_v2ViewController {
                                 self.dataProvider.append(header)
                             }
                             
-                            if(customCount == 0) {
-                                // "Header" (split)
-                                let splitHeader = DataProviderSplitHeaderItem()
-                                self.dataProvider.append(splitHeader)
-                            }
-                            
                             if(customCount==4 && _T.stillHasStories()) {
-                                // Stories
                                 newGroupItem = DataProvideriPadGroupItem_splitStoryText()
                                 customCount = 0
                             } else {
-                                newGroupItem = DataProvideriPadGroupItem_splitText()
-                                customCount += 1
+                                if(_T.has_2_articles()) {
+                                    if(customCount == 0) {
+                                        // "Header" (split)
+                                        let splitHeader = DataProviderSplitHeaderItem()
+                                        self.dataProvider.append(splitHeader)
+                                    }
+                                
+                                    newGroupItem = DataProvideriPadGroupItem_splitText()
+                                    customCount += 1
+                                } else {
+                                    if(_T.stillHasStories()) {
+                                        newGroupItem = DataProvideriPadGroupItem_splitStoryText()
+                                        customCount = 0
+                                    }
+                                }
                             }
                             
                         }
                     }
                 }
                 
-                for j in 1...newGroupItem.MaxNumOfItems { // fill the "newItem"
-                    let storyFlag = newGroupItem.storyFlags[j-1]
-                    if let _A = _T.nextAvailableArticle(isStory: storyFlag) {
-                        newGroupItem.articles.append(_A)
-                        self.data.addCountTo(topic: _T.name)
-                        
-//                        if(newGroupItem.articles.count==4 && newGroupItem is DataProvideriPadGroup_topText) {
-//                            break
-//                        }
-                    } else {
-                        break
+                if let _newGroupItem = newGroupItem {
+                    //---
+                    for j in 1..._newGroupItem.MaxNumOfItems { // fill the "newItem"
+                        let storyFlag = _newGroupItem.storyFlags[j-1]
+                        if let _A = _T.nextAvailableArticle(isStory: storyFlag) {
+                            _newGroupItem.articles.append(_A)
+                            self.data.addCountTo(topic: _T.name)
+                        } else {
+                            break
+                        }
                     }
-                }
                 
-                self.dataProvider.append(newGroupItem)
-                itemInTopic += 1
+                    self.dataProvider.append(_newGroupItem)
+                    itemInTopic += 1
+                    //---
+                }
             }
             
             if(i==0) { // Banner, only for 1rst topic (if apply)

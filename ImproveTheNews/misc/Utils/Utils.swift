@@ -126,4 +126,4 @@ func PREFS_SHOW_STORIES() -> Bool {
 }
 
 
-let LOAD_MORE_LIMIT = 15
+let LOAD_MORE_LIMIT = 12
