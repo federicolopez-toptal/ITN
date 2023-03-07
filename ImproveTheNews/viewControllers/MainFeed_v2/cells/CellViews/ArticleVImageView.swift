@@ -70,10 +70,10 @@ class ArticleVImageView: CustomCellView {
         self.gradient.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         self.addSubview(self.gradient)
         self.gradient.activateConstraints([
-            self.gradient.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.gradient.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             self.gradient.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.gradient.topAnchor.constraint(equalTo: self.pill.topAnchor, constant: -20),
-            self.gradient.heightAnchor.constraint(equalToConstant: 80)
+            self.gradient.topAnchor.constraint(equalTo: self.pill.topAnchor, constant: -30),
+            self.gradient.heightAnchor.constraint(equalToConstant: 60)
         ])
         self.gradient.contentMode = .scaleToFill
         self.gradient.clipsToBounds = true

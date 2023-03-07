@@ -113,6 +113,8 @@ class StanceIconView: UIView {
         if(PREFS_SHOW_STANCE_ICONS() == false) {
             self.alpha = 0
         }
+        
+        self.refreshDisplayMode()
     }
     
     func getValues() -> (Int, Int) {

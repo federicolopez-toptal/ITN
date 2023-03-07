@@ -177,9 +177,14 @@ extension MainFeed_v2ViewController: iPadMoreCellDelegate {
 
         let topic = sender.topic
         self.data.loadMoreData(topic: topic) { (error, articlesAdded) in
-            if(articlesAdded == 0) { // No more articles
+            let count = self.data.topicsCount[topic]! + 11
+            if(count >= LOAD_MORE_LIMIT * 11) {
                 self.topicsCompleted[topic] = true
             }
+        
+//            if(articlesAdded == 0) { // No more articles
+//                self.topicsCompleted[topic] = true
+//            }
             
             self.populateDataProvider()
             self.refreshList()

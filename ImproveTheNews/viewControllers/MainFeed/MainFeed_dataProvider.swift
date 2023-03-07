@@ -33,7 +33,7 @@ extension MainFeedViewController {
             
         */
         
-        let LOADMORE_LIMIT = 20
+        let LOADMORE_LIMIT = 50
         var itemsToShowPerTopic = ""
         
         if(TEXT_IMAGES()) {

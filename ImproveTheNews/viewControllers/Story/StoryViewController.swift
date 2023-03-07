@@ -128,11 +128,11 @@ extension StoryViewController {
                 // Empty story content
                 ALERT(vc: self, title: "Server error",
                 message: "There was an error while retrieving your story. Please try again later", onCompletion: {
-                    //CustomNavController.shared.popViewController(animated: true)
+                    CustomNavController.shared.popViewController(animated: true)
                     
-                    DELAY(1.0) {
-                        self.loadContent()
-                    }
+//                    DELAY(1.0) {
+//                        self.loadContent()
+//                    }
                 })
             } else {
                 MAIN_THREAD {
@@ -178,8 +178,10 @@ extension StoryViewController {
         self.addTitle(text: story.title)
         self.addImage(imageUrl: story.image_src)
         
-        if(!story.time.isEmpty) {
-            self.addTime(time: story.time)
+//        print(self.story!.time)
+//        print(story.time)
+        if(!self.story!.time.isEmpty) {
+            self.addTime(time: self.story!.time)
         }
         
         self.addFactsStructure()
@@ -188,11 +190,13 @@ extension StoryViewController {
             self.populateFacts()    // works with self.facts
         
         self.addSpins(story.spins)
-        if(story.splitType.isEmpty) {
-            self.addArticles(story.articles)
-        } else {
-            self.addSplitArticles(type: story.splitType, story.articles)
-        }
+        
+        self.addArticles(story.articles)
+//        if(story.splitType.isEmpty) {
+//            self.addArticles(story.articles)
+//        } else {
+//            self.addSplitArticles(type: story.splitType, story.articles)
+//        }
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
@@ -804,6 +808,18 @@ extension StoryViewController {
                 contentLabel.attributedText = self.attrText(F.title, index: F.sourceIndex+1)
                 HStack.addArrangedSubview(contentLabel)
                 
+                let numberButton = UIButton(type: .custom)
+                numberButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                HStack.addSubview(numberButton)
+                numberButton.activateConstraints([
+                    numberButton.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor),
+                    numberButton.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor),
+                    numberButton.bottomAnchor.constraint(equalTo: contentLabel.bottomAnchor),
+                    numberButton.heightAnchor.constraint(equalToConstant: 25)
+                ])
+                numberButton.tag = 77 + F.sourceIndex
+                numberButton.addTarget(self, action: #selector(numberButtonOnTap(_:)), for: .touchUpInside)
+                
                 ADD_SPACER(to: VStack, height: 15) // separation from next item
                 
                 if(self.show3 && i==2) {
@@ -962,6 +978,12 @@ extension StoryViewController {
         ADD_SPACER(to: VStack, height: 15)
         //print("--------------------")
     }
+    @objc func numberButtonOnTap(_ sender: UIButton) {
+        let index = sender.tag-77
+        let tmpButton = UIButton(type: .custom)
+        tmpButton.tag = 200+index
+        self.sourceButtonOnTap(tmpButton)
+    }
     
     private func addFactsStructure() {
         ADD_SPACER(to: self.VStack, height: 1)
@@ -1094,8 +1116,8 @@ extension StoryViewController: UIGestureRecognizerDelegate {
         let font = UIFont(name: "Merriweather", size: 13)
         let fontItalic = UIFont(name: "Merriweather-Italic", size: 13)
         //let fontItalic = UIFont(name: "Merriweather-LightItalic", size: 14)
-        let extraText = " [" + String(index) + "]"
-        let mText = text + extraText
+        let extraText = "[" + String(index) + "]"
+        let mText = text + " " + extraText
         
         let attr = prettifyText(fullString: mText as NSString, boldPartsOfString: [],
             font: font, boldFont: font, paths: [], linkedSubstrings: [], accented: [])

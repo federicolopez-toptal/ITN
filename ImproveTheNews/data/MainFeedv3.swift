@@ -56,7 +56,6 @@ class MainFeedv3 {
     
     func loadMoreData(topic T: String, callback: @escaping (Error?, Int?) -> ()) {
         var S_value = self.skipForTopic(T)
-        print("must SKIP", S_value)
         
         //if(T != self.topic){ S_value += 1 }
         
@@ -93,8 +92,6 @@ class MainFeedv3 {
                             callback(nil, articlesAdded)
                         }
                         */
-                        
-                        print("new articles added: ", articlesAdded)
                         
                         if(articlesAdded < 5) {
                             callback(nil, 0)
@@ -165,16 +162,21 @@ extension MainFeedv3 {
                     let articles = _obj[1] as! [Any]
                     
                     for A in articles {
-                        if let _title = (A as! [Any])[2] as? String {
-                            let found = self.topics[topicIndex].articles.first { $0.title == _title }
-                            print("Found", found)
-                            
-                            if(found == nil) { // not found
-                                let newArticle = MainFeedArticle(A as! [Any])
-                                self.topics[topicIndex].articles.append(newArticle)
-                                articlesAdded += 1
-                            }
-                        }
+                        // non-repeated articles
+//                        if let _title = (A as! [Any])[2] as? String {
+//                            let found = self.topics[topicIndex].articles.first { $0.title == _title }
+//                            print("Found", found)
+//
+//                            if(found == nil) { // not found
+//                                let newArticle = MainFeedArticle(A as! [Any])
+//                                self.topics[topicIndex].articles.append(newArticle)
+//                                articlesAdded += 1
+//                            }
+//                        }
+
+                        let newArticle = MainFeedArticle(A as! [Any])
+                        self.topics[topicIndex].articles.append(newArticle)
+                        articlesAdded += 1
                     }
 
                     break
