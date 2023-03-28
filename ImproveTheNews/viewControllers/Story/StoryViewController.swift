@@ -1049,11 +1049,13 @@ extension StoryViewController {
             self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 200)
             self.imageHeightConstraint?.isActive = true
             
-            imageView.sd_setImage(with: URL(string: imageUrl)) { (img, error, cacheType, url) in
+            imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, options: .retryFailed) { (img, error, cacheType, url) in
                 if let _img = img {
                     let W: CGFloat = SCREEN_SIZE().width
                     let H = (_img.size.height * W)/_img.size.width
                     self.imageHeightConstraint?.constant = H
+                } else if(error != nil) {
+                    imageView.image = nil
                 }
             }
         }

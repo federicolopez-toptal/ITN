@@ -156,6 +156,7 @@ class ArticleBigImageView: CustomCellView {
         if let _url = URL(string: article.imgUrl) {
             self.mainImageView.sd_setImage(with: _url)
         }
+        
         self.titleLabel.text = article.title
         
         if(article.isStory) {
@@ -203,7 +204,7 @@ class ArticleBigImageView: CustomCellView {
     }
     
     override func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = .green //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.gradient.image = UIImage(named: DisplayMode.imageName("story.shortGradient"))
         self.gradientBottom.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E242F) : UIColor(hex: 0xE9EAEB)
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)

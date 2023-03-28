@@ -59,7 +59,8 @@ class ArticleVImageView: CustomCellView {
         ])
                 
         vStack.addArrangedSubview(self.titleLabel)
-        self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
+        self.titleLabel.backgroundColor = .green.withAlphaComponent(0.3)
+        //self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
 
         self.addSubview(self.pill)
         self.pill.activateConstraints([
@@ -216,7 +217,7 @@ class ArticleVImageView: CustomCellView {
         self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.articleSourceTime.textColor = self.storyTimeLabel.textColor
         
-        //self.backgroundColor = .systemPink
+        self.backgroundColor = .systemPink
     }
 
 }
@@ -230,5 +231,15 @@ extension ArticleVImageView: StanceIconViewDelegate {
             "country": self.article.country
         ]
         NOTIFY(Notification_stanceIconTap, userInfo: info)
+    }
+    
+    static func calculateHeight(text: String, width: CGFloat) -> CGFloat {
+        let tmpTitleLabel = ARTICLE_TITLE()
+        tmpTitleLabel.text = text
+        //tmpTitleLabel.font = MERRIWEATHER_BOLD(30)
+        let textW: CGFloat = width - (IPAD_INNER_MARGIN*2)
+        let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
+
+        return 175 + (IPAD_INNER_MARGIN*3) + textH + 28
     }
 }

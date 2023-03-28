@@ -182,7 +182,7 @@ class iPadBannerCell: UITableViewCell {
     }
     
     func populate(with banner: Banner) {
-        banner.trace()
+        //banner.trace()
         self.mainImageView.image = nil
         if let _url = URL(string: banner.imgUrl) {
             self.mainImageView.sd_setImage(with: _url) { (img, error, cacheType, url) in
@@ -226,7 +226,7 @@ extension iPadBannerCell {
     static func heightFor(banner: Banner) -> CGFloat {
         var result: CGFloat = 1
         
-        print("CODE", banner.code)
+        //print("CODE", banner.code)
         switch(banner.code) {
             case "pC":
                 result = 350

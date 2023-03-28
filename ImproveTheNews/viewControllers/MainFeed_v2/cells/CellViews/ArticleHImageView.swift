@@ -50,8 +50,9 @@ class ArticleHImageView: CustomCellView {
             vStack.topAnchor.constraint(equalTo: self.topAnchor)
         ])
         
+        //self.titleLabel.font = MERRIWEATHER_BOLD(30)
         vStack.addArrangedSubview(self.titleLabel)
-        self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
+        //self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         
         ADD_SPACER(to: vStack, height: IPAD_INNER_MARGIN)
         self.articleSourceRow = HSTACK(into: vStack)
@@ -140,5 +141,15 @@ extension ArticleHImageView: StanceIconViewDelegate {
             "country": self.article.country
         ]
         NOTIFY(Notification_stanceIconTap, userInfo: info)
+    }
+    
+    static func calculateHeight(text: String, width: CGFloat) -> CGFloat {
+        let tmpTitleLabel = ARTICLE_TITLE()
+        tmpTitleLabel.text = text
+        //tmpTitleLabel.font = MERRIWEATHER_BOLD(30)
+        let textW: CGFloat = width - 135 - IPAD_INNER_MARGIN
+        let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
+        
+        return textH + 28 + (IPAD_INNER_MARGIN * 2)
     }
 }

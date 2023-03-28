@@ -104,7 +104,7 @@ extension MainFeed_v2ViewController {
                     as! iPadGroupItem_splitStoriesCellText
             }
             
-            // ...
+            // ... //
             (cell as! GroupItemCell).populate(with: _dpGroupItem)
         } else { // Single cell(s)
             if(dpItem is DataProviderHeaderItem) {
@@ -140,8 +140,10 @@ extension MainFeed_v2ViewController {
         } else if(dpItem is DataProviderSplitHeaderItem) {
             result = 50
         } else if(dpItem is DataProvideriPadGroup_top) {
-            let count = (dpItem as! DataProvideriPadGroup_top).articles.count
-            result = iPadGroupItem_topCell.getHeightForCount(count)
+            let articles = (dpItem as! DataProvideriPadGroup_top).articles
+            result = iPadGroupItem_topCell.calculateHeightFor(articles)
+//            let count = (dpItem as! DataProvideriPadGroup_top).articles.count
+//            result = iPadGroupItem_topCell.getHeightForCount(count)
         } else if(dpItem is DataProvideriPadGroup_topText) {
             let count = (dpItem as! DataProvideriPadGroup_topText).articles.count
             result = iPadGroupItem_topCellText.getHeightForCount(count)

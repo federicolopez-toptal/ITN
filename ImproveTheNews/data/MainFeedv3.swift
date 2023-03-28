@@ -62,6 +62,13 @@ class MainFeedv3 {
 //        if(S_value-self.prevS <= 2) {
 //            callback(nil, 0)
 //        } else {
+            
+//            let strUrl = self.buildUrl(topic: T, A: 11, B: 0, S: S_value )
+//            var _B = 0
+//            if(MUST_SPLIT()>0) {
+//                _B = 12
+//            }
+            
             let strUrl = self.buildUrl(topic: T, A: 11, B: 0, S: S_value )
             var request = URLRequest(url: URL(string: strUrl)!)
             request.httpMethod = "GET"

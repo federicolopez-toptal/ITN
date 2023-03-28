@@ -166,13 +166,3 @@ extension MainFeed_v2ViewController {
     }
 }
 
-//            if(MUST_SPLIT()>0) { // remove stories
-//                var _articles = [MainFeedArticle]()
-//                for _A in _T.articles {
-//                    if(!_A.isStory) {
-//                        _articles.append(_A)
-//                    }
-//                }
-//
-//                _T.articles = _articles
-//            }
