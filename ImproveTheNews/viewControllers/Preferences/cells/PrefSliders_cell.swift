@@ -56,6 +56,7 @@ class PrefSliders_cell: UITableViewCell {
         let paragraph_01 = HyperlinkLabel.parrafo(text: self.texts(1), linkTexts: self.linkTexts(1),
             urls: self.urls(1), onTap: self.onLinkTap(_:))
         self.place(view: paragraph_01, below: self.titleLabel)
+        paragraph_01.tag = 400+1
         
         //-----
         let title2 = self.orangeTitle(text: "What spin do you want?")

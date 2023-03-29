@@ -157,6 +157,7 @@
 		1FF61CC028DAFC4D006DF9AC /* ArticleCI_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF61CBF28DAFC4D006DF9AC /* ArticleCI_cell.swift */; };
 		1FF6DF7929AE41960072D0D0 /* iPadBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */; };
 		1FF6FBAA2912F10F00673146 /* SplitHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6FBA92912F10F00673146 /* SplitHeaderCell.swift */; };
+		1FF9ED5129D48E82000D56C0 /* notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1FF9ED5029D48E82000D56C0 /* notes.txt */; };
 		1FFA551F294B756A00663966 /* URLs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FFA551E294B756A00663966 /* URLs.plist */; };
 		1FFA5521294B78A500663966 /* PrefSliders_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFA5520294B78A500663966 /* PrefSliders_cell.swift */; };
 		1FFDA25D2975D9AC00E9FC3F /* TUN64.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFDA1992975D9AB00E9FC3F /* TUN64.png */; };
@@ -511,6 +512,7 @@
 		1FF61CBF28DAFC4D006DF9AC /* ArticleCI_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCI_cell.swift; sourceTree = "<group>"; };
 		1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadBannerCell.swift; sourceTree = "<group>"; };
 		1FF6FBA92912F10F00673146 /* SplitHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitHeaderCell.swift; sourceTree = "<group>"; };
+		1FF9ED5029D48E82000D56C0 /* notes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = notes.txt; sourceTree = "<group>"; };
 		1FFA551E294B756A00663966 /* URLs.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = URLs.plist; sourceTree = "<group>"; };
 		1FFA5520294B78A500663966 /* PrefSliders_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefSliders_cell.swift; sourceTree = "<group>"; };
 		1FFDA1992975D9AB00E9FC3F /* TUN64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TUN64.png; sourceTree = "<group>"; };
@@ -879,6 +881,7 @@
 				1F95135528BFB96F00A77AB6 /* resources */,
 				1F95136428BFCB0700A77AB6 /* texts & notes */,
 				1FD23407291572B800B85AE9 /* trash */,
+				1FF9ED5029D48E82000D56C0 /* notes.txt */,
 			);
 			path = ImproveTheNews;
 			sourceTree = "<group>";
@@ -1510,6 +1513,7 @@
 				1FFDA2CA2975D9AC00E9FC3F /* GBR64.png in Resources */,
 				1FFDA2912975D9AC00E9FC3F /* COK64.png in Resources */,
 				1FFDA3112975D9AC00E9FC3F /* FRA64.png in Resources */,
+				1FF9ED5129D48E82000D56C0 /* notes.txt in Resources */,
 				1FFDA3082975D9AC00E9FC3F /* GUM64.png in Resources */,
 				1FFDA3122975D9AC00E9FC3F /* ECU64.png in Resources */,
 				1FFDA2FB2975D9AC00E9FC3F /* UGA64.png in Resources */,
@@ -2006,7 +2010,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2022,7 +2026,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ITNFoundation.ITNaggregator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -2042,7 +2046,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2058,7 +2062,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ITNFoundation.ITNaggregator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -2132,7 +2136,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2148,7 +2152,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ITNFoundation.ITNaggregator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

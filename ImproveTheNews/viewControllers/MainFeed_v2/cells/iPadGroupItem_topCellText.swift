@@ -11,6 +11,10 @@ class iPadGroupItem_topCellText: GroupItemCell {
 
     static let identifier = "iPadGroupItem_topCellText"
 
+    var view3_heightConstraint: NSLayoutConstraint!
+    var view4_heightConstraint: NSLayoutConstraint!
+    var view5_heightConstraint: NSLayoutConstraint!
+
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -100,6 +104,12 @@ class iPadGroupItem_topCellText: GroupItemCell {
         }
 
         return result
+    }
+    
+    
+    override func refreshDisplayMode() {
+        super.refreshDisplayMode()
+        //self.contentView.backgroundColor = .systemPink
     }
 
 }

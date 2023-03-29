@@ -117,3 +117,17 @@ func ALERT(vc: UIViewController, title: String? = nil, message: String, onComple
 func FUTURE_IMPLEMENTATION(_ text: String) {
     CustomNavController.shared.infoAlert(message: "Future implementation: " + text)
 }
+
+func ORIENTATION_PORTRAIT() -> Bool {
+    if(UIDevice.current.orientation.isPortrait) {
+        return true
+    }
+    return false
+}
+
+func ORIENTATION_LANDSCAPE() -> Bool {
+    if(UIDevice.current.orientation.isLandscape) {
+        return true
+    }
+    return false
+}

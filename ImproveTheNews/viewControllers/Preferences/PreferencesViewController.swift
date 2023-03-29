@@ -13,6 +13,7 @@ class PreferencesViewController: BaseViewController {
     let navBar = NavBarView()
     var list = UITableView()
     var firstTime = false
+    var wasInitialOrientationLandscape = false
 
     let dataProvider: [PreferenceItem] = [ // Items order
         .checkboxes,
@@ -38,9 +39,16 @@ class PreferencesViewController: BaseViewController {
             
             self.buildContent()
             self.firstTime = true
+            if(ORIENTATION_LANDSCAPE()) {
+                self.wasInitialOrientationLandscape = true
+            }
             
             CustomNavController.shared.slidersPanel.show(rows: 0)
         }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.list.reloadData()
     }
     
     // MARK: - misc

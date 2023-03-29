@@ -1,0 +1,17 @@
+PROD / LIVE
+com.ITNFoundation.ITNaggregator
+ImproveTheNews
+AppIcon
+
+https://www.improvethenews.org
+    misc/Utils/Utils.swif   API_BASE_URL
+
+------------------------------------------------------------
+------------------------------------------------------------
+BETA
+com.ITNFoundation.ITN-revamp
+ITN Revamp
+AppIcon-Beta
+
+https://www.improvemynews.com
+    misc/Utils/Utils.swif   API_BASE_URL

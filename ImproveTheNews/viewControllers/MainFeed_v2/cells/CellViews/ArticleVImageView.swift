@@ -59,7 +59,7 @@ class ArticleVImageView: CustomCellView {
         ])
                 
         vStack.addArrangedSubview(self.titleLabel)
-        self.titleLabel.backgroundColor = .green.withAlphaComponent(0.3)
+        //self.titleLabel.backgroundColor = .green.withAlphaComponent(0.3)
         //self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
 
         self.addSubview(self.pill)
@@ -217,7 +217,7 @@ class ArticleVImageView: CustomCellView {
         self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.articleSourceTime.textColor = self.storyTimeLabel.textColor
         
-        self.backgroundColor = .systemPink
+        //self.backgroundColor = .systemPink
     }
 
 }

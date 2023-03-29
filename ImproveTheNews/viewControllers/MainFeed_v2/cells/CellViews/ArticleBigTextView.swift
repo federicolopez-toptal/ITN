@@ -208,9 +208,6 @@ class ArticleBigTextView: CustomCellView {
         self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.storyTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         self.articleSourceTime.textColor = self.storyTimeLabel.textColor
-        
-        
-        
         //self.backgroundColor = .systemPink
     }
 
@@ -225,5 +222,14 @@ extension ArticleBigTextView: StanceIconViewDelegate {
             "country": self.article.country
         ]
         NOTIFY(Notification_stanceIconTap, userInfo: info)
+    }
+    
+    static func calculateHeight(text: String, width: CGFloat) -> CGFloat {
+        let tmpTitleLabel = ARTICLE_TITLE()
+        tmpTitleLabel.text = text
+        let textW: CGFloat = width - 135 - IPAD_INNER_MARGIN
+        let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
+        
+        return textH + 28 + (IPAD_INNER_MARGIN * 2)
     }
 }

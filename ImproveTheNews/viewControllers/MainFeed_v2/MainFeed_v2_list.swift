@@ -148,7 +148,9 @@ extension MainFeed_v2ViewController {
             let count = (dpItem as! DataProvideriPadGroup_topText).articles.count
             result = iPadGroupItem_topCellText.getHeightForCount(count)
         } else if(dpItem is DataProvideriPadGroup_row) {
-            result = 350+16
+            let articles = (dpItem as! DataProvideriPadGroup_row).articles
+            result = iPadGroupItem_rowCell.calculateHeightFor(articles)
+            //result = 350+16
         } else if(dpItem is DataProvideriPadGroup_rowText) {
             result = 250+16
         } else if(dpItem is DataProviderMoreItem) {

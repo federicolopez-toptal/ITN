@@ -15,6 +15,7 @@ class iPadGroupItem_topCell: GroupItemCell {
     var view4_heightConstraint: NSLayoutConstraint!
     var view5_heightConstraint: NSLayoutConstraint!
 
+
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
