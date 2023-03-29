@@ -10,7 +10,7 @@ https://www.improvethenews.org
 ------------------------------------------------------------
 BETA
 com.ITNFoundation.ITN-revamp
-ITN Revamp
+ITN Beta
 AppIcon-Beta
 
 https://www.improvemynews.com
