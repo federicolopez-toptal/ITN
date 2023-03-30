@@ -130,8 +130,10 @@ class StoryWT_cell: UICollectionViewCell {
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         
-        self.storyLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0xFF643C) : .white
-        self.storyLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        //self.storyLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0xFF643C) : .white
+        self.storyLabel.backgroundColor = UIColor(hex: 0xFF643C)
+        //self.storyLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        self.storyLabel.textColor = .white
         
 //        self.contentView.backgroundColor = .systemPink
     }

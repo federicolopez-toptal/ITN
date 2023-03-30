@@ -208,6 +208,10 @@ class StancePopupView: PopupView {
                 slider.setValue(Float(value), animated: false)
             }
         }
+        
+        if(DARK_MODE()) {
+            self.stanceIcon.backgroundColor = UIColor(hex: 0x2A323E)
+        }
     }
     
     private func country(_ value: String) -> String {
