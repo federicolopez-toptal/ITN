@@ -39,6 +39,8 @@ extension MainFeed_v2ViewController {
     }
 
     @objc func onStanceIconTap(_ notification: Notification) {
+        if(CustomNavController.shared.viewControllers.last! != self) { return }
+    
         if let _info = notification.userInfo as? [String: Any] {
             let source = _info["source"] as! String
             let country = _info["country"] as! String
@@ -48,6 +50,7 @@ extension MainFeed_v2ViewController {
             let popup = StancePopupView()
             popup.populate(sourceName: source, country: country, LR: LR, PE: PE)
             popup.pushFromBottom()
+            print("HERE!")
         }
     }
     

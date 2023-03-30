@@ -123,7 +123,7 @@ class StanceIconView: UIView {
     
     //MARK: Event(s)
     @objc func viewOnTap(sender: UITapGestureRecognizer) {
-        print("PREFS_SHOW_STANCE_POPUPS", PREFS_SHOW_STANCE_POPUPS())
+        //print("PREFS_SHOW_STANCE_POPUPS", PREFS_SHOW_STANCE_POPUPS())
         if(PREFS_SHOW_STANCE_POPUPS()) {
             self.delegate?.onStanceIconTap(sender: self)
         }
