@@ -29,6 +29,7 @@ class ArticleVImageView: CustomCellView {
         var articleSource: UIStackView? = nil
         var articleSourceTime = UILabel()
         let stanceIcon = StanceIconView()
+        let flagImageView = UIImageView()
 
 
     // MARK: - Start
@@ -124,6 +125,18 @@ class ArticleVImageView: CustomCellView {
             self.articleSourceRow!.trailingAnchor.constraint(equalTo: self.storySourcesRow!.trailingAnchor),
             self.articleSourceRow!.heightAnchor.constraint(equalToConstant: 28)
         ])
+        
+            self.flagImageView.backgroundColor = .clear
+            self.flagImageView.activateConstraints([
+                self.flagImageView.widthAnchor.constraint(equalToConstant: 24),
+                self.flagImageView.heightAnchor.constraint(equalToConstant: 24)
+            ])
+            let flagVStack = VSTACK(into: self.articleSourceRow!)
+            ADD_SPACER(to: flagVStack, height: 2)
+            flagVStack.addArrangedSubview(self.flagImageView)
+            ADD_SPACER(to: flagVStack, height: 2)
+            ADD_SPACER(to: self.articleSourceRow!, width: 5)
+        
             self.articleSource = HSTACK(into: self.articleSourceRow!)
             self.articleSource!.backgroundColor = .clear //.orange
             
@@ -202,6 +215,12 @@ class ArticleVImageView: CustomCellView {
             
             self.articleSourceTime.text = CLEAN_SOURCE(from: article.source) + " • " + article.time
             self.stanceIcon.setValues(article.LR, article.PE)
+        }
+        
+        if let _image = UIImage(named: self.article.country.uppercased() + "64.png") {
+            self.flagImageView.image = _image
+        } else {
+            self.flagImageView.image = UIImage(named: "noFlag.png")
         }
         
         self.refreshDisplayMode()
