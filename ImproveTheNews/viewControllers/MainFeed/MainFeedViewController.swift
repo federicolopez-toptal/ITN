@@ -24,6 +24,7 @@ class MainFeedViewController: BaseViewController {
     var prevMustSplit: Int?
 
     var mustReloadOnShow = false
+    var bannerClosed = false
 
 
     // MARK: - Start
@@ -102,6 +103,7 @@ class MainFeedViewController: BaseViewController {
     
     // MARK: - Data
     func loadData(showLoading: Bool = true) {
+        self.bannerClosed = false
         if(showLoading){ self.showLoading() }
         self.topicsCompleted = [String: Bool]()
         //let imFirst = self.imFirstViewController() !!!
@@ -161,6 +163,7 @@ class MainFeedViewController: BaseViewController {
     @objc func removeBannerFromNotification() {
         for (i, dpObj) in self.dataProvider.enumerated() {
             if(dpObj is DP_banner) {
+                self.bannerClosed = true
                 self.dataProvider.remove(at: i)
                 break
             }

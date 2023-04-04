@@ -20,7 +20,8 @@ class MainFeed_v2ViewController: BaseViewController {
     var topicsCompleted = [String: Bool]()
     var prevMustSplit: Int?
     var mustReloadOnShow = false
-
+    var bannerClosed = false
+    
 
     // MARK: - Start
     override func viewDidLoad() {
@@ -93,6 +94,7 @@ class MainFeed_v2ViewController: BaseViewController {
 extension MainFeed_v2ViewController {
     
     func loadData(showLoading: Bool = true) {
+        self.bannerClosed = false
         if(showLoading){ self.showLoading() }
         self.topicsCompleted = [String: Bool]()
         

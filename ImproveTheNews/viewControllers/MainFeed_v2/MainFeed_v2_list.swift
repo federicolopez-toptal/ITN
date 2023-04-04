@@ -181,7 +181,7 @@ extension MainFeed_v2ViewController: iPadMoreCellDelegate {
         self.showLoading()
 
         let topic = sender.topic
-        self.data.loadMoreData(topic: topic) { (error, articlesAdded) in
+        self.data.loadMoreData(topic: topic, bannerClosed: self.bannerClosed) { (error, articlesAdded) in
             let count = self.data.topicsCount[topic]! + 11
             
             let A = (count >= LOAD_MORE_LIMIT * 11)

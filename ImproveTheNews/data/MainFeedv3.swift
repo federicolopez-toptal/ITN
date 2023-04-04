@@ -54,7 +54,7 @@ class MainFeedv3 {
         task.resume()
     }
     
-    func loadMoreData(topic T: String, callback: @escaping (Error?, Int?) -> ()) {
+    func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
         var S_value = self.skipForTopic(T)
         
         //if(T != self.topic){ S_value += 1 }
@@ -85,7 +85,7 @@ class MainFeedv3 {
                 } else {
                     let mData = ADD_MAIN_NODE(to: data)
                     if let _json = JSON(fromData: mData) {
-                        let articlesAdded = self.addArticlesTo(topic: T, json: _json)
+                        let articlesAdded = self.addArticlesTo(topic: T, json: _json, bannerClosed: bannerClosed)
                         
                         /*
                         print("articlesAdded:", articlesAdded)
@@ -149,11 +149,12 @@ extension MainFeedv3 {
         }
     }
     
-    private func addArticlesTo(topic T: String, json: [String: Any]) -> Int {
+    private func addArticlesTo(topic T: String, json: [String: Any], bannerClosed: Bool = false) -> Int {
         
         var articlesAdded = 0
         let mainNode = json["data"] as! [Any]
         
+        if(bannerClosed){ self.banner = nil }
         for obj in mainNode {
             let _obj = obj as! [Any]
             if(_obj.count>1) {
