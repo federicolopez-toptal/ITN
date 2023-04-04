@@ -184,7 +184,7 @@ extension StoryViewController {
 //        if(!self.story!.time.isEmpty) { // self.story
 //            self.addTime(time: self.story!.time)
 //        }
-        if(story.time.isEmpty) { // self.story
+        if(!story.time.isEmpty) { // self.story
             self.addTime(time: story.time)
         }
         
@@ -326,6 +326,14 @@ extension StoryViewController {
                     HStack_source.addArrangedSubview(stanceIcon)
                     stanceIcon.setValues(LR, PE)
                     ADD_SPACER(to: HStack_source) // H fill
+
+                    if(!A.timeRelative.isEmpty) {
+                        let timeLabel = UILabel()
+                        timeLabel.text = "updated " + A.timeRelative
+                        timeLabel.font = ROBOTO(12)
+                        timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                        VStack_data.addArrangedSubview(timeLabel)
+                    }
 
                     ADD_SPACER(to: VStack_data) // V fill
 
@@ -706,6 +714,13 @@ extension StoryViewController {
                     stanceIcon.setValues(S.LR, S.CP)
                     ADD_SPACER(to: HStack_source) // H fill
                     
+                    if(!S.timeRelative.isEmpty) {
+                        let timeLabel = UILabel()
+                        timeLabel.text = "updated " + S.timeRelative
+                        timeLabel.font = ROBOTO(12)
+                        timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                        VStack_data.addArrangedSubview(timeLabel)
+                    }
                     ADD_SPACER(to: VStack_data) // V fill
                     
                     let mainButton = UIButton(type: .custom)
