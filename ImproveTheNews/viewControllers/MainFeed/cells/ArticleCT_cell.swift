@@ -25,6 +25,7 @@ class ArticleCT_cell: UICollectionViewCell {
     let sourcesContainer = UIStackView()
     let sourceTimeLabel = UILabel()
     let stanceIcon = StanceIconView()
+    let flagImageView = UIImageView()
     
     var LR: Int = 1
     var PE: Int = 1
@@ -68,13 +69,25 @@ class ArticleCT_cell: UICollectionViewCell {
         let sourcesHStack = HSTACK(into: self.mainVStack)
         sourcesHStack.backgroundColor = .clear //.yellow
 
+        self.flagImageView.backgroundColor = .clear
+        self.flagImageView.activateConstraints([
+            self.flagImageView.widthAnchor.constraint(equalToConstant: 24),
+            self.flagImageView.heightAnchor.constraint(equalToConstant: 24)
+        ])
+        let flagVStack = VSTACK(into: sourcesHStack)
+        ADD_SPACER(to: flagVStack, height: 2)
+        flagVStack.addArrangedSubview(self.flagImageView)
+        ADD_SPACER(to: flagVStack, height: 2)
+                
+        ADD_SPACER(to: sourcesHStack, width: 5)
+
         sourcesHStack.addArrangedSubview(self.sourcesContainer)
 
         self.sourceTimeLabel.text = "Last updated 2 hours ago"
         self.sourceTimeLabel.textColor = .black
         self.sourceTimeLabel.numberOfLines = 2
         self.sourceTimeLabel.font = roboto
-        self.sourceTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        self.sourceTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         sourcesHStack.addArrangedSubview(self.sourceTimeLabel)
 
         ADD_SPACER(to: sourcesHStack, width: 5)
@@ -87,7 +100,7 @@ class ArticleCT_cell: UICollectionViewCell {
         if(PREFS_SHOW_STANCE_POPUPS()) {
             self.stanceIcon.delegate = self
         }
-        ADD_SPACER(to: sourcesHStack)
+        //ADD_SPACER(to: sourcesHStack)
 
         ADD_SPACER(to: self.mainVStack, height: 16)
     }
@@ -122,6 +135,12 @@ class ArticleCT_cell: UICollectionViewCell {
         self.PE = article.PE
         self.sourceName = source
         self.country = article.country
+        
+        if let _image = UIImage(named: self.country.uppercased() + "64.png") {
+            self.flagImageView.image = _image
+        } else {
+            self.flagImageView.image = UIImage(named: "noFlag.png")
+        }
     }
     
     private func shortenTime(_ text: String) -> String {

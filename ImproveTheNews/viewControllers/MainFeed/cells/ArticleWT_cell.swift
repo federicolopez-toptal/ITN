@@ -22,6 +22,7 @@ class ArticleWT_cell: UICollectionViewCell {
     let sourceTimeLabel = UILabel()
     let stanceIcon = StanceIconView()
     let bottomLine = UIView()
+    let flagImageView = UIImageView()
     
     var LR: Int = 1
     var PE: Int = 1
@@ -70,6 +71,15 @@ class ArticleWT_cell: UICollectionViewCell {
             iconsHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10)
         ])
+        
+        self.flagImageView.backgroundColor = .clear
+        self.flagImageView.activateConstraints([
+            self.flagImageView.widthAnchor.constraint(equalToConstant: 24),
+            self.flagImageView.heightAnchor.constraint(equalToConstant: 24)
+        ])
+        iconsHStack.addArrangedSubview(self.flagImageView)
+        ADD_SPACER(to: iconsHStack, width: 5)
+        
         iconsHStack.addArrangedSubview(self.sourcesContainer)
         
         self.sourceTimeLabel.text = "Last updated 2 hours ago"
@@ -122,6 +132,12 @@ class ArticleWT_cell: UICollectionViewCell {
         self.PE = article.PE
         self.sourceName = source
         self.country = article.country
+        
+        if let _image = UIImage(named: self.country.uppercased() + "64.png") {
+            self.flagImageView.image = _image
+        } else {
+            self.flagImageView.image = UIImage(named: "noFlag.png")
+        }
     }
     
     func refreshDisplayMode() {
