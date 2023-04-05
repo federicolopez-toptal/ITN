@@ -370,7 +370,11 @@ extension MainFeedv3 {
                 10 if never cancelled
                 
         BANNER(s)
+            pC  podCast banner
             yT  YouTube banner
+            nL  newsLetter form
+            lO  ABC banner
+            
                 01  Banner shown, no user interaction
                 02  User tapped on "close"
                 03  User check "Don't show again", then tap on "close"
@@ -494,7 +498,7 @@ extension MainFeedv3 {
                 }
             }
         }
-        result += "nL03"
+        result += "lO03nL03"
         
         return result
     }
