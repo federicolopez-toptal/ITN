@@ -147,10 +147,6 @@ class MainFeedViewController: BaseViewController {
                             CustomNavController.shared.showTour = false
                             self.startTour()
                         }
-                        
-                        DELAY(2.0) {
-                            self.scrollToBottom()
-                        }
                     /* --- */ }
                 }
             }

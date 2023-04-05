@@ -137,7 +137,8 @@ class RatingView: UIView {
         
         var valX: CGFloat = 0
         for i in 1...5 {
-            let star = UIImageView(image: UIImage(named: DisplayMode.imageName("star")))
+            //let star = UIImageView(image: UIImage(named: DisplayMode.imageName("star")))
+            let star = UIImageView(image: UIImage(named: "starFilled"))
             self.starsContainer.addSubview(star)
             star.activateConstraints([
                 star.widthAnchor.constraint(equalToConstant: 20),
@@ -272,7 +273,7 @@ extension RatingView {
                 if(i <= value) {
                     star.alpha = 1
                 } else {
-                    star.alpha = 0.3
+                    star.alpha = 0.4
                 }
             }
         }
