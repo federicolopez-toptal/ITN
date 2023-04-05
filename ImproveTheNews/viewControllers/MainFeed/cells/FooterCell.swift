@@ -125,7 +125,7 @@ class FooterCell: UICollectionViewCell {
             self.bottomView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.bottomView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.bottomView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 34),
-            self.bottomView.heightAnchor.constraint(equalToConstant: 34)
+            self.bottomView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -188,7 +188,12 @@ class FooterCell: UICollectionViewCell {
     }
     
     static func getHeight(width: CGFloat) -> CGSize {
-        return CGSize(width: width, height: 380) //20
+        var H: CGFloat = 390
+        if(SAFE_AREA()?.bottom == 0) {
+            H += 40
+        }
+        
+        return CGSize(width: width, height: H)
     }
 }
 

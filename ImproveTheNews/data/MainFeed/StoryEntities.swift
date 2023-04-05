@@ -48,8 +48,8 @@ struct Spin {
     var subTitle: String = ""
     var url: String = ""
     var image: String = ""
-    var LR: Int = 1
-    var CP: Int = 1
+    var LR: Int = 0
+    var CP: Int = 0
     var time: Int = 0
     var timeRelative: String = ""
     var media_title: String = ""

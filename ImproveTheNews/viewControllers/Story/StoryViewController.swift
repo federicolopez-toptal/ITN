@@ -298,8 +298,8 @@ extension StoryViewController {
                         ADD_SPACER(to: HStack_source, width: 2)
                     }
                          
-                    var LR = 1
-                    var PE = 1
+                    var LR = 0
+                    var PE = 0
                          
                     let sourceName = A.media_title.components(separatedBy: " #").first!
                     self.getSourceIcon(name: sourceName) { (icon) in
@@ -325,6 +325,11 @@ extension StoryViewController {
                     stanceIcon.tag = 767
                     HStack_source.addArrangedSubview(stanceIcon)
                     stanceIcon.setValues(LR, PE)
+                    stanceIcon.alpha = 1
+                    if(LR==0 || PE==0) {
+                        stanceIcon.alpha = 0
+                    }
+                    
                     ADD_SPACER(to: HStack_source) // H fill
 
                     if(!A.timeRelative.isEmpty) {
@@ -712,6 +717,12 @@ extension StoryViewController {
                     let stanceIcon = StanceIconView()
                     HStack_source.addArrangedSubview(stanceIcon)
                     stanceIcon.setValues(S.LR, S.CP)
+                    
+                    stanceIcon.alpha = 1
+                    if(S.LR==0 || S.CP==0) {
+                        stanceIcon.alpha = 0
+                    }
+                    
                     ADD_SPACER(to: HStack_source) // H fill
                     
                     if(!S.timeRelative.isEmpty) {
