@@ -25,9 +25,10 @@ extension MainFeed_v2ViewController {
             // Per topic...
             var itemInTopic = 1
             var customCount = 0
+            var hasStories = _T.stillHasStories()
+            
             while(_T.hasAvailableArticles()) {
                 var newGroupItem: DataProviderGroupItem?
-                
                 if(IPAD()) {
                     if(TEXT_IMAGES()) {
                         if(MUST_SPLIT()==0) {
@@ -36,7 +37,7 @@ extension MainFeed_v2ViewController {
                                 let header = DataProviderHeaderItem(title: _T.capitalizedName)
                                 self.dataProvider.append(header)
                             
-                                if(PREFS_SHOW_STORIES()) {
+                                if(hasStories) {
                                     newGroupItem = DataProvideriPadGroup_top()
                                 } else {
                                     let spacer = DataProviderSpacer(size: 20.0)
@@ -45,7 +46,7 @@ extension MainFeed_v2ViewController {
                                     newGroupItem = DataProvideriPadGroup_rowNoStories()
                                 }
                             } else {
-                                if(PREFS_SHOW_STORIES()) {
+                                if(hasStories) {
                                     newGroupItem = DataProvideriPadGroup_row()
                                 } else {
                                     newGroupItem = DataProvideriPadGroup_rowNoStories()
