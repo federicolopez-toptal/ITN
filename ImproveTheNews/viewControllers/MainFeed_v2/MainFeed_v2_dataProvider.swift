@@ -36,9 +36,20 @@ extension MainFeed_v2ViewController {
                                 let header = DataProviderHeaderItem(title: _T.capitalizedName)
                                 self.dataProvider.append(header)
                             
-                                newGroupItem = DataProvideriPadGroup_top()
+                                if(PREFS_SHOW_STORIES()) {
+                                    newGroupItem = DataProvideriPadGroup_top()
+                                } else {
+                                    let spacer = DataProviderSpacer(size: 20.0)
+                                    self.dataProvider.append(spacer)
+                                
+                                    newGroupItem = DataProvideriPadGroup_rowNoStories()
+                                }
                             } else {
-                                newGroupItem = DataProvideriPadGroup_row()
+                                if(PREFS_SHOW_STORIES()) {
+                                    newGroupItem = DataProvideriPadGroup_row()
+                                } else {
+                                    newGroupItem = DataProvideriPadGroup_rowNoStories()
+                                }
                             }
                         } else {
                             // SPLIT

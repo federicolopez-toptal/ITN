@@ -32,6 +32,14 @@ class DataProviderFooterItem: DataProviderItem {
     /* ... */
 }
 
+class DataProviderSpacer: DataProviderItem {
+    var size: CGFloat = 1.0
+    
+    init(size: CGFloat) {
+        self.size = size
+    }
+}
+
 class DataProviderMoreItem: DataProviderItem {
     var topic = "news"
     var completed = false
@@ -95,6 +103,18 @@ class DataProvideriPadGroup_rowText: DataProviderGroupItem {
         
         self.MaxNumOfItems = 3
         self.storyFlags = [false, false, false]
+    }
+    
+}
+
+class DataProvideriPadGroup_rowNoStories: DataProviderGroupItem {
+
+    override init() {
+        super.init()
+        self.articles = [MainFeedArticle]()
+        
+        self.MaxNumOfItems = 2
+        self.storyFlags = [false, false]
     }
     
 }

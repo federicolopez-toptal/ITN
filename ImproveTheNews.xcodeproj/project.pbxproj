@@ -45,6 +45,8 @@
 		1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */; };
 		1F56F727294B9D2900654CDB /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */; };
 		1F5A0FFF2992D59700DD8CB3 /* Data_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */; };
+		1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */; };
+		1F66798429DF026000CFB714 /* iPadSpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798329DF026000CFB714 /* iPadSpacerCell.swift */; };
 		1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */; };
 		1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */; };
 		1F70BE712913FD940061E3FA /* SearchTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE702913FD940061E3FA /* SearchTextView.swift */; };
@@ -424,6 +426,8 @@
 		1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCT_cell.swift; sourceTree = "<group>"; };
 		1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_misc.swift; sourceTree = "<group>"; };
+		1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_rowNoStoriesCell.swift; sourceTree = "<group>"; };
+		1F66798329DF026000CFB714 /* iPadSpacerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSpacerCell.swift; sourceTree = "<group>"; };
 		1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1F70BE702913FD940061E3FA /* SearchTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextView.swift; sourceTree = "<group>"; };
@@ -803,6 +807,7 @@
 				1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */,
 				1F9EDD4A29AE8FE2007A97A6 /* iPadGroupItem_topCellText.swift */,
 				1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */,
+				1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */,
 				1F9EDD4E29AE9842007A97A6 /* iPadGroupItem_rowCellText.swift */,
 				1F9EDD5229AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift */,
 				1F9EDD5429AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift */,
@@ -811,6 +816,7 @@
 				1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */,
 				1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */,
 				1F9EDD4629AE5819007A97A6 /* iPadFooterCell.swift */,
+				1F66798329DF026000CFB714 /* iPadSpacerCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -1932,6 +1938,7 @@
 				1FA4CE7928C3DCFB0068DE4A /* SlidersPanel.swift in Sources */,
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
 				1FC73904298961C8003EB38D /* Animations.swift in Sources */,
+				1F66798429DF026000CFB714 /* iPadSpacerCell.swift in Sources */,
 				1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */,
 				1FE916A129A7A32A007F8AAF /* ArticleVImageView.swift in Sources */,
 				1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */,
@@ -1967,6 +1974,7 @@
 				1F70BE712913FD940061E3FA /* SearchTextView.swift in Sources */,
 				1F22E2EB28C6E5E0007F00D1 /* UINavigationControllerExtension.swift in Sources */,
 				1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */,
+				1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
