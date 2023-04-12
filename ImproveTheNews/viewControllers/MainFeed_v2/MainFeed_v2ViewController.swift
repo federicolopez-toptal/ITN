@@ -133,15 +133,17 @@ extension MainFeed_v2ViewController {
                         
                         // TOUR
                         if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
-                            WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
-                            CustomNavController.shared.showTour = false
-                            self.startTour()
+                            if(CustomNavController.shared.viewControllers.first! == self) {
+                                WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
+                                CustomNavController.shared.startTour()
+                            }
                         }
                         
-                        DELAY(0.5) {
-                            //self.scrollToBottom()
-                        }
-                    /* --- */ }
+//                        if(CustomNavController.shared.viewControllers.first! == self) {
+//                            CustomNavController.shared.startTour() //!!!
+//                        }
+                        
+                    }
                 }
             }
         }

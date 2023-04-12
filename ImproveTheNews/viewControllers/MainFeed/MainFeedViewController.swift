@@ -143,10 +143,16 @@ class MainFeedViewController: BaseViewController {
                         
                         // TOUR
                         if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
-                            WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
-                            CustomNavController.shared.showTour = false
-                            self.startTour()
+                            if(CustomNavController.shared.viewControllers.first! == self) {
+                                WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
+                                CustomNavController.shared.startTour()
+                            }
                         }
+                        
+//                        if(CustomNavController.shared.viewControllers.first! == self) {
+//                            CustomNavController.shared.startTour() //!!!
+//                        }
+                        
                     /* --- */ }
                 }
             }
@@ -226,6 +232,8 @@ extension MainFeedViewController: TopicSelectorViewDelegate, BreadcrumbsViewDele
             let vc = MainFeedViewController()
             let topic = self.data.topics[index].name
             vc.topic = topic
+            
+            CustomNavController.shared.tour?.cancel()
             CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
@@ -278,16 +286,6 @@ extension MainFeedViewController {
             WRITE(LocalKeys.preferences.showStancePopups, value: "01")
         }
         
-    }
-    
-    func startTour() {
-        MAIN_THREAD {
-            CustomNavController.shared.slidersPanel.makeSureIsClosed()
-            CustomNavController.shared.slidersPanel.forceSplitOff()
-        
-            let tour = TourView(buildInto: CustomNavController.shared.view)
-            tour.start()
-        }
     }
     
     func scrollToBottom() {

@@ -21,7 +21,8 @@ class CustomNavController: UINavigationController {
     let slidersPanel = SlidersPanel()
     let floatingButton = FloatingButton()
     let darkView = DarkView()
-
+    
+    var tour: Tour?
 
 
     override func viewDidLoad() {
@@ -35,7 +36,7 @@ class CustomNavController: UINavigationController {
         
         self.loading.buildInto(self.view)
         self.darkView.buildInto(self.view)
-        
+
         self.addInitialViewController() // Start!
     }
     
@@ -44,6 +45,7 @@ class CustomNavController: UINavigationController {
         if(!self.didLayout) {
             self.didLayout = true
             self.menu.buildInto(self.view)
+            self.tour = Tour(buildInto: self.view)
         }
     }
     
@@ -76,6 +78,19 @@ class CustomNavController: UINavigationController {
                 (v as! PopupView).refreshDisplayMode()
             }
         }
+    }
+    
+}
+
+// MARK: - Tour
+extension CustomNavController {
+    
+    func startTour() {
+        self.showTour = false
+    
+        self.slidersPanel.makeSureIsClosed()
+        self.slidersPanel.forceSplitOff()
+        self.tour?.start()
     }
     
 }
@@ -121,6 +136,7 @@ extension CustomNavController {
             self.view.layoutIfNeeded()
         }
 
+        self.tour?.cancel()
         self.slidersPanel.hide()
         self.floatingButton.hide()
     }

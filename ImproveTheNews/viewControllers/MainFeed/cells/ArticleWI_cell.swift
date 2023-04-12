@@ -85,6 +85,9 @@ class ArticleWI_cell: UICollectionViewCell {
         titleVStack.addArrangedSubview(self.titleLabel)
         
         let iconsHStack = HSTACK(into: titleVStack)
+        iconsHStack.activateConstraints([
+            iconsHStack.heightAnchor.constraint(equalToConstant: 28)
+        ])
         
         self.flagImageView.backgroundColor = .clear
         self.flagImageView.activateConstraints([
@@ -104,6 +107,11 @@ class ArticleWI_cell: UICollectionViewCell {
         
         ADD_SPACER(to: iconsHStack, width: 10)
         iconsHStack.addArrangedSubview(self.stanceIcon)
+//        iconsHStack.backgroundColor = .yellow.withAlphaComponent(0.5)
+        self.stanceIcon.activateConstraints([
+            self.stanceIcon.heightAnchor.constraint(equalToConstant: 28),
+            self.stanceIcon.widthAnchor.constraint(equalToConstant: 28)
+        ])
         
         self.stanceIcon.alpha = 1.0
         if(PREFS_SHOW_STANCE_ICONS()==false) {
@@ -187,7 +195,10 @@ class ArticleWI_cell: UICollectionViewCell {
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         
-        let H: CGFloat = 16 + textH + 13 + sourcesH + 16
+        var H: CGFloat = 16 + textH + 13 + sourcesH + 16
+        let minH: CGFloat = 130
+        if(H<minH){ H = minH }
+        
         return CGSize(width: width, height: H)
     }
     

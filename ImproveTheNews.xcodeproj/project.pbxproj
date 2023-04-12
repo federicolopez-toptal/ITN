@@ -20,6 +20,7 @@
 		1F1788AD2937CBC1003F528E /* TrashCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AC2937CBC1003F528E /* TrashCode.swift */; };
 		1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18C88828F89EF600197F38 /* MenuItemCell.swift */; };
 		1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A1A9B28D27D3100256785 /* StringExtension.swift */; };
+		1F1B2B1129DF23B600993CE4 /* TourRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B2B1029DF23B600993CE4 /* TourRectView.swift */; };
 		1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */; };
 		1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */; };
 		1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */; };
@@ -314,6 +315,7 @@
 		1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */; };
 		1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */; };
 		1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B4ADC2967745A00BE8850 /* RatingView.swift */; };
+		1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B89E729DF0FDC004697DD /* Tour.swift */; };
 		1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */; };
 		1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */; };
 		1F9E28C32954B22900041303 /* PrivacyPolicy_content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28C22954B22900041303 /* PrivacyPolicy_content.swift */; };
@@ -401,6 +403,7 @@
 		1F1788AC2937CBC1003F528E /* TrashCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashCode.swift; sourceTree = "<group>"; };
 		1F18C88828F89EF600197F38 /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
 		1F1A1A9B28D27D3100256785 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		1F1B2B1029DF23B600993CE4 /* TourRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourRectView.swift; sourceTree = "<group>"; };
 		1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
 		1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMode.swift; sourceTree = "<group>"; };
@@ -697,6 +700,7 @@
 		1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadHeaderCell.swift; sourceTree = "<group>"; };
 		1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadMoreCell.swift; sourceTree = "<group>"; };
 		1F9B4ADC2967745A00BE8850 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		1F9B89E729DF0FDC004697DD /* Tour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tour.swift; sourceTree = "<group>"; };
 		1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		1F9E28C22954B22900041303 /* PrivacyPolicy_content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicy_content.swift; sourceTree = "<group>"; };
@@ -993,6 +997,7 @@
 				1F7E777128E362160024D792 /* CustomCollectionView */,
 				1FD2340229155F0000B85AE9 /* Menu */,
 				1FBCA44E294122D000FBF997 /* TextFields */,
+				1F9B89E929DF21FE004697DD /* Tour */,
 				1F56F728294B9D2F00654CDB /* Third Party */,
 				1FA4CE7828C3DCFB0068DE4A /* SlidersPanel.swift */,
 				1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */,
@@ -1001,7 +1006,6 @@
 				1FA1728528D2AF6E00693B85 /* StanceIconView.swift */,
 				1F8EAECF29085FE30015F6F6 /* BreadcrumbsView.swift */,
 				1F2306BB291987D600755D71 /* OnOffView.swift */,
-				1F88B405293FC67E0024904E /* TourView.swift */,
 				1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */,
 				1F9B4ADC2967745A00BE8850 /* RatingView.swift */,
 			);
@@ -1020,6 +1024,16 @@
 				1F9538D728FF123800251598 /* TASKS.plist */,
 			);
 			path = "texts & notes";
+			sourceTree = "<group>";
+		};
+		1F9B89E929DF21FE004697DD /* Tour */ = {
+			isa = PBXGroup;
+			children = (
+				1F88B405293FC67E0024904E /* TourView.swift */,
+				1F9B89E729DF0FDC004697DD /* Tour.swift */,
+				1F1B2B1029DF23B600993CE4 /* TourRectView.swift */,
+			);
+			path = Tour;
 			sourceTree = "<group>";
 		};
 		1F9E28C12954B1FD00041303 /* PrivacyPolicy */ = {
@@ -1111,6 +1125,19 @@
 			path = FAQ;
 			sourceTree = "<group>";
 		};
+		1FC0880229E6F77E00FAAA62 /* simpleCells */ = {
+			isa = PBXGroup;
+			children = (
+				1F0B000028F5FD35007280FF /* FooterCell.swift */,
+				1F9EDD4829AE8510007A97A6 /* SpacerCell.swift */,
+				1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */,
+				1FA8AA3328D0D50200B6C956 /* HeaderCell.swift */,
+				1F2A2353294A5B4D00CA16D7 /* HeaderZeroCell.swift */,
+				1FF6FBA92912F10F00673146 /* SplitHeaderCell.swift */,
+			);
+			path = simpleCells;
+			sourceTree = "<group>";
+		};
 		1FC287D329A645660017433B /* MainFeed_v2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1189,12 +1216,7 @@
 			isa = PBXGroup;
 			children = (
 				1FA8AA3928D1788B00B6C956 /* misc */,
-				1FA8AA3328D0D50200B6C956 /* HeaderCell.swift */,
-				1F2A2353294A5B4D00CA16D7 /* HeaderZeroCell.swift */,
-				1FF6FBA92912F10F00673146 /* SplitHeaderCell.swift */,
-				1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */,
-				1F9EDD4829AE8510007A97A6 /* SpacerCell.swift */,
-				1F0B000028F5FD35007280FF /* FooterCell.swift */,
+				1FC0880229E6F77E00FAAA62 /* simpleCells */,
 				1FDEB1CA28CB88730029831E /* StoryBI_cell.swift */,
 				1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */,
 				1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */,
@@ -1927,6 +1949,7 @@
 				1F9EDD5729AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */,
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
+				1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */,
 				1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */,
 				1FD2340C2915A17500B85AE9 /* PrefCheckboxes_cell.swift in Sources */,
 				1FC73906298961EA003EB38D /* Animator.swift in Sources */,
@@ -1972,6 +1995,7 @@
 				1FD5BDF128DC0F91003E650F /* NoInternetPopupView.swift in Sources */,
 				1FA8AA3428D0D50200B6C956 /* HeaderCell.swift in Sources */,
 				1F70BE712913FD940061E3FA /* SearchTextView.swift in Sources */,
+				1F1B2B1129DF23B600993CE4 /* TourRectView.swift in Sources */,
 				1F22E2EB28C6E5E0007F00D1 /* UINavigationControllerExtension.swift in Sources */,
 				1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */,
 				1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */,

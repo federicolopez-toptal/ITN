@@ -179,7 +179,10 @@ extension StoryCI_cell {
         let sourcesH: CGFloat = sourcesCount == 1 ? 0 : 18
         let timeLabelH: CGFloat = 18
         
-        let H: CGFloat = 16+5 + imageH + 5 + textH + 10 + sourcesH + 10 + timeLabelH + 12 + 16
+        var H: CGFloat = 16+5 + imageH + 5 + textH + 10 + sourcesH + 10 + timeLabelH + 12 + 16
+        let minH: CGFloat = 260
+        if(H<minH){ H = minH }
+        
         return CGSize(width: width/2, height: H)
     }
     

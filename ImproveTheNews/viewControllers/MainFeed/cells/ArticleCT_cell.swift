@@ -178,7 +178,10 @@ extension ArticleCT_cell {
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         
-        let H: CGFloat = 16 + textH + 10 + sourcesH + 16
+        var H: CGFloat = 16 + textH + 10 + sourcesH + (16*2)
+        let minH: CGFloat = 145
+        if(H<minH){ H = minH }
+        
         return CGSize(width: width/2, height: H)
     }
     

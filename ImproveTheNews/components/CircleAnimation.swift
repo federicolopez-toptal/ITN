@@ -52,6 +52,9 @@ class CircleAnimation: UIView {
             self.circle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.circle.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+        
+        self.isUserInteractionEnabled = false
+        self.hide()
     }
     
     func startAnimation() {

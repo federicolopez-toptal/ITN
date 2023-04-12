@@ -447,6 +447,8 @@ extension NavBarView {
         let vc = SearchViewController()        
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
+        
+        CustomNavController.shared.tour?.cancel()
         CustomNavController.shared.present(vc, animated: true)
     }
     

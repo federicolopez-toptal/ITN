@@ -283,7 +283,7 @@ extension TourView {
                     splitButtonMargin += bottom
                 }
             }
-            splitButtonMargin -= 55
+            //splitButtonMargin -= 55
         
             let buttonArea = UIButton(type: .custom)
             buttonArea.backgroundColor = .clear //.green.withAlphaComponent(0.25)

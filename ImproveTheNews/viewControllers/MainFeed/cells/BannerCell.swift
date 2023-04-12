@@ -166,7 +166,7 @@ class BannerCell: UICollectionViewCell {
             return
         }
         
-        _banner.trace()
+        //_banner.trace()
         self.mainImageView.image = nil
 //        if(Layout.current() == .textImages) {
             if let _url = URL(string: _banner.imgUrl) {

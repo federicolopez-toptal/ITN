@@ -376,6 +376,7 @@ extension SlidersPanel {
         if(gesture.direction == .up) {
             if(self.rowsShown == 2) {
                 self.show(rows: 6, animated: true)
+                CustomNavController.shared.tour?.finish()
             }
         } else if(gesture.direction == .down) {
             if(self.rowsShown == 2) {

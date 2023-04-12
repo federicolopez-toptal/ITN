@@ -69,7 +69,8 @@ class ArticleWT_cell: UICollectionViewCell {
         iconsHStack.activateConstraints([
             iconsHStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             iconsHStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10)
+            iconsHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
+            iconsHStack.heightAnchor.constraint(equalToConstant: 28)
         ])
         
         self.flagImageView.backgroundColor = .clear
@@ -166,7 +167,10 @@ class ArticleWT_cell: UICollectionViewCell {
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         
-        let H: CGFloat = 16 + textH + 10 + sourcesH + 16
+        var H: CGFloat = 16 + textH + 10 + sourcesH + 16
+        let minH: CGFloat = 103
+        if(H<minH){ H = minH }
+        
         return CGSize(width: width, height: H)
     }
     

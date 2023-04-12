@@ -157,7 +157,10 @@ class StoryWT_cell: UICollectionViewCell {
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 18
         
-        let H: CGFloat = 16 + storyLabelH + 8 + textH + 10 + sourcesH + 16 + 5 + StoryWT_cell.extraHeight
+        var H: CGFloat = 16 + storyLabelH + 8 + textH + 10 + sourcesH + 16 + 5 + StoryWT_cell.extraHeight
+        let minH: CGFloat = 147
+        if(H<minH){ H = minH }
+        
         return CGSize(width: width, height: H)
     }
     
