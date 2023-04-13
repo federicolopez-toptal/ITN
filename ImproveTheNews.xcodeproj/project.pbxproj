@@ -22,6 +22,7 @@
 		1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18C88828F89EF600197F38 /* MenuItemCell.swift */; };
 		1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A1A9B28D27D3100256785 /* StringExtension.swift */; };
 		1F1B2B1129DF23B600993CE4 /* TourRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B2B1029DF23B600993CE4 /* TourRectView.swift */; };
+		1F1BBA4329E87D6000D8C697 /* iPadBannerNewsletterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1BBA4229E87D6000D8C697 /* iPadBannerNewsletterCell.swift */; };
 		1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */; };
 		1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */; };
 		1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */; };
@@ -407,6 +408,7 @@
 		1F18C88828F89EF600197F38 /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
 		1F1A1A9B28D27D3100256785 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		1F1B2B1029DF23B600993CE4 /* TourRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourRectView.swift; sourceTree = "<group>"; };
+		1F1BBA4229E87D6000D8C697 /* iPadBannerNewsletterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadBannerNewsletterCell.swift; sourceTree = "<group>"; };
 		1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		1F22E2E428C6590F007F00D1 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
 		1F22E2E628C65CF4007F00D1 /* DisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMode.swift; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 				1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */,
 				1F9EDD4629AE5819007A97A6 /* iPadFooterCell.swift */,
 				1F66798329DF026000CFB714 /* iPadSpacerCell.swift */,
+				1F1BBA4229E87D6000D8C697 /* iPadBannerNewsletterCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -1984,6 +1987,7 @@
 				1FF61CC028DAFC4D006DF9AC /* ArticleCI_cell.swift in Sources */,
 				1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */,
 				1FE916A529A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift in Sources */,
+				1F1BBA4329E87D6000D8C697 /* iPadBannerNewsletterCell.swift in Sources */,
 				1F95136328BFC69200A77AB6 /* MainFeedViewController.swift in Sources */,
 				1FA4CE7328C2DDFD0068DE4A /* ErrorExtension.swift in Sources */,
 				1F9EDD4B29AE8FE2007A97A6 /* iPadGroupItem_topCellText.swift in Sources */,

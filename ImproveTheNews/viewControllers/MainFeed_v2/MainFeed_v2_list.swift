@@ -34,6 +34,8 @@ extension MainFeed_v2ViewController {
         self.list.register(iPadGroupItem_splitCell.self, forCellReuseIdentifier: iPadGroupItem_splitCell.identifier)
         self.list.register(iPadSplitHeaderCell.self, forCellReuseIdentifier: iPadSplitHeaderCell.identifier)
         self.list.register(iPadBannerCell.self, forCellReuseIdentifier: iPadBannerCell.identifier)
+        self.list.register(iPadBannerNewsletterCell.self,
+            forCellReuseIdentifier: iPadBannerNewsletterCell.identifier)
         self.list.register(iPadFooterCell.self, forCellReuseIdentifier: iPadFooterCell.identifier)
         
         self.list.register(iPadSpacerCell.self, forCellReuseIdentifier: iPadSpacerCell.identifier)
@@ -126,8 +128,13 @@ extension MainFeed_v2ViewController {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadSplitHeaderCell.identifier) as! iPadSplitHeaderCell
                 (cell as! iPadSplitHeaderCell).populate()
             } else if(dpItem is DataProviderBannerItem) {
-                cell = self.list.dequeueReusableCell(withIdentifier: iPadBannerCell.identifier) as! iPadBannerCell
-                (cell as! iPadBannerCell).populate(with: self.data.banner!)
+                if(self.data.banner!.code == "nL") {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPadBannerNewsletterCell.identifier) as! iPadBannerNewsletterCell
+                    (cell as! iPadBannerNewsletterCell).populate(with: self.data.banner!)
+                } else {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPadBannerCell.identifier) as! iPadBannerCell
+                    (cell as! iPadBannerCell).populate(with: self.data.banner!)
+                }
             } else if(dpItem is DataProviderFooterItem) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadFooterCell.identifier) as! iPadFooterCell
                 (cell as! iPadFooterCell).viewController = self
@@ -175,7 +182,11 @@ extension MainFeed_v2ViewController {
         } else if(dpItem is DataProvideriPadGroupItem_splitText) {
             result = 180
         } else if(dpItem is DataProviderBannerItem) {
-            result = iPadBannerCell.heightFor(banner: self.data.banner!)
+            if(self.data.banner!.code == "nL") {
+                result = iPadBannerNewsletterCell.getHeight()
+            } else {
+                result = iPadBannerCell.heightFor(banner: self.data.banner!)
+            }
         } else if(dpItem is DataProviderFooterItem) {
             result = 330
         } else if(dpItem is DataProvideriPadGroupItem_splitStory) {
