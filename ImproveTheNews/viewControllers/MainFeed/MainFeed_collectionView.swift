@@ -41,6 +41,7 @@ extension MainFeedViewController {
         self.list.register(ArticleCI_cell.self, forCellWithReuseIdentifier: ArticleCI_cell.identifier)
         self.list.register(ArticleCT_cell.self, forCellWithReuseIdentifier: ArticleCT_cell.identifier)
         self.list.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
+        self.list.register(BannernewsLetterCell.self, forCellWithReuseIdentifier: BannernewsLetterCell.identifier)
         self.list.register(SpacerCell.self, forCellWithReuseIdentifier: SpacerCell.identifier)
 
         self.list.delegate = self
@@ -203,14 +204,19 @@ extension MainFeedViewController {
             size = StoryWT_cell.calculateHeight(text: story.title, width: width)
         } else if let _dpItem = dpItem as? DP_banner { // Banner
             let banner = self.getBanner(from: _dpItem)
-            var headerText = ""
-            var mainText = ""
-            if let _banner = banner {
-                headerText = _banner.headerText
-                mainText = _banner.mainText
-            }
             
-            size = BannerCell.calculateHeight(headerText: headerText, text: mainText, width: width)
+            if(banner?.code == "nL") {
+                size = BannernewsLetterCell.getHeight(width: width)
+            } else {
+                var headerText = ""
+                var mainText = ""
+                if let _banner = banner {
+                    headerText = _banner.headerText
+                    mainText = _banner.mainText
+                }
+            
+                size = BannerCell.calculateHeight(headerText: headerText, text: mainText, width: width)
+            }
         }
         
         return size
@@ -287,9 +293,17 @@ extension MainFeedViewController {
                 for: indexPath) as! StoryWT_cell
             (cell as! StoryWT_cell).populate(with: self.getArticle(from: _item))
         } else if let _item = dpItem as? DP_banner { // Banner
-            cell = self.list.dequeueReusableCell(withReuseIdentifier: BannerCell.identifier,
-                for: indexPath) as! BannerCell
-            (cell as! BannerCell).populate(with: self.getBanner(from: _item))
+            let banner = self.getBanner(from: _item)
+            
+            if(banner?.code == "nL") {
+                cell = self.list.dequeueReusableCell(withReuseIdentifier: BannernewsLetterCell.identifier,
+                    for: indexPath) as! BannernewsLetterCell
+                (cell as! BannernewsLetterCell).populate(with: banner)
+            } else {
+                cell = self.list.dequeueReusableCell(withReuseIdentifier: BannerCell.identifier,
+                    for: indexPath) as! BannerCell
+                (cell as! BannerCell).populate(with: banner)
+            }
         }
             
         return cell

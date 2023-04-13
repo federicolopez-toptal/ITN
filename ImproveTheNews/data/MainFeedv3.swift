@@ -373,7 +373,7 @@ extension MainFeedv3 {
             pC  podCast banner
             yT  YouTube banner
             nL  newsLetter form
-            lO  ABC banner
+            lO  ABC banner - IGNORE!
             
                 01  Banner shown, no user interaction
                 02  User tapped on "close"
@@ -478,10 +478,10 @@ extension MainFeedv3 {
         }
 
 
-        result += "VM00VE35" //oB11"
+        result += "VM00VE35"
         
         // Onboarding
-        result += "oB"
+        result += "oB" //oB11"
         if let _onboarding = READ(LocalKeys.preferences.onBoardingState) {
             result += _onboarding
         } else {
@@ -498,7 +498,7 @@ extension MainFeedv3 {
                 }
             }
         }
-        result += "lO03nL03"
+        result += "lO03" //nL03"
         
         return result
     }

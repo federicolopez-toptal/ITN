@@ -103,6 +103,11 @@ extension FormTextView {
     func text() -> String {
         return self.mainTextField.text!
     }
+    
+    func setText(_ T: String) {
+        self.mainTextField.text = T
+        self.onFormTextChange(self.mainTextField)
+    }
 
     func focus() {
         self.mainTextField.becomeFirstResponder()
