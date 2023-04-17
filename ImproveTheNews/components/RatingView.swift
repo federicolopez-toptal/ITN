@@ -31,10 +31,15 @@ class RatingView: UIView {
     }
     
     func buildInto(viewController: UIViewController, url: String) {
+        var normal = true
+        if(SCREEN_SIZE().width==320){ normal = false }
+        
         self.url = url
     
         if(SAFE_AREA()!.bottom > 0) {
-            self.HEIGHT += 15
+            self.HEIGHT = 79
+        } else {
+            self.HEIGHT = 64
         }
     
         viewController.view.addSubview(self)
@@ -56,13 +61,15 @@ class RatingView: UIView {
             line.heightAnchor.constraint(equalToConstant: 1),
         ])
     
-        self.label.text = "Rate article"
+        self.label.text = normal ? "Rate article" : "Rate\narticle"
+        self.label.numberOfLines = normal ? 1 : 2
         self.label.font = MERRIWEATHER_BOLD(15)
         self.label.textColor = .white
+        //self.label.backgroundColor = .red
         self.addSubview(self.label)
         self.label.activateConstraints([
-            self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14),
-            self.label.topAnchor.constraint(equalTo: self.topAnchor, constant: 22)
+            self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: normal ? 14 : 7),
+            self.label.topAnchor.constraint(equalTo: self.topAnchor, constant: normal ? 22 : 13)
         ])
         
         let button = UIButton(type: .system)
@@ -71,7 +78,7 @@ class RatingView: UIView {
         self.addSubview(button)
         button.activateConstraints([
             button.centerYAnchor.constraint(equalTo: self.label.centerYAnchor),
-            button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -46),
+            button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: normal ? -46 : -40),
             button.widthAnchor.constraint(equalToConstant: 74),
             button.heightAnchor.constraint(equalToConstant: 35)
         ])

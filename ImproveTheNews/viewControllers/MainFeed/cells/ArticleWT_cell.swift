@@ -73,14 +73,22 @@ class ArticleWT_cell: UICollectionViewCell {
             iconsHStack.heightAnchor.constraint(equalToConstant: 28)
         ])
         
-        self.flagImageView.backgroundColor = .clear
-        self.flagImageView.activateConstraints([
-            self.flagImageView.widthAnchor.constraint(equalToConstant: 24),
-            self.flagImageView.heightAnchor.constraint(equalToConstant: 24)
-        ])
-        iconsHStack.addArrangedSubview(self.flagImageView)
-        ADD_SPACER(to: iconsHStack, width: 5)
         
+        
+        let vStackFlag = VSTACK(into: iconsHStack)
+        vStackFlag.backgroundColor = .clear //.green
+        // ----------
+        ADD_SPACER(to: vStackFlag, height: 5)
+            self.flagImageView.backgroundColor = .darkGray
+            vStackFlag.addArrangedSubview(self.flagImageView)
+            self.flagImageView.activateConstraints([
+                self.flagImageView.widthAnchor.constraint(equalToConstant: 18),
+                self.flagImageView.heightAnchor.constraint(equalToConstant: 18)
+            ])
+        ADD_SPACER(to: vStackFlag, height: 5)
+        iconsHStack.addArrangedSubview(vStackFlag)
+        ADD_SPACER(to: iconsHStack, width: 6)
+        // ----------
         iconsHStack.addArrangedSubview(self.sourcesContainer)
         
         self.sourceTimeLabel.text = "Last updated 2 hours ago"

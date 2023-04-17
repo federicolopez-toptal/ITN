@@ -67,19 +67,19 @@ class ArticleCT_cell: UICollectionViewCell {
         ADD_SPACER(to: self.mainVStack, height: 10)
 
         let sourcesHStack = HSTACK(into: self.mainVStack)
-        sourcesHStack.backgroundColor = .clear //.yellow
+        sourcesHStack.backgroundColor = .clear //.yellow.withAlphaComponent(0.5)
 
         self.flagImageView.backgroundColor = .clear
         self.flagImageView.activateConstraints([
-            self.flagImageView.widthAnchor.constraint(equalToConstant: 24),
-            self.flagImageView.heightAnchor.constraint(equalToConstant: 24)
+            self.flagImageView.widthAnchor.constraint(equalToConstant: 18),
+            self.flagImageView.heightAnchor.constraint(equalToConstant: 18)
         ])
         let flagVStack = VSTACK(into: sourcesHStack)
-        ADD_SPACER(to: flagVStack, height: 2)
+        ADD_SPACER(to: flagVStack, height: 5)
         flagVStack.addArrangedSubview(self.flagImageView)
-        ADD_SPACER(to: flagVStack, height: 2)
+        ADD_SPACER(to: flagVStack, height: 5)
                 
-        ADD_SPACER(to: sourcesHStack, width: 5)
+        ADD_SPACER(to: sourcesHStack, width: 6)
 
         sourcesHStack.addArrangedSubview(self.sourcesContainer)
 

@@ -287,15 +287,15 @@ extension StoryViewController {
                             flagImageView.image = UIImage(named: "noFlag.png")
                         }
                         
-                        ADD_SPACER(to: VStack_flag, height: 4)
+                        ADD_SPACER(to: VStack_flag, height: 5)
                         VStack_flag.addArrangedSubview(flagImageView)
                         flagImageView.activateConstraints([
-                            flagImageView.widthAnchor.constraint(equalToConstant: 20),
-                            flagImageView.heightAnchor.constraint(equalToConstant: 20)
+                            flagImageView.widthAnchor.constraint(equalToConstant: 18),
+                            flagImageView.heightAnchor.constraint(equalToConstant: 18)
                         ])
-                        ADD_SPACER(to: VStack_flag, height: 4)
+                        ADD_SPACER(to: VStack_flag, height: 5)
                         
-                        ADD_SPACER(to: HStack_source, width: 2)
+                        ADD_SPACER(to: HStack_source, width: 6)
                     }
                          
                     var LR = 0
@@ -690,15 +690,15 @@ extension StoryViewController {
                             flagImageView.image = UIImage(named: "noFlag.png")
                         }
                         
-                        ADD_SPACER(to: VStack_flag, height: 4)
+                        ADD_SPACER(to: VStack_flag, height: 5)
                         VStack_flag.addArrangedSubview(flagImageView)
                         flagImageView.activateConstraints([
-                            flagImageView.widthAnchor.constraint(equalToConstant: 20),
-                            flagImageView.heightAnchor.constraint(equalToConstant: 20)
+                            flagImageView.widthAnchor.constraint(equalToConstant: 18),
+                            flagImageView.heightAnchor.constraint(equalToConstant: 18)
                         ])
-                        ADD_SPACER(to: VStack_flag, height: 4)
+                        ADD_SPACER(to: VStack_flag, height: 5)
                         
-                        ADD_SPACER(to: HStack_source, width: 2)
+                        ADD_SPACER(to: HStack_source, width: 6)
                     }
                     
                     if(!S.media_label.isEmpty) {
