@@ -397,6 +397,19 @@ extension SlidersPanel {
         
         self.checkSplitComponents()
         WRITE(LocalKeys.sliders.split, value: String(self.split))
+        
+        var topic: String = ""
+            let lastVC = CustomNavController.shared.viewControllers.last!
+            if let _vc = lastVC as? MainFeedViewController {
+                topic = _vc.topic
+            }
+            if let _vc = lastVC as? MainFeed_v2ViewController {
+                topic = _vc.topic
+            }
+        if(!topic.isEmpty) {
+            print("RELOAD TOPIC " + topic)
+        }
+        
         NOTIFY(Notification_reloadMainFeed)
     }
     

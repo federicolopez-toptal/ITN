@@ -136,10 +136,10 @@ class MainFeedViewController: BaseViewController {
                         self.list.forceUpdateLayoutForVisibleItems()
                         self.refreshVLine()
 
-                        if(self.prevMustSplit != nil) {
-                            if(self.prevMustSplit != MUST_SPLIT()) { self.tapOnLogo() }
-                        }
-                        self.prevMustSplit = MUST_SPLIT()
+//                        if(self.prevMustSplit != nil) {
+//                            if(self.prevMustSplit != MUST_SPLIT()) { self.tapOnLogo() }
+//                        }
+//                        self.prevMustSplit = MUST_SPLIT()
                         
                         // TOUR
                         if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
@@ -160,6 +160,7 @@ class MainFeedViewController: BaseViewController {
     }
     // MARK: - For local notifications
     @objc func loadDataFromNotification() {
+        print("FROM NOTIFICATION!")
         self.loadData(showLoading: true)
     }
     @objc func refreshDataFromNotification() {

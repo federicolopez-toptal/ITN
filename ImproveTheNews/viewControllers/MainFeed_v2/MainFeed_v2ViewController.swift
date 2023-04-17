@@ -124,12 +124,12 @@ extension MainFeed_v2ViewController {
                         self.hideLoading()
                         self.list.hideRefresher()
 
-                        if(self.prevMustSplit != nil) {
-                            if(self.prevMustSplit != MUST_SPLIT()) {
-                                CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
-                            }
-                        }
-                        self.prevMustSplit = MUST_SPLIT()
+//                        if(self.prevMustSplit != nil) {
+//                            if(self.prevMustSplit != MUST_SPLIT()) {
+//                                CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
+//                            }
+//                        }
+//                        self.prevMustSplit = MUST_SPLIT()
                         
                         // TOUR
                         if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
