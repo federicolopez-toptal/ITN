@@ -325,6 +325,9 @@ extension SignInView {
     }
     
     @objc func mainActionButtonTap(_ sender: UIButton) {
+//        self.emailText.setText("gatolab@gmail.com")
+//        self.passText.setText("federico123")
+        
         if(self.emailText.text().isEmpty) {
             CustomNavController.shared.infoAlert(message: "Please, enter your email")
         } else if(!VALIDATE_EMAIL(self.emailText.text())) {
@@ -333,11 +336,24 @@ extension SignInView {
             CustomNavController.shared.infoAlert(message: "Please, enter your password")
         } else {
             self.delegate?.SignInViewShowLoading(state: true)
-            FUTURE_IMPLEMENTATION("Connect with the API for authentication")
-            
-            DELAY(3.0) {
-                self.delegate?.SignInViewShowLoading(state: false)
+
+            let email = self.emailText.text()
+            let password = self.passText.text()
+            API.shared.signIn(email: email, password: password) { (success, serverMsg) in
+                if(success) {
+                    print("Todo bien!")
+                } else {
+                    var msg = serverMsg
+                    if(msg == nil) { msg = "An error ocurred. Please, try again later" }
+                    
+                    CustomNavController.shared.infoAlert(message: msg!)
+                }
+                
+                DELAY(2.0) {
+                    self.delegate?.SignInViewShowLoading(state: false)
+                }
             }
+
         }
     }
     

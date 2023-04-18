@@ -252,7 +252,7 @@ extension iPadBannerNewsletterCell {
             CustomNavController.shared.infoAlert(message: "Please, enter a valid email")
         } else {
             CustomNavController.shared.loading.show()
-            API.shared.subscribeToNewsletter(email: emailText.text()) { (success) in
+            API.shared.subscribeToNewsletter(email: emailText.text()) { (success, serverMsg) in
                 var msg = "Subscription successful"
                 if(!success){ msg = "Error while processing your request. Please, try again later" }
                 

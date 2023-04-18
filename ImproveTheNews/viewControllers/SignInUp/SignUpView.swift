@@ -389,6 +389,10 @@ extension SignUpView {
     }
     
     @objc func mainActionButtonTap(_ sender: UIButton) {
+//        self.emailText.setText("gatolab2@gmail.com")
+//        self.passText.setText("federico123")
+//        self.pass2Text.setText("federico123")
+
         if(self.emailText.text().isEmpty) {
             CustomNavController.shared.infoAlert(message: "Please, enter your email")
         } else if(!VALIDATE_EMAIL(self.emailText.text())) {
@@ -401,10 +405,22 @@ extension SignUpView {
             CustomNavController.shared.infoAlert(message: "The password and the confirmation must match")
         } else {
             self.delegate?.SignUpViewShowLoading(state: true)
-            FUTURE_IMPLEMENTATION("Connect with the API for authentication")
             
-            DELAY(3.0) {
-                self.delegate?.SignUpViewShowLoading(state: false)
+            let email = self.emailText.text()
+            let password = self.passText.text()
+            API.shared.signUp(email: email, password: password) { (success, serverMsg) in
+                if(success) {
+                    CustomNavController.shared.infoAlert(message: "Registration successful. You'll receive a validation email to complete the process")
+                } else {
+                    var msg = serverMsg
+                    if(msg == nil) { msg = "An error ocurred. Please, try again later" }
+                    
+                    CustomNavController.shared.infoAlert(message: msg!)
+                }
+                
+                DELAY(2.0) {
+                    self.delegate?.SignUpViewShowLoading(state: false)
+                }
             }
         }
     }

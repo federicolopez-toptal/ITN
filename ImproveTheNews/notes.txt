@@ -21,6 +21,7 @@ https://www.improvemynews.com
 
 
 FIXES ------------------------------------------------------
+>> Cuando actualicé a Xcode 14.3
 https://stackoverflow.com/questions/73760753/xcode-14-command-phasescriptexecution-failed-with-a-nonzero-exit-code
 
 Search for the following line in your project:
