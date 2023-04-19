@@ -123,6 +123,9 @@ extension API {
         request.httpMethod = method
         let body = try? JSONSerialization.data(withJSONObject: bodyJson)
         request.httpBody = body
+        
+        print( self.getBearerAuth() )
+        
         request.setValue(self.getBearerAuth(), forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { data, resp, error in

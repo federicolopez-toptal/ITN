@@ -31,7 +31,7 @@ struct MainFeedStory {
         self.time = getSTRING(mainNode["time"])
         
         if let _imageObj = mainNode["image"] as? [String: Any] {
-            self.image_src = getSTRING(_imageObj["src"])
+            self.image_src = FIX_URL( getSTRING(_imageObj["src"]) )
             if let _imageCreditObj = _imageObj["credit"] as? [String: String] {
                 self.image_credit_title = getSTRING(_imageCreditObj["title"])
                 self.image_credit_title = getSTRING(_imageCreditObj["url"])

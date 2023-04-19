@@ -31,8 +31,8 @@ struct MainFeedArticle {
         self.source = json[0] as! String
         self.time = json[1] as! String // "2 minutes ago"
         self.title = json[2] as! String
-        self.url = json[3] as! String
-        self.imgUrl = json[4] as! String
+        self.url = FIX_URL(json[3] as! String)
+        self.imgUrl = FIX_URL(json[4] as! String)
         self.LR = (json[8] as! NSNumber).intValue
         self.PE = (json[9] as! NSNumber).intValue
         self.country = json[10] as! String

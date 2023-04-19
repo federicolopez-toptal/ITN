@@ -160,7 +160,6 @@ class MainFeedViewController: BaseViewController {
     }
     // MARK: - For local notifications
     @objc func loadDataFromNotification() {
-        print("FROM NOTIFICATION!")
         self.loadData(showLoading: true)
     }
     @objc func refreshDataFromNotification() {

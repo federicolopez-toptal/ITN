@@ -22,8 +22,8 @@ struct StoryArticle {
     init(_ json: [String: Any]) {
         self.id = getSTRING(json["id"], defaultValue: "1")
         self.title = getSTRING(json["title"], defaultValue: "")
-        self.url = getSTRING(json["url"])
-        self.image = getSTRING(json["image"])
+        self.url = FIX_URL( getSTRING(json["url"]) )
+        self.image = FIX_URL( getSTRING(json["image"]) )
         self.timeRelative = getSTRING(json["timeRelative"])
         
         if let _time = json["time"] as? Int {
@@ -34,7 +34,6 @@ struct StoryArticle {
             self.media_title = getSTRING(_mediaObj["title"])
             self.media_country_code = getSTRING(_mediaObj["country_code"])
         }
-        
     }
 }
 
@@ -67,8 +66,8 @@ struct Spin {
                 let first = _spinsArray[0]
                 
                 self.subTitle = getSTRING(first["title"])
-                self.url = getSTRING(first["url"])
-                self.image = getSTRING(first["image"])
+                self.url = FIX_URL( getSTRING(first["url"]) )
+                self.image = FIX_URL( getSTRING(first["image"]) )
                 
                 if let _time = first["time"] as? Int {
                     self.time = _time
@@ -113,7 +112,7 @@ struct Fact {
                 let first = _sourceArray[0]
                 
                 self.source_title = getSTRING(first["title"])
-                self.source_url = getSTRING(first["url"])
+                self.source_url = FIX_URL( getSTRING(first["url"]) )
             }
         }
     }

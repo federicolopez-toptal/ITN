@@ -92,8 +92,7 @@ extension ArticleViewController: WKNavigationDelegate {
         if let _article = self.article {
             self.showLoading()
             
-            let strUrl = _article.url.replacingOccurrences(of: "http", with: "https")
-            if let _url = URL(string: strUrl) {
+            if let _url = URL(string: _article.url) {
                 let request = URLRequest(url: _url)
                 self.webView.load(request)
             }
