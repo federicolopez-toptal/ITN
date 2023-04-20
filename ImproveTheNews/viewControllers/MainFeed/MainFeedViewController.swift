@@ -90,6 +90,8 @@ class MainFeedViewController: BaseViewController {
         if(CustomNavController.shared.slidersPanel.isHidden && CustomNavController.shared.floatingButton.isHidden) {
             CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
+        
+        self.printUserInfo()
     }
     
     override func refreshDisplayMode() {
@@ -319,6 +321,14 @@ extension MainFeedViewController {
 //            self.showFAQ()
 //        }
     }
+    
+    private func printUserInfo() {
+        print("----")
+        print("USER ID", UUID.shared.getValue())
+        print("AUTH", "Bearer " + READ(LocalKeys.user.JWT)!)
+        print("----")
+    }
+    
 }
 
 extension MainFeedViewController: UIGestureRecognizerDelegate {

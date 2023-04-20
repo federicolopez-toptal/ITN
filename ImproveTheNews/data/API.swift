@@ -11,6 +11,8 @@ class API {
 
     static let shared = API()
 
+    var isLogged = false
+
 // ---
     func signUp(email: String, password: String, newsletter: Bool = false,
         callback: @escaping (Bool, String?) -> () ) {
@@ -123,9 +125,6 @@ extension API {
         request.httpMethod = method
         let body = try? JSONSerialization.data(withJSONObject: bodyJson)
         request.httpBody = body
-        
-        print( self.getBearerAuth() )
-        
         request.setValue(self.getBearerAuth(), forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { data, resp, error in
