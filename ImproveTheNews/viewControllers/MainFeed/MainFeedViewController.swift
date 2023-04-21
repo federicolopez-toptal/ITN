@@ -325,7 +325,7 @@ extension MainFeedViewController {
     private func printUserInfo() {
         print("----")
         print("USER ID", UUID.shared.getValue())
-        print("AUTH", "Bearer " + READ(LocalKeys.user.JWT)!)
+        print("AUTH", READ(LocalKeys.user.JWT))
         print("----")
     }
     

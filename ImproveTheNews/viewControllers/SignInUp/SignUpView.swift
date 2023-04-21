@@ -389,9 +389,9 @@ extension SignUpView {
     }
     
     @objc func mainActionButtonTap(_ sender: UIButton) {
-        self.emailText.setText("federico@improvethenews.org")
-        self.passText.setText("federico123")
-        self.pass2Text.setText("federico123")
+//        self.emailText.setText("federico@improvethenews.org")
+//        self.passText.setText("federico123")
+//        self.pass2Text.setText("federico123")
 
         if(self.emailText.text().isEmpty) {
             CustomNavController.shared.infoAlert(message: "Please, enter your email")

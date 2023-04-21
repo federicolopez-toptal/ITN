@@ -16,8 +16,8 @@ class LocalKeys { // Keys to store local values
     
     
     class LocalKeys_user { // For class "UUID"
-        let UUID = "user_uuid"
-        let JWT = "user_jwt"
+        let UUID = "user_uuid_v2"
+        let JWT = "user_jwt_v2"
     }
     
     class LocalKeys_misc { // misc
