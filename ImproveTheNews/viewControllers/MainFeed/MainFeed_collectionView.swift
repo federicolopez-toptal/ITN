@@ -168,7 +168,6 @@ extension MainFeedViewController {
             size = MoreCell.getHeight(width: width)
         } else if (dpItem is DP_spacer) { // Spacer
             size = CGSize(width: width, height: (dpItem as! DP_spacer).height)
-            print("SIZE", size)
         } else if (dpItem is DP_footer) { // Footer
             size = FooterCell.getHeight(width: width)
         } else if let _dpItem = dpItem as? DP_Story_CI { // Story column (with image)

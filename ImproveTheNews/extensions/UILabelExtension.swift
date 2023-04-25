@@ -26,9 +26,9 @@ extension UILabel {
     }
     
     func calculateHeightFor(width: CGFloat) -> CGFloat {
-        self.frame = CGRect(x: 0, y: 0, width: width, height: 10)
-        self.sizeToFit()
-        return self.frame.size.height
+            self.frame = CGRect(x: 0, y: 0, width: width, height: 10)
+            self.sizeToFit()
+            return self.frame.size.height
     }
     
     func calculateWidthFor(height: CGFloat) -> CGFloat {

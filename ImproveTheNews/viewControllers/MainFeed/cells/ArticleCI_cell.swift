@@ -109,7 +109,7 @@ class ArticleCI_cell: UICollectionViewCell {
         }
         //ADD_SPACER(to: sourcesHStack)
 
-        ADD_SPACER(to: self.mainVStack, height: 16)
+        ADD_SPACER(to: self.mainVStack, height: 16)        
     }
 
     func populate(with article: MainFeedArticle, column: Int) {
@@ -119,7 +119,7 @@ class ArticleCI_cell: UICollectionViewCell {
         if let _url = URL(string: article.imgUrl) {
             self.mainImageView.sd_setImage(with: _url)
         }
-
+        
         self.titleLabel.text = article.title
         self.titleLabel.setLineSpacing(lineSpacing: 3.5)
         
@@ -164,7 +164,6 @@ class ArticleCI_cell: UICollectionViewCell {
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-            //.orange.withAlphaComponent(0.5)
         self.mainVStack.backgroundColor = self.contentView.backgroundColor
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
@@ -178,9 +177,9 @@ extension ArticleCI_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 15
+        result.numberOfLines = 0
         result.font = ArticleCI_cell.merriweather_bold
-        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        //result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
         
         return result
@@ -190,12 +189,13 @@ extension ArticleCI_cell {
         let imageH: CGFloat = 100
         let textW: CGFloat = (width/2)-(16*2)
         let tmpTitleLabel = ArticleCI_cell.createTitleLabel(text: text)
+        tmpTitleLabel.setLineSpacing(lineSpacing: 3.5)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         
-        var H: CGFloat = 16+5 + imageH + 10 + textH + 10 + sourcesH + 16 + 12
-        let minH: CGFloat = 260
-        if(H<minH){ H = minH }
+        var H: CGFloat = 16+5 + imageH + 10 + textH + 10 + sourcesH + 16
+//        let minH: CGFloat = 260
+//        if(H<minH){ H = minH }
         
         return CGSize(width: width/2, height: H)
     }

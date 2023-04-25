@@ -135,9 +135,9 @@ extension StoryCT_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 10
-        result.font = StoryCI_cell.merriweather_bold
-        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        result.numberOfLines = 0
+        result.font = StoryCT_cell.merriweather_bold
+        //result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
         
         return result
@@ -145,14 +145,15 @@ extension StoryCT_cell {
     
     static func calculateHeight(text: String, sourcesCount: Int, width: CGFloat) -> CGSize {
         let textW: CGFloat = (width/2)-(16*2)-(7*2)
-        let tmpTitleLabel = StoryCI_cell.createTitleLabel(text: text)
+        let tmpTitleLabel = StoryCT_cell.createTitleLabel(text: text)
+        tmpTitleLabel.setLineSpacing(lineSpacing: 3.5)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = sourcesCount == 1 ? 0 : 18
         let timeLabelH: CGFloat = 18
         
-        var H: CGFloat = 16 + 40 + textH + 10 + sourcesH + 10 + timeLabelH + 12 + 16 + 5
-        let minH: CGFloat = 195
-        if(H<minH){ H = minH }
+        var H: CGFloat = 16 + 10 + 23 + 5 + textH + 10 + sourcesH + 10 + timeLabelH + 12 + 16
+//        let minH: CGFloat = 195
+//        if(H<minH){ H = minH }
         
         return CGSize(width: width/2, height: H)
     }

@@ -44,7 +44,7 @@ class CustomFlowLayout: UICollectionViewFlowLayout {
         } else {
             if let prevFrame = self.getFrame(index: currentIndex-1) {
                 let prevEndX = prevFrame.origin.x + prevFrame.size.width
-                
+
                 if(prevEndX + attributes.frame.size.width <= cvWidth) {
                     attributes.frame.origin = CGPoint(x: prevEndX, y: prevFrame.origin.y)
                     self.frames[currentIndex] = attributes.frame
@@ -58,11 +58,20 @@ class CustomFlowLayout: UICollectionViewFlowLayout {
                             }
                         }
                     }
-                    
+
                     attributes.frame.origin = CGPoint(x: 0, y: prevEndY)
                     self.frames[currentIndex] = attributes.frame
                 }
             }
+            
+//            if let prevFrame = self.getFrame(index: currentIndex-1) {
+//                var prevEndY = prevFrame.origin.y + prevFrame.size.height
+//                attributes.frame.origin = CGPoint(x: 0, y: prevEndY)
+//
+//                self.frames[currentIndex] = attributes.frame
+//            } else {
+//                print("nope")
+//            }
         }
 
         return attributes

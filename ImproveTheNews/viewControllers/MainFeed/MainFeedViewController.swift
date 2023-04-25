@@ -91,7 +91,7 @@ class MainFeedViewController: BaseViewController {
             CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
         
-        self.printUserInfo()
+        //self.printUserInfo()
     }
     
     override func refreshDisplayMode() {

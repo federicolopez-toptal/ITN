@@ -131,3 +131,15 @@ func ORIENTATION_LANDSCAPE() -> Bool {
     }
     return false
 }
+
+func ADD_BOTTOM_LINE(to view: UIView, color: UIColor = .black.withAlphaComponent(0.5)) {
+    let bottomLine = UIView()
+    bottomLine.backgroundColor = color
+    view.addSubview(bottomLine)
+    bottomLine.activateConstraints([
+        bottomLine.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        bottomLine.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        bottomLine.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        bottomLine.heightAnchor.constraint(equalToConstant: 1.0)
+    ])
+}

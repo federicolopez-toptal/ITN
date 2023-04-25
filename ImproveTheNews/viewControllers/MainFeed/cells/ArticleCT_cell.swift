@@ -100,9 +100,9 @@ class ArticleCT_cell: UICollectionViewCell {
         if(PREFS_SHOW_STANCE_POPUPS()) {
             self.stanceIcon.delegate = self
         }
+        
         //ADD_SPACER(to: sourcesHStack)
-
-        ADD_SPACER(to: self.mainVStack, height: 16)
+        //ADD_SPACER(to: self.mainVStack, height: 16)
     }
 
     func populate(with article: MainFeedArticle, column: Int) {
@@ -164,9 +164,9 @@ extension ArticleCT_cell {
 
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 10
-        result.font = ArticleCI_cell.merriweather_bold
-        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        result.numberOfLines = 0
+        result.font = ArticleCT_cell.merriweather_bold
+        //result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
         
         return result
@@ -174,13 +174,14 @@ extension ArticleCT_cell {
     
     static func calculateHeight(text: String, sourcesCount: Int, width: CGFloat) -> CGSize {
         let textW: CGFloat = (width/2)-(16*2)
-        let tmpTitleLabel = ArticleCI_cell.createTitleLabel(text: text)
+        let tmpTitleLabel = ArticleCT_cell.createTitleLabel(text: text)
+        tmpTitleLabel.setLineSpacing(lineSpacing: 3.5)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         
-        var H: CGFloat = 16 + textH + 10 + sourcesH + (16*2)
-        let minH: CGFloat = 145
-        if(H<minH){ H = minH }
+        var H: CGFloat = 16 + textH + 10 + sourcesH + 16
+//        let minH: CGFloat = 145
+//        if(H<minH){ H = minH }
         
         return CGSize(width: width/2, height: H)
     }

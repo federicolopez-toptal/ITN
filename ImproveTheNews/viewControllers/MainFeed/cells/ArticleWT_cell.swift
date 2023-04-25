@@ -161,9 +161,9 @@ class ArticleWT_cell: UICollectionViewCell {
     
     static func createTitleLabel(text: String) -> UILabel {
         let result = UILabel()
-        result.numberOfLines = 8
+        result.numberOfLines = 0
         result.font = ArticleWT_cell.merriweather_bold
-        result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
+        //result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         result.text = text
         
         return result
@@ -172,12 +172,13 @@ class ArticleWT_cell: UICollectionViewCell {
     static func calculateHeight(text: String, width: CGFloat) -> CGSize {
         let textW: CGFloat = width-(16*2)
         let tmpTitleLabel = ArticleWT_cell.createTitleLabel(text: text)
+        tmpTitleLabel.setLineSpacing(lineSpacing: 3.5)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         
         var H: CGFloat = 16 + textH + 10 + sourcesH + 16
-        let minH: CGFloat = 103
-        if(H<minH){ H = minH }
+//        let minH: CGFloat = 103
+//        if(H<minH){ H = minH }
         
         return CGSize(width: width, height: H)
     }
