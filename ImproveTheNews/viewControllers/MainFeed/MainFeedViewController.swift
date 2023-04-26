@@ -91,7 +91,7 @@ class MainFeedViewController: BaseViewController {
             CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
         
-        //self.printUserInfo()
+        UUID.shared.trace()
     }
     
     override func refreshDisplayMode() {
@@ -320,13 +320,6 @@ extension MainFeedViewController {
 //            self.hideLoading()
 //            self.showFAQ()
 //        }
-    }
-    
-    private func printUserInfo() {
-        print("----")
-        print("USER ID", UUID.shared.getValue())
-        print("AUTH", READ(LocalKeys.user.JWT))
-        print("----")
     }
     
 }

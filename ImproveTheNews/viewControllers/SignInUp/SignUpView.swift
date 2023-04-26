@@ -410,12 +410,11 @@ extension SignUpView {
             let password = self.passText.text()
             API.shared.signUp(email: email, password: password) { (success, serverMsg) in
                 if(success) {
-                    CustomNavController.shared.infoAlert(message: "Registration successful. You'll receive a validation email to complete the process")
+                    let msg = "Registration successful. You'll receive a validation email to complete the process"
+                    CustomNavController.shared.infoAlert(message: msg)
+                    UUID.shared.trace()
                 } else {
-                    var msg = serverMsg
-                    if(msg == nil) { msg = "An error ocurred. Please, try again later" }
-                    
-                    CustomNavController.shared.infoAlert(message: msg!)
+                    CustomNavController.shared.infoAlert(message: serverMsg)
                 }
                 
                 DELAY(2.0) {

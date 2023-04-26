@@ -341,12 +341,22 @@ extension SignInView {
             let password = self.passText.text()
             API.shared.signIn(email: email, password: password) { (success, serverMsg) in
                 if(success) {
-                    print("Todo bien!")
+                    let msg = "Login ok!"
+                    CustomNavController.shared.infoAlert(message: msg)
                 } else {
-                    var msg = serverMsg
-                    if(msg == nil) { msg = "An error ocurred. Please, try again later" }
+                    var showYesNo = false
+                    if(serverMsg.lowercased().contains("not verified")) {
+                        showYesNo = true
+                    }
                     
-                    CustomNavController.shared.infoAlert(message: msg!)
+                    if(showYesNo) {
+                        let _msg = serverMsg + "\n\n" + "Resend the verification email?"
+                        CustomNavController.shared.yesNoAlert(message: _msg) { (result) in
+                            if(result) { self.resend_verificationEmail() }
+                        }
+                    } else {
+                        CustomNavController.shared.infoAlert(message: serverMsg)
+                    }
                 }
                 
                 DELAY(2.0) {
@@ -355,6 +365,24 @@ extension SignInView {
             }
 
         }
+    }
+    
+    private func resend_verificationEmail() {
+        self.delegate?.SignInViewShowLoading(state: true)
+        
+        API.shared.resendVerificationEmail(email: self.emailText.text()) { (success, serverMsg) in
+            if(success) {
+                let msg = "Email resent succesfully"
+                CustomNavController.shared.infoAlert(message: msg)
+            } else {
+                CustomNavController.shared.infoAlert(message: serverMsg)
+            }
+            
+            DELAY(2.0) {
+                self.delegate?.SignInViewShowLoading(state: false)
+            }
+        }
+        
     }
     
 }

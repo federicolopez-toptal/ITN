@@ -10,12 +10,13 @@ import Foundation
 class API {
 
     static let shared = API()
+    static let defaultErrorMessage = "An error ocurred. Please, try again later"
 
     var isLogged = false
 
 // ---
     func signUp(email: String, password: String, newsletter: Bool = false,
-        callback: @escaping (Bool, String?) -> () ) {
+        callback: @escaping (Bool, String) -> () ) {
     
         let json: [String: String] = [
             "type": "Sign Up",
@@ -32,18 +33,18 @@ class API {
                     if(_status == "OK") {
                         if let _jwt = _json["jwt"], let _uuid = _json["uuid"] as? String {
                             WRITE(LocalKeys.user.JWT, value: _jwt)
-                            WRITE(LocalKeys.user.UUID, value: _uuid) //!!!
+                            WRITE(LocalKeys.user.UUID, value: _uuid)
                         }
-                        callback(true, nil)
+                        callback(true, "")
                     } else {
                         if let _msg = _json["message"] as? String {
                             callback(false, _msg)
                         } else {
-                            callback(false, nil)
+                            callback(false, serverMsg)
                         }
                     }
                 } else {
-                    callback(false, nil)
+                    callback(false, serverMsg)
                 }
             } else {
                 callback(false, serverMsg)
@@ -51,7 +52,7 @@ class API {
         }
     }
 // ---
-    func signIn(email: String, password: String, callback: @escaping (Bool, String?) -> () ) {
+    func signIn(email: String, password: String, callback: @escaping (Bool, String) -> () ) {
         
         let json: [String: String] = [
             "type": "Sign In",
@@ -67,18 +68,47 @@ class API {
                     if(_status == "OK") {
                         if let _jwt = _json["jwt"], let _uuid = _json["uuid"] as? String {
                             WRITE(LocalKeys.user.JWT, value: _jwt)
-                            WRITE(LocalKeys.user.UUID, value: _uuid) //!!!
+                            WRITE(LocalKeys.user.UUID, value: _uuid)
                         }
-                        callback(true, nil)
+                        callback(true, "")
                     } else {
                         if let _msg = _json["message"] as? String {
                             callback(false, _msg)
                         } else {
-                            callback(false, nil)
+                            callback(false, serverMsg)
                         }
                     }
                 } else {
-                    callback(false, nil)
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
+            }
+        }
+    }
+// ---
+    func resendVerificationEmail(email: String, callback: @escaping (Bool, String) -> () ) {
+        
+        let json: [String: String] = [
+            "type": "Resend Email Verification",
+            "email": email,
+            "app": "iOS"
+        ]
+        
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _status = _json["status"] as? String {
+                    if(_status == "OK") {
+                        callback(true, "")
+                    } else {
+                        if let _msg = _json["message"] as? String {
+                            callback(false, _msg)
+                        } else {
+                            callback(false, serverMsg)
+                        }
+                    }
+                } else {
+                    callback(false, serverMsg)
                 }
             } else {
                 callback(false, serverMsg)
@@ -98,12 +128,12 @@ class API {
             if let _json = json, success {
                 if let _status = _json["message"] as? String {
                     if(_status == "OK") {
-                        callback(true, nil)
+                        callback(true, "")
                     } else {
-                        callback(false, nil)
+                        callback(false, serverMsg)
                     }
                 } else {
-                    callback(false, nil)
+                    callback(false, serverMsg)
                 }
             } else {
                 callback(false, serverMsg)
@@ -117,9 +147,10 @@ extension API {
 
     private func makeRequest(to urlPath: String, with bodyJson: [String: String],
         method: String = "POST",
-        callback: @escaping (Bool, [String: Any]?, String?) -> ()) {
+        callback: @escaping (Bool, [String: Any]?, String) -> ()) {
         
-        let url = "https://biaspost.org/api/" + urlPath
+        //let url = "https://biaspost.org/api/" + urlPath
+        let url = "https://biaspedia.org/api/" + urlPath
         
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = method
@@ -132,9 +163,9 @@ extension API {
                 callback(false, nil, _error.localizedDescription)
             } else {
                 if let _json = JSON(fromData: data) {
-                    callback(true, _json, nil)
+                    callback(true, _json, "")
                 } else {
-                    callback(false, nil, nil)
+                    callback(false, nil, API.defaultErrorMessage)
                 }
                 
             }

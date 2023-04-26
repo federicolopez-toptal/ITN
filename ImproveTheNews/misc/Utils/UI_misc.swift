@@ -114,6 +114,23 @@ func ALERT(vc: UIViewController, title: String? = nil, message: String, onComple
     }
 }
 
+func ALERT_YESNO(vc: UIViewController, title: String? = nil, message: String, onCompletion: @escaping (Bool)->() ) {
+    MAIN_THREAD {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
+            onCompletion(true)
+        }
+        let noAction = UIAlertAction(title: "No", style: .default) { action in
+            onCompletion(false)
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        vc.present(alert, animated: true)
+    }
+}
+
 func FUTURE_IMPLEMENTATION(_ text: String) {
     CustomNavController.shared.infoAlert(message: "Future implementation: " + text)
 }

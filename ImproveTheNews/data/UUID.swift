@@ -60,6 +60,8 @@ class UUID {
                     if let _jwt = _json["jwt"] as? String, let _uuid = _json["uuid"] as? String {
                         WRITE(LocalKeys.user.UUID, value: _uuid)
                         WRITE(LocalKeys.user.JWT, value: _jwt)
+                        
+                        self.trace()
                         callback(nil, _uuid)
                     } else {
                         let _error = CustomError.jsonParseError
@@ -93,6 +95,16 @@ class UUID {
         }
         
         return randomNums
+    }
+    
+    func trace() {
+        print("----")
+        print("USER ID", UUID.shared.getValue())
+        if let _jwt = READ(LocalKeys.user.JWT) {
+            print("AUTH", "Bearer " + _jwt)
+        } else {
+            print("AUTH nil")
+        }
     }
     
 }

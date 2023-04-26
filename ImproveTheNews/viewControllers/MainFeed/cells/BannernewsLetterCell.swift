@@ -294,9 +294,7 @@ extension BannernewsLetterCell {
             CustomNavController.shared.infoAlert(message: "Please, enter a valid email")
         } else {
             CustomNavController.shared.loading.show()
-            API.shared.subscribeToNewsletter(email: emailText.text()) { (success, serverMsg) in
-                print("MSG", serverMsg)
-                
+            API.shared.subscribeToNewsletter(email: emailText.text()) { (success, _) in
                 var msg = "Subscription successful"
                 if(!success){ msg = "Error while processing your request. Please, try again later" }
                 
