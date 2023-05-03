@@ -46,6 +46,70 @@ struct MainFeedTopic {
         }
     }
     
+    // ------------------------------------------------------------------
+    mutating func splitReorderArticles_justInCase() {
+        if( MUST_SPLIT()>0 ) {
+            let articlesCopy = self.articles.filter{ !$0.isEmpty() }
+            self.articles = [MainFeedArticle]()
+
+            var col1 = [MainFeedArticle]()
+            var col2 = [MainFeedArticle]()
+            var stories = [MainFeedArticle]()
+
+        // ---
+            for A in articlesCopy {
+                if(A.isStory) {
+                    stories.append(A)
+                } else {
+                    if(MUST_SPLIT()==1) {
+                        // Left / Right
+                        if(A.LR<3) {
+                            col1.append(A)
+                        } else {
+                            col2.append(A)
+                        }
+                    } else {
+                        // Critical / Pro
+                        if(A.PE<3) {
+                            col1.append(A)
+                        } else {
+                            col2.append(A)
+                        }
+                    }
+                }
+            }
+            
+        // ---
+            var col = 1
+            while(col1.count>0 || col2.count>0) {
+                if(col==1) {
+                    if(col1.count>0) {
+                        self.articles.append(col1.first!)
+                        col1.removeFirst()
+                    } else {
+                        self.articles.append( MainFeedArticle.createEmpty(defaultValue: 1) )
+                    }
+                } else {
+                    if(col2.count>0) {
+                        self.articles.append(col2.first!)
+                        col2.removeFirst()
+                    } else {
+                        self.articles.append( MainFeedArticle.createEmpty(defaultValue: 5) )
+                    }
+                }
+
+                col += 1
+                if(col>2){ col=1 }
+            }
+            
+            for i in 0...stories.count-1 {
+                self.articles.append(stories[i])
+            }
+
+        }
+    }
+    // ------------------------------------------------------------------
+    
     func hasAvailableArticles() -> Bool {
         var result = false
         if let _ = self.articles.first(where: { $0.used == false }) {

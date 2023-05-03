@@ -140,7 +140,9 @@ extension MainFeedv3 {
                     
                 if(!isBanner) {
                     let articles = _obj[1] as! [Any]
-                    let newTopic = MainFeedTopic(topicInfo, articles)
+                    var newTopic = MainFeedTopic(topicInfo, articles)
+                    newTopic.splitReorderArticles_justInCase()
+                    
                     self.topics.append(newTopic)
                 } else {
                     if(self.banner == nil) { self.banner = Banner(topicInfo) }
@@ -186,6 +188,8 @@ extension MainFeedv3 {
                         self.topics[topicIndex].articles.append(newArticle)
                         articlesAdded += 1
                     }
+                    
+                    self.topics[topicIndex].splitReorderArticles_justInCase()
 
                     break
                 }

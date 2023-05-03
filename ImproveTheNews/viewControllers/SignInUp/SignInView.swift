@@ -341,8 +341,10 @@ extension SignInView {
             let password = self.passText.text()
             API.shared.signIn(email: email, password: password) { (success, serverMsg) in
                 if(success) {
-                    let msg = "Login ok!"
-                    CustomNavController.shared.infoAlert(message: msg)
+//                    let msg = "Login ok!"
+//                    CustomNavController.shared.infoAlert(message: msg)
+//
+                    FUTURE_IMPLEMENTATION("Redirect to the ACCOUNT info screen")
                 } else {
                     var showYesNo = false
                     if(serverMsg.lowercased().contains("not verified")) {

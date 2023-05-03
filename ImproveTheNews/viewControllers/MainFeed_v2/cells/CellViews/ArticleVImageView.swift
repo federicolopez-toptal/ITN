@@ -225,6 +225,17 @@ class ArticleVImageView: CustomCellView {
             self.flagImageView.image = UIImage(named: "noFlag.png")
         }
         
+        // ----------------
+        var alphaValue: CGFloat = 1.0
+        if(article.isEmpty()){ alphaValue = 0.0 }
+    
+        self.mainImageView.alpha = alphaValue
+        self.titleLabel.alpha = alphaValue
+        self.stanceIcon.alpha = alphaValue
+        self.articleSourceTime.alpha = alphaValue
+        self.flagImageView.alpha = alphaValue
+        // ----------------
+        
         self.refreshDisplayMode()
         self.show()
     }

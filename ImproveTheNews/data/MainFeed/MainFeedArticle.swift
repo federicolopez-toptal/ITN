@@ -78,6 +78,24 @@ struct MainFeedArticle {
         self.used = false
     }
     
+    static let EMPTY_ARTICLE_TITLE = "*** EMPTY ARTICLE ***"
+    static func createEmpty(defaultValue: Int) -> MainFeedArticle {
+        var art = MainFeedArticle(url: "")
+        art.title = MainFeedArticle.EMPTY_ARTICLE_TITLE
+        art.LR = defaultValue
+        art.PE = defaultValue
+        
+        return art
+    }
+    
+    func isEmpty() -> Bool {
+        if(self.title == MainFeedArticle.EMPTY_ARTICLE_TITLE) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 }
 
 struct Markup {

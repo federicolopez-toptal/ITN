@@ -91,7 +91,7 @@ class MainFeedViewController: BaseViewController {
             CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
         
-        UUID.shared.trace()
+//        UUID.shared.trace()
     }
     
     override func refreshDisplayMode() {

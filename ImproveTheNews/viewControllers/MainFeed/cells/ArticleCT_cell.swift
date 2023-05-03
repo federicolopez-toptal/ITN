@@ -141,6 +141,16 @@ class ArticleCT_cell: UICollectionViewCell {
         } else {
             self.flagImageView.image = UIImage(named: "noFlag.png")
         }
+        
+        // ----------------
+        var alphaValue: CGFloat = 1.0
+        if(article.isEmpty()){ alphaValue = 0.0 }
+    
+        self.titleLabel.alpha = alphaValue
+        self.stanceIcon.alpha = alphaValue
+        self.sourceTimeLabel.alpha = alphaValue
+        self.sourcesContainer.alpha = alphaValue
+        self.flagImageView.alpha = alphaValue
     }
     
     private func shortenTime(_ text: String) -> String {

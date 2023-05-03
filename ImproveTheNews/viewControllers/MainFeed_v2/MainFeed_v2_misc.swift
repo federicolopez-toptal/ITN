@@ -50,7 +50,7 @@ extension MainFeed_v2ViewController {
             let popup = StancePopupView()
             popup.populate(sourceName: source, country: country, LR: LR, PE: PE)
             popup.pushFromBottom()
-            print("HERE!")
+            //print("HERE!")
         }
     }
     
