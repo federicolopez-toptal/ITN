@@ -7,6 +7,16 @@
 
 import Foundation
 
+// ---
+struct MyUser {
+    var firstName = ""
+    var lastName = ""
+    var userName = ""
+    var email = ""
+}
+// ---
+
+
 class API {
 
     static let shared = API()
@@ -66,10 +76,19 @@ class API {
             if let _json = json, success {
                 if let _status = _json["status"] as? String {
                     if(_status == "OK") {
+                        if let _values = _json["slidercookies"] {
+                            /*
+                                Hacer algo con los slider values
+                                Ejemplo de valor:
+                                LR50PE50NU70DE70SL70RE70lO00yT01pC01aL00mL00nL01SS00VA01VB01VC01VM01VE00oB10IN00FB00LI00TW00RD00ST01LA20AP01
+                            */
+                        }
+                    
                         if let _jwt = _json["jwt"], let _uuid = _json["uuid"] as? String {
                             WRITE(LocalKeys.user.JWT, value: _jwt)
                             WRITE(LocalKeys.user.UUID, value: _uuid)
                         }
+                        
                         callback(true, "")
                     } else {
                         if let _msg = _json["message"] as? String {
@@ -141,6 +160,40 @@ class API {
         }
     }
 // ---
+    func getUserInfo( callback: @escaping (Bool, String, MyUser?) -> () ) {
+        let json: [String: String] = [
+            "type": "User Info Get",
+            "userId": UUID.shared.getValue()
+        ]
+        
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _msg = _json["message"] as? String, _msg == "OK" {
+                    
+                    var user = MyUser()
+                    if let _firstName = _json["firstname"] as? String {
+                        user.firstName = _firstName
+                    }
+                    if let _lastName = _json["lastname"] as? String {
+                        user.lastName = _lastName
+                    }
+                    if let _screenName = _json["username"] as? String {
+                        user.userName = _screenName
+                    }
+                    if let _email = _json["email"] as? String {
+                        user.email = _email
+                    }
+                
+                    callback(true, "", user)
+                } else {
+                    callback(false, serverMsg, nil)
+                }
+            } else {
+                callback(false, serverMsg, nil)
+            }
+        }
+    }
+// ---
 }
 
 extension API {
@@ -178,3 +231,4 @@ extension API {
     }
     
 }
+

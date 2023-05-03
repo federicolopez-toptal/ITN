@@ -34,6 +34,7 @@
 		1F2D3228294230CA00BA1B00 /* CircleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */; };
 		1F2D9FD428D36F6A00CE3008 /* ArticleWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */; };
 		1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */; };
+		1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */; };
 		1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */; };
 		1F38213E29A6DA32004D4D29 /* MainFeed_v2_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */; };
 		1F38214129A6DF45004D4D29 /* iPadGroupItem_topCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */; };
@@ -421,6 +422,7 @@
 		1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnimation.swift; sourceTree = "<group>"; };
 		1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWT_cell.swift; sourceTree = "<group>"; };
 		1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryWT_cell.swift; sourceTree = "<group>"; };
+		1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2_list.swift; sourceTree = "<group>"; };
 		1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_topCell.swift; sourceTree = "<group>"; };
@@ -992,6 +994,7 @@
 				1FBD090529B24A5A00AC20F5 /* FAQ */,
 				1F7B9EBC296DEF5800D99C5D /* Story */,
 				1FC7390E298A149C003EB38D /* SignInUp */,
+				1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */,
 			);
@@ -1961,6 +1964,7 @@
 				1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */,
 				1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */,
 				1F9EDD5729AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift in Sources */,
+				1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */,
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
 				1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */,

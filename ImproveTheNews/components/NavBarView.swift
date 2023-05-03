@@ -465,10 +465,15 @@ extension NavBarView {
     }
     
     @objc func onUserButtonTap(_ sender: UIButton) {
-        let vc = SignInUpViewController()
-//        vc.modalPresentationStyle = .fullScreen
-//        vc.modalTransitionStyle = .coverVertical
-        CustomNavController.shared.pushViewController(vc, animated: true)
+        var vc: UIViewController?
+        
+        if(USER_AUTHENTICATED()) {
+            vc = AccountViewController()
+        } else {
+            vc = SignInUpViewController()
+        }
+        
+        CustomNavController.shared.pushViewController(vc!, animated: true)
     }
     
     @objc func onCloseModalButtonTap(_ sender: UIButton) {

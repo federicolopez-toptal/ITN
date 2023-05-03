@@ -174,8 +174,8 @@ extension CustomNavController {
         }
     }
     
-    func yesNoAlert(message msg: String, onCompletion: @escaping (Bool)->()) {
-        ALERT_YESNO(vc: self, title: "⚠️ Info", message: msg) { (result) in
+    func ask(question msg: String, onCompletion: @escaping (Bool)->()) {
+        ALERT_YESNO(vc: self, title: "⚠️ Question", message: msg) { (result) in
             onCompletion(result)
         }
     }

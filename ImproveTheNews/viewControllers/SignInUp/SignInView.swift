@@ -344,10 +344,13 @@ extension SignInView {
             let password = self.passText.text()
             API.shared.signIn(email: email, password: password) { (success, serverMsg) in
                 if(success) {
-//                    let msg = "Login ok!"
-//                    CustomNavController.shared.infoAlert(message: msg)
-//
-                    FUTURE_IMPLEMENTATION("Redirect to the ACCOUNT info screen")
+                    WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
+                    MAIN_THREAD {
+                        CustomNavController.shared.menu.updateLogout()
+                    
+                        let vc = AccountViewController()
+                        CustomNavController.shared.pushViewController(vc, animated: true)
+                    }
                 } else {
                     var showYesNo = false
                     if(serverMsg.lowercased().contains("not verified")) {
@@ -356,7 +359,7 @@ extension SignInView {
                     
                     if(showYesNo) {
                         let _msg = serverMsg + "\n\n" + "Resend the verification email?"
-                        CustomNavController.shared.yesNoAlert(message: _msg) { (result) in
+                        CustomNavController.shared.ask(question: _msg) { (result) in
                             if(result) { self.resend_verificationEmail() }
                         }
                     } else {

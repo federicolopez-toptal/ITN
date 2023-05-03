@@ -129,5 +129,13 @@ func PREFS_SHOW_STORIES() -> Bool {
     return PREF(key: LocalKeys.preferences.showStories)
 }
 
-
 let LOAD_MORE_LIMIT = 12
+// ---------------------------------------------
+
+func USER_AUTHENTICATED() -> Bool {
+    if(READ(LocalKeys.user.AUTHENTICATED)=="YES") {
+        return true
+    } else {
+        return false
+    }
+}

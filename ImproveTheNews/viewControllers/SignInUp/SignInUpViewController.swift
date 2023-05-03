@@ -32,7 +32,8 @@ class SignInUpViewController: BaseViewController {
             self.didLayout = true
 
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.back])
+            self.navBar.addComponents([.back, .title])
+            self.navBar.setTitle("User account")
 
             self.buildContent()
             CustomNavController.shared.hidePanelAndButtonWithAnimation()

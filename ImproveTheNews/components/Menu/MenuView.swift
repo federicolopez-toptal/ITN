@@ -23,6 +23,8 @@ class MenuView: UIView {
         .headlines,
         .displayMode,
         .tour,
+        .profile,
+        .logout,
         .preferences,
         .layout,
         .more
@@ -32,6 +34,8 @@ class MenuView: UIView {
         .headlines,
         .displayMode,
         .tour,
+        .profile,
+        .logout,
         .preferences,
         .layout,
         .more,
@@ -124,6 +128,8 @@ class MenuView: UIView {
         self.menuLeadingConstraint?.constant = -self.MENU_WIDTH
         
         self.dataProvider = self.dataProvider_A
+        self.removeLogoutIfApply()
+        
         self.refreshDisplayMode()
     }
     
@@ -329,7 +335,7 @@ extension MenuView {
         } else {
             self.dataProvider = self.dataProvider_A
         }
-        self.refreshDisplayMode()
+        self.refreshDisplayMode() // reload list implicit
     }
     
     // ---------
@@ -360,6 +366,34 @@ extension MenuView {
 
             default:
                 NOTHING()
+        }
+    }
+    
+    // ---------
+    func showProfile() {
+        self.dismissMe()
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
+    
+        var vc: UIViewController?
+        if(USER_AUTHENTICATED()) {
+            vc = AccountViewController()
+        } else {
+            vc = SignInUpViewController()
+        }
+        
+        CustomNavController.shared.pushViewController(vc!, animated: true)
+    }
+    
+    // ---------
+    func askForLogout() {
+        let msg = "Are you sure you want to sign out\nfrom your account?"
+        CustomNavController.shared.ask(question: msg) { (success) in
+            if(success) {
+                WRITE(LocalKeys.user.AUTHENTICATED, value: "NO")
+                CustomNavController.shared.menu.updateLogout()
+
+                self.dismissMe()
+            }
         }
     }
     
@@ -421,5 +455,35 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
+    
+}
+
+
+// MARK: - Logout
+extension MenuView {
+    
+    func removeLogoutIfApply() {
+        if(!USER_AUTHENTICATED()) {
+            for (i, item) in self.dataProvider.enumerated() {
+                if(item == .logout) {
+                    self.dataProvider.remove(at: i)
+                    break
+                }
+            }
+        }
+    }
+    
+    func updateLogout() {
+        if(self.isShowingMore) {
+            self.dataProvider = self.dataProvider_B
+        } else {
+            self.dataProvider = self.dataProvider_A
+        }
+        
+        self.removeLogoutIfApply()
+        self.refreshDisplayMode() // reload list implicit
+    }
+    
+    
     
 }

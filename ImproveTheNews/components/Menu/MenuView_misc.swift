@@ -16,6 +16,8 @@ enum MenuITem {
     case preferences
     case tour
     case more
+    case profile
+    case logout
     
     case sliders
     case faq
@@ -62,6 +64,12 @@ extension MenuView {
             case .privacy:
                 result = "Privacy policy"
                 
+            case .profile:
+                result = "Profile"
+                
+            case .logout:
+                result = "Logout"
+                
             default:
                 result = ""
         }
@@ -105,6 +113,12 @@ extension MenuView {
             case .privacy:
                 icon = "policy"
             
+            case .profile:
+                icon = "profile"
+            
+            case .logout:
+                icon = "logout"
+            
 //            default:
 //                icon = ""
         }
@@ -136,6 +150,12 @@ extension MenuView {
                 
             case .sliders, .faq, .feedback, .privacy:
                 self.showContent(item)
+                
+            case .profile:
+                self.showProfile()
+                
+            case .logout:
+                self.askForLogout()
                 
             default:
                 NOTHING()
