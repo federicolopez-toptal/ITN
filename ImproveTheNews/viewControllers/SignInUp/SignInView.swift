@@ -143,11 +143,14 @@ class SignInView: UIView {
         HLine2.tag = 100
         ADD_SPACER(to: self.VStack, height: 26)
 
+        var extraHMargin: CGFloat = 0
+        if(IPAD()){ extraHMargin += 80 }
+
         let HStack_form = HSTACK(into: self.VStack)
-        ADD_SPACER(to: HStack_form, width: 16)
+        ADD_SPACER(to: HStack_form, width: 16+extraHMargin)
         let VStack_form = VSTACK(into: HStack_form)
         //VStack_form.backgroundColor = .green
-        ADD_SPACER(to: HStack_form, width: 20)
+        ADD_SPACER(to: HStack_form, width: 20+extraHMargin)
 
         let titleLabel = UILabel()
         titleLabel.text = "Sign in"
