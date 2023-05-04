@@ -23,10 +23,10 @@ class MenuView: UIView {
         .headlines,
         .displayMode,
         .tour,
-        .profile,
-        .logout,
         .preferences,
         .layout,
+        .profile,
+        .logout,
         .more
     ]
     
@@ -34,10 +34,10 @@ class MenuView: UIView {
         .headlines,
         .displayMode,
         .tour,
-        .profile,
-        .logout,
         .preferences,
         .layout,
+        .profile,
+        .logout,
         .more,
         
         .sliders,

@@ -60,10 +60,14 @@ class AccountViewController: BaseViewController {
     }
     
     func loadUserData() {
-        self.showLoading()
-        API.shared.getUserInfo { (success, serverMsg, user) in
-            self.hideLoading()
-            print(user?.firstName, user?.lastName, user?.userName, user?.email)
+//        self.showLoading()
+//        API.shared.getUserInfo { (success, serverMsg, user) in
+//            self.hideLoading()
+//            print(user?.firstName, user?.lastName, user?.userName, user?.email)
+//        }
+
+        DELAY(0.5) {
+            FUTURE_IMPLEMENTATION("Show user info, set user preferences, logout, etc.")
         }
     }
 
