@@ -315,7 +315,7 @@ extension SignInView {
 // MARK: - Events
 extension SignInView {
     
-    @objc func tabButtonOnTap(_ sender: UIButton) {
+    @objc func tabButtonOnTap(_ sender: UIButton?) {
         self.delegate?.SignInViewOnTabTap()
     }
     
@@ -324,7 +324,8 @@ extension SignInView {
     }
     
     @objc func forgotPassButtonTap(_ sender: UIButton) {
-        FUTURE_IMPLEMENTATION("Show \"Forgot password\" form")
+        let vc = ResetPassViewController()
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
     @objc func mainActionButtonTap(_ sender: UIButton) {

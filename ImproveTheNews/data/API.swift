@@ -194,6 +194,34 @@ class API {
         }
     }
 // ---
+    func resetPassword(email: String, callback: @escaping (Bool, String) -> ()) {
+        let json: [String: String] = [
+            "type": "Generate Password Reset Link",
+            "email": email,
+            "app": "iOS"
+        ]
+        
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _status = _json["status"] as? String {
+                    if(_status == "OK") {
+                        callback(true, "")
+                    } else {
+                        if let _msg = _json["message"] as? String {
+                            callback(false, _msg)
+                        } else {
+                            callback(false, serverMsg)
+                        }
+                    }
+                } else {
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
+            }
+        }
+    }
+// ---
 }
 
 extension API {
