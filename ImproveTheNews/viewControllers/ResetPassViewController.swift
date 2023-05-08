@@ -22,7 +22,7 @@ class ResetPassViewController: BaseViewController {
 
     // MARK: - End
     deinit {
-        print("chau!")
+        self.hideLoading()
         self.removeKeyboardObservers()
     }
 

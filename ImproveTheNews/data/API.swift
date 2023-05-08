@@ -13,6 +13,44 @@ struct MyUser {
     var lastName = ""
     var userName = ""
     var email = ""
+    
+    var subscriptionType = 0 // 0: Not subscribed, 1: Daily, 2: Weekly
+    
+    
+    
+    init() {
+    }
+    
+    init(_ json: [String: Any]) {
+        if let _firstName = json["firstname"] as? String {
+            self.firstName = _firstName
+        }
+        if let _lastName = json["lastname"] as? String {
+            self.lastName = _lastName
+        }
+        if let _screenName = json["username"] as? String {
+            self.userName = _screenName
+        }
+        if let _email = json["email"] as? String {
+            self.email = _email
+        }
+        
+        if let _subscribed = json["subscribed"] as? String {
+            self.subscriptionType = 0
+            if(_subscribed == "Y") {
+                self.subscriptionType = 1
+                if let _subscription = json["subscription"] as? [String: Any] {
+                    if let _strType = _subscription["frequency"] as? String {
+                        if(_strType.lowercased() == "daily") {
+                            self.subscriptionType = 1
+                        } else {
+                            self.subscriptionType = 2
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 // ---
 
@@ -135,12 +173,47 @@ class API {
         }
     }
 // ---
-    func subscribeToNewsletter(email: String, callback: @escaping (Bool, String?) -> () ) {
+    func subscribeToNewsletter(email: String, _ state: Bool = true, callback: @escaping (Bool, String) -> () ) {
         
-        let json: [String: String] = [
+        var json: [String: String] = [
             "type": "Subscribe",
             "userId": UUID.shared.getValue(),
             "email": email
+        ]
+        if(!state) {
+            json = [
+                "type": "Unsubscribe",
+                "userId": UUID.shared.getValue()
+            ]
+        }
+        
+        self.makeRequest(to: "newsletter/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _status = _json["message"] as? String {
+                    if(_status == "OK") {
+                        callback(true, "")
+                    } else {
+                        callback(false, serverMsg)
+                    }
+                } else {
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
+            }
+        }
+    }
+// ---
+    func changeSubscriptionTypeTo(type: Int, email: String, callback: @escaping (Bool, String) -> () ) {
+        
+        var freq = "Daily"
+        if(type==2){ freq = "Weekly" }
+        
+        let json: [String: String] = [
+            "type": "Options",
+            "userId": UUID.shared.getValue(),
+            "email": email,
+            "frequency": freq
         ]
         
         self.makeRequest(to: "newsletter/", with: json) { (success, json, serverMsg) in
@@ -169,27 +242,46 @@ class API {
         self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
             if let _json = json, success {
                 if let _msg = _json["message"] as? String, _msg == "OK" {
-                    
-                    var user = MyUser()
-                    if let _firstName = _json["firstname"] as? String {
-                        user.firstName = _firstName
-                    }
-                    if let _lastName = _json["lastname"] as? String {
-                        user.lastName = _lastName
-                    }
-                    if let _screenName = _json["username"] as? String {
-                        user.userName = _screenName
-                    }
-                    if let _email = _json["email"] as? String {
-                        user.email = _email
-                    }
-                
+                    let user = MyUser(_json)
                     callback(true, "", user)
                 } else {
                     callback(false, serverMsg, nil)
                 }
             } else {
                 callback(false, serverMsg, nil)
+            }
+        }
+    }
+// ---
+    func userInfoSave(user: MyUser?, callback: @escaping (Bool, String) -> () ) {
+        var json: [String: String] = [
+            "type": "User Info Update",
+            "userId": UUID.shared.getValue()
+        ]
+        
+        if let _name = user?.firstName {
+            json["firstName"] = _name
+        }
+        if let _lastName = user?.lastName {
+            json["lastName"] = _lastName
+        }
+        if let _screenName = user?.userName {
+            json["username"] = _screenName
+        }
+        if let _email = user?.email {
+            json["email"] = _email
+        }
+        
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _msg = _json["message"] as? String, _msg == "OK" {
+//                    let user = MyUser(_json)
+                    callback(true, "")
+                } else {
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
             }
         }
     }
@@ -222,6 +314,26 @@ class API {
         }
     }
 // ---
+    func deleteAccount(callback: @escaping (Bool, String) -> () ) {
+        
+        let json: [String: String] = [
+            "type": "Disconnect All",
+            "userId": UUID.shared.getValue()
+        ]
+        
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _msg = _json["message"] as? String, _msg == "OK" {
+                    callback(true, "")
+                } else {
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
+            }
+        }
+    }
+//---
 }
 
 extension API {

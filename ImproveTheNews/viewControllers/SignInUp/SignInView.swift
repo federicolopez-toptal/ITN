@@ -349,6 +349,7 @@ extension SignInView {
                     MAIN_THREAD {
                         CustomNavController.shared.menu.updateLogout()
                     
+                        self.delegate?.SignInViewShowLoading(state: false)
                         let vc = AccountViewController()
                         CustomNavController.shared.pushViewController(vc, animated: true)
                     }
