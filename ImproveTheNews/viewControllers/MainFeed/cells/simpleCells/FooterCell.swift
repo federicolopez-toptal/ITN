@@ -16,8 +16,10 @@ class FooterCell: UICollectionViewCell {
     let subTitle = UILabel()
     let line = UIView()
     let copyrightLabel = UILabel()
+    let podcastLabel = UILabel()
     let followLabel = UILabel()
     let bottomView = UIView()
+    var podcastStack = UIStackView()
     
     let ITEMS_FONT = ROBOTO_BOLD(12)
     
@@ -39,11 +41,12 @@ class FooterCell: UICollectionViewCell {
         self.contentView.backgroundColor = .white
 
         self.contentView.addSubview(self.logoImageView)
+        self.logoImageView.image = UIImage(named: "navBar.circleLogo")
         self.logoImageView.activateConstraints([
             self.logoImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
-            self.logoImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 28),
-            self.logoImageView.widthAnchor.constraint(equalToConstant: 163),
-            self.logoImageView.heightAnchor.constraint(equalToConstant: 27)
+            self.logoImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 18),
+            self.logoImageView.widthAnchor.constraint(equalToConstant: 48),
+            self.logoImageView.heightAnchor.constraint(equalToConstant: 48)
         ])
         
         self.subTitle.text = "A non-profit news aggregator helping you break out of your filter bubble"
@@ -93,18 +96,20 @@ class FooterCell: UICollectionViewCell {
         ])
         
         let socialStack = HSTACK(into: self.contentView, spacing: 8)
-        socialStack.backgroundColor = .clear //.yellow
+        //socialStack.backgroundColor = .yellow.withAlphaComponent(0.3)
         socialStack.activateConstraints([
-            socialStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
             socialStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
-            socialStack.topAnchor.constraint(equalTo: self.copyrightLabel.bottomAnchor, constant: 18)
+            socialStack.topAnchor.constraint(equalTo: shareLabel.topAnchor, constant: -5),
+            socialStack.heightAnchor.constraint(equalToConstant: 30)
+//            socialStack.widthAnchor.constraint(equalToConstant: 200)
+            //socialStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18)
         ])
         
         self.followLabel.text = "FOLLOW US"
         self.followLabel.font = ROBOTO_BOLD(12)
         socialStack.addArrangedSubview(self.followLabel)
         
-        ADD_SPACER(to: socialStack, width: 5)
+        //ADD_SPACER(to: socialStack, width: 5)
         for i in 1...3 { //4 {
             let socialButton = UIButton(type: .system)
             socialButton.backgroundColor = .clear //.black
@@ -117,9 +122,38 @@ class FooterCell: UICollectionViewCell {
             socialButton.tag = 10 + i
             socialButton.addTarget(self, action: #selector(onSocialButtonTap(_:)), for: .touchUpInside)
         }
-        ADD_SPACER(to: socialStack)
+        //ADD_SPACER(to: socialStack)
         
-        self.bottomView.backgroundColor = .green
+        self.podcastLabel.text = "Improve The News Podcast"
+        self.podcastLabel.font = ROBOTO(12)
+        self.contentView.addSubview(self.podcastLabel)
+        self.podcastLabel.activateConstraints([
+            self.podcastLabel.topAnchor.constraint(equalTo: self.copyrightLabel.bottomAnchor, constant: 10),
+            self.podcastLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18)
+        ])
+        
+        self.podcastStack = HSTACK(into: self.contentView, spacing: 8)
+        self.podcastStack.activateConstraints([
+            self.podcastStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            self.podcastStack.topAnchor.constraint(equalTo: self.podcastLabel.bottomAnchor, constant: 16),
+        ])
+        
+        for i in 1...4 {
+            let img = UIImage(named: DisplayMode.imageName("podcast_\(i)"))?.withRenderingMode(.alwaysOriginal)
+        
+            let podcastButton = UIButton(type: .system)
+            podcastButton.backgroundColor = .clear //.black
+            podcastButton.setImage(img, for: .normal)
+            self.podcastStack.addArrangedSubview(podcastButton)
+            podcastButton.activateConstraints([
+                podcastButton.widthAnchor.constraint(equalToConstant: 48),
+                podcastButton.heightAnchor.constraint(equalToConstant: 48)
+            ])
+            podcastButton.tag = 20 + i
+            podcastButton.addTarget(self, action: #selector(onPodcastButtonTap(_:)), for: .touchUpInside)
+        }
+        
+        self.bottomView.backgroundColor = .green.withAlphaComponent(0.3)
         self.contentView.addSubview(self.bottomView)
         self.bottomView.activateConstraints([
             self.bottomView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
@@ -127,6 +161,7 @@ class FooterCell: UICollectionViewCell {
             self.bottomView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 34),
             self.bottomView.heightAnchor.constraint(equalToConstant: 100)
         ])
+        self.contentView.sendSubviewToBack(self.bottomView)
     }
     
     func addItem(_ text: String, below: UIView, separation: CGFloat, icon: String? = nil, action: Selector) -> UILabel {
@@ -145,7 +180,7 @@ class FooterCell: UICollectionViewCell {
             let iconImageView = UIImageView(image: UIImage(named: _icon))
             self.contentView.addSubview(iconImageView)
             iconImageView.activateConstraints([
-                iconImageView.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 8),
+                iconImageView.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 15),
                 iconImageView.centerYAnchor.constraint(equalTo: label.centerYAnchor),
                 iconImageView.widthAnchor.constraint(equalToConstant: 23),
                 iconImageView.heightAnchor.constraint(equalToConstant: 23)
@@ -174,21 +209,30 @@ class FooterCell: UICollectionViewCell {
     private func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202E) : UIColor(hex: 0xE8E9EA)
         self.bottomView.backgroundColor = self.contentView.backgroundColor
-        self.logoImageView.image = UIImage(named: DisplayMode.imageName("navBar.logo"))
-        self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+//        self.logoImageView.image = UIImage(named: DisplayMode.imageName("navBar.logo"))
+        self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
         self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x212E43) : UIColor(hex: 0xC3C9CF)
         self.copyrightLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+        self.podcastLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
+        
+        self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
         
         for view in self.contentView.subviews {
             if let label = view as? UILabel, (label.font == self.ITEMS_FONT) {
-                label.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+                label.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
             }
+        }
+        
+        for (i, view) in self.podcastStack.arrangedSubviews.enumerated() {
+            let img = UIImage(named: DisplayMode.imageName("podcast_\(i+1)"))?.withRenderingMode(.alwaysOriginal)
+            
+            let button = view as! UIButton
+            button.setImage(img, for: .normal)
         }
     }
     
     static func getHeight(width: CGFloat) -> CGSize {
-        var H: CGFloat = 390
+        var H: CGFloat = 390 + 45
         if(SAFE_AREA()?.bottom == 0) {
             H += 40
         }
@@ -203,6 +247,30 @@ extension FooterCell {
     @objc func onShareButtonTap(_ sender: UIButton) {
         if let _vc = self.viewController {
             SHARE_URL("http://www.improvethenews.org", from: _vc)
+        }
+    }
+    
+    @objc func onPodcastButtonTap(_ sender: UIButton) {
+        let tag = sender.tag - 20
+        
+        var url: String?
+        switch(tag) {
+            case 1:
+                url = "https://podcasts.apple.com/us/podcast/improve-the-news/id1618971104?ign-itscg=30200&ign-itsct=podcast_box_player"
+            case 2:
+                url = "https://open.spotify.com/show/6f0N5HoyXABPBM8vS0iI8H"
+            case 3:
+                url = "https://music.amazon.com/podcasts/f5de9928-7979-4710-ab1a-13dc22007e70/improve-the-news"
+            case 4:
+                url = "https://www.youtube.com/playlist?list=PLDJZZqlKlvx4wm6206Vgq3s1dFPIP78p8"
+  
+            default:
+                url = nil
+        }
+        
+        
+        if let _url = url {
+            OPEN_URL(_url)
         }
     }
     

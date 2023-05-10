@@ -18,7 +18,9 @@ class iPadFooterCell: UITableViewCell {
     
     let line = UIView()
     let copyrightLabel = UILabel()
+    let podcastLabel = UILabel()
     let bottomView = UIView()
+    var podcastStack = UIStackView()
     
 
     // MARK: - Start
@@ -41,7 +43,7 @@ class iPadFooterCell: UITableViewCell {
             hStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: margin),
             hStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -margin),
             hStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: margin),
-            hStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -100)
+            hStack.heightAnchor.constraint(equalToConstant: 230)
         ])
         
         let column1 = VSTACK(into: hStack)
@@ -146,6 +148,38 @@ class iPadFooterCell: UITableViewCell {
             self.copyrightLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
         ])
         
+        self.podcastLabel.text = "Improve The News Podcast"
+        self.podcastLabel.font = ROBOTO(12)
+        self.contentView.addSubview(self.podcastLabel)
+        self.podcastLabel.activateConstraints([
+            self.podcastLabel.topAnchor.constraint(equalTo: self.copyrightLabel.bottomAnchor, constant: 10),
+            self.podcastLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18)
+        ])
+        
+        self.podcastStack = HSTACK(into: self.contentView, spacing: 8)
+        self.podcastStack.activateConstraints([
+            self.podcastStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            self.podcastStack.topAnchor.constraint(equalTo: self.podcastLabel.bottomAnchor, constant: 16),
+        ])
+        
+        for i in 1...4 {
+            let img = UIImage(named: DisplayMode.imageName("podcast_\(i)"))?.withRenderingMode(.alwaysOriginal)
+        
+            let podcastButton = UIButton(type: .system)
+            podcastButton.backgroundColor = .clear //.black
+            podcastButton.setImage(img, for: .normal)
+            self.podcastStack.addArrangedSubview(podcastButton)
+            podcastButton.activateConstraints([
+                podcastButton.widthAnchor.constraint(equalToConstant: 48),
+                podcastButton.heightAnchor.constraint(equalToConstant: 48)
+            ])
+            podcastButton.tag = 20 + i
+            podcastButton.addTarget(self, action: #selector(onPodcastButtonTap(_:)), for: .touchUpInside)
+        }
+        
+        
+        
+        // -----
         self.bottomView.backgroundColor = .green
         self.contentView.addSubview(self.bottomView)
         self.bottomView.activateConstraints([
@@ -154,20 +188,26 @@ class iPadFooterCell: UITableViewCell {
             self.bottomView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 34),
             self.bottomView.heightAnchor.constraint(equalToConstant: 34)
         ])
+        self.contentView.sendSubviewToBack(self.bottomView)
         
         self.refreshDisplayMode()
+    }
+    
+    static func getHeight() -> CGFloat {
+        return 330 + 100
     }
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202E) : UIColor(hex: 0xE8E9EA)
         self.bottomView.backgroundColor = self.contentView.backgroundColor
-        self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
-        self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+        self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
+        self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
         self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x212E43) : UIColor(hex: 0xC3C9CF)
-        self.copyrightLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        self.copyrightLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1E242F)
+        self.podcastLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
         
         for L in self.labels {
-            L.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+            L.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
         }
     }
 
@@ -219,6 +259,30 @@ extension iPadFooterCell {
     @objc func onShareButtonTap(_ sender: UIButton) {
         if let _vc = self.viewController {
             SHARE_URL("http://www.improvethenews.org", from: _vc)
+        }
+    }
+    
+    @objc func onPodcastButtonTap(_ sender: UIButton) {
+        let tag = sender.tag - 20
+        
+        var url: String?
+        switch(tag) {
+            case 1:
+                url = "https://podcasts.apple.com/us/podcast/improve-the-news/id1618971104?ign-itscg=30200&ign-itsct=podcast_box_player"
+            case 2:
+                url = "https://open.spotify.com/show/6f0N5HoyXABPBM8vS0iI8H"
+            case 3:
+                url = "https://music.amazon.com/podcasts/f5de9928-7979-4710-ab1a-13dc22007e70/improve-the-news"
+            case 4:
+                url = "https://www.youtube.com/playlist?list=PLDJZZqlKlvx4wm6206Vgq3s1dFPIP78p8"
+  
+            default:
+                url = nil
+        }
+        
+        
+        if let _url = url {
+            OPEN_URL(_url)
         }
     }
     

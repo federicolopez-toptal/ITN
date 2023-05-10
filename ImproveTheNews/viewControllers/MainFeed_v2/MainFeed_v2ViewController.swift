@@ -142,6 +142,9 @@ extension MainFeed_v2ViewController {
 //                        if(CustomNavController.shared.viewControllers.first! == self) {
 //                            CustomNavController.shared.startTour() //!!!
 //                        }
+//                        DELAY(4.5) {
+//                            self.scrollToBottom()
+//                        }
                         
                     }
                 }

@@ -188,7 +188,7 @@ extension MainFeed_v2ViewController {
                 result = iPadBannerCell.heightFor(banner: self.data.banner!)
             }
         } else if(dpItem is DataProviderFooterItem) {
-            result = 330
+            result = iPadFooterCell.getHeight()
         } else if(dpItem is DataProvideriPadGroupItem_splitStory) {
             let count = (dpItem as! DataProvideriPadGroupItem_splitStory).articles.count
             result = iPadGroupItem_splitStoriesCell.getHeightForCount(count)
