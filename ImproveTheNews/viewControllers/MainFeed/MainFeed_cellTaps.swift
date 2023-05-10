@@ -20,10 +20,10 @@ extension MainFeedViewController {
 
         if(!isHeader && !isBanner && !isMore && !isFooter) {
             let article = self.getArticle(from: (item as! DP_itemPointingData))
+            if(article.isEmpty()){ return }
 
             CustomNavController.shared.tour?.cancel()
             if(article.isStory) {
-                // FUTURE_IMPLEMENTATION("Show the Story content screen here")
                 let vc = StoryViewController()
                 vc.story = article
                 CustomNavController.shared.pushViewController(vc, animated: true)

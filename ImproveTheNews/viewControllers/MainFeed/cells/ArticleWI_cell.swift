@@ -172,6 +172,12 @@ class ArticleWI_cell: UICollectionViewCell {
         } else {
             self.flagImageView.image = UIImage(named: "noFlag.png")
         }
+        
+        if(PREFS_SHOW_FLAGS()) {
+            self.flagImageView.superview!.show()
+        } else {
+            self.flagImageView.superview!.hide()
+        }
     }
     
     func refreshDisplayMode() {

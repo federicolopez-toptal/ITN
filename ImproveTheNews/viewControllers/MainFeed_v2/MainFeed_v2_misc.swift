@@ -115,6 +115,10 @@ extension MainFeed_v2ViewController {
             WRITE(LocalKeys.preferences.showStancePopups, value: "01")
         }
         
+        // show flags
+        if(READ(LocalKeys.preferences.showStancePopups)==nil) {
+            WRITE(LocalKeys.preferences.showSourceFlags, value: "01")
+        }
     }
     
 }

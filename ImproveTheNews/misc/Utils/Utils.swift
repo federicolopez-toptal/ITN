@@ -128,6 +128,10 @@ func PREFS_SHOW_STANCE_POPUPS() -> Bool {
 func PREFS_SHOW_STORIES() -> Bool {
     return PREF(key: LocalKeys.preferences.showStories)
 }
+func PREFS_SHOW_FLAGS() -> Bool {
+    return PREF(key: LocalKeys.preferences.showSourceFlags)
+}
+
 
 let LOAD_MORE_LIMIT = 12
 // ---------------------------------------------

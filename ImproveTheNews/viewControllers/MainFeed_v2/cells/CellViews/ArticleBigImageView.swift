@@ -138,6 +138,7 @@ class ArticleBigImageView: CustomCellView {
     
     @objc func viewOnTap(_ gesture: UITapGestureRecognizer) {
         CustomNavController.shared.tour?.cancel()
+        if(article.isEmpty()){ return }
         
         if(article.isStory) {
             let vc = StoryViewController()

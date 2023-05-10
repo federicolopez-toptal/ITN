@@ -42,6 +42,7 @@ class LocalKeys { // Keys to store local values
         let onBoardingShow = "pref_onBoardingShow"
         let onBoardingState = "pref_onBoardingState"
         
+        let showSourceFlags = "pref_showSourceFlags"
         let showSourceIcons = "pref_showSourceIcons"
         let showStanceIcons = "pref_showStanceIcons"
         let showStancePopups = "pref_showStancePopups"

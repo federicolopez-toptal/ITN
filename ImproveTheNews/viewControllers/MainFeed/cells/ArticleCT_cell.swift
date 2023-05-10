@@ -151,6 +151,12 @@ class ArticleCT_cell: UICollectionViewCell {
         self.sourceTimeLabel.alpha = alphaValue
         self.sourcesContainer.alpha = alphaValue
         self.flagImageView.alpha = alphaValue
+        
+        if(PREFS_SHOW_FLAGS()) {
+            self.flagImageView.superview!.show()
+        } else {
+            self.flagImageView.superview!.hide()
+        }
     }
     
     private func shortenTime(_ text: String) -> String {

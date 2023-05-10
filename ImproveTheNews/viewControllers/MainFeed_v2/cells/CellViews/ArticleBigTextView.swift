@@ -150,6 +150,7 @@ class ArticleBigTextView: CustomCellView {
     
     @objc func viewOnTap(_ gesture: UITapGestureRecognizer) {
         CustomNavController.shared.tour?.cancel()
+        if(article.isEmpty()){ return }
         
         if(article.isStory) {
             let vc = StoryViewController()
@@ -208,6 +209,12 @@ class ArticleBigTextView: CustomCellView {
             self.articleSourceTime.text = CLEAN_SOURCE(from: article.source) + " • " + article.time
             self.articleSourceTime.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
             self.stanceIcon.setValues(article.LR, article.PE)
+            
+            if(PREFS_SHOW_FLAGS()) {
+                self.flagImageView.superview!.show()
+            } else {
+                self.flagImageView.superview!.hide()
+            }
         }
         
         if let _image = UIImage(named: self.article.country.uppercased() + "64.png") {
