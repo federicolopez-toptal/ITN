@@ -224,6 +224,51 @@ class SignInView: UIView {
             mainActionLabel.centerYAnchor.constraint(equalTo: self.mainActionButton.centerYAnchor)
         ])
         
+        // ----
+        let socialLabel = UILabel()
+        socialLabel.font = ROBOTO(16)
+        socialLabel.textAlignment = .center
+        socialLabel.textColor = UIColor(hex: 0x93A0B4)
+        socialLabel.text = "or user social networks to sign in:"
+        VStack_form.addArrangedSubview(socialLabel)
+        ADD_SPACER(to: VStack_form, height: 15)
+        
+        let hStackSocial = HSTACK(into: VStack_form)
+        hStackSocial.spacing = 16
+        
+        let iconsCount = 3
+        let sepWidth: CGFloat = SCREEN_SIZE().width - 16 - 20 - (extraHMargin * 2) -
+            (35 * CGFloat(iconsCount)) - (hStackSocial.spacing * CGFloat(iconsCount)-1)
+        
+        ADD_SPACER(to: hStackSocial, width: sepWidth/2)
+        for i in 1...iconsCount {
+            let file = "footerSocial_\(i)"
+            let imgView = UIImageView(image: UIImage(named: file))
+            hStackSocial.addArrangedSubview(imgView)
+            imgView.activateConstraints([
+                imgView.widthAnchor.constraint(equalToConstant: 35),
+                imgView.heightAnchor.constraint(equalToConstant: 35)
+            ])
+            
+            let button = UIButton(type: .custom)
+            button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+            hStackSocial.addSubview(button)
+            button.activateConstraints([
+                button.leadingAnchor.constraint(equalTo: imgView.leadingAnchor),
+                button.trailingAnchor.constraint(equalTo: imgView.trailingAnchor),
+                button.topAnchor.constraint(equalTo: imgView.topAnchor),
+                button.bottomAnchor.constraint(equalTo: imgView.bottomAnchor)
+            ])
+            button.tag = i
+            button.addTarget(self, action: #selector(socialButtonOnTap(_:)), for: .touchUpInside)
+        }
+        ADD_SPACER(to: hStackSocial, width: sepWidth/2)
+        ADD_SPACER(to: VStack_form, height: 15)
+        // ----
+            
+        
+        
+        
         let HStack_question = HSTACK(into: VStack_form)
         
         ADD_SPACER(to: HStack_question)
@@ -329,8 +374,8 @@ extension SignInView {
     }
     
     @objc func mainActionButtonTap(_ sender: UIButton) {
-//        self.emailText.setText("gatolab@gmail.com")
-//        self.passText.setText("federico123")
+        self.emailText.setText("gatolab@gmail.com")
+        self.passText.setText("federico123")
         
         if(self.emailText.text().isEmpty) {
             CustomNavController.shared.infoAlert(message: "Please, enter your email")
@@ -345,13 +390,15 @@ extension SignInView {
             let password = self.passText.text()
             API.shared.signIn(email: email, password: password) { (success, serverMsg) in
                 if(success) {
+                    NOTIFY(Notification_reloadMainFeedOnShow)
                     WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
                     MAIN_THREAD {
                         CustomNavController.shared.menu.updateLogout()
                     
                         self.delegate?.SignInViewShowLoading(state: false)
-                        let vc = AccountViewController()
-                        CustomNavController.shared.pushViewController(vc, animated: true)
+                        CustomNavController.shared.popViewController(animated: true)
+//                        let vc = AccountViewController()
+//                        CustomNavController.shared.pushViewController(vc, animated: true)
                     }
                 } else {
                     var showYesNo = false
@@ -393,6 +440,10 @@ extension SignInView {
             }
         }
         
+    }
+    
+    @objc func socialButtonOnTap(_ sender: UIButton) {
+        print( sender.tag )
     }
     
 }
