@@ -17,6 +17,7 @@
 		1F0CAD7E295CB10600E234C4 /* MainFeedv3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0CAD7D295CB10600E234C4 /* MainFeedv3.swift */; };
 		1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F106AEA2907186E004B9943 /* MainFeed_dataProvider.swift */; };
 		1F106AED29071E30004B9943 /* MainFeed_cellTaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F106AEC29071E30004B9943 /* MainFeed_cellTaps.swift */; };
+		1F1247EA2A0E7BFC00039D51 /* SocialBasic_SDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1247E92A0E7BFC00039D51 /* SocialBasic_SDK.swift */; };
 		1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AA29363353003F528E /* MainFeedv2.swift */; };
 		1F1788AD2937CBC1003F528E /* TrashCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AC2937CBC1003F528E /* TrashCode.swift */; };
 		1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18C88828F89EF600197F38 /* MenuItemCell.swift */; };
@@ -35,6 +36,7 @@
 		1F2D9FD428D36F6A00CE3008 /* ArticleWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */; };
 		1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */; };
 		1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */; };
+		1F36ACAC2A0E73D8000EF350 /* LinkedIn_SDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36ACAB2A0E73D8000EF350 /* LinkedIn_SDK.swift */; };
 		1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */; };
 		1F38213E29A6DA32004D4D29 /* MainFeed_v2_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */; };
 		1F38214129A6DF45004D4D29 /* iPadGroupItem_topCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */; };
@@ -50,6 +52,7 @@
 		1F5261C929E844FE000CE599 /* BannernewsLetterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5261C829E844FE000CE599 /* BannernewsLetterCell.swift */; };
 		1F56F727294B9D2900654CDB /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */; };
 		1F5A0FFF2992D59700DD8CB3 /* Data_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */; };
+		1F5EE1482A0E93A900168FB0 /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5EE1472A0E93A900168FB0 /* URLExtension.swift */; };
 		1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */; };
 		1F66798429DF026000CFB714 /* iPadSpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798329DF026000CFB714 /* iPadSpacerCell.swift */; };
 		1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */; };
@@ -406,6 +409,7 @@
 		1F0CAD7D295CB10600E234C4 /* MainFeedv3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedv3.swift; sourceTree = "<group>"; };
 		1F106AEA2907186E004B9943 /* MainFeed_dataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_dataProvider.swift; sourceTree = "<group>"; };
 		1F106AEC29071E30004B9943 /* MainFeed_cellTaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_cellTaps.swift; sourceTree = "<group>"; };
+		1F1247E92A0E7BFC00039D51 /* SocialBasic_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialBasic_SDK.swift; sourceTree = "<group>"; };
 		1F1788AA29363353003F528E /* MainFeedv2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedv2.swift; sourceTree = "<group>"; };
 		1F1788AC2937CBC1003F528E /* TrashCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashCode.swift; sourceTree = "<group>"; };
 		1F18C88828F89EF600197F38 /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
@@ -424,6 +428,7 @@
 		1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWT_cell.swift; sourceTree = "<group>"; };
 		1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryWT_cell.swift; sourceTree = "<group>"; };
 		1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		1F36ACAB2A0E73D8000EF350 /* LinkedIn_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedIn_SDK.swift; sourceTree = "<group>"; };
 		1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2_list.swift; sourceTree = "<group>"; };
 		1F38214029A6DF45004D4D29 /* iPadGroupItem_topCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_topCell.swift; sourceTree = "<group>"; };
@@ -439,6 +444,7 @@
 		1F5261C829E844FE000CE599 /* BannernewsLetterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannernewsLetterCell.swift; sourceTree = "<group>"; };
 		1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_misc.swift; sourceTree = "<group>"; };
+		1F5EE1472A0E93A900168FB0 /* URLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
 		1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_rowNoStoriesCell.swift; sourceTree = "<group>"; };
 		1F66798329DF026000CFB714 /* iPadSpacerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSpacerCell.swift; sourceTree = "<group>"; };
 		1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -813,6 +819,15 @@
 			path = MainFeed;
 			sourceTree = "<group>";
 		};
+		1F36ACAA2A0E73B3000EF350 /* Social(s) */ = {
+			isa = PBXGroup;
+			children = (
+				1F1247E92A0E7BFC00039D51 /* SocialBasic_SDK.swift */,
+				1F36ACAB2A0E73D8000EF350 /* LinkedIn_SDK.swift */,
+			);
+			path = "Social(s)";
+			sourceTree = "<group>";
+		};
 		1F38213F29A6DF1F004D4D29 /* cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -1014,6 +1029,7 @@
 				1FBCA44E294122D000FBF997 /* TextFields */,
 				1F9B89E929DF21FE004697DD /* Tour */,
 				1F56F728294B9D2F00654CDB /* Third Party */,
+				1F36ACAA2A0E73B3000EF350 /* Social(s) */,
 				1FA4CE7828C3DCFB0068DE4A /* SlidersPanel.swift */,
 				1F22E2E228C64BA4007F00D1 /* FloatingButton.swift */,
 				1FEE16EA28C833BF0079BE54 /* NavBarView.swift */,
@@ -1263,6 +1279,7 @@
 		1FF61CBC28DAD84A006DF9AC /* basics */ = {
 			isa = PBXGroup;
 			children = (
+				1F5EE1472A0E93A900168FB0 /* URLExtension.swift */,
 				1FA1728728D2B7AC00693B85 /* IntExtension.swift */,
 				1F1A1A9B28D27D3100256785 /* StringExtension.swift */,
 				1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */,
@@ -1939,6 +1956,7 @@
 				1FE541C62A03FA9A000A2CF3 /* ResetPassViewController.swift in Sources */,
 				1FEE16ED28C83CED0079BE54 /* TopicSelectorView.swift in Sources */,
 				1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */,
+				1F1247EA2A0E7BFC00039D51 /* SocialBasic_SDK.swift in Sources */,
 				1F95136128BFC64300A77AB6 /* CustomNavController.swift in Sources */,
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
 				1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */,
@@ -1996,9 +2014,11 @@
 				1F3E5E3E292FD24E00FA090B /* FilterTextView.swift in Sources */,
 				1F897CE828CC3B0F00438FC5 /* UI_misc.swift in Sources */,
 				1F3DDED1296EEE4F003DCD2F /* StoryEntities.swift in Sources */,
+				1F36ACAC2A0E73D8000EF350 /* LinkedIn_SDK.swift in Sources */,
 				1FF61CC028DAFC4D006DF9AC /* ArticleCI_cell.swift in Sources */,
 				1F36FB0228EBF0E0002A54BC /* CGRectExtension.swift in Sources */,
 				1FE916A529A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift in Sources */,
+				1F5EE1482A0E93A900168FB0 /* URLExtension.swift in Sources */,
 				1F1BBA4329E87D6000D8C697 /* iPadBannerNewsletterCell.swift in Sources */,
 				1F95136328BFC69200A77AB6 /* MainFeedViewController.swift in Sources */,
 				1FA4CE7328C2DDFD0068DE4A /* ErrorExtension.swift in Sources */,

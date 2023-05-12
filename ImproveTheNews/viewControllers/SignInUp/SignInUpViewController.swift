@@ -14,6 +14,8 @@ class SignInUpViewController: BaseViewController {
     var signUp = SignUpView()
     
     
+    
+    
     // MARK: - End
     deinit {
         self.signIn.removeKeyboardObservers()
@@ -72,6 +74,12 @@ extension SignInUpViewController: SignInViewDelegate, SignUpViewDelegate {
             self.hideLoading()
         }
         
+    }
+    
+    func SignInOnSocialButtonTap(index: Int) {
+        LinkedIn_SDK.shared.login(vc: self) { (success) in
+            print("Login completed:", success)
+        }
     }
     
     // Sign up

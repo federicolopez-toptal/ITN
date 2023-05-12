@@ -334,6 +334,33 @@ class API {
         }
     }
 //---
+    func socialLogin(socialName: String, accessToken: String, callback: @escaping (Bool, String) -> ()) {
+        let json: [String: String] = [
+            "type": socialName,
+            "userId": UUID.shared.getValue(),
+            "access_token": accessToken,
+            "option": "Sign In",
+            "newsletter": "Y",
+            "app": "iOS"
+        ]
+    
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _status = _json["message"] as? String {
+                    if(_status == "OK") {
+                        callback(true, "")
+                    } else {
+                        callback(false, serverMsg)
+                    }
+                } else {
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
+            }
+        }
+    }
+//---
 }
 
 extension API {

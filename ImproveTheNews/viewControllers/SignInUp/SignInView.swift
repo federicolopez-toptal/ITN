@@ -10,6 +10,7 @@ import UIKit
 protocol SignInViewDelegate: AnyObject {
     func SignInViewOnTabTap()
     func SignInViewShowLoading(state: Bool)
+    func SignInOnSocialButtonTap(index: Int)
 }
 
 
@@ -443,7 +444,7 @@ extension SignInView {
     }
     
     @objc func socialButtonOnTap(_ sender: UIButton) {
-        print( sender.tag )
+        self.delegate?.SignInOnSocialButtonTap(index: sender.tag)
     }
     
 }
