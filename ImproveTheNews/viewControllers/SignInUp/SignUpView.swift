@@ -237,6 +237,7 @@ class SignUpView: UIView {
         ])
         
         // ----
+        /*
         let socialLabel = UILabel()
         socialLabel.font = ROBOTO(16)
         socialLabel.textAlignment = .center
@@ -276,6 +277,7 @@ class SignUpView: UIView {
         }
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         ADD_SPACER(to: VStack_form, height: 15)
+        */
         // ----
         
         let HStack_question = HSTACK(into: VStack_form)

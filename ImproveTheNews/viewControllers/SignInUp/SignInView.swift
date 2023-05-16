@@ -226,6 +226,7 @@ class SignInView: UIView {
         ])
         
         // ----
+        /*
         let socialLabel = UILabel()
         socialLabel.font = ROBOTO(16)
         socialLabel.textAlignment = .center
@@ -265,6 +266,7 @@ class SignInView: UIView {
         }
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         ADD_SPACER(to: VStack_form, height: 15)
+        */
         // ----
             
         
@@ -299,6 +301,7 @@ class SignInView: UIView {
         questionButton.addTarget(self, action: #selector(tabButtonOnTap(_:)), for: .touchUpInside)
         
         ADD_SPACER(to: VStack_form, height: 16)
+        
         
         // --------
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentViewOnTap(_:)))
@@ -375,8 +378,8 @@ extension SignInView {
     }
     
     @objc func mainActionButtonTap(_ sender: UIButton) {
-        self.emailText.setText("gatolab@gmail.com")
-        self.passText.setText("federico123")
+//        self.emailText.setText("gatolab@gmail.com")
+//        self.passText.setText("federico123")
         
         if(self.emailText.text().isEmpty) {
             CustomNavController.shared.infoAlert(message: "Please, enter your email")

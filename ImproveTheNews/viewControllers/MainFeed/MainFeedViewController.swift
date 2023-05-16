@@ -289,7 +289,7 @@ extension MainFeedViewController {
         }
         
         // show flags
-        if(READ(LocalKeys.preferences.showStancePopups)==nil) {
+        if(READ(LocalKeys.preferences.showSourceFlags)==nil) {
             WRITE(LocalKeys.preferences.showSourceFlags, value: "01")
         }
     }
