@@ -335,6 +335,8 @@ extension MenuView {
         } else {
             self.dataProvider = self.dataProvider_A
         }
+        
+        self.removeLogoutIfApply()
         self.refreshDisplayMode() // reload list implicit
     }
     
