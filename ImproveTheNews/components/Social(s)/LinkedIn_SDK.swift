@@ -10,9 +10,7 @@ import UIKit
 import WebKit
 
 
-class LinkedIn_SDK: SocialBasic_SDK {
-    
-    static let shared = LinkedIn_SDK()
+class LinkedIn_SDK: NSObject {
     
     private let AUTHURL = "https://www.linkedin.com/oauth/v2/authorization"
     private let CLIENT_ID = "86hkerhuw16kd6"
@@ -21,23 +19,26 @@ class LinkedIn_SDK: SocialBasic_SDK {
     private let REDIRECT_URI = "https://www.improvemynews.com/php/linkedin/loader.php"
     private let TOKENURL = "https://www.linkedin.com/oauth/v2/accessToken"
     
+    static let shared = LinkedIn_SDK()
+    
+    var vc: UIViewController?
+    let webView = WKWebView()
+    var callback: ( (Bool)->() )?
     
     func login(vc: UIViewController, callback: @escaping (Bool)->()) {
         self.vc = vc
         self.webView.navigationDelegate = self
         self.callback = callback
-        self.bgColor = UIColor(hex: 0x0B66C2)        
-        self.loginUrl = self.buildLoginUrl()
         
-        let nav = self.createNavController(title: "linkedin.com")
+        let nav = self.createNavController()
         self.loadLoginPage()
         self.vc?.present(nav, animated: true)
     }
     
 }
 
-extension LinkedIn_SDK: WKNavigationDelegate {
-    
+//MARK: - Utils
+extension LinkedIn_SDK {
     private func buildLoginUrl() -> String {
         let state = "linkedin\(Int(NSDate().timeIntervalSince1970))"
         let fullAuthUrl = AUTHURL + "?response_type=code&client_id=" + CLIENT_ID +
@@ -46,7 +47,15 @@ extension LinkedIn_SDK: WKNavigationDelegate {
         return fullAuthUrl
     }
     
-    //---
+    func loadLoginPage() {
+        let urlRequest = URLRequest.init(url: URL.init(string: self.buildLoginUrl())!)
+        self.webView.load(urlRequest)
+    }
+}
+
+//MARK: - WKWebView & parsing
+extension LinkedIn_SDK: WKNavigationDelegate {
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
@@ -116,8 +125,86 @@ extension LinkedIn_SDK: WKNavigationDelegate {
     //---
     func ITN_login(_ token: String) {
         API.shared.socialLogin(socialName: "Linkedin", accessToken: token) { (success, serverMsg) in
+            if(success) {
+                self.cancelAction()
+            }
+            
             self.callback!(success)
         }
     }
     
+}
+
+// MARK: - UI
+extension LinkedIn_SDK {
+
+    func createNavController() -> UINavigationController {
+        let vc = UIViewController()
+        
+        vc.view.addSubview(self.webView)
+        self.webView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.webView.topAnchor.constraint(equalTo: vc.view.topAnchor),
+            self.webView.leadingAnchor.constraint(equalTo: vc.view.leadingAnchor),
+            self.webView.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor),
+            self.webView.trailingAnchor.constraint(equalTo: vc.view.trailingAnchor)
+        ])
+        
+        //---
+        let nav = UINavigationController(rootViewController: vc)
+        nav.isNavigationBarHidden = false
+        
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(self.cancelAction))
+        vc.navigationItem.leftBarButtonItem = cancelButton
+        
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh,
+            target: self,
+            action: #selector(self.refreshAction))
+        vc.navigationItem.rightBarButtonItem = refreshButton
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(hex: 0x0B66C2) // LinkedIn blue
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        nav.navigationBar.standardAppearance = appearance
+        nav.navigationBar.compactAppearance = appearance
+        nav.navigationBar.scrollEdgeAppearance = appearance
+
+        vc.navigationItem.title = "linkedin.com"
+        nav.navigationBar.tintColor = UIColor.white
+        nav.modalPresentationStyle = .overFullScreen
+        nav.modalTransitionStyle = .coverVertical
+        
+        return nav
+    }
+    
+    //---
+    private func createViewController() -> UIViewController {
+        let vc = UIViewController()
+        
+        vc.view.addSubview(self.webView)
+        self.webView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.webView.topAnchor.constraint(equalTo: vc.view.topAnchor),
+            self.webView.leadingAnchor.constraint(equalTo: vc.view.leadingAnchor),
+            self.webView.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor),
+            self.webView.trailingAnchor.constraint(equalTo: vc.view.trailingAnchor)
+        ])
+        
+        return vc
+    }
+    
+    //---
+    @objc func cancelAction() {
+        DispatchQueue.main.async {
+            self.vc?.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    //---
+    @objc func refreshAction() {
+        self.webView.reload()
+    }
 }

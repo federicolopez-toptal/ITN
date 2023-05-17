@@ -1271,8 +1271,8 @@ extension StoryViewController {
         
         
         let popup = StancePopupView()
-        popup.populate(sourceName: article.media_title, country: article.media_country_code,
-            LR: LR, PE: PE)
+        let sourceName = article.media_title.components(separatedBy: " #").first!
+        popup.populate(sourceName: sourceName, country: article.media_country_code, LR: LR, PE: PE)
         popup.pushFromBottom()
     }
 }

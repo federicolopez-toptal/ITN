@@ -102,8 +102,10 @@ struct MainFeedTopic {
                 if(col>2){ col=1 }
             }
             
-            for i in 0...stories.count-1 {
-                self.articles.append(stories[i])
+            if(stories.count>0) {
+                for i in 0...stories.count-1 {
+                    self.articles.append(stories[i])
+                }
             }
 
         }

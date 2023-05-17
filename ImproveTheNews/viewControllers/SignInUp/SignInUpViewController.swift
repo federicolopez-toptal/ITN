@@ -77,8 +77,11 @@ extension SignInUpViewController: SignInViewDelegate, SignUpViewDelegate {
     }
     
     func SignInOnSocialButtonTap(index: Int) {
-        LinkedIn_SDK.shared.login(vc: self) { (success) in
-            print("Login completed:", success)
+//        LinkedIn_SDK.shared.login(vc: self) { (success) in
+//            print("Login completed:", success)
+//        }
+
+        Twitter_SDK.shared.login(vc: self) { (success) in
         }
     }
     

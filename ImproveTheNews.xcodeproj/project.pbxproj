@@ -17,7 +17,6 @@
 		1F0CAD7E295CB10600E234C4 /* MainFeedv3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0CAD7D295CB10600E234C4 /* MainFeedv3.swift */; };
 		1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F106AEA2907186E004B9943 /* MainFeed_dataProvider.swift */; };
 		1F106AED29071E30004B9943 /* MainFeed_cellTaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F106AEC29071E30004B9943 /* MainFeed_cellTaps.swift */; };
-		1F1247EA2A0E7BFC00039D51 /* SocialBasic_SDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1247E92A0E7BFC00039D51 /* SocialBasic_SDK.swift */; };
 		1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AA29363353003F528E /* MainFeedv2.swift */; };
 		1F1788AD2937CBC1003F528E /* TrashCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AC2937CBC1003F528E /* TrashCode.swift */; };
 		1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18C88828F89EF600197F38 /* MenuItemCell.swift */; };
@@ -46,6 +45,7 @@
 		1F3DDED1296EEE4F003DCD2F /* StoryEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DDED0296EEE4F003DCD2F /* StoryEntities.swift */; };
 		1F3E5E3C292FC2BF00FA090B /* SourceFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */; };
 		1F3E5E3E292FD24E00FA090B /* FilterTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */; };
+		1F41AE272A13DFDA00C0A0D2 /* Twitter_SDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F41AE262A13DFDA00C0A0D2 /* Twitter_SDK.swift */; };
 		1F41FCCC29B24AFC002081AE /* FAQ_content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F41FCCB29B24AFC002081AE /* FAQ_content.swift */; };
 		1F47CD8D290F5476003F0003 /* StoryCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */; };
 		1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */; };
@@ -409,7 +409,6 @@
 		1F0CAD7D295CB10600E234C4 /* MainFeedv3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedv3.swift; sourceTree = "<group>"; };
 		1F106AEA2907186E004B9943 /* MainFeed_dataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_dataProvider.swift; sourceTree = "<group>"; };
 		1F106AEC29071E30004B9943 /* MainFeed_cellTaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_cellTaps.swift; sourceTree = "<group>"; };
-		1F1247E92A0E7BFC00039D51 /* SocialBasic_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialBasic_SDK.swift; sourceTree = "<group>"; };
 		1F1788AA29363353003F528E /* MainFeedv2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedv2.swift; sourceTree = "<group>"; };
 		1F1788AC2937CBC1003F528E /* TrashCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashCode.swift; sourceTree = "<group>"; };
 		1F18C88828F89EF600197F38 /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
@@ -438,6 +437,7 @@
 		1F3DDED0296EEE4F003DCD2F /* StoryEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEntities.swift; sourceTree = "<group>"; };
 		1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFilterViewController.swift; sourceTree = "<group>"; };
 		1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTextView.swift; sourceTree = "<group>"; };
+		1F41AE262A13DFDA00C0A0D2 /* Twitter_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Twitter_SDK.swift; sourceTree = "<group>"; };
 		1F41FCCB29B24AFC002081AE /* FAQ_content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_content.swift; sourceTree = "<group>"; };
 		1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCT_cell.swift; sourceTree = "<group>"; };
 		1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCT_cell.swift; sourceTree = "<group>"; };
@@ -822,8 +822,8 @@
 		1F36ACAA2A0E73B3000EF350 /* Social(s) */ = {
 			isa = PBXGroup;
 			children = (
-				1F1247E92A0E7BFC00039D51 /* SocialBasic_SDK.swift */,
 				1F36ACAB2A0E73D8000EF350 /* LinkedIn_SDK.swift */,
+				1F41AE262A13DFDA00C0A0D2 /* Twitter_SDK.swift */,
 			);
 			path = "Social(s)";
 			sourceTree = "<group>";
@@ -1918,6 +1918,7 @@
 				1F38213E29A6DA32004D4D29 /* MainFeed_v2_list.swift in Sources */,
 				1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */,
 				1FD23406291565F100B85AE9 /* MenuView_misc.swift in Sources */,
+				1F41AE272A13DFDA00C0A0D2 /* Twitter_SDK.swift in Sources */,
 				1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */,
 				1F2A2354294A5B4D00CA16D7 /* HeaderZeroCell.swift in Sources */,
 				1FC73912298A1515003EB38D /* SignUpView.swift in Sources */,
@@ -1956,7 +1957,6 @@
 				1FE541C62A03FA9A000A2CF3 /* ResetPassViewController.swift in Sources */,
 				1FEE16ED28C83CED0079BE54 /* TopicSelectorView.swift in Sources */,
 				1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */,
-				1F1247EA2A0E7BFC00039D51 /* SocialBasic_SDK.swift in Sources */,
 				1F95136128BFC64300A77AB6 /* CustomNavController.swift in Sources */,
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
 				1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */,
@@ -2190,7 +2190,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2226,7 +2226,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2316,7 +2316,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
