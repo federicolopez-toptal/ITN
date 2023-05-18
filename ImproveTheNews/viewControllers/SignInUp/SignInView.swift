@@ -237,31 +237,34 @@ class SignInView: UIView {
         let hStackSocial = HSTACK(into: VStack_form)
         hStackSocial.spacing = 16
         
-        let iconsCount = 3
+        var iconsCount = 1
         let sepWidth: CGFloat = SCREEN_SIZE().width - 16 - 20 - (extraHMargin * 2) -
             (35 * CGFloat(iconsCount)) - (hStackSocial.spacing * CGFloat(iconsCount)-1)
         
+        iconsCount = 3
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         for i in 1...iconsCount {
-            let file = "footerSocial_\(i)"
-            let imgView = UIImageView(image: UIImage(named: file))
-            hStackSocial.addArrangedSubview(imgView)
-            imgView.activateConstraints([
-                imgView.widthAnchor.constraint(equalToConstant: 35),
-                imgView.heightAnchor.constraint(equalToConstant: 35)
-            ])
-            
-            let button = UIButton(type: .custom)
-            button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
-            hStackSocial.addSubview(button)
-            button.activateConstraints([
-                button.leadingAnchor.constraint(equalTo: imgView.leadingAnchor),
-                button.trailingAnchor.constraint(equalTo: imgView.trailingAnchor),
-                button.topAnchor.constraint(equalTo: imgView.topAnchor),
-                button.bottomAnchor.constraint(equalTo: imgView.bottomAnchor)
-            ])
-            button.tag = i
-            button.addTarget(self, action: #selector(socialButtonOnTap(_:)), for: .touchUpInside)
+            if(i==2) {
+                let file = "footerSocial_\(i)"
+                let imgView = UIImageView(image: UIImage(named: file))
+                hStackSocial.addArrangedSubview(imgView)
+                imgView.activateConstraints([
+                    imgView.widthAnchor.constraint(equalToConstant: 35),
+                    imgView.heightAnchor.constraint(equalToConstant: 35)
+                ])
+                
+                let button = UIButton(type: .custom)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                hStackSocial.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: imgView.leadingAnchor),
+                    button.trailingAnchor.constraint(equalTo: imgView.trailingAnchor),
+                    button.topAnchor.constraint(equalTo: imgView.topAnchor),
+                    button.bottomAnchor.constraint(equalTo: imgView.bottomAnchor)
+                ])
+                button.tag = i
+                button.addTarget(self, action: #selector(socialButtonOnTap(_:)), for: .touchUpInside)
+            }
         }
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         ADD_SPACER(to: VStack_form, height: 15)
@@ -399,7 +402,7 @@ extension SignInView {
                         CustomNavController.shared.menu.updateLogout()
                     
                         self.delegate?.SignInViewShowLoading(state: false)
-                        CustomNavController.shared.popViewController(animated: true)
+                        CustomNavController.shared.popViewController(animated: true) // go back to main feed
 //                        let vc = AccountViewController()
 //                        CustomNavController.shared.pushViewController(vc, animated: true)
                     }

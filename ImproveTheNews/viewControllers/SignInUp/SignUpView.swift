@@ -10,6 +10,7 @@ import UIKit
 protocol SignUpViewDelegate: AnyObject {
     func SignUpViewOnTabTap()
     func SignUpViewShowLoading(state: Bool)
+    func SignUpOnSocialButtonTap(index: Int)
 }
 
 
@@ -236,8 +237,7 @@ class SignUpView: UIView {
             mainActionLabel.centerYAnchor.constraint(equalTo: self.mainActionButton.centerYAnchor)
         ])
         
-        // ----
-        /*
+        // ---- SOCIAL
         let socialLabel = UILabel()
         socialLabel.font = ROBOTO(16)
         socialLabel.textAlignment = .center
@@ -249,35 +249,37 @@ class SignUpView: UIView {
         let hStackSocial = HSTACK(into: VStack_form)
         hStackSocial.spacing = 16
         
-        let iconsCount = 3
+        var iconsCount = 1
         let sepWidth: CGFloat = SCREEN_SIZE().width - 16 - 20 - (extraHMargin * 2) -
             (35 * CGFloat(iconsCount)) - (hStackSocial.spacing * CGFloat(iconsCount)-1)
         
+        iconsCount = 3
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         for i in 1...iconsCount {
-            let file = "footerSocial_\(i)"
-            let imgView = UIImageView(image: UIImage(named: file))
-            hStackSocial.addArrangedSubview(imgView)
-            imgView.activateConstraints([
-                imgView.widthAnchor.constraint(equalToConstant: 35),
-                imgView.heightAnchor.constraint(equalToConstant: 35)
-            ])
-            
-            let button = UIButton(type: .custom)
-            button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
-            hStackSocial.addSubview(button)
-            button.activateConstraints([
-                button.leadingAnchor.constraint(equalTo: imgView.leadingAnchor),
-                button.trailingAnchor.constraint(equalTo: imgView.trailingAnchor),
-                button.topAnchor.constraint(equalTo: imgView.topAnchor),
-                button.bottomAnchor.constraint(equalTo: imgView.bottomAnchor)
-            ])
-            button.tag = i
-            button.addTarget(self, action: #selector(socialButtonOnTap(_:)), for: .touchUpInside)
+            if(i==2) {
+                let file = "footerSocial_\(i)"
+                let imgView = UIImageView(image: UIImage(named: file))
+                hStackSocial.addArrangedSubview(imgView)
+                imgView.activateConstraints([
+                    imgView.widthAnchor.constraint(equalToConstant: 35),
+                    imgView.heightAnchor.constraint(equalToConstant: 35)
+                ])
+                
+                let button = UIButton(type: .custom)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                hStackSocial.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: imgView.leadingAnchor),
+                    button.trailingAnchor.constraint(equalTo: imgView.trailingAnchor),
+                    button.topAnchor.constraint(equalTo: imgView.topAnchor),
+                    button.bottomAnchor.constraint(equalTo: imgView.bottomAnchor)
+                ])
+                button.tag = i
+                button.addTarget(self, action: #selector(socialButtonOnTap(_:)), for: .touchUpInside)
+            }
         }
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         ADD_SPACER(to: VStack_form, height: 15)
-        */
         // ----
         
         let HStack_question = HSTACK(into: VStack_form)
@@ -472,7 +474,7 @@ extension SignUpView {
     }
     
     @objc func socialButtonOnTap(_ sender: UIButton) {
-        print( sender.tag )
+        self.delegate?.SignUpOnSocialButtonTap(index: sender.tag)
     }
     
 }

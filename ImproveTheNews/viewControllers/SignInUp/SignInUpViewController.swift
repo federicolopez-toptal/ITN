@@ -77,12 +77,7 @@ extension SignInUpViewController: SignInViewDelegate, SignUpViewDelegate {
     }
     
     func SignInOnSocialButtonTap(index: Int) {
-//        LinkedIn_SDK.shared.login(vc: self) { (success) in
-//            print("Login completed:", success)
-//        }
-
-        Twitter_SDK.shared.login(vc: self) { (success) in
-        }
+        self.onSocialButtonTap(index)
     }
     
     // Sign up
@@ -100,6 +95,10 @@ extension SignInUpViewController: SignInViewDelegate, SignUpViewDelegate {
         
     }
     
+    func SignUpOnSocialButtonTap(index: Int) {
+        self.onSocialButtonTap(index)
+    }
+    
 }
 
 extension SignInUpViewController: UIGestureRecognizerDelegate {
@@ -110,4 +109,37 @@ extension SignInUpViewController: UIGestureRecognizerDelegate {
         
         return true
     }
+}
+
+// MARK: - Social stuff
+extension SignInUpViewController {
+    
+    func onSocialButtonTap(_ index: Int) {
+        switch(index) {
+            case 2:
+                self.linkedInAuth()
+            
+            default:
+                NOTHING()
+        }
+    
+
+
+//        Twitter_SDK.shared.login(vc: self) { (success) in
+//        }
+    }
+    
+    func linkedInAuth() {
+        LinkedIn_SDK.shared.login(vc: self) { (success) in
+            if(success) {
+                NOTIFY(Notification_reloadMainFeedOnShow)
+                WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
+                MAIN_THREAD {
+                    CustomNavController.shared.menu.updateLogout()
+                    CustomNavController.shared.popViewController(animated: true) // go back to main feed
+                }
+            }
+        }
+    }
+    
 }

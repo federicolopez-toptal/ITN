@@ -205,7 +205,7 @@ class AccountViewController: BaseViewController {
             saveUserInfoButton.heightAnchor.constraint(equalToConstant: 52)
         ])
         saveUserInfoButton.addTarget(self, action: #selector(saveUserInfoButtonTap(_:)), for: .touchUpInside)
-        ADD_SPACER(to: VStack_form, height: 45)
+        ADD_SPACER(to: VStack_form, height: 30)
         
         let saveUserInfoLabel = UILabel()
         saveUserInfoLabel.text = "SAVE"
@@ -224,7 +224,7 @@ class AccountViewController: BaseViewController {
             line1.heightAnchor.constraint(equalToConstant: 0.75)
         ])
         VStack_form.addArrangedSubview(line1)
-        ADD_SPACER(to: VStack_form, height: 45)
+        ADD_SPACER(to: VStack_form, height: 30)
         
         let titleLabel2 = UILabel()
         titleLabel2.text = "Newsletter Preferences"
@@ -335,7 +335,7 @@ class AccountViewController: BaseViewController {
         buttonCircle2.tag = 2
         buttonCircle2.addTarget(self, action: #selector(subscriptionTypeButtonTap(_:)), for: .touchUpInside)
         ADD_SPACER(to: hStackSubscriptionStyle)
-        ADD_SPACER(to: VStack_form, height: 45)
+        ADD_SPACER(to: VStack_form, height: 30)
         
         hStackSubscriptionStyle.addSubview(self.circleMark1)
         self.circleMark1.tintColor = .black.withAlphaComponent(0.5)
@@ -364,9 +364,67 @@ class AccountViewController: BaseViewController {
             line2.heightAnchor.constraint(equalToConstant: 0.75)
         ])
         VStack_form.addArrangedSubview(line2)
-        ADD_SPACER(to: VStack_form, height: 45)
+        ADD_SPACER(to: VStack_form, height: 30)
+        
+    //--- SOCIAL
+        let titleLabel_21 = UILabel()
+        titleLabel_21.text = "Connected social accounts"
+        titleLabel_21.font = MERRIWEATHER_BOLD(18)
+        titleLabel_21.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        VStack_form.addArrangedSubview(titleLabel_21)
+        ADD_SPACER(to: VStack_form, height: 20)
+        
+        // Linkedin
+        let hStackSocial1 = HSTACK(into: VStack_form)
+        let socialImgView1 = UIImageView(image: UIImage(named: "footerSocial_2"))
+        hStackSocial1.addArrangedSubview(socialImgView1)
+        socialImgView1.activateConstraints([
+            socialImgView1.widthAnchor.constraint(equalToConstant: 35),
+            socialImgView1.heightAnchor.constraint(equalToConstant: 35)
+        ])
+        ADD_SPACER(to: hStackSocial1, width: 15)
+        let socialNameLabel1 = UILabel()
+        socialNameLabel1.text = "Linkedin"
+        socialNameLabel1.font = ROBOTO(16)
+        socialNameLabel1.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        hStackSocial1.addArrangedSubview(socialNameLabel1)
+        ADD_SPACER(to: hStackSocial1)
+        
+        let socialButton1 = UIButton(type: .custom)
+        socialButton1.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
+        socialButton1.layer.cornerRadius = 4.0
+        hStackSocial1.addArrangedSubview(socialButton1)
+        socialButton1.activateConstraints([
+            socialButton1.widthAnchor.constraint(equalToConstant: 150),
+            socialButton1.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        socialButton1.tag = 100+1
+        socialButton1.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
+        
+        let socialButtonLabel1 = UILabel()
+        socialButtonLabel1.text = "..."
+        socialButtonLabel1.textColor = .white
+        socialButtonLabel1.font = ROBOTO_BOLD(13)
+        hStackSocial1.addSubview(socialButtonLabel1)
+        socialButtonLabel1.activateConstraints([
+            socialButtonLabel1.centerXAnchor.constraint(equalTo: socialButton1.centerXAnchor),
+            socialButtonLabel1.centerYAnchor.constraint(equalTo: socialButton1.centerYAnchor)
+        ])
+        socialButtonLabel1.tag = 200+1
         
         
+        
+        ADD_SPACER(to: VStack_form, height: 30)
+        
+        let line21 = UIView()
+        line21.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+        line21.activateConstraints([
+            line21.heightAnchor.constraint(equalToConstant: 0.75)
+        ])
+        VStack_form.addArrangedSubview(line21)
+        ADD_SPACER(to: VStack_form, height: 30)
+        
+    //---
         let titleLabel3 = UILabel()
         titleLabel3.text = "Sign out"
         titleLabel3.font = MERRIWEATHER_BOLD(18)
@@ -404,7 +462,7 @@ class AccountViewController: BaseViewController {
             signOutButtonLabel.centerYAnchor.constraint(equalTo: signOutButton.centerYAnchor)
         ])
         
-        ADD_SPACER(to: VStack_form, height: 45)
+        ADD_SPACER(to: VStack_form, height: 30)
         
         
         //---
@@ -414,7 +472,7 @@ class AccountViewController: BaseViewController {
             line3.heightAnchor.constraint(equalToConstant: 0.75)
         ])
         VStack_form.addArrangedSubview(line3)
-        ADD_SPACER(to: VStack_form, height: 45)
+        ADD_SPACER(to: VStack_form, height: 30)
         
         ///////////////////
         let titleLabel4 = UILabel()
@@ -492,6 +550,8 @@ class AccountViewController: BaseViewController {
                     
                     self.subscriptionType = _user.subscriptionType
                     self.updateSubscriptionType()
+                    
+                    self.updateSocialNetworks(_user.socialnetworks)
                 }
             }
             //---
@@ -526,6 +586,27 @@ class AccountViewController: BaseViewController {
             } else {
                 self.circleMark1.hide()
                 self.circleMark2.show()
+            }
+        }
+    }
+    
+    func updateSocialNetworks(_ socialnetworks: [String]) {
+        // Linkedin (1)
+        if(socialnetworks.contains("Linkedin")) {
+            self.updateSocialButton(1, state: true)
+        } else {
+            self.updateSocialButton(1, state: false)
+        }
+    }
+    
+    private func updateSocialButton(_ index: Int, state: Bool) {
+        MAIN_THREAD {
+            if let button = self.view.viewWithTag(100+1) as? UIButton {
+                button.backgroundColor = state ? UIColor(hex: 0xFF643C) : .lightGray
+            }
+            
+            if let label = self.view.viewWithTag(200+1) as? UILabel {
+                label.text = state ? "Disconnect" : "Connect"
             }
         }
     }
@@ -696,6 +777,35 @@ extension AccountViewController {
                             CustomNavController.shared.menu.updateLogout()
                             CustomNavController.shared.popViewController(animated: true)
                         }
+                    }
+                }
+            }
+        }
+    }
+    
+    @objc func socialButtonTap(_ sender: UIButton) {
+        let index = sender.tag - 100
+        
+        if(sender.backgroundColor == UIColor(hex: 0xFF643C)) { // ON
+            CustomNavController.shared.ask(question: "Disconnect this social network?") { (answer) in
+                if(answer) {
+                    if(index==1) { // Linkedin
+                        self.showLoading()
+                        LinkedIn_SDK.shared.disconnect { (succes) in
+                            self.hideLoading()
+                            if(succes) {
+                                self.updateSocialButton(1, state: false)
+                            }
+                        }
+                    }
+                }
+            }
+        } else { // OFF
+            if(index==1) { // Linkedin
+                LinkedIn_SDK.shared.login(vc: self) { (success) in
+                    self.hideLoading()
+                    if(success) {
+                        self.updateSocialButton(1, state: true)
                     }
                 }
             }

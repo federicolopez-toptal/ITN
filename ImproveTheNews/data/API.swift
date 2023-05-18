@@ -13,6 +13,7 @@ struct MyUser {
     var lastName = ""
     var userName = ""
     var email = ""
+    var socialnetworks = [String]()
     
     var subscriptionType = 0 // 0: Not subscribed, 1: Daily, 2: Weekly
     
@@ -49,6 +50,10 @@ struct MyUser {
                     }
                 }
             }
+        }
+        
+        if let _socialnetworks = json["socialnetworks"] as? [String] {
+            self.socialnetworks = _socialnetworks
         }
     }
 }
@@ -334,8 +339,10 @@ class API {
         }
     }
 //---
-    func socialLogin(socialName: String, accessToken: String, callback: @escaping (Bool, String) -> ()) {
-        let json: [String: String] = [
+    func socialLogin(socialName: String, accessToken: String,
+        verifier: String? = nil, callback: @escaping (Bool, String) -> ()) {
+        
+        var json: [String: String] = [
             "type": socialName,
             "userId": UUID.shared.getValue(),
             "access_token": accessToken,
@@ -343,6 +350,10 @@ class API {
             "newsletter": "Y",
             "app": "iOS"
         ]
+        
+        if let _secret = verifier {
+            json["secret_token"] = _secret
+        }
     
         self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
             if let _json = json, success {
@@ -352,6 +363,26 @@ class API {
                     } else {
                         callback(false, serverMsg)
                     }
+                } else {
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
+            }
+        }
+    }
+//---
+    func socialDisconnect(socialName: String, callback: @escaping (Bool, String) -> ()) {
+        let json: [String: String] = [
+            "type": "Disconnect",
+            "userId": UUID.shared.getValue(),
+            "socialNetwork": socialName
+        ]
+        
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _msg = _json["message"] as? String, _msg == "OK" {
+                    callback(true, "")
                 } else {
                     callback(false, serverMsg)
                 }

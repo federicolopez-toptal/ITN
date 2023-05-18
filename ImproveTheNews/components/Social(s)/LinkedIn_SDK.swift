@@ -36,6 +36,21 @@ class LinkedIn_SDK: NSObject {
         self.vc?.present(nav, animated: true)
     }
     
+    func disconnect(callback: @escaping (Bool)->()) {
+        API.shared.socialDisconnect(socialName: "Linkedin") { (success, serverMsg) in
+            callback(success)
+            self.logout_web()
+        }
+    }
+    
+    private func logout_web() {
+        DispatchQueue.main.async {
+            let url = "https://linkedin.com/m/logout"
+            var request = URLRequest(url: URL(string: url)!)
+            self.webView.load(request)
+        }
+    }
+    
 }
 
 //MARK: - Utils
@@ -68,7 +83,9 @@ extension LinkedIn_SDK: WKNavigationDelegate {
             let code = self.getAuthCodeFrom(url: url)
             self.getAccessTokenWith(authCode: code) { (token) in
                 if let _token = token {
-                    self.ITN_login(_token)
+                    self.local_ITNLogin(_token)
+                } else {
+                    self.callback!(false)
                 }
             }
             
@@ -124,12 +141,20 @@ extension LinkedIn_SDK: WKNavigationDelegate {
     }
     
     //---
-    func ITN_login(_ token: String) {
+    func local_ITNLogin(_ token: String) {
+        MAIN_THREAD {
+            CustomNavController.shared.loading.show()
+        }
+
         API.shared.socialLogin(socialName: "Linkedin", accessToken: token) { (success, serverMsg) in
-            if(success) {
-                self.cancelAction()
+            MAIN_THREAD {
+                //CustomNavController.shared.loading.hide()
+                
+                if(success) {
+                    self.vc?.dismiss(animated: true, completion: nil)
+                }
             }
-            
+
             self.callback!(success)
         }
     }
@@ -201,6 +226,7 @@ extension LinkedIn_SDK {
     @objc func cancelAction() {
         DispatchQueue.main.async {
             self.vc?.dismiss(animated: true, completion: nil)
+            self.callback!(false)
         }
     }
     

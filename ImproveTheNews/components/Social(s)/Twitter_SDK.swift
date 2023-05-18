@@ -36,6 +36,7 @@ class Twitter_SDK: NSObject {
         self.requestInitialToken { (error, token) in
             if let _error = error {
                 print(_error.localizedDescription)
+                callback(false)
             } else {
                 if let _token = token {
                     MAIN_THREAD {
@@ -43,6 +44,7 @@ class Twitter_SDK: NSObject {
                     }
                 } else {
                     print("Unexpected error!")
+                    callback(false)
                 }
             }
         }
@@ -137,10 +139,44 @@ extension Twitter_SDK {
         let sha1 = HMAC.sha1(key: key, message: msg)!
         return sha1.base64EncodedString(options: [])
     }
+    
+    //---
+    func local_ITNLogin(token: String, verifier: String) {
+        API.shared.socialLogin(socialName: "Twitter", accessToken: token, verifier: verifier) { (success, serverMsg) in
+            if(success) {
+                self.cancelAction()
+            }
+            
+            self.callback!(success)
+        }
+    }
 }
 
 //MARK: - WKWebView & parsing
 extension Twitter_SDK: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        let url = (navigationAction.request.url?.absoluteString)! as String
+        print("URL", url)
+        
+        if(url.lowercased().contains(REDIRECT_URI.lowercased())) {
+            decisionHandler(.cancel)
+            
+            if let _params = URL(string: url)?.params() {
+                let token = _params["oauth_token"] as? String
+                let verifier = _params["oauth_verifier"] as? String
+                
+                if let _T = token, let _V = verifier {
+                    self.local_ITNLogin(token: _T, verifier: _V)
+                }
+            }
+        } else {
+            decisionHandler(.allow)
+        }
+    }
+    
 }
 
 // MARK: - UI
