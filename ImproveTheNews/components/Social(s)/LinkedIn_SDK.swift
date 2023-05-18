@@ -12,7 +12,7 @@ import WebKit
 
 class LinkedIn_SDK: NSObject {
     
-    private let AUTHURL = "https://www.linkedin.com/oauth/v2/authorization"
+    private let AUTH_URL = "https://www.linkedin.com/oauth/v2/authorization"
     private let CLIENT_ID = "86hkerhuw16kd6"
     private let CLIENT_SECRET = "fYU2FzY8VBhCvOO2"
     private let SCOPE = "r_liteprofile%20r_emailaddress%20w_member_social"
@@ -24,6 +24,7 @@ class LinkedIn_SDK: NSObject {
     var vc: UIViewController?
     let webView = WKWebView()
     var callback: ( (Bool)->() )?
+    
     
     func login(vc: UIViewController, callback: @escaping (Bool)->()) {
         self.vc = vc
@@ -41,7 +42,7 @@ class LinkedIn_SDK: NSObject {
 extension LinkedIn_SDK {
     private func buildLoginUrl() -> String {
         let state = "linkedin\(Int(NSDate().timeIntervalSince1970))"
-        let fullAuthUrl = AUTHURL + "?response_type=code&client_id=" + CLIENT_ID +
+        let fullAuthUrl = AUTH_URL + "?response_type=code&client_id=" + CLIENT_ID +
             "&scope=" + SCOPE + "&state=" + state + "&redirect_uri=" + REDIRECT_URI
             
         return fullAuthUrl
