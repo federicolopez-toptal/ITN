@@ -27,6 +27,8 @@ class StoryViewController: BaseViewController {
     var articles: [StoryArticle]!
     var imageHeightConstraint: NSLayoutConstraint? = nil
     
+    var imageCreditUrl: String = ""
+    
     deinit {
         self.hideLoading()
     }
@@ -186,6 +188,10 @@ extension StoryViewController {
 //        }
         if(!story.time.isEmpty) { // self.story
             self.addTime(time: story.time)
+        }
+        
+        if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
+            self.addImageCredit(story.image_credit_title, story.image_credit_url)
         }
         
         self.addFactsStructure()
@@ -1033,6 +1039,33 @@ extension StoryViewController {
         ADD_SPACER(to: innerHStack, width: 13)
     }
     
+    private func addImageCredit(_ title: String, _ url: String) {
+        let creditLabel = UILabel()
+        creditLabel.numberOfLines = 0
+        creditLabel.font = ROBOTO(14)
+        creditLabel.textColor = UIColor(hex: 0xFF643C)
+        creditLabel.text = "Image credit: " + title
+        creditLabel.addUnderline()
+        
+        let HStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: HStack, width: 13)
+        HStack.addArrangedSubview(creditLabel)
+        ADD_SPACER(to: HStack, width: 13)
+        
+        let creditButton = UIButton(type: .system)
+        creditLabel.backgroundColor = .clear
+        HStack.addSubview(creditButton)
+        creditButton.activateConstraints([
+            creditButton.leadingAnchor.constraint(equalTo: creditLabel.leadingAnchor),
+            creditButton.trailingAnchor.constraint(equalTo: creditLabel.trailingAnchor),
+            creditButton.topAnchor.constraint(equalTo: creditLabel.topAnchor),
+            creditButton.bottomAnchor.constraint(equalTo: creditLabel.bottomAnchor)
+        ])
+        creditButton.addTarget(self, action: #selector(onImageCreditButtonTap(_:)), for: .touchUpInside)
+        
+        self.imageCreditUrl = url
+    }
+    
     private func addTime(time: String) {
         let updatedLabel = UILabel()
         updatedLabel.font = ROBOTO(14)
@@ -1274,5 +1307,11 @@ extension StoryViewController {
         let sourceName = article.media_title.components(separatedBy: " #").first!
         popup.populate(sourceName: sourceName, country: article.media_country_code, LR: LR, PE: PE)
         popup.pushFromBottom()
+    }
+    
+    @objc func onImageCreditButtonTap(_ sender: UIButton?) {
+        if(!self.imageCreditUrl.isEmpty){
+            OPEN_URL(self.imageCreditUrl)
+        }
     }
 }

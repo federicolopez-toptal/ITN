@@ -12,7 +12,7 @@ struct MainFeedStory {
     var id = "1"
     var title = "Title not available"
     var image_src: String = ""
-    var image_credit_title: String = "Not available"
+    var image_credit_title: String = ""
     var image_credit_url: String = ""
     var time: String = ""
     var splitType: String = ""
@@ -34,7 +34,7 @@ struct MainFeedStory {
             self.image_src = FIX_URL( getSTRING(_imageObj["src"]) )
             if let _imageCreditObj = _imageObj["credit"] as? [String: String] {
                 self.image_credit_title = getSTRING(_imageCreditObj["title"])
-                self.image_credit_title = getSTRING(_imageCreditObj["url"])
+                self.image_credit_url = getSTRING(_imageCreditObj["url"])
             }
         }
     
