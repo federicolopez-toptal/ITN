@@ -172,6 +172,7 @@ class Tour {
     
     func write(_ value: String) {
         WRITE(LocalKeys.preferences.onBoardingState, value: value)
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
     }
     
     // Event(s)

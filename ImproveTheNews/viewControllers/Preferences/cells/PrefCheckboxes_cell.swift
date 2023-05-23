@@ -159,6 +159,7 @@ extension PrefCheckboxes_cell: OnOffViewDelegate {
         
         if(newValue){ WRITE(key, value: "01") }
         else{ WRITE(key, value: "00") }
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         
         NOTIFY(Notification_reloadMainFeedOnShow)
     }

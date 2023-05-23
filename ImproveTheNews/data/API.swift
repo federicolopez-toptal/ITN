@@ -88,6 +88,10 @@ class API {
                             WRITE(LocalKeys.user.JWT, value: _jwt)
                             WRITE(LocalKeys.user.UUID, value: _uuid)
                         }
+                        if let _sliderValues = _json["slidercookies"] as? String, !_sliderValues.isEmpty {
+                            MainFeedv3.parseSliderValues(_sliderValues)
+                        }
+                        
                         callback(true, "")
                     } else {
                         if let _msg = _json["message"] as? String {
@@ -119,17 +123,12 @@ class API {
             if let _json = json, success {
                 if let _status = _json["status"] as? String {
                     if(_status == "OK") {
-                        if let _values = _json["slidercookies"] {
-                            /*
-                                Hacer algo con los slider values
-                                Ejemplo de valor:
-                                LR50PE50NU70DE70SL70RE70lO00yT01pC01aL00mL00nL01SS00VA01VB01VC01VM01VE00oB10IN00FB00LI00TW00RD00ST01LA20AP01
-                            */
-                        }
-                    
                         if let _jwt = _json["jwt"], let _uuid = _json["uuid"] as? String {
                             WRITE(LocalKeys.user.JWT, value: _jwt)
                             WRITE(LocalKeys.user.UUID, value: _uuid)
+                        }
+                        if let _sliderValues = _json["slidercookies"] as? String, !_sliderValues.isEmpty {
+                            MainFeedv3.parseSliderValues(_sliderValues)
                         }
                         
                         callback(true, "")
@@ -258,6 +257,18 @@ class API {
         }
     }
 // ---
+    func savesSliderValues(_ values: String) {
+        let json: [String: String] = [
+            "type": "slidercookies",
+            "userId": UUID.shared.getValue(),
+            "slidercookies": values
+        ]
+        
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+        }
+    }
+
+// ---
     func userInfoSave(user: MyUser?, callback: @escaping (Bool, String) -> () ) {
         var json: [String: String] = [
             "type": "User Info Update",
@@ -359,6 +370,9 @@ class API {
             if let _json = json, success {
                 if let _status = _json["message"] as? String {
                     if(_status == "OK") {
+                        if let _sliderValues = _json["slidercookies"] as? String, !_sliderValues.isEmpty {
+                            MainFeedv3.parseSliderValues(_sliderValues)
+                        }
                         callback(true, "")
                     } else {
                         callback(false, serverMsg)

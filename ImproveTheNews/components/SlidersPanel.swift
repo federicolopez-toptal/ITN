@@ -369,6 +369,7 @@ extension SlidersPanel {
         let key = LocalKeys.sliders.allKeys[tag-1]
         
         WRITE(key, value: strValue)
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         NOTIFY(Notification_reloadMainFeed)
     }
     
@@ -410,6 +411,7 @@ extension SlidersPanel {
             print("RELOAD TOPIC " + topic)
         }
         
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         NOTIFY(Notification_reloadMainFeed)
     }
     
@@ -430,11 +432,19 @@ extension SlidersPanel {
     }
     
     func forceSplitOff() {
-        if(self.split != 0) {
-            self.split = 0
+        self.forceSplitTo(value: 0)
+    }
+    
+    func forceSplitTo(value: Int) {
+        if(self.split != value) {
+            self.split = value
             self.checkSplitComponents()
             WRITE(LocalKeys.sliders.split, value: String(self.split))
         }
+    }
+    
+    func forceSplitToStoredValue() {
+        self.forceSplitTo(value: MUST_SPLIT())
     }
     
 }

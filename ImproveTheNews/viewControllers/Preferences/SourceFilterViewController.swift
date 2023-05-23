@@ -320,6 +320,7 @@ extension SourceFilterViewController: FilterTextViewDelegate {
         WRITE(LocalKeys.preferences.sourceFilters, value: value)
         print("Writing", value)
         
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         NOTIFY(Notification_reloadMainFeedOnShow)
     }
     

@@ -15,6 +15,7 @@ class Twitter_SDK: NSObject {
     
     private let API_KEY = "ysqrSma3OfWLXT2d0XgvfNNV7"
     private let API_KEY_SECRET = "8KTYdDUpG9pU4BNJ0v1EzHRMywnIm6rxbcRFjz0wrTvzWk0sKH"
+    
     private let REQ_TOKEN_URL = "https://api.twitter.com/oauth/request_token"
     private let AUTH_URL = "https://api.twitter.com/oauth/authorize"
     private let REDIRECT_URI = "ITNTestApp://" //"https://www.improvemynews.com/php/twitter/loader.php"

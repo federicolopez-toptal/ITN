@@ -85,9 +85,14 @@ class MainFeedViewController: BaseViewController {
         if(self.mustReloadOnShow) {
             self.mustReloadOnShow = false
             self.loadData(showLoading: true)
+            CustomNavController.shared.slidersPanel.reloadSliderValues()
+            CustomNavController.shared.slidersPanel.forceSplitToStoredValue()
+            CustomNavController.shared.menu.changeLayoutFromStoredValue()
+            CustomNavController.shared.menu.changeDisplayModeFromStoredValue()
         }
         
         if(CustomNavController.shared.slidersPanel.isHidden && CustomNavController.shared.floatingButton.isHidden) {
+            CustomNavController.shared.slidersPanel.show(rows: 0, animated: false)
             CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
         

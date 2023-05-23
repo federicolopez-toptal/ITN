@@ -323,6 +323,8 @@ extension iPadBannerNewsletterCell {
         } else {
             WRITE(LocalKeys.misc.allBannerCodes, value: self.bannerCode)
         }
+        
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
     }
     
 }

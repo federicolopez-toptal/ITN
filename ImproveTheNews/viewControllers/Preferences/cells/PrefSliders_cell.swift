@@ -317,6 +317,7 @@ extension PrefSliders_cell {
             CustomNavController.shared.slidersPanel.reloadSliderValues()
         }
         
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         NOTIFY(Notification_reloadMainFeedOnShow)
     }
 

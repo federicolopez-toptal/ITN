@@ -119,6 +119,9 @@ extension SignInUpViewController {
             case 2:
                 self.linkedInAuth()
             
+            case 3:
+                self.facebookAuth()
+            
             default:
                 NOTHING()
         }
@@ -140,6 +143,26 @@ extension SignInUpViewController {
                 }
             }
         }
+    }
+    
+    func facebookAuth() {
+//        Facebook_SDK.shared.login(vc: self) { (success) in
+//            print("Facebook", success)
+//        }
+
+//        var values = "LR10PE20NU30DE40SL50RE60"
+//        values += "SS00"
+//        values += "LA00"
+//        values += "ST01VD01VB01VC01VA01"
+//        values += "oB10"
+//        values += "yT01lO00pC01nL01"
+//        values += "VM01VE00"
+//
+//        values += "aL00mL00IN00FB11LI00TW00RD00AP01"
+//
+//        MainFeedv3.parseSliderValues(values)
+
+        FUTURE_IMPLEMENTATION("Facebook login SDK Auth")
     }
     
 }

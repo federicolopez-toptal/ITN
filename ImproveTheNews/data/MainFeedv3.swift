@@ -388,6 +388,7 @@ extension MainFeedv3 {
         >> LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11yT04
     */
     
+    // LR50PE50NU70DE70SL70RE70SS00LA00ST01VB01VC01VA01VM00VE35oB21lO03
     static func sliderValues() -> String {
         var result = ""
         
@@ -431,21 +432,18 @@ extension MainFeedv3 {
         
         // More Preferences: Show stories
         result += "ST"
-//        if(MUST_SPLIT()>0) {
-//            result += "00"
-//        } else {
-//            if let _showStories = READ(LocalKeys.preferences.showStories) {
-//                result += _showStories
-//            } else {
-//                result += "01" // default value: True
-//            }
-//        }
         if let _showStories = READ(LocalKeys.preferences.showStories) {
             result += _showStories
         } else {
             result += "01" // default value: True
         }
-        
+        // More Preferences: Show source icons
+        result += "VD"
+        if let _showSourceIcons = READ(LocalKeys.preferences.showSourceIcons) {
+            result += _showSourceIcons
+        } else {
+            result += "01" // default value: True
+        }
         // More Preferences: Show stance icons
         result += "VB"
         if let _showStanceIcons = READ(LocalKeys.preferences.showStanceIcons) {
@@ -462,11 +460,15 @@ extension MainFeedv3 {
         }
         // More Preferences: Show newspaper flags
         result += "VA"
-        if let _showFlags = READ(LocalKeys.preferences.showSourceIcons) {
+        if let _showFlags = READ(LocalKeys.preferences.showSourceFlags) {
             result += _showFlags
         } else {
             result += "01" // default value: True
         }
+        
+        
+        
+        
 
         // Source Filters
         if let _sourceFilters = READ(LocalKeys.preferences.sourceFilters) {
@@ -502,7 +504,7 @@ extension MainFeedv3 {
                 }
             }
         }
-        result += "lO03" //nL03"
+        result += "lO03"
         
         return result
     }
@@ -518,4 +520,96 @@ extension MainFeedv3 {
         
         return result
     }
+}
+
+extension MainFeedv3 {
+
+    static func parseSliderValues(_ values: String) {
+        var allBanners = [String]()
+        var allSources = [String]()
+        let banners = ["yT", "pC", "nL", "lO"]
+        
+        var valueID = ""
+        var valueNum = ""
+        for singleChar in values {
+            if(valueID.count==2) {
+                valueNum += String(singleChar)
+                if(valueNum.count==2) {
+                    let wasSet = setSliderValue(valueID, valueNum)
+                    if(banners.contains(valueID)) {
+                        allBanners.append(valueID)
+                    }
+                    if(!wasSet) {
+                        allSources.append(valueID)
+                    }
+                    
+                    valueID = ""
+                    valueNum = ""
+                }
+            } else {
+                valueID += String(singleChar)
+            }
+        }
+        
+        let allBannersString = allBanners.joined(separator: ",")
+        WRITE(LocalKeys.misc.allBannerCodes, value: allBannersString)
+        
+        let allSourcesString = allSources.joined(separator: ",")
+        WRITE(LocalKeys.preferences.sourceFilters, value: allSourcesString)
+        
+        NOTIFY(Notification_reloadMainFeedOnShow)
+        print("Done!")
+    }
+    
+    static func setSliderValue(_ valueID: String, _ valueNum: String) -> Bool {
+        let sliderCodes = ["LR", "PE", "NU", "DE", "SL", "RE"]
+        let preferences = ["ST", "VD", "VB", "VC", "VA"]
+        let banners = ["yT", "pC", "nL", "lO"]
+        
+        var result = true
+        
+        // Slider(s)
+        if(sliderCodes.contains(valueID)) {
+            WRITE("slider_" + valueID, value: valueNum)
+        } else if(valueID=="SS") { // Split
+            WRITE(LocalKeys.sliders.split, value: String(valueNum[0]))
+            WRITE(LocalKeys.sliders.panelState, value: String(valueNum[1]))
+        } else if(valueID=="LA") { // LAYOUT
+            WRITE(LocalKeys.preferences.layout, value: String(valueNum[0]))
+            WRITE(LocalKeys.preferences.displayMode, value: String(valueNum[1]))
+        } else if(preferences.contains(valueID)) { // Preference(s)
+            var key = ""
+            switch(valueID) {
+                case "ST":
+                    key = LocalKeys.preferences.showStories
+                case "VD":
+                    key = LocalKeys.preferences.showSourceIcons
+                case "VB":
+                    key = LocalKeys.preferences.showStanceIcons
+                case "VC":
+                    key = LocalKeys.preferences.showStancePopups
+                case "VA":
+                    key = LocalKeys.preferences.showSourceFlags
+                default:
+                    NOTHING()
+            }
+            
+            WRITE(key, value: valueNum)
+        } else if(valueID=="oB") { // Onboarding
+            WRITE(LocalKeys.preferences.onBoardingState, value: valueNum)
+        } else if(banners.contains(valueID)) { // Banner(s)
+            WRITE(LocalKeys.misc.bannerPrefix + valueID, value: valueNum)
+        } else if(valueID=="VE") { // Version
+            NOTHING()
+        } else if(valueID=="VM") { // Mark up(s)
+            NOTHING()
+        } else { // Source filters
+            result = false
+        }
+        
+        return result
+    }
+    
+    
+    
 }

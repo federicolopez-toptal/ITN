@@ -237,14 +237,14 @@ class SignInView: UIView {
         let hStackSocial = HSTACK(into: VStack_form)
         hStackSocial.spacing = 16
         
-        var iconsCount = 1
+        var iconsCount = 2
         let sepWidth: CGFloat = SCREEN_SIZE().width - 16 - 20 - (extraHMargin * 2) -
             (35 * CGFloat(iconsCount)) - (hStackSocial.spacing * CGFloat(iconsCount)-1)
         
         iconsCount = 3
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         for i in 1...iconsCount {
-            if(i==2) {
+            if(i==2 || i==3) {
                 let file = "footerSocial_\(i)"
                 let imgView = UIImageView(image: UIImage(named: file))
                 hStackSocial.addArrangedSubview(imgView)

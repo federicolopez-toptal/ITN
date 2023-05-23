@@ -246,7 +246,23 @@ extension MenuView {
             CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
-    
+    // ---------
+    func changeDisplayModeFromStoredValue() {
+        CustomNavController.shared.refreshDisplayMode()
+        self.refreshDisplayMode()
+        
+        var stored = "0"
+        if let _stored = READ(LocalKeys.preferences.displayMode) {
+            stored = _stored
+        }
+        
+        if(stored=="0" && DisplayMode.current() == .bright) {
+            self.changeDisplayMode()
+        } else if(stored=="1" && DisplayMode.current() == .dark) {
+            self.changeDisplayMode()
+        }
+
+    }
     // ---------
     func changeDisplayMode() {
         var changeTo: DisplayMode = .bright
@@ -264,6 +280,19 @@ extension MenuView {
     }
     
     // ---------
+    func changeLayoutFromStoredValue() {
+        var stored = "0"
+        if let _stored = READ(LocalKeys.preferences.layout) {
+            stored = _stored
+        }
+        
+        if(stored=="0" && Layout.current() == .textOnly) {
+            self.changeLayout()
+        } else if(stored=="1" && Layout.current() == .textImages) {
+            self.changeLayout()
+        }
+    }
+    // ---------
     func changeLayout() {
         var changeTo: Layout = .textOnly
         if(Layout.current() == .textOnly) {
@@ -273,6 +302,7 @@ extension MenuView {
         var newValue = "0"
         if(changeTo == .textOnly){ newValue = "1" }
         WRITE(LocalKeys.preferences.layout, value: newValue)
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         NOTIFY(Notification_reloadMainFeed)
 
         

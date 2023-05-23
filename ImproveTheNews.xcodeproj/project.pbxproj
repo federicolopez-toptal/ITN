@@ -324,6 +324,7 @@
 		1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */; };
 		1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B4ADC2967745A00BE8850 /* RatingView.swift */; };
 		1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B89E729DF0FDC004697DD /* Tour.swift */; };
+		1F9C63812A1C5B82006465D8 /* Facebook_SDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C63802A1C5B82006465D8 /* Facebook_SDK.swift */; };
 		1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */; };
 		1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */; };
 		1F9E28C32954B22900041303 /* PrivacyPolicy_content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28C22954B22900041303 /* PrivacyPolicy_content.swift */; };
@@ -388,6 +389,7 @@
 		1FE916A129A7A32A007F8AAF /* ArticleVImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A029A7A32A007F8AAF /* ArticleVImageView.swift */; };
 		1FE916A329A7AEF1007F8AAF /* GroupItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */; };
 		1FE916A529A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */; };
+		1FEBAF192A1D6B7900A6E55E /* StringExtensionArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEBAF182A1D6B7900A6E55E /* StringExtensionArray.swift */; };
 		1FEE16EB28C833BF0079BE54 /* NavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE16EA28C833BF0079BE54 /* NavBarView.swift */; };
 		1FEE16ED28C83CED0079BE54 /* TopicSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE16EC28C83CED0079BE54 /* TopicSelectorView.swift */; };
 		1FF088CD29F824ED00F31523 /* NSAttributedStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF088CC29F824ED00F31523 /* NSAttributedStringExtension.swift */; };
@@ -723,6 +725,7 @@
 		1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadMoreCell.swift; sourceTree = "<group>"; };
 		1F9B4ADC2967745A00BE8850 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		1F9B89E729DF0FDC004697DD /* Tour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tour.swift; sourceTree = "<group>"; };
+		1F9C63802A1C5B82006465D8 /* Facebook_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Facebook_SDK.swift; sourceTree = "<group>"; };
 		1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		1F9E28C22954B22900041303 /* PrivacyPolicy_content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicy_content.swift; sourceTree = "<group>"; };
@@ -787,6 +790,7 @@
 		1FE916A029A7A32A007F8AAF /* ArticleVImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleVImageView.swift; sourceTree = "<group>"; };
 		1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupItemCell.swift; sourceTree = "<group>"; };
 		1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_rowCell.swift; sourceTree = "<group>"; };
+		1FEBAF182A1D6B7900A6E55E /* StringExtensionArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionArray.swift; sourceTree = "<group>"; };
 		1FEE16EA28C833BF0079BE54 /* NavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarView.swift; sourceTree = "<group>"; };
 		1FEE16EC28C83CED0079BE54 /* TopicSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSelectorView.swift; sourceTree = "<group>"; };
 		1FF088CC29F824ED00F31523 /* NSAttributedStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtension.swift; sourceTree = "<group>"; };
@@ -834,6 +838,7 @@
 			children = (
 				1F36ACAB2A0E73D8000EF350 /* LinkedIn_SDK.swift */,
 				1F41AE262A13DFDA00C0A0D2 /* Twitter_SDK.swift */,
+				1F9C63802A1C5B82006465D8 /* Facebook_SDK.swift */,
 			);
 			path = "Social(s)";
 			sourceTree = "<group>";
@@ -1294,6 +1299,7 @@
 				1F5EE1472A0E93A900168FB0 /* URLExtension.swift */,
 				1FA1728728D2B7AC00693B85 /* IntExtension.swift */,
 				1F1A1A9B28D27D3100256785 /* StringExtension.swift */,
+				1FEBAF182A1D6B7900A6E55E /* StringExtensionArray.swift */,
 				1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */,
 				1F71FA432A15471400B066E0 /* DictionaryExtension.swift */,
 				1FC8352B2A1549E5007BCE56 /* DataExtension.swift */,
@@ -1969,6 +1975,7 @@
 				1F897CE328CC322900438FC5 /* Sources.swift in Sources */,
 				1FC8352A2A1549B5007BCE56 /* SHA1.swift in Sources */,
 				1FC287D729A648010017433B /* MainFeed_v2_misc.swift in Sources */,
+				1FEBAF192A1D6B7900A6E55E /* StringExtensionArray.swift in Sources */,
 				1FA8AA3228D0D29000B6C956 /* DP_item.swift in Sources */,
 				1F8EAED029085FE30015F6F6 /* BreadcrumbsView.swift in Sources */,
 				1FE541C62A03FA9A000A2CF3 /* ResetPassViewController.swift in Sources */,
@@ -2045,6 +2052,7 @@
 				1F9EDD4B29AE8FE2007A97A6 /* iPadGroupItem_topCellText.swift in Sources */,
 				1FA4CE6528C2865B0068DE4A /* Utils.swift in Sources */,
 				1F22E2E928C6E41A007F00D1 /* MenuViewController.swift in Sources */,
+				1F9C63812A1C5B82006465D8 /* Facebook_SDK.swift in Sources */,
 				1FC287D529A645A50017433B /* MainFeed_v2ViewController.swift in Sources */,
 				1FD2340A2915A07800B85AE9 /* Preferences_misc.swift in Sources */,
 				1FDEB1C828CB7E150029831E /* Layout.swift in Sources */,
