@@ -218,12 +218,28 @@ class SignUpView: UIView {
         VStack_form.addArrangedSubview(passNoteLabel)
         ADD_SPACER(to: VStack_form, height: 14)
         
+        let hStack_mainActionButton = HSTACK(into: VStack_form)
+        
         self.mainActionButton.backgroundColor = UIColor(hex: 0xFF643C)
         self.mainActionButton.layer.cornerRadius = 4.0
-        VStack_form.addArrangedSubview(self.mainActionButton)
-        mainActionButton.activateConstraints([
-            self.mainActionButton.heightAnchor.constraint(equalToConstant: 52)
-        ])
+        if(IPHONE()) {
+            hStack_mainActionButton.addArrangedSubview(self.mainActionButton)
+            mainActionButton.activateConstraints([
+                self.mainActionButton.heightAnchor.constraint(equalToConstant: 52)
+            ])
+        } else {
+            let buttonWidth: CGFloat = 300
+            let spacerWidth: CGFloat = ( SCREEN_SIZE().width - 16 - 20 - (extraHMargin*2) - buttonWidth )/2
+        
+            ADD_SPACER(to: hStack_mainActionButton, width: spacerWidth)
+            hStack_mainActionButton.addArrangedSubview(self.mainActionButton)
+            mainActionButton.activateConstraints([
+                self.mainActionButton.heightAnchor.constraint(equalToConstant: 52),
+                self.mainActionButton.widthAnchor.constraint(equalToConstant: buttonWidth)
+            ])
+            ADD_SPACER(to: hStack_mainActionButton, width: spacerWidth)
+        }
+
         self.mainActionButton.addTarget(self, action: #selector(mainActionButtonTap(_:)), for: .touchUpInside)
         ADD_SPACER(to: VStack_form, height: 24)
         
@@ -249,14 +265,14 @@ class SignUpView: UIView {
         let hStackSocial = HSTACK(into: VStack_form)
         hStackSocial.spacing = 16
         
-        var iconsCount = 1
+        var iconsCount = 3
         let sepWidth: CGFloat = SCREEN_SIZE().width - 16 - 20 - (extraHMargin * 2) -
             (35 * CGFloat(iconsCount)) - (hStackSocial.spacing * CGFloat(iconsCount)-1)
         
         iconsCount = 3
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         for i in 1...iconsCount {
-            if(i==2) {
+            //if(i==2) {
                 let file = "footerSocial_\(i)"
                 let imgView = UIImageView(image: UIImage(named: file))
                 hStackSocial.addArrangedSubview(imgView)
@@ -276,7 +292,7 @@ class SignUpView: UIView {
                 ])
                 button.tag = i
                 button.addTarget(self, action: #selector(socialButtonOnTap(_:)), for: .touchUpInside)
-            }
+            //}
         }
         ADD_SPACER(to: hStackSocial, width: sepWidth/2)
         ADD_SPACER(to: VStack_form, height: 15)

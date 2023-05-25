@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class SignInUpViewController: BaseViewController {
 
     let navBar = NavBarView()
@@ -116,6 +117,9 @@ extension SignInUpViewController {
     
     func onSocialButtonTap(_ index: Int) {
         switch(index) {
+            case 1:
+                self.twitterAuth()
+            
             case 2:
                 self.linkedInAuth()
             
@@ -125,11 +129,20 @@ extension SignInUpViewController {
             default:
                 NOTHING()
         }
+    }
     
-
-
-//        Twitter_SDK.shared.login(vc: self) { (success) in
-//        }
+    func twitterAuth() {
+        Twitter_SDK.shared.login(vc: self) { (success) in
+            if(success) {
+                NOTIFY(Notification_reloadMainFeedOnShow)
+                WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
+                
+                MAIN_THREAD { // UI
+                    CustomNavController.shared.menu.updateLogout()
+                    CustomNavController.shared.popViewController(animated: true) // go back to main feed
+                }
+            }
+        }
     }
     
     func linkedInAuth() {
@@ -137,7 +150,8 @@ extension SignInUpViewController {
             if(success) {
                 NOTIFY(Notification_reloadMainFeedOnShow)
                 WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
-                MAIN_THREAD {
+                
+                MAIN_THREAD { // UI
                     CustomNavController.shared.menu.updateLogout()
                     CustomNavController.shared.popViewController(animated: true) // go back to main feed
                 }
@@ -146,23 +160,17 @@ extension SignInUpViewController {
     }
     
     func facebookAuth() {
-//        Facebook_SDK.shared.login(vc: self) { (success) in
-//            print("Facebook", success)
-//        }
-
-//        var values = "LR10PE20NU30DE40SL50RE60"
-//        values += "SS00"
-//        values += "LA00"
-//        values += "ST01VD01VB01VC01VA01"
-//        values += "oB10"
-//        values += "yT01lO00pC01nL01"
-//        values += "VM01VE00"
-//
-//        values += "aL00mL00IN00FB11LI00TW00RD00AP01"
-//
-//        MainFeedv3.parseSliderValues(values)
-
-        FUTURE_IMPLEMENTATION("Facebook login SDK Auth")
+        Facebook_SDK.shared.login(vc: self) { (success) in
+            if(success) {
+                NOTIFY(Notification_reloadMainFeedOnShow)
+                WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
+                
+                MAIN_THREAD { // UI
+                    CustomNavController.shared.menu.updateLogout()
+                    CustomNavController.shared.popViewController(animated: true) // go back to main feed
+                }
+            }
+        }
     }
     
 }

@@ -19,10 +19,12 @@ class LinkedIn_SDK: NSObject {
     private let SCOPE = "r_liteprofile%20r_emailaddress%20w_member_social"
     private let REDIRECT_URI = "https://www.improvemynews.com/php/linkedin/loader.php"
     private let TOKENURL = "https://www.linkedin.com/oauth/v2/accessToken"
+    private let LOGOUT_URL = "https://linkedin.com/m/logout"
     
     static let shared = LinkedIn_SDK()
     
     var vc: UIViewController?
+    let loading = LoadingView()
     let webView = WKWebView()
     var callback: ( (Bool)->() )?
     
@@ -45,9 +47,8 @@ class LinkedIn_SDK: NSObject {
     }
     
     private func logout_web() {
-        DispatchQueue.main.async {
-            let url = "https://linkedin.com/m/logout"
-            var request = URLRequest(url: URL(string: url)!)
+        MAIN_THREAD {
+            let request = URLRequest(url: URL(string: self.LOGOUT_URL)!)
             self.webView.load(request)
         }
     }
@@ -80,6 +81,7 @@ extension LinkedIn_SDK: WKNavigationDelegate {
         
         if(url.contains("?code=")) {
             decisionHandler(.cancel)
+            self.loading.show()
             
             let code = self.getAuthCodeFrom(url: url)
             self.getAccessTokenWith(authCode: code) { (token) in
@@ -119,7 +121,7 @@ extension LinkedIn_SDK: WKNavigationDelegate {
         request.addValue("application/x-www-form-urlencoded;", forHTTPHeaderField: "Content-Type")
         
         let session = URLSession(configuration: URLSessionConfiguration.default)
-        //let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
+                                                                                    //(data, response, error)
         let task: URLSessionDataTask = session.dataTask(with: request as URLRequest) { (D, R, E) -> Void in
             if let _error = E {
                 print("LINKEDIN", _error.localizedDescription)
@@ -143,14 +145,9 @@ extension LinkedIn_SDK: WKNavigationDelegate {
     
     //---
     func local_ITNLogin(_ token: String) {
-        MAIN_THREAD {
-            CustomNavController.shared.loading.show()
-        }
-
         API.shared.socialLogin(socialName: "Linkedin", accessToken: token) { (success, serverMsg) in
             MAIN_THREAD {
-                //CustomNavController.shared.loading.hide()
-                
+                self.loading.hide()
                 if(success) {
                     self.vc?.dismiss(animated: true, completion: nil)
                 }
@@ -203,6 +200,10 @@ extension LinkedIn_SDK {
         nav.navigationBar.tintColor = UIColor.white
         nav.modalPresentationStyle = .overFullScreen
         nav.modalTransitionStyle = .coverVertical
+        
+        self.loading.buildInto(nav.view)
+        self.loading.forceDarkColor()
+        self.loading.hide()
         
         return nav
     }

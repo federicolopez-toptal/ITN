@@ -197,13 +197,30 @@ class AccountViewController: BaseViewController {
         self.emailText.setEnabled(false)
         ADD_SPACER(to: VStack_form, height: 35)
         // -------
+        let hStack_saveUserInfoButton = HSTACK(into: VStack_form)
+        
         let saveUserInfoButton = UIButton(type: .custom)
         saveUserInfoButton.backgroundColor = UIColor(hex: 0xFF643C)
         saveUserInfoButton.layer.cornerRadius = 4.0
-        VStack_form.addArrangedSubview(saveUserInfoButton)
-        saveUserInfoButton.activateConstraints([
-            saveUserInfoButton.heightAnchor.constraint(equalToConstant: 52)
-        ])
+        
+        if(IPHONE()) {
+            hStack_saveUserInfoButton.addArrangedSubview(saveUserInfoButton)
+            saveUserInfoButton.activateConstraints([
+                saveUserInfoButton.heightAnchor.constraint(equalToConstant: 52)
+            ])
+        } else {
+            let buttonWidth: CGFloat = 300
+            let spacerWidth: CGFloat = ( SCREEN_SIZE().width - 16 - 20 - (extraHMargin*2) - buttonWidth )/2
+        
+            ADD_SPACER(to: hStack_saveUserInfoButton, width: spacerWidth)
+            hStack_saveUserInfoButton.addArrangedSubview(saveUserInfoButton)
+            saveUserInfoButton.activateConstraints([
+                saveUserInfoButton.heightAnchor.constraint(equalToConstant: 52),
+                saveUserInfoButton.widthAnchor.constraint(equalToConstant: buttonWidth)
+            ])
+            ADD_SPACER(to: hStack_saveUserInfoButton, width: spacerWidth)
+        }
+
         saveUserInfoButton.addTarget(self, action: #selector(saveUserInfoButtonTap(_:)), for: .touchUpInside)
         ADD_SPACER(to: VStack_form, height: 30)
         
@@ -374,7 +391,7 @@ class AccountViewController: BaseViewController {
         VStack_form.addArrangedSubview(titleLabel_21)
         ADD_SPACER(to: VStack_form, height: 20)
         
-        // Linkedin
+        // >> Linkedin
         let hStackSocial1 = HSTACK(into: VStack_form)
         let socialImgView1 = UIImageView(image: UIImage(named: "footerSocial_2"))
         hStackSocial1.addArrangedSubview(socialImgView1)
@@ -411,11 +428,91 @@ class AccountViewController: BaseViewController {
             socialButtonLabel1.centerYAnchor.constraint(equalTo: socialButton1.centerYAnchor)
         ])
         socialButtonLabel1.tag = 200+1
-        
-        
-        
         ADD_SPACER(to: VStack_form, height: 30)
+        // Linkedin <<
+        // -------------------------------------
         
+        // >> Twitter
+        let hStackSocial2 = HSTACK(into: VStack_form)
+        let socialImgView2 = UIImageView(image: UIImage(named: "footerSocial_1"))
+        hStackSocial2.addArrangedSubview(socialImgView2)
+        socialImgView2.activateConstraints([
+            socialImgView2.widthAnchor.constraint(equalToConstant: 35),
+            socialImgView2.heightAnchor.constraint(equalToConstant: 35)
+        ])
+        ADD_SPACER(to: hStackSocial2, width: 15)
+        let socialNameLabel2 = UILabel()
+        socialNameLabel2.text = "Twitter"
+        socialNameLabel2.font = ROBOTO(16)
+        socialNameLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        hStackSocial2.addArrangedSubview(socialNameLabel2)
+        ADD_SPACER(to: hStackSocial2)
+
+        let socialButton2 = UIButton(type: .custom)
+        socialButton2.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
+        socialButton2.layer.cornerRadius = 4.0
+        hStackSocial2.addArrangedSubview(socialButton2)
+        socialButton2.activateConstraints([
+            socialButton2.widthAnchor.constraint(equalToConstant: 150),
+            socialButton2.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        socialButton2.tag = 100+2
+        socialButton2.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
+
+        let socialButtonLabel2 = UILabel()
+        socialButtonLabel2.text = "..."
+        socialButtonLabel2.textColor = .white
+        socialButtonLabel2.font = ROBOTO_BOLD(13)
+        hStackSocial2.addSubview(socialButtonLabel2)
+        socialButtonLabel2.activateConstraints([
+            socialButtonLabel2.centerXAnchor.constraint(equalTo: socialButton2.centerXAnchor),
+            socialButtonLabel2.centerYAnchor.constraint(equalTo: socialButton2.centerYAnchor)
+        ])
+        socialButtonLabel2.tag = 200+2
+        ADD_SPACER(to: VStack_form, height: 30)
+        // Twitter <<
+        // -------------------------------------
+        
+        // >> Facebook
+        let hStackSocial3 = HSTACK(into: VStack_form)
+        let socialImgView3 = UIImageView(image: UIImage(named: "footerSocial_3"))
+        hStackSocial3.addArrangedSubview(socialImgView3)
+        socialImgView3.activateConstraints([
+            socialImgView3.widthAnchor.constraint(equalToConstant: 35),
+            socialImgView3.heightAnchor.constraint(equalToConstant: 35)
+        ])
+        ADD_SPACER(to: hStackSocial3, width: 15)
+        let socialNameLabel3 = UILabel()
+        socialNameLabel3.text = "Facebook"
+        socialNameLabel3.font = ROBOTO(16)
+        socialNameLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        hStackSocial3.addArrangedSubview(socialNameLabel3)
+        ADD_SPACER(to: hStackSocial3)
+
+        let socialButton3 = UIButton(type: .custom)
+        socialButton3.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
+        socialButton3.layer.cornerRadius = 4.0
+        hStackSocial3.addArrangedSubview(socialButton3)
+        socialButton3.activateConstraints([
+            socialButton3.widthAnchor.constraint(equalToConstant: 150),
+            socialButton3.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        socialButton3.tag = 100+3
+        socialButton3.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
+
+        let socialButtonLabel3 = UILabel()
+        socialButtonLabel3.text = "..."
+        socialButtonLabel3.textColor = .white
+        socialButtonLabel3.font = ROBOTO_BOLD(13)
+        hStackSocial3.addSubview(socialButtonLabel3)
+        socialButtonLabel3.activateConstraints([
+            socialButtonLabel3.centerXAnchor.constraint(equalTo: socialButton3.centerXAnchor),
+            socialButtonLabel3.centerYAnchor.constraint(equalTo: socialButton3.centerYAnchor)
+        ])
+        socialButtonLabel3.tag = 200+3
+        ADD_SPACER(to: VStack_form, height: 30)
+        // Facebook <<
+
         let line21 = UIView()
         line21.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
         line21.activateConstraints([
@@ -597,15 +694,29 @@ class AccountViewController: BaseViewController {
         } else {
             self.updateSocialButton(1, state: false)
         }
+        
+        // Twitter (2)
+        if(socialnetworks.contains("Twitter")) {
+            self.updateSocialButton(2, state: true)
+        } else {
+            self.updateSocialButton(2, state: false)
+        }
+        
+        // Fcebook (3)
+        if(socialnetworks.contains("Facebook")) {
+            self.updateSocialButton(3, state: true)
+        } else {
+            self.updateSocialButton(3, state: false)
+        }
     }
     
     private func updateSocialButton(_ index: Int, state: Bool) {
         MAIN_THREAD {
-            if let button = self.view.viewWithTag(100+1) as? UIButton {
+            if let button = self.view.viewWithTag(100+index) as? UIButton {
                 button.backgroundColor = state ? UIColor(hex: 0xFF643C) : .lightGray
             }
             
-            if let label = self.view.viewWithTag(200+1) as? UILabel {
+            if let label = self.view.viewWithTag(200+index) as? UILabel {
                 label.text = state ? "Disconnect" : "Connect"
             }
         }
@@ -797,6 +908,22 @@ extension AccountViewController {
                                 self.updateSocialButton(1, state: false)
                             }
                         }
+                    } else if(index==2) { // Twitter
+                        self.showLoading()
+                        Twitter_SDK.shared.disconnect { (succes) in
+                            self.hideLoading()
+                            if(succes) {
+                                self.updateSocialButton(2, state: false)
+                            }
+                        }
+                    } else if(index==3) { // Facebook
+                        self.showLoading()
+                        Facebook_SDK.shared.disconnect { (succes) in
+                            self.hideLoading()
+                            if(succes) {
+                                self.updateSocialButton(3, state: false)
+                            }
+                        }
                     }
                 }
             }
@@ -806,6 +933,20 @@ extension AccountViewController {
                     self.hideLoading()
                     if(success) {
                         self.updateSocialButton(1, state: true)
+                    }
+                }
+            } else if(index==2) { // Twitter
+                Twitter_SDK.shared.login(vc: self) { (success) in
+                    self.hideLoading()
+                    if(success) {
+                        self.updateSocialButton(2, state: true)
+                    }
+                }
+            } else if(index==3) { // Facebook
+                Facebook_SDK.shared.login(vc: self) { (success) in
+                    self.hideLoading()
+                    if(success) {
+                        self.updateSocialButton(3, state: true)
                     }
                 }
             }

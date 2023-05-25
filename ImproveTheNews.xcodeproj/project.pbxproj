@@ -433,6 +433,7 @@
 		1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnimation.swift; sourceTree = "<group>"; };
 		1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWT_cell.swift; sourceTree = "<group>"; };
 		1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryWT_cell.swift; sourceTree = "<group>"; };
+		1F2E0D4F2A1E52C70024063F /* ImproveTheNews.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ImproveTheNews.entitlements; path = ../../../../ImproveTheNews.entitlements; sourceTree = "<group>"; };
 		1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		1F36ACAB2A0E73D8000EF350 /* LinkedIn_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedIn_SDK.swift; sourceTree = "<group>"; };
 		1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
@@ -979,6 +980,7 @@
 		1F95133F28BFB92E00A77AB6 /* ImproveTheNews */ = {
 			isa = PBXGroup;
 			children = (
+				1F2E0D4F2A1E52C70024063F /* ImproveTheNews.entitlements */,
 				1F95135428BFB95000A77AB6 /* app */,
 				1FA4CE6328C2864F0068DE4A /* misc */,
 				1FA4CE6628C286C40068DE4A /* data */,
@@ -2217,6 +2219,7 @@
 				API_BASE_URL = "https://www.improvemynews.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = U7V2C7L759;
@@ -2253,6 +2256,7 @@
 				API_BASE_URL = "https://www.improvethenews.org";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = U7V2C7L759;
@@ -2343,6 +2347,7 @@
 				API_BASE_URL = "https://www.improvemynews.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = U7V2C7L759;

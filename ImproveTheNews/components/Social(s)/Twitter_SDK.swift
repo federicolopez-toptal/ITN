@@ -18,13 +18,15 @@ class Twitter_SDK: NSObject {
     
     private let REQ_TOKEN_URL = "https://api.twitter.com/oauth/request_token"
     private let AUTH_URL = "https://api.twitter.com/oauth/authorize"
-    private let REDIRECT_URI = "ITNTestApp://" //"https://www.improvemynews.com/php/twitter/loader.php"
+    private let REDIRECT_URI = "ITNTestApp://"
     private let OAUTH_SIGN_METHOD = "HMAC-SHA1"
     private let OAUTH_VERSION = "1.0"
+    private let LOGOUT_URL = "https://twitter.com/logout"
 
     static let shared = Twitter_SDK()
     
     var vc: UIViewController?
+    let loading = LoadingView()
     let webView = WKWebView()
     var callback: ( (Bool)->() )?
     
@@ -48,6 +50,20 @@ class Twitter_SDK: NSObject {
                     callback(false)
                 }
             }
+        }
+    }
+    
+    func disconnect(callback: @escaping (Bool)->()) {
+        API.shared.socialDisconnect(socialName: "Twitter") { (success, serverMsg) in
+            callback(success)
+            self.logout_web()
+        }
+    }
+    
+    private func logout_web() {
+        MAIN_THREAD {
+            let request = URLRequest(url: URL(string: self.LOGOUT_URL)!)
+            self.webView.load(request)
         }
     }
     
@@ -144,10 +160,13 @@ extension Twitter_SDK {
     //---
     func local_ITNLogin(token: String, verifier: String) {
         API.shared.socialLogin(socialName: "Twitter", accessToken: token, verifier: verifier) { (success, serverMsg) in
-            if(success) {
-                self.cancelAction()
+            MAIN_THREAD {
+                self.loading.hide()
+                if(success) {
+                    self.cancelAction()
+                }
             }
-            
+
             self.callback!(success)
         }
     }
@@ -160,10 +179,11 @@ extension Twitter_SDK: WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         let url = (navigationAction.request.url?.absoluteString)! as String
-        print("URL", url)
+        print(url)
         
         if(url.lowercased().contains(REDIRECT_URI.lowercased())) {
             decisionHandler(.cancel)
+            self.loading.show()
             
             if let _params = URL(string: url)?.params() {
                 let token = _params["oauth_token"] as? String
@@ -219,6 +239,10 @@ extension Twitter_SDK {
         nav.navigationBar.tintColor = UIColor.white
         nav.modalPresentationStyle = .overFullScreen
         nav.modalTransitionStyle = .coverVertical
+        
+        self.loading.buildInto(nav.view)
+        self.loading.forceDarkColor()
+        self.loading.hide()
         
         return nav
     }

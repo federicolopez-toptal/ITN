@@ -6,10 +6,49 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+
+        // URL SCHEME
+        let strUrl = url.absoluteString.lowercased()
+        if(strUrl.contains("itntestapp")) {
+            if(strUrl.contains("fb")) {
+                if(strUrl.contains("usrid") && strUrl.contains("jwt")) {
+//                    // FB login callback
+//                    let params = url.params()
+//                    let _uuid = params["usrid"] as! String
+//                    let _jwt = params["jwt"] as! String
+//
+//                    let api = ShareAPI.instance
+//                    api.writeJWT(_jwt)
+//                    api.writeUUID(_uuid)
+//                    NotificationCenter.default.post(name: NOTIFICATION_FB_LOGGED, object: nil)
+                } else {
+//                    NotificationCenter.default.post(name: NOTIFICATION_FB_DONE, object: nil)
+                }
+            }
+        }
+        
+        // FB
+        ApplicationDelegate.shared.application(
+            UIApplication.shared,
+            open: url,
+            sourceApplication: nil,
+            annotation: [UIApplication.OpenURLOptionsKey.annotation]
+        )
+    }
+
+
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

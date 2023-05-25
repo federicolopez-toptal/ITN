@@ -45,4 +45,8 @@ class LoadingView: UIView {
         self.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.2) : .black.withAlphaComponent(0.5)
     }
     
+    func forceDarkColor() {
+        self.backgroundColor = .black.withAlphaComponent(0.5)
+    }
+    
 }
