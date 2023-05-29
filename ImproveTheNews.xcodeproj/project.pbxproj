@@ -433,8 +433,8 @@
 		1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnimation.swift; sourceTree = "<group>"; };
 		1F2D9FD328D36F6A00CE3008 /* ArticleWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWT_cell.swift; sourceTree = "<group>"; };
 		1F2D9FD528D386B600CE3008 /* StoryWT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryWT_cell.swift; sourceTree = "<group>"; };
-		1F2E0D4F2A1E52C70024063F /* ImproveTheNews.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ImproveTheNews.entitlements; path = ../../../../ImproveTheNews.entitlements; sourceTree = "<group>"; };
 		1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		1F3218432A21718E00085F6A /* ImproveTheNews.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = ImproveTheNews.entitlements; sourceTree = "<group>"; };
 		1F36ACAB2A0E73D8000EF350 /* LinkedIn_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedIn_SDK.swift; sourceTree = "<group>"; };
 		1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		1F38213D29A6DA32004D4D29 /* MainFeed_v2_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2_list.swift; sourceTree = "<group>"; };
@@ -980,7 +980,7 @@
 		1F95133F28BFB92E00A77AB6 /* ImproveTheNews */ = {
 			isa = PBXGroup;
 			children = (
-				1F2E0D4F2A1E52C70024063F /* ImproveTheNews.entitlements */,
+				1F3218432A21718E00085F6A /* ImproveTheNews.entitlements */,
 				1F95135428BFB95000A77AB6 /* app */,
 				1FA4CE6328C2864F0068DE4A /* misc */,
 				1FA4CE6628C286C40068DE4A /* data */,
