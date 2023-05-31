@@ -23,6 +23,7 @@ class Twitter_SDK: NSObject {
     private let OAUTH_VERSION = "1.0"
     private let LOGOUT_URL = "https://twitter.com/logout"
 
+
     static let shared = Twitter_SDK()
     
     var vc: UIViewController?
@@ -61,10 +62,10 @@ class Twitter_SDK: NSObject {
     }
     
     private func logout_web() {
-        MAIN_THREAD {
-            let request = URLRequest(url: URL(string: self.LOGOUT_URL)!)
-            self.webView.load(request)
-        }
+//        MAIN_THREAD {
+//            let request = URLRequest(url: URL(string: self.LOGOUT_URL)!)
+//            self.webView.load(request)
+//        }
     }
     
     private func loadLoginPage(token: String) {
@@ -275,6 +276,7 @@ extension Twitter_SDK {
         self.webView.reload()
     }
 }
+
 
 
 

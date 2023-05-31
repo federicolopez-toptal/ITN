@@ -77,6 +77,16 @@ func VALIDATE_EMAIL(_ email:String) -> Bool {
     return emailPred.evaluate(with: email)
 }
 
+func MAC() -> Bool {
+    var result = false
+    
+    if #available(iOS 14.0, *) {
+        result = ProcessInfo.processInfo.isiOSAppOnMac
+    }
+    
+    return result
+}
+
 func IPAD() -> Bool {
     let idiom = UIScreen.main.traitCollection.userInterfaceIdiom
     

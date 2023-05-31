@@ -79,7 +79,10 @@ class MainFeedViewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             self.loadData()
+            self.loadUserData()
             self.testFeature()
+            
+            UUID.shared.trace()
         }
         
         if(self.mustReloadOnShow) {
@@ -96,7 +99,7 @@ class MainFeedViewController: BaseViewController {
             CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
         
-        UUID.shared.trace()
+        
     }
     
     override func refreshDisplayMode() {
@@ -165,6 +168,32 @@ class MainFeedViewController: BaseViewController {
             }
         }
     }
+    
+    func loadUserData() {
+//        if(CustomNavController.shared.viewControllers.first!==self && USER_AUTHENTICATED()) {
+//            API.shared.getUserInfo { (success, serverMsg, user) in
+//                if let _sliderValues = user?.sliderValues {
+//                    print(_sliderValues)
+//                    print(MainFeedv3.sliderValues())
+//
+//                    if(_sliderValues != MainFeedv3.sliderValues()) {
+//                        MainFeedv3.parseSliderValues(_sliderValues)
+//                        self.loadData(showLoading: true)
+//                        MAIN_THREAD {
+//                            CustomNavController.shared.slidersPanel.reloadSliderValues()
+//                            CustomNavController.shared.slidersPanel.forceSplitToStoredValue()
+//                            CustomNavController.shared.menu.changeLayoutFromStoredValue()
+//                            CustomNavController.shared.menu.changeDisplayModeFromStoredValue()
+//                        }
+//                    } else {
+//                        print("nop")
+//                    }
+//                }
+//            }
+//        }
+    }
+    
+    
     // MARK: - For local notifications
     @objc func loadDataFromNotification() {
         self.loadData(showLoading: true)

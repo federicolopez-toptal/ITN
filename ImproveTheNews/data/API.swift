@@ -14,6 +14,7 @@ struct MyUser {
     var userName = ""
     var email = ""
     var socialnetworks = [String]()
+    var sliderValues = ""
     
     var subscriptionType = 0 // 0: Not subscribed, 1: Daily, 2: Weekly
     
@@ -54,6 +55,10 @@ struct MyUser {
         
         if let _socialnetworks = json["socialnetworks"] as? [String] {
             self.socialnetworks = _socialnetworks
+        }
+        
+        if let _sliderValues = json["slidercookies"] as? String {
+            self.sliderValues = _sliderValues
         }
     }
 }

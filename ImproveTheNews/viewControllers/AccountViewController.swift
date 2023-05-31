@@ -275,7 +275,7 @@ class AccountViewController: BaseViewController {
         subscribeButton.layer.cornerRadius = 4.0
         hStackSubscription.addArrangedSubview(subscribeButton)
         subscribeButton.activateConstraints([
-            subscribeButton.widthAnchor.constraint(equalToConstant: 150),
+            subscribeButton.widthAnchor.constraint(equalToConstant: 125),
             subscribeButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         subscribeButton.addTarget(self, action: #selector(subscribeButtonTap(_:)), for: .touchUpInside)
@@ -412,7 +412,7 @@ class AccountViewController: BaseViewController {
         socialButton1.layer.cornerRadius = 4.0
         hStackSocial1.addArrangedSubview(socialButton1)
         socialButton1.activateConstraints([
-            socialButton1.widthAnchor.constraint(equalToConstant: 150),
+            socialButton1.widthAnchor.constraint(equalToConstant: 125),
             socialButton1.heightAnchor.constraint(equalToConstant: 44)
         ])
         socialButton1.tag = 100+1
@@ -453,7 +453,7 @@ class AccountViewController: BaseViewController {
         socialButton2.layer.cornerRadius = 4.0
         hStackSocial2.addArrangedSubview(socialButton2)
         socialButton2.activateConstraints([
-            socialButton2.widthAnchor.constraint(equalToConstant: 150),
+            socialButton2.widthAnchor.constraint(equalToConstant: 125),
             socialButton2.heightAnchor.constraint(equalToConstant: 44)
         ])
         socialButton2.tag = 100+2
@@ -494,7 +494,7 @@ class AccountViewController: BaseViewController {
         socialButton3.layer.cornerRadius = 4.0
         hStackSocial3.addArrangedSubview(socialButton3)
         socialButton3.activateConstraints([
-            socialButton3.widthAnchor.constraint(equalToConstant: 150),
+            socialButton3.widthAnchor.constraint(equalToConstant: 125),
             socialButton3.heightAnchor.constraint(equalToConstant: 44)
         ])
         socialButton3.tag = 100+3
@@ -544,7 +544,7 @@ class AccountViewController: BaseViewController {
         signOutButton.layer.cornerRadius = 4.0
         hStackSignOut.addArrangedSubview(signOutButton)
         signOutButton.activateConstraints([
-            signOutButton.widthAnchor.constraint(equalToConstant: 150),
+            signOutButton.widthAnchor.constraint(equalToConstant: 125),
             signOutButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         signOutButton.addTarget(self, action: #selector(signOutButtonTap(_:)), for: .touchUpInside)
@@ -603,7 +603,7 @@ class AccountViewController: BaseViewController {
         deleteButton.layer.cornerRadius = 4.0
         hStackDelete.addArrangedSubview(deleteButton)
         deleteButton.activateConstraints([
-            deleteButton.widthAnchor.constraint(equalToConstant: 150),
+            deleteButton.widthAnchor.constraint(equalToConstant: 125),
             deleteButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         deleteButton.addTarget(self, action: #selector(deleteButtonTap(_:)), for: .touchUpInside)
@@ -717,7 +717,7 @@ class AccountViewController: BaseViewController {
             }
             
             if let label = self.view.viewWithTag(200+index) as? UILabel {
-                label.text = state ? "Disconnect" : "Connect"
+                label.text = state ? "DISCONNECT" : "CONNECT"
             }
         }
     }

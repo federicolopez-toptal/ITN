@@ -504,7 +504,9 @@ extension MainFeedv3 {
                 }
             }
         }
-        result += "lO03"
+        if(!result.contains("lO03")) {
+            result += "lO03"
+        }
         
         return result
     }
@@ -558,7 +560,6 @@ extension MainFeedv3 {
         WRITE(LocalKeys.preferences.sourceFilters, value: allSourcesString)
         
         NOTIFY(Notification_reloadMainFeedOnShow)
-        print("Done!")
     }
     
     static func setSliderValue(_ valueID: String, _ valueNum: String) -> Bool {
