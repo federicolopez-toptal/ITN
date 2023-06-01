@@ -411,18 +411,18 @@ extension SignInView {
 
             let email = self.emailText.text()
             let password = self.passText.text()
-            API.shared.signIn(email: email, password: password) { (success, serverMsg) in
+            API.shared.signIn(email: email, password: password) { (success, serverMsg, gotCookies) in
                 if(success) {
                     NOTIFY(Notification_reloadMainFeedOnShow)
                     WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
-                    MAIN_THREAD {
-                        CustomNavController.shared.menu.updateLogout()
                     
-                        self.delegate?.SignInViewShowLoading(state: false)
-                        CustomNavController.shared.popViewController(animated: true) // go back to main feed
-//                        let vc = AccountViewController()
-//                        CustomNavController.shared.pushViewController(vc, animated: true)
+                    print("gotCookies", gotCookies)
+                    if(gotCookies) {
+                        self.finishSignIn()
+                    } else {
+                        self.getCookies()
                     }
+                    
                 } else {
                     var showYesNo = false
                     if(serverMsg.lowercased().contains("not verified")) {
@@ -437,13 +437,32 @@ extension SignInView {
                     } else {
                         CustomNavController.shared.infoAlert(message: serverMsg)
                     }
-                }
-                
-                DELAY(2.0) {
-                    self.delegate?.SignInViewShowLoading(state: false)
+                    
+                    DELAY(2.0) {
+                        self.delegate?.SignInViewShowLoading(state: false)
+                    }
                 }
             }
 
+        }
+    }
+    
+    private func finishSignIn() {
+        MAIN_THREAD {
+            CustomNavController.shared.menu.updateLogout()
+                    
+            self.delegate?.SignInViewShowLoading(state: false)
+            CustomNavController.shared.popViewController(animated: true) // go back to main feed
+        }
+    }
+    
+    private func getCookies() {
+        print("Obteniendo sliderValues")
+        API.shared.getUserInfo { (success, serverMsg, user) in
+            if let _user = user, success {
+                MainFeedv3.parseSliderValues(_user.sliderValues)
+            }
+            self.finishSignIn()
         }
     }
     

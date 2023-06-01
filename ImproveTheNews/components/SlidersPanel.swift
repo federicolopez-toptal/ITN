@@ -302,6 +302,7 @@ class SlidersPanel: UIView {
         if(rows == 2){ panelState = "1" }
         else if(rows == 6){ panelState = "2" }
         WRITE(LocalKeys.sliders.panelState, value: panelState)
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         
         if(self.isIphone7()) {
             var newValue: CGFloat = -21

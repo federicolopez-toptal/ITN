@@ -114,7 +114,7 @@ class API {
         }
     }
 // ---
-    func signIn(email: String, password: String, callback: @escaping (Bool, String) -> () ) {
+    func signIn(email: String, password: String, callback: @escaping (Bool, String, Bool) -> () ) {
         
         let json: [String: String] = [
             "type": "Sign In",
@@ -132,23 +132,26 @@ class API {
                             WRITE(LocalKeys.user.JWT, value: _jwt)
                             WRITE(LocalKeys.user.UUID, value: _uuid)
                         }
+                        
+                        var gotCookies = false
                         if let _sliderValues = _json["slidercookies"] as? String, !_sliderValues.isEmpty {
                             MainFeedv3.parseSliderValues(_sliderValues)
+                            gotCookies = true
                         }
                         
-                        callback(true, "")
+                        callback(true, "", gotCookies)
                     } else {
                         if let _msg = _json["message"] as? String {
-                            callback(false, _msg)
+                            callback(false, _msg, false)
                         } else {
-                            callback(false, serverMsg)
+                            callback(false, serverMsg, false)
                         }
                     }
                 } else {
-                    callback(false, serverMsg)
+                    callback(false, serverMsg, false)
                 }
             } else {
-                callback(false, serverMsg)
+                callback(false, serverMsg, false)
             }
         }
     }
@@ -263,13 +266,15 @@ class API {
     }
 // ---
     func savesSliderValues(_ values: String) {
-        let json: [String: String] = [
-            "type": "slidercookies",
-            "userId": UUID.shared.getValue(),
-            "slidercookies": values
-        ]
-        
-        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+        if(USER_AUTHENTICATED()) {
+            let json: [String: String] = [
+                "type": "slidercookies",
+                "userId": UUID.shared.getValue(),
+                "slidercookies": values
+            ]
+            
+            self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            }
         }
     }
 
