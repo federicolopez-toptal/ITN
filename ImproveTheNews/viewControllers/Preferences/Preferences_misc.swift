@@ -47,9 +47,7 @@ extension PreferencesViewController {
                 }
             } else {
                 result = PrefSliders_cell.calculateHeight()
-            }
-            
-            print(result)
+            }            
         }
         
         return result

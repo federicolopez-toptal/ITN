@@ -50,6 +50,9 @@ class CustomNavController: UINavigationController {
     }
     
     private func addInitialViewController() {
+//        let vc = AudioPlayerViewController()
+//        self.setViewControllers([vc], animated: false)
+    
         if(IPHONE()) {
             let vc = MainFeedViewController()
             self.setViewControllers([vc], animated: false)

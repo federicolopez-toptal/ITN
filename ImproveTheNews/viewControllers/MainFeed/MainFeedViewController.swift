@@ -113,6 +113,8 @@ class MainFeedViewController: BaseViewController {
     
     // MARK: - Data
     func loadData(showLoading: Bool = true) {
+//        KeywordSearch.shared.search("ar")
+//        return        
         self.bannerClosed = false
         if(showLoading){ self.showLoading() }
         self.topicsCompleted = [String: Bool]()
@@ -169,7 +171,7 @@ class MainFeedViewController: BaseViewController {
         }
     }
     
-    func loadUserData() {
+    func loadUserData() { // UNSED
 //        if(CustomNavController.shared.viewControllers.first!==self && USER_AUTHENTICATED()) {
 //            API.shared.getUserInfo { (success, serverMsg, user) in
 //                if let _sliderValues = user?.sliderValues {

@@ -356,6 +356,8 @@
 		1FA8AA3628D0E3F500B6C956 /* ArticleWI_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */; };
 		1FA8AA3828D1778F00B6C956 /* SourceIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8AA3728D1778F00B6C956 /* SourceIcons.swift */; };
 		1FACBF8329AD01D0009A8E0F /* iPadSplitHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */; };
+		1FC1A2B92A3222FA001998B0 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift */; };
+		1FC1A2BB2A3224CD001998B0 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */; };
 		1FC287D529A645A50017433B /* MainFeed_v2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287D429A645A50017433B /* MainFeed_v2ViewController.swift */; };
 		1FC287D729A648010017433B /* MainFeed_v2_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287D629A648010017433B /* MainFeed_v2_misc.swift */; };
 		1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287DA29A64BC90017433B /* CustomFeedList.swift */; };
@@ -395,6 +397,7 @@
 		1FF088CD29F824ED00F31523 /* NSAttributedStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF088CC29F824ED00F31523 /* NSAttributedStringExtension.swift */; };
 		1FF326C128CA71DA006FF2CE /* MainFeedTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF326C028CA71DA006FF2CE /* MainFeedTopic.swift */; };
 		1FF326C328CA720E006FF2CE /* MainFeedArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF326C228CA720E006FF2CE /* MainFeedArticle.swift */; };
+		1FF32A282A2FAEF100948FA4 /* KeywordSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF32A272A2FAEF100948FA4 /* KeywordSearch.swift */; };
 		1FF61CBE28DAE50B006DF9AC /* StoryCI_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF61CBD28DAE50B006DF9AC /* StoryCI_cell.swift */; };
 		1FF61CC028DAFC4D006DF9AC /* ArticleCI_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF61CBF28DAFC4D006DF9AC /* ArticleCI_cell.swift */; };
 		1FF6DF7929AE41960072D0D0 /* iPadBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */; };
@@ -758,6 +761,8 @@
 		1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWI_cell.swift; sourceTree = "<group>"; };
 		1FA8AA3728D1778F00B6C956 /* SourceIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceIcons.swift; sourceTree = "<group>"; };
 		1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSplitHeaderCell.swift; sourceTree = "<group>"; };
+		1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
+		1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
 		1FC287D429A645A50017433B /* MainFeed_v2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2ViewController.swift; sourceTree = "<group>"; };
 		1FC287D629A648010017433B /* MainFeed_v2_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2_misc.swift; sourceTree = "<group>"; };
 		1FC287DA29A64BC90017433B /* CustomFeedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeedList.swift; sourceTree = "<group>"; };
@@ -797,6 +802,7 @@
 		1FF088CC29F824ED00F31523 /* NSAttributedStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtension.swift; sourceTree = "<group>"; };
 		1FF326C028CA71DA006FF2CE /* MainFeedTopic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedTopic.swift; sourceTree = "<group>"; };
 		1FF326C228CA720E006FF2CE /* MainFeedArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedArticle.swift; sourceTree = "<group>"; };
+		1FF32A272A2FAEF100948FA4 /* KeywordSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordSearch.swift; sourceTree = "<group>"; };
 		1FF61CBD28DAE50B006DF9AC /* StoryCI_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCI_cell.swift; sourceTree = "<group>"; };
 		1FF61CBF28DAFC4D006DF9AC /* ArticleCI_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCI_cell.swift; sourceTree = "<group>"; };
 		1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadBannerCell.swift; sourceTree = "<group>"; };
@@ -1026,6 +1032,7 @@
 				1FC287D329A645660017433B /* MainFeed_v2 */,
 				1FD2340829159EFD00B85AE9 /* Preferences */,
 				1F70BE72291457960061E3FA /* Search */,
+				1FF32A262A2FAEDB00948FA4 /* KeywordSearch */,
 				1F9E28C12954B1FD00041303 /* PrivacyPolicy */,
 				1FBD090529B24A5A00AC20F5 /* FAQ */,
 				1F7B9EBC296DEF5800D99C5D /* Story */,
@@ -1058,6 +1065,8 @@
 				1F2306BB291987D600755D71 /* OnOffView.swift */,
 				1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */,
 				1F9B4ADC2967745A00BE8850 /* RatingView.swift */,
+				1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift */,
+				1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -1293,6 +1302,14 @@
 				1F025CAF28E12F2900AA866D /* Banner.swift */,
 			);
 			path = MainFeed;
+			sourceTree = "<group>";
+		};
+		1FF32A262A2FAEDB00948FA4 /* KeywordSearch */ = {
+			isa = PBXGroup;
+			children = (
+				1FF32A272A2FAEF100948FA4 /* KeywordSearch.swift */,
+			);
+			path = KeywordSearch;
 			sourceTree = "<group>";
 		};
 		1FF61CBC28DAD84A006DF9AC /* basics */ = {
@@ -1987,6 +2004,7 @@
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
 				1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */,
 				1FEE16EB28C833BF0079BE54 /* NavBarView.swift in Sources */,
+				1FC1A2BB2A3224CD001998B0 /* AudioPlayerViewController.swift in Sources */,
 				1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */,
 				1FD2340429155F1700B85AE9 /* MenuView.swift in Sources */,
 				1FF088CD29F824ED00F31523 /* NSAttributedStringExtension.swift in Sources */,
@@ -2013,6 +2031,7 @@
 				1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */,
 				1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */,
 				1F9EDD5729AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift in Sources */,
+				1FF32A282A2FAEF100948FA4 /* KeywordSearch.swift in Sources */,
 				1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift in Sources */,
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
@@ -2028,6 +2047,7 @@
 				1FA8AA3828D1778F00B6C956 /* SourceIcons.swift in Sources */,
 				1FC835282A1548B1007BCE56 /* HMAC.swift in Sources */,
 				1F3E5E3C292FC2BF00FA090B /* SourceFilterViewController.swift in Sources */,
+				1FC1A2B92A3222FA001998B0 /* AudioPlayerView.swift in Sources */,
 				1FA4CE7928C3DCFB0068DE4A /* SlidersPanel.swift in Sources */,
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
 				1FC73904298961C8003EB38D /* Animations.swift in Sources */,

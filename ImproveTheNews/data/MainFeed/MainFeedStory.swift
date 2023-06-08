@@ -21,6 +21,7 @@ struct MainFeedStory {
     var spins = [Spin]()
     var articles = [StoryArticle]()
     
+    var audio: AudioFile?
     
     init (_ json: [String: Any]) {
     // main fields
@@ -68,7 +69,11 @@ struct MainFeedStory {
         if let _type = json["splitType"] as? String {
             self.splitType = _type
         }
-                
+        
+    // Audio file
+        // TEST
+        let aUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/ITNPod07JUN2023_8176.mp3"
+        self.audio = AudioFile(file: aUrl, duration: 194, created: "Jun 06 23")
     }
 
 }

@@ -28,6 +28,7 @@ class StoryViewController: BaseViewController {
     var imageHeightConstraint: NSLayoutConstraint? = nil
     
     var imageCreditUrl: String = ""
+    var audioPlayer = AudioPlayerView()
     
     deinit {
         self.hideLoading()
@@ -178,6 +179,7 @@ extension StoryViewController {
         
         self.addPill()
         self.addTitle(text: story.title)
+        self.addAudioPlayer(story.audio)
         self.addImage(imageUrl: story.image_src)
         
 //        print(self.story!.time)
@@ -1120,6 +1122,12 @@ extension StoryViewController {
         }
         
         ADD_SPACER(to: self.VStack, height: 4)
+    }
+
+    private func addAudioPlayer(_ audioFile: AudioFile?) {
+        if let _audioFile = audioFile {
+            self.audioPlayer.buildInto(self.VStack, file: _audioFile)
+        }
     }
 
     private func addTitle(text: String) {

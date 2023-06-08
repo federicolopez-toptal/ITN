@@ -64,6 +64,8 @@ class Sources {
                 if(filters.contains(newSource.code!)) {
                     newSource.state = false
                 }
+                
+//                print("ID", newSource.identifier, newSource.code)
                 self.all?.append(newSource)
             }
         }
