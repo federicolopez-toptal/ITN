@@ -558,6 +558,15 @@ extension MainFeedv3 {
         
         let allSourcesString = allSources.joined(separator: ",")
         WRITE(LocalKeys.preferences.sourceFilters, value: allSourcesString)
+        if let _sources = Sources.shared.all {
+            for (i, S) in _sources.enumerated() {
+                if(allSources.contains(S.code!)) {
+                    Sources.shared.all![i].state = false
+                } else {
+                    Sources.shared.all![i].state = true
+                }
+            }
+        }
         
         NOTIFY(Notification_reloadMainFeedOnShow)
     }

@@ -73,7 +73,8 @@ struct MainFeedStory {
     // Audio file
         // TEST
         let aUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/ITNPod07JUN2023_8176.mp3"
-        self.audio = AudioFile(file: aUrl, duration: 194, created: "Jun 06 23")
+        let aTitle = "Iran Reportedly Presents its First Hypersonic Ballistic Missile"
+        self.audio = AudioFile(file: aUrl, duration: 194, created: "Jun 06 23", title: aTitle)
     }
 
 }

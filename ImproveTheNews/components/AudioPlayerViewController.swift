@@ -30,7 +30,8 @@ class AudioPlayerViewController: BaseViewController {
         ])
         
         let aUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/ITNPod07JUN2023_8176.mp3"
-        let audioFile = AudioFile(file: aUrl, duration: 194, created: "Jun 06 23")
+        let aTitle = "Iran Reportedly Presents its First Hypersonic Ballistic Missile"
+        let audioFile = AudioFile(file: aUrl, duration: 194, created: "Jun 06 23", title: aTitle)
         self.player.buildInto(self.VStack, file: audioFile)
     }
 

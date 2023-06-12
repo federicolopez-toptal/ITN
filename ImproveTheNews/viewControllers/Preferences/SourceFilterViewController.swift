@@ -290,7 +290,8 @@ extension SourceFilterViewController: FilterTextViewDelegate {
         if(state) {
             view.alpha = 1
         } else {
-            view.alpha = 0.5
+            if(DARK_MODE()) { view.alpha = 0.35 }
+            else { view.alpha = 0.5 }
         }
     }
     
