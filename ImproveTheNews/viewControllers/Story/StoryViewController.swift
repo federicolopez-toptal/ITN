@@ -31,6 +31,7 @@ class StoryViewController: BaseViewController {
     var audioPlayer = AudioPlayerView()
     
     deinit {
+        self.audioPlayer.close()
         self.hideLoading()
     }
     
@@ -1126,7 +1127,7 @@ extension StoryViewController {
 
     private func addAudioPlayer(_ audioFile: AudioFile?) {
         if let _audioFile = audioFile {
-//            self.audioPlayer.buildInto(self.VStack, file: _audioFile)
+            self.audioPlayer.buildInto(self.VStack, file: _audioFile)
         }
     }
 

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVKit
 
 
 class AudioPlayerView: UIView {
@@ -16,12 +17,17 @@ class AudioPlayerView: UIView {
     private let heightOpened: CGFloat = 250
     
     private var isOpen = false
+    private var isPlaying = false
     private var wasBuilt = false
     private var duration: CGFloat = 0
     
     private var upDownArrowImageView = UIImageView()
     private var innerContainer: UIStackView!
     private var timeLabel = UILabel()
+    private let playImageView = UIImageView()
+    
+    private var player: AVPlayer?
+    private var playerObserver: Any?
     
     // MARK: - Init(s)
     init() {
@@ -42,6 +48,7 @@ class AudioPlayerView: UIView {
 //        self.isOpen = false
 //        self.mainHStack_heightConstraint = mainHStack.heightAnchor.constraint(equalToConstant: self.heightClosed)
         self.isOpen = true
+        self.isPlaying = false
         self.mainHStack_heightConstraint = mainHStack.heightAnchor.constraint(equalToConstant: self.heightOpened)
 
         self.mainHStack_heightConstraint.isActive = true
@@ -171,13 +178,33 @@ class AudioPlayerView: UIView {
         
         self.timeLabel.font = ROBOTO(13)
         self.timeLabel.textAlignment = .center
-        self.timeLabel.text = "01:00"
+        self.timeLabel.text = "00:00"
         //self.timeLabel.backgroundColor = .red
         self.timeLabel.textColor = UIColor(hex: 0x93A0B4)
         sliderHStack.addArrangedSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
             self.timeLabel.widthAnchor.constraint(equalToConstant: 45)
         ])
+        
+        //self.playImageView.backgroundColor = .red.withAlphaComponent(0.3)
+        sliderHStack.addArrangedSubview(self.playImageView)
+        self.playImageView.activateConstraints([
+            self.playImageView.widthAnchor.constraint(equalToConstant: 30),
+            self.playImageView.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        self.playImageView.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
+        self.playImageView.tintColor = UIColor(hex: 0xF3643C)
+        
+        let playButton = UIButton(type: .custom)
+        //playButton.backgroundColor = .red.withAlphaComponent(0.3)
+        sliderHStack.addSubview(playButton)
+        playButton.activateConstraints([
+            playButton.leadingAnchor.constraint(equalTo: self.playImageView.leadingAnchor),
+            playButton.trailingAnchor.constraint(equalTo: self.playImageView.trailingAnchor),
+            playButton.topAnchor.constraint(equalTo: self.playImageView.topAnchor),
+            playButton.bottomAnchor.constraint(equalTo: self.playImageView.bottomAnchor)
+        ])
+        playButton.addTarget(self, action: #selector(playButtonOnTap(_:)), for: .touchUpInside)
         
         ADD_SPACER(to: self.innerContainer, height: 10)
         let platformsLabel = UILabel()
@@ -210,6 +237,7 @@ class AudioPlayerView: UIView {
         
         ADD_SPACER(to: containerVStack, height: 5)
         self.wasBuilt = true
+        self.startPlayerWith(url: file.file)
     }
     
     // MARK: - Event(s)
@@ -252,15 +280,27 @@ class AudioPlayerView: UIView {
     }
     
     @objc func sliderOnValueChange(_ sender: UISlider) {
-        self.updateTimeFromSlider(CGFloat(sender.value))
+        let seconds = (CGFloat(sender.value) * self.duration)/100
+        self.updateTime(seconds)
+        self.player?.seek(to: CMTime(value: CMTimeValue(seconds), timescale: 1))
     }
     
-    private func updateTimeFromSlider(_ value: CGFloat) {
-        let currentSeconds = (value * self.duration)/100        
-        let minutes = Int(currentSeconds/60)
-        let seconds = Int(currentSeconds)-(minutes*60)
-
+    private func updateTime(_ secs: CGFloat) {
+        let minutes = Int(secs/60)
+        let seconds = Int(secs)-(minutes*60)
         self.timeLabel.text = String(format: "%02d:%02d", minutes, seconds)
+    }
+    
+    @objc func playButtonOnTap(_ sender: UIButton?) {
+        self.isPlaying = !self.isPlaying
+        
+        if(self.isPlaying) {
+            self.playImageView.image = UIImage(systemName: "pause.circle")?.withRenderingMode(.alwaysTemplate)
+            self.player?.play()
+        } else {
+            self.playImageView.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
+            self.player?.pause()
+        }
     }
 }
 
@@ -304,4 +344,34 @@ struct AudioFile {
         self.created = created
         self.title = title
     }
+}
+
+extension AudioPlayerView {
+    
+    func startPlayerWith(url: String) {
+        do {
+            let item = AVPlayerItem(url: URL(string: url)!)
+            self.player = try AVPlayer(playerItem: item)
+            
+            let interval = CMTime(value: CMTimeValue(1), timescale: 1)
+            self.playerObserver = self.player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { (time) in
+                self.updateTime(time.seconds)
+            })
+            
+        } catch let error as NSError {
+            self.player = nil
+            print(error.localizedDescription)
+        } catch {
+            print("AVPlayer error")
+        }
+    }
+    
+    func close() {
+        print("CLOSE")
+        
+        self.player?.removeTimeObserver(self.playerObserver)
+        self.playerObserver = nil
+        self.player = nil
+    }
+    
 }
