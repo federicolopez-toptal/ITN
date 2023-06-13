@@ -12,22 +12,37 @@ import AVKit
 
 class AudioPlayerView: UIView {
     
-    private var mainHStack_heightConstraint: NSLayoutConstraint!
+    private var wasBuilt = false
+    private var duration: CGFloat = 0
+    private var sliderIsPressed = false
+    private var wasCompleted = false
+    
+    // Open/Close
+    private var isOpen = false
+    private var heightConstraint: NSLayoutConstraint!
     private let heightClosed: CGFloat = 50
     private let heightOpened: CGFloat = 250
     
-    private var isOpen = false
+    // Play/Pause
     private var isPlaying = false
-    private var wasBuilt = false
-    private var duration: CGFloat = 0
+    private var playTimes: Int = 0
     
+    // Components
+    private let playImageView1 = UIImageView()
+    private var playButton1 = UIButton(type: .custom)
     private var upDownArrowImageView = UIImageView()
     private var innerContainer: UIStackView!
+    private var slider = UISlider()
     private var timeLabel = UILabel()
-    private let playImageView = UIImageView()
+    private let playImageView2 = UIImageView()
     
+    // AVPlayer
     private var player: AVPlayer?
     private var playerObserver: Any?
+    
+    
+    
+    
     
     // MARK: - Init(s)
     init() {
@@ -40,25 +55,17 @@ class AudioPlayerView: UIView {
     // MARK: - Build component
     func buildInto(_ containerVStack: UIStackView, file: AudioFile) {
         if(self.wasBuilt) { return }
+        
         self.duration = CGFloat(file.duration)
     
         let mainHStack = HSTACK(into: containerVStack)
-        //mainHStack.backgroundColor = .yellow
+        self.heightConstraint = mainHStack.heightAnchor.constraint(equalToConstant: self.heightClosed)
+        self.heightConstraint.isActive = true
         
-//        self.isOpen = false
-//        self.mainHStack_heightConstraint = mainHStack.heightAnchor.constraint(equalToConstant: self.heightClosed)
-        self.isOpen = true
-        self.isPlaying = false
-        self.mainHStack_heightConstraint = mainHStack.heightAnchor.constraint(equalToConstant: self.heightOpened)
-
-        self.mainHStack_heightConstraint.isActive = true
-
         ADD_SPACER(to: mainHStack, width: 13)
-        
-        let colorRect = UIView()
-        colorRect.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D2530) : UIColor(hex: 0xEAEBEC)
-        mainHStack.addArrangedSubview(colorRect)
-        
+            let colorRect = UIView()
+            colorRect.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D2530) : UIColor(hex: 0xEAEBEC)
+            mainHStack.addArrangedSubview(colorRect)
         ADD_SPACER(to: mainHStack, width: 13)
         
         // -------
@@ -100,20 +107,39 @@ class AudioPlayerView: UIView {
             self.upDownArrowImageView.topAnchor.constraint(equalTo: colorRect.topAnchor, constant: 13)
         ])
         
-        let buttonArea = UIButton(type: .custom)
-        //buttonArea.backgroundColor = .red.withAlphaComponent(0.25)
-        colorRect.addSubview(buttonArea)
-        buttonArea.activateConstraints([
-            buttonArea.leadingAnchor.constraint(equalTo: colorRect.leadingAnchor),
-            buttonArea.trailingAnchor.constraint(equalTo: colorRect.trailingAnchor),
-            buttonArea.topAnchor.constraint(equalTo: colorRect.topAnchor),
-            buttonArea.heightAnchor.constraint(equalToConstant: 50)
+        let upDownbuttonArea = UIButton(type: .custom)
+        colorRect.addSubview(upDownbuttonArea)
+        upDownbuttonArea.activateConstraints([
+            upDownbuttonArea.leadingAnchor.constraint(equalTo: colorRect.leadingAnchor),
+            upDownbuttonArea.trailingAnchor.constraint(equalTo: colorRect.trailingAnchor),
+            upDownbuttonArea.topAnchor.constraint(equalTo: colorRect.topAnchor),
+            upDownbuttonArea.heightAnchor.constraint(equalToConstant: 50)
         ])
-        buttonArea.addTarget(self, action: #selector(buttonAreaOnTap(_:)), for: .touchUpInside)
+        upDownbuttonArea.addTarget(self, action: #selector(upDownButtonAreaOnTap(_:)), for: .touchUpInside)
+        
+        colorRect.addSubview(self.playImageView1)
+        self.playImageView1.activateConstraints([
+            self.playImageView1.widthAnchor.constraint(equalToConstant: 25),
+            self.playImageView1.heightAnchor.constraint(equalToConstant: 25),
+            self.playImageView1.trailingAnchor.constraint(equalTo: self.upDownArrowImageView.leadingAnchor, constant: -15),
+            self.playImageView1.centerYAnchor.constraint(equalTo: self.upDownArrowImageView.centerYAnchor)
+        ])
+        self.playImageView1.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
+        self.playImageView1.tintColor = UIColor(hex: 0xF3643C)
+        self.playImageView1.hide()
+        
+        colorRect.addSubview(self.playButton1)
+        self.playButton1.activateConstraints([
+            self.playButton1.leadingAnchor.constraint(equalTo: self.playImageView1.leadingAnchor, constant: -5),
+            self.playButton1.trailingAnchor.constraint(equalTo: self.playImageView1.trailingAnchor, constant: 5),
+            self.playButton1.topAnchor.constraint(equalTo: self.playImageView1.topAnchor, constant: -5),
+            self.playButton1.bottomAnchor.constraint(equalTo: self.playImageView1.bottomAnchor, constant: 5)
+        ])
+        self.playButton1.hide()
+        self.playButton1.addTarget(self, action: #selector(playButtonOnTap(_:)), for: .touchUpInside)
         
         // ------------
         self.innerContainer = VSTACK(into: colorRect)
-        //self.innerContainer.backgroundColor = .yellow.withAlphaComponent(0.2)
         self.innerContainer.activateConstraints([
             self.innerContainer.topAnchor.constraint(equalTo: podcastIcon.bottomAnchor, constant: 10),
             self.innerContainer.leadingAnchor.constraint(equalTo: colorRect.leadingAnchor, constant: 16),
@@ -140,7 +166,6 @@ class AudioPlayerView: UIView {
         
         let titleLabel = UILabel()
         titleLabel.numberOfLines = 0
-        //titleLabel.backgroundColor = .blue.withAlphaComponent(0.4)      
         let textStart = file.created + ": "
         let text = textStart + file.title
         //titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
@@ -155,7 +180,6 @@ class AudioPlayerView: UIView {
         ])
         
         let sliderHStack = HSTACK(into: colorSubRect)
-        //sliderHStack.backgroundColor = .green
         sliderHStack.spacing = 8
         sliderHStack.activateConstraints([
             sliderHStack.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
@@ -164,47 +188,48 @@ class AudioPlayerView: UIView {
             sliderHStack.heightAnchor.constraint(equalToConstant: 30)
         ])
         
-        let slider = UISlider()
-        //slider.backgroundColor = .blue.withAlphaComponent(0.3)
-        slider.minimumValue = 0
-        slider.maximumValue = 100
-        slider.value = 0
-        slider.isContinuous = true
-        slider.minimumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x1D2530) : UIColor(hex: 0xEAEBEC)
-        slider.maximumTrackTintColor = slider.minimumTrackTintColor
-        slider.setThumbImage(UIImage(named: "audioPlayerThumb"), for: .normal)
-        sliderHStack.addArrangedSubview(slider)
-        slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
+        self.slider.minimumValue = 0
+        self.slider.maximumValue = 100
+        self.slider.value = 0
+        self.slider.isContinuous = true
+        self.slider.minimumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x1D2530) : UIColor(hex: 0xEAEBEC)
+        self.slider.maximumTrackTintColor = self.slider.minimumTrackTintColor
+        self.slider.setThumbImage(UIImage(named: "audioPlayerThumb"), for: .normal)
+        sliderHStack.addArrangedSubview(self.slider)
+        self.slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
+        self.slider.addTarget(self, action: #selector(sliderOnTouchDown(_:)), for: .touchDown)
+        self.slider.addTarget(self, action: #selector(sliderOnTouchUp(_:)), for: .touchUpInside)
         
         self.timeLabel.font = ROBOTO(13)
         self.timeLabel.textAlignment = .center
         self.timeLabel.text = "00:00"
-        //self.timeLabel.backgroundColor = .red
         self.timeLabel.textColor = UIColor(hex: 0x93A0B4)
         sliderHStack.addArrangedSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
             self.timeLabel.widthAnchor.constraint(equalToConstant: 45)
         ])
         
-        //self.playImageView.backgroundColor = .red.withAlphaComponent(0.3)
-        sliderHStack.addArrangedSubview(self.playImageView)
-        self.playImageView.activateConstraints([
-            self.playImageView.widthAnchor.constraint(equalToConstant: 30),
-            self.playImageView.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        self.playImageView.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
-        self.playImageView.tintColor = UIColor(hex: 0xF3643C)
+        let playIconVStack = VSTACK(into: sliderHStack)
+        sliderHStack.addArrangedSubview(playIconVStack)
+        ADD_SPACER(to: playIconVStack, height: 2.5)
+            playIconVStack.addArrangedSubview(self.playImageView2)
+            self.playImageView2.activateConstraints([
+                self.playImageView2.widthAnchor.constraint(equalToConstant: 25),
+                self.playImageView2.heightAnchor.constraint(equalToConstant: 25)
+            ])
+            self.playImageView2.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
+            self.playImageView2.tintColor = UIColor(hex: 0xF3643C)
+        ADD_SPACER(to: playIconVStack, height: 2.5)
         
-        let playButton = UIButton(type: .custom)
-        //playButton.backgroundColor = .red.withAlphaComponent(0.3)
-        sliderHStack.addSubview(playButton)
-        playButton.activateConstraints([
-            playButton.leadingAnchor.constraint(equalTo: self.playImageView.leadingAnchor),
-            playButton.trailingAnchor.constraint(equalTo: self.playImageView.trailingAnchor),
-            playButton.topAnchor.constraint(equalTo: self.playImageView.topAnchor),
-            playButton.bottomAnchor.constraint(equalTo: self.playImageView.bottomAnchor)
+        let playButton2 = UIButton(type: .custom)
+        sliderHStack.addSubview(playButton2)
+        playButton2.activateConstraints([
+            playButton2.leadingAnchor.constraint(equalTo: self.playImageView2.leadingAnchor, constant: -5),
+            playButton2.trailingAnchor.constraint(equalTo: self.playImageView2.trailingAnchor, constant: 5),
+            playButton2.topAnchor.constraint(equalTo: self.playImageView2.topAnchor, constant: -5),
+            playButton2.bottomAnchor.constraint(equalTo: self.playImageView2.bottomAnchor, constant: 5)
         ])
-        playButton.addTarget(self, action: #selector(playButtonOnTap(_:)), for: .touchUpInside)
+        playButton2.addTarget(self, action: #selector(playButtonOnTap(_:)), for: .touchUpInside)
         
         ADD_SPACER(to: self.innerContainer, height: 10)
         let platformsLabel = UILabel()
@@ -234,23 +259,36 @@ class AudioPlayerView: UIView {
         
         // ----------
         ADD_SPACER(to: self.innerContainer)
-        
         ADD_SPACER(to: containerVStack, height: 5)
-        self.wasBuilt = true
+        
+        self.innerContainer.hide()
         self.startPlayerWith(url: file.file)
+        self.wasBuilt = true
     }
     
     // MARK: - Event(s)
-    @objc func buttonAreaOnTap(_ sender: UIButton?) {
+    @objc func upDownButtonAreaOnTap(_ sender: UIButton?) {
         self.isOpen = !self.isOpen
+        self.playImageView1.hide()
+        self.playButton1.hide()
         
         if(self.isOpen) {
-            self.mainHStack_heightConstraint.constant = self.heightOpened
+            self.heightConstraint.constant = self.heightOpened
             self.upDownArrowImageView.image = UIImage(named: "arrow.up")
+            self.playImageView1.hide()
+            
+            self.innerContainer.alpha = 0
             self.innerContainer.show()
+            UIView.animate(withDuration: 0.5) {
+                self.innerContainer.alpha = 1.0
+            }
         } else {
-            self.mainHStack_heightConstraint.constant = self.heightClosed
+            self.heightConstraint.constant = self.heightClosed
             self.upDownArrowImageView.image = UIImage(named: "arrow.down")
+            if(self.playTimes>0){
+                self.playButton1.show()
+                self.playImageView1.show()
+            }
             self.innerContainer.hide()
         }
     }
@@ -279,6 +317,13 @@ class AudioPlayerView: UIView {
         }
     }
     
+    @objc func sliderOnTouchDown(_ sender: UISlider?) {
+        self.sliderIsPressed = true
+    }
+    @objc func sliderOnTouchUp(_ sender: UISlider?) {
+        self.sliderIsPressed = false
+    }
+    
     @objc func sliderOnValueChange(_ sender: UISlider) {
         let seconds = (CGFloat(sender.value) * self.duration)/100
         self.updateTime(seconds)
@@ -292,15 +337,17 @@ class AudioPlayerView: UIView {
     }
     
     @objc func playButtonOnTap(_ sender: UIButton?) {
+        self.playTimes += 1
         self.isPlaying = !self.isPlaying
         
         if(self.isPlaying) {
-            self.playImageView.image = UIImage(systemName: "pause.circle")?.withRenderingMode(.alwaysTemplate)
+            self.playImageView2.image = UIImage(systemName: "pause.circle")?.withRenderingMode(.alwaysTemplate)
             self.player?.play()
         } else {
-            self.playImageView.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
+            self.playImageView2.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
             self.player?.pause()
         }
+        self.playImageView1.image = self.playImageView2.image
     }
 }
 
@@ -349,27 +396,36 @@ struct AudioFile {
 extension AudioPlayerView {
     
     func startPlayerWith(url: String) {
-        do {
-            let item = AVPlayerItem(url: URL(string: url)!)
-            self.player = try AVPlayer(playerItem: item)
+        let item = AVPlayerItem(url: URL(string: url)!)
+        self.player = AVPlayer(playerItem: item)
+        
+        let interval = CMTime(value: CMTimeValue(1), timescale: 1)
+        self.playerObserver = self.player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { (time) in
+            self.updateTime(time.seconds)
             
-            let interval = CMTime(value: CMTimeValue(1), timescale: 1)
-            self.playerObserver = self.player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { (time) in
-                self.updateTime(time.seconds)
-            })
+            if(!self.sliderIsPressed) {
+                let perc = (time.seconds * 100)/self.duration
+                self.slider.value = Float(perc)
+            }
             
-        } catch let error as NSError {
-            self.player = nil
-            print(error.localizedDescription)
-        } catch {
-            print("AVPlayer error")
-        }
+            if((Int(time.seconds) >= Int(self.duration) && self.isPlaying) && !self.wasCompleted) {
+                self.wasCompleted = true
+                DELAY(1.0) {
+                    self.player?.seek(to: CMTime(value: CMTimeValue(0), timescale: 1))
+                    self.player?.pause()
+                    
+                    self.playButtonOnTap(nil)
+                    self.updateTime(0)
+                    self.slider.value = 0
+                    self.wasCompleted = false
+                }
+            }
+        })
     }
     
     func close() {
         print("CLOSE")
-        
-        self.player?.removeTimeObserver(self.playerObserver)
+        self.player?.removeTimeObserver(self.playerObserver!)
         self.playerObserver = nil
         self.player = nil
     }

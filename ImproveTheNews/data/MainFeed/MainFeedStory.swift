@@ -39,6 +39,20 @@ struct MainFeedStory {
             }
         }
     
+    // Audio
+//        let aUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/ITNPod07JUN2023_8176.mp3"
+//        let aTitle = "Iran Reportedly Presents its First Hypersonic Ballistic Missile"
+//        self.audio = AudioFile(file: aUrl, duration: 194, created: "Jun 06 23", title: aTitle)
+    
+        let _file = getSTRING(mainNode["audiofile"])
+        let _duration = getSTRING(mainNode["duration"])
+        let _created = getSTRING(mainNode["created"])
+        let _title = getSTRING(mainNode["title"], defaultValue: "Title not available")
+    
+        if(!_file.isEmpty && !_duration.isEmpty && !_created.isEmpty && !_title.isEmpty) {
+            self.audio = AudioFile(file: _file, duration: Int(_duration)!, created: _created, title: _title)
+        }
+
     // Facts
         let factsNode = removeNULL(from: json["facts"])
         self.facts = [Fact]()
@@ -69,12 +83,7 @@ struct MainFeedStory {
         if let _type = json["splitType"] as? String {
             self.splitType = _type
         }
-        
-    // Audio file
-        // TEST
-        let aUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/ITNPod07JUN2023_8176.mp3"
-        let aTitle = "Iran Reportedly Presents its First Hypersonic Ballistic Missile"
-        self.audio = AudioFile(file: aUrl, duration: 194, created: "Jun 06 23", title: aTitle)
+
     }
 
 }
