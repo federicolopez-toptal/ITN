@@ -25,7 +25,13 @@ struct MainFeedStory {
     
     init (_ json: [String: Any]) {
     // main fields
-        let mainNode = json["storyData"] as! [String: Any]
+        var mainNode: [String: Any] = [:]
+        if let _mainNode = json["storyData"] as? [String: Any] {
+            mainNode = _mainNode
+        } else {
+            return
+        }
+        //let mainNode = json["storyData"] as! [String: Any]
         
         self.id = getSTRING(mainNode["id"], defaultValue: "1")
         self.title = getSTRING(mainNode["title"], defaultValue: "Title not available")

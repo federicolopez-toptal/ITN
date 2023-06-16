@@ -91,8 +91,12 @@ extension StoryContent {
                 callback(nil)
             } else {
                 if let json = JSON(fromData: data) {
-                    let story = MainFeedStory(json) //Story content
-                    callback(story)
+                    if let _ = json["error"] {
+                        callback(nil)
+                    } else {
+                        let story = MainFeedStory(json) //Story content
+                        callback(story)
+                    }
                 } else {
                     callback(nil)
                 }
