@@ -402,6 +402,8 @@
 		1FF61CC028DAFC4D006DF9AC /* ArticleCI_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF61CBF28DAFC4D006DF9AC /* ArticleCI_cell.swift */; };
 		1FF6DF7929AE41960072D0D0 /* iPadBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */; };
 		1FF6FBAA2912F10F00673146 /* SplitHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6FBA92912F10F00673146 /* SplitHeaderCell.swift */; };
+		1FF7D8CB2A4082DD00770B69 /* KeywordSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7D8CA2A4082DD00770B69 /* KeywordSearchViewController.swift */; };
+		1FF7D8CD2A40868B00770B69 /* KeywordSearchTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF7D8CC2A40868B00770B69 /* KeywordSearchTextView.swift */; };
 		1FF9ED5129D48E82000D56C0 /* notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1FF9ED5029D48E82000D56C0 /* notes.txt */; };
 		1FFA551F294B756A00663966 /* URLs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FFA551E294B756A00663966 /* URLs.plist */; };
 		1FFA5521294B78A500663966 /* PrefSliders_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFA5520294B78A500663966 /* PrefSliders_cell.swift */; };
@@ -807,6 +809,8 @@
 		1FF61CBF28DAFC4D006DF9AC /* ArticleCI_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCI_cell.swift; sourceTree = "<group>"; };
 		1FF6DF7829AE41960072D0D0 /* iPadBannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadBannerCell.swift; sourceTree = "<group>"; };
 		1FF6FBA92912F10F00673146 /* SplitHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitHeaderCell.swift; sourceTree = "<group>"; };
+		1FF7D8CA2A4082DD00770B69 /* KeywordSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordSearchViewController.swift; sourceTree = "<group>"; };
+		1FF7D8CC2A40868B00770B69 /* KeywordSearchTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordSearchTextView.swift; sourceTree = "<group>"; };
 		1FF9ED5029D48E82000D56C0 /* notes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = notes.txt; sourceTree = "<group>"; };
 		1FFA551E294B756A00663966 /* URLs.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = URLs.plist; sourceTree = "<group>"; };
 		1FFA5520294B78A500663966 /* PrefSliders_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefSliders_cell.swift; sourceTree = "<group>"; };
@@ -901,6 +905,8 @@
 			children = (
 				1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */,
 				1F70BE73291457B70061E3FA /* Search_topics.swift */,
+				1FF7D8CA2A4082DD00770B69 /* KeywordSearchViewController.swift */,
+				1FF32A272A2FAEF100948FA4 /* KeywordSearch.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -1032,7 +1038,6 @@
 				1FC287D329A645660017433B /* MainFeed_v2 */,
 				1FD2340829159EFD00B85AE9 /* Preferences */,
 				1F70BE72291457960061E3FA /* Search */,
-				1FF32A262A2FAEDB00948FA4 /* KeywordSearch */,
 				1F9E28C12954B1FD00041303 /* PrivacyPolicy */,
 				1FBD090529B24A5A00AC20F5 /* FAQ */,
 				1F7B9EBC296DEF5800D99C5D /* Story */,
@@ -1171,6 +1176,7 @@
 			isa = PBXGroup;
 			children = (
 				1F70BE702913FD940061E3FA /* SearchTextView.swift */,
+				1FF7D8CC2A40868B00770B69 /* KeywordSearchTextView.swift */,
 				1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */,
 				1FC7390C298A144D003EB38D /* FormTextView.swift */,
 			);
@@ -1302,14 +1308,6 @@
 				1F025CAF28E12F2900AA866D /* Banner.swift */,
 			);
 			path = MainFeed;
-			sourceTree = "<group>";
-		};
-		1FF32A262A2FAEDB00948FA4 /* KeywordSearch */ = {
-			isa = PBXGroup;
-			children = (
-				1FF32A272A2FAEF100948FA4 /* KeywordSearch.swift */,
-			);
-			path = KeywordSearch;
 			sourceTree = "<group>";
 		};
 		1FF61CBC28DAD84A006DF9AC /* basics */ = {
@@ -1980,6 +1978,7 @@
 				1FF61CBE28DAE50B006DF9AC /* StoryCI_cell.swift in Sources */,
 				1F0B000328F61D14007280FF /* Fonts_misc.swift in Sources */,
 				1F71FA442A15471400B066E0 /* DictionaryExtension.swift in Sources */,
+				1FF7D8CD2A40868B00770B69 /* KeywordSearchTextView.swift in Sources */,
 				1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */,
 				1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */,
 				1FF326C128CA71DA006FF2CE /* MainFeedTopic.swift in Sources */,
@@ -2016,6 +2015,7 @@
 				1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */,
 				1FE9169F29A79805007F8AAF /* ArticleHImageView.swift in Sources */,
 				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */,
+				1FF7D8CB2A4082DD00770B69 /* KeywordSearchViewController.swift in Sources */,
 				1FE916A329A7AEF1007F8AAF /* GroupItemCell.swift in Sources */,
 				1F1788AD2937CBC1003F528E /* TrashCode.swift in Sources */,
 				1FD5BDEE28DC01AA003E650F /* ArticleViewController.swift in Sources */,

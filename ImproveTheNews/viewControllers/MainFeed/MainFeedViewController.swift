@@ -113,8 +113,7 @@ class MainFeedViewController: BaseViewController {
     
     // MARK: - Data
     func loadData(showLoading: Bool = true) {
-//        KeywordSearch.shared.search("ar")
-//        return        
+
         self.bannerClosed = false
         if(showLoading){ self.showLoading() }
         self.topicsCompleted = [String: Bool]()

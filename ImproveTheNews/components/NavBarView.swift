@@ -444,7 +444,8 @@ extension NavBarView {
     }
     
     @objc func onSearchButtonTap(_ sender: UIButton) {
-        let vc = SearchViewController()        
+//        let vc = SearchViewController()
+        let vc = KeywordSearchViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         

@@ -18,6 +18,7 @@ class KeywordSearch {
     private var searchPageSize: Int = 4
     private var searchPage: Int = 1
     
+    var searchType: searchType = .all
     var topics: [TopicSearchResult] = []
     var stories: [StorySearchResult] = []
     var articles: [ArticleSearchResult] = []
@@ -26,12 +27,14 @@ class KeywordSearch {
     init() {
     }
     
-    func search(_ text: String, type: searchType = .all) {
+    func search(_ text: String, type: searchType = .all, callback: @escaping (Bool) -> () ) {
+        self.searchType = type
         self.topics = []
         self.stories = []
+        self.articles = []
         let offset = (self.searchPage-1)*self.searchPageSize
         
-        var url = self.searchUrl + "?searchtype=" + type.rawValue
+        var url = self.searchUrl + "?searchtype=" + self.searchType.rawValue
         url += "&searchstring=" + text + "&limit=" + String(self.searchPageSize)
         url += "&offset=" + String(offset)
         url += "&slidercookies=" + MainFeedv3.sliderValues()
@@ -40,8 +43,10 @@ class KeywordSearch {
         self.makeSearch(withUrl: url) { (success, serverMsg, json) in
             if let _json = json, success {
                 self.parseResult(_json)
+                callback(true)
             } else {
                 print("ERROR", serverMsg)
+                callback(false)
             }
         }
     }
