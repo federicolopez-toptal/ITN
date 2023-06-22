@@ -51,6 +51,9 @@ class MainFeedViewController: BaseViewController {
             selector: #selector(self.setReloadMainFeedOnShow),
             name: Notification_reloadMainFeedOnShow, object: nil)
             
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.onStanceIconTapFromNotification),
+            name: Notification_stanceIconTap, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -100,6 +103,25 @@ class MainFeedViewController: BaseViewController {
         }
         
         
+    }
+    
+    @objc func onStanceIconTapFromNotification(_ notification: Notification) {
+        var mustReturn = false
+        if(CustomNavController.shared.viewControllers.last! != self) { mustReturn = true }
+        if(CustomNavController.shared.viewControllers.last! is KeywordSearchViewController){ mustReturn = false }
+        if(mustReturn){ return }
+    
+        if let _info = notification.userInfo as? [String: Any] {
+            let source = _info["source"] as! String
+            let country = _info["country"] as! String
+            let LR = _info["LR"] as! Int
+            let PE = _info["PE"] as! Int
+            
+            let popup = StancePopupView()
+            popup.populate(sourceName: source, country: country, LR: LR, PE: PE)
+            popup.pushFromBottom()
+            //print("HERE!")
+        }
     }
     
     override func refreshDisplayMode() {

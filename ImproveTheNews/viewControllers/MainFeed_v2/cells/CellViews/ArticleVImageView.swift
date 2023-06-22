@@ -275,10 +275,20 @@ extension ArticleVImageView: StanceIconViewDelegate {
     static func calculateHeight(text: String, width: CGFloat) -> CGFloat {
         let tmpTitleLabel = ARTICLE_TITLE()
         tmpTitleLabel.text = text
-        //tmpTitleLabel.font = MERRIWEATHER_BOLD(30)
         let textW: CGFloat = width - (IPAD_INNER_MARGIN*2)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
 
-        return 175 + (IPAD_INNER_MARGIN*3) + textH + 28
+//        if(IPAD()) {
+            return 175 + (IPAD_INNER_MARGIN*3) + textH + 28
+//        } else {
+//            let imageH: CGFloat = 175
+//            let dataH: CGFloat = textH + 14 + 28
+//            
+//            if(imageH > dataH) {
+//                return imageH
+//            } else {
+//                return dataH
+//            }
+//        }
     }
 }

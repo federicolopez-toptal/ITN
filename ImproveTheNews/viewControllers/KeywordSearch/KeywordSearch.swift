@@ -12,10 +12,10 @@ class KeywordSearch {
 
     static var shared = KeywordSearch()
     
-    private var searchUrl = "https://www.improvemynews.com/php/util/search-topics.php"
+    private var searchUrl = "https://www.improvethenews.org/php/util/search-topics.php"
     //private var searchUrl = "http://ec2-18-191-221-195.us-east-2.compute.amazonaws.com/php/util/search-topics.php"
     
-    private var searchPageSize: Int = 4
+    private var searchPageSize: Int = 11
     private var searchPage: Int = 1
     
     var searchType: searchType = .all
@@ -39,6 +39,9 @@ class KeywordSearch {
         url += "&offset=" + String(offset)
         url += "&slidercookies=" + MainFeedv3.sliderValues()
         url += "&userId=" + UUID.shared.getValue()
+        
+        print("----")
+        print("SEARCH", url)
         
         self.makeSearch(withUrl: url) { (success, serverMsg, json) in
             if let _json = json, success {

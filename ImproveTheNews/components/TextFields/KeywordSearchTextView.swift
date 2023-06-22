@@ -21,7 +21,7 @@ class KeywordSearchTextView: UIView {
     let lupa = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.search")))
     let placeHolderLabel = UILabel()
     let searchTextField = UITextField()
-    let closeIcon = UIImageView(image: UIImage(named: "menu.close"))
+    let closeIcon = UIImageView(image: UIImage(named: "menu.close")!.withRenderingMode(.alwaysTemplate))
     
     // MARK: - Init(s)
     init() {
@@ -86,11 +86,12 @@ class KeywordSearchTextView: UIView {
         
         bgColorView.addSubview(self.closeIcon)
         self.closeIcon.activateConstraints([
-            self.closeIcon.widthAnchor.constraint(equalToConstant: 32),
-            self.closeIcon.heightAnchor.constraint(equalToConstant: 32),
-            self.closeIcon.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -4),
+            self.closeIcon.widthAnchor.constraint(equalToConstant: 25),
+            self.closeIcon.heightAnchor.constraint(equalToConstant: 25),
+            self.closeIcon.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -8),
             self.closeIcon.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor)
         ])
+        self.closeIcon.tintColor = UIColor(hex: 0xFF643C)
         self.closeIcon.hide()
         
         let closeButton = UIButton(type: .system)

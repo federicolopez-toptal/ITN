@@ -50,6 +50,22 @@ class DataProviderMoreItem: DataProviderItem {
     }
 }
 
+class DataProviderTopicsItem: DataProviderItem {
+    var topics: [TopicSearchResult] = []
+    
+    init(topics: [TopicSearchResult]) {
+        self.topics = topics
+    }
+}
+
+class DataProviderCenteredText: DataProviderItem {
+    var text: String = ""
+    
+    init(text: String) {
+        self.text = text
+    }
+}
+
 // ------------------------------------------------------
 class DataProviderGroupItem: DataProviderItem {
     var MaxNumOfItems = 1

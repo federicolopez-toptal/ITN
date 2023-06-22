@@ -39,7 +39,10 @@ extension MainFeed_v2ViewController {
     }
 
     @objc func onStanceIconTap(_ notification: Notification) {
-        if(CustomNavController.shared.viewControllers.last! != self) { return }
+        var mustReturn = false
+        if(CustomNavController.shared.viewControllers.last! != self) { mustReturn = true }
+        if(CustomNavController.shared.viewControllers.last! is KeywordSearchViewController){ mustReturn = false }
+        if(mustReturn){ return }
     
         if let _info = notification.userInfo as? [String: Any] {
             let source = _info["source"] as! String

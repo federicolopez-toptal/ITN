@@ -445,12 +445,13 @@ extension NavBarView {
     
     @objc func onSearchButtonTap(_ sender: UIButton) {
 //        let vc = SearchViewController()
+//        vc.modalPresentationStyle = .fullScreen
+//        vc.modalTransitionStyle = .crossDissolve
+//        CustomNavController.shared.tour?.cancel()
+//        CustomNavController.shared.present(vc, animated: true)
+
         let vc = KeywordSearchViewController()
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        
-        CustomNavController.shared.tour?.cancel()
-        CustomNavController.shared.present(vc, animated: true)
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
     @objc func onShareButtonTap(_ sender: UIButton) {

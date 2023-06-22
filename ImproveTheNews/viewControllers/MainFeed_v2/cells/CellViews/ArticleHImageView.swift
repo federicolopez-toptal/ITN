@@ -50,7 +50,7 @@ class ArticleHImageView: CustomCellView {
             vStack.topAnchor.constraint(equalTo: self.topAnchor)
         ])
         
-        //self.titleLabel.font = MERRIWEATHER_BOLD(30)
+        self.titleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(13) : MERRIWEATHER_BOLD(30)
         vStack.addArrangedSubview(self.titleLabel)
         //self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         
@@ -109,6 +109,8 @@ class ArticleHImageView: CustomCellView {
     // MARK: Overrides
     override func populate(_ article: MainFeedArticle) {
         self.article = article
+        
+        //print("article.imgUrl", article.imgUrl)
         
         self.mainImageView.image = nil
         if let _url = URL(string: article.imgUrl) {
@@ -171,6 +173,7 @@ extension ArticleHImageView: StanceIconViewDelegate {
     
     static func calculateHeight(text: String, width: CGFloat) -> CGFloat {
         let tmpTitleLabel = ARTICLE_TITLE()
+        tmpTitleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(13) : MERRIWEATHER_BOLD(30)
         tmpTitleLabel.text = text
         //tmpTitleLabel.font = MERRIWEATHER_BOLD(30)
         let textW: CGFloat = width - 135 - IPAD_INNER_MARGIN

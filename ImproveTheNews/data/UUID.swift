@@ -105,6 +105,7 @@ class UUID {
         } else {
             print("AUTH nil")
         }
+        print("----")
     }
     
 }

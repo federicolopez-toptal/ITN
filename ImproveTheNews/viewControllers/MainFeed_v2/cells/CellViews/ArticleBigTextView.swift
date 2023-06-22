@@ -80,7 +80,7 @@ class ArticleBigTextView: CustomCellView {
         ])
 
         vStack.addArrangedSubview(self.titleLabel)
-        self.titleLabel.font = MERRIWEATHER_BOLD(30)
+        self.titleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
         self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.2)
     
     // STORY
@@ -248,6 +248,8 @@ class ArticleBigTextView: CustomCellView {
         self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.storyTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         self.articleSourceTime.textColor = self.storyTimeLabel.textColor
+        
+        //self.titleLabel.backgroundColor = .green
         //self.backgroundColor = .systemPink
     }
 
@@ -266,10 +268,24 @@ extension ArticleBigTextView: StanceIconViewDelegate {
     
     static func calculateHeight(text: String, width: CGFloat) -> CGFloat {
         let tmpTitleLabel = ARTICLE_TITLE()
+        tmpTitleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
         tmpTitleLabel.text = text
-        let textW: CGFloat = width - 135 - IPAD_INNER_MARGIN
+        
+        var textW: CGFloat = width - 135 - IPAD_INNER_MARGIN
+        let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
+        return textH + 28 + (IPAD_INNER_MARGIN * 2)
+    }
+    
+    static func calculateHeight2(text: String, isStory: Bool, width: CGFloat) -> CGFloat {
+        let tmpTitleLabel = ARTICLE_TITLE()
+        tmpTitleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
+        tmpTitleLabel.text = text
+  
+        var spacerHeight: CGFloat = 0
+        if(isStory){ spacerHeight = 30 }
+        let textW: CGFloat = width - (IPAD_INNER_MARGIN * 2)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         
-        return textH + 28 + (IPAD_INNER_MARGIN * 2)
+        return spacerHeight + textH + 28 + 14 + IPAD_INNER_MARGIN
     }
 }

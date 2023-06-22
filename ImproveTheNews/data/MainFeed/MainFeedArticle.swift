@@ -98,6 +98,46 @@ struct MainFeedArticle {
     
 }
 
+// MARK: - Custom init(s)
+extension MainFeedArticle {
+    
+    init(article A: ArticleSearchResult) {
+        self.source = A.mediaName
+        self.time = A.timeAgo
+        self.title = A.title
+        self.url = A.url
+        self.imgUrl = A.imgUrl
+        self.LR = A.LR
+        self.PE = A.PE
+        self.country = A.country
+        
+        self.markups = [Markup]()
+        self.isStory = false
+        self.storySources = [String]()
+        self.used = false
+    }
+    
+    init(story A: StorySearchResult) {
+        self.title = A.title
+        self.imgUrl = A.image_url
+        self.time = A.timeago
+        self.storySources = A.medianames.components(separatedBy: ",")
+        self.storySources.removeDuplicates()
+        
+        self.markups = [Markup]()
+        self.isStory = true
+        self.used = false
+        
+        // ------ en duro (por ahora)
+        self.country = "USA"
+        self.source = "ITN"
+        self.url = "https://www.improvethenews.org/story/2023/china-announces-b-package-of-electric-vehicle-tax-breaks"
+        self.LR = 1
+        self.PE = 2
+    }
+    
+}
+
 struct Markup {
     var title: String
     var url: String

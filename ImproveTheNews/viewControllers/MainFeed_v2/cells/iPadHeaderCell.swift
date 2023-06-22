@@ -23,12 +23,17 @@ class iPadHeaderCell: UITableViewCell {
     }
 
     private func buildContent() {
-        self.titleLabel.font = MERRIWEATHER_BOLD(27)
+        self.titleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(13) : MERRIWEATHER_BOLD(27)
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: IPAD_INNER_MARGIN),
-            self.titleLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: IPAD_INNER_MARGIN)
         ])
+        
+        if(IPHONE()) {
+            self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        } else {
+            self.titleLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
+        }
     }
     
     func populate(with item: DataProviderHeaderItem) {
@@ -38,9 +43,7 @@ class iPadHeaderCell: UITableViewCell {
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        
-        //self.contentView.backgroundColor = .systemPink
+        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)        
     }
 
 }
