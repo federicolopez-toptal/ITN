@@ -123,6 +123,7 @@ extension MainFeedArticle {
         self.time = A.timeago
         self.storySources = A.medianames.components(separatedBy: ",")
         self.storySources.removeDuplicates()
+        self.url = API_BASE_URL() + "/" + A.slug
         
         self.markups = [Markup]()
         self.isStory = true
@@ -131,7 +132,6 @@ extension MainFeedArticle {
         // ------ en duro (por ahora)
         self.country = "USA"
         self.source = "ITN"
-        self.url = "https://www.improvethenews.org/story/2023/china-announces-b-package-of-electric-vehicle-tax-breaks"
         self.LR = 1
         self.PE = 2
     }

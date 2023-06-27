@@ -1,4 +1,5 @@
 //
+//
 //  StoryViewController.swift
 //  ImproveTheNews
 //
@@ -29,9 +30,13 @@ class StoryViewController: BaseViewController {
     
     var imageCreditUrl: String = ""
     var audioPlayer = AudioPlayerView()
+    var secondaryAudioPlayer = AudioPlayerView(secondary: true)
+    var titleLabelHeight: CGFloat = 0
     
     deinit {
         self.audioPlayer.close()
+        self.secondaryAudioPlayer.close()
+        
         self.hideLoading()
     }
     
@@ -64,6 +69,7 @@ class StoryViewController: BaseViewController {
         
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
+        self.scrollView.delegate = self
         self.scrollView.activateConstraints([
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
@@ -1128,6 +1134,8 @@ extension StoryViewController {
     private func addAudioPlayer(_ audioFile: AudioFile?) {
         if let _audioFile = audioFile {
             self.audioPlayer.buildInto(self.VStack, file: _audioFile)
+            self.secondaryAudioPlayer.buildInto(self.view, file: _audioFile)
+            self.secondaryAudioPlayer.customHide()
         }
     }
 
@@ -1144,6 +1152,9 @@ extension StoryViewController {
         ADD_SPACER(to: HStack, width: 13)
         
         ADD_SPACER(to: self.VStack, height: 1)
+        
+        let W: CGFloat = SCREEN_SIZE().width - 13 - 13
+        self.titleLabelHeight = titleLabel.calculateHeightFor(width: W)
     }
 
     private func addPill() {
@@ -1323,4 +1334,24 @@ extension StoryViewController {
             OPEN_URL(self.imageCreditUrl)
         }
     }
+}
+
+// MARK: - UIScrollViewDelegate
+extension StoryViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let extraMargin: CGFloat = 15
+        let playerHeight: CGFloat = self.audioPlayer.getHeight()
+        let playerBottom: CGFloat = 20 + 23 + 16 + self.titleLabelHeight + 16 + playerHeight
+        
+        
+        
+        
+        if(scrollView.contentOffset.y > playerBottom) {
+            self.secondaryAudioPlayer.customShow()
+        } else {
+            self.secondaryAudioPlayer.customHide()
+        }
+    }
+    
 }

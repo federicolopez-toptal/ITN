@@ -12,7 +12,7 @@ extension KeywordSearchViewController {
     
     // MARK: - Start
     func listInit() {
-        self.list.separatorStyle = .singleLine //.none
+        self.list.separatorStyle = .none
         self.list.tableFooterView = UIView()
         self.listRegisterCells()
         

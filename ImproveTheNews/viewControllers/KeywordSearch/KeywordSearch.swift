@@ -35,7 +35,7 @@ class KeywordSearch {
         let offset = (self.searchPage-1)*self.searchPageSize
         
         var url = self.searchUrl + "?searchtype=" + self.searchType.rawValue
-        url += "&searchstring=" + text + "&limit=" + String(self.searchPageSize)
+        url += "&searchstring=" + text.urlEncodedString() + "&limit=" + String(self.searchPageSize)
         url += "&offset=" + String(offset)
         url += "&slidercookies=" + MainFeedv3.sliderValues()
         url += "&userId=" + UUID.shared.getValue()

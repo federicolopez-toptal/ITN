@@ -9,8 +9,13 @@ import Foundation
 import UIKit
 import AVKit
 
+let AudioPlayerViewNotification_timeUpdated = Notification.Name("AudioPlayerView_timeUpdated")
+let AudioPlayerViewNotification_statusUpdated = Notification.Name("AudioPlayerView_statusUpdated")
 
 class AudioPlayerView: UIView {
+    
+    private var primary: Bool = true
+    private var secondary: Bool = false
     
     private var wasBuilt = false
     private var duration: CGFloat = 0
@@ -20,14 +25,15 @@ class AudioPlayerView: UIView {
     // Open/Close
     private var isOpen = false
     private var heightConstraint: NSLayoutConstraint!
-    private let heightClosed: CGFloat = 50
-    private let heightOpened: CGFloat = 250
+    private var heightClosed: CGFloat = 50
+    private var heightOpened: CGFloat = 250
     
     // Play/Pause
     private var isPlaying = false
     private var playTimes: Int = 0
     
     // Components
+    private var mainHStack = UIStackView()
     private let playImageView1 = UIImageView()
     private var playButton1 = UIButton(type: .custom)
     private var upDownArrowImageView = UIImageView()
@@ -40,33 +46,55 @@ class AudioPlayerView: UIView {
     private var player: AVPlayer?
     private var playerObserver: Any?
     
-    
-    
-    
-    
     // MARK: - Init(s)
-    init() {
+    init(secondary: Bool = false) {
+        self.primary = !secondary
+        self.secondary = secondary
+        
         super.init(frame: CGRect.zero)
+        self.addNotificationObservers()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Build component
-    func buildInto(_ containerVStack: UIStackView, file: AudioFile) {
+    func buildInto(_ containerView: UIView, file: AudioFile) {
         if(self.wasBuilt) { return }
-        
         self.duration = CGFloat(file.duration)
-    
-        let mainHStack = HSTACK(into: containerVStack)
-        self.heightConstraint = mainHStack.heightAnchor.constraint(equalToConstant: self.heightClosed)
+        
+        //let containerVStack = containerView as? UIStackView
+        if(self.secondary) {
+            self.mainHStack = HSTACK(into: containerView)
+            self.mainHStack.activateConstraints([
+                self.mainHStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                self.mainHStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                self.mainHStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            ])
+        } else {
+            self.mainHStack = HSTACK(into: containerView as! UIStackView)
+        }
+        
+        var bottomMargin: CGFloat = 0
+        if(self.secondary) {
+            if let _margin = SAFE_AREA()?.bottom, _margin>0 {
+                bottomMargin = 22
+            }
+        }
+        self.heightClosed += bottomMargin
+        self.heightOpened += bottomMargin
+        
+        self.heightConstraint = self.mainHStack.heightAnchor.constraint(equalToConstant: self.heightClosed)
         self.heightConstraint.isActive = true
         
-        ADD_SPACER(to: mainHStack, width: 13)
+        var hMargin: CGFloat = 13
+        if(self.secondary){ hMargin = 0 }
+        
+        ADD_SPACER(to: self.mainHStack, width: hMargin)
             let colorRect = UIView()
             colorRect.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D2530) : UIColor(hex: 0xEAEBEC)
-            mainHStack.addArrangedSubview(colorRect)
-        ADD_SPACER(to: mainHStack, width: 13)
+            self.mainHStack.addArrangedSubview(colorRect)
+        ADD_SPACER(to: self.mainHStack, width: hMargin)
         
         // -------
         let colorLine = UIView()
@@ -98,7 +126,7 @@ class AudioPlayerView: UIView {
             listenLabel.centerYAnchor.constraint(equalTo: podcastIcon.centerYAnchor)
         ])
         
-        self.upDownArrowImageView.image = UIImage(named: "arrow.down")
+        self.upDownArrowImageView.image = UIImage(named: self.primary ? "arrow.down" : "arrow.up")
         colorRect.addSubview(self.upDownArrowImageView)
         self.upDownArrowImageView.activateConstraints([
             self.upDownArrowImageView.widthAnchor.constraint(equalToConstant: 24),
@@ -259,11 +287,42 @@ class AudioPlayerView: UIView {
         
         // ----------
         ADD_SPACER(to: self.innerContainer)
-        ADD_SPACER(to: containerVStack, height: 5)
+        if(self.primary) {
+            ADD_SPACER(to: containerView as! UIStackView, height: 5)
+        }
         
         self.innerContainer.hide()
-        self.startPlayerWith(url: file.file)
+        if(self.primary){ self.startPlayerWith(url: file.file) }
         self.wasBuilt = true
+        
+//        if(self.secondary) {
+//            self.mainHStack.hide()
+//        }
+    }
+    
+    func customHide() {
+        if(!self.mainHStack.isHidden && self.mainHStack.alpha==1.0) {
+            UIView.animate(withDuration: 0.3) {
+                self.mainHStack.alpha = 0.0
+            } completion: { _ in
+                self.mainHStack.hide()
+                self.mainHStack.alpha = 1.0
+            }
+        }
+    }
+    
+    func customShow() {
+        if(self.mainHStack.isHidden) {
+            self.mainHStack.alpha = 0.0
+            self.mainHStack.show()
+            UIView.animate(withDuration: 0.3) {
+                self.mainHStack.alpha = 1.0
+            }
+        }
+    }
+    
+    func getHeight() -> CGFloat {
+        return heightConstraint!.constant
     }
     
     // MARK: - Event(s)
@@ -274,7 +333,7 @@ class AudioPlayerView: UIView {
         
         if(self.isOpen) {
             self.heightConstraint.constant = self.heightOpened
-            self.upDownArrowImageView.image = UIImage(named: "arrow.up")
+            self.upDownArrowImageView.image = UIImage(named: self.primary ? "arrow.up" : "arrow.down")
             self.playImageView1.hide()
             
             self.innerContainer.alpha = 0
@@ -284,7 +343,7 @@ class AudioPlayerView: UIView {
             }
         } else {
             self.heightConstraint.constant = self.heightClosed
-            self.upDownArrowImageView.image = UIImage(named: "arrow.down")
+            self.upDownArrowImageView.image = UIImage(named: self.primary ? "arrow.down" : "arrow.up")
             if(self.playTimes>0){
                 self.playButton1.show()
                 self.playImageView1.show()
@@ -327,7 +386,17 @@ class AudioPlayerView: UIView {
     @objc func sliderOnValueChange(_ sender: UISlider) {
         let seconds = (CGFloat(sender.value) * self.duration)/100
         self.updateTime(seconds)
-        self.player?.seek(to: CMTime(value: CMTimeValue(seconds), timescale: 1))
+        
+        if(self.primary) {
+            self.player?.seek(to: CMTime(value: CMTimeValue(seconds), timescale: 1))
+        }
+        
+        let info: [String : Any] = [
+            "isPrimary": self.primary,
+            "value": sender.value,
+            "time": seconds
+        ]
+        NOTIFY(AudioPlayerViewNotification_timeUpdated, userInfo: info)
     }
     
     private func updateTime(_ secs: CGFloat) {
@@ -348,6 +417,12 @@ class AudioPlayerView: UIView {
             self.player?.pause()
         }
         self.playImageView1.image = self.playImageView2.image
+        
+        let info: [String : Any] = [
+            "isPrimary": self.primary,
+            "status": self.isPlaying
+        ]
+        NOTIFY(AudioPlayerViewNotification_statusUpdated, userInfo: info)
     }
 }
 
@@ -402,6 +477,12 @@ extension AudioPlayerView {
         let interval = CMTime(value: CMTimeValue(1), timescale: 1)
         self.playerObserver = self.player?.addPeriodicTimeObserver(forInterval: interval, queue: .main, using: { (time) in
             self.updateTime(time.seconds)
+            let info: [String : Any] = [
+                "isPrimary": self.primary,
+                "value": self.slider.value,
+                "time": CGFloat(time.seconds)
+            ]
+            NOTIFY(AudioPlayerViewNotification_timeUpdated, userInfo: info)
             
             if(!self.sliderIsPressed) {
                 let perc = (time.seconds * 100)/self.duration
@@ -431,3 +512,73 @@ extension AudioPlayerView {
     }
     
 }
+
+// MARK: - Notification(s)
+extension AudioPlayerView {
+    
+    func addNotificationObservers() {
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.onTimeUpdated),
+            name: AudioPlayerViewNotification_timeUpdated, object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.onStatusUpdated),
+            name: AudioPlayerViewNotification_statusUpdated, object: nil)
+        
+        
+    }
+    
+    @objc func onTimeUpdated(_ notification: Notification) {
+        if let _info = notification.userInfo as? [String: Any] {
+            let senderIsPrimary = _info["isPrimary"] as! Bool
+            let sliderValue = _info["value"] as! Float
+            let seconds = _info["time"] as! CGFloat
+            
+            self.updateTime(seconds)
+            self.slider.value = sliderValue
+            
+            if(!senderIsPrimary) {
+                self.player?.seek(to: CMTime(value: CMTimeValue(seconds), timescale: 1))
+            }
+        }
+    }
+    
+    @objc func onStatusUpdated(_ notification: Notification) {
+        if let _info = notification.userInfo as? [String: Any] {
+            let senderIsPrimary = _info["isPrimary"] as! Bool
+            let status = _info["status"] as! Bool
+            
+            if(self.secondary) { // Sender primary
+                self.playTimes += 1
+                self.isPlaying = status
+                
+                if(self.isPlaying) {
+                    self.playImageView2.image = UIImage(systemName: "pause.circle")?.withRenderingMode(.alwaysTemplate)
+                } else {
+                    self.playImageView2.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
+                }
+                self.playImageView1.image = self.playImageView2.image
+            } else { // Sender secondary
+                self.playTimes += 1
+                self.isPlaying = status
+                
+                if(self.isPlaying) {
+                    self.playImageView2.image = UIImage(systemName: "pause.circle")?.withRenderingMode(.alwaysTemplate)
+                    self.player?.play()
+                } else {
+                    self.playImageView2.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
+                    self.player?.pause()
+                }
+                self.playImageView1.image = self.playImageView2.image
+            }
+            
+            if(self.playTimes>0 && !self.isOpen){
+                self.playButton1.show()
+                self.playImageView1.show()
+            }
+        }
+    }
+    
+}
+
+
