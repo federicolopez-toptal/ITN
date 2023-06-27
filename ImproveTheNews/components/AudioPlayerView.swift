@@ -66,11 +66,20 @@ class AudioPlayerView: UIView {
         //let containerVStack = containerView as? UIStackView
         if(self.secondary) {
             self.mainHStack = HSTACK(into: containerView)
-            self.mainHStack.activateConstraints([
-                self.mainHStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-                self.mainHStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-                self.mainHStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-            ])
+            
+            if(IPHONE()) {
+                self.mainHStack.activateConstraints([
+                    self.mainHStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                    self.mainHStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                    self.mainHStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+                ])
+            } else {
+                self.mainHStack.activateConstraints([
+                    self.mainHStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                    self.mainHStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                    self.mainHStack.widthAnchor.constraint(equalToConstant: 435)
+                ])
+            }
         } else {
             self.mainHStack = HSTACK(into: containerView as! UIStackView)
         }

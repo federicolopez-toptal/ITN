@@ -59,7 +59,6 @@ class MainFeed_v2ViewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             self.loadData()
-            //self.testFeature()
         }
         
         if(self.mustReloadOnShow) {
@@ -151,6 +150,7 @@ extension MainFeed_v2ViewController {
 //                            self.scrollToBottom()
 //                        }
                         
+                        self.testFeature()
                     }
                 }
             }
@@ -164,3 +164,30 @@ extension MainFeed_v2ViewController {
 
 }
 
+
+extension MainFeed_v2ViewController {
+    
+    func testFeature() {
+//        var found = false
+//        for T in self.data.topics {
+//            if(T.name=="sci_tech") {
+//                for (i, A) in T.articles.enumerated() {
+//                    if(i==1 && A.isStory) {
+//                        DELAY(1.0) {
+//                            let vc = StoryViewController()
+//                            vc.story = A
+//                            CustomNavController.shared.pushViewController(vc, animated: true)
+//                        }
+//
+//
+//                        found = true
+//                        break
+//                    }
+//                }
+//            }
+//
+//            if(found){ break }
+//        }
+    }
+    
+}
