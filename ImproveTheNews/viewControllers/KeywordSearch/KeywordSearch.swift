@@ -15,8 +15,8 @@ class KeywordSearch {
     private var searchUrl = "https://www.improvethenews.org/php/util/search-topics.php"
     //private var searchUrl = "http://ec2-18-191-221-195.us-east-2.compute.amazonaws.com/php/util/search-topics.php"
     
-    private var searchPageSize: Int = 11
-    private var searchPage: Int = 1
+    private var searchPageSize: Int = 12
+    //private var searchPage: Int = 1
     
     var searchType: searchType = .all
     var topics: [TopicSearchResult] = []
@@ -27,12 +27,15 @@ class KeywordSearch {
     init() {
     }
     
-    func search(_ text: String, type: searchType = .all, callback: @escaping (Bool) -> () ) {
+    func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool) -> () ) {
         self.searchType = type
-        self.topics = []
-        self.stories = []
-        self.articles = []
-        let offset = (self.searchPage-1)*self.searchPageSize
+        let offset = self.searchPageSize * (pageNumber-1)
+        
+        if(type == .all) {
+            self.topics = []
+            self.stories = []
+            self.articles = []
+        }
         
         var url = self.searchUrl + "?searchtype=" + self.searchType.rawValue
         url += "&searchstring=" + text.urlEncodedString() + "&limit=" + String(self.searchPageSize)
@@ -43,7 +46,12 @@ class KeywordSearch {
         print("----")
         print("SEARCH", url)
         
-        self.makeSearch(withUrl: url) { (success, serverMsg, json) in
+        var addNode = false
+        if(type != .all) {
+            addNode = true
+        }
+        
+        self.makeSearch(withUrl: url, addMainNode: addNode) { (success, serverMsg, json) in
             if let _json = json, success {
                 self.parseResult(_json)
                 callback(true)
@@ -54,7 +62,7 @@ class KeywordSearch {
         }
     }
     
-    private func makeSearch(withUrl url: String, callback: @escaping (Bool, String, [String: Any]?) -> () ) {
+    private func makeSearch(withUrl url: String, addMainNode: Bool, callback: @escaping (Bool, String, [String: Any]?) -> () ) {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
@@ -62,11 +70,22 @@ class KeywordSearch {
             if let _error = error {
                 callback(false, _error.localizedDescription, nil)
             } else {
-                if let _json = JSON(fromData: data) {
-                    callback(true, "", _json)
+                if(addMainNode) {
+                    let mData = ADD_MAIN_NODE(to: data)
+                    if let _json = JSON(fromData: mData) {
+                        callback(true, "", _json)
+                    } else {
+                        callback(false, API.defaultErrorMessage, nil)
+                    }
                 } else {
-                    callback(false, API.defaultErrorMessage, nil)
+                    if let _json = JSON(fromData: data) {
+                        callback(true, "", _json)
+                    } else {
+                        callback(false, API.defaultErrorMessage, nil)
+                    }
                 }
+            
+                
                 
             }
         }
@@ -74,29 +93,54 @@ class KeywordSearch {
     }
     
     private func parseResult(_ json: [String: Any]) {
-        // TOPICS
-        if let _topics = json["topics"] as? [Any] {
-            for TOP in _topics {
-                let newTopic = TopicSearchResult(TOP as! [String: String])
-                self.topics.append(newTopic)
+        if(self.searchType == .all) {
+            // TOPICS
+            if let _topics = json["topics"] as? [Any] {
+                for TOP in _topics {
+                    let newTopic = TopicSearchResult(TOP as! [String: String])
+                    self.topics.append(newTopic)
+                }
+            }
+            
+            // STORIES
+            if let _stories = json["stories"] as? [Any] {
+                for STO in _stories {
+                    let newStory = StorySearchResult(STO as! [String: Any])
+                    self.stories.append(newStory)
+                }
+            }
+            
+            // ARTICLES
+            if let _articles = json["articles"] as? [Any] {
+                for ART in _articles {
+                    let newArticle = ArticleSearchResult(ART as! [String: Any])
+                    self.articles.append(newArticle)
+                }
             }
         }
         
-        // STORIES
-        if let _stories = json["stories"] as? [Any] {
-            for STO in _stories {
-                let newStory = StorySearchResult(STO as! [String: Any])
-                self.stories.append(newStory)
+        if(self.searchType == .stories) { // ONLY ADDING STORIES
+            if let _data = json["data"] as? [Any] {
+                if let _stories = _data[0] as? [Any] {
+                    for STO in _stories {
+                        let newStory = StorySearchResult(STO as! [String: Any])
+                        self.stories.append(newStory)
+                    }
+                }
             }
         }
         
-        // ARTICLES
-        if let _articles = json["articles"] as? [Any] {
-            for ART in _articles {
-                let newArticle = ArticleSearchResult(ART as! [String: Any])
-                self.articles.append(newArticle)
+        if(self.searchType == .articles) { // ONLY ADDING ARTICLES
+            if let _data = json["data"] as? [Any] {
+                if let _articles = _data[0] as? [Any] {
+                    for ART in _articles {
+                        let newArticle = ArticleSearchResult(ART as! [String: Any])
+                        self.articles.append(newArticle)
+                    }
+                }
             }
         }
+        
     }
 }
 
