@@ -100,6 +100,7 @@ extension KeywordSearchViewController {
     
 }
 
+// MARK: - iPadMoreCellDelegate
 extension KeywordSearchViewController: iPadMoreCellDelegate {
 
     func onShowMoreButtonTap(sender: iPadMoreCell) {
