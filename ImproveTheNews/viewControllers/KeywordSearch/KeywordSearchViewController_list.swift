@@ -50,9 +50,11 @@ extension KeywordSearchViewController {
             if(!article.isStory) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGroupItem_1AR_Cell.identifier) as! iPhoneGroupItem_1AR_Cell
                 (cell as! iPhoneGroupItem_1AR_Cell).populate(with: _group)
+                (cell as! iPhoneGroupItem_1AR_Cell).highlight(text: self.searchTextfield.text())
             } else {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGroupItem_1ST_Cell.identifier) as! iPhoneGroupItem_1ST_Cell
                 (cell as! iPhoneGroupItem_1ST_Cell).populate(with: _group)
+                (cell as! iPhoneGroupItem_1ST_Cell).highlight(text: self.searchTextfield.text())
             }
 
         } else if let _group = dpItem as? DataProviderTopicsItem {
@@ -156,11 +158,6 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                 
                 KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage) { (success) in
                     if(success) {
-                        //test
-                        for (i, AR) in KeywordSearch.shared.articles.enumerated() {
-                            print((i+1), AR.title)
-                        }
-                    
                         self.onShowMoreButtonTap(sender: sender)
                     } else {
                         // show error

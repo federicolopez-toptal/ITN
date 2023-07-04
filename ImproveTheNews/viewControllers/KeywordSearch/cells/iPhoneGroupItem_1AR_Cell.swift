@@ -57,7 +57,13 @@ class iPhoneGroupItem_1AR_Cell: GroupItemCell {
     
     override func refreshDisplayMode() {
         super.refreshDisplayMode()
-        //self.contentView.backgroundColor = .green
+        //self.contentView.backgroundColor = .green        
+    }
+    
+    func highlight(text T: String) {
+        if let _view1 = self.subViews[0] as? ArticleHImageView {
+            _view1.highlight(subtext: T)
+        }
     }
 
 }

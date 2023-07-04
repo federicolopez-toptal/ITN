@@ -60,4 +60,10 @@ class iPhoneGroupItem_1ST_Cell: GroupItemCell {
         //self.contentView.backgroundColor = .green
     }
 
+    func highlight(text T: String) {
+        if let _view1 = self.subViews[0] as? ArticleBigTextView {
+            _view1.highlight(subtext: T)
+        }
+    }
+
 }

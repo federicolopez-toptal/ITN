@@ -9,7 +9,7 @@ import UIKit
 
 class ArticleBigTextView: CustomCellView {
 
-    private var article: MainFeedArticle!
+    var article: MainFeedArticle!
 
     let pill = STORY_PILL()
     let spacer = UIView()
@@ -288,4 +288,38 @@ extension ArticleBigTextView: StanceIconViewDelegate {
         
         return spacerHeight + textH + 28 + 14 + IPAD_INNER_MARGIN
     }
+}
+
+// MARK: - highlight search text
+extension ArticleBigTextView {
+
+    func highlight(subtext: String) {
+        let font = self.titleLabel.font
+        self.titleLabel.attributedText = self.prettifyText(fullString: self.article.title as NSString,
+            boldPartsOfString: [], font: font, boldFont: font, paths: [], linkedSubstrings: [], accented: [subtext])
+    }
+    
+    private func prettifyText(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, paths: [String], linkedSubstrings: [String], accented: [String]) -> NSAttributedString {
+
+        let nonBoldFontAttribute: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font:font!, NSAttributedString.Key.foregroundColor: DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)]
+        let boldFontAttribute = [NSAttributedString.Key.font:boldFont!]
+        let accentedAttribute:  [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor(hex: 0xF3643C)]
+        
+        
+        let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
+        for i in 0 ..< boldPartsOfString.count {
+            boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
+        }
+        for l in 0..<paths.count {
+            let sbstrRange = fullString.range(of: linkedSubstrings[l])
+            boldString.addAttribute(.link, value: paths[l], range: sbstrRange)
+        }
+        for a in 0..<accented.count {
+            let sbstrRange = fullString.range(of: accented[a], options: .caseInsensitive)
+            
+            boldString.addAttributes(accentedAttribute, range: sbstrRange)
+        }
+        return boldString
+    }
+
 }
