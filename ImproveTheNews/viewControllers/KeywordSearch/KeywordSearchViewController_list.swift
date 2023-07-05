@@ -16,8 +16,17 @@ extension KeywordSearchViewController {
         self.list.tableFooterView = UIView()
         self.listRegisterCells()
         
+        self.refresher.tintColor = .lightGray
+        self.refresher.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        self.list.addSubview(refresher)
+        
         self.list.delegate = self
         self.list.dataSource = self
+    }
+    
+    @objc func refresh(_ sender: UIRefreshControl!) {
+        self.refresher.beginRefreshing()
+        self.search(self.searchTextfield.text(), type: .all)
     }
     
     // MARK: - Cell registration
@@ -35,6 +44,10 @@ extension KeywordSearchViewController {
     // MARK: - Cell component
     func getCell(_ indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
+        if(self.dataProvider.isEmpty || indexPath.row>=self.dataProvider.count) {
+            return cell
+        }
+        
         let dpItem = self.dataProvider[indexPath.row]
         
         if let _ = dpItem as? DataProviderHeaderItem {
@@ -81,6 +94,10 @@ extension KeywordSearchViewController {
     // MARK: - Cell height
     func getHeight(_ indexPath: IndexPath) -> CGFloat {
         var result: CGFloat = 0
+        if(self.dataProvider.isEmpty || indexPath.row>=self.dataProvider.count) {
+            return result
+        }
+        
         let dpItem = self.dataProvider[indexPath.row]
         
         if let _ = dpItem as? DataProviderHeaderItem {
@@ -125,13 +142,12 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                 let T = self.searchTextfield.text()
                 
                 KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage) { (success) in
-                    if(success) {
-                        self.onShowMoreButtonTap(sender: sender)
-                    } else {
-                        // show error
-                        print("Error en busqueda")
-                    }
-                    
+                if(success) {
+                    self.onShowMoreButtonTap(sender: sender)
+                } else {
+                    self.showErrorOnLoadMore()
+                }
+                                        
                     self.hideLoading()
                 }
             } else {
@@ -175,8 +191,7 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                     if(success) {
                         self.onShowMoreButtonTap(sender: sender)
                     } else {
-                        // show error
-                        print("Error en busqueda")
+                        self.showErrorOnLoadMore()
                     }
                     
                     self.hideLoading()
@@ -205,6 +220,14 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                     self.list.reloadData()
                 }
             }
+        }
+    }
+
+    func showErrorOnLoadMore() {
+        MAIN_THREAD {
+            ALERT(vc: self, title: "Server error",
+                message: "There was an error while retrieving the information. Please try again later", onCompletion: {
+            })
         }
     }
 
