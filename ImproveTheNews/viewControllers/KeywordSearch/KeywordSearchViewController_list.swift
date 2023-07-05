@@ -26,6 +26,7 @@ extension KeywordSearchViewController {
         self.list.register(iPadSpacerCell.self, forCellReuseIdentifier: iPadSpacerCell.identifier)
         self.list.register(iPhoneGroupItem_1AR_Cell.self, forCellReuseIdentifier: iPhoneGroupItem_1AR_Cell.identifier)
         self.list.register(iPhoneGroupItem_1ST_Cell.self, forCellReuseIdentifier: iPhoneGroupItem_1ST_Cell.identifier)
+        self.list.register(iPadGroupItem_2ST_Cell.self, forCellReuseIdentifier: iPadGroupItem_2ST_Cell.identifier)
         self.list.register(TopicsCell.self, forCellReuseIdentifier: TopicsCell.identifier)
         self.list.register(CenteredTextCell.self, forCellReuseIdentifier: CenteredTextCell.identifier)
         self.list.register(iPadMoreCell.self, forCellReuseIdentifier: iPadMoreCell.identifier)
@@ -39,6 +40,7 @@ extension KeywordSearchViewController {
         if let _ = dpItem as? DataProviderHeaderItem {
             cell = self.list.dequeueReusableCell(withIdentifier: iPadHeaderCell.identifier) as! iPadHeaderCell
             (cell as! iPadHeaderCell).populate(with: (dpItem as! DataProviderHeaderItem))
+            if(IPAD()){ (cell as! iPadHeaderCell).titleLabel.font = MERRIWEATHER_BOLD(20) }
         } else if let _item = dpItem as? DataProviderMoreItem {
             cell = self.list.dequeueReusableCell(withIdentifier: iPadMoreCell.identifier) as! iPadMoreCell
             (cell as! iPadMoreCell).populate(with: _item)
@@ -46,15 +48,20 @@ extension KeywordSearchViewController {
         } else if let _group = dpItem as? DataProviderGroupItem {
             let article = _group.articles.first!
             
-            // preguntar x iphone
-            if(!article.isStory) {
+            if(article.isStory) {
+                if(IPHONE()) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGroupItem_1ST_Cell.identifier) as! iPhoneGroupItem_1ST_Cell
+                    (cell as! iPhoneGroupItem_1ST_Cell).populate(with: _group)
+                    (cell as! iPhoneGroupItem_1ST_Cell).highlight(text: self.searchTextfield.text())
+                } else {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_2ST_Cell.identifier) as! iPadGroupItem_2ST_Cell
+                    (cell as! iPadGroupItem_2ST_Cell).populate(with: _group)
+                    (cell as! iPadGroupItem_2ST_Cell).highlight(text: self.searchTextfield.text())
+                }
+            } else {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGroupItem_1AR_Cell.identifier) as! iPhoneGroupItem_1AR_Cell
                 (cell as! iPhoneGroupItem_1AR_Cell).populate(with: _group)
                 (cell as! iPhoneGroupItem_1AR_Cell).highlight(text: self.searchTextfield.text())
-            } else {
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGroupItem_1ST_Cell.identifier) as! iPhoneGroupItem_1ST_Cell
-                (cell as! iPhoneGroupItem_1ST_Cell).populate(with: _group)
-                (cell as! iPhoneGroupItem_1ST_Cell).highlight(text: self.searchTextfield.text())
             }
 
         } else if let _group = dpItem as? DataProviderTopicsItem {
@@ -83,11 +90,14 @@ extension KeywordSearchViewController {
         } else if let _group = dpItem as? DataProviderGroupItem {
             let article = _group.articles.first!
             
-            // preguntar x iphone
-            if(!article.isStory) {
-                result = iPhoneGroupItem_1AR_Cell.calculateHeightFor(_group.articles) + 5
+            if(article.isStory) {
+                if(IPHONE()) {
+                    result = iPhoneGroupItem_1ST_Cell.calculateHeightFor(_group.articles) + 10
+                } else {
+                    result = 350 + 20
+                }
             } else {
-                result = iPhoneGroupItem_1ST_Cell.calculateHeightFor(_group.articles) + 10
+                result = iPhoneGroupItem_1AR_Cell.calculateHeightFor(_group.articles) + 5
             }
         } else if let _group = dpItem as? DataProviderTopicsItem {
             result = TopicsCell.calculateHeightFor(topics: _group.topics) + 10
@@ -138,7 +148,12 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                         self.addStories(index: i)
                         
                         let moreItem = DataProviderMoreItem(topic: "ST", completed: false)
-                        self.dataProvider.insert(moreItem, at: i+4)
+                        if(IPHONE()) {
+                            self.dataProvider.insert(moreItem, at: i+4)
+                        } else {
+                            self.dataProvider.insert(moreItem, at: i+2)
+                        }
+                        
                         
                         break
                     }

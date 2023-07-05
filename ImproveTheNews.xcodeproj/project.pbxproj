@@ -326,6 +326,7 @@
 		1F9538DE28FF387800251598 /* Merriweather-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */; };
 		1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */; };
 		1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */; };
+		1F984B1D2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F984B1C2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift */; };
 		1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B4ADC2967745A00BE8850 /* RatingView.swift */; };
 		1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B89E729DF0FDC004697DD /* Tour.swift */; };
 		1F9C63812A1C5B82006465D8 /* Facebook_SDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C63802A1C5B82006465D8 /* Facebook_SDK.swift */; };
@@ -739,6 +740,7 @@
 		1F9538DD28FF387800251598 /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merriweather-Regular.ttf"; sourceTree = "<group>"; };
 		1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadHeaderCell.swift; sourceTree = "<group>"; };
 		1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadMoreCell.swift; sourceTree = "<group>"; };
+		1F984B1C2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_2ST_Cell.swift; sourceTree = "<group>"; };
 		1F9B4ADC2967745A00BE8850 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		1F9B89E729DF0FDC004697DD /* Tour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tour.swift; sourceTree = "<group>"; };
 		1F9C63802A1C5B82006465D8 /* Facebook_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Facebook_SDK.swift; sourceTree = "<group>"; };
@@ -1219,6 +1221,7 @@
 			children = (
 				1F38DDC02A433E81007B0E18 /* iPhoneGroupItem_1AR_Cell.swift */,
 				1F0589F72A43C28200E7F8AB /* iPhoneGroupItem_1ST_Cell.swift */,
+				1F984B1C2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift */,
 				1FE98DE52A43F22600FE0260 /* TopicsCell.swift */,
 				1F0741B22A43FFB6005F90E5 /* CenteredTextCell.swift */,
 			);
@@ -2014,6 +2017,7 @@
 				1F71FA442A15471400B066E0 /* DictionaryExtension.swift in Sources */,
 				1FF7D8CD2A40868B00770B69 /* KeywordSearchTextView.swift in Sources */,
 				1FE98DE62A43F22600FE0260 /* TopicsCell.swift in Sources */,
+				1F984B1D2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift in Sources */,
 				1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */,
 				1F0741B32A43FFB6005F90E5 /* CenteredTextCell.swift in Sources */,
 				1F38DDC12A433E81007B0E18 /* iPhoneGroupItem_1AR_Cell.swift in Sources */,
