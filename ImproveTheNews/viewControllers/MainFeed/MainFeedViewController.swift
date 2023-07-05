@@ -83,7 +83,7 @@ class MainFeedViewController: BaseViewController {
             self.didAppear = true
             self.loadData()
             self.loadUserData()
-            self.testFeature()
+            //self.testFeature()
             
             UUID.shared.trace()
         }
@@ -405,12 +405,12 @@ extension MainFeedViewController {
 //            if(found){ break }
 //        }
 
-        DELAY(1.0) {
-            MAIN_THREAD {
-                let vc = KeywordSearchViewController()
-            CustomNavController.shared.pushViewController(vc, animated: true)
-            }
-        }
+//        DELAY(1.0) {
+//            MAIN_THREAD {
+//                let vc = KeywordSearchViewController()
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
+//            }
         ///
     }
     
