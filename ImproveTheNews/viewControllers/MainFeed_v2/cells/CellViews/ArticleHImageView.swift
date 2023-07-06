@@ -50,7 +50,7 @@ class ArticleHImageView: CustomCellView {
             vStack.topAnchor.constraint(equalTo: self.topAnchor)
         ])
         
-        self.titleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(13) : MERRIWEATHER_BOLD(30)
+        self.titleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(13) : MERRIWEATHER_BOLD(20)
         vStack.addArrangedSubview(self.titleLabel)
         //self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         
@@ -173,7 +173,7 @@ extension ArticleHImageView: StanceIconViewDelegate {
     
     static func calculateHeight(text: String, width: CGFloat) -> CGFloat {
         let tmpTitleLabel = ARTICLE_TITLE()
-        tmpTitleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(13) : MERRIWEATHER_BOLD(30)
+        tmpTitleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(13) : MERRIWEATHER_BOLD(20)
         tmpTitleLabel.text = text
         //tmpTitleLabel.font = MERRIWEATHER_BOLD(30)
         let textW: CGFloat = width - 135 - IPAD_INNER_MARGIN
