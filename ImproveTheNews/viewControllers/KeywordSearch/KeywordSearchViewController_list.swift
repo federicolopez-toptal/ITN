@@ -141,9 +141,14 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                 self.storySearchPage += 1
                 let T = self.searchTextfield.text()
                 
-                KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage) { (success) in
-                    if(success) {
-                        self.onShowMoreButtonTap(sender: sender)
+                KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage){ (ok, count) in
+                    if(ok) {
+                        if(count == 0) {
+                            self.noMoreStories = true
+                            self.removeAddMore(isStory: true)
+                        } else {
+                            self.onShowMoreButtonTap(sender: sender)
+                        }
                     } else {
                         self.showErrorOnLoadMore()
                     }
@@ -189,8 +194,8 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                 self.articleSearchPage += 1
                 let T = self.searchTextfield.text()
                 
-                KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage) { (success) in
-                    if(success) {
+                KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage){ (ok, count) in
+                    if(ok) {
                         self.onShowMoreButtonTap(sender: sender)
                     } else {
                         self.showErrorOnLoadMore()
@@ -230,6 +235,26 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
             ALERT(vc: self, title: "Server error",
                 message: "There was an error while retrieving the information. Please try again later", onCompletion: {
             })
+        }
+    }
+    
+    func removeAddMore(isStory: Bool) {
+        var found = false
+        for (i, item) in self.dataProvider.enumerated() {
+            if(item is DataProviderGroupItem) {
+                if((item as! DataProviderGroupItem).articles.first!.isStory == isStory) {
+                    found = true
+                }
+            }
+
+            if(found && item is DataProviderMoreItem) {
+                self.dataProvider.remove(at: i)
+                break
+            }
+        }
+    
+        MAIN_THREAD {
+            self.list.reloadData()
         }
     }
 

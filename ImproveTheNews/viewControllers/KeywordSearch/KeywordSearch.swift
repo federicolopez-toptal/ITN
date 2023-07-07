@@ -27,7 +27,7 @@ class KeywordSearch {
     init() {
     }
     
-    func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool) -> () ) {
+    func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool, Int) -> () ) {
         self.searchType = type
         let offset = self.searchPageSize * (pageNumber-1)
         
@@ -53,11 +53,11 @@ class KeywordSearch {
         
         self.makeSearch(withUrl: url, addMainNode: addNode) { (success, serverMsg, json) in
             if let _json = json, success {
-                self.parseResult(_json)
-                callback(true)
+                let count = self.parseResult(_json)
+                callback(true, count)
             } else {
                 print("ERROR", serverMsg)
-                callback(false)
+                callback(false, -1)
             }
         }
     }
@@ -92,10 +92,13 @@ class KeywordSearch {
         task.resume()
     }
     
-    private func parseResult(_ json: [String: Any]) {
+    private func parseResult(_ json: [String: Any]) -> Int {
+        var count = 0
+        
         if(self.searchType == .all) {
             // TOPICS
             if let _topics = json["topics"] as? [Any] {
+                count += _topics.count
                 for TOP in _topics {
                     let newTopic = TopicSearchResult(TOP as! [String: String])
                     self.topics.append(newTopic)
@@ -104,6 +107,7 @@ class KeywordSearch {
             
             // STORIES
             if let _stories = json["stories"] as? [Any] {
+                count += _stories.count
                 for STO in _stories {
                     let newStory = StorySearchResult(STO as! [String: Any])
                     self.stories.append(newStory)
@@ -112,6 +116,7 @@ class KeywordSearch {
             
             // ARTICLES
             if let _articles = json["articles"] as? [Any] {
+                count += _articles.count
                 for ART in _articles {
                     let newArticle = ArticleSearchResult(ART as! [String: Any])
                     self.articles.append(newArticle)
@@ -122,6 +127,7 @@ class KeywordSearch {
         if(self.searchType == .stories) { // ONLY ADDING STORIES
             if let _data = json["data"] as? [Any] {
                 if let _stories = _data[0] as? [Any] {
+                    count += _stories.count
                     for STO in _stories {
                         let newStory = StorySearchResult(STO as! [String: Any])
                         self.stories.append(newStory)
@@ -133,6 +139,7 @@ class KeywordSearch {
         if(self.searchType == .articles) { // ONLY ADDING ARTICLES
             if let _data = json["data"] as? [Any] {
                 if let _articles = _data[0] as? [Any] {
+                    count += _articles.count
                     for ART in _articles {
                         let newArticle = ArticleSearchResult(ART as! [String: Any])
                         self.articles.append(newArticle)
@@ -141,6 +148,7 @@ class KeywordSearch {
             }
         }
         
+        return count
     }
 }
 
