@@ -331,7 +331,11 @@ class AudioPlayerView: UIView {
     }
     
     func getHeight() -> CGFloat {
-        return heightConstraint!.constant
+        if let _constraint = self.heightConstraint {
+            return _constraint.constant
+        } else {
+            return 0
+        }
     }
     
     // MARK: - Event(s)

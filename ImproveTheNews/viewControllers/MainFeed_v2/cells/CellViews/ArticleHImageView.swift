@@ -179,7 +179,10 @@ extension ArticleHImageView: StanceIconViewDelegate {
         let textW: CGFloat = width - 135 - IPAD_INNER_MARGIN
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         
-        return textH + 28 + (IPAD_INNER_MARGIN * 2)
+        var result = textH + 28 + (IPAD_INNER_MARGIN * 2)
+        if(result < 90){ result = 90 }
+
+        return result
     }
 }
 

@@ -297,6 +297,8 @@ extension ArticleVImageView: StanceIconViewDelegate {
 extension ArticleVImageView {
 
     func highlight(subtext: String) {
+        if(self.article==nil) { return }
+        
         let font = self.titleLabel.font
         self.titleLabel.attributedText = self.prettifyText(fullString: self.article.title as NSString,
             boldPartsOfString: [], font: font, boldFont: font, paths: [], linkedSubstrings: [], accented: [subtext])

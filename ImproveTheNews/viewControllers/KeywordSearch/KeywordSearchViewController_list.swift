@@ -142,11 +142,11 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                 let T = self.searchTextfield.text()
                 
                 KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage) { (success) in
-                if(success) {
-                    self.onShowMoreButtonTap(sender: sender)
-                } else {
-                    self.showErrorOnLoadMore()
-                }
+                    if(success) {
+                        self.onShowMoreButtonTap(sender: sender)
+                    } else {
+                        self.showErrorOnLoadMore()
+                    }
                                         
                     self.hideLoading()
                 }
@@ -161,14 +161,16 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
 
                     if(isStory && item is DataProviderMoreItem) {
                         self.dataProvider.remove(at: i)
-                        self.addStories(index: i)
+                        let count = self.addStories(index: i)
                         
                         let moreItem = DataProviderMoreItem(topic: "ST", completed: false)
-                        if(IPHONE()) {
-                            self.dataProvider.insert(moreItem, at: i+4)
-                        } else {
-                            self.dataProvider.insert(moreItem, at: i+2)
-                        }
+                        self.dataProvider.insert(moreItem, at: i+count)
+                        
+//                        if(IPHONE()) {
+//                            self.dataProvider.insert(moreItem, at: i+count)
+//                        } else {
+//                            self.dataProvider.insert(moreItem, at: i+2)
+//                        }
                         
                         
                         break
