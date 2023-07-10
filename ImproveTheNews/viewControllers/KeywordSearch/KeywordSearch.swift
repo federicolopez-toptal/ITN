@@ -23,6 +23,9 @@ class KeywordSearch {
     var stories: [StorySearchResult] = []
     var articles: [ArticleSearchResult] = []
     
+    var task: URLSessionDataTask? = nil
+
+    
     
     init() {
     }
@@ -66,10 +69,18 @@ class KeywordSearch {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
-        let task = URLSession.shared.dataTask(with: request) { data, resp, error in
+        if let _task = self.task {
+            _task.cancel()
+            print("SEARCH :: BUSQUEDA CANCELADA")
+        }
+        
+        self.task = URLSession.shared.dataTask(with: request) { data, resp, error in
             if let _error = error {
+                print("SEARCH :: ERROR EN BUSQUEDA")
                 callback(false, _error.localizedDescription, nil)
             } else {
+                print("SEARCH :: BUSQUEDA EXITOSA")
+            
                 if(addMainNode) {
                     let mData = ADD_MAIN_NODE(to: data)
                     if let _json = JSON(fromData: mData) {
@@ -89,7 +100,7 @@ class KeywordSearch {
                 
             }
         }
-        task.resume()
+        self.task?.resume()
     }
     
     private func parseResult(_ json: [String: Any]) -> Int {
