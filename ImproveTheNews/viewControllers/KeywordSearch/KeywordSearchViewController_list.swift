@@ -102,7 +102,7 @@ extension KeywordSearchViewController {
         
         if let _ = dpItem as? DataProviderHeaderItem {
             result = 30
-        } else if let _item = dpItem as? DataProviderMoreItem {
+        } else if let _ = dpItem as? DataProviderMoreItem {
             result = 70
         } else if let _group = dpItem as? DataProviderGroupItem {
             let article = _group.articles.first!
@@ -133,99 +133,132 @@ extension KeywordSearchViewController {
 extension KeywordSearchViewController: iPadMoreCellDelegate {
 
     func onShowMoreButtonTap(sender: iPadMoreCell) {
-        if(sender.topic=="ST") { // STORIES
-            if(KeywordSearch.shared.stories.count == self.storyPages * 4) {
-                self.showLoading()
-                print("SEARCHING...")
-        
-                self.storySearchPage += 1
-                let T = self.searchTextfield.text()
-                
-                KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage){ (ok, count) in
-                    if(ok) {
-                        if(count == 0) {
-                            self.noMoreStories = true
-                            self.removeAddMore(isStory: true)
-                        } else {
-                            self.onShowMoreButtonTap(sender: sender)
-                        }
-                    } else {
-                        self.showErrorOnLoadMore()
-                    }
-                                        
-                    self.hideLoading()
-                }
-            } else {
-                var isStory = false
-                for (i, item) in self.dataProvider.enumerated() {
-                    if(item is DataProviderGroupItem) {
-                        if((item as! DataProviderGroupItem).articles.first!.isStory) {
-                            isStory = true
-                        }
-                    }
-
-                    if(isStory && item is DataProviderMoreItem) {
-                        self.dataProvider.remove(at: i)
-                        let count = self.addStories(index: i)
-                        
-                        let moreItem = DataProviderMoreItem(topic: "ST", completed: false)
-                        self.dataProvider.insert(moreItem, at: i+count)
-                        
-//                        if(IPHONE()) {
-//                            self.dataProvider.insert(moreItem, at: i+count)
-//                        } else {
-//                            self.dataProvider.insert(moreItem, at: i+2)
-//                        }
-                        
-                        
-                        break
-                    }
-                }
+        if(sender.topic == "ST") {
+            self.loadMoreStories()
+        } else {
+            self.loadMoreArticles()
+        }
+    }
+    
+    func loadMoreStories() {
+        if(self.thereAreStoriesToShow()) {
+            let i = self.removeAddMoreItem(isStory: true)
+            let count = self.addStories(index: i)
+            if(count==self.PAGE_SIZE){
+                self.addMoreItem(forStories: true)
+            }
             
-                MAIN_THREAD {
-                    self.list.reloadData()
+            MAIN_THREAD {
+                self.list.reloadData()
+            }
+        } else {
+            print("SEARCHING...")
+            
+            self.showLoading()
+            let T = self.searchTextfield.text()
+            KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage+1) { (ok, _) in
+                if(ok) {
+                    self.storySearchPage += 1
+                    let i = self.removeAddMoreItem(isStory: true)
+                    let count = self.addStories(index: i)
+                    
+                    if(count >= self.PAGE_SIZE) {
+                        self.addMoreItem(forStories: true)
+                    }
+                
+                    MAIN_THREAD {
+                        self.list.reloadData()
+                    }
+                } else {
+                    self.showErrorOnLoadMore()
+                }
+
+                self.hideLoading()
+            }
+        }
+    }
+    
+    func loadMoreArticles() {
+        if(self.thereAreArticlesToShow()) {
+            let i = self.removeAddMoreItem(isStory: false)
+            let count = self.addArticles(index: i)
+            if(count==self.PAGE_SIZE){
+                self.addMoreItem(forStories: false)
+            }
+            
+            MAIN_THREAD {
+                self.list.reloadData()
+            }
+        } else {
+            print("SEARCHING...")
+            
+            self.showLoading()
+            let T = self.searchTextfield.text()
+            KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage+1) { (ok, _) in
+                if(ok) {
+                    self.articleSearchPage += 1
+                    let i = self.removeAddMoreItem(isStory: false)
+                    let count = self.addArticles(index: i)
+                    if(count >= self.PAGE_SIZE) {
+                        self.addMoreItem(forStories: false)
+                    }
+                
+                    MAIN_THREAD {
+                        self.list.reloadData()
+                    }
+                } else {
+                    self.showErrorOnLoadMore()
+                }
+
+                self.hideLoading()
+            }
+        }
+    }
+    
+    func removeAddMoreItem(isStory: Bool) -> Int {
+        if(isStory==false) {
+            self.dataProvider.remove(at: self.dataProvider.count-1)
+            return self.dataProvider.count
+        }
+        
+        var found = false
+        var result = -1
+        for (i, item) in self.dataProvider.enumerated() {
+            if(!found && item is DataProviderGroupItem) {
+                if((item as! DataProviderGroupItem).articles.first!.isStory == isStory) {
+                    found = true
                 }
             }
-        } else { // ARTICLES
-            if(KeywordSearch.shared.articles.count == self.articlePages * 4) {
-                self.showLoading()
-                print("SEARCHING...")
+
+            if(found && item is DataProviderMoreItem) {
+                self.dataProvider.remove(at: i)
+                result = i
+                break
+            }
+        }
+    
+        return result
+    }
+    
+    func addMoreItem(forStories: Bool) {
+        if(forStories==false) {
+            let moreItem = DataProviderMoreItem(topic: "AR", completed: false)
+            self.dataProvider.append(moreItem)
+            return
+        }
         
-                self.articleSearchPage += 1
-                let T = self.searchTextfield.text()
-                
-                KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage){ (ok, count) in
-                    if(ok) {
-                        self.onShowMoreButtonTap(sender: sender)
-                    } else {
-                        self.showErrorOnLoadMore()
-                    }
-                    
-                    self.hideLoading()
+        var found = false
+        for (i, item) in self.dataProvider.enumerated() {
+            if(!found && item is DataProviderGroupItem) {
+                if((item as! DataProviderGroupItem).articles.first!.isStory == forStories) {
+                    found = true
                 }
-            } else {
-                var isStory = true
-                for (i, item) in self.dataProvider.enumerated() {
-                    if(item is DataProviderGroupItem) {
-                        if((item as! DataProviderGroupItem).articles.first!.isStory == false) {
-                            isStory = false
-                        }
-                    }
-                    
-                    if(isStory == false && item is DataProviderMoreItem) {
-                        self.dataProvider.remove(at: i)
-                        self.addArticles(index: i)
-                        
-                        let moreItem = DataProviderMoreItem(topic: "AR", completed: false)
-                        self.dataProvider.insert(moreItem, at: i+4)
-                        
-                        break
-                    }
-                }
+            }
             
-                MAIN_THREAD {
-                    self.list.reloadData()
-                }
+            if(forStories==true && found && item is DataProviderHeaderItem) {
+                let moreItem = DataProviderMoreItem(topic: "ST", completed: false)
+                self.dataProvider.insert(moreItem, at: i)
+                break
             }
         }
     }

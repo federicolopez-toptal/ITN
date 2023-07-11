@@ -16,15 +16,11 @@ class KeywordSearch {
     //private var searchUrl = "http://ec2-18-191-221-195.us-east-2.compute.amazonaws.com/php/util/search-topics.php"
     
     private var searchPageSize: Int = 12
-    //private var searchPage: Int = 1
-    
     var searchType: searchType = .all
     var topics: [TopicSearchResult] = []
     var stories: [StorySearchResult] = []
     var articles: [ArticleSearchResult] = []
-    
     var task: URLSessionDataTask? = nil
-
     
     
     init() {
@@ -69,18 +65,15 @@ class KeywordSearch {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
-        if let _task = self.task {
-            _task.cancel()
-            print("SEARCH :: BUSQUEDA CANCELADA")
-        }
+//        if let _task = self.task, _task.state != .completed {
+//            //_task.cancel()
+//            print("cancelar busqueda")
+//        }
         
         self.task = URLSession.shared.dataTask(with: request) { data, resp, error in
             if let _error = error {
-                print("SEARCH :: ERROR EN BUSQUEDA")
                 callback(false, _error.localizedDescription, nil)
             } else {
-                print("SEARCH :: BUSQUEDA EXITOSA")
-            
                 if(addMainNode) {
                     let mData = ADD_MAIN_NODE(to: data)
                     if let _json = JSON(fromData: mData) {
@@ -105,6 +98,7 @@ class KeywordSearch {
     
     private func parseResult(_ json: [String: Any]) -> Int {
         var count = 0
+        var myCount = 0
         
         if(self.searchType == .all) {
             // TOPICS
@@ -122,6 +116,7 @@ class KeywordSearch {
                 for STO in _stories {
                     let newStory = StorySearchResult(STO as! [String: Any])
                     self.stories.append(newStory)
+                    myCount += 1
                 }
             }
             
@@ -131,6 +126,11 @@ class KeywordSearch {
                 for ART in _articles {
                     let newArticle = ArticleSearchResult(ART as! [String: Any])
                     self.articles.append(newArticle)
+                    myCount += 1
+                    
+                    if(myCount==2) {
+                        break
+                    }
                 }
             }
         }
@@ -174,6 +174,7 @@ struct ArticleSearchResult {
     var mediaName: String = ""
     var LR: Int = 1
     var PE: Int = 1
+    var used: Bool = false
     
     init(_ data: [String: Any]) {
         self.title = data["title"] as! String
@@ -193,6 +194,7 @@ struct StorySearchResult {
     var timeago: String = ""
     var title: String = ""
     var medianames: String = ""
+    var used: Bool = false
     
     init(_ data: [String: Any]) {
         self.image_url = data["image_url"] as! String
