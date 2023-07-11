@@ -29,6 +29,13 @@ extension KeywordSearchViewController {
         self.search(self.searchTextfield.text(), type: .all)
     }
     
+    // MARK: - misc
+    func refreshList() {
+        MAIN_THREAD {
+            self.list.reloadData()
+        }
+    }
+    
     // MARK: - Cell registration
     func listRegisterCells() {
         self.list.register(iPadHeaderCell.self, forCellReuseIdentifier: iPadHeaderCell.identifier)
@@ -44,11 +51,11 @@ extension KeywordSearchViewController {
     // MARK: - Cell component
     func getCell(_ indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-        if(self.dataProvider.isEmpty || indexPath.row>=self.dataProvider.count) {
+        if(self.filteredDataProvider.isEmpty || indexPath.row>=self.filteredDataProvider.count) {
             return cell
         }
         
-        let dpItem = self.dataProvider[indexPath.row]
+        let dpItem = self.filteredDataProvider[indexPath.row]
         
         if let _ = dpItem as? DataProviderHeaderItem {
             cell = self.list.dequeueReusableCell(withIdentifier: iPadHeaderCell.identifier) as! iPadHeaderCell
@@ -94,11 +101,11 @@ extension KeywordSearchViewController {
     // MARK: - Cell height
     func getHeight(_ indexPath: IndexPath) -> CGFloat {
         var result: CGFloat = 0
-        if(self.dataProvider.isEmpty || indexPath.row>=self.dataProvider.count) {
+        if(self.filteredDataProvider.isEmpty || indexPath.row>=self.filteredDataProvider.count) {
             return result
         }
         
-        let dpItem = self.dataProvider[indexPath.row]
+        let dpItem = self.filteredDataProvider[indexPath.row]
         
         if let _ = dpItem as? DataProviderHeaderItem {
             result = 30
@@ -148,9 +155,8 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                 self.addMoreItem(forStories: true)
             }
             
-            MAIN_THREAD {
-                self.list.reloadData()
-            }
+            self.updateFilteredDataProvider()
+            self.refreshList()
         } else {
             print("SEARCHING...")
             
@@ -166,9 +172,8 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                         self.addMoreItem(forStories: true)
                     }
                 
-                    MAIN_THREAD {
-                        self.list.reloadData()
-                    }
+                    self.updateFilteredDataProvider()
+                    self.refreshList()
                 } else {
                     self.showErrorOnLoadMore()
                 }
@@ -186,9 +191,8 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                 self.addMoreItem(forStories: false)
             }
             
-            MAIN_THREAD {
-                self.list.reloadData()
-            }
+            self.updateFilteredDataProvider()
+            self.refreshList()
         } else {
             print("SEARCHING...")
             
@@ -203,9 +207,8 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                         self.addMoreItem(forStories: false)
                     }
                 
-                    MAIN_THREAD {
-                        self.list.reloadData()
-                    }
+                    self.updateFilteredDataProvider()
+                    self.refreshList()
                 } else {
                     self.showErrorOnLoadMore()
                 }
@@ -288,6 +291,51 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
     
         MAIN_THREAD {
             self.list.reloadData()
+        }
+    }
+    
+    func updateFilteredDataProvider() {
+        print("filtering data provider!")
+        self.filteredDataProvider = [DataProviderItem]()
+        
+        switch(self.resultType) {
+            case 0: // all
+                for _item in self.dataProvider {
+                    self.filteredDataProvider.append(_item)
+                }
+            case 1: // topics
+                for _item in self.dataProvider {
+                    self.filteredDataProvider.append(_item)
+                    if(_item is DataProviderTopicsItem) {
+                        break
+                    }
+                }
+            case 2: // stories
+                var add = false
+                var count = 0
+                for _item in self.dataProvider {
+                    if(add && count>0 && _item is DataProviderHeaderItem) {
+                        break
+                    }
+                
+                    if(add){
+                        self.filteredDataProvider.append(_item)
+                        count += 1
+                    }
+                    if(_item is DataProviderTopicsItem) { add = true }
+                }
+                
+            case 3: // articles
+                for _item in self.dataProvider.reversed() {
+                    self.filteredDataProvider.append(_item)
+                    if(_item is DataProviderHeaderItem) {
+                        break
+                    }
+                }
+                self.filteredDataProvider.reverse()
+                
+            default:
+                NOTHING()
         }
     }
 
