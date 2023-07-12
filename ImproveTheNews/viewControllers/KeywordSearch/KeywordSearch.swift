@@ -20,7 +20,11 @@ class KeywordSearch {
     var topics: [TopicSearchResult] = []
     var stories: [StorySearchResult] = []
     var articles: [ArticleSearchResult] = []
+    
     var task: URLSessionDataTask? = nil
+    
+    
+    
     
     
     init() {
@@ -69,28 +73,32 @@ class KeywordSearch {
 //            //_task.cancel()
 //            print("cancelar busqueda")
 //        }
+        self.task?.cancel()
         
         self.task = URLSession.shared.dataTask(with: request) { data, resp, error in
             if let _error = error {
-                callback(false, _error.localizedDescription, nil)
+                if(_error.localizedDescription != "cancelled") {
+                    callback(false, _error.localizedDescription, nil)
+                } else {
+                    print("Cancelado!")
+                }
             } else {
                 if(addMainNode) {
                     let mData = ADD_MAIN_NODE(to: data)
                     if let _json = JSON(fromData: mData) {
                         callback(true, "", _json)
                     } else {
+                        print("ERROR JSON - main node")
                         callback(false, API.defaultErrorMessage, nil)
                     }
                 } else {
                     if let _json = JSON(fromData: data) {
                         callback(true, "", _json)
                     } else {
+                        print("ERROR JSON - NO main node")
                         callback(false, API.defaultErrorMessage, nil)
                     }
                 }
-            
-                
-                
             }
         }
         self.task?.resume()

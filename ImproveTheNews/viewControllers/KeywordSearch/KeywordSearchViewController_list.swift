@@ -295,7 +295,7 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
     }
     
     func updateFilteredDataProvider() {
-        print("filtering data provider!")
+
         self.filteredDataProvider = [DataProviderItem]()
         
         switch(self.resultType) {
