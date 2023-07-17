@@ -79,8 +79,6 @@ class KeywordSearch {
             if let _error = error {
                 if(_error.localizedDescription != "cancelled") {
                     callback(false, _error.localizedDescription, nil)
-                } else {
-                    print("Cancelado!")
                 }
             } else {
                 if(addMainNode) {
@@ -88,14 +86,14 @@ class KeywordSearch {
                     if let _json = JSON(fromData: mData) {
                         callback(true, "", _json)
                     } else {
-                        print("ERROR JSON - main node")
+//                        print("ERROR JSON - main node")
                         callback(false, API.defaultErrorMessage, nil)
                     }
                 } else {
                     if let _json = JSON(fromData: data) {
                         callback(true, "", _json)
                     } else {
-                        print("ERROR JSON - NO main node")
+//                        print("ERROR JSON - NO main node")
                         callback(false, API.defaultErrorMessage, nil)
                     }
                 }

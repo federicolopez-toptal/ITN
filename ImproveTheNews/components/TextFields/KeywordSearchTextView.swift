@@ -10,6 +10,7 @@ import UIKit
 
 protocol KeywordSearchTextViewDelegate: AnyObject {
     func KeywordSearchTextView_onTextChange(sender: KeywordSearchTextView, text: String)
+    func KeywordSearchTextView_onSearchTap(sender: KeywordSearchTextView)
 }
 
 
@@ -67,7 +68,7 @@ class KeywordSearchTextView: UIView {
         
         self.searchTextField.font = roboto
         self.searchTextField.textColor = UIColor(hex: 0xFF643C)
-        self.searchTextField.returnKeyType = .done
+        self.searchTextField.returnKeyType = .search
         self.searchTextField.autocapitalizationType = .none
         self.searchTextField.autocorrectionType = .no
         self.searchTextField.smartDashesType = .no
@@ -141,6 +142,7 @@ extension KeywordSearchTextView: UITextFieldDelegate {
     // Search button tap
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         HIDE_KEYBOARD(view: self)
+        self.delegate?.KeywordSearchTextView_onSearchTap(sender: self)
         return true
     }
     

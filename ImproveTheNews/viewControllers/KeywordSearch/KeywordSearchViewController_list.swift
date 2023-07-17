@@ -268,10 +268,28 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
 
     func showErrorOnLoadMore() {
         MAIN_THREAD {
-            ALERT(vc: self, title: "Server error",
-                message: "There was an error while retrieving the information. Please try again later", onCompletion: {
-            })
+            let msg = "There was an error while retrieving the information. Try again?"
+        
+            ALERT_YESNO(vc: self, title: "Server error", message: msg) { (answer) in
+                if(answer) {
+                    DELAY(0.2) {
+                        self.search(self.searchTextfield.text(), type: .all)
+                    }
+                } else {
+                    MAIN_THREAD {
+                        self.refresher.endRefreshing()
+                    }
+                }
+            }
         }
+        
+        
+        
+//        MAIN_THREAD {
+//            ALERT(vc: self, title: "Server error",
+//                message: "There was an error while retrieving the information. Please try again later", onCompletion: {
+//            })
+//        }
     }
     
     func removeAddMore(isStory: Bool) {
@@ -295,48 +313,25 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
     }
     
     func updateFilteredDataProvider() {
-
         self.filteredDataProvider = [DataProviderItem]()
         
-        switch(self.resultType) {
-            case 0: // all
-                for _item in self.dataProvider {
-                    self.filteredDataProvider.append(_item)
-                }
-            case 1: // topics
-                for _item in self.dataProvider {
-                    self.filteredDataProvider.append(_item)
-                    if(_item is DataProviderTopicsItem) {
-                        break
-                    }
-                }
-            case 2: // stories
-                var add = false
-                var count = 0
-                for _item in self.dataProvider {
-                    if(add && count>0 && _item is DataProviderHeaderItem) {
-                        break
-                    }
-                
-                    if(add){
-                        self.filteredDataProvider.append(_item)
-                        count += 1
-                    }
-                    if(_item is DataProviderTopicsItem) { add = true }
+        if(self.resultType == 0) {
+            for _item in self.dataProvider {
+                self.filteredDataProvider.append(_item)
+            }
+        } else {
+            var count = 0
+            for _item in self.dataProvider {
+                if(_item is DataProviderHeaderItem) {
+                    count += 1
                 }
                 
-            case 3: // articles
-                for _item in self.dataProvider.reversed() {
+                if(count==self.resultType) {
                     self.filteredDataProvider.append(_item)
-                    if(_item is DataProviderHeaderItem) {
-                        break
-                    }
                 }
-                self.filteredDataProvider.reverse()
-                
-            default:
-                NOTHING()
+            }
         }
+        
     }
 
 }
