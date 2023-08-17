@@ -359,6 +359,7 @@ class API {
             }
         }
     }
+    
 //---
     func socialLogin(socialName: String, accessToken: String,
         verifier: String? = nil, callback: @escaping (Bool, String) -> ()) {

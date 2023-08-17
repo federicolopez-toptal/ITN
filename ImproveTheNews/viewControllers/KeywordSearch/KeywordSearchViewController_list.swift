@@ -158,7 +158,7 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
             self.updateFilteredDataProvider()
             self.refreshList()
         } else {
-            print("SEARCHING...")
+            //print("SEARCHING...")
             
             self.showLoading()
             let T = self.searchTextfield.text()
@@ -194,7 +194,7 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
             self.updateFilteredDataProvider()
             self.refreshList()
         } else {
-            print("SEARCHING...")
+            //print("SEARCHING...")
             
             self.showLoading()
             let T = self.searchTextfield.text()

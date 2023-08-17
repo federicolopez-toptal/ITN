@@ -518,7 +518,7 @@ extension AudioPlayerView {
     }
     
     func close() {
-        print("CLOSE")
+        //print("CLOSE")
         self.player?.removeTimeObserver(self.playerObserver!)
         self.playerObserver = nil
         self.player = nil
