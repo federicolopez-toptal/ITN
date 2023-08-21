@@ -68,7 +68,7 @@ class KeywordSearchTextView: UIView {
         
         self.searchTextField.font = roboto
         self.searchTextField.textColor = UIColor(hex: 0xFF643C)
-        self.searchTextField.returnKeyType = .search
+        self.searchTextField.returnKeyType = .done
         self.searchTextField.autocapitalizationType = .none
         self.searchTextField.autocorrectionType = .no
         self.searchTextField.smartDashesType = .no
@@ -132,6 +132,7 @@ extension KeywordSearchTextView {
     }
     
     @objc func onCloseButtonTap(_ sender: UIButton) {
+        HIDE_KEYBOARD(view: self)
         self.searchTextField.text = ""
         self.onSearchTextChange(self.searchTextField)
     }
