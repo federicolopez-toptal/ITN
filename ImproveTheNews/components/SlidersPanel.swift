@@ -420,7 +420,7 @@ extension SlidersPanel {
         if(self.rowsShown == 0) {
             self.show(rows: 2, animated: true)
         } else if(self.rowsShown==2) {
-            self.show(rows: 6, animated: true)
+            self.show(rows: 0, animated: true)
         } else if(self.rowsShown==6) {
             self.show(rows: 0, animated: true)
         }
