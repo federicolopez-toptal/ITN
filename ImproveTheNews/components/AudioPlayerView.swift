@@ -424,6 +424,13 @@ class AudioPlayerView: UIView {
         
         if(self.isPlaying) {
             self.playImageView2.image = UIImage(systemName: "pause.circle")?.withRenderingMode(.alwaysTemplate)
+            
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback)
+            } catch(let error) {
+                print(error.localizedDescription)
+            }
+            
             self.player?.play()
         } else {
             self.playImageView2.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
