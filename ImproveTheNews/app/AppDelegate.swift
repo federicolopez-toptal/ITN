@@ -34,6 +34,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
     }
     
+//    func applicationWillEnterForeground(_ application: UIApplication) {
+//        print("BACK!")
+//    }
+//    
+//    func applicationWillResignActive(_ application: UIApplication) {
+//        print("SADSADAS")
+//    }
+//    
+//    func applicationDidEnterBackground(_ application: UIApplication) {
+//        //Here!
+//        print("BACKGROUND!")
+//    }
+    
     
     
     
