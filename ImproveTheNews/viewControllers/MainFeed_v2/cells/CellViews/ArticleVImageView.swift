@@ -243,6 +243,13 @@ class ArticleVImageView: CustomCellView {
         self.flagImageView.alpha = alphaValue
         // ----------------
         
+        if(!article.isEmpty()) {
+            self.stanceIcon.alpha = 1.0
+            if(PREFS_SHOW_STANCE_ICONS() == false) {
+                self.stanceIcon.alpha = 0
+            }
+        }
+        
         self.refreshDisplayMode()
         self.show()
     }

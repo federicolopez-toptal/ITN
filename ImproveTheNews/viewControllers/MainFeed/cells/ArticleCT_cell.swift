@@ -152,6 +152,13 @@ class ArticleCT_cell: UICollectionViewCell {
         self.sourcesContainer.alpha = alphaValue
         self.flagImageView.alpha = alphaValue
         
+        if(!article.isEmpty()) {
+            self.stanceIcon.alpha = 1.0
+            if(PREFS_SHOW_STANCE_ICONS() == false) {
+                self.stanceIcon.alpha = 0
+            }
+        }
+        
         if(PREFS_SHOW_FLAGS()) {
             self.flagImageView.superview!.show()
         } else {
