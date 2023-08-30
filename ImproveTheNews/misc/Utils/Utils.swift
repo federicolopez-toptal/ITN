@@ -133,7 +133,8 @@ func PREFS_SHOW_STANCE_ICONS() -> Bool {
     return PREF(key: LocalKeys.preferences.showStanceIcons)
 }
 func PREFS_SHOW_STANCE_POPUPS() -> Bool {
-    return PREF(key: LocalKeys.preferences.showStancePopups)
+    return true
+    //return PREF(key: LocalKeys.preferences.showStancePopups)
 }
 func PREFS_SHOW_STORIES() -> Bool {
     return PREF(key: LocalKeys.preferences.showStories)

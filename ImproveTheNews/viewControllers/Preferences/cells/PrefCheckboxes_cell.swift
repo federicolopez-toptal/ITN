@@ -16,7 +16,7 @@ class PrefCheckboxes_cell: UITableViewCell {
         ("Show newspaper flags", LocalKeys.preferences.showSourceFlags),
         ("Show source icons", LocalKeys.preferences.showSourceIcons),
         ("Show newspaper stance icon", LocalKeys.preferences.showStanceIcons),
-        ("Enable newspaper info popups", LocalKeys.preferences.showStancePopups),
+        //("Enable newspaper info popups", LocalKeys.preferences.showStancePopups),
         ("Show stories", LocalKeys.preferences.showStories)
     ]
 
