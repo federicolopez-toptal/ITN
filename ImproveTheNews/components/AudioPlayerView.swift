@@ -10,6 +10,7 @@ import UIKit
 import AVKit
 
 let AudioPlayerViewNotification_timeUpdated = Notification.Name("AudioPlayerView_timeUpdated")
+let AudioPlayerViewNotification_timeCompleted = Notification.Name("AudioPlayerView_timeCompleted")
 let AudioPlayerViewNotification_statusUpdated = Notification.Name("AudioPlayerView_statusUpdated")
 
 class AudioPlayerView: UIView {
@@ -239,7 +240,8 @@ class AudioPlayerView: UIView {
         
         self.timeLabel.font = ROBOTO(13)
         self.timeLabel.textAlignment = .center
-        self.timeLabel.text = "00:00"
+        //self.timeLabel.text = "00:00"
+        self.updateTime(-1)
         self.timeLabel.textColor = UIColor(hex: 0x93A0B4)
         sliderHStack.addArrangedSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
@@ -413,8 +415,11 @@ class AudioPlayerView: UIView {
     }
     
     private func updateTime(_ secs: CGFloat) {
-        let minutes = Int(secs/60)
-        let seconds = Int(secs)-(minutes*60)
+        var _secs = secs
+        if(_secs == -1){ _secs = self.duration }
+        
+        let minutes = Int(_secs/60)
+        let seconds = Int(_secs)-(minutes*60)
         self.timeLabel.text = String(format: "%02d:%02d", minutes, seconds)
     }
     
@@ -516,9 +521,13 @@ extension AudioPlayerView {
                     self.player?.pause()
                     
                     self.playButtonOnTap(nil)
-                    self.updateTime(0)
                     self.slider.value = 0
                     self.wasCompleted = false
+                    
+                    DELAY(0.1) {
+                        self.updateTime(-1)
+                        if(self.primary){ NOTIFY(AudioPlayerViewNotification_timeCompleted) }
+                    }
                 }
             }
         })
@@ -542,10 +551,12 @@ extension AudioPlayerView {
             name: AudioPlayerViewNotification_timeUpdated, object: nil)
         
         NotificationCenter.default.addObserver(self,
+            selector: #selector(self.onTimeCompleted),
+            name: AudioPlayerViewNotification_timeCompleted, object: nil)
+        
+        NotificationCenter.default.addObserver(self,
             selector: #selector(self.onStatusUpdated),
             name: AudioPlayerViewNotification_statusUpdated, object: nil)
-        
-        
     }
     
     @objc func onTimeUpdated(_ notification: Notification) {
@@ -560,6 +571,12 @@ extension AudioPlayerView {
             if(!senderIsPrimary) {
                 self.player?.seek(to: CMTime(value: CMTimeValue(seconds), timescale: 1))
             }
+        }
+    }
+    
+    @objc func onTimeCompleted(_ notification: Notification) {
+        if(self.secondary) {
+            self.updateTime(-1)
         }
     }
     
