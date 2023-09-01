@@ -113,9 +113,27 @@ class ArticleHImageView: CustomCellView {
         //print("article.imgUrl", article.imgUrl)
         
         self.mainImageView.image = nil
-        if let _url = URL(string: article.imgUrl) {
-            self.mainImageView.sd_setImage(with: _url)
+        if let _url = URL(string: article.imgUrl.replacingOccurrences(of: "http:", with: "https:")) {
+            self.mainImageView.sd_setImage(with: _url) { (_, error, _, _) in
+            }
         }
+        
+//        if let _url = URL(string: article.imgUrl) {
+//            self.mainImageView.sd_setImage(with: _url) { (_, error, _, _) in
+//
+//                if let SDWIerror = error as? SDWebImageError {
+//                    if(SDWIerror.code.rawValue == 1003) {
+//                        print("Image url is blacklisted")
+//                        let newUrl = URL(string: article.imgUrl.replacingOccurrences(of: "http:", with: "https:"))
+//                        print( newUrl )
+//                        self.mainImageView.sd_setImage(with: newUrl) { (_, error, _, _) in
+//                            print(error)
+//                        }
+//                    }
+//                }
+//
+//            }
+//        }
         self.titleLabel.text = article.title
         
         if(!article.isStory) {
