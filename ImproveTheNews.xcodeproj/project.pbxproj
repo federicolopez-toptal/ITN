@@ -363,6 +363,7 @@
 		1FACBF8329AD01D0009A8E0F /* iPadSplitHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */; };
 		1FBD426E2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBD426D2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift */; };
 		1FBD42712A40EDF200BFE68B /* KeywordSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBD42702A40EDF200BFE68B /* KeywordSearchViewController.swift */; };
+		1FBDA3932AABA6950013FD6A /* verityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FBDA3922AABA6950013FD6A /* verityLogo.png */; };
 		1FC1A2B92A3222FA001998B0 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift */; };
 		1FC1A2BB2A3224CD001998B0 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */; };
 		1FC287D529A645A50017433B /* MainFeed_v2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287D429A645A50017433B /* MainFeed_v2ViewController.swift */; };
@@ -777,6 +778,7 @@
 		1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSplitHeaderCell.swift; sourceTree = "<group>"; };
 		1FBD426D2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordSearchViewController_list.swift; sourceTree = "<group>"; };
 		1FBD42702A40EDF200BFE68B /* KeywordSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeywordSearchViewController.swift; sourceTree = "<group>"; };
+		1FBDA3922AABA6950013FD6A /* verityLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verityLogo.png; sourceTree = "<group>"; };
 		1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
 		1FC287D429A645A50017433B /* MainFeed_v2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2ViewController.swift; sourceTree = "<group>"; };
@@ -1037,6 +1039,7 @@
 				1F897CE928CC4C4300438FC5 /* sources_svg */,
 				1F95134628BFB92E00A77AB6 /* Main.storyboard */,
 				1F95134B28BFB92F00A77AB6 /* LaunchScreen.storyboard */,
+				1FBDA3922AABA6950013FD6A /* verityLogo.png */,
 				1F95134928BFB92F00A77AB6 /* Assets.xcassets */,
 			);
 			path = resources;
@@ -1914,6 +1917,7 @@
 				1F715ECD29DC7EBE0063AC83 /* SPM64.png in Resources */,
 				1F715F7729DC7EBE0063AC83 /* UZB64.png in Resources */,
 				1FDEB1CE28CBC54F0029831E /* Merriweather-Bold.ttf in Resources */,
+				1FBDA3932AABA6950013FD6A /* verityLogo.png in Resources */,
 				1F715F1E29DC7EBE0063AC83 /* LIE64.png in Resources */,
 				1F715F0E29DC7EBE0063AC83 /* VUT64.png in Resources */,
 				1F715F0529DC7EBE0063AC83 /* POL64.png in Resources */,
@@ -2285,13 +2289,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Verity-Beta";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -2322,13 +2326,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Verity-Beta";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -2413,13 +2417,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Verity-Beta";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
