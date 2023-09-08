@@ -207,12 +207,12 @@ class ArticleBigImageView: CustomCellView {
     }
     
     override func refreshDisplayMode() {
-        self.backgroundColor = .green //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.gradient.image = UIImage(named: DisplayMode.imageName("story.shortGradient"))
-        self.gradientBottom.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E242F) : UIColor(hex: 0xE9EAEB)
+        self.gradientBottom.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xE9EAEB)
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         
-        self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         self.articleSourceTime.textColor = self.storyTimeLabel.textColor
         
         self.backgroundColor = .systemPink

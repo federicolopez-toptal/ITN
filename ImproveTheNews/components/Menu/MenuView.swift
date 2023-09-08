@@ -59,7 +59,7 @@ class MenuView: UIView {
     
     func buildInto(_ container: UIView) {
         container.addSubview(self)
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         
         self.menuLeadingConstraint = self.leadingAnchor.constraint(equalTo: container.leadingAnchor)
         self.activateConstraints([
@@ -93,7 +93,7 @@ class MenuView: UIView {
             " (build " + Bundle.main.buildVersionNumber! + ")"
         
         self.addSubview(self.versionLabel)
-        self.versionLabel.textColor = UIColor(hex: 0xFF643C)
+        self.versionLabel.textColor = UIColor(hex: 0xDA4933)
         self.versionLabel.font = ROBOTO_BOLD(14)
         self.versionLabel.text = vInfo
         self.versionLabel.textAlignment = .center
@@ -103,8 +103,9 @@ class MenuView: UIView {
             self.versionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace)
         ])
         
-        let closeImage = UIImage(named: "menu.close")
+        let closeImage = UIImage(named: "menu.close")?.withRenderingMode(.alwaysTemplate)
         let closeIcon = UIImageView(image: closeImage)
+        closeIcon.tag = 77
         self.addSubview(closeIcon)
         closeIcon.activateConstraints([
             closeIcon.widthAnchor.constraint(equalToConstant: 32),
@@ -112,6 +113,7 @@ class MenuView: UIView {
             closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -18),
             closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: topSpace)
         ])
+        closeIcon.tintColor = .red //DARK_MODE() ? UIColor(hex: 0xBBBDC0) : .red //UIColor(hex: 0x1D242F)
         
         let closeButton = UIButton(type: .system)
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
@@ -135,13 +137,16 @@ class MenuView: UIView {
     
     // MARK: - misc
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.list.backgroundColor = self.backgroundColor
         
         for (i, _) in self.dataProvider.enumerated() {
             let cell = self.tableView(self.list, cellForRowAt: IndexPath(row: i, section: 0)) as! MenuItemCell
             cell.refreshDisplayMode()
         }
+
+        let closeIcon = self.viewWithTag(77) as! UIImageView
+        closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
 
         self.list.reloadData()
     }
@@ -450,6 +455,7 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
         
         cell.titleLabel.text = self.getText(forItem: dpItem)
         cell.icon.image = self.getIcon(forItem: dpItem)
+        cell.icon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
         var gap: CGFloat = 0
         if(!self.dataProvider_A.contains(dpItem)) {

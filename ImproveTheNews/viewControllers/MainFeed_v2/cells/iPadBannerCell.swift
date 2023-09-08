@@ -50,7 +50,7 @@ class iPadBannerCell: UITableViewCell {
         ])
         
         let vLine = UIView()
-        vLine.backgroundColor = UIColor(hex: 0xFF643C)
+        vLine.backgroundColor = UIColor(hex: 0xDA4933)
         self.mainContainer.addSubview(vLine)
         vLine.activateConstraints([
             vLine.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor),
@@ -59,7 +59,7 @@ class iPadBannerCell: UITableViewCell {
             vLine.widthAnchor.constraint(equalToConstant: 4)
         ])
         
-        self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
+        self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))?.withRenderingMode(.alwaysTemplate)
         self.closeIcon.backgroundColor = .clear
         self.mainContainer.addSubview(self.closeIcon)
         self.closeIcon.activateConstraints([
@@ -210,14 +210,14 @@ class iPadBannerCell: UITableViewCell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
-        self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE9EAEB)
+        self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))?.withRenderingMode(.alwaysTemplate)
         self.headerLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.descrLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.descrLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         self.dontShowAgainLabel.textColor = self.descrLabel.textColor
         
-        //self.contentView.backgroundColor = .systemPink
+        self.closeIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
     }
 }
 

@@ -169,9 +169,9 @@ class ArticleHImageView: CustomCellView {
     }
     
     override func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.articleSourceTime.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.articleSourceTime.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
         //self.backgroundColor = .systemPink
     }

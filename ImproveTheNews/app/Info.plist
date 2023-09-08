@@ -4,6 +4,26 @@
 <dict>
 	<key>API_BASE_URL</key>
 	<string>$(API_BASE_URL)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb562579928156269</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>562579928156269</string>
+	<key>FacebookClientToken</key>
+	<string>2200a3c7b6278e1659d50454dbb49732</string>
+	<key>FacebookDisplayName</key>
+	<string>ITN TestApp</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Regular.ttf</string>
@@ -33,25 +53,5 @@
 	</dict>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb562579928156269</string>
-			</array>
-		</dict>
-	</array>
-	<key>FacebookAppID</key>
-	<string>562579928156269</string>
-	<key>FacebookClientToken</key>
-	<string>2200a3c7b6278e1659d50454dbb49732</string>
-	<key>FacebookDisplayName</key>
-	<string>ITN TestApp</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>fbapi</string>
-		<string>fb-messenger-share-api</string>
-	</array>
 </dict>
 </plist>

@@ -45,7 +45,7 @@ class StoryWT_cell: UICollectionViewCell {
     let characterSpacing: Double = 1.35
     let roboto = ROBOTO(13)
         
-        self.storyLabel.backgroundColor = UIColor(hex: 0xFF643C)
+        self.storyLabel.backgroundColor = UIColor(hex: 0xDA4933)
         self.storyLabel.textColor = .white
         self.storyLabel.text = "STORY"
         self.storyLabel.textAlignment = .center
@@ -125,13 +125,13 @@ class StoryWT_cell: UICollectionViewCell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE9EAEB)
         self.marginView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
         //self.storyLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0xFF643C) : .white
-        self.storyLabel.backgroundColor = UIColor(hex: 0xFF643C)
+        self.storyLabel.backgroundColor = UIColor(hex: 0xDA4933)
         //self.storyLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.storyLabel.textColor = .white
         

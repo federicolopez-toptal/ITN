@@ -32,7 +32,7 @@ class MainFeedViewController: BaseViewController {
         super.viewDidLoad()
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
         
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.preferencesSetDefaultValues()
         
         NotificationCenter.default.addObserver(self,
@@ -128,7 +128,7 @@ class MainFeedViewController: BaseViewController {
         self.navBar.refreshDisplayMode()
         self.topicSelector.refreshDisplayMode()
         
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.list.backgroundColor = self.view.backgroundColor
         self.list.reloadData()
     }

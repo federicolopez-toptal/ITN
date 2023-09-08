@@ -52,16 +52,16 @@ class iPadFooterCell: UITableViewCell {
             ADD_SPACER(to: column1, height: 20)
             let hStackLogo = HSTACK(into: column1)
             
-                let logo = UIImageView(image: UIImage(named: ("navBar.circleLogo")))
+                let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("verity.logo")))
                 hStackLogo.addArrangedSubview(logo)
                 logo.activateConstraints([
-                    logo.widthAnchor.constraint(equalToConstant: 44),
-                    logo.heightAnchor.constraint(equalToConstant: 44)
+                    logo.widthAnchor.constraint(equalToConstant: 475 * 0.23),
+                    logo.heightAnchor.constraint(equalToConstant: 97 * 0.23)
                 ])
                 ADD_SPACER(to: hStackLogo)
             
             ADD_SPACER(to: column1, height: 10)
-            self.subTitle.text = "A non-profit news aggregator helping you break out of your filter bubble"
+            self.subTitle.text = "The whole truth behind every major news story.\nAll angles covered."
             self.subTitle.numberOfLines = 2
             self.subTitle.font = ROBOTO(14)
             column1.addArrangedSubview(self.subTitle)
@@ -148,7 +148,7 @@ class iPadFooterCell: UITableViewCell {
             self.copyrightLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
         ])
         
-        self.podcastLabel.text = "Improve The News Podcast"
+        self.podcastLabel.text = "Verity Podcast"
         self.podcastLabel.font = ROBOTO(12)
         self.contentView.addSubview(self.podcastLabel)
         self.podcastLabel.activateConstraints([
@@ -198,16 +198,16 @@ class iPadFooterCell: UITableViewCell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202E) : UIColor(hex: 0xE8E9EA)
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xE8E9EA)
         self.bottomView.backgroundColor = self.contentView.backgroundColor
-        self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
-        self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
-        self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x212E43) : UIColor(hex: 0xC3C9CF)
+        self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1E242F)
+        self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1E242F)
+        self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xC3C9CF)
         self.copyrightLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1E242F)
-        self.podcastLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
+        self.podcastLabel.textColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1E242F)
         
         for L in self.labels {
-            L.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
+            L.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1E242F)
         }
     }
 

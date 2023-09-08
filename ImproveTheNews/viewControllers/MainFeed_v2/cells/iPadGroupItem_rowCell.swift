@@ -128,7 +128,7 @@ class iPadGroupItem_rowCell: GroupItemCell {
     
     override func refreshDisplayMode() {
         super.refreshDisplayMode()
-        //self.backgroundColor = .green
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     }
 
 }

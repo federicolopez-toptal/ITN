@@ -35,7 +35,7 @@ class StanceIconView: UIView {
             self.heightAnchor.constraint(equalToConstant: DIM)
         ])
         
-        slider1.backgroundColor = UIColor(hex: 0x93A0B4)
+        slider1.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0xB3B3B3)
         self.addSubview(slider1)
         slider1.activateConstraints([
             slider1.widthAnchor.constraint(equalToConstant: 15),
@@ -46,7 +46,7 @@ class StanceIconView: UIView {
         
         let thumb1 = UIView()
         thumb1.layer.cornerRadius = 3.5
-        thumb1.backgroundColor = .orange
+        thumb1.backgroundColor = UIColor(hex: 0xDA4933)
         slider1.addSubview(thumb1)
         thumb1.activateConstraints([
             thumb1.widthAnchor.constraint(equalToConstant: 7),
@@ -68,7 +68,7 @@ class StanceIconView: UIView {
         
         let thumb2 = UIView()
         thumb2.layer.cornerRadius = 3.5
-        thumb2.backgroundColor = .orange
+        thumb2.backgroundColor = UIColor(hex: 0xDA4933)
         slider2.addSubview(thumb2)
         thumb2.activateConstraints([
             thumb2.widthAnchor.constraint(equalToConstant: 7),
@@ -90,7 +90,7 @@ class StanceIconView: UIView {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xEAEBEC)
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE3E3E3)
         
         let thumb1 = self.slider1.subviews.first!
         thumb1.backgroundColor = DARK_MODE() ? .white : UIColor(hex: 0xFF643C)

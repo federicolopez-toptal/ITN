@@ -246,13 +246,13 @@ class ArticleBigTextView: CustomCellView {
     
     override func refreshDisplayMode() {
         if(article.isStory) {
-            self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
+            self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE9EAEB)
         } else {
-            self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+            self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         }
         
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.storyTimeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         self.storyTimeLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.5)
         self.articleSourceTime.textColor = self.storyTimeLabel.textColor
         

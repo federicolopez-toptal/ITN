@@ -54,10 +54,10 @@ class iPadSplitHeaderCell: UITableViewCell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.titleLabel_1.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.titleLabel_1.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         self.titleLabel_2.textColor = self.titleLabel_1.textColor
-        self.vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1D242F)
         
         //self.contentView.backgroundColor = .systemPink
     }

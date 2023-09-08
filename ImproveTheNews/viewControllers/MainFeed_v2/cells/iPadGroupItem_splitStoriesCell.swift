@@ -52,4 +52,9 @@ class iPadGroupItem_splitStoriesCell: GroupItemCell {
         
         return (350 * _count) + (margin*(_count+1))
     }
+    
+    override func refreshDisplayMode() {
+        super.refreshDisplayMode()
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+    }
 }

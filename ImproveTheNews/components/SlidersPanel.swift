@@ -56,7 +56,7 @@ class SlidersPanel: UIView {
         ])
         
         //Handle
-        let handle = UIImageView(image: UIImage(named: "slidersPanel.handle.bright"))
+        let handle = UIImageView(image: UIImage(named: "slidersPanel.handle.bright")?.withRenderingMode(.alwaysTemplate))
         self.addSubview(handle)
         handle.activateConstraints([
             handle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -193,7 +193,12 @@ class SlidersPanel: UIView {
             slider.isContinuous = false
             slider.minimumTrackTintColor = UIColor(hex: 0xD9DCDF)
             slider.maximumTrackTintColor = UIColor(hex: 0xD9DCDF)
-            slider.setThumbImage(UIImage(named: "slidersOrangeThumb"), for: .normal)
+            
+            let thumbImg = UIImage(named: "slidersOrangeThumb")
+            slider.setThumbImage(thumbImg, for: .normal)
+            //slider.tintColor = DARK_MODE() ? .green : .systemPink
+            //UIColor(hex: 0xDA4933) : UIColor(hex: 0xFF643C)
+            
 //            slider.thumbTintColor = UIColor(hex: 0xFF643C)
             slider.tag = 20 + i
             slider.setValue(Float(sliderValue), animated: false)
@@ -340,8 +345,11 @@ class SlidersPanel: UIView {
                 hLine.hide()
             }
 
+            
+
             let alphaImage = UIImage(named: "slidersOrangeThumb")?.image(alpha: imageAlpha)
             slider.setThumbImage(alphaImage, for: .normal)
+            //slider.tintColor = DARK_MODE() ? UIColor(hex: 0xDA4933) : UIColor(hex: 0xFF643C)
         }
     }
     
@@ -454,23 +462,24 @@ extension SlidersPanel {
 extension SlidersPanel {
 
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : .white
         self.coverView.backgroundColor = self.backgroundColor
         
         for C in self.displayModeComponents {
             if(C is UILabel) {
                 let label = (C as! UILabel)
                 if(label.tag == 3) { // title & split
-                    label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+                    label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x0A0A0C)
                 } else if(label.tag == 4) { // left & right legends
-                    label.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+                    label.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x0A0A0C)
                 }
             }
             
             // handle
             if(C is UIImageView) {
                 let handle = (C as! UIImageView)
-                handle.image = UIImage(named: DisplayMode.imageName("slidersPanel.handle"))
+                handle.image = UIImage(named: DisplayMode.imageName("slidersPanel.handle"))?.withRenderingMode(.alwaysTemplate)
+                handle.tintColor = DARK_MODE() ? .black : UIColor(hex: 0xE2E3E3)
             }
         }
         
@@ -479,11 +488,11 @@ extension SlidersPanel {
             let slider = self.viewWithTag(20 + i) as! UISlider
             
             if(DARK_MODE()) {
-                slider.minimumTrackTintColor = UIColor(hex: 0x545B67)
-                slider.maximumTrackTintColor = UIColor(hex: 0x545B67)
+                slider.minimumTrackTintColor = UIColor(hex: 0x19191C)
+                slider.maximumTrackTintColor = UIColor(hex: 0x19191C)
             } else {
-                slider.minimumTrackTintColor = UIColor(hex: 0xD9DCDF)
-                slider.maximumTrackTintColor = UIColor(hex: 0xD9DCDF)
+                slider.minimumTrackTintColor = UIColor(hex: 0xE2E3E3)
+                slider.maximumTrackTintColor = UIColor(hex: 0xE2E3E3)
             }
         }
     }

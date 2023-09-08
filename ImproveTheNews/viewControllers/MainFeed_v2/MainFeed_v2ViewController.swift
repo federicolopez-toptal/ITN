@@ -28,7 +28,7 @@ class MainFeed_v2ViewController: BaseViewController {
         super.viewDidLoad()
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
         
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.preferencesSetDefaultValues()
         self.addNotificationObservers()
     }
@@ -81,7 +81,7 @@ class MainFeed_v2ViewController: BaseViewController {
         self.navBar.refreshDisplayMode()
         self.topicSelector.refreshDisplayMode()
         
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.list.backgroundColor = self.view.backgroundColor
         self.list.reloadData()
     }
@@ -146,7 +146,7 @@ extension MainFeed_v2ViewController {
 //                        if(CustomNavController.shared.viewControllers.first! == self) {
 //                            CustomNavController.shared.startTour() //!!!
 //                        }
-//                        DELAY(4.5) {
+//                        DELAY(2.0) {
 //                            self.scrollToBottom()
 //                        }
                         

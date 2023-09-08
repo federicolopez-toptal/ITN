@@ -41,15 +41,16 @@ class FooterCell: UICollectionViewCell {
         self.contentView.backgroundColor = .white
 
         self.contentView.addSubview(self.logoImageView)
-        self.logoImageView.image = UIImage(named: "navBar.circleLogo")
+        self.logoImageView.image = UIImage(named: DisplayMode.imageName("verity.logo"))
         self.logoImageView.activateConstraints([
             self.logoImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
             self.logoImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 18),
-            self.logoImageView.widthAnchor.constraint(equalToConstant: 48),
-            self.logoImageView.heightAnchor.constraint(equalToConstant: 48)
+            self.logoImageView.widthAnchor.constraint(equalToConstant: 475 * 0.23),
+            self.logoImageView.heightAnchor.constraint(equalToConstant: 97 * 0.23)
         ])
         
-        self.subTitle.text = "A non-profit news aggregator helping you break out of your filter bubble"
+        //self.subTitle.text = "A non-profit news aggregator helping you break out of your filter bubble"
+        self.subTitle.text = "The whole truth behind every major news story.\nAll angles covered."
         self.subTitle.numberOfLines = 2
         self.subTitle.font = ROBOTO(14)
         self.contentView.addSubview(self.subTitle)
@@ -124,7 +125,7 @@ class FooterCell: UICollectionViewCell {
         }
         //ADD_SPACER(to: socialStack)
         
-        self.podcastLabel.text = "Improve The News Podcast"
+        self.podcastLabel.text = "Verity Podcast"
         self.podcastLabel.font = ROBOTO(12)
         self.contentView.addSubview(self.podcastLabel)
         self.podcastLabel.activateConstraints([
@@ -207,19 +208,19 @@ class FooterCell: UICollectionViewCell {
     }
     
     private func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202E) : UIColor(hex: 0xE8E9EA)
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.bottomView.backgroundColor = self.contentView.backgroundColor
-//        self.logoImageView.image = UIImage(named: DisplayMode.imageName("navBar.logo"))
-        self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
-        self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x212E43) : UIColor(hex: 0xC3C9CF)
+        self.logoImageView.image = UIImage(named: DisplayMode.imageName("verity.logo"))
+        self.subTitle.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1E242F)
+        self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xC3C9CF)
         self.copyrightLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.podcastLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
+        self.podcastLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1E242F)
         
-        self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
+        self.followLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1E242F)
         
         for view in self.contentView.subviews {
             if let label = view as? UILabel, (label.font == self.ITEMS_FONT) {
-                label.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1E242F)
+                label.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1E242F)
             }
         }
         

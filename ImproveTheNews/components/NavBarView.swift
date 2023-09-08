@@ -63,15 +63,39 @@ class NavBarView: UIView {
     func addComponents(_ components: [NavBarViewComponents]) {
         for C in components {
             if(C == .logo) {
-                // ITN logo
-                let logo = UIImageView(image: UIImage(named: ("navBar.circleLogo")))
+//                // ITN logo
+//                let logo = UIImageView(image: UIImage(named: ("navBar.circleLogo")))
+//                self.addSubview(logo)
+//                logo.activateConstraints([
+//                    logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+//                    logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(50)),
+//                    logo.widthAnchor.constraint(equalToConstant: 44),
+//                    logo.heightAnchor.constraint(equalToConstant: 44)
+//                ])
+//                logo.tag = 1
+//                self.displayModeComponents.append(logo)
+//
+//                let button = UIButton(type: .system)
+//                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+//                self.addSubview(button)
+//                button.activateConstraints([
+//                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
+//                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
+//                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
+//                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
+//                ])
+//                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
+                // VERITY logo
+                let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("verity.logo")))
                 self.addSubview(logo)
                 logo.activateConstraints([
                     logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-                    logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(50)),
-                    logo.widthAnchor.constraint(equalToConstant: 44),
-                    logo.heightAnchor.constraint(equalToConstant: 44)
+                    logo.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
+                    //logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(50)),
+                    logo.widthAnchor.constraint(equalToConstant: 475 * 0.23),
+                    logo.heightAnchor.constraint(equalToConstant: 97 * 0.23)
                 ])
+                //logo.backgroundColor = .red.withAlphaComponent(0.5)
                 logo.tag = 1
                 self.displayModeComponents.append(logo)
 
@@ -353,33 +377,40 @@ class NavBarView: UIView {
     
     // MARK: - misc
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         
         for C in self.displayModeComponents {
         
             if(C is UIImageView) {
+                
                 let imgView = C as! UIImageView
+                var img: UIImage?
+                
                 switch(imgView.tag) {
                     case 1: // logo
-                        imgView.image = UIImage(named: DisplayMode.imageName("navBar.circleLogo"))
+                        //imgView.image = UIImage(named: DisplayMode.imageName("navBar.circleLogo"))
+                        img = UIImage(named: DisplayMode.imageName("verity.logo"))?.withRenderingMode(.alwaysTemplate)
                     case 2: // menu
-                        imgView.image = UIImage(named: DisplayMode.imageName("navBar.menu"))
+                        img = UIImage(named: DisplayMode.imageName("navBar.menu"))?.withRenderingMode(.alwaysTemplate)
                     case 3: // search
-                        imgView.image = UIImage(named: DisplayMode.imageName("navBar.search"))
+                        img = UIImage(named: DisplayMode.imageName("navBar.search"))?.withRenderingMode(.alwaysTemplate)
                     case 4: // back (+ text)
-                        imgView.image = UIImage(named: DisplayMode.imageName("back.button"))
+                        img = UIImage(named: DisplayMode.imageName("back.button"))?.withRenderingMode(.alwaysTemplate)
                     case 6: // back
-                        imgView.image = UIImage(named: DisplayMode.imageName("back.button"))
+                        img = UIImage(named: DisplayMode.imageName("back.button"))?.withRenderingMode(.alwaysTemplate)
                     case 8: // share
-                        imgView.image = UIImage(named: DisplayMode.imageName("share"))
+                        img = UIImage(named: DisplayMode.imageName("share"))?.withRenderingMode(.alwaysTemplate)
                     case 9: // user
-                        imgView.image = UIImage(named: DisplayMode.imageName("navBar.user"))
+                        img = UIImage(named: DisplayMode.imageName("navBar.user"))?.withRenderingMode(.alwaysTemplate)
                     case 10: // close
-                        imgView.image = UIImage(named: DisplayMode.imageName("popup.close"))
+                        img = UIImage(named: DisplayMode.imageName("popup.close"))?.withRenderingMode(.alwaysTemplate)
                     
                     default:
                         NOTHING()
                 }
+                
+                imgView.image = img
+                imgView.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x0A0A0C)
             }
             
             if(C is UILabel) {

@@ -48,7 +48,7 @@ func ARTICLE_IMG() -> UIImageView {
 
 func STORY_PILL() -> UILabel {
     let result = UILabel()
-    result.backgroundColor = UIColor(hex: 0xFF643C)
+    result.backgroundColor = UIColor(hex: 0xDA4933)
     result.textColor = .white
     result.text = "STORY"
     result.textAlignment = .center

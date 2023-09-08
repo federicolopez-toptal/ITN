@@ -27,6 +27,11 @@ class ArticleViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let A = self.article {
+            self.article?.url = A.url.replacingOccurrences(of: "http:", with: "https:")
+        }
+        
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
         

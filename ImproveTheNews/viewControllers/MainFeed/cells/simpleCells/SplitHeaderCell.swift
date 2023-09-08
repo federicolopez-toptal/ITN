@@ -70,7 +70,7 @@ class SplitHeaderCell: UICollectionViewCell {
     }
     
     private func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.leftLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         self.rightLabel.textColor = self.leftLabel.textColor
     }

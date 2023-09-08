@@ -64,7 +64,7 @@ class StoryBI_cell: UICollectionViewCell {
         let storyHStack = HSTACK(into: vStack)
 
         let storyLabel = UILabel()
-        storyLabel.backgroundColor = UIColor(hex: 0xFF643C)
+        storyLabel.backgroundColor = UIColor(hex: 0xDA4933)
         storyLabel.textColor = .white
         storyLabel.text = "STORY"
         storyLabel.textAlignment = .center
@@ -170,13 +170,13 @@ class StoryBI_cell: UICollectionViewCell {
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
-    
+        self.mainImageView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : .lightGray
+        
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         
         self.gradient.image = UIImage(named: DisplayMode.imageName("story.shortGradient"))
-        self.gradientBottom.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E242F) : UIColor(hex: 0xE9EAEB)
+        self.gradientBottom.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xE9EAEB)
         self.gradient.alpha = 1.0
         //self.gradientBottom.alpha = self.gradient.alpha
     }

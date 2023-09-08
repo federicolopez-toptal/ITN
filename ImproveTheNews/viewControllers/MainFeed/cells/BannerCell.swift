@@ -49,7 +49,7 @@ class BannerCell: UICollectionViewCell {
         ])
         
         let vLine = UIView()
-        vLine.backgroundColor = UIColor(hex: 0xFF643C)
+        vLine.backgroundColor = UIColor(hex: 0xDA4933)
         self.mainContainer.addSubview(vLine)
         vLine.activateConstraints([
             vLine.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor),
@@ -136,7 +136,7 @@ class BannerCell: UICollectionViewCell {
         ])
         checkButton.addTarget(self, action: #selector(onCheckButtonTap(_:)), for: .touchUpInside)
         
-        self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
+        self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))?.withRenderingMode(.alwaysTemplate)
         self.closeIcon.backgroundColor = .clear //.systemPink
         vStack.addSubview(self.closeIcon)
         self.closeIcon.activateConstraints([
@@ -213,16 +213,14 @@ class BannerCell: UICollectionViewCell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : UIColor(hex: 0xE9EAEB)
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE9EAEB)
         self.mainImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
         self.headerLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.textLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.textLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         self.dontShowAgainLabel.textColor = self.textLabel.textColor
         
-        
-    return
-        self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
+        self.closeIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
     }
     
     static func calculateHeight(headerText: String, text: String, width: CGFloat) -> CGSize {

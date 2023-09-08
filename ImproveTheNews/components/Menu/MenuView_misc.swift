@@ -123,7 +123,7 @@ extension MenuView {
 //                icon = ""
         }
         
-        return UIImage(named: "menu." + icon)
+        return UIImage(named: "menu." + icon)?.withRenderingMode(.alwaysTemplate)
     }
     
     
