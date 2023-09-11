@@ -109,7 +109,7 @@ class PrivacyPolicyViewController: BaseViewController {
         label.tag = 11
         label.numberOfLines = 0
         label.font = MERRIWEATHER_BOLD(16)
-        label.textColor = UIColor(hex: 0xFF643C)
+        label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.VStack.addArrangedSubview(label)
     }
     
@@ -121,7 +121,7 @@ class PrivacyPolicyViewController: BaseViewController {
     
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.scrollView.backgroundColor = self.view.backgroundColor
         self.contentView.backgroundColor = self.view.backgroundColor
         self.navBar.refreshDisplayMode()
