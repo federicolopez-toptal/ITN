@@ -75,7 +75,8 @@ extension MainFeedViewController {
 
             self.column = 1
             var allItems = itemsToShowPerTopic.components(separatedBy: ",")
-            if(mustSplit==0 && i==0 && allItems.count>1 && Layout.current() == .textImages && IPHONE()){
+            //if(mustSplit==0 && i==0 && allItems.count>1 && Layout.current() == .textImages && IPHONE()){
+            if(mustSplit==0 && allItems.count>1 && Layout.current() == .textImages && IPHONE()){
                 allItems.swapAt(0, 1)
             }
             

@@ -92,13 +92,13 @@ class PrefSliders_cell: UITableViewCell {
         self.place(view: sliders3, below: paragraph_04)
         
         //-----
-        self.saveButton = self.longButton(color: UIColor(hex: 0xFF643C), tag: 100)
+        self.saveButton = self.longButton(color: UIColor(hex: 0xDA4933), tag: 100)
         self.place(view: self.saveButton, below: sliders3, extraMargin: 40)
         self.setText("SAVE SLIDER PREFERENCES", toButton: self.saveButton)
         self.saveButton.isEnabled = false
         self.saveButton.alpha = 0.5
         
-        let resetButton = self.longButton(color: DARK_MODE() ? UIColor(hex: 0x283241) : UIColor(hex: 0xB4BDCA), tag: 200)
+        let resetButton = self.longButton(color: DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xB4BDCA), tag: 200)
         self.place(view: resetButton, below: saveButton)
         self.setText("RESET TO DEFAULT SETTINGS", toButton: resetButton)
         
@@ -131,8 +131,8 @@ class PrefSliders_cell: UITableViewCell {
 
     // MARK: - misc
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202D).withAlphaComponent(0.4) : UIColor(hex: 0xF4F6F8)
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF4F6F8)
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
     }
     
@@ -148,7 +148,7 @@ extension PrefSliders_cell {
     func orangeTitle(text: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textColor = UIColor(hex: 0xFF643C)
+        label.textColor = UIColor(hex: 0xDA4933)
         label.font = MERRIWEATHER_BOLD(17)
         return label
     }
@@ -207,7 +207,7 @@ extension PrefSliders_cell {
             view.heightAnchor.constraint(equalToConstant: self.sliderRowsHeight)
         ])
         
-        let roboto_bold = ROBOTO_BOLD(13)
+        let aileronBold = AILERON_BOLD(13)
         let characterSpacing: Double = 1.5
         let titles = [
                         ["POLITICAL STANCE", "ESTABLISHMENT STANCE"],
@@ -235,7 +235,7 @@ extension PrefSliders_cell {
             
             let titleLabel = UILabel()
             titleLabel.text = _2titles[j-1]
-            titleLabel.font = roboto_bold
+            titleLabel.font = aileronBold
             titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
             titleLabel.addCharacterSpacing(kernValue: characterSpacing)
             view.addSubview(titleLabel)
@@ -257,8 +257,8 @@ extension PrefSliders_cell {
             
             let leftLabel = UILabel()
             leftLabel.text = _4legends[k]
-            leftLabel.font = roboto_bold
-            leftLabel.textColor = UIColor(hex: 0x93A0B4)
+            leftLabel.font = aileronBold
+            leftLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
             leftLabel.addCharacterSpacing(kernValue: characterSpacing)
             hStack.addArrangedSubview(leftLabel)
             
@@ -266,8 +266,8 @@ extension PrefSliders_cell {
             
             let rightLabel = UILabel()
             rightLabel.text = _4legends[k+1]
-            rightLabel.font = roboto_bold
-            rightLabel.textColor = UIColor(hex: 0x93A0B4)
+            rightLabel.font = aileronBold
+            rightLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
             rightLabel.addCharacterSpacing(kernValue: characterSpacing)
             hStack.addArrangedSubview(rightLabel)
             

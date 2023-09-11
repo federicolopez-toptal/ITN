@@ -27,8 +27,8 @@ extension MainFeedViewController {
         ])
         
         // Cells registration
-        self.list.register(HeaderCell.self, forCellWithReuseIdentifier: HeaderCell.identifier)
-        self.list.register(HeaderZeroCell.self, forCellWithReuseIdentifier: HeaderZeroCell.identifier)
+        self.list.register(HeaderOverCell.self, forCellWithReuseIdentifier: HeaderOverCell.identifier)
+        self.list.register(HeaderUnderItemCell.self, forCellWithReuseIdentifier: HeaderUnderItemCell.identifier)
         self.list.register(SplitHeaderCell.self, forCellWithReuseIdentifier: SplitHeaderCell.identifier)
         self.list.register(MoreCell.self, forCellWithReuseIdentifier: MoreCell.identifier)
         self.list.register(FooterCell.self, forCellWithReuseIdentifier: FooterCell.identifier)
@@ -157,10 +157,15 @@ extension MainFeedViewController {
         let dpItem = self.getDP_item(indexPath)
 
         if (dpItem is DP_header) { // Header
-            if(indexPath.row==1) {
-                size = HeaderZeroCell.getHeight(width: width)
+//            if(indexPath.row==1) {
+//                size = HeaderUnderItemCell.getHeight(width: width)
+//            } else {
+//                size = HeaderCell.getHeight(width: width)
+//            }
+            if(Layout.current() == .textImages) {
+                size = HeaderUnderItemCell.getHeight(width: width)
             } else {
-                size = HeaderCell.getHeight(width: width)
+                size = HeaderOverCell.getHeight(width: width)
             }
         } else if (dpItem is DP_splitHeader) { // Split header
             size = SplitHeaderCell.getHeight(width: width)
@@ -228,16 +233,26 @@ extension MainFeedViewController {
         let dpItem = self.getDP_item(indexPath)
         
         if let _item = dpItem as? DP_header { // Header
-            if(indexPath.row == 1) {
-                cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderZeroCell.identifier,
-                for: indexPath) as! HeaderZeroCell
-            
-                (cell as! HeaderZeroCell).populate(with: _item)
+//            if(indexPath.row == 1) {
+//                cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderUnderItemCell.identifier,
+//                for: indexPath) as! HeaderUnderItemCell
+//
+//                (cell as! HeaderUnderItemCell).populate(with: _item)
+//            } else {
+//                cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderCell.identifier,
+//                for: indexPath) as! HeaderCell
+//
+//                (cell as! HeaderCell).populate(with: _item)
+//            }
+
+            if(Layout.current() == .textImages) {
+                cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderUnderItemCell.identifier,
+                    for: indexPath) as! HeaderUnderItemCell
+                (cell as! HeaderUnderItemCell).populate(with: _item)
             } else {
-                cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderCell.identifier,
-                for: indexPath) as! HeaderCell
-            
-                (cell as! HeaderCell).populate(with: _item)
+                cell = self.list.dequeueReusableCell(withReuseIdentifier: HeaderOverCell.identifier,
+                    for: indexPath) as! HeaderOverCell
+                (cell as! HeaderOverCell).populate(with: _item)
             }
         } else if let _item = dpItem as? DP_splitHeader { // Split header
             cell = self.list.dequeueReusableCell(withReuseIdentifier: SplitHeaderCell.identifier,

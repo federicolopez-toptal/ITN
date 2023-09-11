@@ -18,10 +18,10 @@ class FilterTextView: UIView {
     weak var delegate: FilterTextViewDelegate?
     private weak var viewController: UIViewController?
     
-    let lupa = UIImageView(image: UIImage(named: "navBar.search.dark"))
+    let lupa = UIImageView(image: UIImage(named: "navBar.search.dark")?.withRenderingMode(.alwaysTemplate))
     let placeHolderLabel = UILabel()
     let mainTextField = UITextField()
-    let closeIcon = UIImageView(image: UIImage(named: "menu.close"))
+    let closeIcon = UIImageView(image: UIImage(named: "menu.close")?.withRenderingMode(.alwaysTemplate))
     let closeButton = UIButton(type: .system)
     var bgColorViewTrailingConstraint: NSLayoutConstraint?
     
@@ -48,12 +48,12 @@ class FilterTextView: UIView {
         viewController.view.addSubview(self)
         
         self.layer.borderWidth = 1.0
-        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x2B3747).cgColor : UIColor(hex: 0xB4BDCA).cgColor
+        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xB4BDCA).cgColor
         
         self.placeHolderLabel.text = "Example text"
         self.placeHolderLabel.textColor = .yellow
         self.placeHolderLabel.font = roboto
-        self.placeHolderLabel.textColor = UIColor(hex: 0x93A0B4)
+        self.placeHolderLabel.textColor = UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5)
         self.addSubview(self.placeHolderLabel)
         self.placeHolderLabel.activateConstraints([
             self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
@@ -61,7 +61,8 @@ class FilterTextView: UIView {
         ])
 
         self.mainTextField.font = roboto
-        self.mainTextField.textColor = UIColor(hex: 0xFF643C)
+        self.mainTextField.textColor = UIColor(hex: 0xDA4933)
+        self.mainTextField.tintColor = UIColor(hex: 0xDA4933)
         self.mainTextField.returnKeyType = .done
         self.mainTextField.autocapitalizationType = .none
         self.mainTextField.autocorrectionType = .no
@@ -86,6 +87,7 @@ class FilterTextView: UIView {
             self.lupa.widthAnchor.constraint(equalToConstant: 24),
             self.lupa.heightAnchor.constraint(equalToConstant: 24)
         ])
+        self.lupa.tintColor = UIColor(hex: 0xBBBDC0)
         
         self.addSubview(self.closeIcon)
         self.closeIcon.activateConstraints([
@@ -95,6 +97,7 @@ class FilterTextView: UIView {
             self.closeIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         self.closeIcon.hide()
+        closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x28282D)
 
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
         self.addSubview(closeButton)

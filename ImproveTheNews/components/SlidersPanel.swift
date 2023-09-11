@@ -75,7 +75,7 @@ class SlidersPanel: UIView {
             rowsVStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27)
         ])
         
-        let roboto_bold = ROBOTO_BOLD(13)
+        let aileronBold = AILERON_BOLD(13)
         let characterSpacing: Double = 1.5
         
         for i in 1...6 {
@@ -85,7 +85,7 @@ class SlidersPanel: UIView {
             
                 let titleLabel = UILabel()
                 titleLabel.text = self.titles[i-1].uppercased()
-                titleLabel.font = roboto_bold
+                titleLabel.font = aileronBold
                 titleLabel.textColor = UIColor(hex: 0x1D242F)
                 titleLabel.addCharacterSpacing(kernValue: characterSpacing)
                 titleHStack.addArrangedSubview(titleLabel)
@@ -133,7 +133,7 @@ class SlidersPanel: UIView {
 
                     let splitLabel = UILabel()
                     splitLabel.text = "SPLIT"
-                    splitLabel.font = roboto_bold
+                    splitLabel.font = aileronBold
                     splitLabel.textColor = UIColor(hex: 0x1D242F)
                     splitLabel.addCharacterSpacing(kernValue: characterSpacing)
                     titleHStack.addArrangedSubview(splitLabel)
@@ -163,7 +163,7 @@ class SlidersPanel: UIView {
             
                 let leftLabel = UILabel()
                 leftLabel.text = _legends.0.uppercased()
-                leftLabel.font = roboto_bold
+                leftLabel.font = aileronBold
                 leftLabel.textColor = UIColor(hex: 0x93A0B4)
                 leftLabel.addCharacterSpacing(kernValue: characterSpacing)
                 legendsHStack.addArrangedSubview(leftLabel)
@@ -174,7 +174,7 @@ class SlidersPanel: UIView {
                 
                 let rightLabel = UILabel()
                 rightLabel.text = _legends.1.uppercased()
-                rightLabel.font = roboto_bold
+                rightLabel.font = aileronBold
                 rightLabel.textColor = UIColor(hex: 0x93A0B4)
                 rightLabel.addCharacterSpacing(kernValue: characterSpacing)
                 legendsHStack.addArrangedSubview(rightLabel)

@@ -52,7 +52,7 @@ func STORY_PILL() -> UILabel {
     result.textColor = .white
     result.text = "STORY"
     result.textAlignment = .center
-    result.font = ROBOTO_BOLD(11)
+    result.font = AILERON_BOLD(11)
     result.layer.masksToBounds = true
     result.layer.cornerRadius = 12
     result.addCharacterSpacing(kernValue: 1.0)

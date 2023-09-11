@@ -88,8 +88,8 @@ class PrefCheckboxes_cell: UITableViewCell {
             
             let check = OnOffView()
             check.status = value
-            check.thumbOnColor = UIColor(hex: 0xFF643C)
-            check.thumbOffColor = UIColor(hex: 0x93A0B4)
+            check.thumbOnColor = UIColor(hex: 0xDA4933)
+            check.thumbOffColor = .white
             check.delegate = self
             check.tag = 50 + i
             hStack.addArrangedSubview(check)
@@ -98,7 +98,7 @@ class PrefCheckboxes_cell: UITableViewCell {
         self.mainContainer.addSubview(self.sourcesButton)
         self.sourcesButton.activateConstraints([
             self.sourcesButton.heightAnchor.constraint(equalToConstant: 35),
-            self.sourcesButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 20)
+            self.sourcesButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 45)
         ])
         if(IPHONE()) {
             self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16).isActive = true
@@ -123,8 +123,8 @@ class PrefCheckboxes_cell: UITableViewCell {
     
     //MARK: - misc
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202D).withAlphaComponent(0.4) : UIColor(hex: 0xF4F6F8)
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF4F6F8)
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         
         let vStack = self.mainContainer.viewWithTag(22) as! UIStackView
@@ -132,14 +132,18 @@ class PrefCheckboxes_cell: UITableViewCell {
             let hStack = v as! UIStackView
             
             let label = hStack.arrangedSubviews[0] as! UILabel
-            label.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+            label.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
             
             let onOff = hStack.arrangedSubviews[1] as! OnOffView
-            onOff.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : .white
+            if(onOff.status) {
+                onOff.backgroundColor = DARK_MODE() ? UIColor(hex: 0x823129) : UIColor(hex: 0xE6A49D)
+            } else {
+                onOff.backgroundColor = DARK_MODE() ? UIColor(hex: 0x68686A) : UIColor(hex: 0xA1A2A3)
+            }
         }
         
-        self.sourcesButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x283241) : UIColor(hex: 0xB4BDCA)
-        self.sourcesLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : .white
+        self.sourcesButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xB4BDCA)
+        self.sourcesLabel.textColor = DARK_MODE() ? .white : .white
     }
     
     // MARK: - Event(s)

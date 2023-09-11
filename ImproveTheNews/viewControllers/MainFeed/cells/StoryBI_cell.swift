@@ -56,7 +56,7 @@ class StoryBI_cell: UICollectionViewCell {
             vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
         ])
         
-    let roboto_bold = ROBOTO_BOLD(11)
+    let aileronBold = AILERON_BOLD(11)
     let roboto = ROBOTO(13)
     let merriweather_bold = MERRIWEATHER_BOLD(18)
     let characterSpacing: Double = 1.0 //35
@@ -68,7 +68,7 @@ class StoryBI_cell: UICollectionViewCell {
         storyLabel.textColor = .white
         storyLabel.text = "STORY"
         storyLabel.textAlignment = .center
-        storyLabel.font = roboto_bold
+        storyLabel.font = aileronBold
         storyLabel.layer.masksToBounds = true
         storyLabel.layer.cornerRadius = 12
         storyLabel.addCharacterSpacing(kernValue: characterSpacing)
@@ -176,7 +176,7 @@ class StoryBI_cell: UICollectionViewCell {
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
         
         self.gradient.image = UIImage(named: DisplayMode.imageName("story.shortGradient"))
-        self.gradientBottom.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xE9EAEB)
+        self.gradientBottom.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE9EAEB)
         self.gradient.alpha = 1.0
         //self.gradientBottom.alpha = self.gradient.alpha
     }

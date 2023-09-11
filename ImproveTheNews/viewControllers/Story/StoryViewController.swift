@@ -1166,7 +1166,7 @@ extension StoryViewController {
         storyPillLabel.textColor = .white
         storyPillLabel.text = "STORY"
         storyPillLabel.textAlignment = .center
-        storyPillLabel.font = ROBOTO_BOLD(11)
+        storyPillLabel.font = AILERON_BOLD(11)
         storyPillLabel.layer.masksToBounds = true
         storyPillLabel.layer.cornerRadius = 12
         storyPillLabel.addCharacterSpacing(kernValue: 1.0)

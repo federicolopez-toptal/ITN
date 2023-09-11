@@ -52,7 +52,7 @@ final class HyperlinkLabel: UILabel {
     
     // MARK: Finding Hyperlink Under Touch
     
-    var hyperlinkAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor(hex: 0xFF643C)]
+    var hyperlinkAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor(hex: 0xDA4933)]
     
     var didTapOnURL: (URL) -> Void = { url in
         if UIApplication.shared.canOpenURL(url) {
@@ -133,7 +133,7 @@ extension HyperlinkLabel {
         
         let attributedString = NSMutableAttributedString(string: text, attributes: [
             .font: ROBOTO(15),
-            .foregroundColor: DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         ])
 
         for (i, url) in urls.enumerated() {

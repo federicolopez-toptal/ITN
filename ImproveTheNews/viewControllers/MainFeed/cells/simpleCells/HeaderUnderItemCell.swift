@@ -1,15 +1,17 @@
 //
-//  HeaderCell.swift
+//  HeaderZeroCell.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 13/09/2022.
+//  Created by Federico Lopez on 14/12/2022.
 //
 
+import Foundation
 import UIKit
 
-class HeaderCell: UICollectionViewCell {
 
-    static let identifier = "HeaderCell"
+class HeaderUnderItemCell: UICollectionViewCell {
+
+    static let identifier = "HeaderZeroCell"
 
     let titleLabel = UILabel()
     
@@ -29,23 +31,24 @@ class HeaderCell: UICollectionViewCell {
     private func buildContent() {
         self.contentView.backgroundColor = .white
         
-    let roboto_bold = ROBOTO_BOLD(12)
+    //let roboto_bold = ROBOTO_BOLD(12)
         
         self.titleLabel.backgroundColor = .clear //.orange
         self.titleLabel.textColor = .black
-        self.titleLabel.font = roboto_bold
+        self.titleLabel.font = MERRIWEATHER_BOLD(18) //roboto_bold
         self.titleLabel.text = "TEST TOPIC"
+//        self.titleLabel.backgroundColor = .black
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.titleLabel.heightAnchor.constraint(equalToConstant: 14),
-            self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+            self.titleLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -4)
         ])
     }
     
     func populate(with header: DP_header) {
-        self.titleLabel.text = header.text
+        self.titleLabel.text = header.text.capitalized
         let characterSpacing: Double = 1.5
         self.titleLabel.addCharacterSpacing(kernValue: characterSpacing)
         
@@ -58,26 +61,7 @@ class HeaderCell: UICollectionViewCell {
     }
     
     static func getHeight(width: CGFloat) -> CGSize {
-        return CGSize(width: width, height: 45.0)
+        return CGSize(width: width, height: 34)
     }
 
 }
-
-
-/*
-//-------------------
-        if let _prevTestLine = self.contentView.viewWithTag(951) {
-            _prevTestLine.removeFromSuperview()
-        }
-        
-        //print(SCREEN_SIZE().width)
-        let collectionViewWidth: CGFloat = 375 // iPhone 12 mini, iPhone 8
-        let _size = StoryCO_cell.calculateHeight(text: story.title, sourcesCount: story.storySources.count,
-            width: collectionViewWidth)
-        
-        let testLine = UIView()
-        testLine.tag = 951
-        testLine.backgroundColor = .yellow.withAlphaComponent(0.5)
-        testLine.frame = CGRect(x: 0, y: _size.height, width: collectionViewWidth, height: 4)
-        self.contentView.addSubview(testLine)
-*/

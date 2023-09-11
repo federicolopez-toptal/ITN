@@ -30,7 +30,8 @@ class MenuItemCell: UITableViewCell {
     private func buildContent() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         
-        let roboto_bold = ROBOTO_BOLD(13)
+        let aileronBold = AILERON_BOLD(13)
+        //ROBOTO_BOLD(13)
         
         let gap = UIView()
         gap.backgroundColor = .clear //.systemPink
@@ -55,7 +56,7 @@ class MenuItemCell: UITableViewCell {
         
         self.titleLabel.backgroundColor = .clear //.orange
         self.titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
-        self.titleLabel.font = roboto_bold
+        self.titleLabel.font = aileronBold
         self.titleLabel.text = "TEST TOPIC"
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([

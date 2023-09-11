@@ -107,6 +107,12 @@ class OnOffView: UIView {
         let leadingTo: CGFloat = self._status ? (self.WIDTH-self.BORDER-dim) : 2
         
         self.thumb.backgroundColor = colorTo
+        if(self._status) {
+            self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x823129) : UIColor(hex: 0xE6A49D)
+        } else {
+            self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x68686A) : UIColor(hex: 0xA1A2A3)
+        }
+        
         self.thumbLeadingConstraint?.constant = leadingTo
         UIView.animate(withDuration: 0.2) {
             self.layoutIfNeeded()

@@ -44,9 +44,9 @@ class SourceFilterViewController: BaseViewController {
     // MARK: - misc
     func buildContent() {
         let topSpace: CGFloat = Y_TOP_NOTCH_FIX(54)
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     
-        let closeImage = UIImage(named: "menu.close")
+        let closeImage = UIImage(named: "menu.close")?.withRenderingMode(.alwaysTemplate)
         let closeIcon = UIImageView(image: closeImage)
         self.view.addSubview(closeIcon)
         closeIcon.activateConstraints([
@@ -55,6 +55,8 @@ class SourceFilterViewController: BaseViewController {
             closeIcon.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -18),
             closeIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topSpace)
         ])
+        closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+        
         
         let closeButton = UIButton(type: .system)
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
@@ -94,7 +96,7 @@ class SourceFilterViewController: BaseViewController {
     
         let paywallLabel = UILabel()
         paywallLabel.text = "* indicates pay wall"
-        paywallLabel.textColor = UIColor(hex: 0xFF643C)
+        paywallLabel.textColor = UIColor(hex: 0xDA4933)
         paywallLabel.font = ROBOTO_BOLD(14)
         self.view.addSubview(paywallLabel)
         paywallLabel.activateConstraints([
@@ -135,9 +137,9 @@ class SourceFilterViewController: BaseViewController {
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.sTitleLabel.textColor = self.titleLabel.textColor
+        self.sTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : self.titleLabel.textColor
     }
     
     @objc func onCloseButtonTap(_ sender: UIButton) {
@@ -203,7 +205,7 @@ extension SourceFilterViewController: FilterTextViewDelegate {
             nameLabel.font = MERRIWEATHER_BOLD(14)
             nameLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
             if(icon.paywall) {
-                nameLabel.textColor = UIColor(hex: 0xFF643C)
+                nameLabel.textColor = UIColor(hex: 0xDA4933)
                 nameLabel.text = icon.name + " *"
             } else {
                 nameLabel.text = icon.name

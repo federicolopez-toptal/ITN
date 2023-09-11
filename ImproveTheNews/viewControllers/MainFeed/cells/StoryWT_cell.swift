@@ -41,7 +41,7 @@ class StoryWT_cell: UICollectionViewCell {
             StoryWT_cell.extraHeight = 8
         }
         
-    let roboto_bold = ROBOTO_BOLD(11)
+    let aileronBold = AILERON_BOLD(11)
     let characterSpacing: Double = 1.35
     let roboto = ROBOTO(13)
         
@@ -49,16 +49,16 @@ class StoryWT_cell: UICollectionViewCell {
         self.storyLabel.textColor = .white
         self.storyLabel.text = "STORY"
         self.storyLabel.textAlignment = .center
-        self.storyLabel.font = roboto_bold
+        self.storyLabel.font = aileronBold
         self.storyLabel.layer.masksToBounds = true
-        self.storyLabel.layer.cornerRadius = 12
+        self.storyLabel.layer.cornerRadius = 10
         self.storyLabel.addCharacterSpacing(kernValue: characterSpacing)
         self.contentView.addSubview(self.storyLabel)
         self.storyLabel.activateConstraints([
             self.storyLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16+StoryWT_cell.extraHeight),
-            self.storyLabel.widthAnchor.constraint(equalToConstant: 65),
+            self.storyLabel.widthAnchor.constraint(equalToConstant: 60),
             self.storyLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            self.storyLabel.heightAnchor.constraint(equalToConstant: 23)
+            self.storyLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         
         self.titleLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.3)

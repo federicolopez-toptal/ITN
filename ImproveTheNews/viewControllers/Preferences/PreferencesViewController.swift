@@ -73,7 +73,7 @@ class PreferencesViewController: BaseViewController {
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.list.backgroundColor = self.view.backgroundColor
         self.navBar.refreshDisplayMode()
         
