@@ -55,7 +55,7 @@ class TopicsCell: UITableViewCell {
         for (i, T) in topics.enumerated() {
             let label = UILabel()
             label.font = ROBOTO(13)
-            label.textColor = UIColor(hex: 0xFF643C)
+            label.textColor = UIColor(hex: 0xDA4933)
             label.backgroundColor = UIColor(hex: 0xFF643C).withAlphaComponent(0.2)
             label.textAlignment = .center
             label.text = T.name
@@ -100,7 +100,7 @@ class TopicsCell: UITableViewCell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     }
     
     // MARK: - Event(s)

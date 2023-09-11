@@ -57,7 +57,7 @@ class iPhoneGroupItem_1AR_Cell: GroupItemCell {
     
     override func refreshDisplayMode() {
         super.refreshDisplayMode()
-        //self.contentView.backgroundColor = .green        
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white        
     }
     
     func highlight(text T: String) {

@@ -19,7 +19,7 @@ class KeywordSearchTextView: UIView {
     private let charactersLimit: Int = 28
     weak var delegate: KeywordSearchTextViewDelegate?
     
-    let lupa = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.search")))
+    let lupa = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.search"))?.withRenderingMode(.alwaysTemplate))
     let placeHolderLabel = UILabel()
     let searchTextField = UITextField()
     let closeIcon = UIImageView(image: UIImage(named: "menu.close")!.withRenderingMode(.alwaysTemplate))
@@ -37,7 +37,7 @@ class KeywordSearchTextView: UIView {
         viewController.view.addSubview(self)
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x323943) : UIColor(hex: 0xF2F2F2)
+        bgColorView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xF2F2F2)
         self.addSubview(bgColorView)
         bgColorView.activateConstraints([
             bgColorView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -54,12 +54,13 @@ class KeywordSearchTextView: UIView {
             self.lupa.widthAnchor.constraint(equalToConstant: 24),
             self.lupa.heightAnchor.constraint(equalToConstant: 24)
         ])
+        self.lupa.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.75) : UIColor(hex: 0x1D242F)
         
         let roboto = ROBOTO(14)
         
         self.placeHolderLabel.text = "Search topics" // "Headlines, stories & article splits"
         self.placeHolderLabel.font = roboto
-        self.placeHolderLabel.textColor = UIColor(hex: 0x93A0B4)
+        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5) : UIColor(hex: 0x1D242F).withAlphaComponent(0.5)
         bgColorView.addSubview(self.placeHolderLabel)
         self.placeHolderLabel.activateConstraints([
             self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.lupa.trailingAnchor, constant: 4),
@@ -67,7 +68,8 @@ class KeywordSearchTextView: UIView {
         ])
         
         self.searchTextField.font = roboto
-        self.searchTextField.textColor = UIColor(hex: 0xFF643C)
+        self.searchTextField.textColor = UIColor(hex: 0xDA4933)
+        self.searchTextField.tintColor = UIColor(hex: 0xDA4933)
         self.searchTextField.returnKeyType = .done
         self.searchTextField.autocapitalizationType = .none
         self.searchTextField.autocorrectionType = .no
@@ -92,7 +94,7 @@ class KeywordSearchTextView: UIView {
             self.closeIcon.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -8),
             self.closeIcon.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor)
         ])
-        self.closeIcon.tintColor = UIColor(hex: 0xFF643C)
+        self.closeIcon.tintColor = UIColor(hex: 0xDA4933)
         self.closeIcon.hide()
         
         let closeButton = UIButton(type: .system)
@@ -124,7 +126,7 @@ extension KeywordSearchTextView {
         } else {
             self.placeHolderLabel.hide()
             self.lupa.image = UIImage(named: "navBar.search.dark")?.withRenderingMode(.alwaysTemplate)
-            self.lupa.tintColor = UIColor(hex: 0xFF643C)
+            self.lupa.tintColor = UIColor(hex: 0xDA4933)
             self.closeIcon.show()
         }
         

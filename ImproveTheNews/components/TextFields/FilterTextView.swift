@@ -53,7 +53,7 @@ class FilterTextView: UIView {
         self.placeHolderLabel.text = "Example text"
         self.placeHolderLabel.textColor = .yellow
         self.placeHolderLabel.font = roboto
-        self.placeHolderLabel.textColor = UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5)
+        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5) : UIColor(hex: 0x1D242F).withAlphaComponent(0.5)
         self.addSubview(self.placeHolderLabel)
         self.placeHolderLabel.activateConstraints([
             self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
@@ -87,7 +87,7 @@ class FilterTextView: UIView {
             self.lupa.widthAnchor.constraint(equalToConstant: 24),
             self.lupa.heightAnchor.constraint(equalToConstant: 24)
         ])
-        self.lupa.tintColor = UIColor(hex: 0xBBBDC0)
+        self.lupa.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5) : UIColor(hex: 0xBBBDC0)
         
         self.addSubview(self.closeIcon)
         self.closeIcon.activateConstraints([
@@ -97,7 +97,7 @@ class FilterTextView: UIView {
             self.closeIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         self.closeIcon.hide()
-        closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x28282D)
+        closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5) : UIColor(hex: 0x1D242F).withAlphaComponent(0.5)
 
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
         self.addSubview(closeButton)
