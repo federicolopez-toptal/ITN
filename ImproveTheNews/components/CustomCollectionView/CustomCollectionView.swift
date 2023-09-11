@@ -64,7 +64,7 @@ class CustomCollectionView: UICollectionView {
         
         REMOVE_ALL_SUBVIEWS(from: self.vLineView)
         for (_, L) in lines.enumerated() {
-            let color = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+            let color = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1D242F).withAlphaComponent(0.2)
             
             if(L.1) {
                 let newLine = UIView()

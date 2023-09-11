@@ -126,7 +126,7 @@ class StoryWT_cell: UICollectionViewCell {
     
     func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE9EAEB)
-        self.marginView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.marginView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         

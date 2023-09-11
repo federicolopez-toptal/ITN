@@ -122,8 +122,8 @@ class StoryViewController: BaseViewController {
     
     override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
     }
     
 }
@@ -332,7 +332,7 @@ extension StoryViewController {
                     let sourceLabel = UILabel()
                     sourceLabel.text = sourceName
                     sourceLabel.font = ROBOTO(12)
-                    sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                    sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
                     HStack_source.addArrangedSubview(sourceLabel)
                     ADD_SPACER(to: HStack_source, width: 8)
 
@@ -351,7 +351,7 @@ extension StoryViewController {
                         let timeLabel = UILabel()
                         timeLabel.text = "updated " + A.timeRelative
                         timeLabel.font = ROBOTO(12)
-                        timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                        timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
                         VStack_data.addArrangedSubview(timeLabel)
                     }
 
@@ -646,7 +646,7 @@ extension StoryViewController {
                 titleLabel.font = MERRIWEATHER_BOLD(17)
                 titleLabel.text = _title
                 titleLabel.numberOfLines = 0
-                titleLabel.textColor = UIColor(hex: 0xFF643C)
+                titleLabel.textColor = UIColor(hex: 0xDA4933)
                 innerHStack.addArrangedSubview(titleLabel)
                 
                 ADD_SPACER(to: innerHStack, height: 10)
@@ -654,7 +654,7 @@ extension StoryViewController {
                 descriptionLabel.font = ROBOTO(14)
                 descriptionLabel.numberOfLines = 0
                 descriptionLabel.text = S.description
-                descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
                 innerHStack.addArrangedSubview(descriptionLabel)
                 
                 if(!S.image.isEmpty && !S.subTitle.isEmpty && !S.media_title.isEmpty) {
@@ -725,7 +725,7 @@ extension StoryViewController {
                     let sourceLabel = UILabel()
                     sourceLabel.text = S.media_name
                     sourceLabel.font = ROBOTO(12)
-                    sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                    sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
                     HStack_source.addArrangedSubview(sourceLabel)
                     ADD_SPACER(to: HStack_source, width: 8)
                     
@@ -744,7 +744,7 @@ extension StoryViewController {
                         let timeLabel = UILabel()
                         timeLabel.text = "updated " + S.timeRelative
                         timeLabel.font = ROBOTO(12)
-                        timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                        timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
                         VStack_data.addArrangedSubview(timeLabel)
                     }
                     ADD_SPACER(to: VStack_data) // V fill
@@ -785,7 +785,7 @@ extension StoryViewController {
                         let dash_long: CGFloat = 5
                         let dash_sep: CGFloat = 2
                         var val_x: CGFloat = 0
-                        let dash_color = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                        let dash_color = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1D242F).withAlphaComponent(0.2)
                         
                         var maxDim = SCREEN_SIZE().width
                         if(SCREEN_SIZE().height > maxDim){ maxDim = SCREEN_SIZE().height }
@@ -837,7 +837,7 @@ extension StoryViewController {
                 ADD_SPACER(to: HStack, width: 20)
 
                 let dot = UIView()
-                dot.backgroundColor = UIColor(hex: 0xFF643C)
+                dot.backgroundColor = UIColor(hex: 0xDA4933)
                 HStack.addSubview(dot)
                 dot.activateConstraints([
                     dot.widthAnchor.constraint(equalToConstant: 8),
@@ -876,7 +876,7 @@ extension StoryViewController {
             ADD_SPACER(to: VStack, height: 20)
             //////////////////////////////////////
             let showMoreLabel = UILabel()
-            showMoreLabel.textColor = UIColor(hex: 0xFF643C)
+            showMoreLabel.textColor = UIColor(hex: 0xDA4933)
             showMoreLabel.textAlignment = .center
             showMoreLabel.font = ROBOTO(15)
             showMoreLabel.text = self.show3 ? "Show more" : "Show fewer facts"
@@ -895,7 +895,7 @@ extension StoryViewController {
             //////////////////////////////////////
             ADD_SPACER(to: VStack, height: 30)
             let line = UIView()
-            line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E2634) : UIColor(hex: 0xE2E3E3)
+            line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
             VStack.addArrangedSubview(line)
             line.activateConstraints([
                 line.heightAnchor.constraint(equalToConstant: 1)
@@ -955,7 +955,7 @@ extension StoryViewController {
                 let sourceLabel = UILabel()
                 sourceLabel.font = ROBOTO(15)
                 //sourceLabel.backgroundColor = .blue
-                sourceLabel.textColor = UIColor(hex: 0xFF643C)
+                sourceLabel.textColor = UIColor(hex: 0xDA4933)
                 sourceLabel.text = "[" + String(i+1) + "] " + S.0
                 //print("SOURCE:", sourceLabel.text)
                 
@@ -1038,7 +1038,7 @@ extension StoryViewController {
         let VStack_borders = VSTACK(into: HStack)
         ADD_SPACER(to: HStack, width: 12)
         VStack_borders.layer.borderWidth = 8.0
-        VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x1D2530).cgColor : UIColor(hex: 0xE1E3E3).cgColor
+        VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE1E3E3).cgColor
 
         let innerHStack = HSTACK(into: VStack_borders)
         //innerHStack.backgroundColor = .blue
@@ -1052,7 +1052,7 @@ extension StoryViewController {
         let creditLabel = UILabel()
         creditLabel.numberOfLines = 0
         creditLabel.font = ROBOTO(14)
-        creditLabel.textColor = UIColor(hex: 0xFF643C)
+        creditLabel.textColor = UIColor(hex: 0xDA4933)
         creditLabel.text = "Image credit: " + title
         creditLabel.addUnderline()
         
@@ -1078,7 +1078,7 @@ extension StoryViewController {
     private func addTime(time: String) {
         let updatedLabel = UILabel()
         updatedLabel.font = ROBOTO(14)
-        updatedLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x93A0B4)
+        updatedLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x93A0B4)
         updatedLabel.text = "Updated " + time
         
         let HStack = HSTACK(into: self.VStack)
@@ -1162,18 +1162,18 @@ extension StoryViewController {
         ADD_SPACER(to: HStack, width: 10)
         
         let storyPillLabel = UILabel()
-        storyPillLabel.backgroundColor = UIColor(hex: 0xFF643C)
+        storyPillLabel.backgroundColor = UIColor(hex: 0xDA4933)
         storyPillLabel.textColor = .white
         storyPillLabel.text = "STORY"
         storyPillLabel.textAlignment = .center
         storyPillLabel.font = AILERON_BOLD(11)
         storyPillLabel.layer.masksToBounds = true
-        storyPillLabel.layer.cornerRadius = 12
+        storyPillLabel.layer.cornerRadius = 10
         storyPillLabel.addCharacterSpacing(kernValue: 1.0)
         HStack.addArrangedSubview(storyPillLabel)
         storyPillLabel.activateConstraints([
-            storyPillLabel.widthAnchor.constraint(equalToConstant: 65),
-            storyPillLabel.heightAnchor.constraint(equalToConstant: 23)
+            storyPillLabel.widthAnchor.constraint(equalToConstant: 60),
+            storyPillLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         
         ADD_SPACER(to: HStack)
@@ -1217,7 +1217,7 @@ extension StoryViewController: UIGestureRecognizerDelegate {
         range = NSRange(location: attr.string.count - extraText.count, length: extraText.count)
         
         mAttr.addAttribute(NSAttributedString.Key.foregroundColor,
-            value: UIColor(hex: 0xFF643C),
+            value: UIColor(hex: 0xDA4933),
             range: range)
         mAttr.addAttribute(NSAttributedString.Key.font,
             value: fontItalic!,

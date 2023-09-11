@@ -47,14 +47,14 @@ class HeaderOverCell: UICollectionViewCell {
     func populate(with header: DP_header) {
         self.titleLabel.text = header.text
         let characterSpacing: Double = 1.5
-        self.titleLabel.addCharacterSpacing(kernValue: characterSpacing)
+        //self.titleLabel.addCharacterSpacing(kernValue: characterSpacing)
         
         self.refreshDisplayMode()
     }
     
     private func refreshDisplayMode() {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
-        self.titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
     }
     
     static func getHeight(width: CGFloat) -> CGSize {

@@ -64,7 +64,7 @@ class iPadGroupItem_splitCell: GroupItemCell {
 
     override func refreshDisplayMode() {
         super.refreshDisplayMode()
-        self.vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1D242F)
+        self.vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1D242F).withAlphaComponent(0.2)
     }
 
 }
