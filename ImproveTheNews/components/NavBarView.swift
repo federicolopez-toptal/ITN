@@ -410,7 +410,12 @@ class NavBarView: UIView {
                 }
                 
                 imgView.image = img
-                imgView.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x0A0A0C)
+                if(imgView.tag==1) { // logo
+                    imgView.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x0A0A0C)
+                } else {
+                    imgView.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x0A0A0C)
+                }
+                
             }
             
             if(C is UILabel) {

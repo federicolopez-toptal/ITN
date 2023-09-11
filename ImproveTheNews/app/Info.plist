@@ -31,6 +31,9 @@
 		<string>Merriweather-Bold.ttf</string>
 		<string>Merriweather-Regular.ttf</string>
 		<string>Merriweather-Italic.ttf</string>
+		<string>Aileron-Regular.otf</string>
+		<string>Aileron-SemiBold.otf</string>
+		<string>Aileron-Bold.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

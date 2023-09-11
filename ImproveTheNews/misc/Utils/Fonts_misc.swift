@@ -25,3 +25,17 @@ func ROBOTO(_ size: CGFloat = 10.0) -> UIFont {
 func ROBOTO_BOLD(_ size: CGFloat = 10.0) -> UIFont {
     return UIFont(name: "Roboto-Bold", size: size)!
 }
+
+func AILERON(_ size: CGFloat = 10.0) -> UIFont {
+    return UIFont(name: "Aileron-Regular", size: size)!
+}
+
+func AILERON_SEMIBOLD(_ size: CGFloat = 10.0) -> UIFont {
+    return UIFont(name: "Aileron-SemiBold", size: size)!
+}
+
+func AILERON_BOLD(_ size: CGFloat = 10.0) -> UIFont {
+    return UIFont(name: "Aileron-Bold", size: size)!
+}
+
+
