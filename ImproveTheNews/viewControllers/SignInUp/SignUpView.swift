@@ -86,7 +86,7 @@ class SignUpView: UIView {
         HLine.backgroundColor = .red
         self.VStack.addArrangedSubview(HLine)
         HLine.activateConstraints([
-            HLine.heightAnchor.constraint(equalToConstant: 1)
+            HLine.heightAnchor.constraint(equalToConstant: 6)
         ])
         HLine.tag = 100
 
@@ -98,10 +98,10 @@ class SignUpView: UIView {
         hStack.tag = 101
 
         let tab1Label = UILabel()
-        tab1Label.text = "SIGN IN"
-        tab1Label.font = ROBOTO_BOLD(14)
+        tab1Label.text = "SIGN IN".capitalized
+        tab1Label.font = MERRIWEATHER_BOLD(16)
         tab1Label.textAlignment = .center
-        tab1Label.textColor = UIColor(hex: 0x93A0B4)
+        tab1Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         hStack.addArrangedSubview(tab1Label)
         tab1Label.activateConstraints([
             tab1Label.widthAnchor.constraint(equalToConstant: (SCREEN_SIZE().width/2)-1)
@@ -111,13 +111,13 @@ class SignUpView: UIView {
         vLine.backgroundColor = .red
         hStack.addArrangedSubview(vLine)
         vLine.activateConstraints([
-            vLine.widthAnchor.constraint(equalToConstant: 1)
+            vLine.widthAnchor.constraint(equalToConstant: 6)
         ])
         vLine.tag = 100
 
         let tab2Label = UILabel()
-        tab2Label.text = "SIGN UP"
-        tab2Label.font = ROBOTO_BOLD(14)
+        tab2Label.text = "SIGN UP".capitalized
+        tab2Label.font = MERRIWEATHER_BOLD(16)
         tab2Label.textAlignment = .center
         tab2Label.textColor = UIColor(hex: 0xFF643C)
         hStack.addArrangedSubview(tab2Label)
@@ -139,7 +139,7 @@ class SignUpView: UIView {
         HLine2.activateConstraints([
             HLine2.leadingAnchor.constraint(equalTo: VStack.leadingAnchor, constant: 0),
             HLine2.topAnchor.constraint(equalTo: VStack.topAnchor, constant: 67),
-            HLine2.heightAnchor.constraint(equalToConstant: 1),
+            HLine2.heightAnchor.constraint(equalToConstant: 6),
             HLine2.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width/2)
         ])
         HLine2.tag = 100
@@ -220,7 +220,7 @@ class SignUpView: UIView {
         
         let hStack_mainActionButton = HSTACK(into: VStack_form)
         
-        self.mainActionButton.backgroundColor = UIColor(hex: 0xFF643C)
+        self.mainActionButton.backgroundColor = UIColor(hex: 0xDA4933)
         self.mainActionButton.layer.cornerRadius = 4.0
         if(IPHONE()) {
             hStack_mainActionButton.addArrangedSubview(self.mainActionButton)
@@ -310,7 +310,7 @@ class SignUpView: UIView {
         let questionLabel2 = UILabel()
         questionLabel2.font = ROBOTO(16)
         questionLabel2.text = "Click here to sign in!"
-        questionLabel2.textColor = UIColor(hex: 0xFF643C)
+        questionLabel2.textColor = UIColor(hex: 0xDA4933)
         questionLabel2.addUnderline()
         HStack_question.addArrangedSubview(questionLabel2)
         ADD_SPACER(to: HStack_question)
@@ -392,9 +392,9 @@ class SignUpView: UIView {
 extension SignUpView {
 
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.scrollView.backgroundColor = self.backgroundColor
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
 
         for v in self.VStack.arrangedSubviews {
             self.setColorToView(v)
@@ -403,16 +403,19 @@ extension SignUpView {
         for v in self.VStack.subviews {
             self.setColorToView(v)
         }
+        
+        self.contentView.layer.borderWidth = 6
+        self.contentView.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE2E3E3).cgColor
     }
     
     // ------------
     func setColorToView(_ view: UIView) {
         switch(view.tag) {
             case 100:
-                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : UIColor(hex: 0xE2E3E3)
+                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3) // lines
 
             case 101:
-                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white // tabs
 
             default:
                 NOTHING()

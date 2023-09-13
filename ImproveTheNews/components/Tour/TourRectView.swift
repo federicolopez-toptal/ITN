@@ -30,7 +30,7 @@ class TourRectView: UIView {
         super.init(frame: CGRect.zero)
         self.index = index
         
-        self.backgroundColor = UIColor(hex: 0x303B4D)
+        self.backgroundColor = UIColor(hex: 0x19191C)
         self.layer.cornerRadius = 4.0
         container.addSubview(self)
         self.activateConstraints([
@@ -40,7 +40,12 @@ class TourRectView: UIView {
         
             // X axis -----------------------------------
         if(IPHONE()) {
-            self.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
+            if(index==4 || index==5) {
+                self.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16).isActive = true
+            } else {
+                self.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
+            }
+            
         } else if(IPAD()) {
             if(index==4 || index==5) {
                 self.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16).isActive = true
@@ -84,7 +89,7 @@ class TourRectView: UIView {
 
         // LABEL -------------------------------
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = UIColor(hex: 0xBBBDC0)
         label.font = ROBOTO(16.5)
         label.numberOfLines = 0
         label.text = text
@@ -97,7 +102,7 @@ class TourRectView: UIView {
         ])
         
         // CLOSE -------------------------------
-        let closeIcon = UIImageView(image: UIImage(named: "popup.close.dark"))
+        let closeIcon = UIImageView(image: UIImage(named: "popup.close.dark")?.withRenderingMode(.alwaysTemplate))
         self.addSubview(closeIcon)
         closeIcon.activateConstraints([
             closeIcon.widthAnchor.constraint(equalToConstant: 24),
@@ -105,6 +110,7 @@ class TourRectView: UIView {
             closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 11),
             closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -11)
         ])
+        closeIcon.tintColor = UIColor(hex: 0xBBBDC0)
         
         let closeIconButton = UIButton(type: .custom)
         closeIconButton.backgroundColor = .clear
@@ -122,7 +128,7 @@ class TourRectView: UIView {
         
         if(backButtonFlag) {
             backLabel = UILabel()
-            backLabel!.textColor = UIColor(hex: 0xFF643C)
+            backLabel!.textColor = UIColor(hex: 0xDA4933)
             backLabel!.text = "Back"
             backLabel!.font = ROBOTO(16)
             self.addSubview(backLabel!)
@@ -131,7 +137,7 @@ class TourRectView: UIView {
         // NEXT BUTTON (ORANGE) -------------------------------
         if let _nextButtonText = nextButtonText {
             let orangeButton = UIButton(type: .custom)
-            orangeButton.backgroundColor = UIColor(hex: 0xFF643C)
+            orangeButton.backgroundColor = UIColor(hex: 0xDA4933)
             orangeButton.layer.cornerRadius = 4.0
             self.addSubview(orangeButton)
             orangeButton.activateConstraints([

@@ -52,7 +52,7 @@ class RatingView: UIView {
         ])
     
         let line = UIView()
-        line.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.2) : UIColor(hex: 0xE2E3E3)
+        line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
         self.addSubview(line)
         line.activateConstraints([
             line.topAnchor.constraint(equalTo: self.topAnchor),
@@ -73,7 +73,7 @@ class RatingView: UIView {
         ])
         
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor(hex: 0xFF643C)
+        button.backgroundColor = UIColor(hex: 0xDA4933)
         button.layer.cornerRadius = 4
         self.addSubview(button)
         button.activateConstraints([
@@ -145,7 +145,7 @@ class RatingView: UIView {
         var valX: CGFloat = 0
         for i in 1...5 {
             //let star = UIImageView(image: UIImage(named: DisplayMode.imageName("star")))
-            let star = UIImageView(image: UIImage(named: "starFilled"))
+            let star = UIImageView(image: UIImage(named: "starFilled")?.withRenderingMode(.alwaysTemplate))
             self.starsContainer.addSubview(star)
             star.activateConstraints([
                 star.widthAnchor.constraint(equalToConstant: 20),
@@ -153,6 +153,7 @@ class RatingView: UIView {
                 star.leadingAnchor.constraint(equalTo: self.starsContainer.leadingAnchor, constant: valX),
                 star.topAnchor.constraint(equalTo: self.starsContainer.topAnchor)
             ])
+            star.tintColor = UIColor(hex: 0xDA4933)
             star.isUserInteractionEnabled = false
             star.tag = 30 + i
             
@@ -178,7 +179,7 @@ class RatingView: UIView {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
     }

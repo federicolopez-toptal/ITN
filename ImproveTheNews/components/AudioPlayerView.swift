@@ -102,13 +102,13 @@ class AudioPlayerView: UIView {
         
         ADD_SPACER(to: self.mainHStack, width: hMargin)
             let colorRect = UIView()
-            colorRect.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D2530) : UIColor(hex: 0xEAEBEC)
+            colorRect.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xEAEBEC)
             self.mainHStack.addArrangedSubview(colorRect)
         ADD_SPACER(to: self.mainHStack, width: hMargin)
         
         // -------
         let colorLine = UIView()
-        colorLine.backgroundColor = UIColor(hex: 0xF3643C)
+        colorLine.backgroundColor = UIColor(hex: 0xDA4933)
         colorRect.addSubview(colorLine)
         colorLine.activateConstraints([
             colorLine.leadingAnchor.constraint(equalTo: colorRect.leadingAnchor),
@@ -117,7 +117,8 @@ class AudioPlayerView: UIView {
             colorLine.widthAnchor.constraint(equalToConstant: 4)
         ])
         
-        let podcastIcon = UIImageView(image: UIImage(named: "podcast"))
+        let podcastIcon = UIImageView(image: UIImage(named: "podcast")?.withRenderingMode(.alwaysTemplate))
+        podcastIcon.tintColor = UIColor(hex: 0xDA4933)
         colorRect.addSubview(podcastIcon)
         podcastIcon.activateConstraints([
             podcastIcon.widthAnchor.constraint(equalToConstant: 24),
@@ -187,7 +188,7 @@ class AudioPlayerView: UIView {
         ])
         
         let colorSubRect = UIView()
-        colorSubRect.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0C121E) : .white
+        colorSubRect.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.innerContainer.addArrangedSubview(colorSubRect)
         colorSubRect.activateConstraints([
             colorSubRect.heightAnchor.constraint(equalToConstant: 105)
@@ -230,9 +231,9 @@ class AudioPlayerView: UIView {
         self.slider.maximumValue = 100
         self.slider.value = 0
         self.slider.isContinuous = true
-        self.slider.minimumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x1D2530) : UIColor(hex: 0xEAEBEC)
+        self.slider.minimumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xEAEBEC)
         self.slider.maximumTrackTintColor = self.slider.minimumTrackTintColor
-        self.slider.setThumbImage(UIImage(named: "audioPlayerThumb"), for: .normal)
+        self.slider.setThumbImage(UIImage(named: DisplayMode.imageName("slidersGrayThumb")), for: .normal)
         sliderHStack.addArrangedSubview(self.slider)
         self.slider.addTarget(self, action: #selector(sliderOnValueChange(_:)), for: .valueChanged)
         self.slider.addTarget(self, action: #selector(sliderOnTouchDown(_:)), for: .touchDown)
@@ -242,7 +243,7 @@ class AudioPlayerView: UIView {
         self.timeLabel.textAlignment = .center
         //self.timeLabel.text = "00:00"
         self.updateTime(-1)
-        self.timeLabel.textColor = UIColor(hex: 0x93A0B4)
+        self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         sliderHStack.addArrangedSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
             self.timeLabel.widthAnchor.constraint(equalToConstant: 45)
@@ -257,7 +258,7 @@ class AudioPlayerView: UIView {
                 self.playImageView2.heightAnchor.constraint(equalToConstant: 25)
             ])
             self.playImageView2.image = UIImage(systemName: "play.circle")?.withRenderingMode(.alwaysTemplate)
-            self.playImageView2.tintColor = UIColor(hex: 0xF3643C)
+            self.playImageView2.tintColor = UIColor(hex: 0xDA4933)
         ADD_SPACER(to: playIconVStack, height: 2.5)
         
         let playButton2 = UIButton(type: .custom)
@@ -274,7 +275,7 @@ class AudioPlayerView: UIView {
         let platformsLabel = UILabel()
         platformsLabel.text = "Or listen to this story on the following platforms"
         platformsLabel.font = ROBOTO(13)
-        platformsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+        platformsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         self.innerContainer.addArrangedSubview(platformsLabel)
         
         ADD_SPACER(to: self.innerContainer, height: 10)
@@ -456,7 +457,7 @@ extension AudioPlayerView {
     
     private func prettifyText(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, paths: [String], linkedSubstrings: [String], accented: [String]) -> NSAttributedString {
 
-        let nonBoldFontAttribute: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font:font!, NSAttributedString.Key.foregroundColor: DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)]
+        let nonBoldFontAttribute: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font:font!, NSAttributedString.Key.foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)]
         let boldFontAttribute = [NSAttributedString.Key.font:boldFont!]
         let accentedAttribute:  [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor(hex: 0xD3592D), NSAttributedString.Key.strokeWidth: -5]
         

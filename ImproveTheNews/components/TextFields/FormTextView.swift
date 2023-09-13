@@ -40,14 +40,14 @@ class FormTextView: UIView {
             self.heightAnchor.constraint(equalToConstant: 44)
         ])
 
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E1E1E) : .white
         self.layer.borderWidth = 1.0
-        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x2B3747).cgColor : UIColor(hex: 0xBBBBBB).cgColor
+        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0xBBBBBB).withAlphaComponent(0.5).cgColor : UIColor(hex: 0xBBBBBB).cgColor
 
         self.placeHolderLabel.text = "Example text"
         self.placeHolderLabel.textColor = .yellow
         self.placeHolderLabel.font = ROBOTO(14)
-        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0x2B3747) : UIColor(hex: 0xBBBBBB)
+        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBBBB).withAlphaComponent(0.5) : UIColor(hex: 0xBBBBBB)
         self.addSubview(self.placeHolderLabel)
         self.placeHolderLabel.activateConstraints([
             self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
@@ -55,7 +55,8 @@ class FormTextView: UIView {
         ])
 
         self.mainTextField.font = ROBOTO(14)
-        self.mainTextField.textColor = UIColor(hex: 0xFF643C)
+        self.mainTextField.textColor = .white
+        self.mainTextField.tintColor = .white
         self.mainTextField.returnKeyType = .done
         self.mainTextField.autocapitalizationType = .none
         self.mainTextField.autocorrectionType = .no
@@ -120,6 +121,7 @@ extension FormTextView {
         self.charactersLimit = charactersLimit
         self.placeHolderLabel.text = placeHolderText
         self.mainTextField.textColor = textColor
+        self.mainTextField.tintColor = textColor
     }
     
     func setPasswordMode(_ state: Bool) {

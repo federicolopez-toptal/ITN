@@ -56,7 +56,7 @@ extension MenuView {
                 result = "How the sliders work"
                 
             case .faq:
-                result = "FAQ"
+                result = "About"
                 
             case .feedback:
                 result = "Feedback"
@@ -105,7 +105,7 @@ extension MenuView {
                 icon = "sliders"
             
             case .faq:
-                icon = "faq"
+                icon = "about"
                 
             case .feedback:
                 icon = "feedback"

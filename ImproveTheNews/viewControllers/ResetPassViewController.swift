@@ -130,7 +130,7 @@ class ResetPassViewController: BaseViewController {
         self.emailText.delegate = self
         ADD_SPACER(to: VStack_form, height: 20)
         
-        self.mainActionButton.backgroundColor = UIColor(hex: 0xFF643C)
+        self.mainActionButton.backgroundColor = UIColor(hex: 0xDA4933)
         self.mainActionButton.layer.cornerRadius = 4.0
         VStack_form.addArrangedSubview(self.mainActionButton)
         mainActionButton.activateConstraints([
@@ -153,7 +153,7 @@ class ResetPassViewController: BaseViewController {
         questionLabel.font = ROBOTO(16)
         questionLabel.textAlignment = .center
         questionLabel.text = "Click here to sign up!"
-        questionLabel.textColor = UIColor(hex: 0xFF643C)
+        questionLabel.textColor = UIColor(hex: 0xDA4933)
         questionLabel.addUnderline()
         VStack_form.addArrangedSubview(questionLabel)
         ADD_SPACER(to: VStack_form, height: 32)
@@ -171,11 +171,14 @@ class ResetPassViewController: BaseViewController {
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.navBar.refreshDisplayMode()
         
         self.scrollView.backgroundColor = self.view.backgroundColor
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        
+        self.contentView.layer.borderWidth = 6
+        self.contentView.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE2E3E3).cgColor
     }
 
 }

@@ -53,7 +53,7 @@ class SignInUpViewController: BaseViewController {
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.navBar.refreshDisplayMode()
         self.signIn.refreshDisplayMode()
     }

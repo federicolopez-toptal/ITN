@@ -85,7 +85,7 @@ class SignInView: UIView {
         HLine.backgroundColor = .red
         self.VStack.addArrangedSubview(HLine)
         HLine.activateConstraints([
-            HLine.heightAnchor.constraint(equalToConstant: 1)
+            HLine.heightAnchor.constraint(equalToConstant: 6)
         ])
         HLine.tag = 100
 
@@ -97,10 +97,10 @@ class SignInView: UIView {
         hStack.tag = 101
 
         let tab1Label = UILabel()
-        tab1Label.text = "SIGN IN"
-        tab1Label.font = ROBOTO_BOLD(14)
+        tab1Label.text = "SIGN IN".capitalized
+        tab1Label.font = MERRIWEATHER_BOLD(16)
         tab1Label.textAlignment = .center
-        tab1Label.textColor = UIColor(hex: 0xFF643C)
+        tab1Label.textColor = UIColor(hex: 0xDA4933)
         hStack.addArrangedSubview(tab1Label)
         tab1Label.activateConstraints([
             tab1Label.widthAnchor.constraint(equalToConstant: (SCREEN_SIZE().width/2)-1)
@@ -110,15 +110,15 @@ class SignInView: UIView {
         vLine.backgroundColor = .red
         hStack.addArrangedSubview(vLine)
         vLine.activateConstraints([
-            vLine.widthAnchor.constraint(equalToConstant: 1)
+            vLine.widthAnchor.constraint(equalToConstant: 6)
         ])
         vLine.tag = 100
 
         let tab2Label = UILabel()
-        tab2Label.text = "SIGN UP"
-        tab2Label.font = ROBOTO_BOLD(14)
+        tab2Label.text = "SIGN UP".capitalized
+        tab2Label.font = MERRIWEATHER_BOLD(16)
         tab2Label.textAlignment = .center
-        tab2Label.textColor = UIColor(hex: 0x93A0B4)
+        tab2Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         hStack.addArrangedSubview(tab2Label)
 
         let tabButton = UIButton(type: .custom)
@@ -138,7 +138,7 @@ class SignInView: UIView {
         HLine2.activateConstraints([
             HLine2.leadingAnchor.constraint(equalTo: VStack.leadingAnchor, constant: (SCREEN_SIZE().width/2)),
             HLine2.topAnchor.constraint(equalTo: VStack.topAnchor, constant: 67),
-            HLine2.heightAnchor.constraint(equalToConstant: 1),
+            HLine2.heightAnchor.constraint(equalToConstant: 6),
             HLine2.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width/2)
         ])
         HLine2.tag = 100
@@ -188,7 +188,7 @@ class SignInView: UIView {
         ADD_SPACER(to: VStack_form, height: 14)
         
         let forgotPassLabel = UILabel()
-        forgotPassLabel.textColor = UIColor(hex: 0xFF643C)
+        forgotPassLabel.textColor = UIColor(hex: 0xDA4933)
         forgotPassLabel.font = ROBOTO(15)
         forgotPassLabel.text = "Forgot password"
         forgotPassLabel.addUnderline()
@@ -208,7 +208,7 @@ class SignInView: UIView {
         
         let hStack_mainActionButton = HSTACK(into: VStack_form)
         
-        self.mainActionButton.backgroundColor = UIColor(hex: 0xFF643C)
+        self.mainActionButton.backgroundColor = UIColor(hex: 0xDA4933)
         self.mainActionButton.layer.cornerRadius = 4.0
         
         if(IPHONE()) {
@@ -246,7 +246,7 @@ class SignInView: UIView {
         let socialLabel = UILabel()
         socialLabel.font = ROBOTO(16)
         socialLabel.textAlignment = .center
-        socialLabel.textColor = UIColor(hex: 0x93A0B4)
+        socialLabel.textColor = UIColor(hex: 0xBBBDC0)
         socialLabel.text = "or user social networks to sign in:"
         VStack_form.addArrangedSubview(socialLabel)
         ADD_SPACER(to: VStack_form, height: 15)
@@ -297,13 +297,13 @@ class SignInView: UIView {
         let questionLabel1 = UILabel()
         questionLabel1.font = ROBOTO(16)
         questionLabel1.text = "Don’t have an account? - "
-        questionLabel1.textColor = UIColor(hex: 0x93A0B4)
+        questionLabel1.textColor = UIColor(hex: 0xBBBDC0)
         HStack_question.addArrangedSubview(questionLabel1)
         
         let questionLabel2 = UILabel()
         questionLabel2.font = ROBOTO(16)
         questionLabel2.text = "Click here to sign up!"
-        questionLabel2.textColor = UIColor(hex: 0xFF643C)
+        questionLabel2.textColor = UIColor(hex: 0xDA4933)
         questionLabel2.addUnderline()
         HStack_question.addArrangedSubview(questionLabel2)
         ADD_SPACER(to: HStack_question)
@@ -334,9 +334,9 @@ class SignInView: UIView {
 extension SignInView {
 
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.scrollView.backgroundColor = self.backgroundColor
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
 
         for v in self.VStack.arrangedSubviews {
             self.setColorToView(v)
@@ -345,16 +345,19 @@ extension SignInView {
         for v in self.VStack.subviews {
             self.setColorToView(v)
         }
+        
+        self.contentView.layer.borderWidth = 6
+        self.contentView.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE2E3E3).cgColor
     }
     
     // ------------
     func setColorToView(_ view: UIView) {
         switch(view.tag) {
             case 100:
-                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : UIColor(hex: 0xE2E3E3)
+                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3) // lines
 
             case 101:
-                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white // tabs
 
             default:
                 NOTHING()

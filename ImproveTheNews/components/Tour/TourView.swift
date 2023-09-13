@@ -110,7 +110,7 @@ extension TourView {
         showSpike: Bool = false) {
         
         let rect = UIView()
-        rect.backgroundColor = UIColor(hex: 0x303B4D) //.withAlphaComponent(0.25)
+        rect.backgroundColor = UIColor(hex: 0x19191C) //.withAlphaComponent(0.25)
         rect.layer.cornerRadius = 4.0
         rect.tag = 10 + 1
         self.addSubview(rect)

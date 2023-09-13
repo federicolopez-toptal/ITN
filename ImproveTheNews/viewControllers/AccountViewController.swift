@@ -133,7 +133,7 @@ class AccountViewController: BaseViewController {
         blablaLabel.numberOfLines = 0
         blablaLabel.text = "Hi! You can manage your account settings below."
         blablaLabel.font = ROBOTO(14)
-        blablaLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        blablaLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(blablaLabel)
         ADD_SPACER(to: VStack_form, height: 25)
     
@@ -200,7 +200,7 @@ class AccountViewController: BaseViewController {
         let hStack_saveUserInfoButton = HSTACK(into: VStack_form)
         
         let saveUserInfoButton = UIButton(type: .custom)
-        saveUserInfoButton.backgroundColor = UIColor(hex: 0xFF643C)
+        saveUserInfoButton.backgroundColor = UIColor(hex: 0xDA4933)
         saveUserInfoButton.layer.cornerRadius = 4.0
         
         if(IPHONE()) {
@@ -271,7 +271,7 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: hStackSubscription)
         
         let subscribeButton = UIButton(type: .custom)
-        subscribeButton.backgroundColor = UIColor(hex: 0xFF643C)
+        subscribeButton.backgroundColor = UIColor(hex: 0xDA4933)
         subscribeButton.layer.cornerRadius = 4.0
         hStackSubscription.addArrangedSubview(subscribeButton)
         subscribeButton.activateConstraints([
@@ -540,7 +540,7 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: hStackSignOut)
         
         let signOutButton = UIButton(type: .custom)
-        signOutButton.backgroundColor = UIColor(hex: 0xFF643C)
+        signOutButton.backgroundColor = UIColor(hex: 0xDA4933)
         signOutButton.layer.cornerRadius = 4.0
         hStackSignOut.addArrangedSubview(signOutButton)
         signOutButton.activateConstraints([
@@ -582,7 +582,7 @@ class AccountViewController: BaseViewController {
         let hStackDelete = HSTACK(into: VStack_form)
         
         let deleteIcon = UIImageView(image: UIImage(systemName: "x.circle.fill")?.withRenderingMode(.alwaysTemplate))
-        deleteIcon.tintColor = UIColor(hex: 0xFF643C)
+        deleteIcon.tintColor = UIColor(hex: 0xDA4933)
         hStackDelete.addArrangedSubview(deleteIcon)
         deleteIcon.activateConstraints([
             deleteIcon.widthAnchor.constraint(equalToConstant: 44),
@@ -599,7 +599,7 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: hStackDelete)
         
         let deleteButton = UIButton(type: .custom)
-        deleteButton.backgroundColor = UIColor(hex: 0xFF643C)
+        deleteButton.backgroundColor = UIColor(hex: 0xDA4933)
         deleteButton.layer.cornerRadius = 4.0
         hStackDelete.addArrangedSubview(deleteButton)
         deleteButton.activateConstraints([
@@ -622,11 +622,11 @@ class AccountViewController: BaseViewController {
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.navBar.refreshDisplayMode()
         
         self.scrollView.backgroundColor = self.view.backgroundColor
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     }
     
     func loadUserData() {
@@ -713,7 +713,7 @@ class AccountViewController: BaseViewController {
     private func updateSocialButton(_ index: Int, state: Bool) {
         MAIN_THREAD {
             if let button = self.view.viewWithTag(100+index) as? UIButton {
-                button.backgroundColor = state ? UIColor(hex: 0xFF643C) : .lightGray
+                button.backgroundColor = state ? UIColor(hex: 0xDA4933) : .lightGray
             }
             
             if let label = self.view.viewWithTag(200+index) as? UILabel {

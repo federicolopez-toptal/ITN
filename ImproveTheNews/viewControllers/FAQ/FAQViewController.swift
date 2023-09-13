@@ -9,8 +9,9 @@ import UIKit
 
 class FAQViewController: BaseViewController {
 
+    var descrLabel: HyperlinkLabel?
+            
     let navBar = NavBarView()
-    let titleLabel = UILabel()
     let scrollView = UIScrollView()
     let contentView = UIView()
     var VStack: UIStackView!
@@ -31,7 +32,7 @@ class FAQViewController: BaseViewController {
             
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.back, .title])
-            self.navBar.setTitle("FAQ's")
+            self.navBar.setTitle("About")
             
             self.buildContent()
         }
@@ -64,22 +65,34 @@ class FAQViewController: BaseViewController {
             H
         ])
 
-        self.titleLabel.font = MERRIWEATHER_BOLD(24)
-        self.titleLabel.text = ""
-        self.contentView.addSubview(self.titleLabel)
-        self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 13),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -13),
-            self.titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 13)
+        self.descrLabel = HyperlinkLabel.parrafo2(text: self.mainContent(), linkTexts: ["Max Tegmark"],
+            urls: ["https://physics.mit.edu/faculty/max-tegmark/"], onTap: self.onLinkTap(_:))
+            
+        self.contentView.addSubview(self.descrLabel!)
+        self.descrLabel!.activateConstraints([
+            self.descrLabel!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
+            self.descrLabel!.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
+            self.descrLabel!.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 13)
+        ])
+        
+        let FAQ = UILabel()
+        FAQ.text = "Frequently Asked Questions"
+        FAQ.font = MERRIWEATHER_BOLD(20)
+        FAQ.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        self.contentView.addSubview(FAQ)
+        FAQ.activateConstraints([
+            FAQ.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
+            FAQ.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
+            FAQ.topAnchor.constraint(equalTo: self.descrLabel!.bottomAnchor, constant: 25)
         ])
 
         self.VStack = VSTACK(into: self.contentView)
         self.VStack.backgroundColor = .clear //.systemPink
-        self.VStack.spacing = 10
+        self.VStack.spacing = 0
         self.VStack.activateConstraints([
             self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 13),
             self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -13),
-            self.VStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 0),
+            self.VStack.topAnchor.constraint(equalTo: FAQ.bottomAnchor, constant: 15),
             //self.VStack.topAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 13),
             self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -26),
             //VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
@@ -93,7 +106,7 @@ class FAQViewController: BaseViewController {
         REMOVE_ALL_SUBVIEWS(from: self.VStack)
         self.heightConstraints = [NSLayoutConstraint]()
         
-        for i in 1...15 {
+        for i in 1...(15-1) {
             self.addSection(title: self.titles(i), content: self.contents(i),
                 linkTexts: self.linkedTexts(i), urls: self.urls(i), index: i)
         }
@@ -105,7 +118,7 @@ class FAQViewController: BaseViewController {
         
         let sectionView = UIView()
         sectionView.tag = 0
-        sectionView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19202D).withAlphaComponent(0.4) : UIColor(hex: 0xF4F6F8)
+        sectionView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xF4F6F8)
         self.VStack.addArrangedSubview(sectionView)
         
         let heightConstraint = sectionView.heightAnchor.constraint(equalToConstant: 50)
@@ -113,7 +126,7 @@ class FAQViewController: BaseViewController {
         self.heightConstraints.append(heightConstraint)
         
         let vLine = UIView()
-        vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x4C596C) : UIColor(hex: 0x93A0B4)
+        vLine.backgroundColor = .red //DARK_MODE() ? UIColor(hex: 0x4C596C) : UIColor(hex: 0x93A0B4)
         sectionView.addSubview(vLine)
         vLine.activateConstraints([
             vLine.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor),
@@ -121,6 +134,7 @@ class FAQViewController: BaseViewController {
             vLine.bottomAnchor.constraint(equalTo: sectionView.bottomAnchor),
             vLine.widthAnchor.constraint(equalToConstant: 2)
         ])
+        vLine.alpha = 0
         
         let titleHStack = HSTACK(into: sectionView)
         titleHStack.backgroundColor = .clear //.orange
@@ -132,7 +146,7 @@ class FAQViewController: BaseViewController {
         
         let titleLabel = UILabel()
         titleLabel.font = MERRIWEATHER_BOLD(20)
-        titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         titleLabel.numberOfLines = 0
         titleLabel.text = tText
         titleLabel.backgroundColor = .clear //.yellow
@@ -149,7 +163,7 @@ class FAQViewController: BaseViewController {
             icon.trailingAnchor.constraint(equalTo: titleHStack.trailingAnchor),
             icon.topAnchor.constraint(equalTo: titleHStack.topAnchor, constant: -4)
         ])
-                
+               
         let buttonArea = UIButton(type: .custom)
         buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         sectionView.addSubview(buttonArea)
@@ -204,6 +218,16 @@ class FAQViewController: BaseViewController {
             ])
         }
         
+        let hTopLine = UIView()
+        hTopLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.35) : .black.withAlphaComponent(0.1)
+        sectionView.addSubview(hTopLine)
+        hTopLine.activateConstraints([
+            hTopLine.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor),
+            hTopLine.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor),
+            hTopLine.topAnchor.constraint(equalTo: sectionView.topAnchor),
+            hTopLine.heightAnchor.constraint(equalToConstant: 1)
+        ])
+        
         self.updateSectionHeight(index: self.VStack.arrangedSubviews.count, open: false)
     }
     func updateSectionHeight(index: Int, open: Bool, animate: Bool = false) {
@@ -232,7 +256,7 @@ class FAQViewController: BaseViewController {
             height = 24 + titleLabel.calculateHeightFor(width: W) + 24 + contentLabel.calculateHeightFor(width: W+50) + 24
             contentLabel.show()
             vLine.backgroundColor = UIColor(hex: 0xFF643C)
-            titleLabel.textColor = UIColor(hex: 0xFF643C)
+            titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
             
             var imageName = "minusLight"
             if(DARK_MODE()){ imageName = "minusDark" }
@@ -259,8 +283,8 @@ class FAQViewController: BaseViewController {
             sectionView.tag = 0
             height = 24 + titleLabel.calculateHeightFor(width: W) + 24
             contentLabel.hide()
-            vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x4C596C) : UIColor(hex: 0x93A0B4)
-            titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+            vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x4C596C) : UIColor(hex: 0x1D242F)
+            titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
             icon.image = UIImage(named: "plus")
             imageView?.hide()
         }
@@ -284,8 +308,8 @@ class FAQViewController: BaseViewController {
     
 
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        //self.descrLabel!.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.scrollView.backgroundColor = self.view.backgroundColor
         self.contentView.backgroundColor = self.view.backgroundColor
         self.navBar.refreshDisplayMode()

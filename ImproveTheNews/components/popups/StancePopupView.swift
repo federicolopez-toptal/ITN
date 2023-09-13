@@ -43,7 +43,9 @@ class StancePopupView: PopupView {
             self.bottomConstraint!
         ])
         
-        let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("popup.close")))
+        let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("popup.close"))?.withRenderingMode(.alwaysTemplate))
+        closeIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        
         self.addSubview(closeIcon)
         closeIcon.activateConstraints([
             closeIcon.widthAnchor.constraint(equalToConstant: 24),
@@ -82,7 +84,7 @@ class StancePopupView: PopupView {
         
         // ------------------
         self.addSubview(self.descriptionLabel)
-        self.descriptionLabel.font = MERRIWEATHER(15)
+        self.descriptionLabel.font = AILERON(15)  //MERRIWEATHER(15)
         self.descriptionLabel.backgroundColor = .clear //.systemPink
         self.descriptionLabel.numberOfLines = 3
         self.descriptionLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
@@ -110,8 +112,8 @@ class StancePopupView: PopupView {
             
             let leftLabel = UILabel()
             leftLabel.text = (i==1) ? "LEFT" : "CRITICAL"
-            leftLabel.textColor = UIColor(hex: 0x93A0B4)
-            leftLabel.font = ROBOTO(13)
+            leftLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x0A0A0C)
+            leftLabel.font = AILERON_BOLD(13)
             leftLabel.addCharacterSpacing(kernValue: characterSpacing)
             sliderHStack.addArrangedSubview(leftLabel)
             
@@ -119,8 +121,8 @@ class StancePopupView: PopupView {
             
             let rightLabel = UILabel()
             rightLabel.text = (i==1) ? "RIGHT" : "PRO"
-            rightLabel.textColor = UIColor(hex: 0x93A0B4)
-            rightLabel.font = ROBOTO(13)
+            rightLabel.textColor = leftLabel.textColor
+            rightLabel.font = AILERON_BOLD(13)
             rightLabel.addCharacterSpacing(kernValue: characterSpacing)
             sliderHStack.addArrangedSubview(rightLabel)
             
@@ -138,7 +140,7 @@ class StancePopupView: PopupView {
         
         let moreInfoLabel = UILabel()
         moreInfoLabel.text = "More info"
-        moreInfoLabel.textColor = UIColor(hex: 0xFF643C)
+        moreInfoLabel.textColor = UIColor(hex: 0xDA4933)
         moreInfoLabel.font = ROBOTO(16)
         moreInfoLabel.backgroundColor = .clear //.black
         self.addSubview(moreInfoLabel)
@@ -147,7 +149,8 @@ class StancePopupView: PopupView {
             moreInfoLabel.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 16)
         ])
         
-        let moreInfoIcon = UIImageView(image: UIImage(named: "infoIcon"))
+        let moreInfoIcon = UIImageView(image: UIImage(named: "infoIcon")?.withRenderingMode(.alwaysTemplate))
+        moreInfoIcon.tintColor = UIColor(hex: 0xDA4933)
         self.addSubview(moreInfoIcon)
         moreInfoIcon.activateConstraints([
             moreInfoIcon.widthAnchor.constraint(equalToConstant: 20),
@@ -176,10 +179,10 @@ class StancePopupView: PopupView {
     }
     
     override func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1D242F) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : .white
         self.stanceIcon.refreshDisplayMode()
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+        self.descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
         if(DARK_MODE()) {
             self.stanceIcon.backgroundColor = UIColor(hex: 0x2A323E)
@@ -188,9 +191,9 @@ class StancePopupView: PopupView {
         // sliders
         for i in 1...2 {
             if let slider = self.viewWithTag(20+i) as? UISlider {
-                slider.minimumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x545B67) : UIColor(hex: 0xD9DCDF)
+                slider.minimumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xE3E3E3)
                 slider.maximumTrackTintColor = slider.minimumTrackTintColor
-                slider.setThumbImage(UIImage(named: "slidersGrayThumb"), for: .normal)
+                slider.setThumbImage(UIImage(named: DisplayMode.imageName("slidersGrayThumb")), for: .normal)
             }
         }
     }
