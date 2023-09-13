@@ -15,6 +15,7 @@ class FAQViewController: BaseViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
     var VStack: UIStackView!
+    var firstItemOpened: Bool = false
     
     var heightConstraints = [NSLayoutConstraint]()
     
@@ -35,8 +36,25 @@ class FAQViewController: BaseViewController {
             self.navBar.setTitle("About")
             
             self.buildContent()
+            if(self.firstItemOpened) {
+                self.updateSectionHeight(index: 1, open: true)
+                self.firstItemOpened = false
+                
+                let FAQ = self.contentView.viewWithTag(951) as! UILabel
+                let W = SCREEN_SIZE().width - 18 - 18
+                let H = 13 + descrLabel!.calculateHeightFor(width: W) + 25 + FAQ.calculateHeightFor(width: W + 15)
+                DELAY(0.5) {
+                    self.scrollView.setContentOffset(CGPoint(x: 0, y: H), animated: true)
+                }
+            }
         }
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        self.updateSectionHeight(index: 1, open: true)
+//    }
     
     func buildContent() {
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
@@ -76,6 +94,7 @@ class FAQViewController: BaseViewController {
         ])
         
         let FAQ = UILabel()
+        FAQ.tag = 951
         FAQ.text = "Frequently Asked Questions"
         FAQ.font = MERRIWEATHER_BOLD(20)
         FAQ.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
@@ -99,6 +118,10 @@ class FAQViewController: BaseViewController {
         ])
     
         self.refreshDisplayMode()
+        
+//        DELAY(1.0) {
+//
+//        }
     }
     
     func addContent() {
@@ -110,7 +133,6 @@ class FAQViewController: BaseViewController {
             self.addSection(title: self.titles(i), content: self.contents(i),
                 linkTexts: self.linkedTexts(i), urls: self.urls(i), index: i)
         }
-        
     }
     
     func addSection(title tText: String, content: String,

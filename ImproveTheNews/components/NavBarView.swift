@@ -109,6 +109,28 @@ class NavBarView: UIView {
                     button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
                 ])
                 button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
+                
+                let infoIcon = UIImageView(image: UIImage(systemName: "info.circle.fill")?.withRenderingMode(.alwaysTemplate))
+                infoIcon.tintColor = UIColor(hex: 0xBBBDC0)
+                self.addSubview(infoIcon)
+                infoIcon.activateConstraints([
+                    infoIcon.widthAnchor.constraint(equalToConstant: 17),
+                    infoIcon.heightAnchor.constraint(equalToConstant: 17),
+                    infoIcon.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: 8),
+                    infoIcon.topAnchor.constraint(equalTo: logo.topAnchor)
+                ])
+                
+                let infoButton = UIButton(type: .system)
+                infoButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                self.addSubview(infoButton)
+                infoButton.activateConstraints([
+                    infoButton.leadingAnchor.constraint(equalTo: infoIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    infoButton.topAnchor.constraint(equalTo: infoIcon.topAnchor, constant: -self.buttonsMargin),
+                    infoButton.widthAnchor.constraint(equalTo: infoIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    infoButton.heightAnchor.constraint(equalTo: infoIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                infoButton.addTarget(self, action: #selector(onInfoButtonTap(_:)), for: .touchUpInside)
+                
             }
             
             if(C == .menuIcon) {
@@ -477,6 +499,12 @@ extension NavBarView {
         }
 
         CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
+    }
+    
+    @objc func onInfoButtonTap(_ sender: UIButton) {
+        let vc = FAQViewController()
+        vc.firstItemOpened = true
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
     @objc func onSearchButtonTap(_ sender: UIButton) {
