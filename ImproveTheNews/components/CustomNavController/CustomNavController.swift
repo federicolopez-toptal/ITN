@@ -69,9 +69,11 @@ class CustomNavController: UINavigationController {
         self.menu.refreshDisplayMode()
 
         for vc in self.viewControllers {
-            if(vc is BaseViewController) {
-                DELAY(0.1) { // delay, to avoid layout weird behavior
-                    (vc as! BaseViewController).refreshDisplayMode()
+            if let _vc = vc as? BaseViewController {
+                _vc.setNeedsStatusBarAppearanceUpdate()
+                
+                DELAY(0.1) {
+                    _vc.refreshDisplayMode()
                 }
             }
         }
