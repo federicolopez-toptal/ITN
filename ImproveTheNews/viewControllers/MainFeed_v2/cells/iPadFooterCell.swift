@@ -111,7 +111,7 @@ class iPadFooterCell: UITableViewCell {
             self.labels.append(sliders)
             
             ADD_SPACER(to: column2, height: 10)
-            let faq = self.addItem("FAQ", to: column2,
+            let faq = self.addItem("ABOUT", to: column2,
                 icon: nil, iconMargin: nil,
                 action: #selector(self.onFAQButtonTap(_:)))
             self.labels.append(faq)

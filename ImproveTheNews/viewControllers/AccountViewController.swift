@@ -51,6 +51,7 @@ class AccountViewController: BaseViewController {
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.back, .title])
             self.navBar.setTitle("My account")
+            self.navBar.addBottomLine()
 
             self.buildContent()
             CustomNavController.shared.hidePanelAndButtonWithAnimation()

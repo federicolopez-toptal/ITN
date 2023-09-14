@@ -146,7 +146,7 @@ class MenuView: UIView {
         }
 
         let closeIcon = self.viewWithTag(77) as! UIImageView
-        closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+        closeIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
 
         self.list.reloadData()
     }

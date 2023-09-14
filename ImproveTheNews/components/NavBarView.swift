@@ -60,6 +60,20 @@ class NavBarView: UIView {
         self.refreshDisplayMode()
     }
     
+    func addBottomLine() {
+        //bottom line
+        let line2 = UIView()
+        line2.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
+        
+        self.addSubview(line2)
+        line2.activateConstraints([
+            line2.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            line2.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            line2.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            line2.heightAnchor.constraint(equalToConstant: 1)
+        ])
+    }
+    
     func addComponents(_ components: [NavBarViewComponents]) {
         for C in components {
             if(C == .logo) {
@@ -116,18 +130,18 @@ class NavBarView: UIView {
                 infoIcon.activateConstraints([
                     infoIcon.widthAnchor.constraint(equalToConstant: 17),
                     infoIcon.heightAnchor.constraint(equalToConstant: 17),
-                    infoIcon.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: 8),
-                    infoIcon.topAnchor.constraint(equalTo: logo.topAnchor)
+                    infoIcon.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: 0),
+                    infoIcon.centerYAnchor.constraint(equalTo: logo.centerYAnchor)
                 ])
                 
                 let infoButton = UIButton(type: .system)
                 infoButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
                 self.addSubview(infoButton)
                 infoButton.activateConstraints([
-                    infoButton.leadingAnchor.constraint(equalTo: infoIcon.leadingAnchor, constant: -self.buttonsMargin),
-                    infoButton.topAnchor.constraint(equalTo: infoIcon.topAnchor, constant: -self.buttonsMargin),
-                    infoButton.widthAnchor.constraint(equalTo: infoIcon.widthAnchor, constant: self.buttonsMargin * 2),
-                    infoButton.heightAnchor.constraint(equalTo: infoIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                    infoButton.centerXAnchor.constraint(equalTo: infoIcon.centerXAnchor),
+                    infoButton.centerYAnchor.constraint(equalTo: infoIcon.centerYAnchor),
+                    infoButton.widthAnchor.constraint(equalTo: infoIcon.widthAnchor, constant: self.buttonsMargin * 2.5),
+                    infoButton.heightAnchor.constraint(equalTo: infoIcon.heightAnchor, constant: self.buttonsMargin * 2.5)
                 ])
                 infoButton.addTarget(self, action: #selector(onInfoButtonTap(_:)), for: .touchUpInside)
                 

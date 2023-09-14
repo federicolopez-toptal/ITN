@@ -30,6 +30,7 @@ class PrivacyPolicyViewController: BaseViewController {
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.back, .title])
             self.navBar.setTitle("Privacy Policy")
+            self.navBar.addBottomLine()
             
             self.buildContent()
         }

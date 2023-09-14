@@ -50,12 +50,6 @@ class FAQViewController: BaseViewController {
         }
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        self.updateSectionHeight(index: 1, open: true)
-//    }
-    
     func buildContent() {
         self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
     
