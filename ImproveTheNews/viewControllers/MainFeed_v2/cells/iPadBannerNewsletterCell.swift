@@ -75,7 +75,7 @@ class iPadBannerNewsletterCell: UITableViewCell {
             logo.heightAnchor.constraint(equalToConstant: 44)
         ])
         ADD_SPACER(to: hStack_title, width: 10)
-        self.headerLabel.font = MERRIWEATHER_BOLD(19)
+        self.headerLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
         hStack_title.addArrangedSubview(self.headerLabel)
         
         // -----------------------------

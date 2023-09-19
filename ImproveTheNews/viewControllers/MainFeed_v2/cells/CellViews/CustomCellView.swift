@@ -29,7 +29,8 @@ func ARTICLE_TITLE() -> UILabel {
     result.backgroundColor = .clear //.red.withAlphaComponent(0.25)
     result.textColor = UIColor(hex: 0x1D242F)
     result.numberOfLines = 0
-    result.font = IPHONE() ? MERRIWEATHER_BOLD(18) : MERRIWEATHER_BOLD(20) 
+    result.font = IPHONE() ? DM_SERIF_DISPLAY_fixed(18) : DM_SERIF_DISPLAY_fixed(20)
+    //MERRIWEATHER_BOLD(18) : MERRIWEATHER_BOLD(20)
     result.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
     //result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
     

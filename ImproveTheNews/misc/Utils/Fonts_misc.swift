@@ -38,4 +38,10 @@ func AILERON_BOLD(_ size: CGFloat = 10.0) -> UIFont {
     return UIFont(name: "Aileron-Bold", size: size)!
 }
 
+func DM_SERIF_DISPLAY(_ size: CGFloat = 10.0) -> UIFont {
+    return UIFont(name: "DMSerifDisplay-Regular", size: size)!
+}
 
+func DM_SERIF_DISPLAY_fixed(_ size: CGFloat = 10.0) -> UIFont {
+    return UIFont(name: "DMSerifDisplay-Regular", size: size+3)!
+}

@@ -124,13 +124,13 @@ class iPadBannerCell: UITableViewCell {
             ADD_SPACER(to: vStackTexts, height: margin*2)
             
             self.headerLabel.numberOfLines = 0
-            self.headerLabel.font = MERRIWEATHER_BOLD(26)
+            self.headerLabel.font = DM_SERIF_DISPLAY_fixed(26) //MERRIWEATHER_BOLD(26)
             self.headerLabel.text = "Header text"
             vStackTexts.addArrangedSubview(self.headerLabel)
             
             ADD_SPACER(to: vStackTexts, height: margin)
             self.descrLabel.numberOfLines = 0
-            self.descrLabel.font = MERRIWEATHER(16)
+            self.descrLabel.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER(16)
             self.descrLabel.text = "Description text"
             vStackTexts.addArrangedSubview(self.descrLabel)
             

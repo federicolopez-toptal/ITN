@@ -128,7 +128,7 @@ class AudioPlayerView: UIView {
         ])
         
         let listenLabel = UILabel()
-        listenLabel.font = MERRIWEATHER_BOLD(14)
+        listenLabel.font = DM_SERIF_DISPLAY_fixed(14) //MERRIWEATHER_BOLD(14)
         listenLabel.text = "Listen to this story"
         listenLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
         colorRect.addSubview(listenLabel)

@@ -16,7 +16,7 @@ protocol ArticleCT_cell_Delegate: AnyObject {
 class ArticleCT_cell: UICollectionViewCell {
     
     static let identifier = "ArticleCT_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(13)
+    static let merriweather_bold = DM_SERIF_DISPLAY_fixed(14) //MERRIWEATHER_BOLD(13)
     var column: Int = 1
     weak var delegate: ArticleCT_cell_Delegate?
     
@@ -109,7 +109,7 @@ class ArticleCT_cell: UICollectionViewCell {
         self.column = column
 
         self.titleLabel.text = article.title
-        self.titleLabel.setLineSpacing(lineSpacing: 3.5)
+        //self.titleLabel.setLineSpacing(lineSpacing: 3.5)
 
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: article.source) {
@@ -198,7 +198,7 @@ extension ArticleCT_cell {
     static func calculateHeight(text: String, sourcesCount: Int, width: CGFloat) -> CGSize {
         let textW: CGFloat = (width/2)-(16*2)
         let tmpTitleLabel = ArticleCT_cell.createTitleLabel(text: text)
-        tmpTitleLabel.setLineSpacing(lineSpacing: 3.5)
+        //tmpTitleLabel.setLineSpacing(lineSpacing: 3.5)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = 28
         

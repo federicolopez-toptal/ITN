@@ -28,7 +28,7 @@ class SplitHeaderCell: UICollectionViewCell {
     private func buildContent() {
         
         self.contentView.backgroundColor = .white
-        let merriweather_bold = MERRIWEATHER_BOLD(17)
+        let merriweather_bold = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
         
         let hStack = HSTACK(into: self.contentView)
         hStack.backgroundColor = .clear

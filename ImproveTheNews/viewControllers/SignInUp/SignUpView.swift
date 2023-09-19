@@ -99,7 +99,7 @@ class SignUpView: UIView {
 
         let tab1Label = UILabel()
         tab1Label.text = "SIGN IN".capitalized
-        tab1Label.font = MERRIWEATHER_BOLD(16)
+        tab1Label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
         tab1Label.textAlignment = .center
         tab1Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         hStack.addArrangedSubview(tab1Label)
@@ -117,7 +117,7 @@ class SignUpView: UIView {
 
         let tab2Label = UILabel()
         tab2Label.text = "SIGN UP".capitalized
-        tab2Label.font = MERRIWEATHER_BOLD(16)
+        tab2Label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
         tab2Label.textAlignment = .center
         tab2Label.textColor = UIColor(hex: 0xFF643C)
         hStack.addArrangedSubview(tab2Label)
@@ -156,7 +156,7 @@ class SignUpView: UIView {
 
         let titleLabel = UILabel()
         titleLabel.text = "Sign up"
-        titleLabel.font = MERRIWEATHER_BOLD(18)
+        titleLabel.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel)
         ADD_SPACER(to: VStack_form, height: 6)
@@ -337,7 +337,7 @@ class SignUpView: UIView {
         
         ADD_SPACER(to: VStackRect, height: 30)
         let rectTitle = UILabel()
-        rectTitle.font = MERRIWEATHER_BOLD(18)
+        rectTitle.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         rectTitle.numberOfLines = 0
         rectTitle.backgroundColor = .clear //.systemPink
         rectTitle.text = "Why you should sign up to Improve The News"

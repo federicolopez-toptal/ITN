@@ -215,12 +215,12 @@ class NavBarView: UIView {
                 backIcon.tag = 4
                 self.displayModeComponents.append(backIcon)
                 
-                let merriweather_bold = MERRIWEATHER_BOLD(18)
+                let dmSerifDisplay = DM_SERIF_DISPLAY(21)
                 
                 let label = UILabel()
                 label.text = "Back to feed"
                 label.textColor = .black
-                label.font = merriweather_bold
+                label.font = dmSerifDisplay
                 self.addSubview(label)
                 label.activateConstraints([
                     label.leadingAnchor.constraint(equalTo: backIcon.trailingAnchor, constant: 3),
@@ -244,13 +244,13 @@ class NavBarView: UIView {
             }
             
             if(C == .title) {
-                let merriweather_bold = MERRIWEATHER_BOLD(18)
+                let dmSerifDisplay = DM_SERIF_DISPLAY(21)
                 
                 let label = UILabel()
                 label.text = " "
                 label.textColor = .black
                 label.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-                label.font = merriweather_bold
+                label.font = dmSerifDisplay
                 self.addSubview(label)
                 label.activateConstraints([
                     label.centerXAnchor.constraint(equalTo: self.centerXAnchor),

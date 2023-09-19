@@ -34,6 +34,7 @@
 		<string>Aileron-Regular.otf</string>
 		<string>Aileron-SemiBold.otf</string>
 		<string>Aileron-Bold.otf</string>
+		<string>DMSerifDisplay-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

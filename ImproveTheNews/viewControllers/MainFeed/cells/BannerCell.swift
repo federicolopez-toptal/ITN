@@ -251,7 +251,7 @@ extension BannerCell {
         result.backgroundColor = .clear
         result.textColor = .black
         result.numberOfLines = 4
-        result.font = MERRIWEATHER_BOLD(16)
+        result.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(16)
         result.text = text
         result.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
         

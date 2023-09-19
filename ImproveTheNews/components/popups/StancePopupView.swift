@@ -77,7 +77,8 @@ class StancePopupView: PopupView {
         
         titleHStack.addArrangedSubview(self.stanceIcon)
         
-        self.titleLabel.font = MERRIWEATHER_BOLD(16)
+        self.titleLabel.font = DM_SERIF_DISPLAY(18)
+        //MERRIWEATHER_BOLD(16)
         self.titleLabel.text = "ASDHKJSDH ASJDSAJDLK"
         titleHStack.addArrangedSubview(self.titleLabel)
         ADD_SPACER(to: titleHStack)
@@ -184,9 +185,9 @@ class StancePopupView: PopupView {
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
-        if(DARK_MODE()) {
-            self.stanceIcon.backgroundColor = UIColor(hex: 0x2A323E)
-        }
+//        if(DARK_MODE()) {
+//            self.stanceIcon.backgroundColor = UIColor(hex: 0x2A323E)
+//        }
         
         // sliders
         for i in 1...2 {

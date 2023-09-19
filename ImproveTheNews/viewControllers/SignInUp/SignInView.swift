@@ -98,7 +98,7 @@ class SignInView: UIView {
 
         let tab1Label = UILabel()
         tab1Label.text = "SIGN IN".capitalized
-        tab1Label.font = MERRIWEATHER_BOLD(16)
+        tab1Label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
         tab1Label.textAlignment = .center
         tab1Label.textColor = UIColor(hex: 0xDA4933)
         hStack.addArrangedSubview(tab1Label)
@@ -116,7 +116,7 @@ class SignInView: UIView {
 
         let tab2Label = UILabel()
         tab2Label.text = "SIGN UP".capitalized
-        tab2Label.font = MERRIWEATHER_BOLD(16)
+        tab2Label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
         tab2Label.textAlignment = .center
         tab2Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         hStack.addArrangedSubview(tab2Label)
@@ -155,7 +155,7 @@ class SignInView: UIView {
 
         let titleLabel = UILabel()
         titleLabel.text = "Sign in"
-        titleLabel.font = MERRIWEATHER_BOLD(18)
+        titleLabel.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel)
         ADD_SPACER(to: VStack_form, height: 30)

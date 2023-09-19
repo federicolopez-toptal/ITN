@@ -90,7 +90,7 @@ class FAQViewController: BaseViewController {
         let FAQ = UILabel()
         FAQ.tag = 951
         FAQ.text = "Frequently Asked Questions"
-        FAQ.font = MERRIWEATHER_BOLD(20)
+        FAQ.font = DM_SERIF_DISPLAY_fixed(20) //MERRIWEATHER_BOLD(20)
         FAQ.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.contentView.addSubview(FAQ)
         FAQ.activateConstraints([
@@ -161,7 +161,7 @@ class FAQViewController: BaseViewController {
         ])
         
         let titleLabel = UILabel()
-        titleLabel.font = MERRIWEATHER_BOLD(20)
+        titleLabel.font = DM_SERIF_DISPLAY_fixed(20) //MERRIWEATHER_BOLD(20)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         titleLabel.numberOfLines = 0
         titleLabel.text = tText

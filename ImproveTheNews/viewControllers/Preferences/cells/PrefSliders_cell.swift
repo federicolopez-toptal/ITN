@@ -43,7 +43,7 @@ class PrefSliders_cell: UITableViewCell {
             self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
         ])
         
-        self.titleLabel.font = MERRIWEATHER_BOLD(17)
+        self.titleLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
         self.titleLabel.text = "Slider preferences"
         self.mainContainer.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
@@ -149,7 +149,7 @@ extension PrefSliders_cell {
         let label = UILabel()
         label.text = text
         label.textColor = UIColor(hex: 0xDA4933)
-        label.font = MERRIWEATHER_BOLD(17)
+        label.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
         return label
     }
     

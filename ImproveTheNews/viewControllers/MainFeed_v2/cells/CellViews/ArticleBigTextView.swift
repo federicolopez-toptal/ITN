@@ -47,7 +47,7 @@ class ArticleBigTextView: CustomCellView {
     }
     
     func setFontSize(_ size: CGFloat) {
-        self.titleLabel.font = MERRIWEATHER_BOLD(size)
+        self.titleLabel.font =  DM_SERIF_DISPLAY_fixed(size) //MERRIWEATHER_BOLD(size)
     }
     
     func setSourcesLimit(_ limit: Int) {
@@ -80,7 +80,8 @@ class ArticleBigTextView: CustomCellView {
         ])
 
         vStack.addArrangedSubview(self.titleLabel)
-        self.titleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
+        self.titleLabel.font = IPHONE() ? DM_SERIF_DISPLAY_fixed(17) : DM_SERIF_DISPLAY_fixed(30)
+        //MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
         self.titleLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.2)
     
     // STORY
@@ -275,7 +276,8 @@ extension ArticleBigTextView: StanceIconViewDelegate {
     
     static func calculateHeight(text: String, width: CGFloat) -> CGFloat {
         let tmpTitleLabel = ARTICLE_TITLE()
-        tmpTitleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
+        tmpTitleLabel.font = IPHONE() ? DM_SERIF_DISPLAY_fixed(17) : DM_SERIF_DISPLAY_fixed(30)
+        //MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
         tmpTitleLabel.text = text
         
         var textW: CGFloat = width - 135 - IPAD_INNER_MARGIN
@@ -285,7 +287,8 @@ extension ArticleBigTextView: StanceIconViewDelegate {
     
     static func calculateHeight2(text: String, isStory: Bool, width: CGFloat) -> CGFloat {
         let tmpTitleLabel = ARTICLE_TITLE()
-        tmpTitleLabel.font = IPHONE() ? MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
+        tmpTitleLabel.font = IPHONE() ? DM_SERIF_DISPLAY_fixed(17) : DM_SERIF_DISPLAY_fixed(30)
+        //MERRIWEATHER_BOLD(17) : MERRIWEATHER_BOLD(30)
         tmpTitleLabel.text = text
   
         var spacerHeight: CGFloat = 0

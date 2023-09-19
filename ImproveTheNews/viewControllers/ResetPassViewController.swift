@@ -104,7 +104,7 @@ class ResetPassViewController: BaseViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = "Forgot Password"
-        titleLabel.font = MERRIWEATHER_BOLD(18)
+        titleLabel.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel)
         ADD_SPACER(to: VStack_form, height: 20)

@@ -140,7 +140,7 @@ class AccountViewController: BaseViewController {
     
         let titleLabel = UILabel()
         titleLabel.text = "My details"
-        titleLabel.font = MERRIWEATHER_BOLD(18)
+        titleLabel.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel)
         ADD_SPACER(to: VStack_form, height: 25)
@@ -246,7 +246,7 @@ class AccountViewController: BaseViewController {
         
         let titleLabel2 = UILabel()
         titleLabel2.text = "Newsletter Preferences"
-        titleLabel2.font = MERRIWEATHER_BOLD(18)
+        titleLabel2.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         titleLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel2)
         ADD_SPACER(to: VStack_form, height: 25)
@@ -387,7 +387,7 @@ class AccountViewController: BaseViewController {
     //--- SOCIAL
         let titleLabel_21 = UILabel()
         titleLabel_21.text = "Connected social accounts"
-        titleLabel_21.font = MERRIWEATHER_BOLD(18)
+        titleLabel_21.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         titleLabel_21.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel_21)
         ADD_SPACER(to: VStack_form, height: 20)
@@ -525,7 +525,7 @@ class AccountViewController: BaseViewController {
     //---
         let titleLabel3 = UILabel()
         titleLabel3.text = "Sign out"
-        titleLabel3.font = MERRIWEATHER_BOLD(18)
+        titleLabel3.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         titleLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel3)
         ADD_SPACER(to: VStack_form, height: 5)
@@ -575,7 +575,7 @@ class AccountViewController: BaseViewController {
         ///////////////////
         let titleLabel4 = UILabel()
         titleLabel4.text = "Delete my account"
-        titleLabel4.font = MERRIWEATHER_BOLD(18)
+        titleLabel4.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         titleLabel4.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         VStack_form.addArrangedSubview(titleLabel4)
         ADD_SPACER(to: VStack_form, height: 5)

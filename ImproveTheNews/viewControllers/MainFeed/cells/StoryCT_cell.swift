@@ -10,7 +10,7 @@ import UIKit
 class StoryCT_cell: UICollectionViewCell {
 
     static let identifier = "StoryCT_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(13)
+    static let merriweather_bold = DM_SERIF_DISPLAY_fixed(14) //MERRIWEATHER_BOLD(13)
     var column: Int = 1
     
     var mainVStack: UIStackView!
@@ -104,7 +104,7 @@ class StoryCT_cell: UICollectionViewCell {
         self.column = column
         
         self.titleLabel.text =  story.title
-        self.titleLabel.setLineSpacing(lineSpacing: 3.5)
+        //self.titleLabel.setLineSpacing(lineSpacing: 3.5)
         
         if( READ(LocalKeys.preferences.showSourceIcons) == "01" ) {
             ADD_SOURCE_ICONS(data: story.storySources, to: self.sourcesContainer)
@@ -120,6 +120,7 @@ class StoryCT_cell: UICollectionViewCell {
         self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.mainVStack.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE9EAEB)
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
 //        self.storyLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
@@ -146,7 +147,7 @@ extension StoryCT_cell {
     static func calculateHeight(text: String, sourcesCount: Int, width: CGFloat) -> CGSize {
         let textW: CGFloat = (width/2)-(16*2)-(7*2)
         let tmpTitleLabel = StoryCT_cell.createTitleLabel(text: text)
-        tmpTitleLabel.setLineSpacing(lineSpacing: 3.5)
+        //tmpTitleLabel.setLineSpacing(lineSpacing: 3.5)
         let textH: CGFloat = tmpTitleLabel.calculateHeightFor(width: textW)
         let sourcesH: CGFloat = sourcesCount == 1 ? 0 : 18
         let timeLabelH: CGFloat = 18

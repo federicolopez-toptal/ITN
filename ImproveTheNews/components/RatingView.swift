@@ -63,7 +63,7 @@ class RatingView: UIView {
     
         self.label.text = normal ? "Rate article" : "Rate\narticle"
         self.label.numberOfLines = normal ? 1 : 2
-        self.label.font = MERRIWEATHER_BOLD(15)
+        self.label.font = DM_SERIF_DISPLAY_fixed(15)//MERRIWEATHER_BOLD(15)
         self.label.textColor = .white
         //self.label.backgroundColor = .red
         self.addSubview(self.label)
@@ -122,7 +122,7 @@ class RatingView: UIView {
         self.loading.hide()
         
         self.thanksLabel.text = "Thank you!"
-        self.thanksLabel.font = MERRIWEATHER_BOLD(13)
+        self.thanksLabel.font =  DM_SERIF_DISPLAY_fixed(13) //MERRIWEATHER_BOLD(13)
         self.thanksLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.thanksLabel.textAlignment = .center
         self.addSubview(self.thanksLabel)

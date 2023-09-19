@@ -10,7 +10,7 @@ import UIKit
 class StoryWT_cell: UICollectionViewCell {
 
     static let identifier = "StoryWT_cell"
-    static let merriweather_bold = MERRIWEATHER_BOLD(17)
+    static let merriweather_bold =  DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
 
     let storyLabel = UILabel()
     let titleLabel = StoryWT_cell.createTitleLabel(text: "Lorem ipsum")

@@ -99,7 +99,7 @@ class PrivacyPolicyViewController: BaseViewController {
         label.text = text
         label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         label.numberOfLines = 0
-        label.font = MERRIWEATHER_BOLD(18)
+        label.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
         self.VStack.addArrangedSubview(label)
     }
     
@@ -109,7 +109,7 @@ class PrivacyPolicyViewController: BaseViewController {
         label.textAlignment = .left
         label.tag = 11
         label.numberOfLines = 0
-        label.font = MERRIWEATHER_BOLD(16)
+        label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
         label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.VStack.addArrangedSubview(label)
     }

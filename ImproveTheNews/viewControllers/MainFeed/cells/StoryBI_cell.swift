@@ -58,7 +58,7 @@ class StoryBI_cell: UICollectionViewCell {
         
     let aileronBold = AILERON_BOLD(11)
     let roboto = ROBOTO(13)
-    let merriweather_bold = MERRIWEATHER_BOLD(18)
+    let merriweather_bold = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
     let characterSpacing: Double = 1.0 //35
         
         let storyHStack = HSTACK(into: vStack)

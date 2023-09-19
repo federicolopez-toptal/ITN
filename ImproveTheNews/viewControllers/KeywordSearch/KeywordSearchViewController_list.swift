@@ -60,7 +60,8 @@ extension KeywordSearchViewController {
         if let _ = dpItem as? DataProviderHeaderItem {
             cell = self.list.dequeueReusableCell(withIdentifier: iPadHeaderCell.identifier) as! iPadHeaderCell
             (cell as! iPadHeaderCell).populate(with: (dpItem as! DataProviderHeaderItem))
-            if(IPAD()){ (cell as! iPadHeaderCell).titleLabel.font = MERRIWEATHER_BOLD(20) }
+            if(IPAD()){ (cell as! iPadHeaderCell).titleLabel.font = DM_SERIF_DISPLAY_fixed(20) //MERRIWEATHER_BOLD(20)
+            }
         } else if let _item = dpItem as? DataProviderMoreItem {
             cell = self.list.dequeueReusableCell(withIdentifier: iPadMoreCell.identifier) as! iPadMoreCell
             (cell as! iPadMoreCell).populate(with: _item)

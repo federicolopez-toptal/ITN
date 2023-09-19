@@ -70,7 +70,7 @@ class SourceFilterViewController: BaseViewController {
         closeButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
     
         self.view.addSubview(self.titleLabel)
-        self.titleLabel.font = MERRIWEATHER_BOLD(24)
+        self.titleLabel.font = DM_SERIF_DISPLAY_fixed(24) //MERRIWEATHER_BOLD(24)
         self.titleLabel.text = "Source filter"
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
@@ -202,7 +202,7 @@ extension SourceFilterViewController: FilterTextViewDelegate {
         
         
             let nameLabel = UILabel()
-            nameLabel.font = MERRIWEATHER_BOLD(14)
+            nameLabel.font = DM_SERIF_DISPLAY_fixed(14) //MERRIWEATHER_BOLD(14)
             nameLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
             if(icon.paywall) {
                 nameLabel.textColor = UIColor(hex: 0xDA4933)
