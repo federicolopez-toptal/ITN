@@ -45,7 +45,7 @@ class HeaderOverCell: UICollectionViewCell {
     }
     
     func populate(with header: DP_header) {
-        self.titleLabel.text = header.text
+        self.titleLabel.text = header.text.capitalized
         let characterSpacing: Double = 1.5
         //self.titleLabel.addCharacterSpacing(kernValue: characterSpacing)
         
