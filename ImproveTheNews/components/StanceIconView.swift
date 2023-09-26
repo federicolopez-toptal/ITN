@@ -14,11 +14,12 @@ protocol StanceIconViewDelegate: AnyObject {
 
 class StanceIconView: UIView {
 
-    private let DIM: CGFloat = 28
+    private let DIM: CGFloat = 23
     weak var delegate: StanceIconViewDelegate?
 
     let slider1 = UIView()
     let slider2 = UIView()
+    let circle = UIView()
     var thumb1LeadingConstraint: NSLayoutConstraint?
     var thumb2LeadingConstraint: NSLayoutConstraint?
     
@@ -38,19 +39,19 @@ class StanceIconView: UIView {
         slider1.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0xB3B3B3)
         self.addSubview(slider1)
         slider1.activateConstraints([
-            slider1.widthAnchor.constraint(equalToConstant: 15),
-            slider1.heightAnchor.constraint(equalToConstant: 1),
+            slider1.widthAnchor.constraint(equalToConstant: 12),
+            slider1.heightAnchor.constraint(equalToConstant: 0.5),
             slider1.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            slider1.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -5)
+            slider1.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -4)
         ])
         
         let thumb1 = UIView()
-        thumb1.layer.cornerRadius = 3.5
+        thumb1.layer.cornerRadius = 2
         thumb1.backgroundColor = UIColor(hex: 0xDA4933)
         slider1.addSubview(thumb1)
         thumb1.activateConstraints([
-            thumb1.widthAnchor.constraint(equalToConstant: 7),
-            thumb1.heightAnchor.constraint(equalToConstant: 7),
+            thumb1.widthAnchor.constraint(equalToConstant: 4),
+            thumb1.heightAnchor.constraint(equalToConstant: 4),
             thumb1.centerYAnchor.constraint(equalTo: slider1.centerYAnchor)
         ])
         self.thumb1LeadingConstraint = thumb1.leadingAnchor.constraint(equalTo: slider1.leadingAnchor)
@@ -60,23 +61,33 @@ class StanceIconView: UIView {
         slider2.backgroundColor = UIColor(hex: 0x93A0B4)
         self.addSubview(slider2)
         slider2.activateConstraints([
-            slider2.widthAnchor.constraint(equalToConstant: 15),
-            slider2.heightAnchor.constraint(equalToConstant: 1),
+            slider2.widthAnchor.constraint(equalToConstant: 12),
+            slider2.heightAnchor.constraint(equalToConstant: 0.5),
             slider2.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            slider2.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 5)
+            slider2.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 4)
         ])
         
         let thumb2 = UIView()
-        thumb2.layer.cornerRadius = 3.5
+        thumb2.layer.cornerRadius = 2
         thumb2.backgroundColor = UIColor(hex: 0xDA4933)
         slider2.addSubview(thumb2)
         thumb2.activateConstraints([
-            thumb2.widthAnchor.constraint(equalToConstant: 7),
-            thumb2.heightAnchor.constraint(equalToConstant: 7),
+            thumb2.widthAnchor.constraint(equalToConstant: 4),
+            thumb2.heightAnchor.constraint(equalToConstant: 4),
             thumb2.centerYAnchor.constraint(equalTo: slider2.centerYAnchor)
         ])
         self.thumb2LeadingConstraint = thumb2.leadingAnchor.constraint(equalTo: slider2.leadingAnchor)
         self.thumb2LeadingConstraint?.isActive = true
+        
+        self.circle.layer.cornerRadius = (DIM/2)
+        self.addSubview(self.circle)
+        self.circle.activateConstraints([
+            self.circle.widthAnchor.constraint(equalToConstant: DIM),
+            self.circle.heightAnchor.constraint(equalToConstant: DIM),
+            self.circle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.circle.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
+        self.sendSubviewToBack(self.circle)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewOnTap(sender:)))
         self.addGestureRecognizer(tapGesture)
@@ -90,7 +101,8 @@ class StanceIconView: UIView {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE3E3E3)
+        self.backgroundColor = .clear
+        self.circle.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE3E3E3)
         
         let thumb1 = self.slider1.subviews.first!
         thumb1.backgroundColor = DARK_MODE() ? .white : UIColor(hex: 0xFF643C)
