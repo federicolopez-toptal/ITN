@@ -30,7 +30,7 @@ class MenuItemCell: UITableViewCell {
     private func buildContent() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         
-        let aileronBold = AILERON_BOLD(13)
+        let aileronBold = AILERON(15)
         //ROBOTO_BOLD(13)
         
         let gap = UIView()

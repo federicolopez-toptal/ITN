@@ -454,6 +454,7 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
         let dpItem = self.dataProvider[indexPath.row]
         
         cell.titleLabel.text = self.getText(forItem: dpItem)
+        cell.titleLabel.addCharacterSpacing(kernValue: 1.0)
         cell.icon.image = self.getIcon(forItem: dpItem)
         cell.icon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
