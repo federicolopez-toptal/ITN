@@ -30,7 +30,7 @@ class TourRectView: UIView {
         super.init(frame: CGRect.zero)
         self.index = index
         
-        self.backgroundColor = UIColor(hex: 0x19191C)
+        self.backgroundColor = UIColor(hex: 0x303A4D) //DARK_MODE() ? UIColor(hex: 0x303A4D) : UIColor(hex: 0x19191C)
         self.layer.cornerRadius = 4.0
         container.addSubview(self)
         self.activateConstraints([
