@@ -1,3 +1,14 @@
+NEW ☢️ PROD / LIVE
+com.ITNFoundation.ITNaggregator
+Verity
+AppIcon
+
+https://www.improvethenews.org
+    misc/Utils/Utils.swif   API_BASE_URL
+
+------------------------------------------------------------
+------------------------------------------------------------
+
 PROD / LIVE
 com.ITNFoundation.ITNaggregator
 ImproveTheNews

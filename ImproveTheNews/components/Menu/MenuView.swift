@@ -453,7 +453,14 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
         let cell = self.list.dequeueReusableCell(withIdentifier: MenuItemCell.identifier) as! MenuItemCell
         let dpItem = self.dataProvider[indexPath.row]
         
-        cell.titleLabel.text = self.getText(forItem: dpItem)
+        let text = self.getText(forItem: dpItem)
+        cell.titleLabel.text = text
+        
+        cell.titleLabel.font = AILERON(15)
+        if(text == self.getText(forItem: .sliders)) {
+            cell.titleLabel.font = AILERON(13.5)
+        }
+        
         cell.titleLabel.addCharacterSpacing(kernValue: 1.0)
         cell.icon.image = self.getIcon(forItem: dpItem)
         cell.icon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)

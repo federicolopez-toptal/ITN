@@ -1,0 +1,9 @@
+
+Screen      Resolution      Device
+// ----------------------------------------------
+6.7"        1290 x 2796     iPhone 14 Pro Max
+6.5"        1242 × 2688     iPhone 11 Pro Max
+5.5"        1242 × 2208     iPhone 8 Plus
+
+12.9"       2048 × 2732     iPad Pro (6th gen)
+12.9"       2048 × 2732     iPad Pro (2th gen)

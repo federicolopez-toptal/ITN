@@ -39,7 +39,7 @@ class HeaderOverCell: UICollectionViewCell {
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.titleLabel.heightAnchor.constraint(equalToConstant: 14),
+            //self.titleLabel.heightAnchor.constraint(equalToConstant: 14),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
     }
