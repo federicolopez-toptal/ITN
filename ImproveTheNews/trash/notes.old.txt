@@ -1,21 +1,25 @@
 PROD / LIVE
 com.ITNFoundation.ITNaggregator
-Verity
+ImproveTheNews
 AppIcon
+
+https://www.improvethenews.org
+    misc/Utils/Utils.swif   API_BASE_URL
 
 ------------------------------------------------------------
 ------------------------------------------------------------
 BETA
 com.ITNFoundation.ITN-revamp
-Verity-Beta
+ITN Beta
 AppIcon-Beta
 
+https://www.improvemynews.com
+    misc/Utils/Utils.swif   API_BASE_URL
 
 
 
 
-------------------------------------------------------------
-------------------------------------------------------------
+
 FIXES ------------------------------------------------------
 >> Cuando actualicé a Xcode 14.3
 https://stackoverflow.com/questions/73760753/xcode-14-command-phasescriptexecution-failed-with-a-nonzero-exit-code

@@ -23,6 +23,9 @@ class OnOffView: UIView {
     weak var delegate: OnOffViewDelegate?
     var thumbLeadingConstraint: NSLayoutConstraint?
     
+    let checkMark = UIImageView()
+    let dashMark = UIImageView()
+    
     private var _thumbOffColor = UIColor.red
     var thumbOffColor: UIColor {
         get {
@@ -53,6 +56,14 @@ class OnOffView: UIView {
         set {
             self._status = newValue
             self.refreshDisplayMode()
+            
+            if(self._status) {
+                self.checkMark.show()
+                self.dashMark.hide()
+            } else {
+                self.checkMark.hide()
+                self.dashMark.show()
+            }
         }
     }
     
@@ -82,6 +93,30 @@ class OnOffView: UIView {
             self.thumbLeadingConstraint!
         ])
         
+        checkMark.image = UIImage(systemName: "checkmark")?.withRenderingMode(.alwaysTemplate)
+        checkMark.tintColor = DARK_MODE() ? UIColor(hex: 0x969697) : .white
+        //checkMark.backgroundColor = .white
+        self.addSubview(checkMark)
+        checkMark.activateConstraints([
+            checkMark.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            checkMark.widthAnchor.constraint(equalToConstant: 18),
+            checkMark.heightAnchor.constraint(equalToConstant: 18),
+            checkMark.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5)
+        ])
+        
+        let cfg = UIImage.SymbolConfiguration(weight: .bold)
+        dashMark.image = UIImage(systemName: "minus", withConfiguration: cfg)?.withRenderingMode(.alwaysTemplate)
+        dashMark.tintColor = .white //DARK_MODE() ? UIColor(hex: 0x68686A) : .white
+        self.addSubview(dashMark)
+        dashMark.activateConstraints([
+            dashMark.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            dashMark.widthAnchor.constraint(equalToConstant: 14),
+            dashMark.heightAnchor.constraint(equalToConstant: 18),
+            dashMark.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -7)
+        ])
+        
+        
+        
         let button = UIButton(type: .custom)
         button.backgroundColor = .clear //.red.withAlphaComponent(0.3)
         self.addSubview(button)
@@ -109,8 +144,12 @@ class OnOffView: UIView {
         self.thumb.backgroundColor = colorTo
         if(self._status) {
             self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x823129) : UIColor(hex: 0xE6A49D)
+            self.checkMark.show()
+            self.dashMark.hide()
         } else {
             self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x68686A) : UIColor(hex: 0xA1A2A3)
+            self.checkMark.hide()
+            self.dashMark.show()
         }
         
         self.thumbLeadingConstraint?.constant = leadingTo

@@ -80,8 +80,9 @@ struct MainFeedStory {
     // Articles
         let articlesNode = removeNULL(from: json["articles"])
         self.articles = [StoryArticle]()
-        for A in articlesNode {
-            let newArticle = StoryArticle(A)
+        for (i, A) in articlesNode.enumerated() {
+            var newArticle = StoryArticle(A)
+            newArticle.tag = i
             self.articles.append(newArticle)
         }
         

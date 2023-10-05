@@ -19,6 +19,11 @@ struct StoryArticle {
     var media_title: String = ""
     var media_country_code: String = ""
     
+    var LR: Int = 1
+    var PE: Int = 1
+    
+    var tag: Int = -1
+    
     init(_ json: [String: Any]) {
         self.id = getSTRING(json["id"], defaultValue: "1")
         self.title = getSTRING(json["title"], defaultValue: "")
@@ -34,6 +39,17 @@ struct StoryArticle {
             self.media_title = getSTRING(_mediaObj["title"])
             self.media_country_code = getSTRING(_mediaObj["country_code"])
         }
+        
+        if let _LR = json["LR"] as? Int {
+            self.LR = _LR
+        }
+        self.LR = self.LR.clamp(lower: 1, upper: 5)
+        
+        if let _PE = json["PE"] as? Int {
+            self.PE = _PE
+        }
+        self.PE = self.PE.clamp(lower: 1, upper: 5)
+        
     }
 }
 

@@ -210,12 +210,12 @@ extension StoryViewController {
         
         self.addSpins(story.spins)
         
-        self.addArticles(story.articles)
-//        if(story.splitType.isEmpty) {
-//            self.addArticles(story.articles)
-//        } else {
-//            self.addSplitArticles(type: story.splitType, story.articles)
-//        }
+        //self.addArticles(story.articles)
+        if(story.splitType.isEmpty) {
+            self.addArticles(story.articles)
+        } else {
+            self.addSplitArticles(type: story.splitType, story.articles)
+        }
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
@@ -430,6 +430,8 @@ extension StoryViewController {
             noArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             innerHStack.addArrangedSubview(noArticlesLabel)
         } else {
+            
+        
             var title = "Political split"
             if(type.uppercased() == "PE") {
                 title = "Establishment split"
@@ -466,51 +468,112 @@ extension StoryViewController {
             }
             innerHStack.addArrangedSubview(headers)
             
-            var column = 1
-            for (i, A) in articles.enumerated() {
+            // Sorting --------------------------------
+            var articlesLeft = [StoryArticle]()
+            var articlesRight = [StoryArticle]()
+            var articlesNeutral = [StoryArticle]()
+            
+            for A in articles {
                 if(!A.image.isEmpty && !A.title.isEmpty && !A.media_title.isEmpty) {
-                    if(column==1){
-                        ADD_SPACER(to: innerHStack, height: 16)
-                    }
+                    var value = 1
+                    if(type.uppercased() == "PE") { value = A.PE } else { value = A.LR }
                     
-                    let hStackColumns: UIStackView!
-                    if(column == 1) {
-                        hStackColumns = HSTACK(into: innerHStack)
-                        hStackColumns.spacing = 20
-                        hStackColumns.distribution = .fillEqually
+                    if(value < 3) {
+                        articlesLeft.append(A)
+                    } else if(value > 3) {
+                        articlesRight.append(A)
                     } else {
-                        hStackColumns = innerHStack.arrangedSubviews.last as! UIStackView
+                        articlesNeutral.append(A)
                     }
-                    
-                    let newItem = articleColumnView(A, i: i)
-                    hStackColumns.addArrangedSubview(newItem)
-                    
-                    column += 1
-                    if(column == 3){
-                        column = 1
-                    }
-                    
-                    if(i==articles.count-1) {
-                        let line = UIView()
-                        line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
-                        innerHStack.addSubview(line)
-                        line.activateConstraints([
-                            line.widthAnchor.constraint(equalToConstant: 1.5),
-                            line.centerXAnchor.constraint(equalTo: innerHStack.centerXAnchor),
-                            line.topAnchor.constraint(equalTo: headers.topAnchor),
-                            line.bottomAnchor.constraint(equalTo: newItem.bottomAnchor)
-                        ])
-                    }
-                    
-                    
                 }
             }
+            
+            // Show columns --------------------------------
+            while(articlesLeft.count>0 || articlesRight.count>0) {
+                let aLeft = articlesLeft.first
+                let aRight = articlesRight.first
+                
+                let hStackColumns = HSTACK(into: innerHStack)
+                hStackColumns.spacing = 20
+                hStackColumns.distribution = .fillEqually
+                
+                hStackColumns.addArrangedSubview(articleColumnView(aLeft))
+                hStackColumns.addArrangedSubview(articleColumnView(aRight))
+                
+                if(aLeft != nil){ articlesLeft.removeFirst() }
+                if(aRight != nil){ articlesRight.removeFirst() }
+                
+                // Vertical divider --------------------------------
+                let line = UIView()
+                line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
+                innerHStack.addSubview(line)
+                line.activateConstraints([
+                    line.widthAnchor.constraint(equalToConstant: 1.5),
+                    line.centerXAnchor.constraint(equalTo: innerHStack.centerXAnchor),
+                    line.topAnchor.constraint(equalTo: headers.topAnchor),
+                    line.bottomAnchor.constraint(equalTo: hStackColumns.bottomAnchor)
+                ])
+            }
+            
+            self.addNeutralArticles(type: type, articlesNeutral)
         }
     }
     
-    private func articleColumnView(_ A: StoryArticle, i: Int) -> UIView {
+    private func addNeutralArticles(type: String, _ articles: [StoryArticle]) {
+        if(articles.count==0){ return }
+        
+        ADD_SPACER(to: self.VStack, height: 22)
+        let HStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: HStack, width: 12)
+        let innerHStack = VSTACK(into: HStack)
+        ADD_SPACER(to: HStack, width: 12)
+        
+        var title = "More neutral "
+        if(type.uppercased() == "PE") {
+            title += "establishment"
+        } else {
+            title += "political"
+        }
+        title += " stance articles"
+        
+            
+        let ArticlesLabel = UILabel()
+        ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+        ArticlesLabel.text = title
+        if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+        }
+        ArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+        innerHStack.addArrangedSubview(ArticlesLabel)
+        ADD_SPACER(to: innerHStack, height: 18)
+        
+        var articlesCopy = articles
+        // Show columns --------------------------------
+        while(articlesCopy.count>0) {
+            let aLeft = articlesCopy.first
+            var aRight: StoryArticle? = nil
+            if(articlesCopy.count>1){ aRight = articlesCopy[1] }
+            
+            let hStackColumns = HSTACK(into: innerHStack)
+            hStackColumns.spacing = 20
+            hStackColumns.distribution = .fillEqually
+            
+            hStackColumns.addArrangedSubview(articleColumnView(aLeft))
+            hStackColumns.addArrangedSubview(articleColumnView(aRight))
+            
+            if(aLeft != nil){ articlesCopy.removeFirst() }
+            if(aRight != nil){ articlesCopy.removeFirst() }
+        }
+    }
+    
+    //private func articleColumnView(_ A: StoryArticle, i: Int) -> UIView {
+    private func articleColumnView(_ A: StoryArticle?) -> UIView {
         let vStack = UIStackView()
         vStack.axis = .vertical
+        
+        if(A == nil) {
+            //vStack.backgroundColor = .green
+            return vStack
+        }
         
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -518,16 +581,16 @@ extension StoryViewController {
         imageView.backgroundColor = .darkGray
         vStack.addArrangedSubview(imageView)
         imageView.activateConstraints([
-            imageView.heightAnchor.constraint(equalToConstant: 98 * 0.8)
+            imageView.heightAnchor.constraint(equalToConstant: 98 * 1.1)
         ])
-        imageView.sd_setImage(with: URL(string: A.image))
+        imageView.sd_setImage(with: URL(string: A!.image))
         ADD_SPACER(to: vStack, height: 8)
         
         let subTitleLabel = UILabel()
         subTitleLabel.font = DM_SERIF_DISPLAY_fixed(14) //MERRIWEATHER_BOLD(14)
         subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
         subTitleLabel.numberOfLines = 0
-        subTitleLabel.text = A.title
+        subTitleLabel.text = A!.title
         vStack.addArrangedSubview(subTitleLabel)
         ADD_SPACER(to: vStack, height: 8)
         
@@ -535,12 +598,12 @@ extension StoryViewController {
         HStack_source.activateConstraints([
             HStack_source.heightAnchor.constraint(equalToConstant: 28)
         ])
-        if(!A.media_country_code.isEmpty) {
+        if(!A!.media_country_code.isEmpty) {
             let VStack_flag = VSTACK(into: HStack_source)
             //VStack_flag.backgroundColor = .green
             let flagImageView = UIImageView()
             
-            if let _image = UIImage(named: A.media_country_code.uppercased() + "64.png") {
+            if let _image = UIImage(named: A!.media_country_code.uppercased() + "64.png") {
                 flagImageView.image = _image
             } else {
                 flagImageView.image = UIImage(named: "noFlag.png")
@@ -556,10 +619,9 @@ extension StoryViewController {
             ADD_SPACER(to: HStack_source, width: 2)
         }
         
-        var LR = 1
-        var PE = 1
-                    
-        let sourceName = A.media_title.components(separatedBy: " #").first!
+        let LR = A!.LR
+        let PE = A!.PE
+        let sourceName = A!.media_title.components(separatedBy: " #").first!
         self.getSourceIcon(name: sourceName) { (icon) in
             if let _icon = icon {
                 let sourcesContainer = UIStackView()
@@ -567,8 +629,8 @@ extension StoryViewController {
                 ADD_SOURCE_ICONS(data: [_icon.identifier],
                     to: sourcesContainer, containerHeight: 28)
                     
-                LR = _icon.LR
-                PE = _icon.PE
+//                LR = _icon.LR
+//                PE = _icon.PE
             }
         }
         
@@ -595,7 +657,7 @@ extension StoryViewController {
             mainButton.topAnchor.constraint(equalTo: imageView.topAnchor),
             mainButton.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
         ])
-        mainButton.tag = 300+i
+        mainButton.tag = 300 + A!.tag
         mainButton.addTarget(self, action: #selector(articleOnTap(_:)), for: .touchUpInside)
 
         let miniButton = UIButton(type: .custom)
@@ -607,7 +669,7 @@ extension StoryViewController {
             miniButton.topAnchor.constraint(equalTo: stanceIcon.topAnchor),
             miniButton.bottomAnchor.constraint(equalTo: stanceIcon.bottomAnchor)
         ])
-        miniButton.tag = 400+i
+        miniButton.tag = 400 + A!.tag
         miniButton.addTarget(self, action: #selector(articleStanceIconOnTap(_:)), for: .touchUpInside)
         
         ADD_SPACER(to: vStack, height: 20) // Space to next item
@@ -786,6 +848,8 @@ extension StoryViewController {
                     line.activateConstraints([
                         line.heightAnchor.constraint(equalToConstant: 2.0)
                     ])
+                    
+                    if(i < spins.count-1) {
                         // Dashes
                         line.clipsToBounds = true
                         let dash_long: CGFloat = 5
@@ -804,8 +868,13 @@ extension StoryViewController {
                             
                             val_x += dash_long + dash_sep
                         }
+                        
+                        ADD_SPACER(to: innerHStack, height: 20) // Space to next item
+                    } else {
+                        ADD_SPACER(to: innerHStack, height: 1) // Space to next item
+                    }
                     
-                    ADD_SPACER(to: innerHStack, height: 20) // Space to next item
+                    
                 }
                 
             }
