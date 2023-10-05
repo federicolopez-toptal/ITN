@@ -50,7 +50,7 @@ extension StoryContent {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
-        let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if let _error = error {
                 print(_error.localizedDescription)
                 callback(nil)

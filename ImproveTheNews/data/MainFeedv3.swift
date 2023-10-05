@@ -31,7 +31,7 @@ class MainFeedv3 {
         
         self.prevS = 0
         print("MAIN FEED from", request.url!.absoluteString)
-        let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
             }
@@ -50,7 +50,7 @@ class MainFeedv3 {
                 }
             }
         }
-        
+
         task.resume()
     }
     

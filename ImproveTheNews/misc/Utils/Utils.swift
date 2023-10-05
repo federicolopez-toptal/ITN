@@ -9,6 +9,14 @@ import Foundation
 import UIKit
 
 
+func URL_SESSION(timeout: TimeInterval = 30) -> URLSession {
+    let cfg = URLSessionConfiguration.default
+    cfg.timeoutIntervalForRequest = timeout
+    let session = URLSession(configuration: cfg)
+    
+    return session
+}
+
 func WRITE(_ key: String, value: Any) {
 //    print(">> WRITING", key, value)
     UserDefaults.standard.setValue(value, forKey: key)

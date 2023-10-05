@@ -34,7 +34,7 @@ class Sources {
         var request = URLRequest(url: URL(string: sourcesUrl)!)
         request.httpMethod = "GET"
         
-        let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if let _error = error {
                 print(_error.localizedDescription)
                 callback(_error)

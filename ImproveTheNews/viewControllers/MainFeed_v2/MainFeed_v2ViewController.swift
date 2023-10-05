@@ -102,21 +102,22 @@ extension MainFeed_v2ViewController {
         if(showLoading){ self.showLoading() }
         self.topicsCompleted = [String: Bool]()
         
-        UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
-            Sources.shared.checkIfLoaded { _ in // load sources (if needed)
+        UUID.shared.checkIfGenerated { (success) in // generates a new uuid (if needed)
+            if(!success) {
+                self.showErrorAlert()
+                return
+            }
+        
+            Sources.shared.checkIfLoaded { (success) in // load sources (if needed)
+                if(!success) {
+                    self.showErrorAlert()
+                    return
+                }
 
                 self.data.loadData(self.topic) { (error) in
                     MAIN_THREAD {/* --- */
-                        if(self.data.topics.count == 0) {
-                            self.hideLoading()
-                            self.list.hideRefresher()
-                        
-                            ALERT(vc: self, title: "Server error",
-                                message: "There was an error retrieving your news. Please try again later", onCompletion: {
-                                DELAY(1.0) {
-                                    self.loadData(showLoading: true)
-                                }
-                            })
+                        if(error != nil || self.data.topics.count == 0) {
+                            self.showErrorAlert()
                             return
                         }
                     
@@ -154,6 +155,20 @@ extension MainFeed_v2ViewController {
                     }
                 }
             }
+        }
+    }
+    
+    func showErrorAlert() {
+        MAIN_THREAD {
+            self.hideLoading()
+            self.list.hideRefresher()
+            
+            ALERT(vc: self, title: "",
+                message: "Trouble loading the news,\nplease try again later.", onCompletion: {
+                DELAY(1.0) {
+                    self.loadData(showLoading: true)
+                }
+            })
         }
     }
     

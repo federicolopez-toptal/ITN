@@ -137,9 +137,8 @@ extension StoryViewController {
             if(story == nil) {
                 // Empty story content
                 ALERT(vc: self, title: "Server error",
-                message: "There was an error while retrieving your story. Please try again later", onCompletion: {
+                message: "Trouble loading story,\nplease try again later.", onCompletion: {
                     CustomNavController.shared.popViewController(animated: true)
-                    
 //                    DELAY(1.0) {
 //                        self.loadContent()
 //                    }

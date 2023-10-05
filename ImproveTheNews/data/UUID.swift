@@ -51,7 +51,7 @@ class UUID {
         let body = try? JSONSerialization.data(withJSONObject: bodyJson)
         request.httpBody = body
         
-        let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if let _error = error {
                 print(_error.localizedDescription)
                 callback(_error, nil)

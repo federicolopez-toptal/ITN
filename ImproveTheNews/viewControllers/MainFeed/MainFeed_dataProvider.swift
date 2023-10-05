@@ -39,7 +39,7 @@ extension MainFeedViewController {
         if(TEXT_IMAGES()) {
             itemsToShowPerTopic = "h,"
             for _ in 1...LOADMORE_LIMIT {
-                itemsToShowPerTopic += "sbi,awi2,awt3,swt,sci,aci3,"
+                itemsToShowPerTopic += "sbi,awi2,awt3,swt,_,sci,aci3,"
             }
             itemsToShowPerTopic += "m"
         } else if(TEXT_ONLY()){
@@ -92,7 +92,7 @@ extension MainFeedViewController {
                     let hText = T.capitalizedName.uppercased()
                     self.addHeader(format: format, isHeadline: (T.name=="news"), headlineText: hText)
                 } else if(type == "_") {
-                    let spacer = DP_spacer(height: 10)
+                    let spacer = DP_spacer(height: 12)
                     self.dataProvider.append(spacer)
                 }else if(type == "m") {
                     self.insertBanner(index: i)

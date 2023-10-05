@@ -141,21 +141,25 @@ class MainFeedViewController: BaseViewController {
         self.topicsCompleted = [String: Bool]()
         //let imFirst = self.imFirstViewController() !!!
         
-        UUID.shared.checkIfGenerated { _ in // generates a new uuid (if needed)
-            Sources.shared.checkIfLoaded { _ in // load sources (if needed)
+        var cfg = URLSession.shared.configuration
+        cfg.timeoutIntervalForRequest = 30
+        
+        UUID.shared.checkIfGenerated { (success) in // generates a new uuid (if needed)
+            if(!success) {
+                self.showErrorAlert()
+                return
+            }
+            
+            Sources.shared.checkIfLoaded { (success) in // load sources (if needed)
+                if(!success) {
+                    self.showErrorAlert()
+                    return
+                }
             
                 self.data.loadData(self.topic) { (error) in
                     MAIN_THREAD {/* --- */
-                        if(self.data.topics.count == 0) {
-                            self.hideLoading()
-                            self.list.hideRefresher()
-                        
-                            ALERT(vc: self, title: "Server error",
-                                message: "There was an error while retrieving your news. Please try again later", onCompletion: {
-                                DELAY(1.0) {
-                                    self.loadData(showLoading: true)
-                                }
-                            })
+                        if(error != nil || self.data.topics.count == 0) {
+                            self.showErrorAlert()
                             return
                         }
                     
@@ -191,6 +195,20 @@ class MainFeedViewController: BaseViewController {
                     /* --- */ }
                 }
             }
+        }
+    }
+    
+    func showErrorAlert() {
+        MAIN_THREAD {
+            self.hideLoading()
+            self.list.hideRefresher()
+            
+            ALERT(vc: self, title: "",
+                message: "Trouble loading the news,\nplease try again later.", onCompletion: {
+                DELAY(1.0) {
+                    self.loadData(showLoading: true)
+                }
+            })
         }
     }
     
