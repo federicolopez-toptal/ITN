@@ -137,7 +137,7 @@ extension StoryViewController {
             if(story == nil) {
                 // Empty story content
                 ALERT(vc: self, title: "Server error",
-                message: "Trouble loading story,\nplease try again later.", onCompletion: {
+                message: "Trouble loading your story,\nplease try again later.", onCompletion: {
                     CustomNavController.shared.popViewController(animated: true)
 //                    DELAY(1.0) {
 //                        self.loadContent()
@@ -724,7 +724,8 @@ extension StoryViewController {
                 descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
                 innerHStack.addArrangedSubview(descriptionLabel)
                 
-                if(!S.image.isEmpty && !S.subTitle.isEmpty && !S.media_title.isEmpty) {
+                //if(!S.image.isEmpty && !S.subTitle.isEmpty && !S.media_title.isEmpty) {
+                if(!S.image.isEmpty && !S.media_title.isEmpty) {
                     ADD_SPACER(to: innerHStack, height: 16)
                     let HStack_image = HSTACK(into: innerHStack)
                     //HStack_image.backgroundColor = .orange
@@ -740,7 +741,25 @@ extension StoryViewController {
                         imageView.widthAnchor.constraint(equalToConstant: 146 * 0.8),
                         imageView.heightAnchor.constraint(equalToConstant: 98 * 0.8)
                     ])
-                    imageView.sd_setImage(with: URL(string: S.image))
+                    
+                    imageView.sd_setImage(with: URL(string: S.image), placeholderImage: nil, options: .retryFailed) { (img, error, cacheType, url) in
+                        if(error != nil) {
+                            print("IMG ERROR", error?.localizedDescription)
+                            imageView.image = nil
+                            
+                            let imgIcon = UIImageView(image: UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate))
+                            imgIcon.tintColor = .white.withAlphaComponent(0.5)
+                            
+                            imageView.addSubview(imgIcon)
+                            imgIcon.activateConstraints([
+                                imgIcon.widthAnchor.constraint(equalToConstant: 40),
+                                imgIcon.heightAnchor.constraint(equalToConstant: 30),
+                                imgIcon.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+                                imgIcon.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
+                            ])
+                        }
+                    }
+                    //imageView.sd_setImage(with: URL(string: S.image))
                     ADD_SPACER(to: VStack_image) // V fill
 
                     ADD_SPACER(to: HStack_image, width: 12)
