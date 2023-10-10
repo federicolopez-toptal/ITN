@@ -114,7 +114,7 @@ class API {
         }
     }
 // ---
-    func signIn(email: String, password: String, callback: @escaping (Bool, String, Bool) -> () ) {
+    func  signIn(email: String, password: String, callback: @escaping (Bool, String, Bool) -> () ) {
         
         let json: [String: String] = [
             "type": "Sign In",

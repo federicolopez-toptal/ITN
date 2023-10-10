@@ -429,9 +429,39 @@ extension MenuView {
                 WRITE(LocalKeys.user.AUTHENTICATED, value: "NO")
                 CustomNavController.shared.menu.updateLogout()
 
+                self.resetAllSettings()
+                NOTIFY(Notification_reloadMainFeed)
+                CustomNavController.shared.slidersPanel.reloadSliderValues()
+                CustomNavController.shared.slidersPanel.forceSplitOff()
+                
+                if(Layout.current() == .textOnly) {
+                    self.changeLayout()
+                }
+                
+                if(DisplayMode.current() == .bright) {
+                    self.changeDisplayMode()
+                }
+                
                 self.dismissMe()
             }
         }
+    }
+    
+    private func resetAllSettings() {
+        // Back all settings to default
+        
+        // Sliders
+        for (i, key) in LocalKeys.sliders.allKeys.enumerated() {
+            var newValue = LocalKeys.sliders.defaultValues[i]
+            let strValue = String(format: "%02d", newValue)
+            WRITE(key, value: strValue)
+        }
+        
+        // Feed Preferences (on/off)
+        WRITE(LocalKeys.preferences.showSourceFlags, value: "01")
+        WRITE(LocalKeys.preferences.showSourceIcons, value: "01")
+        WRITE(LocalKeys.preferences.showStanceIcons, value: "01")
+        WRITE(LocalKeys.preferences.showStories, value: "01")
     }
     
 }
