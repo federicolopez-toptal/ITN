@@ -40,8 +40,12 @@ class KeywordSearch {
             self.articles = []
         }
         
+        var _text = text
+//        _text = _text.replacingOccurrences(of: "'", with: "")
+//        _text = _text.replacingOccurrences(of: "\"", with: "")
+        
         var url = self.searchUrl + "?searchtype=" + self.searchType.rawValue
-        url += "&searchstring=" + text.urlEncodedString() + "&limit=" + String(self.searchPageSize)
+        url += "&searchstring=" + _text.urlEncodedString() + "&limit=" + String(self.searchPageSize)
         url += "&offset=" + String(offset)
         url += "&slidercookies=" + MainFeedv3.sliderValues()
         url += "&userId=" + UUID.shared.getValue()
