@@ -256,22 +256,7 @@ struct StorySearchResult {
         
         formatter.dateFormat = "yyyy"
         result += ", " + formatter.string(from: inputDate)
-        
-//        print("input", input)
-//        let year = input.subString(from: 0, count: 4)
-//        print("input (again)", input)
-//        let month = input.subString(from: 5, count: 2)
-        
-        //let month = input.subString(from: 5, count: 2)
-        //let day = input.subString(from: 8, count: 2)
-        
-        /*
-        let type = item.getCharAt(index: 0) // 1st char: Data type (h: header, s: story, a: article, m: more)
-                let format = item.subString(from: 1, count: 2) // 2nd + 3rd char: Size and/or format
-                var count = item.getCharAt(index: 3) //4th char: Items count
-         */
-        
-        //return month! + " " + day! + "," + year!
+    
         return result
     }
 }

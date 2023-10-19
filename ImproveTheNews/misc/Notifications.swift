@@ -15,6 +15,7 @@ let Notification_reloadMainFeedOnShow = Notification.Name("ReloadMainFeedOnSHow"
 
 let Notification_stanceIconTap = Notification.Name("StanceIconTap")                 // User taps on a Stance icon
 
+let Notification_tryAgainButtonTap = Notification.Name("TryAgainButtonTap")          // User taps on a "Try again" button
 
 
 func NOTIFY(_ name: Notification.Name, userInfo: [AnyHashable: Any]? = nil) {

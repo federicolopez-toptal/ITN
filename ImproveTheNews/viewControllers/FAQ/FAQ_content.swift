@@ -118,7 +118,7 @@ extension FAQViewController {
         } else if(index == 12) {
             return ["here"]
         } else if(index == 13) {
-            return ["jobs@improvethenews.org", "feedback form"]
+            return ["contact@improvethenews.org", "feedback form"]
         }  else if(index == 14) {
             return ["here"]
         }
@@ -146,7 +146,7 @@ extension FAQViewController {
         } else if(index == 12) {
             return ["local://privacyPolicy"]
         } else if(index == 13) {
-            return ["mailto:jobs@improvethenews.org", "local://feedbackForm"]
+            return ["mailto:contact@improvethenews.org", "local://feedbackForm"]
         }  else if(index == 14) {
             return ["local://feedbackForm"]
         }

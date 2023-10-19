@@ -274,19 +274,22 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
 //            popup.populate(sourceName: "mySource", country: "USA", LR: 1, PE: 5)
 //            popup.pushFromBottom()
         
-            let msg = "There was an error while retrieving the information. Try again?"
+        HIDE_KEYBOARD(view: self.view)
+        SERVER_ERROR_POPUP(text: "Oops: we're having a temprary\ndatabase problem - this one is on\nus!")
+        
+            //let msg = "There was an error while retrieving the information. Try again?"
 
-            ALERT_YESNO(vc: self, title: "Server error", message: msg) { (answer) in
-                if(answer) {
-                    DELAY(0.2) {
-                        self.search(self.searchTextfield.text(), type: .all)
-                    }
-                } else {
-                    MAIN_THREAD {
-                        self.refresher.endRefreshing()
-                    }
-                }
-            }
+//            ALERT_YESNO(vc: self, title: "Server error", message: msg) { (answer) in
+//                if(answer) {
+//                    DELAY(0.2) {
+//                        self.search(self.searchTextfield.text(), type: .all)
+//                    }
+//                } else {
+//                    MAIN_THREAD {
+//                        self.refresher.endRefreshing()
+//                    }
+//                }
+//            }
         }
         
         

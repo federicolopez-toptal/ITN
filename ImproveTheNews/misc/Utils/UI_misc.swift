@@ -160,3 +160,9 @@ func ADD_BOTTOM_LINE(to view: UIView, color: UIColor = .black.withAlphaComponent
         bottomLine.heightAnchor.constraint(equalToConstant: 1.0)
     ])
 }
+
+func SERVER_ERROR_POPUP(text: String) {
+    let popup = serverErrorPopupView()
+    popup.populate(text: text, actionText: "TRY AGAIN?", notification: Notification_tryAgainButtonTap)
+    popup.pushFromBottom()
+}
