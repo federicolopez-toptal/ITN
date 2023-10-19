@@ -269,8 +269,13 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
 
     func showErrorOnLoadMore() {
         MAIN_THREAD {
-            let msg = "There was an error while retrieving the information. Try again?"
+//            HIDE_KEYBOARD(view: self.view)
+//            let popup = StancePopupView()
+//            popup.populate(sourceName: "mySource", country: "USA", LR: 1, PE: 5)
+//            popup.pushFromBottom()
         
+            let msg = "There was an error while retrieving the information. Try again?"
+
             ALERT_YESNO(vc: self, title: "Server error", message: msg) { (answer) in
                 if(answer) {
                     DELAY(0.2) {

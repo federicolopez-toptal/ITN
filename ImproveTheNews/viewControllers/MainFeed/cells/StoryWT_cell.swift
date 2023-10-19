@@ -20,6 +20,7 @@ class StoryWT_cell: UICollectionViewCell {
     static var extraHeight: CGFloat = 8.0
     var marginViewHeightConstraint: NSLayoutConstraint? = nil
     let marginView = UIView()
+    let bottomView = UIView()
 
     // MARK: - Init
     override init(frame: CGRect) {
@@ -102,6 +103,15 @@ class StoryWT_cell: UICollectionViewCell {
             self.marginViewHeightConstraint!
         ])
         
+        //---
+        self.contentView.addSubview(self.bottomView)
+        self.bottomView.activateConstraints([
+            self.bottomView.heightAnchor.constraint(equalToConstant: 12),
+            self.bottomView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.bottomView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.bottomView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+        ])
+        
         ADD_SPACER(to: iconsHStack)
     }
     
@@ -121,6 +131,9 @@ class StoryWT_cell: UICollectionViewCell {
             ADD_SOURCE_ICONS(data: [], to: self.sourcesContainer)
         }
         
+        if(Layout.current() == .textImages && MUST_SPLIT() == 0){ self.bottomView.show() }
+        else { self.bottomView.hide() }
+        
         self.refreshDisplayMode()
     }
     
@@ -129,6 +142,7 @@ class StoryWT_cell: UICollectionViewCell {
         self.marginView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+        self.bottomView.backgroundColor = self.marginView.backgroundColor
         
         //self.storyLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0xFF643C) : .white
         self.storyLabel.backgroundColor = UIColor(hex: 0xDA4933)
@@ -162,6 +176,7 @@ class StoryWT_cell: UICollectionViewCell {
 //        let minH: CGFloat = 147
 //        if(H<minH){ H = minH }
         
+        if(Layout.current() == .textImages && MUST_SPLIT() == 0){ H += 12 }
         return CGSize(width: width, height: H)
     }
     

@@ -162,3 +162,7 @@ func USER_AUTHENTICATED() -> Bool {
         return false
     }
 }
+
+func YOUTUBE_GET_THUMB_IMG(id: String) -> String {
+    return "https://img.youtube.com/vi/" + id + "/0.jpg"
+}

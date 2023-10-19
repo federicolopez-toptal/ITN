@@ -20,6 +20,7 @@ struct MainFeedStory {
     var facts = [Fact]()
     var spins = [Spin]()
     var articles = [StoryArticle]()
+    var goDeeper = [StorySearchResult]()
     
     var audio: AudioFile?
     
@@ -91,6 +92,31 @@ struct MainFeedStory {
             self.splitType = _type
         }
 
+    // Go deeper
+        let goDeeperNode = removeNULL(from: json["goDeeper"])
+        let contextsNode = removeNULL(from: json["storyContexts"])
+        self.goDeeper = [StorySearchResult]()
+        
+        for (_, A) in goDeeperNode.enumerated() {
+            var newStory = StorySearchResult(A)
+            
+            for B in contextsNode {
+                let titleB = B["title"] as! String
+                
+                if(titleB == newStory.title) {
+                    let logos = B["logos"] as! [[String: Any]]
+                    
+                    var logosStr = [String]()
+                    for LOGO in logos {
+                        logosStr.append(LOGO["medianame"] as! String)
+                    }
+                    
+                    newStory.medianames = logosStr.joined(separator: ",")
+                }
+            }
+            
+            self.goDeeper.append(newStory)
+        }
     }
 
 }

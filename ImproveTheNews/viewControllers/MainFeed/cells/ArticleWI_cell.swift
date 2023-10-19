@@ -135,6 +135,8 @@ class ArticleWI_cell: UICollectionViewCell {
     
     func populate(with article: MainFeedArticle) {
         self.mainImageView.image = nil
+        
+        //print("IMAGE TO LOAD", article.imgUrl)
         if let _url = URL(string: article.imgUrl.replacingOccurrences(of: "http:", with: "https:")) {
             self.mainImageView.sd_setImage(with: _url)
         }

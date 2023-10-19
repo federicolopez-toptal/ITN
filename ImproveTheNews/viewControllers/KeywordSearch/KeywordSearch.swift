@@ -206,16 +206,73 @@ struct StorySearchResult {
     var medianames: String = ""
     var used: Bool = false
     
+    var type: Int = 1
+    var videoFile: String?
+    
     init(_ data: [String: Any]) {
         self.image_url = data["image_url"] as! String
         self.slug = data["slug"] as! String
-        self.timeago = data["timeago"] as! String
+        
+        if let _timeAgo = data["timeago"] as? String {
+            self.timeago = _timeAgo
+        } else if let _timeAgo = data["timeRelative"] as? String {
+            self.timeago = _timeAgo
+        } else if let _timeAgo = data["updated"] as? String {
+            self.timeago = self.formattedUpdatedTime(input: _timeAgo)
+        }
+        
         self.title = data["title"] as! String
         
         self.medianames = ""
-        if let _medianames = data["medianames"] as? String {
-            self.medianames = _medianames
+        if let _mediaNames = data["medianames"] as? String {
+            self.medianames = _mediaNames
+        } else if let _mediaNames = data["media"] as? [String] {
+            self.medianames = _mediaNames.joined(separator: ",")
         }
+        
+        if let _type = data["storytype"] as? Int {
+            self.type = _type
+        }
+        
+        if let _videoFile = data["videofile"] as? String {
+            self.videoFile = _videoFile
+        }
+    }
+    
+    func formattedUpdatedTime(input: String) -> String {
+        //Example: "2023-04-30 21:31:29"
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let inputDate = formatter.date(from: input)!
+        var result = ""
+        
+        formatter.dateFormat = "LLL"
+        result = formatter.string(from: inputDate)
+        
+        formatter.dateFormat = "dd"
+        result += " " + formatter.string(from: inputDate)
+        
+        formatter.dateFormat = "yyyy"
+        result += ", " + formatter.string(from: inputDate)
+        
+//        print("input", input)
+//        let year = input.subString(from: 0, count: 4)
+//        print("input (again)", input)
+//        let month = input.subString(from: 5, count: 2)
+        
+        //let month = input.subString(from: 5, count: 2)
+        //let day = input.subString(from: 8, count: 2)
+        
+        /*
+        let type = item.getCharAt(index: 0) // 1st char: Data type (h: header, s: story, a: article, m: more)
+                let format = item.subString(from: 1, count: 2) // 2nd + 3rd char: Size and/or format
+                var count = item.getCharAt(index: 3) //4th char: Items count
+         */
+        
+        //return month! + " " + day! + "," + year!
+        return result
     }
 }
 

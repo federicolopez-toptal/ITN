@@ -86,6 +86,11 @@ class MainFeedViewController: BaseViewController {
             self.testFeature()
             
             UUID.shared.trace()
+            
+//            DELAY(0.5) { //!!!
+//                let vc = FAQViewController()
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
         }
         
         if(self.mustReloadOnShow) {
@@ -101,7 +106,6 @@ class MainFeedViewController: BaseViewController {
             CustomNavController.shared.slidersPanel.show(rows: 0, animated: false)
             CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
-        
         
     }
     

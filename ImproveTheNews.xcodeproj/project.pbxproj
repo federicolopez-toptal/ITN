@@ -57,6 +57,7 @@
 		1F5A0FFF2992D59700DD8CB3 /* Data_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */; };
 		1F5B59042AC4AA9600233B41 /* screens.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F5B59032AC4AA9600233B41 /* screens.txt */; };
 		1F5EE1482A0E93A900168FB0 /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5EE1472A0E93A900168FB0 /* URLExtension.swift */; };
+		1F6506472AD6FA2C00535337 /* FAQ_Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6506462AD6FA2C00535337 /* FAQ_Stories.swift */; };
 		1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */; };
 		1F66798429DF026000CFB714 /* iPadSpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798329DF026000CFB714 /* iPadSpacerCell.swift */; };
 		1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */; };
@@ -362,6 +363,8 @@
 		1FA8AA3628D0E3F500B6C956 /* ArticleWI_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */; };
 		1FA8AA3828D1778F00B6C956 /* SourceIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8AA3728D1778F00B6C956 /* SourceIcons.swift */; };
 		1FACBF8329AD01D0009A8E0F /* iPadSplitHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */; };
+		1FB6A0B12ADF01E4008F968A /* FAQ_normalStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB6A0B02ADF01E4008F968A /* FAQ_normalStoryView.swift */; };
+		1FB6A0B32ADF1537008F968A /* FAQ_contextStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB6A0B22ADF1537008F968A /* FAQ_contextStoryView.swift */; };
 		1FBD426E2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBD426D2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift */; };
 		1FBD42712A40EDF200BFE68B /* KeywordSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBD42702A40EDF200BFE68B /* KeywordSearchViewController.swift */; };
 		1FBDA3932AABA6950013FD6A /* verityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FBDA3922AABA6950013FD6A /* verityLogo.png */; };
@@ -476,6 +479,7 @@
 		1F5A0FFE2992D59700DD8CB3 /* Data_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_misc.swift; sourceTree = "<group>"; };
 		1F5B59032AC4AA9600233B41 /* screens.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = screens.txt; sourceTree = "<group>"; };
 		1F5EE1472A0E93A900168FB0 /* URLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
+		1F6506462AD6FA2C00535337 /* FAQ_Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_Stories.swift; sourceTree = "<group>"; };
 		1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_rowNoStoriesCell.swift; sourceTree = "<group>"; };
 		1F66798329DF026000CFB714 /* iPadSpacerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSpacerCell.swift; sourceTree = "<group>"; };
 		1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -783,6 +787,8 @@
 		1FA8AA3528D0E3F500B6C956 /* ArticleWI_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWI_cell.swift; sourceTree = "<group>"; };
 		1FA8AA3728D1778F00B6C956 /* SourceIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceIcons.swift; sourceTree = "<group>"; };
 		1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSplitHeaderCell.swift; sourceTree = "<group>"; };
+		1FB6A0B02ADF01E4008F968A /* FAQ_normalStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_normalStoryView.swift; sourceTree = "<group>"; };
+		1FB6A0B22ADF1537008F968A /* FAQ_contextStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_contextStoryView.swift; sourceTree = "<group>"; };
 		1FBD426D2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordSearchViewController_list.swift; sourceTree = "<group>"; };
 		1FBD42702A40EDF200BFE68B /* KeywordSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeywordSearchViewController.swift; sourceTree = "<group>"; };
 		1FBDA3922AABA6950013FD6A /* verityLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verityLogo.png; sourceTree = "<group>"; };
@@ -1221,6 +1227,9 @@
 			children = (
 				1F9E28C42954DC0200041303 /* FAQViewController.swift */,
 				1F41FCCB29B24AFC002081AE /* FAQ_content.swift */,
+				1F6506462AD6FA2C00535337 /* FAQ_Stories.swift */,
+				1FB6A0B02ADF01E4008F968A /* FAQ_normalStoryView.swift */,
+				1FB6A0B22ADF1537008F968A /* FAQ_contextStoryView.swift */,
 			);
 			path = FAQ;
 			sourceTree = "<group>";
@@ -2032,6 +2041,7 @@
 				1FD5BDF528DC1313003E650F /* DarkView.swift in Sources */,
 				1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */,
 				1FF6DF7929AE41960072D0D0 /* iPadBannerCell.swift in Sources */,
+				1FB6A0B32ADF1537008F968A /* FAQ_contextStoryView.swift in Sources */,
 				1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */,
 				1F9538DC28FF337A00251598 /* StancePopupView.swift in Sources */,
 				1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */,
@@ -2085,6 +2095,7 @@
 				1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */,
 				1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */,
 				1FE9169F29A79805007F8AAF /* ArticleHImageView.swift in Sources */,
+				1FB6A0B12ADF01E4008F968A /* FAQ_normalStoryView.swift in Sources */,
 				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */,
 				1FE916A329A7AEF1007F8AAF /* GroupItemCell.swift in Sources */,
 				1F1788AD2937CBC1003F528E /* TrashCode.swift in Sources */,
@@ -2096,6 +2107,7 @@
 				1F9EDD5529AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift in Sources */,
 				1F025CB228E133D800AA866D /* BannerCell.swift in Sources */,
 				1F9EDD4929AE8510007A97A6 /* SpacerCell.swift in Sources */,
+				1F6506472AD6FA2C00535337 /* FAQ_Stories.swift in Sources */,
 				1F56F727294B9D2900654CDB /* HyperlinkLabel.swift in Sources */,
 				1F9EDD4F29AE9842007A97A6 /* iPadGroupItem_rowCellText.swift in Sources */,
 				1F5A0FFF2992D59700DD8CB3 /* Data_misc.swift in Sources */,
@@ -2313,7 +2325,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2350,7 +2362,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2441,7 +2453,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

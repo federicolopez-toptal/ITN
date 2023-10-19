@@ -47,18 +47,21 @@ func ARTICLE_IMG() -> UIImageView {
     return result
 }
 
-func STORY_PILL() -> UILabel {
+func STORY_PILL(bgColor: UIColor = UIColor(hex: 0xDA4933), text: String = "STORY")  -> UILabel {
     let result = UILabel()
-    result.backgroundColor = UIColor(hex: 0xDA4933)
+    result.backgroundColor = bgColor
     result.textColor = .white
-    result.text = "STORY"
+    result.text = text
     result.textAlignment = .center
     result.font = AILERON_BOLD(11)
     result.layer.masksToBounds = true
     result.layer.cornerRadius = 12
     result.addCharacterSpacing(kernValue: 1.0)
+    
+    var W: CGFloat = 65
+    if(text != "STORY"){ W = 80 }
     result.activateConstraints([
-        result.widthAnchor.constraint(equalToConstant: 65),
+        result.widthAnchor.constraint(equalToConstant: W),
         result.heightAnchor.constraint(equalToConstant: 23)
     ])
     
@@ -75,6 +78,10 @@ class CustomCellView: UIView {
     }
     
     func refreshDisplayMode() {
+    }
+    
+    func getHeight(forColumnWidth columnW: CGFloat) -> CGFloat {
+        return 1
     }
 
 }

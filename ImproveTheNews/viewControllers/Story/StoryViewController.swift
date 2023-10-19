@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import WebKit
 
 
 class StoryViewController: BaseViewController {
@@ -32,6 +33,8 @@ class StoryViewController: BaseViewController {
     var audioPlayer = AudioPlayerView()
     var secondaryAudioPlayer = AudioPlayerView(secondary: true)
     var titleLabelHeight: CGFloat = 0
+    
+    var isContext: Bool = false
     
     deinit {
         self.audioPlayer.close()
@@ -186,7 +189,12 @@ extension StoryViewController {
         self.addPill()
         self.addTitle(text: story.title)
         self.addAudioPlayer(story.audio)
-        self.addImage(imageUrl: story.image_src)
+        
+        if(self.isContext) {
+            self.addVideo()
+        } else {
+            self.addImage(imageUrl: story.image_src)
+        }
         
 //        print(self.story!.time)
 //        print(story.time)
@@ -209,12 +217,17 @@ extension StoryViewController {
         
         self.addSpins(story.spins)
         
-        //self.addArticles(story.articles)
+
         if(story.splitType.isEmpty) {
-            self.addArticles(story.articles)
+            if(self.isContext) {
+                self.addGoDeeper(stories: story.goDeeper)
+            } else {
+                self.addArticles(story.articles)
+            }
         } else {
             self.addSplitArticles(type: story.splitType, story.articles)
         }
+        
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
@@ -224,6 +237,72 @@ extension StoryViewController {
 //        DELAY(1.0) {
 //            self.scrollToBottom()
 //        }
+    }
+
+    //----
+    private func addGoDeeper(stories: [StorySearchResult]) {
+        if(stories.count==0){ return }
+        
+        let sectionView = UIView()
+        //sectionView.backgroundColor = .yellow.withAlphaComponent(0.3)
+        ADD_SPACER(to: self.VStack, height: 10)
+        self.VStack.addArrangedSubview(sectionView)
+        
+        let title = UILabel()
+        title.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        //title.backgroundColor = .red.withAlphaComponent(0.3)
+        title.font = DM_SERIF_DISPLAY_fixed(20)
+        title.text = "Go Deeper"
+        sectionView.addSubview(title)
+        title.activateConstraints([
+            title.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: 20),
+            title.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: 15),
+            title.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -15)
+        ])
+        
+        let W: CGFloat = SCREEN_SIZE().width - (13*2) - (15*2)
+        var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20
+        let columnW: CGFloat = (W-15)/2
+        
+        var col = 1
+        var prevH: CGFloat = 0
+        for (i, ST) in stories.enumerated() {
+            let storyView = FAQ_normalStoryView()
+            sectionView.addSubview(storyView)
+            storyView.activateConstraints([
+                storyView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: (col == 1) ? 15 : (15+columnW+15)),
+                storyView.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY),
+                storyView.widthAnchor.constraint(equalToConstant: columnW)
+            ])
+            
+            storyView.populate(MainFeedArticle(story: ST))
+            storyView.refreshDisplayMode()
+            
+            let H = storyView.getHeight(forColumnWidth: columnW)
+            storyView.heightAnchor.constraint(equalToConstant: H).isActive = true
+            
+            if(col==1) {
+                prevH = H
+            }
+            
+            col += 1
+            if(col == 3) {
+                col = 1
+                var max = H
+                if(prevH > max){ max = prevH }
+                posY += max + 15
+            } else if(i == stories.count-1) {
+//                var max = H
+//                if(prevH > max){ max = prevH }
+//                posY += max + 15
+
+                posY += H + 15
+            }
+        }
+        
+        sectionView.activateConstraints([
+            sectionView.heightAnchor.constraint(equalToConstant: posY)
+        ])
     }
 
     // ------------------------------------------
@@ -255,7 +334,7 @@ extension StoryViewController {
             
             ADD_SPACER(to: innerHStack, height: 12)
             for (i, A) in articles.enumerated() {
-                if(!A.image.isEmpty && !A.title.isEmpty && !A.media_title.isEmpty) {
+                if(!A.image.isEmpty && !A.title.isEmpty) {//} && !A.media_title.isEmpty) {
                     ADD_SPACER(to: innerHStack, height: 16)
                     let HStack_image = HSTACK(into: innerHStack)
                     //HStack_image.backgroundColor = .orange
@@ -1182,6 +1261,20 @@ extension StoryViewController {
         HStack.addArrangedSubview(updatedLabel)
         ADD_SPACER(to: HStack, width: 13)
     }
+    
+    private func addVideo() {
+        var webBrowser = WKWebView()
+        
+        let H = (SCREEN_SIZE().width * 9)/16
+        self.VStack.addArrangedSubview(webBrowser)
+        webBrowser.activateConstraints([
+            webBrowser.heightAnchor.constraint(equalToConstant: H)
+        ])
+        
+        let videoURL = URL(string: "https://www.youtube.com/embed/" + self.story!.videoFile!)!
+        let request = URLRequest(url: videoURL)
+        webBrowser.load(request)
+    }
 
     private func addImage(imageUrl: String) {
         let imageView = UIImageView()
@@ -1258,17 +1351,20 @@ extension StoryViewController {
         ADD_SPACER(to: HStack, width: 10)
         
         let storyPillLabel = UILabel()
-        storyPillLabel.backgroundColor = UIColor(hex: 0xDA4933)
+        storyPillLabel.backgroundColor = (self.isContext) ? UIColor(hex: 0x3FBC04) : UIColor(hex: 0xDA4933)
         storyPillLabel.textColor = .white
-        storyPillLabel.text = "STORY"
+        storyPillLabel.text = (self.isContext) ? "CONTEXT" : "STORY"
         storyPillLabel.textAlignment = .center
         storyPillLabel.font = AILERON_BOLD(11)
         storyPillLabel.layer.masksToBounds = true
         storyPillLabel.layer.cornerRadius = 10
         storyPillLabel.addCharacterSpacing(kernValue: 1.0)
+        
+        var W: CGFloat = 60
+        if(self.isContext){ W = 80 }
         HStack.addArrangedSubview(storyPillLabel)
         storyPillLabel.activateConstraints([
-            storyPillLabel.widthAnchor.constraint(equalToConstant: 60),
+            storyPillLabel.widthAnchor.constraint(equalToConstant: W),
             storyPillLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         

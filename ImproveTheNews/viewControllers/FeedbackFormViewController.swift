@@ -15,8 +15,8 @@ class FeedbackFormViewController: BaseViewController {
     let line = UIView()
     let webView = WKWebView()
     
-    let FEEDBACK_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfoGi4VkL99kV4nESvK71k4NgzcVuIo4o-JDrlmBqArLR_IYA/viewform"
-    
+//    let FEEDBACK_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfoGi4VkL99kV4nESvK71k4NgzcVuIo4o-JDrlmBqArLR_IYA/viewform"
+    let FEEDBACK_FORM = "https://improvethenews.typeform.com/contact-us"
     
     override func viewDidLoad() {
         super.viewDidLoad()

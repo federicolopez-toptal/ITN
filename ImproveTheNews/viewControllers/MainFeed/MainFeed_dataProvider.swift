@@ -39,7 +39,7 @@ extension MainFeedViewController {
         if(TEXT_IMAGES()) {
             itemsToShowPerTopic = "h,"
             for _ in 1...LOADMORE_LIMIT {
-                itemsToShowPerTopic += "sbi,awi2,awt3,swt,_,sci,aci3,"
+                itemsToShowPerTopic += "sbi,awi2,awt3,swt,sci,aci3," //"sbi,awi2,awt3,swt,_,sci,aci3,"
             }
             itemsToShowPerTopic += "m"
         } else if(TEXT_ONLY()){

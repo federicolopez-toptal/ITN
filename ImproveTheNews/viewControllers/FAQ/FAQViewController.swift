@@ -16,8 +16,9 @@ class FAQViewController: BaseViewController {
     let contentView = UIView()
     var VStack: UIStackView!
     var firstItemOpened: Bool = false
-    
     var heightConstraints = [NSLayoutConstraint]()
+    
+    var stories: FAQ_Stories? = FAQ_Stories()
     
     // MARK: - Init
     override func viewDidLoad() {
@@ -112,10 +113,6 @@ class FAQViewController: BaseViewController {
         ])
     
         self.refreshDisplayMode()
-        
-//        DELAY(1.0) {
-//
-//        }
     }
     
     func addContent() {
@@ -127,6 +124,103 @@ class FAQViewController: BaseViewController {
             self.addSection(title: self.titles(i), content: self.contents(i),
                 linkTexts: self.linkedTexts(i), urls: self.urls(i), index: i)
         }
+        
+        //-----
+        self.stories?.loadData(callback: { (stories, error) in
+            if let _stories = stories {
+                let _normalStories = _stories.filter { $0.type == 1 }
+                let _contextStories = _stories.filter { $0.type == 2 }
+                
+                MAIN_THREAD {
+                    self.addStories(_normalStories, type: 1, mainText: "Do you create your own stories?",
+                        secText: "Yes, we have a full editorial team who create specially curated stories, screened from the most popular articles of the day — check out some of the latest added stories below to get started on Verity!")
+                        
+                    self.addStories(_contextStories, type: 2, mainText: "What if I need more context?",
+                        secText: "Check out some of our evergreen context articles if you want to take a deeper dive into a story")
+                        
+                    //self.scrollTo(valY: 6000) //!!!
+                }
+            }
+        })
+        //-----
+    }
+    
+    func addStories(_ stories: [StorySearchResult], type: Int, mainText: String, secText: String) {
+        if(stories.count==0){ return }
+        
+        let sectionView = UIView()
+        //sectionView.backgroundColor = .yellow.withAlphaComponent(0.3)
+        ADD_SPACER(to: self.VStack, height: 10)
+        self.VStack.addArrangedSubview(sectionView)
+        
+        let title = UILabel()
+        title.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        //title.backgroundColor = .red.withAlphaComponent(0.3)
+        title.font = DM_SERIF_DISPLAY_fixed(20)
+        title.text = mainText
+        sectionView.addSubview(title)
+        title.activateConstraints([
+            title.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: 20),
+            title.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: 15),
+            title.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -15)
+        ])
+        
+        let descr = UILabel()
+        descr.font = ROBOTO(15)
+        descr.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+        descr.numberOfLines = 0
+        descr.text = secText
+        //descr.backgroundColor = .green
+        sectionView.addSubview(descr)
+        descr.activateConstraints([
+            descr.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
+            descr.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            descr.trailingAnchor.constraint(equalTo: title.trailingAnchor)
+        ])
+        
+        let W: CGFloat = SCREEN_SIZE().width - (13*2) - (15*2)
+        var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20 + descr.calculateHeightFor(width: W) + 20
+        let columnW: CGFloat = (W-15)/2
+        
+        var col = 1
+        var prevH: CGFloat = 0
+        for (i, ST) in stories.enumerated() {
+            let storyView = (type == 1) ? FAQ_normalStoryView() : FAQ_contextStoryView()
+            sectionView.addSubview(storyView)
+            storyView.activateConstraints([
+                storyView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: (col == 1) ? 15 : (15+columnW+15)),
+                storyView.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY),
+                storyView.widthAnchor.constraint(equalToConstant: columnW)
+            ])
+            
+            storyView.populate(MainFeedArticle(story: ST))
+            storyView.refreshDisplayMode()
+            
+            let H = storyView.getHeight(forColumnWidth: columnW)
+            storyView.heightAnchor.constraint(equalToConstant: H).isActive = true
+            
+            if(col==1) {
+                prevH = H
+            }
+            
+            col += 1
+            if(col == 3) {
+                col = 1
+                var max = H
+                if(prevH > max){ max = prevH }
+                posY += max + 15
+            } else if(i == stories.count-1) {
+//                var max = H
+//                if(prevH > max){ max = prevH }
+//                posY += max + 15
+
+                posY += H + 15
+            }
+        }
+        
+        sectionView.activateConstraints([
+            sectionView.heightAnchor.constraint(equalToConstant: posY)
+        ])
     }
     
     func addSection(title tText: String, content: String,
@@ -362,4 +456,14 @@ extension FAQViewController: UIGestureRecognizerDelegate {
         
         return true
     }
+}
+
+// MARK: - Stories
+extension FAQViewController {
+
+    func scrollTo(valY: CGFloat) {
+        let bottomOffset = CGPoint(x: 0, y: valY)
+        self.scrollView.setContentOffset(bottomOffset, animated: true)
+    }
+
 }

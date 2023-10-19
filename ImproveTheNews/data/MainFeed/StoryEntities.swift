@@ -25,10 +25,16 @@ struct StoryArticle {
     var tag: Int = -1
     
     init(_ json: [String: Any]) {
+        print(json)
+        
         self.id = getSTRING(json["id"], defaultValue: "1")
         self.title = getSTRING(json["title"], defaultValue: "")
         self.url = FIX_URL( getSTRING(json["url"]) )
         self.image = FIX_URL( getSTRING(json["image"]) )
+        if(self.image.isEmpty){
+            self.image = FIX_URL( getSTRING(json["image_url"]) )
+        }
+        
         self.timeRelative = getSTRING(json["timeRelative"])
         
         if let _time = json["time"] as? Int {

@@ -25,6 +25,7 @@ struct MainFeedArticle {
     var storySources: [String]
     
     var used: Bool = false
+    var videoFile: String?
     
     
     init (_ json: [Any]) {
@@ -128,6 +129,7 @@ extension MainFeedArticle {
         self.markups = [Markup]()
         self.isStory = true
         self.used = false
+        self.videoFile = A.videoFile
         
         // ------ en duro (por ahora)
         self.country = "USA"
