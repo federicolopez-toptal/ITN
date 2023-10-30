@@ -24,9 +24,7 @@ struct StoryArticle {
     
     var tag: Int = -1
     
-    init(_ json: [String: Any]) {
-        print(json)
-        
+    init(_ json: [String: Any]) {        
         self.id = getSTRING(json["id"], defaultValue: "1")
         self.title = getSTRING(json["title"], defaultValue: "")
         self.url = FIX_URL( getSTRING(json["url"]) )

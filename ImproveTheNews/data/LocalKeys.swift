@@ -37,7 +37,7 @@ class LocalKeys { // Keys to store local values
     class LocalKeys_preferences {
         let displayMode = "pref_displayMode"
         let layout = "pref_layout"
-        let sourceFilters = "pref_sourceFilters_1"
+        let sourceFilters = "pref_sourceFilters_3"
         
         let onBoardingShow = "pref_onBoardingShow"
         let onBoardingState = "pref_onBoardingState"

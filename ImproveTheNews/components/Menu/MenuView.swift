@@ -426,6 +426,7 @@ extension MenuView {
         let msg = "Are you sure you want to sign out\nfrom your account?"
         CustomNavController.shared.ask(question: msg) { (success) in
             if(success) {
+                WRITE(LocalKeys.preferences.sourceFilters, value: "")
                 WRITE(LocalKeys.user.AUTHENTICATED, value: "NO")
                 CustomNavController.shared.menu.updateLogout()
 

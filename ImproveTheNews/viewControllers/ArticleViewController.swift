@@ -97,6 +97,9 @@ extension ArticleViewController: WKNavigationDelegate {
         if let _article = self.article {
             self.showLoading()
             
+            print("----")
+            print("OPEN", _article.url)
+            
             if let _url = URL(string: _article.url) {
                 let request = URLRequest(url: _url)
                 self.webView.load(request)

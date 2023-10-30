@@ -80,6 +80,8 @@ extension StoryContent {
         url = url.replacingOccurrences(of: "<FILTERS>", with: MainFeedv3.sliderValues())
         url += "&split=" + String(MUST_SPLIT()) + "0"
         //url += "&split=00" // + self.mustSplit()
+        
+        print("----")
         print("URL story", url)
         
         var request = URLRequest(url: URL(string: url)!)
