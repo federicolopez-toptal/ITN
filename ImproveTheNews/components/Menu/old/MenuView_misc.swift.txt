@@ -33,9 +33,8 @@ extension MenuView {
         
         switch(item) {
             case .displayMode:
-//                result = "Light mode"
-//                if(BRIGHT_MODE()){ result = "Dark mode" }
-                result = "Theme"
+                result = "Light mode"
+                if(BRIGHT_MODE()){ result = "Dark mode" }
                 
             case .headlines:
                 result = "Headlines"
@@ -54,7 +53,7 @@ extension MenuView {
                 result = "More"
 
             case .sliders:
-                result = "How the\nsliders work"
+                result = "How the sliders work"
                 
             case .faq:
                 result = "About"
@@ -75,7 +74,7 @@ extension MenuView {
                 result = ""
         }
         
-        return result//.capitalized
+        return result.uppercased()
     }
     
     func getIcon(forItem item: MenuITem) -> UIImage? {
@@ -83,9 +82,8 @@ extension MenuView {
         
         switch(item) {
             case .displayMode:
-                icon = "theme"
-//                icon = "gotoLight"
-//                if(BRIGHT_MODE()){ icon = "gotoDark" }
+                icon = "gotoLight"
+                if(BRIGHT_MODE()){ icon = "gotoDark" }
                 
             case .headlines:
                 icon = "headlines"
@@ -101,8 +99,7 @@ extension MenuView {
                 icon = "tour"
             
             case .more:
-                icon = ""
-                //icon = "more2"
+                icon = "more2"
             
             case .sliders:
                 icon = "sliders"

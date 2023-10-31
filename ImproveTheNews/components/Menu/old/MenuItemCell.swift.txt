@@ -10,7 +10,7 @@ import UIKit
 class MenuItemCell: UITableViewCell {
 
     static let identifier = "MenuItemCell"
-    static let heigth: CGFloat = 55
+    static let heigth: CGFloat = 50
     
     let icon = UIImageView()
     let titleLabel = UILabel()
@@ -29,6 +29,9 @@ class MenuItemCell: UITableViewCell {
     
     private func buildContent() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        
+        let aileronBold = AILERON(15)
+        //ROBOTO_BOLD(13)
         
         let gap = UIView()
         gap.backgroundColor = .clear //.systemPink
@@ -53,9 +56,8 @@ class MenuItemCell: UITableViewCell {
         
         self.titleLabel.backgroundColor = .clear //.orange
         self.titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
-        self.titleLabel.font = CSS.shared.menu_font
+        self.titleLabel.font = aileronBold
         self.titleLabel.text = "TEST TOPIC"
-        self.titleLabel.numberOfLines = 0
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.icon.trailingAnchor, constant: 12),
@@ -75,7 +77,7 @@ class MenuItemCell: UITableViewCell {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     }
     
     func setLeftGap(_ value: CGFloat) {

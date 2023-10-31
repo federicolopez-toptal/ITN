@@ -35,6 +35,10 @@ class CustomFeedList: UITableView {
         self.addSubview(refresher)
     }
     
+    func scrollToZero() {
+        self.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
+    
     func hideRefresher() {
         DispatchQueue.main.async {
             if(!self.refresher.isRefreshing){ return }
