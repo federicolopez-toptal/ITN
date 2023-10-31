@@ -10,8 +10,8 @@ import Foundation
 
 class StoryContent {
     
-    private let storyID_url = API_BASE_URL() + "/api/route?slug="
-    private let storyData_url = API_BASE_URL() + "/php/stories/index.php?path=story&id=<ID>&filters=<FILTERS>"
+    private let storyID_url = ITN_URL() + "/api/route?slug="
+    private let storyData_url = ITN_URL() + "/php/stories/index.php?path=story&id=<ID>&filters=<FILTERS>"
     
     func load(url: String, callback: @escaping (MainFeedStory?) ->()) {
         let slug = self.extractSlugFrom(url: url)

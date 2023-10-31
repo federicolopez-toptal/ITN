@@ -19,4 +19,7 @@ TO FIX:
 // ---------------------------------------------------------
 
 EMPROLIJAR
+
+- LOAD_MORE_LIMIT (Utils)
+
 - "TryAgainButtonTap" - Hacer notificacion genérica para popup, poner data en el userInfo (misc/Notifications)

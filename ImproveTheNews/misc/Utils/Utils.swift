@@ -9,6 +9,32 @@ import Foundation
 import UIKit
 
 
+let LOAD_MORE_LIMIT = 12
+
+/*
+    let dict = Bundle.main.infoDictionary!
+    return dict["API_BASE_URL"] as! String
+*/
+
+// MARK: URLs related
+func ITN_URL() -> String {
+//    return "https://www.improvemynews.com"
+    return "https://www.improvethenews.org"
+}
+
+func BIASPEDIA_URL() -> String {
+    //return "https://biaspost.org/api/"
+    return "https://biaspedia.org/api/"
+}
+
+func FIX_URL(_ url: String) -> String {
+    return url.replacingOccurrences(of: "http://", with: "https://")
+}
+
+func YOUTUBE_GET_THUMB_IMG(id: String) -> String {
+    return "https://img.youtube.com/vi/" + id + "/0.jpg"
+}
+
 func URL_SESSION(timeout: TimeInterval = 30) -> URLSession {
     let cfg = URLSessionConfiguration.default
     cfg.timeoutIntervalForRequest = timeout
@@ -17,37 +43,7 @@ func URL_SESSION(timeout: TimeInterval = 30) -> URLSession {
     return session
 }
 
-func WRITE(_ key: String, value: Any) {
-    UserDefaults.standard.setValue(value, forKey: key)
-    UserDefaults.standard.synchronize()
-}
-
-func READ(_ key: String) -> String? {
-    if let _value = UserDefaults.standard.string(forKey: key) {
-        return _value
-    } else {
-        return nil
-    }
-}
-
-func API_BASE_URL() -> String {
-//    let dict = Bundle.main.infoDictionary!
-//    return dict["API_BASE_URL"] as! String
-
-//    return "https://www.improvemynews.com"
-    return "https://www.improvethenews.org"
-}
-
-func DELAY(_ time: TimeInterval, callback: @escaping () ->() ) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
-        callback()
-    })
-}
-
-func NOTHING() {
-    // 🦗🦗🦗 ...
-}
-
+// MARK: Some actions
 func OPEN_URL(_ url: String) {
     if let _url = URL(string: url) {
         UIApplication.shared.open(_url)
@@ -67,14 +63,21 @@ func SHARE_URL(_ url: String, from vc: UIViewController) {
     vc.present(ac, animated: true)
 }
 
+// MARK: misc
+func DELAY(_ time: TimeInterval, callback: @escaping () ->() ) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
+        callback()
+    })
+}
+
+func NOTHING() {
+    // 🦗🦗🦗 ...
+}
+
 func MAIN_THREAD(_ closure: @escaping () -> () ) {
     DispatchQueue.main.async {
         closure()
     }
-}
-
-func FIX_URL(_ url: String) -> String {
-    return url.replacingOccurrences(of: "http://", with: "https://")
 }
 
 func VALIDATE_EMAIL(_ email:String) -> Bool {
@@ -83,70 +86,12 @@ func VALIDATE_EMAIL(_ email:String) -> Bool {
     return emailPred.evaluate(with: email)
 }
 
-func IPAD() -> Bool {
-    let idiom = UIScreen.main.traitCollection.userInterfaceIdiom
-    
-    switch(idiom) {
-        case .pad:
-            return true
-        default:
-            return false
-    }
-}
 
-func IPHONE() -> Bool {
-    let idiom = UIScreen.main.traitCollection.userInterfaceIdiom
-    
-    switch(idiom) {
-        case .phone:
-            return true
-        default:
-            return false
-    }
-}
-
+// MARK: String related
 func CLEAN_SOURCE(from input: String) -> String {
     var result = input
     if let _cleanSource = input.components(separatedBy: " #").first {
         result = _cleanSource
     }
     return result
-}
-
-// ---------------------------------------------
-func PREF(key: String) -> Bool {
-    if( READ(key) == "01" ) {
-        return true
-    } else {
-        return false
-    }
-}
-
-func PREFS_SHOW_SOURCE_ICONS() -> Bool {
-    return PREF(key: LocalKeys.preferences.showSourceIcons)
-}
-func PREFS_SHOW_STANCE_ICONS() -> Bool {
-    return PREF(key: LocalKeys.preferences.showStanceIcons)
-}
-func PREFS_SHOW_STANCE_POPUPS() -> Bool {
-    return true
-    //return PREF(key: LocalKeys.preferences.showStancePopups)
-}
-func PREFS_SHOW_STORIES() -> Bool {
-    return PREF(key: LocalKeys.preferences.showStories)
-}
-func PREFS_SHOW_FLAGS() -> Bool {
-    return PREF(key: LocalKeys.preferences.showSourceFlags)
-}
-
-
-let LOAD_MORE_LIMIT = 12
-// ---------------------------------------------
-
-func USER_AUTHENTICATED() -> Bool {
-    if(READ(LocalKeys.user.AUTHENTICATED)=="YES") {
-        return true
-    } else {
-        return false
-    }
 }

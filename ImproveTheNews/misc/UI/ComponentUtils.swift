@@ -1,32 +1,35 @@
 //
-//  UI_misc.swift
+//  ComponentUtils.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 10/09/2022.
+//  Created by Federico Lopez on 31/10/2023.
 //
 
 import Foundation
 import UIKit
 
 
-func Y_TOP_NOTCH_FIX(_ value: CGFloat) -> CGFloat {
-        // Notch devices, safe area bottom = 48
-        // older devices, safe are bottom = 20
-        if(SAFE_AREA()!.top == 20) {
-            return value - 28
-        }
-        return value
-    }
-
-func SAFE_AREA() -> UIEdgeInsets? {
-    let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
-    return window?.safeAreaInsets
-}
-
+// MARK: UIView related
 func REMOVE_ALL_SUBVIEWS(from view: UIView) {
     view.subviews.forEach({ $0.removeFromSuperview() })
 }
 
+func ADD_SHADOW(to view: UIView, offset: CGSize = CGSize(width: 5, height: 5)) {
+    view.layer.masksToBounds = false
+    view.layer.shadowColor = UIColor.black.cgColor
+    view.self.layer.shadowOpacity = 0.2
+    view.layer.shadowOffset = offset
+    view.layer.shadowRadius = 3
+    view.layer.shouldRasterize = true
+    view.layer.rasterizationScale = UIScreen.main.scale
+}
+
+// MARK: misc
+func HIDE_KEYBOARD(view: UIView) {
+    view.endEditing(true)
+}
+
+// MARK: UIStackView related
 func ADD_SPACER(to: UIStackView, backgroundColor: UIColor = .clear, width: CGFloat? = nil, height: CGFloat? = nil) {
     let spacer = UIView()
     spacer.tag = -1
@@ -67,41 +70,7 @@ func VSTACK(into container: UIView, spacing: CGFloat = 0) -> UIStackView {
     return result
 }
 
-func DARK_MODE() -> Bool {
-    return (DisplayMode.current() == .dark)
-}
-
-func BRIGHT_MODE() -> Bool {
-    return (DisplayMode.current() == .bright)
-}
-
-func ADD_SHADOW(to view: UIView, offset: CGSize = CGSize(width: 5, height: 5)) {
-    view.layer.masksToBounds = false
-    view.layer.shadowColor = UIColor.black.cgColor
-    view.self.layer.shadowOpacity = 0.2
-    view.layer.shadowOffset = offset
-    view.layer.shadowRadius = 3
-    view.layer.shouldRasterize = true
-    view.layer.rasterizationScale = UIScreen.main.scale
-}
-
-func SCREEN_SIZE() -> CGSize {
-    let result = UIScreen.main.bounds.size
-    return result
-}
-
-func TEXT_IMAGES() -> Bool {
-    return (Layout.current() == .textImages)
-}
-
-func TEXT_ONLY() -> Bool {
-    return (Layout.current() == .textOnly)
-}
-
-func HIDE_KEYBOARD(view: UIView) {
-    view.endEditing(true)
-}
-
+// MARK: Alerts
 func ALERT(vc: UIViewController, title: String? = nil, message: String, onCompletion: @escaping ()->() ) {
     MAIN_THREAD {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -135,26 +104,8 @@ func FUTURE_IMPLEMENTATION(_ text: String) {
     CustomNavController.shared.infoAlert(message: "Future implementation: " + text)
 }
 
-func ORIENTATION_PORTRAIT() -> Bool {
-    if(UIDevice.current.orientation.isPortrait) {
-        return true
-    }
-    return false
-}
-
-func ORIENTATION_LANDSCAPE() -> Bool {
-    if(UIDevice.current.orientation.isLandscape) {
-        return true
-    }
-    return false
-}
-
 func SERVER_ERROR_POPUP(text: String) {
     let popup = serverErrorPopupView()
     popup.populate(text: text, actionText: "TRY AGAIN?", notification: Notification_tryAgainButtonTap)
     popup.pushFromBottom()
-}
-
-func YOUTUBE_GET_THUMB_IMG(id: String) -> String {
-    return "https://img.youtube.com/vi/" + id + "/0.jpg"
 }

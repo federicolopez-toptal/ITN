@@ -30,3 +30,11 @@ enum DisplayMode {
     }
     
 }
+
+func DARK_MODE() -> Bool {
+    return (DisplayMode.current() == .dark)
+}
+
+func BRIGHT_MODE() -> Bool {
+    return (DisplayMode.current() == .bright)
+}

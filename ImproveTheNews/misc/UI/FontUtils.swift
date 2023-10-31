@@ -1,5 +1,5 @@
 //
-//  Fonts_misc.swift
+//  FontUtils.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 11/10/2022.

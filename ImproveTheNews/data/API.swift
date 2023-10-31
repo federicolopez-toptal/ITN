@@ -425,8 +425,7 @@ extension API {
         method: String = "POST",
         callback: @escaping (Bool, [String: Any]?, String) -> ()) {
         
-        //let url = "https://biaspost.org/api/" + urlPath
-        let url = "https://biaspedia.org/api/" + urlPath
+        let url = BIASPEDIA_URL() + urlPath
         
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = method

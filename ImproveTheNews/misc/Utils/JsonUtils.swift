@@ -1,5 +1,5 @@
 //
-//  Json_misc.swift
+//  JsonUtils.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 10/09/2022.

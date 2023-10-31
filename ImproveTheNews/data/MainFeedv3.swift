@@ -55,7 +55,7 @@ class MainFeedv3 {
     }
     
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
-        var S_value = self.skipForTopic(T)
+        let S_value = self.skipForTopic(T)
         
         //if(T != self.topic){ S_value += 1 }
         
@@ -286,7 +286,7 @@ extension MainFeedv3 {
             }
         }
         
-        var result = API_BASE_URL() + "/appserver.php/?topic=" + topic
+        var result = ITN_URL() + "/appserver.php/?topic=" + topic
         result += ".A" + String(_A)
         result += ".B" + String(_B)
         result += ".S" + String(S)
@@ -386,9 +386,10 @@ extension MainFeedv3 {
                 
         Example:
         >> LR99PE23NU70DE70SL70RE70SS00LA00ST01VB00VC01VA00VM00VE35oB11yT04
+        >> LR50PE50NU70DE70SL70RE70SS00LA00ST01VB01VC01VA01VM00VE35oB21lO03
     */
     
-    // LR50PE50NU70DE70SL70RE70SS00LA00ST01VB01VC01VA01VM00VE35oB21lO03
+    
     static func sliderValues() -> String {
         var result = ""
         

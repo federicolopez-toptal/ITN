@@ -124,7 +124,7 @@ extension MainFeedArticle {
         self.time = A.timeago
         self.storySources = A.medianames.components(separatedBy: ",")
         self.storySources.removeDuplicates()
-        self.url = API_BASE_URL() + "/" + A.slug
+        self.url = ITN_URL() + "/" + A.slug
         
         self.markups = [Markup]()
         self.isStory = true

@@ -19,3 +19,14 @@ https://sarunw.com/posts/how-to-add-custom-fonts-to-ios-app/
 
 * Some screen resolutions
 http://www.idev101.com/code/User_Interface/sizes.html
+
+
+
+FIXES ------------------------------------------------------
+>> Cuando actualicé a Xcode 14.3
+https://stackoverflow.com/questions/73760753/xcode-14-command-phasescriptexecution-failed-with-a-nonzero-exit-code
+
+Search for the following line in your project:
+    source="$(readlink "${source}")"
+Replace that with:
+    source="$(readlink -f "${source}")"

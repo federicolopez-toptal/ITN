@@ -10,7 +10,7 @@ import Foundation
 class FAQ_Stories {
     
     func loadData(callback: @escaping ([StorySearchResult]?, Error?) -> ()) {
-        let url = API_BASE_URL() + "/api/faqstories?type=latest&page=1&path=faq-stories"
+        let url = ITN_URL() + "/api/faqstories?type=latest&page=1&path=faq-stories"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
     

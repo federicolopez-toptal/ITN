@@ -7,11 +7,10 @@
 
 import Foundation
 
-let Notification_reloadMainFeed = Notification.Name("ReloadMainFeed")               // Reload the main feed!
+let Notification_reloadMainFeed = Notification.Name("ReloadMainFeed")               // Reload the main feed
 let Notification_refreshMainFeed = Notification.Name("RefreshMainFeed")             // Refresh the main feed
 let Notification_removeBanner = Notification.Name("RemoveBanner")                   // Remove banner + reload main feed
 let Notification_reloadMainFeedOnShow = Notification.Name("ReloadMainFeedOnSHow")   // Reload main feed on show viewController
-
 
 let Notification_stanceIconTap = Notification.Name("StanceIconTap")                 // User taps on a Stance icon
 

@@ -12,9 +12,7 @@ class Sources {
     static let shared = Sources()
 
     var all: [SourceIcon]?
-    private let sourcesUrl = API_BASE_URL() + "/news.json" //"/php/api/news/sources.php"
-    // example: https://www.improvemynews.com/news.json
-
+    private let sourcesUrl = ITN_URL() + "/news.json" //"/php/api/news/sources.php"
 
     func checkIfLoaded(callback: @escaping (Bool) -> ()) {
         if(all != nil) {
@@ -56,7 +54,7 @@ class Sources {
         let mainNode = json["data"] as! [Any]
         self.all = [SourceIcon]()
         
-        var filters: [String] = READ(LocalKeys.preferences.sourceFilters)?.components(separatedBy: ",") ?? []
+        let filters: [String] = READ(LocalKeys.preferences.sourceFilters)?.components(separatedBy: ",") ?? []
         
         for obj in mainNode {
             var newSource = SourceIcon(obj as! [String: Any])
@@ -65,7 +63,6 @@ class Sources {
                     newSource.state = false
                 }
                 
-//                print("ID", newSource.identifier, newSource.code)
                 self.all?.append(newSource)
             }
         }
@@ -123,7 +120,7 @@ struct SourceIcon {
             if(!_icon.isEmpty) {
                 var value = _icon
                 if(!value.contains("http") && !value.contains("www")) {
-                    value = API_BASE_URL() + "/" + value
+                    value = ITN_URL() + "/" + value
                 }
                 self.url = value
             }

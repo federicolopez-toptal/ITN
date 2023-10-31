@@ -38,7 +38,7 @@ class UUID {
     }
     
     private func generate(callback: @escaping (Error?, String?) -> ()) {
-        let url = "https://biaspedia.org/api/user/"
+        let url =  BIASPEDIA_URL() + "user/"
         
         let bodyJson: [String: String] = [
             "type": "Generate",

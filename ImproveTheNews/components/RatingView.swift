@@ -313,7 +313,7 @@ extension RatingView {
     
     func submitRating(callback: @escaping (Error?, Bool) -> ()) {
         let parsedUrl = self.url.replacingOccurrences(of: "//", with: "")
-        let url = API_BASE_URL() + "/srating.php?uid=" + UUID.shared.getValue() +
+        let url = ITN_URL() + "/srating.php?uid=" + UUID.shared.getValue() +
             "&url=" + parsedUrl.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)! +
             "&rating=" + String(self.currentRating) + "&pwd=31415926535"
         

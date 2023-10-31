@@ -419,7 +419,6 @@ extension SignInView {
                     NOTIFY(Notification_reloadMainFeedOnShow)
                     WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
                     
-                    print("gotCookies", gotCookies)
                     if(gotCookies) {
                         self.finishSignIn()
                     } else {
@@ -460,7 +459,7 @@ extension SignInView {
     }
     
     private func getCookies() {
-        print("Obteniendo sliderValues")
+        print("Obteniendo cookies (sliderValues)")
         API.shared.getUserInfo { (success, serverMsg, user) in
             if let _user = user, success {
                 MainFeedv3.parseSliderValues(_user.sliderValues)

@@ -227,7 +227,7 @@ extension MainFeedv2 {
                 &uid=3978511592857187948&v=I1.5.0&dev=iPhone_X
         */
         
-        var result = API_BASE_URL() + "/appserver.php/?topic=" + topic
+        var result = ITN_URL() + "/appserver.php/?topic=" + topic
         result += ".A" + String(A)
         result += ".B" + String(B)
         result += ".S" + String(S)

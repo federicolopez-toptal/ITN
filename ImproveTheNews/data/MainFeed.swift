@@ -67,7 +67,7 @@ class MainFeed {
                 &uid=3978511592857187948&v=I1.5.0&dev=iPhone_X
         */
     
-        var result = API_BASE_URL() + "/appserver.php/?topic=" + self.topic
+        var result = ITN_URL() + "/appserver.php/?topic=" + self.topic
         result += ".A" + String(A_articlesPerTopic)
         result += ".B" + String(B_articlesPerSubtopic)
         result += ".S" + String(S_articlesToSkipPerTopic)

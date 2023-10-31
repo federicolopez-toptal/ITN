@@ -22,3 +22,11 @@ enum Layout {
         }
     }
 }
+
+func TEXT_IMAGES() -> Bool {
+    return (Layout.current() == .textImages)
+}
+
+func TEXT_ONLY() -> Bool {
+    return (Layout.current() == .textOnly)
+}
