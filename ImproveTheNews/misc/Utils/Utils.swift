@@ -18,17 +18,14 @@ func URL_SESSION(timeout: TimeInterval = 30) -> URLSession {
 }
 
 func WRITE(_ key: String, value: Any) {
-//    print(">> WRITING", key, value)
     UserDefaults.standard.setValue(value, forKey: key)
     UserDefaults.standard.synchronize()
 }
 
 func READ(_ key: String) -> String? {
     if let _value = UserDefaults.standard.string(forKey: key) {
-//        print("READING", key, _value)
         return _value
     } else {
-//        print("READING", key, "nil")
         return nil
     }
 }
@@ -36,6 +33,7 @@ func READ(_ key: String) -> String? {
 func API_BASE_URL() -> String {
 //    let dict = Bundle.main.infoDictionary!
 //    return dict["API_BASE_URL"] as! String
+
 //    return "https://www.improvemynews.com"
     return "https://www.improvethenews.org"
 }
@@ -83,16 +81,6 @@ func VALIDATE_EMAIL(_ email:String) -> Bool {
     let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
     let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
     return emailPred.evaluate(with: email)
-}
-
-func MAC() -> Bool {
-    var result = false
-    
-    if #available(iOS 14.0, *) {
-        result = ProcessInfo.processInfo.isiOSAppOnMac
-    }
-    
-    return result
 }
 
 func IPAD() -> Bool {
@@ -161,8 +149,4 @@ func USER_AUTHENTICATED() -> Bool {
     } else {
         return false
     }
-}
-
-func YOUTUBE_GET_THUMB_IMG(id: String) -> String {
-    return "https://img.youtube.com/vi/" + id + "/0.jpg"
 }

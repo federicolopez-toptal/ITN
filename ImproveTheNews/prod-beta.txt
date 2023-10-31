@@ -1,0 +1,13 @@
+PROD / LIVE
+com.ITNFoundation.ITNaggregator
+Verity
+AppIcon
+
+------------------------------------------------------------
+------------------------------------------------------------
+BETA
+com.ITNFoundation.ITN-revamp
+Verity-Beta
+AppIcon-Beta
+
+

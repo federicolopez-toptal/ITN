@@ -1,21 +1,3 @@
-PROD / LIVE
-com.ITNFoundation.ITNaggregator
-Verity
-AppIcon
-
-------------------------------------------------------------
-------------------------------------------------------------
-BETA
-com.ITNFoundation.ITN-revamp
-Verity-Beta
-AppIcon-Beta
-
-
-
-
-
-------------------------------------------------------------
-------------------------------------------------------------
 FIXES ------------------------------------------------------
 >> Cuando actualicé a Xcode 14.3
 https://stackoverflow.com/questions/73760753/xcode-14-command-phasescriptexecution-failed-with-a-nonzero-exit-code
@@ -24,3 +6,17 @@ Search for the following line in your project:
     source="$(readlink "${source}")"
 Replace that with:
     source="$(readlink -f "${source}")"
+
+// ---------------------------------------------------------
+// ---------------------------------------------------------
+
+TO FIX:
+- Facebook
+    - AppDelegate
+    - SceneDelegate
+
+// ---------------------------------------------------------
+// ---------------------------------------------------------
+
+EMPROLIJAR
+- "TryAgainButtonTap" - Hacer notificacion genérica para popup, poner data en el userInfo (misc/Notifications)

@@ -149,20 +149,12 @@ func ORIENTATION_LANDSCAPE() -> Bool {
     return false
 }
 
-func ADD_BOTTOM_LINE(to view: UIView, color: UIColor = .black.withAlphaComponent(0.5)) {
-    let bottomLine = UIView()
-    bottomLine.backgroundColor = color
-    view.addSubview(bottomLine)
-    bottomLine.activateConstraints([
-        bottomLine.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        bottomLine.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        bottomLine.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        bottomLine.heightAnchor.constraint(equalToConstant: 1.0)
-    ])
-}
-
 func SERVER_ERROR_POPUP(text: String) {
     let popup = serverErrorPopupView()
     popup.populate(text: text, actionText: "TRY AGAIN?", notification: Notification_tryAgainButtonTap)
     popup.pushFromBottom()
+}
+
+func YOUTUBE_GET_THUMB_IMG(id: String) -> String {
+    return "https://img.youtube.com/vi/" + id + "/0.jpg"
 }
