@@ -306,7 +306,7 @@ class MainFeedViewController: BaseViewController {
 }
 
 // MARK: - Topic selector & Breadcrumbs
-extension MainFeedViewController: TopicSelectorViewDelegate, BreadcrumbsViewDelegate {
+extension MainFeedViewController: TopicSelectorViewDelegate {
 
     func onTopicSelected(_ index: Int) {
         if(index==0) {
@@ -339,10 +339,6 @@ extension MainFeedViewController: TopicSelectorViewDelegate, BreadcrumbsViewDele
 //            }
 //        }
 //    }
-    
-    func breadcrumbOnTap(sender: BreadcrumbsView) {
-        CustomNavController.shared.popViewController(animated: true)
-    }
     
 }
 

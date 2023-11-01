@@ -37,7 +37,7 @@ class CSS {
     let topicSelector_height: CGFloat = 56
     let topicSelector_font = AILERON_SEMIBOLD(14)
     
-    let iPhoneHeader_vMargins: CGFloat = 24
+    let iPhoneHeader_vMargins: CGFloat = 20
     let iPhoneHeader_font = DM_SERIF_DISPLAY(24)
         
     let iPhoneStory_titleFont = DM_SERIF_DISPLAY(23)
