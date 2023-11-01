@@ -1,5 +1,5 @@
 //
-//  iPhoneBigStory_groupItemCell.swift
+//  iPhoneStory_vImg_Cell_v3.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 25/10/2023.
@@ -7,11 +7,9 @@
 
 import UIKit
 
-class iPhoneBigStory_groupItemCell: GroupItemCell {
+class iPhoneStory_vImg_Cell_v3: GroupItemCell_v3 {
 
-    static let identifier = "iPhoneBigStory_groupItemCell"
-    private let WIDTH = SCREEN_SIZE().width
-    
+    static let identifier = "iPhoneStory_vImg_Cell_v3"
     var view1_heightConstraint: NSLayoutConstraint!
     
     
@@ -25,9 +23,9 @@ class iPhoneBigStory_groupItemCell: GroupItemCell {
     }
 
     private func buildContent() {
-        self.subViews = [CustomCellView]()
+        self.subViews = [CustomCellView_v3]()
         
-        let view1 = BigStoryView(width: SCREEN_SIZE().width)
+        let view1 = iPhoneStory_vImg_v3(width: SCREEN_SIZE().width)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -39,23 +37,21 @@ class iPhoneBigStory_groupItemCell: GroupItemCell {
         self.subViews.append(view1)
     }
     
-    override func populate(with group: DataProviderGroupItem) {
+    override func populate(with group: DP3_groupItem) {
         super.populate(with: group)
-                
-        view1_heightConstraint.constant = (self.subViews[0] as! BigStoryView).calculateHeight()
+        view1_heightConstraint.constant = (self.subViews[0] as! iPhoneStory_vImg_v3).calculateHeight()
         self.refreshDisplayMode()
-    }
-    
-    func calculateGroupHeight() -> CGFloat {
-        return (self.subViews[0] as! BigStoryView).calculateHeight()
     }
     
     override func refreshDisplayMode() {
         super.refreshDisplayMode()
-        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
         
         for V in self.subViews {
             V.refreshDisplayMode()
         }
+    }
+    
+    func calculateGroupHeight() -> CGFloat {
+        return (self.subViews[0] as! iPhoneStory_vImg_v3).calculateHeight()
     }
 }

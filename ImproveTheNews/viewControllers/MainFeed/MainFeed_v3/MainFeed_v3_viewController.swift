@@ -123,13 +123,6 @@ extension MainFeed_v3_viewController {
 
                         self.hideLoading()
                         self.list.hideRefresher()
-
-//                        if(self.prevMustSplit != nil) {
-//                            if(self.prevMustSplit != MUST_SPLIT()) {
-//                                CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
-//                            }
-//                        }
-//                        self.prevMustSplit = MUST_SPLIT()
                         
                         // TOUR
                         if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
@@ -139,14 +132,6 @@ extension MainFeed_v3_viewController {
                             }
                         }
                         
-//                        if(CustomNavController.shared.viewControllers.first! == self) {
-//                            CustomNavController.shared.startTour() //!!!
-//                        }
-//                        DELAY(2.0) {
-//                            self.scrollToBottom()
-//                        }
-                        
-                        //self.testFeature()
                     }
                 }
             }
@@ -165,11 +150,6 @@ extension MainFeed_v3_viewController {
                 }
             })
         }
-    }
-    
-    func scrollToBottom() {
-        let indexPath = IndexPath(row: self.dataProvider.count-1, section: 0)
-        self.list.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
 
 }

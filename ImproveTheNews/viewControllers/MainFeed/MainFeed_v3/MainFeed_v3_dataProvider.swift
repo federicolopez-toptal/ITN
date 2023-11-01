@@ -21,20 +21,20 @@ extension MainFeed_v3_viewController {
             
             var itemInTopic = 1
             while(_T.hasAvailableArticles()) {
-                var newGroupItem: DP3_groupItem?
-                
+            
                 if(itemInTopic == 1) {
                     // "Header" item
                     let header = DP3_headerItem(title: _T.capitalizedName)
                     self.dataProvider.append(header)                    
                 }
                 
-                // Main big story
-                newGroupItem = DP3_iPhoneBigStory()
+                var newGroupItem: DP3_groupItem?
                 
-                ////////////////////
+                newGroupItem = DP3_iPhoneBigStory() // Main big story
+                
+                ///////// fill "newGroupItem"
                 if let _newGroupItem = newGroupItem {
-                    for j in 1..._newGroupItem.MaxNumOfItems { // fill the "newItem"
+                    for j in 1..._newGroupItem.MaxNumOfItems {
                         let storyFlag = _newGroupItem.storyFlags[j-1]
                         if let _A = _T.nextAvailableArticle(isStory: storyFlag) {
                             _newGroupItem.articles.append(_A)

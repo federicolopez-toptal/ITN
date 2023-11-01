@@ -1,5 +1,5 @@
 //
-//  CellViewComponents.swift
+//  SubViewComponents_v3.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 26/10/2023.
@@ -10,10 +10,14 @@ import UIKit
 import SDWebImage
 
 
-// MARK: Components
-class Cell_imageView: UIImageView {
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+class ImageViewWithCorners: UIImageView {
+    
+    let imgIcon = UIImageView(image: UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate))
+    
     // MARK: - Start
-    override init(frame: CGRect) {
+    init() {
         super.init(frame: .zero)
         
         self.backgroundColor = .lightGray
@@ -59,20 +63,40 @@ class Cell_imageView: UIImageView {
             border4.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             border4.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
         ])
+        
+        self.imgIcon.tintColor = UIColor.black
+        self.imgIcon.alpha = 0.2
+        self.addSubview(self.imgIcon)
+        self.imgIcon.activateConstraints([
+            self.imgIcon.widthAnchor.constraint(equalToConstant: 32 * 1.6),
+            self.imgIcon.heightAnchor.constraint(equalToConstant: 26 * 1.6),
+            self.imgIcon.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.imgIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
+        self.imgIcon.hide()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func load(url: String) {
         self.image = nil
+        self.imgIcon.show()
+        
         if let _url = URL(string: url) {
-            self.sd_setImage(with: _url)
+            self.sd_setImage(with: _url) { (img, error, cacheType, url) in
+                if(img != nil) {
+                    self.imgIcon.hide()
+                }
+            }
         }
 
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 class StoryPillView: UIView {
     
     let label = UILabel()
@@ -112,6 +136,8 @@ class StoryPillView: UIView {
     
 }
 
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 class SourceIconsView: UIView {
     
     let imgs = [UIImageView(), UIImageView(), UIImageView()]
@@ -131,7 +157,6 @@ class SourceIconsView: UIView {
             self.heightAnchor.constraint(equalToConstant: 30),
             self.widthConstraint!
         ])
-        
         
         self.initImage(self.imgs[0], leading: 0)
         self.initImage(self.imgs[1], leading: 20)

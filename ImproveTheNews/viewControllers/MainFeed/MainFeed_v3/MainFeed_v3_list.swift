@@ -25,9 +25,9 @@ extension MainFeed_v3_viewController {
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topValue) // navBar + topicSelector
         ])
         
-        self.list.register(iPhoneHeader_itemCell.self, forCellReuseIdentifier: iPhoneHeader_itemCell.identifier)
-        self.list.register(Spacer_itemCell.self, forCellReuseIdentifier: Spacer_itemCell.identifier)
-        self.list.register(iPhoneBigStory_groupItemCell.self, forCellReuseIdentifier: iPhoneBigStory_groupItemCell.identifier)
+        self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
+        self.list.register(iPhoneHeaderCell_v3.self, forCellReuseIdentifier: iPhoneHeaderCell_v3.identifier)
+        self.list.register(iPhoneStory_vImg_Cell_v3.self, forCellReuseIdentifier: iPhoneStory_vImg_Cell_v3.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -69,20 +69,20 @@ extension MainFeed_v3_viewController {
     // Cell(s)
     func getCell(_ indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-        let dpItem = self.dataProvider[indexPath.row]
+        let item = self.dataProvider[indexPath.row]
         
-        if let _dpGroupItem = dpItem as? DP3_groupItem { // Group(s) -------------- //
-            if(_dpGroupItem is DP3_iPhoneBigStory) {
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBigStory_groupItemCell.identifier) as! iPhoneBigStory_groupItemCell
+        if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
+            if(_groupItem is DP3_iPhoneBigStory) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_Cell_v3.identifier) as! iPhoneStory_vImg_Cell_v3
             }
             
-            (cell as! GroupItemCell).populate(with: _dpGroupItem)
+            (cell as! GroupItemCell_v3).populate(with: _groupItem)
         } else { // Single cell(s) -------------------------------------------------------- //
-            if(dpItem is DP3_spacer) {
-                cell = self.list.dequeueReusableCell(withIdentifier: Spacer_itemCell.identifier) as! Spacer_itemCell
-            } else if(dpItem is DP3_headerItem) {
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeader_itemCell.identifier) as! iPhoneHeader_itemCell
-                (cell as! iPhoneHeader_itemCell).populate(with: (dpItem as! DP3_headerItem))
+            if item is DP3_spacer {
+                cell = self.list.dequeueReusableCell(withIdentifier: SpacerCell_v3.identifier) as! SpacerCell_v3
+            } else if let _item = item as? DP3_headerItem {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier) as! iPhoneHeaderCell_v3
+                (cell as! iPhoneHeaderCell_v3).populate(with: _item)
             }
         }
         
@@ -91,16 +91,15 @@ extension MainFeed_v3_viewController {
     
     ///////////////////////////////////////////////////////////
     func getHeight(_ indexPath: IndexPath) -> CGFloat {
-        let dpItem = self.dataProvider[indexPath.row]
+        let item = self.dataProvider[indexPath.row]
         var result: CGFloat = 0
         
-        if(dpItem is DP3_spacer) {
-            result = (dpItem as! DP3_spacer).size
-        } else if(dpItem is DP3_headerItem) {
-            result = (self.getCell(indexPath) as! iPhoneHeader_itemCell).calculateHeight()
-        } else if(dpItem is DP3_iPhoneBigStory) {
-            let cell = self.getCell(indexPath) as! iPhoneBigStory_groupItemCell
-            result = cell.calculateGroupHeight()
+        if let _item = item as? DP3_spacer {
+            result = _item.size
+        } else if(item is DP3_headerItem) {
+            result = (self.getCell(indexPath) as! iPhoneHeaderCell_v3).calculateHeight()
+        } else if(item is DP3_iPhoneBigStory) {
+            result = (self.getCell(indexPath) as! iPhoneStory_vImg_Cell_v3).calculateGroupHeight()
         }
         
         return result

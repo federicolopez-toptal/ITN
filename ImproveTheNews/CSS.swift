@@ -37,14 +37,18 @@ class CSS {
     let topicSelector_height: CGFloat = 56
     let topicSelector_font = AILERON_SEMIBOLD(14)
     
-    let header_padding: CGFloat = 24
-    var header_font = DM_SERIF_DISPLAY(24)
+    let iPhoneHeader_vMargins: CGFloat = 24
+    let iPhoneHeader_font = DM_SERIF_DISPLAY(24)
+        
+    let iPhoneStory_titleFont = DM_SERIF_DISPLAY(23)
+    let iPhoneStory_textFont = AILERON(12)
         
     let menu_width: CGFloat = 280
     let menu_font = AILERON(15)
+    let menu_versionFont = AILERON(14)
     
     // ----------
-    let left_padding: CGFloat = 16
+    let iPhoneSide_padding: CGFloat = 16
     let dashedLine_width: CGFloat = 5
     let orange = UIColor(hex: 0xDA4933)
     

@@ -9,19 +9,7 @@ import Foundation
 import UIKit
 
 
-// MARK: UIViewController related
-func NAV_MAINFEED_VC() -> UIViewController {
-    var vc: UIViewController!
-        
-    if(IPHONE()) {
-        vc = MainFeedViewController()
-//        vc = MainFeed_v3_viewController()
-    } else {
-        vc = MainFeed_v2ViewController()
-    }
-    
-    return vc
-}
+
 
 // MARK: UIView related
 func REMOVE_ALL_SUBVIEWS(from view: UIView) {

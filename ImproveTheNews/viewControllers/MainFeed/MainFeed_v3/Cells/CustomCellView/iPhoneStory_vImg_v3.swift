@@ -9,14 +9,13 @@ import Foundation
 import UIKit
 import SDWebImage
 
-class BigStoryView: CustomCellView {
+class iPhoneStory_vImg_v3: CustomCellView_v3 {
     
     private let imgWidth: CGFloat = 370
     private let imgHeight: CGFloat = 213
-    
     private var WIDTH: CGFloat = 1
     
-    let mainImageView = Cell_imageView(frame: .zero)
+    let mainImageView = ImageViewWithCorners()
     let titleLabel = UILabel()
     let pill = StoryPillView()
     let sources = SourceIconsView()
@@ -50,27 +49,27 @@ class BigStoryView: CustomCellView {
         ])
         
         self.titleLabel.numberOfLines = 0
-        self.titleLabel.font = DM_SERIF_DISPLAY(23)
+        self.titleLabel.font = CSS.shared.iPhoneStory_titleFont
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.left_padding),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -CSS.shared.left_padding),
-            self.titleLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: CSS.shared.left_padding),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
+            self.titleLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: CSS.shared.iPhoneSide_padding),
         ])
         
         self.pill.buildInto(self)
         self.pill.activateConstraints([
             self.pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 12),
-            self.pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.left_padding),
+            self.pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
         ])
         
         self.sources.buildInto(self)
         self.sources.activateConstraints([
             self.sources.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
-            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: CSS.shared.left_padding)
+            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
         
-        self.timeLabel.font = AILERON(12)
+        self.timeLabel.font = CSS.shared.iPhoneStory_textFont
         self.addSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
             self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
@@ -95,8 +94,8 @@ class BigStoryView: CustomCellView {
     }
     
     func calculateHeight() -> CGFloat {
-        return self.calculateImageViewHeight() + CSS.shared.left_padding +
-                self.titleLabel.calculateHeightFor(width: self.WIDTH - (CSS.shared.left_padding * 2)) +
+        return self.calculateImageViewHeight() + CSS.shared.iPhoneSide_padding +
+                self.titleLabel.calculateHeightFor(width: self.WIDTH - (CSS.shared.iPhoneSide_padding * 2)) +
                 12 + 24 + 32
     }
     

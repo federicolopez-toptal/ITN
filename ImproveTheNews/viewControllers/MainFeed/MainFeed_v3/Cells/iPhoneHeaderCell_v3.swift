@@ -1,5 +1,5 @@
 //
-//  iPhoneHeader_itemCell.swift
+//  iPhoneHeaderCell_v3.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 25/10/2023.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class iPhoneHeader_itemCell: UITableViewCell {
+class iPhoneHeaderCell_v3: UITableViewCell {
 
-    static let identifier = "iPhoneHeader_itemCell"
+    static let identifier = "iPhoneHeaderCell_v3"
 
     let titleLabel = UILabel()
 
@@ -24,17 +24,12 @@ class iPhoneHeader_itemCell: UITableViewCell {
     }
 
     private func buildContent() {
-        self.titleLabel.font = CSS.shared.header_font
+        self.titleLabel.font = CSS.shared.iPhoneHeader_font
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: CSS.shared.header_padding),
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.left_padding)
+            self.titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: CSS.shared.iPhoneHeader_vMargins),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
-    }
-    
-    func populate(with item: DataProviderHeaderItem) {
-        self.titleLabel.text = item.title
-        self.refreshDisplayMode()
     }
     
     func populate(with item: DP3_headerItem) {
@@ -48,8 +43,8 @@ class iPhoneHeader_itemCell: UITableViewCell {
     }
     
     func calculateHeight() -> CGFloat {
-        let W = SCREEN_SIZE().width - (CSS.shared.left_padding * 2)
-        return CSS.shared.header_padding + self.titleLabel.calculateHeightFor(width: W) + CSS.shared.header_padding
+        let W = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 2)
+        return self.titleLabel.calculateHeightFor(width: W) + (CSS.shared.iPhoneHeader_vMargins * 2)
     }
 
 }

@@ -139,7 +139,7 @@ extension MainFeed_v3_viewController: TopicSelectorViewDelegate {
 
     func onTopicSelected(_ index: Int) {
         if(index==0) {
-            self.list.scrollToZero()
+            self.list.scrollToTop()
         } else {
             let vc = MainFeed_v3_viewController()
             let topic = self.data.topics[index].name

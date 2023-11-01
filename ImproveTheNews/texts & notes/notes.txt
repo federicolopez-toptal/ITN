@@ -21,5 +21,8 @@ TO FIX:
 EMPROLIJAR
 
 - LOAD_MORE_LIMIT (Utils)
+- MainFeed_v3_misc
+    removeBannerFromNotification
 
 - "TryAgainButtonTap" - Hacer notificacion genérica para popup, poner data en el userInfo (misc/Notifications)
+- Ancho de menu para iPad

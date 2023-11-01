@@ -237,12 +237,12 @@ extension MainFeedv3 {
 extension MainFeedv3 {
     
     func resetCounting() {
-        // Called from MainFeed_dataProvider/populateDataProvider
+        // Called from: MainFeed.../populateDataProvider (beginning)
         self.topicsCount = [String: Int]()
     }
 
     func addCountTo(topic: String) {
-        // Called from MainFeed_dataProvider/(addArticleToDataProvider || addStoryToDataProvider)
+        // Called from: MainFeed.../populateDataProvider (when a story/article is added to dataProvider)
         var count = 0
         if let _count = self.topicsCount[topic] {
             count = _count
@@ -253,6 +253,7 @@ extension MainFeedv3 {
     }
     
     private func skipForTopic(_ topic: String) -> Int {
+        // Called from: here/loadMoreData (to know how much articles needs to be skipped)
         var skip = 0
         if let _value = self.topicsCount[topic] {
             skip = _value

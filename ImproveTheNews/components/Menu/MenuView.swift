@@ -60,7 +60,7 @@ class MenuView: UIView {
     
     func buildInto(_ container: UIView) {
         container.addSubview(self)
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
         
         self.menuLeadingConstraint = self.leadingAnchor.constraint(equalTo: container.leadingAnchor)
         self.activateConstraints([
@@ -95,16 +95,15 @@ class MenuView: UIView {
         
         self.addSubview(self.versionLabel)
         self.versionLabel.textColor = CSS.shared.orange
-        self.versionLabel.font =  AILERON_BOLD(14) //ROBOTO_BOLD(14)
+        self.versionLabel.font =  CSS.shared.menu_versionFont
         self.versionLabel.text = vInfo
         self.versionLabel.textAlignment = .center
-        self.versionLabel.backgroundColor = .clear //.yellow.withAlphaComponent(0.3)
         self.versionLabel.activateConstraints([
             self.versionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.versionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace)
         ])
         
-        let closeImage = UIImage(named: DisplayMode.imageName("circle.close"))//?.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(named: DisplayMode.imageName("circle.close"))
         let closeIcon = UIImageView(image: closeImage)
         closeIcon.tag = 77
         self.addSubview(closeIcon)
@@ -114,7 +113,6 @@ class MenuView: UIView {
             closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -18),
             closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: topSpace)
         ])
-        closeIcon.tintColor = .red //DARK_MODE() ? UIColor(hex: 0xBBBDC0) : .red //UIColor(hex: 0x1D242F)
         
         let closeButton = UIButton(type: .system)
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
@@ -241,7 +239,7 @@ extension MenuView {
                 _vc.scrollToZero()
             }
             if let _vc = CustomNavController.shared.viewControllers.first as? MainFeed_v3_viewController {
-                _vc.list.scrollToZero()
+                _vc.list.scrollToTop()
             }
         } else {
             if let _vc = CustomNavController.shared.viewControllers.first as? MainFeed_v2ViewController {
