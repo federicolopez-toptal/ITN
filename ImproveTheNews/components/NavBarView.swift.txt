@@ -17,6 +17,7 @@ enum NavBarViewComponents {
     case title
     case share
     case user
+    case closeModal
     case headlines
 }
 
@@ -27,8 +28,8 @@ class NavBarView: UIView {
     
     private weak var viewController: UIViewController?
     private let buttonsMargin: CGFloat = 5.0
-    private var left_x: CGFloat = CSS.shared.iPhoneSide_padding
-    private var right_x: CGFloat = CSS.shared.iPhoneSide_padding
+    private var left_x: CGFloat = 15
+    private var right_x: CGFloat = 15
     
     private var shareUrl: String? = nil
     private weak var vc: UIViewController? = nil
@@ -47,21 +48,22 @@ class NavBarView: UIView {
     func buildInto(viewController: UIViewController) {
         self.viewController = viewController
         let container = viewController.view!
-
-        self.backgroundColor = CSS.shared.displayMode().main_bgColor
+    
+        self.backgroundColor = .red
         container.addSubview(self)
         self.activateConstraints([
             self.topAnchor.constraint(equalTo: container.topAnchor),
             self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            self.heightAnchor.constraint(equalToConstant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_height)),
+            self.heightAnchor.constraint(equalToConstant: Y_TOP_NOTCH_FIX(101)),
         ])
         self.refreshDisplayMode()
     }
     
     func addBottomLine() {
+        //bottom line
         let line2 = UIView()
-        line2.backgroundColor = CSS.shared.displayMode().line_color
+        line2.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
         
         self.addSubview(line2)
         line2.activateConstraints([
@@ -75,21 +77,44 @@ class NavBarView: UIView {
     func addComponents(_ components: [NavBarViewComponents]) {
         for C in components {
             if(C == .logo) {
+//                // ITN logo
+//                let logo = UIImageView(image: UIImage(named: ("navBar.circleLogo")))
+//                self.addSubview(logo)
+//                logo.activateConstraints([
+//                    logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+//                    logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(50)),
+//                    logo.widthAnchor.constraint(equalToConstant: 44),
+//                    logo.heightAnchor.constraint(equalToConstant: 44)
+//                ])
+//                logo.tag = 1
+//                self.displayModeComponents.append(logo)
+//
+//                let button = UIButton(type: .system)
+//                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+//                self.addSubview(button)
+//                button.activateConstraints([
+//                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
+//                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
+//                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
+//                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
+//                ])
+//                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
                 // VERITY logo
                 let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("verity.logo")))
                 self.addSubview(logo)
                 logo.activateConstraints([
+                    logo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
                     logo.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
-                    logo.widthAnchor.constraint(equalToConstant: 115),
-                    logo.heightAnchor.constraint(equalToConstant: 23.42),
-                    logo.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 64)
+                    //logo.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(50)),
+                    logo.widthAnchor.constraint(equalToConstant: 475 * 0.23),
+                    logo.heightAnchor.constraint(equalToConstant: 97 * 0.23)
                 ])
-                
+                //logo.backgroundColor = .red.withAlphaComponent(0.5)
                 logo.tag = 1
                 self.displayModeComponents.append(logo)
 
                 let button = UIButton(type: .system)
-                button.backgroundColor = .clear
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
                 self.addSubview(button)
                 button.activateConstraints([
                     button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
@@ -98,17 +123,39 @@ class NavBarView: UIView {
                     button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
                 ])
                 button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
+                
+                let infoIcon = UIImageView(image: UIImage(systemName: "info.circle.fill")?.withRenderingMode(.alwaysTemplate))
+                infoIcon.tintColor = UIColor(hex: 0xBBBDC0)
+                self.addSubview(infoIcon)
+                infoIcon.activateConstraints([
+                    infoIcon.widthAnchor.constraint(equalToConstant: 17),
+                    infoIcon.heightAnchor.constraint(equalToConstant: 17),
+                    infoIcon.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: 0),
+                    infoIcon.centerYAnchor.constraint(equalTo: logo.centerYAnchor)
+                ])
+                
+                let infoButton = UIButton(type: .system)
+                infoButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                self.addSubview(infoButton)
+                infoButton.activateConstraints([
+                    infoButton.centerXAnchor.constraint(equalTo: infoIcon.centerXAnchor),
+                    infoButton.centerYAnchor.constraint(equalTo: infoIcon.centerYAnchor),
+                    infoButton.widthAnchor.constraint(equalTo: infoIcon.widthAnchor, constant: self.buttonsMargin * 2.5),
+                    infoButton.heightAnchor.constraint(equalTo: infoIcon.heightAnchor, constant: self.buttonsMargin * 2.5)
+                ])
+                infoButton.addTarget(self, action: #selector(onInfoButtonTap(_:)), for: .touchUpInside)
+                
             }
             
             if(C == .menuIcon) {
                 // Menu
-                let menuIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("newNavBar.menu")))
+                let menuIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.menu")))
                 self.addSubview(menuIcon)
                 menuIcon.activateConstraints([
                     menuIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x),
-                    menuIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                    menuIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
-                    menuIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                    menuIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    menuIcon.widthAnchor.constraint(equalToConstant: 24),
+                    menuIcon.heightAnchor.constraint(equalToConstant: 24)
                 ])
                 menuIcon.tag = 2
                 self.displayModeComponents.append(menuIcon)
@@ -124,18 +171,18 @@ class NavBarView: UIView {
                 ])
                 button.addTarget(self, action: #selector(onMenuButtonTap(_:)), for: .touchUpInside)
                 
-                self.left_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
+                self.left_x += 24 + 15
             }
             
             if(C == .searchIcon) {
                 // Search
-                let searchIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("newNavBar.search")))
+                let searchIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.search")))
                 self.addSubview(searchIcon)
                 searchIcon.activateConstraints([
                     searchIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
-                    searchIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                    searchIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
-                    searchIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                    searchIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    searchIcon.widthAnchor.constraint(equalToConstant: 24),
+                    searchIcon.heightAnchor.constraint(equalToConstant: 24)
                 ])
                 searchIcon.tag = 3
                 self.displayModeComponents.append(searchIcon)
@@ -151,57 +198,32 @@ class NavBarView: UIView {
                 ])
                 button.addTarget(self, action: #selector(onSearchButtonTap(_:)), for: .touchUpInside)
                 
-                self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
-            }
-            
-            if(C == .user) {
-                // User
-                let userIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("newNavBar.user")))
-                self.addSubview(userIcon)
-                userIcon.activateConstraints([
-                    userIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
-                    userIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                    userIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
-                    userIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
-                ])
-                userIcon.tag = 9
-                self.displayModeComponents.append(userIcon)
-                
-                let button = UIButton(type: .system)
-                button.backgroundColor = .clear
-                self.addSubview(button)
-                button.activateConstraints([
-                    button.leadingAnchor.constraint(equalTo: userIcon.leadingAnchor, constant: -self.buttonsMargin),
-                    button.topAnchor.constraint(equalTo: userIcon.topAnchor, constant: -self.buttonsMargin),
-                    button.widthAnchor.constraint(equalTo: userIcon.widthAnchor, constant: self.buttonsMargin * 2),
-                    button.heightAnchor.constraint(equalTo: userIcon.heightAnchor, constant: self.buttonsMargin * 2)
-                ])
-                button.addTarget(self, action: #selector(onUserButtonTap(_:)), for: .touchUpInside)
-                
-                self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
+                self.right_x += 24 + 15
             }
             
             if(C == .backToFeed) {
                 self.left_x -= 10
                 // Back to feed (from the article content)
-                let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.back")))
+                let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
                 self.addSubview(backIcon)
                 backIcon.activateConstraints([
-                    backIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x+10),
-                    backIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                    backIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
-                    backIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                    backIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x),
+                    backIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    backIcon.widthAnchor.constraint(equalToConstant: 24),
+                    backIcon.heightAnchor.constraint(equalToConstant: 24)
                 ])
                 backIcon.tag = 4
                 self.displayModeComponents.append(backIcon)
                 
+                let dmSerifDisplay = DM_SERIF_DISPLAY(21)
+                
                 let label = UILabel()
                 label.text = "Back to feed"
                 label.textColor = .black
-                label.font = CSS.shared.iPhoneTitleBar_font
+                label.font = dmSerifDisplay
                 self.addSubview(label)
                 label.activateConstraints([
-                    label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 64),
+                    label.leadingAnchor.constraint(equalTo: backIcon.trailingAnchor, constant: 3),
                     label.centerYAnchor.constraint(equalTo: backIcon.centerYAnchor)
                 ])
                 label.tag = 5
@@ -218,19 +240,47 @@ class NavBarView: UIView {
                 ])
                 button.addTarget(self, action: #selector(onBackButtonTap(_:)), for: .touchUpInside)
                 
-                self.left_x += CSS.shared.navBar_icon_size + 110 + CSS.shared.navBar_icon_sepX
+                self.left_x += 24 + 110 + 15
+            }
+            
+            if(C == .title) {
+                let dmSerifDisplay = DM_SERIF_DISPLAY(21)
+                
+                let label = UILabel()
+                label.text = " "
+                label.textColor = .black
+                label.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+                label.font = dmSerifDisplay
+                self.addSubview(label)
+                label.activateConstraints([
+                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                    label.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                ])
+                label.tag = 7
+                self.displayModeComponents.append(label)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: label.leadingAnchor, constant: -20),
+                    button.topAnchor.constraint(equalTo: label.topAnchor, constant: -self.buttonsMargin),
+                    button.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: 20),
+                    button.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: self.buttonsMargin)
+                ])
+                button.addTarget(self, action: #selector(onTitleButtonTap(_:)), for: .touchUpInside)
             }
             
             if(C == .back) {
                 self.left_x -= 10
                 // Back
-                let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.back")))
+                let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("back.button")))
                 self.addSubview(backIcon)
                 backIcon.activateConstraints([
-                    backIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x+10),
-                    backIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                    backIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
-                    backIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                    backIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x),
+                    backIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    backIcon.widthAnchor.constraint(equalToConstant: 24),
+                    backIcon.heightAnchor.constraint(equalToConstant: 24)
                 ])
                 backIcon.tag = 6
                 self.displayModeComponents.append(backIcon)
@@ -246,33 +296,7 @@ class NavBarView: UIView {
                 ])
                 button.addTarget(self, action: #selector(onBackButtonTap(_:)), for: .touchUpInside)
                 
-                self.left_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
-            }
-            
-            if(C == .title) {
-                let label = UILabel()
-                label.text = " "
-                label.textColor = .black
-                label.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-                label.font = CSS.shared.iPhoneTitleBar_font
-                self.addSubview(label)
-                label.activateConstraints([
-                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-                    label.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                ])
-                label.tag = 7
-                self.displayModeComponents.append(label)
-                
-                let button = UIButton(type: .system)
-                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
-                self.addSubview(button)
-                button.activateConstraints([
-                    button.leadingAnchor.constraint(equalTo: label.leadingAnchor, constant: -20),
-                    button.topAnchor.constraint(equalTo: label.topAnchor, constant: -self.buttonsMargin),
-                    button.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: 20),
-                    button.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: self.buttonsMargin)
-                ])
-                button.addTarget(self, action: #selector(onTitleButtonTap(_:)), for: .touchUpInside)
+                self.left_x += 24 + 15
             }
             
             if(C == .share) {
@@ -299,7 +323,61 @@ class NavBarView: UIView {
                 ])
                 button.addTarget(self, action: #selector(onShareButtonTap(_:)), for: .touchUpInside)
                 
-                self.right_x += 24 + CSS.shared.navBar_icon_sepX
+                self.right_x += 24 + 15
+            }
+            
+            if(C == .user) {
+                // User
+                let userIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.user")))
+                self.addSubview(userIcon)
+                userIcon.activateConstraints([
+                    userIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    userIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    userIcon.widthAnchor.constraint(equalToConstant: 24),
+                    userIcon.heightAnchor.constraint(equalToConstant: 24)
+                ])
+                userIcon.tag = 9
+                self.displayModeComponents.append(userIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: userIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: userIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: userIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: userIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onUserButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += 24 + 15
+            }
+            
+            if(C == .closeModal) {
+                // Close a modal
+                let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("popup.close")))
+                self.addSubview(closeIcon)
+                closeIcon.activateConstraints([
+                    closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
+                    closeIcon.widthAnchor.constraint(equalToConstant: 24),
+                    closeIcon.heightAnchor.constraint(equalToConstant: 24)
+                ])
+                closeIcon.tag = 10
+                self.displayModeComponents.append(closeIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: closeIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: closeIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onCloseModalButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += 24 + 15
             }
             
             if(C == .headlines) {
@@ -312,7 +390,7 @@ class NavBarView: UIView {
                     ITNicon.widthAnchor.constraint(equalToConstant: 24),
                     ITNicon.heightAnchor.constraint(equalToConstant: 24)
                 ])
-                ITNicon.tag = 10
+                //ITNicon.tag = 10
                 self.displayModeComponents.append(ITNicon)
                 
                 let button = UIButton(type: .system)
@@ -326,7 +404,7 @@ class NavBarView: UIView {
                 ])
                 button.addTarget(self, action: #selector(onHeadlinesButtonTap(_:)), for: .touchUpInside)
                 
-                self.right_x += 24 + CSS.shared.navBar_icon_sepX
+                self.right_x += 24 + 15
             }
         }
         
@@ -335,7 +413,7 @@ class NavBarView: UIView {
     
     // MARK: - misc
     func refreshDisplayMode() {
-        self.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         
         for C in self.displayModeComponents {
         
@@ -347,29 +425,31 @@ class NavBarView: UIView {
                 switch(imgView.tag) {
                     case 1: // logo
                         //imgView.image = UIImage(named: DisplayMode.imageName("navBar.circleLogo"))
-                        img = UIImage(named: DisplayMode.imageName("verity.logo"))
+                        img = UIImage(named: DisplayMode.imageName("verity.logo"))?.withRenderingMode(.alwaysTemplate)
                     case 2: // menu
-                        img = UIImage(named: DisplayMode.imageName("newNavBar.menu"))
+                        img = UIImage(named: DisplayMode.imageName("navBar.menu"))?.withRenderingMode(.alwaysTemplate)
                     case 3: // search
-                        img = UIImage(named: DisplayMode.imageName("newNavBar.search"))
+                        img = UIImage(named: DisplayMode.imageName("navBar.search"))?.withRenderingMode(.alwaysTemplate)
                     case 4: // back (+ text)
-                        img = UIImage(named: DisplayMode.imageName("circle.back"))
+                        img = UIImage(named: DisplayMode.imageName("back.button"))?.withRenderingMode(.alwaysTemplate)
                     case 6: // back
-                        img = UIImage(named: DisplayMode.imageName("circle.back"))
+                        img = UIImage(named: DisplayMode.imageName("back.button"))?.withRenderingMode(.alwaysTemplate)
                     case 8: // share
                         img = UIImage(named: DisplayMode.imageName("share"))?.withRenderingMode(.alwaysTemplate)
                     case 9: // user
-                        img = UIImage(named: DisplayMode.imageName("newNavBar.user"))
-                    case 10: // headlines
-                        img = UIImage(named: DisplayMode.imageName("navBar.home"))?.withRenderingMode(.alwaysTemplate)
+                        img = UIImage(named: DisplayMode.imageName("navBar.user"))?.withRenderingMode(.alwaysTemplate)
+                    case 10: // close
+                        img = UIImage(named: DisplayMode.imageName("popup.close"))?.withRenderingMode(.alwaysTemplate)
                     
                     default:
                         NOTHING()
                 }
                 
                 imgView.image = img
-                if(imgView.tag==8 || imgView.tag==10) {
-                    imgView.tintColor = CSS.shared.displayMode().main_textColor
+                if(imgView.tag==1) { // logo
+                    imgView.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x0A0A0C)
+                } else {
+                    imgView.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x0A0A0C)
                 }
                 
             }
@@ -377,8 +457,10 @@ class NavBarView: UIView {
             if(C is UILabel) {
                 let label = C as! UILabel
                 switch(label.tag) {
-                    case 5, 7: // BACK TO FEED
-                        label.textColor = CSS.shared.displayMode().main_textColor
+                    case 5: // BACK TO FEED
+                        label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+                    case 7: // TITLE
+                        label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
                         
                     default:
                         NOTHING()
@@ -404,7 +486,7 @@ class NavBarView: UIView {
 extension NavBarView {
 
     static func HEIGHT() -> CGFloat {
-        return Y_TOP_NOTCH_FIX(CSS.shared.navBar_height)
+        return Y_TOP_NOTCH_FIX(101)
     }
     
 }
@@ -421,6 +503,11 @@ extension NavBarView {
     }
     
     @objc func onLogoButtonTap(_ sender: UIButton) {
+//        if let _vc = self.viewController as? MainFeedViewController {
+//            _vc.tapOnLogo()
+//            //_vc.scrollToZero()
+//        }
+
         if(CustomNavController.shared.presentedViewController != nil) {
             CustomNavController.shared.dismiss(animated: true)
         }
@@ -455,10 +542,6 @@ extension NavBarView {
         if let _vc = CustomNavController.shared.viewControllers.last as? MainFeedViewController {
             _vc.scrollToZero()
         }
-        
-        if let _vc = CustomNavController.shared.viewControllers.last as? MainFeed_v3_viewController {
-            _vc.list.scrollToTop()
-        }
     }
     
     @objc func onUserButtonTap(_ sender: UIButton) {
@@ -471,6 +554,10 @@ extension NavBarView {
         }
         
         CustomNavController.shared.pushViewController(vc!, animated: true)
+    }
+    
+    @objc func onCloseModalButtonTap(_ sender: UIButton) {
+        CustomNavController.shared.dismiss(animated: true)
     }
     
     @objc func onHeadlinesButtonTap(_ sender: UIButton) {

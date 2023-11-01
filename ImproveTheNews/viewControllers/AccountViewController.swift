@@ -35,6 +35,11 @@ class AccountViewController: BaseViewController {
         self.hideLoading()
         self.removeKeyboardObservers()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.hideLoading()
+    }
 
     // MARK: - Init
     override func viewDidLoad() {

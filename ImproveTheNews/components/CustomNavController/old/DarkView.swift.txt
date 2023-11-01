@@ -33,7 +33,8 @@ class DarkView: UIView {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? CSS.shared.darkMode.main_bgColor.withAlphaComponent(0.4) : CSS.shared.darkMode.main_bgColor.withAlphaComponent(0.3)        
+        self.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) :
+            .black.withAlphaComponent(0.25)
     }
 
 }

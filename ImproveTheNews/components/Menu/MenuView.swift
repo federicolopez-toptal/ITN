@@ -95,7 +95,7 @@ class MenuView: UIView {
         
         self.addSubview(self.versionLabel)
         self.versionLabel.textColor = CSS.shared.orange
-        self.versionLabel.font =  CSS.shared.menu_versionFont
+        self.versionLabel.font =  AILERON_BOLD(14)
         self.versionLabel.text = vInfo
         self.versionLabel.textAlignment = .center
         self.versionLabel.activateConstraints([

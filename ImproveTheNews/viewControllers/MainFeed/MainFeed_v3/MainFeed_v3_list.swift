@@ -101,8 +101,8 @@ extension MainFeed_v3_viewController {
         } else if(item is DP3_iPhoneBigStory) {
             result = (self.getCell(indexPath) as! iPhoneStory_vImg_Cell_v3).calculateGroupHeight()
         }
-        
-        return result
+                
+        return result.rounded()
     }
     
 }

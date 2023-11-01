@@ -17,7 +17,7 @@ class CSS_displayMode {
     
     var menuItem_color: UIColor = .black
     var topicSelector_textColor: UIColor = .black
-    var dashedLine_color: UIColor = .black
+    var line_color: UIColor = .black
     var header_textColor: UIColor = .black
 }
 
@@ -43,6 +43,8 @@ class CSS {
     let iPhoneStory_titleFont = DM_SERIF_DISPLAY(23)
     let iPhoneStory_textFont = AILERON(12)
         
+    let iPhoneTitleBar_font = DM_SERIF_DISPLAY(24)
+        
     let menu_width: CGFloat = 280
     let menu_font = AILERON(15)
     let menu_versionFont = AILERON(14)
@@ -60,7 +62,7 @@ class CSS {
         self.darkMode.sec_textColor = UIColor(hex: 0xBBBDC0)
         self.darkMode.menuItem_color = UIColor(hex: 0xBBBDC0)
         self.darkMode.topicSelector_textColor = UIColor(hex: 0xBBBDC0)
-        self.darkMode.dashedLine_color = UIColor(hex: 0x4C4E50)
+        self.darkMode.line_color = UIColor(hex: 0x4C4E50)
         self.darkMode.header_textColor = UIColor(hex: 0xBBBDC0)
         
         self.lightMode.main_bgColor = .white
@@ -68,7 +70,7 @@ class CSS {
         self.lightMode.sec_textColor = UIColor(hex: 0x19191C)
         self.lightMode.menuItem_color = UIColor(hex: 0x19191C)
         self.lightMode.topicSelector_textColor = UIColor(hex: 0x19191C)
-        self.lightMode.dashedLine_color = UIColor(hex: 0x2D2D31)
+        self.lightMode.line_color = UIColor(hex: 0x2D2D31)
         self.lightMode.header_textColor = UIColor(hex: 0x0A0A0C)
     }
 }
