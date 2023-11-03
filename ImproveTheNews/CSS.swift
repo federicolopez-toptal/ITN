@@ -33,7 +33,8 @@ class CSS {
     let navBar_icon_size: CGFloat = 32
     let navBar_icon_posY: CGFloat = 52
     let navBar_icon_sepX: CGFloat = 10
-
+    let iPhoneTitleBar_font = DM_SERIF_DISPLAY(24)
+    
     let topicSelector_height: CGFloat = 56
     let topicSelector_font = AILERON_SEMIBOLD(14)
     
@@ -42,8 +43,9 @@ class CSS {
         
     let iPhoneStory_titleFont = DM_SERIF_DISPLAY(23)
     let iPhoneStory_textFont = AILERON(12)
-        
-    let iPhoneTitleBar_font = DM_SERIF_DISPLAY(24)
+    let iPhoneArticle_titleFont = AILERON(16)
+    let iPhoneArticle_textFont = AILERON(11)
+    let iPhoneFooter_font = AILERON_SEMIBOLD(14)
         
     let menu_width: CGFloat = 280
     let menu_font = AILERON(15)

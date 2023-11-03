@@ -1,28 +1,27 @@
 //
-//  BigStoryView.swift
+//  iPhoneArticle_vImg_v3.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 26/10/2023.
+//  Created by Federico Lopez on 02/11/2023.
 //
 
 import Foundation
 import UIKit
 import SDWebImage
 
-class iPhoneStory_vImg_v3: CustomCellView_v3 {
-    
-    private let imgWidth: CGFloat = 370
-    private let imgHeight: CGFloat = 213
+class iPhoneArticle_vImg_v3: CustomCellView_v3 {
+
+    private let imgWidth: CGFloat = 160
+    private let imgHeight: CGFloat = 88
     private var WIDTH: CGFloat = 1
     
-    let mainImageView = CustomImageView(showCorners: true)
+    let mainImageView = CustomImageView(showCorners: false)
     let titleLabel = UILabel()
-    let pill = StoryPillView()
     let sources = SourceIconsView()
+    let sourceLabel = UILabel()
     let timeLabel = UILabel()
     
     var article: MainFeedArticle!
-    
     
     // MARK: - Start
     required init?(coder: NSCoder) {
@@ -51,31 +50,36 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         ])
         
         self.titleLabel.numberOfLines = 0
-        self.titleLabel.font = CSS.shared.iPhoneStory_titleFont
+        self.titleLabel.font = CSS.shared.iPhoneArticle_titleFont
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.titleLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: CSS.shared.iPhoneSide_padding),
-        ])
-        
-        self.pill.buildInto(self)
-        self.pill.activateConstraints([
-            self.pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 12),
-            self.pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
         ])
         
         self.sources.buildInto(self)
         self.sources.activateConstraints([
-            self.sources.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
-            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            self.sources.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.sources.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
         
-        self.timeLabel.font = CSS.shared.iPhoneStory_textFont
+        self.timeLabel.font = CSS.shared.iPhoneArticle_textFont
+        self.timeLabel.textAlignment = .left
         self.addSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
-            self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
-            self.timeLabel.leadingAnchor.constraint(equalTo: self.sources.trailingAnchor, constant: 8)
+            self.timeLabel.centerYAnchor.constraint(equalTo: self.sources.centerYAnchor),
+            self.timeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+        
+        self.sourceLabel.font = CSS.shared.iPhoneArticle_textFont
+        self.sourceLabel.numberOfLines = 0
+        self.sourceLabel.textAlignment = .left
+        self.addSubview(self.sourceLabel)
+        self.sourceLabel.activateConstraints([
+            self.sourceLabel.centerYAnchor.constraint(equalTo: self.sources.centerYAnchor),
+            self.sourceLabel.leadingAnchor.constraint(equalTo: self.sources.trailingAnchor, constant: 5),
+            self.sourceLabel.trailingAnchor.constraint(equalTo: self.timeLabel.leadingAnchor, constant: -10)
         ])
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewOnTap(_:)))
@@ -88,24 +92,30 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
     override func populate(_ article: MainFeedArticle) {
         self.article = article
         
+        var sourcesArray = [String]()
+        if let _identifier = Sources.shared.search(name: article.source) {
+            sourcesArray.append(_identifier)
+        }
+        
         self.mainImageView.load(url: article.imgUrl)
         self.titleLabel.text = article.title
-        self.sources.load(article.storySources)
-        self.timeLabel.text = article.time.uppercased()
+        self.sources.load(sourcesArray)
+        self.sourceLabel.text = CLEAN_SOURCE(from: article.source).uppercased()
+        self.timeLabel.text = SHORT_TIME(input: article.time)
     }
     
     override func refreshDisplayMode() {
-        self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
-        self.pill.refreshDisplayMode()
+        self.titleLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.sources.refreshDisplayMode()
-        self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
+        self.sourceLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.timeLabel.textColor = CSS.shared.displayMode().main_textColor
     }
     
     // MARK: misc
     func calculateHeight() -> CGFloat {
         return self.calculateImageViewHeight() + CSS.shared.iPhoneSide_padding +
-                self.titleLabel.calculateHeightFor(width: self.WIDTH - (CSS.shared.iPhoneSide_padding * 2)) +
-                12 + 24 + 32
+                self.titleLabel.calculateHeightFor(width: self.WIDTH) + CSS.shared.iPhoneSide_padding +
+                24 + 24
     }
     
     // MARK: Actions
@@ -115,9 +125,9 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         if let _article = self.article {
             if(_article.isEmpty()) { return }
             
-            if(_article.isStory) {
-                let vc = StoryViewController()
-                vc.story = self.article
+            if(!_article.isStory) {
+                let vc = ArticleViewController()
+                vc.article = article
                 CustomNavController.shared.pushViewController(vc, animated: true)
             }
         }

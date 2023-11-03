@@ -12,57 +12,60 @@ import SDWebImage
 
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
-class ImageViewWithCorners: UIImageView {
+class CustomImageView: UIImageView {
     
     let imgIcon = UIImageView(image: UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate))
+    let loading = UIActivityIndicatorView(style: .medium)
     
     // MARK: - Start
-    init() {
+    init(showCorners: Bool) {
         super.init(frame: .zero)
         
         self.backgroundColor = .lightGray
         self.contentMode = .scaleAspectFill
         self.clipsToBounds = true
         
-        let border1 = UIView()
-        border1.backgroundColor = .white
-        self.addSubview(border1)
-        border1.activateConstraints([
-            border1.widthAnchor.constraint(equalToConstant: 16),
-            border1.heightAnchor.constraint(equalToConstant: 3),
-            border1.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            border1.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
-        ])
-        
-        let border2 = UIView()
-        border2.backgroundColor = .white
-        self.addSubview(border2)
-        border2.activateConstraints([
-            border2.widthAnchor.constraint(equalToConstant: 3),
-            border2.heightAnchor.constraint(equalToConstant: 16),
-            border2.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            border2.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
-        ])
-        
-        let border3 = UIView()
-        border3.backgroundColor = .white
-        self.addSubview(border3)
-        border3.activateConstraints([
-            border3.widthAnchor.constraint(equalToConstant: 3),
-            border3.heightAnchor.constraint(equalToConstant: 16),
-            border3.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            border3.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
-        ])
-        
-        let border4 = UIView()
-        border4.backgroundColor = .white
-        self.addSubview(border4)
-        border4.activateConstraints([
-            border4.widthAnchor.constraint(equalToConstant: 16),
-            border4.heightAnchor.constraint(equalToConstant: 3),
-            border4.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            border4.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
-        ])
+        if(showCorners) {
+            let corner1_A = UIView()
+            corner1_A.backgroundColor = .white
+            self.addSubview(corner1_A)
+            corner1_A.activateConstraints([
+                corner1_A.widthAnchor.constraint(equalToConstant: 16),
+                corner1_A.heightAnchor.constraint(equalToConstant: 3),
+                corner1_A.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+                corner1_A.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
+            ])
+            
+            let corner1_B = UIView()
+            corner1_B.backgroundColor = .white
+            self.addSubview(corner1_B)
+            corner1_B.activateConstraints([
+                corner1_B.widthAnchor.constraint(equalToConstant: 3),
+                corner1_B.heightAnchor.constraint(equalToConstant: 16),
+                corner1_B.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+                corner1_B.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
+            ])
+            
+            let corner2_A = UIView()
+            corner2_A.backgroundColor = .white
+            self.addSubview(corner2_A)
+            corner2_A.activateConstraints([
+                corner2_A.widthAnchor.constraint(equalToConstant: 3),
+                corner2_A.heightAnchor.constraint(equalToConstant: 16),
+                corner2_A.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+                corner2_A.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+            ])
+            
+            let corner2_B = UIView()
+            corner2_B.backgroundColor = .white
+            self.addSubview(corner2_B)
+            corner2_B.activateConstraints([
+                corner2_B.widthAnchor.constraint(equalToConstant: 16),
+                corner2_B.heightAnchor.constraint(equalToConstant: 3),
+                corner2_B.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+                corner2_B.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+            ])
+        }
         
         self.imgIcon.tintColor = UIColor.black
         self.imgIcon.alpha = 0.2
@@ -74,6 +77,16 @@ class ImageViewWithCorners: UIImageView {
             self.imgIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         self.imgIcon.hide()
+        
+        self.loading.color = .black
+        self.loading.alpha = 0.4
+        self.loading.hidesWhenStopped = true
+        self.addSubview(self.loading)
+        self.loading.activateConstraints([
+            self.loading.centerXAnchor.constraint(equalTo: self.imgIcon.centerXAnchor, constant: 20),
+            self.loading.centerYAnchor.constraint(equalTo: self.imgIcon.centerYAnchor, constant: -18)
+        ])
+        self.loading.stopAnimating()
     }
     
     required init?(coder: NSCoder) {
@@ -83,9 +96,11 @@ class ImageViewWithCorners: UIImageView {
     func load(url: String) {
         self.image = nil
         self.imgIcon.show()
+        self.loading.startAnimating()
         
-        if let _url = URL(string: url) {
+        if let _url = URL(string: FIX_URL(url)) {
             self.sd_setImage(with: _url) { (img, error, cacheType, url) in
+                self.loading.stopAnimating()
                 if(img != nil) {
                     self.imgIcon.hide()
                 }

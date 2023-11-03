@@ -28,3 +28,19 @@ class DP3_spacer: DP3_item {
         self.size = size
     }
 }
+
+class DP3_banner: DP3_item {
+}
+
+class DP3_more: DP3_item {
+    var topic = "news"
+    var completed = false
+    
+    init(topic: String, completed: Bool) {
+        self.topic = topic
+        self.completed = completed
+    }
+}
+
+class DP3_footer: DP3_item {
+}

@@ -132,6 +132,10 @@ extension MainFeed_v3_viewController {
                             }
                         }
                         
+                        DELAY(0.1) {
+                            self.list.scrollToBottom()
+                        }
+                        
                     }
                 }
             }

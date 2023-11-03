@@ -111,7 +111,7 @@ extension MainFeed_v3_viewController {
     
     @objc func removeBannerFromNotification() {
         for (i, dpObj) in self.dataProvider.enumerated() {
-            if(dpObj is DataProviderBannerItem) {
+            if(dpObj is DP3_banner) {
                 self.bannerClosed = true
                 self.dataProvider.remove(at: i)
                 break

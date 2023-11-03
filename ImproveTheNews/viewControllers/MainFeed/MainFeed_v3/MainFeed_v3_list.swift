@@ -27,7 +27,19 @@ extension MainFeed_v3_viewController {
         
         self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
         self.list.register(iPhoneHeaderCell_v3.self, forCellReuseIdentifier: iPhoneHeaderCell_v3.identifier)
-        self.list.register(iPhoneStory_vImg_Cell_v3.self, forCellReuseIdentifier: iPhoneStory_vImg_Cell_v3.identifier)
+        
+        self.list.register(iPhoneStory_vImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_vImg_cell_v3.identifier)
+        self.list.register(iPhoneArticle_2cols_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2cols_cell_v3.identifier)
+        
+        self.list.register(iPhoneFooterCell_v3.self, forCellReuseIdentifier: iPhoneFooterCell_v3.identifier)
+        
+        
+        
+        self.list.register(iPhoneBannerCell_v3.self, forCellReuseIdentifier: iPhoneBannerCell_v3.identifier)
+        
+//        self.list.register(iPadBannerNewsletterCell.self,
+//            forCellReuseIdentifier: iPadBannerNewsletterCell.identifier)
+        
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -72,17 +84,25 @@ extension MainFeed_v3_viewController {
         let item = self.dataProvider[indexPath.row]
         
         if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
-            if(_groupItem is DP3_iPhoneBigStory) {
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_Cell_v3.identifier) as! iPhoneStory_vImg_Cell_v3
+            if(_groupItem is DP3_iPhoneStory_vImg) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
+            } else if(_groupItem is DP3_iPhoneArticle_2cols) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2cols_cell_v3.identifier)!
             }
             
             (cell as! GroupItemCell_v3).populate(with: _groupItem)
         } else { // Single cell(s) -------------------------------------------------------- //
             if item is DP3_spacer {
-                cell = self.list.dequeueReusableCell(withIdentifier: SpacerCell_v3.identifier) as! SpacerCell_v3
+                cell = self.list.dequeueReusableCell(withIdentifier: SpacerCell_v3.identifier)!
+                (cell as! SpacerCell_v3).refreshDisplayMode()
             } else if let _item = item as? DP3_headerItem {
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier) as! iPhoneHeaderCell_v3
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier)!
                 (cell as! iPhoneHeaderCell_v3).populate(with: _item)
+            } else if item is DP3_banner {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerCell_v3.identifier)!
+                (cell as! iPhoneBannerCell_v3).populate(with: self.data.banner!)
+            } else if item is DP3_footer {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneFooterCell_v3.identifier)!
             }
         }
         
@@ -98,8 +118,14 @@ extension MainFeed_v3_viewController {
             result = _item.size
         } else if(item is DP3_headerItem) {
             result = (self.getCell(indexPath) as! iPhoneHeaderCell_v3).calculateHeight()
-        } else if(item is DP3_iPhoneBigStory) {
-            result = (self.getCell(indexPath) as! iPhoneStory_vImg_Cell_v3).calculateGroupHeight()
+        } else if(item is DP3_iPhoneStory_vImg) {
+            result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
+        } else if(item is DP3_banner) {
+            result = iPhoneBannerCell_v3.heightFor(banner: self.data.banner!)
+        } else if(item is DP3_iPhoneArticle_2cols) {
+            result = (self.getCell(indexPath) as! iPhoneArticle_2cols_cell_v3).calculateGroupHeight()
+        } else if(item is DP3_footer) {
+            return iPhoneFooterCell_v3.getHeight()
         }
                 
         return result.rounded()

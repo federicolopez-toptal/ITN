@@ -26,3 +26,4 @@ EMPROLIJAR
 
 - "TryAgainButtonTap" - Hacer notificacion genérica para popup, poner data en el userInfo (misc/Notifications)
 - Ancho de menu para iPad
+- Llamadas a MAIN_THREAD

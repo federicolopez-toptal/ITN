@@ -95,3 +95,13 @@ func CLEAN_SOURCE(from input: String) -> String {
     }
     return result
 }
+
+func SHORT_TIME(input: String) -> String {
+    var result = input.uppercased().replacingOccurrences(of: " AGO", with: "")
+    result = result.replacingOccurrences(of: "HOURS", with: "HRS")
+    result = result.replacingOccurrences(of: "HOUR", with: "HR")
+    result = result.replacingOccurrences(of: "MINUTES", with: "MINS")
+    result = result.replacingOccurrences(of: "MINUTE", with: "MIN")
+    
+    return result
+}
