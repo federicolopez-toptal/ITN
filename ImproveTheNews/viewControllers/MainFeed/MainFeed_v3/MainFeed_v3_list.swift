@@ -103,6 +103,7 @@ extension MainFeed_v3_viewController {
                 (cell as! iPhoneBannerCell_v3).populate(with: self.data.banner!)
             } else if item is DP3_footer {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneFooterCell_v3.identifier)!
+                (cell as! iPhoneFooterCell_v3).refreshDisplayMode()
             }
         }
         

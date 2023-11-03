@@ -45,7 +45,7 @@ class CSS {
     let iPhoneStory_textFont = AILERON(12)
     let iPhoneArticle_titleFont = AILERON(16)
     let iPhoneArticle_textFont = AILERON(11)
-    let iPhoneFooter_font = AILERON_SEMIBOLD(14)
+    let iPhoneFooter_font = AILERON_SEMIBOLD(15)
         
     let menu_width: CGFloat = 280
     let menu_font = AILERON(15)

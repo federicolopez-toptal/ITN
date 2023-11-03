@@ -81,9 +81,9 @@ extension MainFeed_v3_viewController {
             
         } // for
         
-        // Footer at the end of everything
-//        let footer = DP3_footer()
-//        self.dataProvider.append(footer)
+        //Footer at the end of all
+        let footer = DP3_footer()
+        self.dataProvider.append(footer)
 
     }
     
