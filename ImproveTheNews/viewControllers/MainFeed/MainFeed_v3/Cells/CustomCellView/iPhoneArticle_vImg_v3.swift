@@ -115,7 +115,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
     func calculateHeight() -> CGFloat {
         return self.calculateImageViewHeight() + CSS.shared.iPhoneSide_padding +
                 self.titleLabel.calculateHeightFor(width: self.WIDTH) + CSS.shared.iPhoneSide_padding +
-                24 + 24
+                24 + 32
     }
     
     // MARK: Actions

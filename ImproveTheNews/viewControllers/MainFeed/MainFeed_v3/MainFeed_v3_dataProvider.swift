@@ -53,16 +53,21 @@ extension MainFeed_v3_viewController {
                         }
                     }
                 
+                    if(self.dataProvider.count > 1) {
+                        let last = self.dataProvider[self.dataProvider.count-1]
+                        
+                        if(last is DP3_iPhoneStory_vImg && _newGroupItem is DP3_iPhoneArticle_2cols) {
+                            let spacer = DP3_spacer(size: 10)
+                            self.dataProvider.append(spacer)
+                        }
+                    }
+                
+                
+                
                     self.dataProvider.append(_newGroupItem)
                     itemInTopic += 1
-                    
-                    if(itemInTopic==3 || itemInTopic==5) {
-                        let spacer = DP3_spacer(size: 10)
-                        self.dataProvider.append(spacer)
-                    }
                 }
                 ////////////////////
-                
                 if(itemInTopic==5) {
                     itemInTopic = 1
                 }
