@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 
+let NEWS_BY_REQUEST: Int = 12
+
+//////////////////////////////////////////////////
 func NAV_MAINFEED_VC() -> UIViewController {
     var vc: UIViewController!
         

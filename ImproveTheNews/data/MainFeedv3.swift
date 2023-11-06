@@ -25,7 +25,7 @@ class MainFeedv3 {
         self.banner = nil
         self.topic = topic
         
-        let strUrl = self.buildUrl(topic: topic, A: 11, B: 11, S: 0)
+        let strUrl = self.buildUrl(topic: topic, A: NEWS_BY_REQUEST, B: NEWS_BY_REQUEST, S: 0)
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
         
@@ -69,7 +69,7 @@ class MainFeedv3 {
 //                _B = 12
 //            }
             
-            let strUrl = self.buildUrl(topic: T, A: 11, B: 0, S: S_value )
+            let strUrl = self.buildUrl(topic: T, A: NEWS_BY_REQUEST, B: 0, S: S_value )
             var request = URLRequest(url: URL(string: strUrl)!)
             request.httpMethod = "GET"
                 
@@ -294,7 +294,7 @@ extension MainFeedv3 {
         result += "&sliders=" + MainFeedv3.sliderValues()  //self.sliderValues()
         result += "&uid=" + UUID.shared.getValue()
         result += "&v=I" + Bundle.main.releaseVersionNumber!
-        result += "&dev=" + UIDevice.current.modelName.replacingOccurrences(of: " ", with: "_")
+        result += "&dev=" + UIDevice.modelName.replacingOccurrences(of: " ", with: "_")
         result += "&rnd=" + self.randomString()
         
         return result

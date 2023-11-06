@@ -19,6 +19,7 @@
 		1F0CAD7E295CB10600E234C4 /* MainFeedv3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0CAD7D295CB10600E234C4 /* MainFeedv3.swift */; };
 		1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F106AEA2907186E004B9943 /* MainFeed_dataProvider.swift */; };
 		1F106AED29071E30004B9943 /* MainFeed_cellTaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F106AEC29071E30004B9943 /* MainFeed_cellTaps.swift */; };
+		1F1493F32AF95DBF001BF4B7 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1493F22AF95DBF001BF4B7 /* UIDeviceExtension.swift */; };
 		1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AA29363353003F528E /* MainFeedv2.swift */; };
 		1F1788AD2937CBC1003F528E /* trash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AC2937CBC1003F528E /* trash.swift */; };
 		1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18C88828F89EF600197F38 /* MenuItemCell.swift */; };
@@ -349,7 +350,7 @@
 		1FA4CE6528C2865B0068DE4A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE6428C2865B0068DE4A /* Utils.swift */; };
 		1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE6728C286F40068DE4A /* MainFeed.swift */; };
 		1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE6928C2874E0068DE4A /* BaseViewController.swift */; };
-		1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE6C28C2D39F0068DE4A /* UIDeviceExtension.swift */; };
+		1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift.txt in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE6C28C2D39F0068DE4A /* UIDeviceExtension.swift.txt */; };
 		1FA4CE6F28C2D47F0068DE4A /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE6E28C2D47F0068DE4A /* BundleExtension.swift */; };
 		1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE7028C2D5460068DE4A /* UUID.swift */; };
 		1FA4CE7328C2DDFD0068DE4A /* ErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA4CE7228C2DDFD0068DE4A /* ErrorExtension.swift */; };
@@ -468,6 +469,7 @@
 		1F0CAD7D295CB10600E234C4 /* MainFeedv3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedv3.swift; sourceTree = "<group>"; };
 		1F106AEA2907186E004B9943 /* MainFeed_dataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_dataProvider.swift; sourceTree = "<group>"; };
 		1F106AEC29071E30004B9943 /* MainFeed_cellTaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_cellTaps.swift; sourceTree = "<group>"; };
+		1F1493F22AF95DBF001BF4B7 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		1F1788AA29363353003F528E /* MainFeedv2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedv2.swift; sourceTree = "<group>"; };
 		1F1788AC2937CBC1003F528E /* trash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trash.swift; sourceTree = "<group>"; };
 		1F18C88828F89EF600197F38 /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
@@ -801,7 +803,7 @@
 		1FA4CE6428C2865B0068DE4A /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1FA4CE6728C286F40068DE4A /* MainFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed.swift; sourceTree = "<group>"; };
 		1FA4CE6928C2874E0068DE4A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		1FA4CE6C28C2D39F0068DE4A /* UIDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
+		1FA4CE6C28C2D39F0068DE4A /* UIDeviceExtension.swift.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UIDeviceExtension.swift.txt; sourceTree = "<group>"; };
 		1FA4CE6E28C2D47F0068DE4A /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
 		1FA4CE7028C2D5460068DE4A /* UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUID.swift; sourceTree = "<group>"; };
 		1FA4CE7228C2DDFD0068DE4A /* ErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorExtension.swift; sourceTree = "<group>"; };
@@ -1228,7 +1230,8 @@
 			isa = PBXGroup;
 			children = (
 				1FF61CBC28DAD84A006DF9AC /* basics */,
-				1FA4CE6C28C2D39F0068DE4A /* UIDeviceExtension.swift */,
+				1F1493F22AF95DBF001BF4B7 /* UIDeviceExtension.swift */,
+				1FA4CE6C28C2D39F0068DE4A /* UIDeviceExtension.swift.txt */,
 				1FA4CE6E28C2D47F0068DE4A /* BundleExtension.swift */,
 				1FA4CE7228C2DDFD0068DE4A /* ErrorExtension.swift */,
 				1FA4CE7428C306590068DE4A /* UIViewExtension.swift */,
@@ -2281,7 +2284,7 @@
 				1FE9169F29A79805007F8AAF /* ArticleHImageView.swift in Sources */,
 				1FB6A0B12ADF01E4008F968A /* FAQ_normalStoryView.swift in Sources */,
 				1FE89D042AF1AE2E00A6C99C /* iPhoneStory_vImg_v3.swift in Sources */,
-				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift in Sources */,
+				1FA4CE6D28C2D39F0068DE4A /* UIDeviceExtension.swift.txt in Sources */,
 				1FE916A329A7AEF1007F8AAF /* GroupItemCell.swift in Sources */,
 				1F1788AD2937CBC1003F528E /* trash.swift in Sources */,
 				1FD5BDEE28DC01AA003E650F /* ArticleViewController.swift in Sources */,
@@ -2337,6 +2340,7 @@
 				1F9EDD4729AE5819007A97A6 /* iPadFooterCell.swift in Sources */,
 				1FE89CF92AF1A97900A6C99C /* DP3_groupItem.swift in Sources */,
 				1FD1BD562AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift in Sources */,
+				1F1493F32AF95DBF001BF4B7 /* UIDeviceExtension.swift in Sources */,
 				1F0BFFFF28F5F2C7007280FF /* MoreCell.swift in Sources */,
 				1F3E5E3E292FD24E00FA090B /* FilterTextView.swift in Sources */,
 				1F897CE828CC3B0F00438FC5 /* MetricUtils.swift in Sources */,

@@ -74,7 +74,7 @@ class MainFeed {
         result += "&sliders=" + self.sliderValues()
         result += "&uid=" + UUID.shared.getValue()
         result += "&v=I" + Bundle.main.releaseVersionNumber!
-        result += "&dev=" + UIDevice.current.modelName.replacingOccurrences(of: " ", with: "_")
+        result += "&dev=" + UIDevice.modelName.replacingOccurrences(of: " ", with: "_")
         result += "&rnd=" + self.randomString()
         
         return result

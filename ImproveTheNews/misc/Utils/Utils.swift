@@ -102,6 +102,8 @@ func SHORT_TIME(input: String) -> String {
     result = result.replacingOccurrences(of: "HOUR", with: "HR")
     result = result.replacingOccurrences(of: "MINUTES", with: "MINS")
     result = result.replacingOccurrences(of: "MINUTE", with: "MIN")
+    result = result.replacingOccurrences(of: "SECONDS", with: "SECS")
+    result = result.replacingOccurrences(of: "SECOND", with: "SEC")
     
     return result
 }
