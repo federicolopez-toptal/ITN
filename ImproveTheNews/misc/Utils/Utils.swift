@@ -11,22 +11,7 @@ import UIKit
 
 let LOAD_MORE_LIMIT = 12
 
-/*
-    let dict = Bundle.main.infoDictionary!
-    return dict["API_BASE_URL"] as! String
-*/
-
 // MARK: URLs related
-func ITN_URL() -> String {
-//    return "https://www.improvemynews.com"
-    return "https://www.improvethenews.org"
-}
-
-func BIASPEDIA_URL() -> String {
-    //return "https://biaspost.org/api/"
-    return "https://biaspedia.org/api/"
-}
-
 func FIX_URL(_ url: String) -> String {
     return url.replacingOccurrences(of: "http://", with: "https://")
 }

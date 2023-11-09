@@ -22,6 +22,7 @@ class SpacerCell_v3: UITableViewCell {
 
     func refreshDisplayMode() {
         self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        if(SPACER_COLOR != nil) { self.contentView.backgroundColor = SPACER_COLOR }
     }
 
 }

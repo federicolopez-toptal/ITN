@@ -13,13 +13,15 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
     
     private let imgWidth: CGFloat = 370
     private let imgHeight: CGFloat = 213
+    
     private var WIDTH: CGFloat = 1
     
-    let mainImageView = CustomImageView(showCorners: true)
+    let mainImageView = CustomImageView()
     let titleLabel = UILabel()
-    let pill = StoryPillView()
+    var pill = StoryPillView()
     let sources = SourceIconsView()
     let timeLabel = UILabel()
+    var time_leading: NSLayoutConstraint?
     
     var article: MainFeedArticle!
     
@@ -32,6 +34,7 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
     init(width: CGFloat) {
         super.init(frame: .zero)
         self.WIDTH = width
+        
         self.buildContent()
     }
     
@@ -68,20 +71,25 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         self.sources.buildInto(self)
         self.sources.activateConstraints([
             self.sources.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
-            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor,
+                constant: CSS.shared.iPhoneSide_padding)
         ])
         
         self.timeLabel.font = CSS.shared.iPhoneStory_textFont
+        self.timeLabel.textAlignment = .right
         self.addSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
-            self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
-            self.timeLabel.leadingAnchor.constraint(equalTo: self.sources.trailingAnchor, constant: 8)
+            self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
         ])
+        self.time_leading = self.timeLabel.leadingAnchor.constraint(equalTo: self.sources.trailingAnchor, constant: 8)
+        self.time_leading?.isActive = true
+
+
+        self.refreshDisplayMode()
         
+        // -------------------
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewOnTap(_:)))
         self.addGestureRecognizer(tapGesture)
-        
-        self.refreshDisplayMode()
     }
     
     // MARK: Overrides
@@ -89,9 +97,19 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         self.article = article
         
         self.mainImageView.load(url: article.imgUrl)
+        self.mainImageView.showCorners(true)
+        
         self.titleLabel.text = article.title
         self.sources.load(article.storySources)
         self.timeLabel.text = article.time.uppercased()
+        
+        if(PREFS_SHOW_SOURCE_ICONS()) {
+            self.sources.show()
+            self.time_leading?.constant = 8
+        } else {
+            self.sources.customHide()
+            self.time_leading?.constant = 0
+        }
     }
     
     override func refreshDisplayMode() {

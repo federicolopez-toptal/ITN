@@ -15,11 +15,11 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
     private let imgHeight: CGFloat = 88
     private var WIDTH: CGFloat = 1
     
-    let mainImageView = CustomImageView(showCorners: false)
+    let mainImageView = CustomImageView()
     let titleLabel = UILabel()
     let sources = SourceIconsView()
     let sourceLabel = UILabel()
-    let timeLabel = UILabel()
+    let stanceIcon = StanceIconView()
     
     var article: MainFeedArticle!
     
@@ -64,14 +64,6 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
             self.sources.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
         
-        self.timeLabel.font = CSS.shared.iPhoneArticle_textFont
-        self.timeLabel.textAlignment = .left
-        self.addSubview(self.timeLabel)
-        self.timeLabel.activateConstraints([
-            self.timeLabel.centerYAnchor.constraint(equalTo: self.sources.centerYAnchor),
-            self.timeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        ])
-        
         self.sourceLabel.font = CSS.shared.iPhoneArticle_textFont
         self.sourceLabel.numberOfLines = 0
         self.sourceLabel.textAlignment = .left
@@ -79,8 +71,15 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         self.sourceLabel.activateConstraints([
             self.sourceLabel.centerYAnchor.constraint(equalTo: self.sources.centerYAnchor),
             self.sourceLabel.leadingAnchor.constraint(equalTo: self.sources.trailingAnchor, constant: 5),
-            self.sourceLabel.trailingAnchor.constraint(equalTo: self.timeLabel.leadingAnchor, constant: -10)
+            self.sourceLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -35)
         ])
+        
+        self.addSubview(self.stanceIcon)
+        self.stanceIcon.activateConstraints([
+            self.stanceIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.stanceIcon.centerYAnchor.constraint(equalTo: self.sources.centerYAnchor)
+        ])
+        self.stanceIcon.delegate = self
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewOnTap(_:)))
         self.addGestureRecognizer(tapGesture)
@@ -100,22 +99,22 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         self.mainImageView.load(url: article.imgUrl)
         self.titleLabel.text = article.title
         self.sources.load(sourcesArray)
-        self.sourceLabel.text = CLEAN_SOURCE(from: article.source).uppercased()
-        self.timeLabel.text = SHORT_TIME(input: article.time)
+        self.sourceLabel.text = CLEAN_SOURCE(from: article.source).uppercased() + "    " + SHORT_TIME(input: article.time)
+        self.stanceIcon.setValues(article.LR, article.PE)
     }
     
     override func refreshDisplayMode() {
         self.titleLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.sources.refreshDisplayMode()
         self.sourceLabel.textColor = CSS.shared.displayMode().main_textColor
-        self.timeLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.stanceIcon.refreshDisplayMode()
     }
     
     // MARK: misc
     func calculateHeight() -> CGFloat {
         return self.calculateImageViewHeight() + CSS.shared.iPhoneSide_padding +
                 self.titleLabel.calculateHeightFor(width: self.WIDTH) + CSS.shared.iPhoneSide_padding +
-                24 + 32
+                30 + 25
     }
     
     // MARK: Actions
@@ -133,4 +132,16 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         }
     }
     
+}
+
+extension iPhoneArticle_vImg_v3: StanceIconViewDelegate {
+    func onStanceIconTap(sender: StanceIconView) {
+        let info: [String : Any] = [
+            "LR": self.article.LR,
+            "PE": self.article.PE,
+            "source": CLEAN_SOURCE(from: self.article.source),
+            "country": self.article.country
+        ]
+        NOTIFY(Notification_stanceIconTap, userInfo: info)
+    }
 }

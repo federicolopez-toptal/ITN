@@ -14,18 +14,19 @@ import SDWebImage
 /////////////////////////////////////////////////////////////////////////////////
 class CustomImageView: UIImageView {
     
+    let cornerTag = 5
     let imgIcon = UIImageView(image: UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate))
     let loading = UIActivityIndicatorView(style: .medium)
     
     // MARK: - Start
-    init(showCorners: Bool) {
+    init() {
         super.init(frame: .zero)
         
         self.backgroundColor = .lightGray
         self.contentMode = .scaleAspectFill
         self.clipsToBounds = true
         
-        if(showCorners) {
+        // Corners
             let corner1_A = UIView()
             corner1_A.backgroundColor = .white
             self.addSubview(corner1_A)
@@ -35,6 +36,7 @@ class CustomImageView: UIImageView {
                 corner1_A.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
                 corner1_A.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
             ])
+            corner1_A.tag = self.cornerTag
             
             let corner1_B = UIView()
             corner1_B.backgroundColor = .white
@@ -45,6 +47,7 @@ class CustomImageView: UIImageView {
                 corner1_B.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
                 corner1_B.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
             ])
+            corner1_B.tag = self.cornerTag
             
             let corner2_A = UIView()
             corner2_A.backgroundColor = .white
@@ -55,6 +58,7 @@ class CustomImageView: UIImageView {
                 corner2_A.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
                 corner2_A.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
             ])
+            corner2_A.tag = self.cornerTag
             
             let corner2_B = UIView()
             corner2_B.backgroundColor = .white
@@ -65,7 +69,8 @@ class CustomImageView: UIImageView {
                 corner2_B.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
                 corner2_B.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
             ])
-        }
+            corner2_B.tag = self.cornerTag
+        // Corners
         
         self.imgIcon.tintColor = UIColor.black
         self.imgIcon.alpha = 0.2
@@ -106,8 +111,17 @@ class CustomImageView: UIImageView {
                 }
             }
         }
-
     }
+    
+    func showCorners(_ state: Bool) {
+        for V in self.subviews {
+            if(V.tag == self.cornerTag) {
+                if(state){ V.show() }
+                else{ V.hide() }
+            }
+        }
+    }
+    
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -124,16 +138,20 @@ class StoryPillView: UIView {
     }
     
     func buildInto(_ container: UIView) {
+        let W: CGFloat = 59
+        let H: CGFloat = 24
+        let F: CGFloat = 11
+        
         container.addSubview(self)
         self.activateConstraints([
-            self.widthAnchor.constraint(equalToConstant: 59),
-            self.heightAnchor.constraint(equalToConstant: 24)
+            self.widthAnchor.constraint(equalToConstant: W),
+            self.heightAnchor.constraint(equalToConstant: H)
         ])
-        self.layer.cornerRadius = 12
+        self.layer.cornerRadius = H/2
         
         self.label.text = "STORY"
         self.label.textAlignment = .center
-        self.label.font = AILERON(11)
+        self.label.font = AILERON_SEMIBOLD(F)
         self.addSubview(self.label)
         self.label.activateConstraints([
             self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -145,7 +163,51 @@ class StoryPillView: UIView {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0xDA4933).withAlphaComponent(0.2) : CSS.shared.orange
+        self.backgroundColor = DARK_MODE() ? CSS.shared.orange.withAlphaComponent(0.2) : CSS.shared.orange
+        self.label.textColor = DARK_MODE() ? CSS.shared.orange : .white
+    }
+    
+}
+
+// ------------------------------------
+class StoryPillMiniView: UIView {
+    
+    let label = UILabel()
+    
+    init() {
+        super.init(frame: .zero)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func buildInto(_ container: UIView) {
+        let W: CGFloat = 43
+        let H: CGFloat = 18
+        let F: CGFloat = 8
+        
+        container.addSubview(self)
+        self.activateConstraints([
+            self.widthAnchor.constraint(equalToConstant: W),
+            self.heightAnchor.constraint(equalToConstant: H)
+        ])
+        self.layer.cornerRadius = H/2
+        
+        self.label.text = "STORY"
+        self.label.textAlignment = .center
+        self.label.font = AILERON_SEMIBOLD(F)
+        self.addSubview(self.label)
+        self.label.activateConstraints([
+            self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.label.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+        ])
+        
+        self.refreshDisplayMode()
+    }
+    
+    func refreshDisplayMode() {
+        self.backgroundColor = DARK_MODE() ? CSS.shared.orange.withAlphaComponent(0.2) : CSS.shared.orange
         self.label.textColor = DARK_MODE() ? CSS.shared.orange : .white
     }
     
@@ -158,24 +220,36 @@ class SourceIconsView: UIView {
     let imgs = [UIImageView(), UIImageView(), UIImageView()]
     var widthConstraint: NSLayoutConstraint?
 
-    init() {
+    private var SIZE: CGFloat
+    private var BORDER: CGFloat
+    private var SEPARATION: CGFloat
+
+    init(size: CGFloat = 24, border: CGFloat = 3, separation: CGFloat = 20) {
+        self.SIZE = size
+        self.BORDER = border
+        self.SEPARATION = separation
+    
         super.init(frame: .zero)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func size() -> CGFloat {
+        return self.SIZE + (self.BORDER * 2)
+    }
+    
     func buildInto(_ container: UIView) {
         container.addSubview(self)
-        self.widthConstraint = self.widthAnchor.constraint(equalToConstant: 80)
+        self.widthConstraint = self.widthAnchor.constraint(equalToConstant: self.size() * 3)
         self.activateConstraints([
-            self.heightAnchor.constraint(equalToConstant: 30),
+            self.heightAnchor.constraint(equalToConstant: self.size()),
             self.widthConstraint!
         ])
         
         self.initImage(self.imgs[0], leading: 0)
-        self.initImage(self.imgs[1], leading: 20)
-        self.initImage(self.imgs[2], leading: 40)
+        self.initImage(self.imgs[1], leading: self.SEPARATION)
+        self.initImage(self.imgs[2], leading: self.SEPARATION*2)
         
         self.imgs[1].superview?.bringSubviewToFront(self.imgs[1])
         self.imgs[0].superview?.bringSubviewToFront(self.imgs[0])
@@ -186,15 +260,15 @@ class SourceIconsView: UIView {
         img.activateConstraints([
             img.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leading),
             img.topAnchor.constraint(equalTo: self.topAnchor),
-            img.widthAnchor.constraint(equalToConstant: 30),
-            img.heightAnchor.constraint(equalToConstant: 30)
+            img.widthAnchor.constraint(equalToConstant: self.size()),
+            img.heightAnchor.constraint(equalToConstant: self.size())
         ])
-        img.layer.cornerRadius = 15
+        img.layer.cornerRadius = self.size()/2
         img.clipsToBounds = true
         img.backgroundColor = .lightGray
         
         img.layer.borderColor = UIColor.red.cgColor
-        img.layer.borderWidth = 3.0
+        img.layer.borderWidth = self.BORDER
     }
     
     func load(_ sources: [String]) {
@@ -217,16 +291,16 @@ class SourceIconsView: UIView {
 
                 switch(num) {
                     case 1:
-                    self.widthConstraint?.constant = 30
+                    self.widthConstraint?.constant = self.size()
                     
                     case 2:
-                    self.widthConstraint?.constant = 30 + 20
+                    self.widthConstraint?.constant = self.size() + self.SEPARATION
                     
                     case 3:
-                    self.widthConstraint?.constant = 30 + 20 + 20
+                    self.widthConstraint?.constant = self.size() + (self.SEPARATION * 2)
                     
                     default:
-                    self.widthConstraint?.constant = 30
+                    NOTHING()
                 }
 
                 num += 1
@@ -241,6 +315,11 @@ class SourceIconsView: UIView {
         for I in self.imgs {
             I.layer.borderColor = CSS.shared.displayMode().main_bgColor.cgColor
         }
+    }
+    
+    func customHide() {
+        self.hide()
+        self.widthConstraint?.constant = 0
     }
     
 }

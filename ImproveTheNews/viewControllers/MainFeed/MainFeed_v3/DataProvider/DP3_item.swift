@@ -12,6 +12,7 @@ import UIKit
 class DP3_item {
 }
 
+////////////////////////////////////////////////////////////////////////
 // MARK: Subclasses
 class DP3_headerItem: DP3_item {
     var title: String = ""
@@ -29,9 +30,6 @@ class DP3_spacer: DP3_item {
     }
 }
 
-class DP3_banner: DP3_item {
-}
-
 class DP3_more: DP3_item {
     var topic = "news"
     var completed = false
@@ -43,4 +41,10 @@ class DP3_more: DP3_item {
 }
 
 class DP3_footer: DP3_item {
+}
+
+
+
+
+class DP3_banner: DP3_item {
 }

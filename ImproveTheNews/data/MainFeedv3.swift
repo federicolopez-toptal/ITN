@@ -25,7 +25,10 @@ class MainFeedv3 {
         self.banner = nil
         self.topic = topic
         
-        let strUrl = self.buildUrl(topic: topic, A: NEWS_BY_REQUEST, B: NEWS_BY_REQUEST, S: 0)
+        let strUrl = self.buildUrl(topic: topic, A: NEWS_INIT_REQ_COUNT,
+                                                B: NEWS_INIT_REQ_COUNT,
+                                                C: NEWS_INIT_REQ_STORIES,
+                                                S: 0)
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
         
@@ -55,7 +58,7 @@ class MainFeedv3 {
     }
     
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
-        let S_value = self.skipForTopic(T)
+        let S_value = self.skipForTopic(T) + 1
         
         //if(T != self.topic){ S_value += 1 }
         
@@ -69,7 +72,8 @@ class MainFeedv3 {
 //                _B = 12
 //            }
             
-            let strUrl = self.buildUrl(topic: T, A: NEWS_BY_REQUEST, B: 0, S: S_value )
+            let strUrl = self.buildUrl(topic: T, A: NEWS_MORE_REQ_COUNT, B: 0,
+                                            C: NEWS_MORE_REQ_STORIES, S: S_value )
             var request = URLRequest(url: URL(string: strUrl)!)
             request.httpMethod = "GET"
                 
@@ -267,7 +271,7 @@ extension MainFeedv3 {
 // MARK: - Utilities
 extension MainFeedv3 {
 
-    private func buildUrl(topic: String, A: Int, B: Int, S: Int) -> String {
+    private func buildUrl(topic: String, A: Int, B: Int, C: Int, S: Int) -> String {
         /*
             DOCUMENTATION
                 https://docs.google.com/document/d/1UTdmnjjLTR5UjkQ7UmP-xGlpFN7MkEImYK1Vq3w7RwE/edit
@@ -290,6 +294,7 @@ extension MainFeedv3 {
         var result = ITN_URL() + "/appserver.php/?topic=" + topic
         result += ".A" + String(_A)
         result += ".B" + String(_B)
+        if(PREFS_SHOW_STORIES()){ result += ".C" + String(C) }
         result += ".S" + String(S)
         result += "&sliders=" + MainFeedv3.sliderValues()  //self.sliderValues()
         result += "&uid=" + UUID.shared.getValue()
