@@ -72,7 +72,7 @@ class CSS {
         self.darkMode.header_textColor = UIColor(hex: 0xBBBDC0)
         self.darkMode.moreButton_bgColor = UIColor(hex: 0x2D2D31)
         
-        self.lightMode.main_bgColor = .white
+        self.lightMode.main_bgColor = UIColor(hex: 0xF0F0F0)
         self.lightMode.main_textColor = UIColor(hex: 0x19191C)
         self.lightMode.sec_textColor = UIColor(hex: 0x19191C)
         self.lightMode.menuItem_color = UIColor(hex: 0x19191C)

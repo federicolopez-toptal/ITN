@@ -304,13 +304,13 @@ class NavBarView: UIView {
             
             if(C == .headlines) {
                 // Back to headlines
-                let ITNicon = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.home")))
+                let ITNicon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.home")))
                 self.addSubview(ITNicon)
                 ITNicon.activateConstraints([
                     ITNicon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
-                    ITNicon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
-                    ITNicon.widthAnchor.constraint(equalToConstant: 24),
-                    ITNicon.heightAnchor.constraint(equalToConstant: 24)
+                    ITNicon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    ITNicon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
+                    ITNicon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
                 ])
                 ITNicon.tag = 10
                 self.displayModeComponents.append(ITNicon)
@@ -326,7 +326,7 @@ class NavBarView: UIView {
                 ])
                 button.addTarget(self, action: #selector(onHeadlinesButtonTap(_:)), for: .touchUpInside)
                 
-                self.right_x += 24 + CSS.shared.navBar_icon_sepX
+                self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
             }
         }
         
@@ -361,14 +361,14 @@ class NavBarView: UIView {
                     case 9: // user
                         img = UIImage(named: DisplayMode.imageName("newNavBar.user"))
                     case 10: // headlines
-                        img = UIImage(named: DisplayMode.imageName("navBar.home"))?.withRenderingMode(.alwaysTemplate)
+                        img = UIImage(named: DisplayMode.imageName("circle.home"))
                     
                     default:
                         NOTHING()
                 }
                 
                 imgView.image = img
-                if(imgView.tag==8 || imgView.tag==10) {
+                if(imgView.tag==8) {
                     imgView.tintColor = CSS.shared.displayMode().main_textColor
                 }
                 
