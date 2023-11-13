@@ -1558,13 +1558,13 @@
 			children = (
 				1FE89CFB2AF1AD3A00A6C99C /* SpacerCell_v3.swift */,
 				1FE89CFC2AF1AD3A00A6C99C /* iPhoneHeaderCell_v3.swift */,
+				1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */,
 				1F5012F62AFA70E800494772 /* iPhoneMoreCell_v3.swift */,
 				1FD1BD572AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift */,
-				1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */,
 				1FD1BD502AF4208700BEF887 /* iPadBannerNewsletterCell.swift.txt */,
-				1FE89D012AF1AE1600A6C99C /* CustomCellView */,
 				1F971CB72AF284BD0049BA42 /* GroupItemCell_v3.swift */,
 				1FA48D982AFBDD81009CEAAC /* Subs (GroupItemCell_v3) */,
+				1FE89D012AF1AE1600A6C99C /* CustomCellView */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

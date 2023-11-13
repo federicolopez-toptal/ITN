@@ -31,7 +31,7 @@ func NAV_MAINFEED_VC() -> UIViewController {
     var vc: UIViewController!
         
     if(IPHONE()) {
-        vc = MainFeedViewController()
+        //vc = MainFeedViewController()
         vc = MainFeed_v3_viewController()
     } else {
         vc = MainFeed_v2ViewController()

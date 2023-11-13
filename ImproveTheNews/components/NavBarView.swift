@@ -277,13 +277,13 @@ class NavBarView: UIView {
             
             if(C == .share) {
                 // Search
-                let shareIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("share")))
+                let shareIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.share")))
                 self.addSubview(shareIcon)
                 shareIcon.activateConstraints([
                     shareIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
-                    shareIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(60)),
-                    shareIcon.widthAnchor.constraint(equalToConstant: 24),
-                    shareIcon.heightAnchor.constraint(equalToConstant: 24)
+                    shareIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    shareIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
+                    shareIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
                 ])
                 shareIcon.tag = 8
                 self.displayModeComponents.append(shareIcon)
@@ -299,7 +299,7 @@ class NavBarView: UIView {
                 ])
                 button.addTarget(self, action: #selector(onShareButtonTap(_:)), for: .touchUpInside)
                 
-                self.right_x += 24 + CSS.shared.navBar_icon_sepX
+                self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
             }
             
             if(C == .headlines) {
@@ -357,7 +357,7 @@ class NavBarView: UIView {
                     case 6: // back
                         img = UIImage(named: DisplayMode.imageName("circle.back"))
                     case 8: // share
-                        img = UIImage(named: DisplayMode.imageName("share"))?.withRenderingMode(.alwaysTemplate)
+                        img = UIImage(named: DisplayMode.imageName("circle.share"))
                     case 9: // user
                         img = UIImage(named: DisplayMode.imageName("newNavBar.user"))
                     case 10: // headlines
@@ -368,9 +368,9 @@ class NavBarView: UIView {
                 }
                 
                 imgView.image = img
-                if(imgView.tag==8) {
-                    imgView.tintColor = CSS.shared.displayMode().main_textColor
-                }
+//                if(imgView.tag==8) {
+//                    imgView.tintColor = CSS.shared.displayMode().main_textColor
+//                }
                 
             }
             

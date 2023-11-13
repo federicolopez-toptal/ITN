@@ -81,6 +81,10 @@ extension MainFeed_v3_viewController {
         NotificationCenter.default.addObserver(self,
             selector: #selector(self.removeBannerFromNotification),
             name: Notification_removeBanner, object: nil)
+            
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.refreshList),
+            name: Notification_refreshMainFeed, object: nil)
     }
     
     @objc func onStanceIconTap(_ notification: Notification) {

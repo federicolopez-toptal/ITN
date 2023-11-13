@@ -113,6 +113,28 @@ class CustomImageView: UIImageView {
         }
     }
     
+    func load(url: String, callback: @escaping (Bool, CGSize?) -> ()) {
+        self.image = nil
+        self.imgIcon.show()
+        self.loading.startAnimating()
+        
+        if let _url = URL(string: FIX_URL(url)) {
+            self.sd_setImage(with: _url) { (img, error, cacheType, url) in
+                self.loading.stopAnimating()
+                if(img != nil) {
+                    self.imgIcon.hide()
+                    callback(true, img?.size)
+                } else {
+                    callback(false, nil)
+                }
+            }
+        } else {
+            callback(false, nil)
+        }
+        
+        self.loading.stopAnimating()
+    }
+    
     func showCorners(_ state: Bool) {
         for V in self.subviews {
             if(V.tag == self.cornerTag) {

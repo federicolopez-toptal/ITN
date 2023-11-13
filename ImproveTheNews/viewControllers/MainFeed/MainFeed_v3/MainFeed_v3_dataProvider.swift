@@ -88,7 +88,9 @@ extension MainFeed_v3_viewController {
             } // while
             
             // Banner, only for 1rst topic (if apply)
-//            if(i==0) { self.insertBanner() }
+            if(i==0) {
+                self.insertBanner()
+            }
 
             // "Load more" item
             var isCompleted = false
@@ -206,6 +208,9 @@ extension MainFeed_v3_viewController {
         if(self.data.banner != nil && mustShow && MUST_SPLIT()==0) {
             let banner = DP3_banner()
             self.dataProvider.append(banner)
+            
+            let spacer = DP3_spacer(size: 24) // Space before the "Show more"
+            self.dataProvider.append(spacer)
         }
     }
 }

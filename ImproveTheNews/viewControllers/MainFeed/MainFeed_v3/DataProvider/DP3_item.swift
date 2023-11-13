@@ -43,8 +43,5 @@ class DP3_more: DP3_item {
 class DP3_footer: DP3_item {
 }
 
-
-
-
 class DP3_banner: DP3_item {
 }

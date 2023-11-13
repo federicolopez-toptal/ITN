@@ -14,6 +14,7 @@ class CSS_displayMode {
     var main_bgColor: UIColor = .black
     var main_textColor: UIColor = .black
     var sec_textColor: UIColor = .black
+    var banner_bgColor: UIColor = .black
     
     var menuItem_color: UIColor = .black
     var topicSelector_textColor: UIColor = .black
@@ -47,8 +48,9 @@ class CSS {
     let iPhoneStory_textFont = AILERON(12)
     let iPhoneArticle_titleFont = AILERON(16)
     let iPhoneArticle_textFont = AILERON(11)
+    let iPhoneBanner_titleFont = DM_SERIF_DISPLAY(23)
+    let iPhoneBanner_textFont = AILERON(16)
     let iPhoneMore_font = AILERON_SEMIBOLD(15)
-    
     let iPhoneFooter_font = AILERON_SEMIBOLD(15)
         
     let menu_width: CGFloat = 280
@@ -71,6 +73,7 @@ class CSS {
         self.darkMode.line_color = UIColor(hex: 0x4C4E50)
         self.darkMode.header_textColor = UIColor(hex: 0xBBBDC0)
         self.darkMode.moreButton_bgColor = UIColor(hex: 0x2D2D31)
+        self.darkMode.banner_bgColor = UIColor(hex: 0x25242A)
         
         self.lightMode.main_bgColor = UIColor(hex: 0xF0F0F0)
         self.lightMode.main_textColor = UIColor(hex: 0x19191C)
@@ -80,6 +83,7 @@ class CSS {
         self.lightMode.line_color = UIColor(hex: 0x2D2D31)
         self.lightMode.header_textColor = UIColor(hex: 0x0A0A0C)
         self.lightMode.moreButton_bgColor = UIColor(hex: 0xE3E3E3)
+        self.lightMode.banner_bgColor = UIColor(hex: 0xE3E3E3)
     }
 }
 

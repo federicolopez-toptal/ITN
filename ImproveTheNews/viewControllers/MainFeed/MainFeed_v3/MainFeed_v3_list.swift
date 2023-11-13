@@ -36,28 +36,18 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)
         
+        self.list.register(iPhoneBannerCell_v3.self, forCellReuseIdentifier: iPhoneBannerCell_v3.identifier)
         self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
         self.list.register(iPhoneFooterCell_v3.self, forCellReuseIdentifier: iPhoneFooterCell_v3.identifier)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        self.list.register(iPhoneBannerCell_v3.self, forCellReuseIdentifier: iPhoneBannerCell_v3.identifier)
-        
 //        self.list.register(iPadBannerNewsletterCell.self,
 //            forCellReuseIdentifier: iPadBannerNewsletterCell.identifier)
-        
         
         self.list.delegate = self
         self.list.dataSource = self
     }
     
-    func refreshList() {
+    @objc func refreshList() {
         MAIN_THREAD {
             self.list.reloadData()
         }
@@ -123,6 +113,7 @@ extension MainFeed_v3_viewController {
                 (cell as! iPhoneMoreCell_v3).populate(with: _item)
                 (cell as! iPhoneMoreCell_v3).delegate = self
             } else if item is DP3_banner {
+                // distinguir newsLetter banner
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerCell_v3.identifier)!
                 (cell as! iPhoneBannerCell_v3).populate(with: self.data.banner!)
             } else if item is DP3_footer {
@@ -150,7 +141,8 @@ extension MainFeed_v3_viewController {
         } else if(item is DP3_iPhoneStory_vTxt) { // big story, text
             result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
         } else if(item is DP3_banner) {
-            result = iPhoneBannerCell_v3.heightFor(banner: self.data.banner!)
+            result = (self.getCell(indexPath) as! iPhoneBannerCell_v3).calculateHeight()
+            //result = iPhoneBannerCell_v3.heightFor(banner: self.data.banner!)
         } else if(item is DP3_iPhoneStory_2colsImg) { // row: 2 stories (image)
             result = (self.getCell(indexPath) as! iPhoneStory_2colsImg_cell_v3).calculateGroupHeight()
         } else if(item is DP3_iPhoneArticle_2colsImg) { // row: 2 articles (image)
