@@ -28,7 +28,7 @@ class MenuItemCell: UITableViewCell {
     }
     
     private func buildContent() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
         
         let gap = UIView()
         gap.backgroundColor = .clear //.systemPink

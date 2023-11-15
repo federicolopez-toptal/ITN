@@ -31,6 +31,13 @@ class Banner {
         self.url = json[8] as! String
     }
     
+    func isNewsLetter() -> Bool {
+        var result = false
+        if(self.code.lowercased() == "nl"){ result = true }
+        
+        return result
+    }
+    
     func trace() {
         print("BANNER")
         print(self.headerText, self.mainText, self.colorScheme, self.type, self.code, self.imgSize, self.imgUrl, self.url)

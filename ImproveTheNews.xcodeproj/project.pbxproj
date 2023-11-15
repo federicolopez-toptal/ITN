@@ -405,7 +405,7 @@
 		1FCD55AD2AAF57B200CCAE3B /* Aileron-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1FCD55AC2AAF57B200CCAE3B /* Aileron-SemiBold.otf */; };
 		1FCD55AF2AAF5B4600CCAE3B /* Aileron-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1FCD55AE2AAF5B4600CCAE3B /* Aileron-Bold.otf */; };
 		1FD1BD4F2AF4208200BEF887 /* iPhoneBannerCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */; };
-		1FD1BD512AF4208700BEF887 /* iPadBannerNewsletterCell.swift.txt in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD502AF4208700BEF887 /* iPadBannerNewsletterCell.swift.txt */; };
+		1FD1BD512AF4208700BEF887 /* iPhoneBannerNLCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD502AF4208700BEF887 /* iPhoneBannerNLCell_v3.swift */; };
 		1FD1BD532AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD522AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift */; };
 		1FD1BD562AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift.txt in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD552AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift.txt */; };
 		1FD1BD582AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD572AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift */; };
@@ -747,6 +747,7 @@
 		1F715EA929DC7EBE0063AC83 /* BRN64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BRN64.png; sourceTree = "<group>"; };
 		1F715EAA29DC7EBE0063AC83 /* ATG64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ATG64.png; sourceTree = "<group>"; };
 		1F715EAB29DC7EBE0063AC83 /* TWN64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TWN64.png; sourceTree = "<group>"; };
+		1F71AA7F2B0505D00080F110 /* NLTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLTextView.swift; sourceTree = "<group>"; };
 		1F71FA432A15471400B066E0 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		1F721AF72A43C9970052ADC4 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewController.swift; sourceTree = "<group>"; };
@@ -866,7 +867,7 @@
 		1FCD55AC2AAF57B200CCAE3B /* Aileron-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-SemiBold.otf"; sourceTree = "<group>"; };
 		1FCD55AE2AAF5B4600CCAE3B /* Aileron-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Bold.otf"; sourceTree = "<group>"; };
 		1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneBannerCell_v3.swift; sourceTree = "<group>"; };
-		1FD1BD502AF4208700BEF887 /* iPadBannerNewsletterCell.swift.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iPadBannerNewsletterCell.swift.txt; sourceTree = "<group>"; };
+		1FD1BD502AF4208700BEF887 /* iPhoneBannerNLCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneBannerNLCell_v3.swift; sourceTree = "<group>"; };
 		1FD1BD522AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneArticle_2colsImg_cell_v3.swift; sourceTree = "<group>"; };
 		1FD1BD552AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = iPhoneArticle_vImg_v3.swift.txt; sourceTree = "<group>"; };
 		1FD1BD572AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneFooterCell_v3.swift; sourceTree = "<group>"; };
@@ -1313,6 +1314,7 @@
 				1FF7D8CC2A40868B00770B69 /* KeywordSearchTextView.swift */,
 				1F3E5E3D292FD24E00FA090B /* FilterTextView.swift */,
 				1FC7390C298A144D003EB38D /* FormTextView.swift */,
+				1F71AA7F2B0505D00080F110 /* NLTextView.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -1559,9 +1561,9 @@
 				1FE89CFB2AF1AD3A00A6C99C /* SpacerCell_v3.swift */,
 				1FE89CFC2AF1AD3A00A6C99C /* iPhoneHeaderCell_v3.swift */,
 				1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */,
+				1FD1BD502AF4208700BEF887 /* iPhoneBannerNLCell_v3.swift */,
 				1F5012F62AFA70E800494772 /* iPhoneMoreCell_v3.swift */,
 				1FD1BD572AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift */,
-				1FD1BD502AF4208700BEF887 /* iPadBannerNewsletterCell.swift.txt */,
 				1F971CB72AF284BD0049BA42 /* GroupItemCell_v3.swift */,
 				1FA48D982AFBDD81009CEAAC /* Subs (GroupItemCell_v3) */,
 				1FE89D012AF1AE1600A6C99C /* CustomCellView */,
@@ -2245,7 +2247,7 @@
 				1F38213E29A6DA32004D4D29 /* MainFeed_v2_list.swift in Sources */,
 				1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */,
 				1F5012F72AFA70E800494772 /* iPhoneMoreCell_v3.swift in Sources */,
-				1FD1BD512AF4208700BEF887 /* iPadBannerNewsletterCell.swift.txt in Sources */,
+				1FD1BD512AF4208700BEF887 /* iPhoneBannerNLCell_v3.swift in Sources */,
 				1FD23406291565F100B85AE9 /* MenuView_misc.swift in Sources */,
 				1F41AE272A13DFDA00C0A0D2 /* Twitter_SDK.swift in Sources */,
 				1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */,
@@ -2416,6 +2418,7 @@
 				1FC287DD29A64EF90017433B /* MainFeed_v2_dataProvider.swift in Sources */,
 				1F897CE628CC380600438FC5 /* JsonUtils.swift in Sources */,
 				1F23DABB28ECAE4D009D9AB1 /* MainFeed_collectionView.swift in Sources */,
+				1F71AA802B0505D00080F110 /* NLTextView.swift in Sources */,
 				1F964CC12AE1C28B00A6B545 /* serverErrorPopupView.swift in Sources */,
 				1FFA5521294B78A500663966 /* PrefSliders_cell.swift in Sources */,
 				1F9EDD4D29AE9142007A97A6 /* ArticleBigTextView.swift in Sources */,

@@ -77,13 +77,13 @@ class iPhoneFooterCell_v3: UITableViewCell {
         let facebook = self.createSocialButton("facebook", into: self.contentView, tag: 2)
         facebook.activateConstraints([
             facebook.topAnchor.constraint(equalTo: twitter.topAnchor),
-            facebook.leadingAnchor.constraint(equalTo: twitter.trailingAnchor, constant: 10)
+            facebook.leadingAnchor.constraint(equalTo: twitter.trailingAnchor, constant: 12)
         ])
         
         let linkedin = self.createSocialButton("linkedin", into: self.contentView, tag: 3)
         linkedin.activateConstraints([
             linkedin.topAnchor.constraint(equalTo: twitter.topAnchor),
-            linkedin.leadingAnchor.constraint(equalTo: facebook.trailingAnchor, constant: 10)
+            linkedin.leadingAnchor.constraint(equalTo: facebook.trailingAnchor, constant: 12)
         ])
         
         let ITNLogo = UIImageView(image: UIImage(named: DisplayMode.imageName("ITNF_logo")))
@@ -102,6 +102,10 @@ class iPhoneFooterCell_v3: UITableViewCell {
     func createSocialButton(_ social: String, into container: UIView, tag: Int) -> UIView {
         let imageView = UIImageView(image: UIImage(named: social))
         container.addSubview(imageView)
+        imageView.activateConstraints([
+            imageView.widthAnchor.constraint(equalToConstant: 35),
+            imageView.heightAnchor.constraint(equalToConstant: 35)
+        ])
         
         let buttonArea = UIButton(type: .system)
         container.addSubview(buttonArea)

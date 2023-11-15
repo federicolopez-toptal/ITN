@@ -170,32 +170,12 @@ class iPhoneBannerCell_v3: UITableViewCell {
     }
     
     func calculateHeight() -> CGFloat {
-        let W: CGFloat = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding)
+        let W: CGFloat = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding*2)
         
         return CSS.shared.iPhoneSide_padding + self.imageHeightConstraint!.constant +
                 CSS.shared.iPhoneSide_padding + self.titleLabel.calculateHeightFor(width: W) + 4 +
                 self.descrLabel.calculateHeightFor(width: W) + (CSS.shared.iPhoneSide_padding*2) + 18 +
                 (CSS.shared.iPhoneSide_padding * 2)
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    static func heightFor(banner: Banner) -> CGFloat {
-        var result: CGFloat = 1
-        
-        //print("CODE", banner.code)
-        switch(banner.code) {
-            case "pC":
-                result = 350
-            case "yT":
-                result = 360
-            case "lO":
-                result = 265
-        
-            default:
-                result = 500
-        }
-        
-        return result
     }
     
 }

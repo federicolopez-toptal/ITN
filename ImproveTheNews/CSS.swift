@@ -57,6 +57,10 @@ class CSS {
     let menu_font = AILERON(15)
     let menu_versionFont = AILERON(14)
     
+    let actionButton_bgColor = UIColor(hex: 0x60C4D6)
+    let actionButton_textColor = UIColor(hex: 0x19191C)
+    let actionButton_iPhone_font = AILERON_SEMIBOLD(14)
+    
     // ----------
     let iPhoneSide_padding: CGFloat = 16
     let dashedLine_width: CGFloat = 5
@@ -73,7 +77,7 @@ class CSS {
         self.darkMode.line_color = UIColor(hex: 0x4C4E50)
         self.darkMode.header_textColor = UIColor(hex: 0xBBBDC0)
         self.darkMode.moreButton_bgColor = UIColor(hex: 0x2D2D31)
-        self.darkMode.banner_bgColor = UIColor(hex: 0x25242A)
+        self.darkMode.banner_bgColor = UIColor(hex: 0x2D2D31)
         
         self.lightMode.main_bgColor = UIColor(hex: 0xF0F0F0)
         self.lightMode.main_textColor = UIColor(hex: 0x19191C)

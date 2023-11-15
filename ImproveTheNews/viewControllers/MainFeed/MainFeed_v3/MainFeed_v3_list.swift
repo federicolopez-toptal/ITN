@@ -37,11 +37,9 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneArticle_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)
         
         self.list.register(iPhoneBannerCell_v3.self, forCellReuseIdentifier: iPhoneBannerCell_v3.identifier)
+        self.list.register(iPhoneBannerNLCell_v3.self, forCellReuseIdentifier: iPhoneBannerNLCell_v3.identifier)
         self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
         self.list.register(iPhoneFooterCell_v3.self, forCellReuseIdentifier: iPhoneFooterCell_v3.identifier)
-        
-//        self.list.register(iPadBannerNewsletterCell.self,
-//            forCellReuseIdentifier: iPadBannerNewsletterCell.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -113,9 +111,13 @@ extension MainFeed_v3_viewController {
                 (cell as! iPhoneMoreCell_v3).populate(with: _item)
                 (cell as! iPhoneMoreCell_v3).delegate = self
             } else if item is DP3_banner {
-                // distinguir newsLetter banner
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerCell_v3.identifier)!
-                (cell as! iPhoneBannerCell_v3).populate(with: self.data.banner!)
+                if(self.data.banner!.isNewsLetter()) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerNLCell_v3.identifier)!
+                    (cell as! iPhoneBannerNLCell_v3).populate(with: self.data.banner!)
+                } else {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerCell_v3.identifier)!
+                    (cell as! iPhoneBannerCell_v3).populate(with: self.data.banner!)
+                }
             } else if item is DP3_footer {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneFooterCell_v3.identifier)!
                 (cell as! iPhoneFooterCell_v3).refreshDisplayMode()
@@ -140,9 +142,12 @@ extension MainFeed_v3_viewController {
             result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
         } else if(item is DP3_iPhoneStory_vTxt) { // big story, text
             result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
-        } else if(item is DP3_banner) {
-            result = (self.getCell(indexPath) as! iPhoneBannerCell_v3).calculateHeight()
-            //result = iPhoneBannerCell_v3.heightFor(banner: self.data.banner!)
+        } else if(item is DP3_banner) { // Banners
+            if(self.data.banner!.isNewsLetter()) {
+                result = (self.getCell(indexPath) as! iPhoneBannerNLCell_v3).calculateHeight()
+            } else {
+                result = (self.getCell(indexPath) as! iPhoneBannerCell_v3).calculateHeight()
+            }
         } else if(item is DP3_iPhoneStory_2colsImg) { // row: 2 stories (image)
             result = (self.getCell(indexPath) as! iPhoneStory_2colsImg_cell_v3).calculateGroupHeight()
         } else if(item is DP3_iPhoneArticle_2colsImg) { // row: 2 articles (image)
