@@ -16,7 +16,7 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
     let titleLabel = UILabel()
     let emailText = FormTextView()
     let secTextLabel = UILabel()
-    
+    let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.close")))
     
     
     // MARK: - Start
@@ -79,6 +79,24 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
             actionButton.widthAnchor.constraint(equalToConstant: 69)
         ])
         actionButton.addTarget(self, action: #selector(onSubscribeButtonTap), for: .touchUpInside)
+        
+        self.containerView.addSubview(self.closeIcon)
+        self.closeIcon.activateConstraints([
+            self.closeIcon.widthAnchor.constraint(equalToConstant: 32),
+            self.closeIcon.heightAnchor.constraint(equalToConstant: 32),
+            self.closeIcon.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
+            self.closeIcon.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: CSS.shared.iPhoneSide_padding)
+        ])
+        
+        let closeButton = UIButton(type: .system)
+        self.containerView.addSubview(closeButton)
+        closeButton.activateConstraints([
+            closeButton.leadingAnchor.constraint(equalTo: self.closeIcon.leadingAnchor, constant: -5),
+            closeButton.trailingAnchor.constraint(equalTo: self.closeIcon.trailingAnchor, constant: 5),
+            closeButton.topAnchor.constraint(equalTo: self.closeIcon.topAnchor, constant: -5),
+            closeButton.bottomAnchor.constraint(equalTo: self.closeIcon.bottomAnchor, constant: 5)
+        ])
+        closeButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
     }
     
     
@@ -86,12 +104,13 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
     func populate(with banner: Banner) {
         self.banner = banner
         self.titleLabel.text = "Sign up to our daily newsletter"
-        self.emailText.setText("gatolab@gmail.com")
+        //self.emailText.setText("gatolab@gmail.com")
         // ------------------------
         self.refreshDisplayMode()
     }
     
     func refreshDisplayMode() {
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.containerView.backgroundColor = CSS.shared.displayMode().banner_bgColor
         self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
         
@@ -122,6 +141,7 @@ extension iPhoneBannerNLCell_v3: FormTextViewDelegate {
     }
 }
 
+// MARK: - Actions & misc
 extension iPhoneBannerNLCell_v3 {
 
     @objc func onSubscribeButtonTap(_ sender: UIButton) {
@@ -148,12 +168,49 @@ extension iPhoneBannerNLCell_v3 {
         }
     }
     
+    @objc func onCloseButtonTap(_ sender: UIButton) {
+//        if(self.dontShowAgain) {
+            self.writeStatus(3) // Clicked on "Close" - Don't show again ON
+            WRITE(LocalKeys.misc.bannerDontShowAgain, value: "1")
+            NOTIFY(Notification_removeBanner)
+//        }
+    }
+    
+    private func writeStatus(_ num: Int) {
+        let key = LocalKeys.misc.bannerPrefix + self.banner!.code
+        WRITE(key, value: "0" + String(num))
+        self.addThisBannerToCodes()
+    }
+    
+    private func addThisBannerToCodes() {
+        if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {
+            var allBannerCodes = _allBannerCodesString.components(separatedBy: ",")
+            
+            var found = false
+            for bCode in allBannerCodes {
+                if(bCode == self.banner!.code) {
+                    found = true
+                    break
+                }
+            }
+            
+            if(!found) {
+                allBannerCodes.append(self.banner!.code)
+                let newStringArray = allBannerCodes.joined(separator: ",")
+                WRITE(LocalKeys.misc.allBannerCodes, value: newStringArray)
+            }
+            
+        } else {
+            WRITE(LocalKeys.misc.allBannerCodes, value: self.banner!.code)
+        }
+        
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
+    }
+    
 }
 
 
-
 /*
-
 
     let headerLabel = BannerCell.createHeaderLabel(text: "Lorem ipsum")
     let emailText = FormTextView()

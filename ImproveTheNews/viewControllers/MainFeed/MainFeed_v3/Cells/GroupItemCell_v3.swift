@@ -21,6 +21,10 @@ class GroupItemCell_v3: UITableViewCell {
             self.subViews[i].show()
             self.subViews[i].populate(A)
             
+            if(A.isEmpty()) {
+                self.subViews[i].hide()
+            }
+            
             count += 1
         }
         

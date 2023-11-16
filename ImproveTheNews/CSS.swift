@@ -77,7 +77,7 @@ class CSS {
         self.darkMode.line_color = UIColor(hex: 0x4C4E50)
         self.darkMode.header_textColor = UIColor(hex: 0xBBBDC0)
         self.darkMode.moreButton_bgColor = UIColor(hex: 0x2D2D31)
-        self.darkMode.banner_bgColor = UIColor(hex: 0x2D2D31)
+        self.darkMode.banner_bgColor = UIColor(hex: 0x252529)
         
         self.lightMode.main_bgColor = UIColor(hex: 0xF0F0F0)
         self.lightMode.main_textColor = UIColor(hex: 0x19191C)
@@ -86,8 +86,8 @@ class CSS {
         self.lightMode.topicSelector_textColor = UIColor(hex: 0x19191C)
         self.lightMode.line_color = UIColor(hex: 0x2D2D31)
         self.lightMode.header_textColor = UIColor(hex: 0x0A0A0C)
-        self.lightMode.moreButton_bgColor = UIColor(hex: 0xE3E3E3)
-        self.lightMode.banner_bgColor = UIColor(hex: 0xE3E3E3)
+        self.lightMode.moreButton_bgColor = UIColor(hex: 0xBBBDC0)
+        self.lightMode.banner_bgColor = UIColor(hex: 0xB3B5B8).withAlphaComponent(0.5)
     }
 }
 

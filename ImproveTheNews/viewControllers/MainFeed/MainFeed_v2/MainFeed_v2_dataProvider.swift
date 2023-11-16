@@ -27,7 +27,7 @@ extension MainFeed_v2ViewController {
             var customCount = 0
             var hasStories = _T.stillHasStories()
             
-            while(_T.hasAvailableArticles()) {
+            while(_T.hasNewsAvailable()) {
                 var newGroupItem: DataProviderGroupItem?
                 if(IPAD()) {
                     if(TEXT_IMAGES()) {

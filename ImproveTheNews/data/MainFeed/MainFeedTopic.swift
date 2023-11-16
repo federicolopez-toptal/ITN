@@ -112,9 +112,18 @@ struct MainFeedTopic {
     }
     // ------------------------------------------------------------------
     
-    func hasAvailableArticles() -> Bool {
+    func hasNewsAvailable() -> Bool {
         var result = false
         if let _ = self.articles.first(where: { $0.used == false }) {
+            result = true
+        }
+        
+        return result
+    }
+    
+    func stillHasArticles() -> Bool {
+        var result = false
+        if let _ = self.articles.first(where: { $0.used == false && $0.isStory == false }) {
             result = true
         }
         

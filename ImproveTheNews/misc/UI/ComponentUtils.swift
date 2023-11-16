@@ -111,3 +111,15 @@ func SERVER_ERROR_POPUP(text: String) {
     popup.populate(text: text, actionText: "TRY AGAIN?", notification: Notification_tryAgainButtonTap)
     popup.pushFromBottom()
 }
+
+func VLINE(into container: UIView) -> (UIView) {
+    let line = UIView()
+    line.backgroundColor = CSS.shared.displayMode().line_color
+    container.addSubview(line)
+    line.activateConstraints([
+        line.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+        line.widthAnchor.constraint(equalToConstant: 1)
+    ])
+    
+    return line
+}

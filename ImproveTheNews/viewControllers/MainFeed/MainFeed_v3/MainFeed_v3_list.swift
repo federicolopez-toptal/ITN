@@ -36,6 +36,10 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)
         
+        self.list.register(iPhoneSplitHeaderCell_v3.self, forCellReuseIdentifier: iPhoneSplitHeaderCell_v3.identifier)
+        self.list.register(iPhoneArticleSplit_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticleSplit_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneArticleSplit_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneArticleSplit_2colsTxt_cell_v3.identifier)
+        
         self.list.register(iPhoneBannerCell_v3.self, forCellReuseIdentifier: iPhoneBannerCell_v3.identifier)
         self.list.register(iPhoneBannerNLCell_v3.self, forCellReuseIdentifier: iPhoneBannerNLCell_v3.identifier)
         self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
@@ -92,10 +96,14 @@ extension MainFeed_v3_viewController {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)!
             } else if(_groupItem is DP3_iPhoneArticle_2colsImg) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
+            } else if(_groupItem is DP3_iPhoneArticleSplit_2colsImg) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticleSplit_2colsImg_cell_v3.identifier)!
             } else if(_groupItem is DP3_iPhoneStory_2colsTxt) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_2colsTxt_cell_v3.identifier)!
             } else if(_groupItem is DP3_iPhoneArticle_2colsTxt) {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
+            } else if(_groupItem is DP3_iPhoneArticleSplit_2colsTxt) {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticleSplit_2colsTxt_cell_v3.identifier)!
             }
             
             (cell as! GroupItemCell_v3).populate(with: _groupItem)
@@ -106,6 +114,9 @@ extension MainFeed_v3_viewController {
             } else if let _item = item as? DP3_headerItem {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier)!
                 (cell as! iPhoneHeaderCell_v3).populate(with: _item)
+            } else if item is DP3_splitHeaderItem {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneSplitHeaderCell_v3.identifier)!
+                (cell as! iPhoneSplitHeaderCell_v3).populate()
             } else if let _item = item as? DP3_more {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneMoreCell_v3.identifier)!
                 (cell as! iPhoneMoreCell_v3).populate(with: _item)
@@ -136,6 +147,8 @@ extension MainFeed_v3_viewController {
             result = _item.size
         } else if(item is DP3_headerItem) { // header
             result = (self.getCell(indexPath) as! iPhoneHeaderCell_v3).calculateHeight()
+        } else if(item is DP3_splitHeaderItem) { // split header
+            result = (self.getCell(indexPath) as! iPhoneSplitHeaderCell_v3).calculateHeight()
         } else if(item is DP3_more) { // more
             result = (self.getCell(indexPath) as! iPhoneMoreCell_v3).calculateHeight()
         } else if(item is DP3_iPhoneStory_vImg) { // big story, image
@@ -152,10 +165,14 @@ extension MainFeed_v3_viewController {
             result = (self.getCell(indexPath) as! iPhoneStory_2colsImg_cell_v3).calculateGroupHeight()
         } else if(item is DP3_iPhoneArticle_2colsImg) { // row: 2 articles (image)
             result = (self.getCell(indexPath) as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
+        } else if(item is DP3_iPhoneArticleSplit_2colsImg) { // row: 2 articles (image) - Split
+            result = (self.getCell(indexPath) as! iPhoneArticleSplit_2colsImg_cell_v3).calculateGroupHeight()
         } else if(item is DP3_iPhoneStory_2colsTxt) { // row: 2 stories (text)
             result = (self.getCell(indexPath) as! iPhoneStory_2colsTxt_cell_v3).calculateGroupHeight()
         } else if(item is DP3_iPhoneArticle_2colsTxt) { // row: 2 articles (text)
             result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxt_cell_v3).calculateGroupHeight()
+        } else if(item is DP3_iPhoneArticleSplit_2colsTxt) { // row: 2 articles (text) - Split
+            result = (self.getCell(indexPath) as! iPhoneArticleSplit_2colsTxt_cell_v3).calculateGroupHeight()
         } else if(item is DP3_footer) { // footer
             return iPhoneFooterCell_v3.getHeight()
         }
@@ -193,6 +210,7 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
             }
             
         }
+        
     }
     
 }

@@ -14,6 +14,9 @@ class DP3_item {
 
 ////////////////////////////////////////////////////////////////////////
 // MARK: Subclasses
+class DP3_splitHeaderItem: DP3_item {
+}
+
 class DP3_headerItem: DP3_item {
     var title: String = ""
     
