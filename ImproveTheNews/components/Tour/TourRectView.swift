@@ -30,7 +30,9 @@ class TourRectView: UIView {
         super.init(frame: CGRect.zero)
         self.index = index
         
-        self.backgroundColor = UIColor(hex: 0x303A4D) //DARK_MODE() ? UIColor(hex: 0x303A4D) : UIColor(hex: 0x19191C)
+        self.backgroundColor = CSS.shared.displayMode().tour_bgColor
+        
+        //UIColor(hex: 0x303A4D) //DARK_MODE() ? UIColor(hex: 0x303A4D) : UIColor(hex: 0x19191C)
         self.layer.cornerRadius = 4.0
         container.addSubview(self)
         self.activateConstraints([
@@ -89,7 +91,7 @@ class TourRectView: UIView {
 
         // LABEL -------------------------------
         let label = UILabel()
-        label.textColor = UIColor(hex: 0xBBBDC0)
+        label.textColor = CSS.shared.displayMode().main_textColor //UIColor(hex: 0xBBBDC0)
         label.font = ROBOTO(16.5)
         label.numberOfLines = 0
         label.text = text
@@ -110,7 +112,7 @@ class TourRectView: UIView {
             closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 11),
             closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -11)
         ])
-        closeIcon.tintColor = UIColor(hex: 0xBBBDC0)
+        closeIcon.tintColor = label.textColor//UIColor(hex: 0xBBBDC0)
         
         let closeIconButton = UIButton(type: .custom)
         closeIconButton.backgroundColor = .clear
@@ -128,20 +130,20 @@ class TourRectView: UIView {
         
         if(backButtonFlag) {
             backLabel = UILabel()
-            backLabel!.textColor = UIColor(hex: 0xDA4933)
+            backLabel!.textColor = CSS.shared.actionButton_bgColor //UIColor(hex: 0xDA4933)
             backLabel!.text = "Back"
-            backLabel!.font = ROBOTO(16)
+            backLabel!.font = CSS.shared.tour_backButton_font //ROBOTO(16)
             self.addSubview(backLabel!)
         }
         
         // NEXT BUTTON (ORANGE) -------------------------------
         if let _nextButtonText = nextButtonText {
             let orangeButton = UIButton(type: .custom)
-            orangeButton.backgroundColor = UIColor(hex: 0xDA4933)
+            orangeButton.backgroundColor = CSS.shared.actionButton_bgColor //UIColor(hex: 0xDA4933)
             orangeButton.layer.cornerRadius = 4.0
             self.addSubview(orangeButton)
             orangeButton.activateConstraints([
-                orangeButton.widthAnchor.constraint(equalToConstant: 110),
+                orangeButton.widthAnchor.constraint(equalToConstant: 90),
                 orangeButton.heightAnchor.constraint(equalToConstant: 35),
                 orangeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
                 orangeButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
@@ -149,9 +151,9 @@ class TourRectView: UIView {
             orangeButton.addTarget(self, action: #selector(onNextButtonTap(_:)), for: .touchUpInside)
             
             let nextLabel = UILabel()
-            nextLabel.textColor = .white
+            nextLabel.textColor =  CSS.shared.actionButton_textColor //.white
             nextLabel.text = _nextButtonText
-            nextLabel.font = ROBOTO_BOLD(12.5)
+            nextLabel.font = CSS.shared.actionButton_iPhone_font //ROBOTO_BOLD(12.5)
             nextLabel.textAlignment = .center
             self.addSubview(nextLabel)
             nextLabel.activateConstraints([
@@ -191,7 +193,9 @@ class TourRectView: UIView {
         
         // SPIKE -------------------------------
         if(index>=4) {
-            let spike = UIImageView(image: UIImage(named: "tourDialogPoint"))
+            //let spike = UIImageView(image: UIImage(named: "tourDialogPoint"))
+            let spike = UIImageView(image: UIImage(named: DisplayMode.imageName("tour.point")))
+            
             self.addSubview(spike)
             spike.activateConstraints([
                 spike.widthAnchor.constraint(equalToConstant: 26),

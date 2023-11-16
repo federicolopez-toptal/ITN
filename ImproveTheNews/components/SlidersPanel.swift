@@ -462,9 +462,9 @@ extension SlidersPanel {
 extension SlidersPanel {
 
     func refreshDisplayMode() {
-        self.backgroundColor = CSS.shared.displayMode().moreButton_bgColor
-        
-        //DARK_MODE() ? UIColor(hex: 0x28282D) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : .white
+        //CSS.shared.displayMode().main_bgColor
+
         self.coverView.backgroundColor = self.backgroundColor
         
         for C in self.displayModeComponents {

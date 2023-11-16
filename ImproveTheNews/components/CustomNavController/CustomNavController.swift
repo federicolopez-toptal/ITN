@@ -87,6 +87,8 @@ extension CustomNavController {
     
         self.slidersPanel.makeSureIsClosed()
         self.slidersPanel.forceSplitOff()
+        
+        self.tour = Tour(buildInto: self.view)
         self.tour?.start()
     }
     

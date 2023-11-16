@@ -21,6 +21,8 @@ class CSS_displayMode {
     var line_color: UIColor = .black
     var header_textColor: UIColor = .black
     var moreButton_bgColor: UIColor = .black
+    
+    var tour_bgColor: UIColor = .black
 }
 
 // -----------------
@@ -60,6 +62,7 @@ class CSS {
     let actionButton_bgColor = UIColor(hex: 0x60C4D6)
     let actionButton_textColor = UIColor(hex: 0x19191C)
     let actionButton_iPhone_font = AILERON_SEMIBOLD(14)
+    let tour_backButton_font = AILERON_BOLD(14)
     
     // ----------
     let iPhoneSide_padding: CGFloat = 16
@@ -78,6 +81,7 @@ class CSS {
         self.darkMode.header_textColor = UIColor(hex: 0xBBBDC0)
         self.darkMode.moreButton_bgColor = UIColor(hex: 0x2D2D31)
         self.darkMode.banner_bgColor = UIColor(hex: 0x252529)
+        self.darkMode.tour_bgColor = UIColor(hex: 0x2D2D31)
         
         self.lightMode.main_bgColor = UIColor(hex: 0xF0F0F0)
         self.lightMode.main_textColor = UIColor(hex: 0x19191C)
@@ -88,6 +92,7 @@ class CSS {
         self.lightMode.header_textColor = UIColor(hex: 0x0A0A0C)
         self.lightMode.moreButton_bgColor = UIColor(hex: 0xBBBDC0)
         self.lightMode.banner_bgColor = UIColor(hex: 0xB3B5B8).withAlphaComponent(0.5)
+        self.lightMode.tour_bgColor = .white
     }
 }
 

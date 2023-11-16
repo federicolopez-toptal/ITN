@@ -21,9 +21,9 @@ class Tour {
     ]
     
     private let nextButtonTEXTs: [String?] = [ "",
-        "SHOW ME!",
-        "NEXT",
-        "NEXT",
+        "Show me!",
+        "Next",
+        "Next",
         nil,
         nil,
         nil
