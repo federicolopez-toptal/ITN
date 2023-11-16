@@ -16,7 +16,7 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
     let titleLabel = UILabel()
     let emailText = FormTextView()
     let secTextLabel = UILabel()
-    let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.close")))
+    let closeIcon = UIImageView(image: UIImage(named: "closeIcon_noBg")?.withRenderingMode(.alwaysTemplate))
     
     
     // MARK: - Start
@@ -43,7 +43,7 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
-            self.titleLabel.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: CSS.shared.iPhoneSide_padding*2)
+            self.titleLabel.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: CSS.shared.iPhoneSide_padding*3)
         ])
         
         let formHStack = HSTACK(into: self.containerView)
@@ -104,7 +104,7 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
     func populate(with banner: Banner) {
         self.banner = banner
         self.titleLabel.text = "Sign up to our daily newsletter"
-        //self.emailText.setText("gatolab@gmail.com")
+        // self.emailText.setText("gatolab@gmail.com")
         // ------------------------
         self.refreshDisplayMode()
     }
@@ -118,12 +118,14 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
         self.emailText.placeHolderLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.emailText.mainTextField.textColor = CSS.shared.displayMode().main_textColor
         self.emailText.mainTextField.tintColor = CSS.shared.displayMode().main_textColor
+        
+        self.closeIcon.tintColor = CSS.shared.displayMode().sec_textColor
     }
     
     func calculateHeight() -> CGFloat {
         let W: CGFloat = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 2)
         
-        return (CSS.shared.iPhoneSide_padding*2) + self.titleLabel.calculateHeightFor(width: W) +
+        return (CSS.shared.iPhoneSide_padding*3) + self.titleLabel.calculateHeightFor(width: W) +
                 (CSS.shared.iPhoneSide_padding/2) + 48 +
                 (CSS.shared.iPhoneSide_padding * 2)
     }

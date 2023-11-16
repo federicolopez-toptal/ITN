@@ -22,7 +22,7 @@ class iPhoneBannerCell_v3: UITableViewCell {
     let descrLabel = UILabel()
     let checkLabel = UILabel()
     
-    let closeIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.close")))
+    let closeIcon = UIImageView(image: UIImage(named: "closeIcon_noBg")?.withRenderingMode(.alwaysTemplate))
     let checkImage = UIImageView()
     
     // MARK: - Start
@@ -128,6 +128,7 @@ class iPhoneBannerCell_v3: UITableViewCell {
         ])
 
         let closeButton = UIButton(type: .system)
+        closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         self.containerView.addSubview(closeButton)
         closeButton.activateConstraints([
             closeButton.leadingAnchor.constraint(equalTo: self.closeIcon.leadingAnchor, constant: -5),
@@ -166,7 +167,8 @@ class iPhoneBannerCell_v3: UITableViewCell {
         self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
         self.descrLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.checkLabel.textColor = CSS.shared.displayMode().sec_textColor
-        self.closeIcon.image = UIImage(named: DisplayMode.imageName("circle.close"))
+        self.closeIcon.tintColor = CSS.shared.displayMode().sec_textColor
+        self.mainImageView.refreshDisplayMode()
     }
     
     func calculateHeight() -> CGFloat {

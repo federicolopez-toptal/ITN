@@ -212,6 +212,8 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.articleSource.refreshDisplayMode()
         self.articleSourceTimeLabel.textColor = CSS.shared.displayMode().main_textColor
         self.articleStanceIcon.refreshDisplayMode()
+        
+        self.mainImageView.refreshDisplayMode()
     }
     
     // MARK: misc

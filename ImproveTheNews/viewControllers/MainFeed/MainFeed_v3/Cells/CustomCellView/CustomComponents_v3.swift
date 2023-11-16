@@ -15,14 +15,14 @@ import SDWebImage
 class CustomImageView: UIImageView {
     
     let cornerTag = 5
-    let imgIcon = UIImageView(image: UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate))
-    let loading = UIActivityIndicatorView(style: .medium)
+    let imgIcon = UIImageView()
+    let loading = UIActivityIndicatorView(style: .large)
     
     // MARK: - Start
     init() {
         super.init(frame: .zero)
         
-        self.backgroundColor = .lightGray
+        self.backgroundColor = CSS.shared.displayMode().imageView_bgColor
         self.contentMode = .scaleAspectFill
         self.clipsToBounds = true
         
@@ -72,24 +72,21 @@ class CustomImageView: UIImageView {
             corner2_B.tag = self.cornerTag
         // Corners
         
-        self.imgIcon.tintColor = UIColor.black
-        self.imgIcon.alpha = 0.2
+        self.imgIcon.image = UIImage(named: "noImageIcon")?.withRenderingMode(.alwaysTemplate)
         self.addSubview(self.imgIcon)
         self.imgIcon.activateConstraints([
-            self.imgIcon.widthAnchor.constraint(equalToConstant: 32 * 1.6),
-            self.imgIcon.heightAnchor.constraint(equalToConstant: 26 * 1.6),
+            self.imgIcon.widthAnchor.constraint(equalToConstant: 72 * 0.7),
+            self.imgIcon.heightAnchor.constraint(equalToConstant: 63 * 0.7),
             self.imgIcon.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.imgIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         self.imgIcon.hide()
         
-        self.loading.color = .black
-        self.loading.alpha = 0.4
         self.loading.hidesWhenStopped = true
         self.addSubview(self.loading)
         self.loading.activateConstraints([
-            self.loading.centerXAnchor.constraint(equalTo: self.imgIcon.centerXAnchor, constant: 20),
-            self.loading.centerYAnchor.constraint(equalTo: self.imgIcon.centerYAnchor, constant: -18)
+            self.loading.centerXAnchor.constraint(equalTo: self.imgIcon.centerXAnchor, constant: 0),
+            self.loading.centerYAnchor.constraint(equalTo: self.imgIcon.centerYAnchor, constant: 0)
         ])
         self.loading.stopAnimating()
     }
@@ -100,14 +97,14 @@ class CustomImageView: UIImageView {
     
     func load(url: String) {
         self.image = nil
-        self.imgIcon.show()
         self.loading.startAnimating()
+        self.imgIcon.hide()
         
         if let _url = URL(string: FIX_URL(url)) {
             self.sd_setImage(with: _url) { (img, error, cacheType, url) in
                 self.loading.stopAnimating()
-                if(img != nil) {
-                    self.imgIcon.hide()
+                if(img == nil) {
+                    self.imgIcon.show()
                 }
             }
         }
@@ -115,8 +112,8 @@ class CustomImageView: UIImageView {
     
     func load(url: String, callback: @escaping (Bool, CGSize?) -> ()) {
         self.image = nil
-        self.imgIcon.show()
         self.loading.startAnimating()
+        self.imgIcon.hide()
         
         if let _url = URL(string: FIX_URL(url)) {
             self.sd_setImage(with: _url) { (img, error, cacheType, url) in
@@ -125,14 +122,14 @@ class CustomImageView: UIImageView {
                     self.imgIcon.hide()
                     callback(true, img?.size)
                 } else {
+                    self.imgIcon.show()
                     callback(false, nil)
                 }
             }
         } else {
+            self.loading.stopAnimating()
             callback(false, nil)
         }
-        
-        self.loading.stopAnimating()
     }
     
     func showCorners(_ state: Bool) {
@@ -142,6 +139,13 @@ class CustomImageView: UIImageView {
                 else{ V.hide() }
             }
         }
+    }
+    
+    func refreshDisplayMode() {
+        self.backgroundColor = CSS.shared.displayMode().imageView_bgColor
+        self.imgIcon.image = UIImage(named: "noImageIcon")?.withRenderingMode(.alwaysTemplate)
+        self.imgIcon.tintColor = CSS.shared.displayMode().imageView_iconColor
+        self.loading.color = CSS.shared.displayMode().loading_color
     }
     
 }

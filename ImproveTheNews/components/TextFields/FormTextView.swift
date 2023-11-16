@@ -54,7 +54,7 @@ class FormTextView: UIView {
             self.placeHolderLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
         ])
 
-        self.mainTextField.font = ROBOTO(14)
+        self.mainTextField.font = AILERON(15)
         self.mainTextField.textColor = .white
         self.mainTextField.tintColor = .white
         self.mainTextField.returnKeyType = .done

@@ -117,6 +117,7 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         self.pill.refreshDisplayMode()
         self.sources.refreshDisplayMode()
         self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
+        self.mainImageView.refreshDisplayMode()
     }
     
     // MARK: misc

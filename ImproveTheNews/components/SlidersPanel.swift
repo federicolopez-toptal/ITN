@@ -43,7 +43,7 @@ class SlidersPanel: UIView {
         var T: CGFloat = 0
         if(IPAD()){ T = -16 }
         
-        self.backgroundColor = .white
+        self.backgroundColor = CSS.shared.displayMode().panel_bgColor
         self.layer.cornerRadius = 20
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         container.addSubview(self)
@@ -462,7 +462,8 @@ extension SlidersPanel {
 extension SlidersPanel {
 
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : .white
+        self.backgroundColor = CSS.shared.displayMode().panel_bgColor
+        // DARK_MODE() ? UIColor(hex: 0x28282D) : .white
         //CSS.shared.displayMode().main_bgColor
 
         self.coverView.backgroundColor = self.backgroundColor
