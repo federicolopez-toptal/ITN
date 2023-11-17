@@ -57,6 +57,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             self.mainImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.mainImageView.heightAnchor.constraint(equalToConstant: self.calculateImageViewHeight())
         ])
+        self.mainImageView.setSmallLoading()
         
     // Story
         self.storyTitleLabel.numberOfLines = 0

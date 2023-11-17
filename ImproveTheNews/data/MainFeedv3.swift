@@ -58,7 +58,9 @@ class MainFeedv3 {
     }
     
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
-        let S_value = self.skipForTopic(T) + 1
+        
+        var S_value = self.skipForTopic(T)
+        if(MUST_SPLIT()==0){ S_value += 1 }
         
         //if(T != self.topic){ S_value += 1 }
         
@@ -284,17 +286,15 @@ extension MainFeedv3 {
         
         var _A = A
         var _B = B
-        if(MUST_SPLIT()>0){
+        if(MUST_SPLIT() > 0){
             _A = 12
-            if(B>0) {
-                _B = 12
-            }
+            if(B>0) { _B = _A }
         }
         
         var result = ITN_URL() + "/appserver.php/?topic=" + topic
         result += ".A" + String(_A)
         result += ".B" + String(_B)
-        if(PREFS_SHOW_STORIES()){ result += ".C" + String(C) }
+        if(PREFS_SHOW_STORIES() && MUST_SPLIT()==0){ result += ".C" + String(C) }
         result += ".S" + String(S)
         result += "&sliders=" + MainFeedv3.sliderValues()  //self.sliderValues()
         result += "&uid=" + UUID.shared.getValue()

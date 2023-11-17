@@ -99,10 +99,16 @@ extension MainFeed_v3_viewController {
                     articleRows = 0
                     
                 // Stories -----------------------------------
+                    if(_T.stillHasStories()) {
+                        let spacer = DP3_spacer(size: 20)
+                        self.dataProvider.append(spacer)
+                    }
+                    
                     while(_T.stillHasStories() || storyRows<4) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
                             let newGroupItem = DP3_iPhoneStory_vTxt()
                             newGroupItem.articles.append(_ST)
+                            self.data.addCountTo(topic: _T.name)
                             artCount += 1
                             self.dataProvider.append(newGroupItem)
                             storyRows += 1
@@ -123,8 +129,7 @@ extension MainFeed_v3_viewController {
         } // for
         
         //Footer at the end of all
-        let footer = DP3_footer()
-        self.dataProvider.append(footer)
+        self.addFooter()
     }
     
     private func populateDataProvider_iPhone_textImages_split() {
@@ -196,13 +201,19 @@ extension MainFeed_v3_viewController {
                         self.dataProvider.append(newGroupItem)
                         articleRows += 1
                     }
-                    articleRows = 0
                     
+                    //articleRows = 0
                 // Stories -----------------------------------
-                    while(_T.stillHasStories() || storyRows<4) {
+                    if(_T.stillHasStories()) {
+                        let spacer = DP3_spacer(size: 20)
+                        self.dataProvider.append(spacer)
+                    }
+                
+                    while(_T.stillHasStories() && storyRows<4) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
                             let newGroupItem = DP3_iPhoneStory_vTxt()
                             newGroupItem.articles.append(_ST)
+                            self.data.addCountTo(topic: _T.name)
                             artCount += 1
                             self.dataProvider.append(newGroupItem)
                             storyRows += 1
@@ -223,8 +234,7 @@ extension MainFeed_v3_viewController {
         } // for
         
         //Footer at the end of all
-        let footer = DP3_footer()
-        self.dataProvider.append(footer)
+        self.addFooter()
     }
     
     private func populateDataProvider_iPhone_textImages() {
@@ -275,9 +285,21 @@ extension MainFeed_v3_viewController {
                         }
                     }
                 
-                    // Extra spacer...
+                    // Extra spacer(s)
                     if let _last = self.dataProvider.last {
                         if(_last is DP3_iPhoneStory_vImg && _newGroupItem is DP3_iPhoneArticle_2colsImg) {
+                            let spacer = DP3_spacer(size: 10)
+                            self.dataProvider.append(spacer)
+                        }
+                    }
+                    if let _last = self.dataProvider.last {
+                        if(_last is DP3_iPhoneArticle_2colsImg && _newGroupItem is DP3_iPhoneStory_vImg) {
+                            let spacer = DP3_spacer(size: 20)
+                            self.dataProvider.append(spacer)
+                        }
+                    }
+                    if let _last = self.dataProvider.last {
+                        if(_last is DP3_iPhoneStory_vImg && _newGroupItem is DP3_iPhoneStory_2colsImg) {
                             let spacer = DP3_spacer(size: 10)
                             self.dataProvider.append(spacer)
                         }
@@ -311,8 +333,7 @@ extension MainFeed_v3_viewController {
         } // for
         
         //Footer at the end of all
-        let footer = DP3_footer()
-        self.dataProvider.append(footer)
+        self.addFooter()
     }
     
     private func populateDataProvider_iPhone_textOnly() {
@@ -394,8 +415,7 @@ extension MainFeed_v3_viewController {
         } // for
         
         //Footer at the end of all
-        let footer = DP3_footer()
-        self.dataProvider.append(footer)
+        self.addFooter()
 
     }
     
@@ -406,7 +426,7 @@ extension MainFeed_v3_viewController {
         }
     
         if(self.data.banner != nil && mustShow && MUST_SPLIT()==0) {
-            let spacerAtTop = DP3_spacer(size: 20) // Space before the "Show more"
+            let spacerAtTop = DP3_spacer(size: 10) // Space before the "Show more"
             self.dataProvider.append(spacerAtTop)
             
             let banner = DP3_banner()
@@ -415,5 +435,13 @@ extension MainFeed_v3_viewController {
             let spacerToBottom = DP3_spacer(size: 24) // Space after the "Show more"
             self.dataProvider.append(spacerToBottom)
         }
+    }
+    
+    private func addFooter() {
+        let spacer = DP3_spacer(size: 15)
+        self.dataProvider.append(spacer)
+    
+        let footer = DP3_footer()
+        self.dataProvider.append(footer)
     }
 }

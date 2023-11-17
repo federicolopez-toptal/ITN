@@ -97,28 +97,33 @@ class CustomImageView: UIImageView {
     
     func load(url: String) {
         self.image = nil
-        self.loading.startAnimating()
         self.imgIcon.hide()
-        
+        self.loading.startAnimating()
+
         if let _url = URL(string: FIX_URL(url)) {
             self.sd_setImage(with: _url) { (img, error, cacheType, url) in
                 self.loading.stopAnimating()
-                if(img == nil) {
+                if(error != nil) {
                     self.imgIcon.show()
+                } else {
+                    self.imgIcon.hide()
                 }
             }
+        } else {
+            self.loading.stopAnimating()
+            self.imgIcon.show()
         }
     }
     
     func load(url: String, callback: @escaping (Bool, CGSize?) -> ()) {
         self.image = nil
-        self.loading.startAnimating()
         self.imgIcon.hide()
+        self.loading.startAnimating()
         
         if let _url = URL(string: FIX_URL(url)) {
             self.sd_setImage(with: _url) { (img, error, cacheType, url) in
                 self.loading.stopAnimating()
-                if(img != nil) {
+                if(error == nil) {
                     self.imgIcon.hide()
                     callback(true, img?.size)
                 } else {
@@ -127,6 +132,7 @@ class CustomImageView: UIImageView {
                 }
             }
         } else {
+            self.imgIcon.show()
             self.loading.stopAnimating()
             callback(false, nil)
         }
@@ -146,6 +152,14 @@ class CustomImageView: UIImageView {
         self.imgIcon.image = UIImage(named: "noImageIcon")?.withRenderingMode(.alwaysTemplate)
         self.imgIcon.tintColor = CSS.shared.displayMode().imageView_iconColor
         self.loading.color = CSS.shared.displayMode().loading_color
+    }
+    
+    func setSmallLoading() {
+        self.loading.style = .medium
+    }
+    
+    func setLargeLoading() {
+        self.loading.style = .large
     }
     
 }
