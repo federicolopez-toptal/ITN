@@ -52,14 +52,9 @@ class iPhoneSplitHeaderCell_v3: UITableViewCell {
         ])
     }
     
-    func populate() {
-        if(MUST_SPLIT() == 1) {
-            self.leftLabel.text = "LEFT"
-            self.rightLabel.text = "RIGHT"
-        } else if(MUST_SPLIT() == 2) {
-            self.leftLabel.text = "CRITICAL"
-            self.rightLabel.text = "PRO"
-        }
+    func populate(with item: DP3_splitHeaderItem) {
+        self.leftLabel.text = item.leftTitle
+        self.rightLabel.text = item.rightTitle
     
         self.refreshDisplayMode()
     }

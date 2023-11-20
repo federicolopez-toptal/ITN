@@ -114,9 +114,9 @@ extension MainFeed_v3_viewController {
             } else if let _item = item as? DP3_headerItem {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier)!
                 (cell as! iPhoneHeaderCell_v3).populate(with: _item)
-            } else if item is DP3_splitHeaderItem {
+            } else if let _item = item as? DP3_splitHeaderItem {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneSplitHeaderCell_v3.identifier)!
-                (cell as! iPhoneSplitHeaderCell_v3).populate()
+                (cell as! iPhoneSplitHeaderCell_v3).populate(with: _item)
             } else if let _item = item as? DP3_more {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneMoreCell_v3.identifier)!
                 (cell as! iPhoneMoreCell_v3).populate(with: _item)

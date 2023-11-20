@@ -40,8 +40,16 @@ class iPhoneStory_vTxt_cell_v3: GroupItemCell_v3 {
     
     // MARK: Overrides
     override func populate(with group: DP3_groupItem) {
+        var showSources = false
+        if let _group = group as? DP3_iPhoneStory_vTxt {
+            showSources = _group.showSources
+        }
+        
+        let view1 = self.subViews[0] as! iPhoneStory_vTxt_v3
+        view1.showSources = showSources
+        
         super.populate(with: group)
-        view1_heightConstraint.constant = (self.subViews[0] as! iPhoneStory_vTxt_v3).calculateHeight()
+        view1_heightConstraint.constant = view1.calculateHeight()
         self.refreshDisplayMode()
     }
     

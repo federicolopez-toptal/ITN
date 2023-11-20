@@ -14,9 +14,6 @@ class DP3_item {
 
 ////////////////////////////////////////////////////////////////////////
 // MARK: Subclasses
-class DP3_splitHeaderItem: DP3_item {
-}
-
 class DP3_headerItem: DP3_item {
     var title: String = ""
     
@@ -25,6 +22,17 @@ class DP3_headerItem: DP3_item {
     }
 }
 
+class DP3_splitHeaderItem: DP3_item {
+    var leftTitle: String = ""
+    var rightTitle: String = ""
+    
+    init(leftTitle: String, rightTitle: String) {
+        self.leftTitle = leftTitle
+        self.rightTitle = rightTitle
+    }
+}
+
+// --------------------------
 class DP3_spacer: DP3_item {
     var size: CGFloat = 1.0
     
@@ -33,6 +41,7 @@ class DP3_spacer: DP3_item {
     }
 }
 
+// --------------------------
 class DP3_more: DP3_item {
     var topic = "news"
     var completed = false
@@ -43,8 +52,10 @@ class DP3_more: DP3_item {
     }
 }
 
+// --------------------------
 class DP3_footer: DP3_item {
 }
 
+// --------------------------
 class DP3_banner: DP3_item {
 }

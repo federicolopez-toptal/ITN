@@ -10,7 +10,7 @@ import UIKit
 
 extension MainFeed_v3_viewController {
 
-    // --------------------------------
+    // main POPULATE
     func populateDataProvider() {
         if(Layout.current() == .textImages) {
             if(MUST_SPLIT() == 0) {
@@ -27,6 +27,7 @@ extension MainFeed_v3_viewController {
         }
     }
     
+    // Split + Text only
     private func populateDataProvider_iPhone_textOnly_split() {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
@@ -35,17 +36,22 @@ extension MainFeed_v3_viewController {
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
             
-            // "Header" item
-            let header = DP3_headerItem(title: _T.capitalizedName)
-            self.dataProvider.append(header)
+        // Headers
+            self.addHeader(text: _T.capitalizedName)
             
-            let splitHeader = DP3_splitHeaderItem()
-            self.dataProvider.append(splitHeader)
+            var _L = "LEFT"
+            var _R = "RIGHT"
+            if(MUST_SPLIT() == 2) {
+                _L = "CRITICAL"
+                _R = "PRO"
+            }
+        
+            self.addSplitHeaders(L: _L, R: _R)
             
+        // Articles sorting  ----------------------------------
             var articlesLeft = [MainFeedArticle]()
             var articlesRight = [MainFeedArticle]()
             
-        // Articles sorting  ----------------------------------
             while(_T.stillHasArticles()) {
                 if let _A = _T.nextAvailableArticle(isStory: false) {
                     if(MUST_SPLIT() == 1) {
@@ -73,7 +79,7 @@ extension MainFeed_v3_viewController {
             while(artCount<total) {
                 var storyRows = 0
                 var articleRows = 0
-                // Articles -------------------------------------------
+                // Add Articles -------------------------------------------
                     while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
                         let newGroupItem = DP3_iPhoneArticleSplit_2colsTxt()
                         
@@ -98,7 +104,7 @@ extension MainFeed_v3_viewController {
                     }
                     articleRows = 0
                     
-                // Stories -----------------------------------
+                // Add Stories -----------------------------------
                     if(_T.stillHasStories()) {
                         let spacer = DP3_spacer(size: 20)
                         self.dataProvider.append(spacer)
@@ -120,18 +126,14 @@ extension MainFeed_v3_viewController {
             }
         
             // "Load more" item
-            var isCompleted = false
-            if let _ = self.topicsCompleted[_T.name] {
-                isCompleted = true
-            }
-            let loadMore = DP3_more(topic: _T.name, completed: isCompleted)
-            self.dataProvider.append(loadMore)
+            self.addLoadMore(topicName: _T.name)
         } // for
         
         //Footer at the end of all
         self.addFooter()
     }
     
+    // Split + Text & Images
     private func populateDataProvider_iPhone_textImages_split() {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
@@ -140,17 +142,22 @@ extension MainFeed_v3_viewController {
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
             
-            // "Header" item
-            let header = DP3_headerItem(title: _T.capitalizedName)
-            self.dataProvider.append(header)
+        // Headers
+            self.addHeader(text: _T.capitalizedName)
             
-            let splitHeader = DP3_splitHeaderItem()
-            self.dataProvider.append(splitHeader)
-            
+            var _L = "LEFT"
+            var _R = "RIGHT"
+            if(MUST_SPLIT() == 2) {
+                _L = "CRITICAL"
+                _R = "PRO"
+            }
+        
+            self.addSplitHeaders(L: _L, R: _R)
+
+        // Articles sorting  ----------------------------------
             var articlesLeft = [MainFeedArticle]()
             var articlesRight = [MainFeedArticle]()
             
-        // Articles sorting  ----------------------------------
             while(_T.stillHasArticles()) {
                 if let _A = _T.nextAvailableArticle(isStory: false) {
                     if(MUST_SPLIT() == 1) {
@@ -178,7 +185,7 @@ extension MainFeed_v3_viewController {
             while(artCount<total) {
                 var storyRows = 0
                 var articleRows = 0
-                // Articles -------------------------------------------
+                // Add Articles -------------------------------------------
                     while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
                         let newGroupItem = DP3_iPhoneArticleSplit_2colsImg()
                         
@@ -203,7 +210,7 @@ extension MainFeed_v3_viewController {
                     }
                     
                     //articleRows = 0
-                // Stories -----------------------------------
+                // Add Stories -----------------------------------
                     if(_T.stillHasStories()) {
                         let spacer = DP3_spacer(size: 20)
                         self.dataProvider.append(spacer)
@@ -211,7 +218,10 @@ extension MainFeed_v3_viewController {
                 
                     while(_T.stillHasStories() && storyRows<4) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
-                            let newGroupItem = DP3_iPhoneStory_vTxt()
+                            //let newGroupItem = DP3_iPhoneStory_vTxt()
+                            //let newGroupItem = DP3_iPhoneStory_vImg()
+                            
+                            let newGroupItem = DP3_iPhoneStory_vTxt(showSources: true)
                             newGroupItem.articles.append(_ST)
                             self.data.addCountTo(topic: _T.name)
                             artCount += 1
@@ -225,18 +235,14 @@ extension MainFeed_v3_viewController {
             }
         
             // "Load more" item
-            var isCompleted = false
-            if let _ = self.topicsCompleted[_T.name] {
-                isCompleted = true
-            }
-            let loadMore = DP3_more(topic: _T.name, completed: isCompleted)
-            self.dataProvider.append(loadMore)
+            self.addLoadMore(topicName: _T.name)
         } // for
         
         //Footer at the end of all
         self.addFooter()
     }
     
+    // Text & Images (Split off)
     private func populateDataProvider_iPhone_textImages() {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
@@ -248,10 +254,9 @@ extension MainFeed_v3_viewController {
             var itemInTopic = 0
             while(_T.hasNewsAvailable()) {
             
+            // Headers
                 if(itemInTopic == 0) {
-                    // "Header" item
-                    let header = DP3_headerItem(title: _T.capitalizedName)
-                    self.dataProvider.append(header)
+                    self.addHeader(text: _T.capitalizedName)
                     itemInTopic += 1
                 }
                 
@@ -285,7 +290,7 @@ extension MainFeed_v3_viewController {
                         }
                     }
                 
-                    // Extra spacer(s)
+                    // Extra spacer(s) - specific situtations
                     if let _last = self.dataProvider.last {
                         if(_last is DP3_iPhoneStory_vImg && _newGroupItem is DP3_iPhoneArticle_2colsImg) {
                             let spacer = DP3_spacer(size: 10)
@@ -318,17 +323,10 @@ extension MainFeed_v3_viewController {
             } // while
             
             // Banner, only for 1rst topic (if apply)
-            if(i==0) {
-                self.insertBanner()
-            }
+            if(i==0) { self.insertBanner() }
 
             // "Load more" item
-            var isCompleted = false
-            if let _ = self.topicsCompleted[_T.name] {
-                isCompleted = true
-            }
-            let loadMore = DP3_more(topic: _T.name, completed: isCompleted)
-            self.dataProvider.append(loadMore)
+            self.addLoadMore(topicName: _T.name)
             
         } // for
         
@@ -336,6 +334,7 @@ extension MainFeed_v3_viewController {
         self.addFooter()
     }
     
+    // Text only (Split off)
     private func populateDataProvider_iPhone_textOnly() {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
@@ -347,10 +346,9 @@ extension MainFeed_v3_viewController {
             var itemInTopic = 0
             while(_T.hasNewsAvailable()) {
             
+            // Headers
                 if(itemInTopic == 0) {
-                    // "Header" item
-                    let header = DP3_headerItem(title: _T.capitalizedName)
-                    self.dataProvider.append(header)
+                    self.addHeader(text: _T.capitalizedName)
                     itemInTopic += 1
                 }
                 
@@ -405,18 +403,27 @@ extension MainFeed_v3_viewController {
             if(i==0) { self.insertBanner() }
 
             // "Load more" item
-            var isCompleted = false
-            if let _ = self.topicsCompleted[_T.name] {
-                isCompleted = true
-            }
-            let loadMore = DP3_more(topic: _T.name, completed: isCompleted)
-            self.dataProvider.append(loadMore)
+            self.addLoadMore(topicName: _T.name)
             
         } // for
         
         //Footer at the end of all
         self.addFooter()
 
+    }
+}
+
+// MARK: DataProvider aux methods
+extension MainFeed_v3_viewController {
+    
+    private func addHeader(text: String) {
+        let header = DP3_headerItem(title: text)
+        self.dataProvider.append(header)
+    }
+    
+    private func addSplitHeaders(L: String, R: String) {
+        let splitHeader = DP3_splitHeaderItem(leftTitle: L, rightTitle: R)
+        self.dataProvider.append(splitHeader)
     }
     
     private func insertBanner() {
@@ -437,6 +444,15 @@ extension MainFeed_v3_viewController {
         }
     }
     
+    private func addLoadMore(topicName: String) {
+        var isCompleted = false
+        if let _ = self.topicsCompleted[topicName] {
+            isCompleted = true
+        }
+        let loadMore = DP3_more(topic: topicName, completed: isCompleted)
+        self.dataProvider.append(loadMore)
+    }
+    
     private func addFooter() {
         let spacer = DP3_spacer(size: 15)
         self.dataProvider.append(spacer)
@@ -444,4 +460,5 @@ extension MainFeed_v3_viewController {
         let footer = DP3_footer()
         self.dataProvider.append(footer)
     }
+    
 }
