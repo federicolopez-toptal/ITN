@@ -32,13 +32,9 @@ class DP3_iPhoneStory_vImg: DP3_groupItem {
 }
 
 class DP3_iPhoneStory_vTxt: DP3_groupItem {
-    // 1 big story (only text))
-    var showSources = true
-    
+    // 1 big story (only text)
     init(showSources: Bool = false) {
         super.init()
-        self.showSources = showSources
-        
         self.articles = [MainFeedArticle]()
         self.MaxNumOfItems = 1
         self.storyFlags = [true]

@@ -20,7 +20,7 @@ class iPhoneStory_vTxt_v3: CustomCellView_v3 {
     var time_leading: NSLayoutConstraint?
     
     var article: MainFeedArticle!
-    var showSources: Bool = false
+    
     
     // MARK: - Start
     required init?(coder: NSCoder) {
@@ -80,7 +80,7 @@ class iPhoneStory_vTxt_v3: CustomCellView_v3 {
         self.titleLabel.text = article.title
         self.timeLabel.text = article.time.uppercased()
         
-        if(PREFS_SHOW_SOURCE_ICONS() && self.showSources) {
+        if(PREFS_SHOW_SOURCE_ICONS() && Layout.current() == .textImages) {
             self.sources.load(article.storySources)
             self.sources.show()
             self.time_leading?.constant = 8

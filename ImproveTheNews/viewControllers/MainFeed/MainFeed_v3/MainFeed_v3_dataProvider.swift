@@ -218,9 +218,6 @@ extension MainFeed_v3_viewController {
                 
                     while(_T.stillHasStories() && storyRows<4) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
-                            //let newGroupItem = DP3_iPhoneStory_vTxt()
-                            //let newGroupItem = DP3_iPhoneStory_vImg()
-                            
                             let newGroupItem = DP3_iPhoneStory_vTxt(showSources: true)
                             newGroupItem.articles.append(_ST)
                             self.data.addCountTo(topic: _T.name)
