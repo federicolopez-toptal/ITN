@@ -57,8 +57,6 @@
 		1F5261C929E844FE000CE599 /* BannernewsLetterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5261C829E844FE000CE599 /* BannernewsLetterCell.swift */; };
 		1F56F727294B9D2900654CDB /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */; };
 		1F58C85D2B05BBBA00E0A151 /* iPhoneSplitHeaderCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F58C85C2B05BBBA00E0A151 /* iPhoneSplitHeaderCell_v3.swift */; };
-		1F58C85F2B05CE7C00E0A151 /* iPhoneArticleSplit_2colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F58C85E2B05CE7C00E0A151 /* iPhoneArticleSplit_2colsImg_cell_v3.swift */; };
-		1F58C8612B05D01700E0A151 /* iPhoneArticleSplit_2colsTxt_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F58C8602B05D01700E0A151 /* iPhoneArticleSplit_2colsTxt_cell_v3.swift */; };
 		1F5A0FFF2992D59700DD8CB3 /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A0FFE2992D59700DD8CB3 /* DataUtils.swift */; };
 		1F5B59042AC4AA9600233B41 /* screens.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F5B59032AC4AA9600233B41 /* screens.txt */; };
 		1F5EE1482A0E93A900168FB0 /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5EE1472A0E93A900168FB0 /* URLExtension.swift */; };
@@ -293,7 +291,7 @@
 		1F715F8929DC7EBE0063AC83 /* TWN64.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F715EAB29DC7EBE0063AC83 /* TWN64.png */; };
 		1F71FA442A15471400B066E0 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F71FA432A15471400B066E0 /* DictionaryExtension.swift */; };
 		1F721AF82A43C9970052ADC4 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F721AF72A43C9970052ADC4 /* ArrayExtension.swift */; };
-		1F7B9EBB296DEC7200D99C5D /* StoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift */; };
+		1F7B9EBB296DEC7200D99C5D /* StoryViewController.swift.txt in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift.txt */; };
 		1F7B9EBE296DEFBA00D99C5D /* StoryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9EBD296DEFBA00D99C5D /* StoryContent.swift */; };
 		1F7B9EC0296E032D00D99C5D /* MainFeedStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9EBF296E032D00D99C5D /* MainFeedStory.swift */; };
 		1F88B406293FC67E0024904E /* TourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F88B405293FC67E0024904E /* TourView.swift */; };
@@ -316,6 +314,7 @@
 		1F90105828C599DC00A5BDC9 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90105728C599DC00A5BDC9 /* UIColorExtension.swift */; };
 		1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90105B28C5ADE700A5BDC9 /* UIImageExtension.swift */; };
 		1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90105D28C5B2A300A5BDC9 /* Notifications.swift */; };
+		1F916E8B2B0EAA0600A020BF /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F916E8A2B0EAA0600A020BF /* AudioPlayerView.swift */; };
 		1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AC5328EDF420003BB1EF /* CustomFlowLayout.swift */; };
 		1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95134028BFB92E00A77AB6 /* AppDelegate.swift */; };
 		1F95134328BFB92E00A77AB6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95134228BFB92E00A77AB6 /* SceneDelegate.swift */; };
@@ -349,6 +348,7 @@
 		1F9EDD5329AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9EDD5229AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift */; };
 		1F9EDD5529AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9EDD5429AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift */; };
 		1F9EDD5729AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9EDD5629AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift */; };
+		1FA158802B0D2F6A006EDCE0 /* StoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1587F2B0D2F6A006EDCE0 /* StoryViewController.swift */; };
 		1FA1728628D2AF6E00693B85 /* StanceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728528D2AF6E00693B85 /* StanceIconView.swift */; };
 		1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728728D2B7AC00693B85 /* IntExtension.swift */; };
 		1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */; };
@@ -380,7 +380,7 @@
 		1FBD42712A40EDF200BFE68B /* KeywordSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBD42702A40EDF200BFE68B /* KeywordSearchViewController.swift */; };
 		1FBDA3932AABA6950013FD6A /* verityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FBDA3922AABA6950013FD6A /* verityLogo.png */; };
 		1FC0AECC2ACC4B3100B3D923 /* notes.old.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1FC0AECB2ACC4B3100B3D923 /* notes.old.txt */; };
-		1FC1A2B92A3222FA001998B0 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift */; };
+		1FC1A2B92A3222FA001998B0 /* AudioPlayerView.swift.txt in Sources */ = {isa = PBXBuildFile; fileRef = 1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift.txt */; };
 		1FC1A2BB2A3224CD001998B0 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */; };
 		1FC287D529A645A50017433B /* MainFeed_v2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287D429A645A50017433B /* MainFeed_v2ViewController.swift */; };
 		1FC287D729A648010017433B /* MainFeed_v2_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC287D629A648010017433B /* MainFeed_v2_misc.swift */; };
@@ -410,7 +410,6 @@
 		1FD1BD4F2AF4208200BEF887 /* iPhoneBannerCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */; };
 		1FD1BD512AF4208700BEF887 /* iPhoneBannerNLCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD502AF4208700BEF887 /* iPhoneBannerNLCell_v3.swift */; };
 		1FD1BD532AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD522AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift */; };
-		1FD1BD562AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift.txt in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD552AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift.txt */; };
 		1FD1BD582AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1BD572AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift */; };
 		1FD2340429155F1700B85AE9 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2340329155F1700B85AE9 /* MenuView.swift */; };
 		1FD23406291565F100B85AE9 /* MenuView_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD23405291565F100B85AE9 /* MenuView_misc.swift */; };
@@ -519,8 +518,6 @@
 		1F5261C829E844FE000CE599 /* BannernewsLetterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannernewsLetterCell.swift; sourceTree = "<group>"; };
 		1F56F726294B9D2900654CDB /* HyperlinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		1F58C85C2B05BBBA00E0A151 /* iPhoneSplitHeaderCell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneSplitHeaderCell_v3.swift; sourceTree = "<group>"; };
-		1F58C85E2B05CE7C00E0A151 /* iPhoneArticleSplit_2colsImg_cell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneArticleSplit_2colsImg_cell_v3.swift; sourceTree = "<group>"; };
-		1F58C8602B05D01700E0A151 /* iPhoneArticleSplit_2colsTxt_cell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneArticleSplit_2colsTxt_cell_v3.swift; sourceTree = "<group>"; };
 		1F5A0FFE2992D59700DD8CB3 /* DataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
 		1F5B59032AC4AA9600233B41 /* screens.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = screens.txt; sourceTree = "<group>"; };
 		1F5EE1472A0E93A900168FB0 /* URLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
@@ -756,7 +753,7 @@
 		1F71AA7F2B0505D00080F110 /* NLTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLTextView.swift; sourceTree = "<group>"; };
 		1F71FA432A15471400B066E0 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		1F721AF72A43C9970052ADC4 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
-		1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewController.swift; sourceTree = "<group>"; };
+		1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoryViewController.swift.txt; sourceTree = "<group>"; };
 		1F7B9EBD296DEFBA00D99C5D /* StoryContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryContent.swift; sourceTree = "<group>"; };
 		1F7B9EBF296E032D00D99C5D /* MainFeedStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedStory.swift; sourceTree = "<group>"; };
 		1F88B405293FC67E0024904E /* TourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourView.swift; sourceTree = "<group>"; };
@@ -779,6 +776,7 @@
 		1F90105728C599DC00A5BDC9 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		1F90105B28C5ADE700A5BDC9 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		1F90105D28C5B2A300A5BDC9 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		1F916E8A2B0EAA0600A020BF /* AudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		1F94AC5328EDF420003BB1EF /* CustomFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
 		1F95133D28BFB92E00A77AB6 /* ImproveTheNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImproveTheNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F95134028BFB92E00A77AB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -814,6 +812,7 @@
 		1F9EDD5229AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_splitCell.swift; sourceTree = "<group>"; };
 		1F9EDD5429AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_splitCellText.swift; sourceTree = "<group>"; };
 		1F9EDD5629AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_splitStoriesCellText.swift; sourceTree = "<group>"; };
+		1FA1587F2B0D2F6A006EDCE0 /* StoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryViewController.swift; sourceTree = "<group>"; };
 		1FA1728528D2AF6E00693B85 /* StanceIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StanceIconView.swift; sourceTree = "<group>"; };
 		1FA1728728D2B7AC00693B85 /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		1FA1728928D2BD3F00693B85 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
@@ -845,7 +844,7 @@
 		1FBD42702A40EDF200BFE68B /* KeywordSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeywordSearchViewController.swift; sourceTree = "<group>"; };
 		1FBDA3922AABA6950013FD6A /* verityLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verityLogo.png; sourceTree = "<group>"; };
 		1FC0AECB2ACC4B3100B3D923 /* notes.old.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = notes.old.txt; sourceTree = "<group>"; };
-		1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
+		1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = AudioPlayerView.swift.txt; sourceTree = "<group>"; };
 		1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
 		1FC287D429A645A50017433B /* MainFeed_v2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2ViewController.swift; sourceTree = "<group>"; };
 		1FC287D629A648010017433B /* MainFeed_v2_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v2_misc.swift; sourceTree = "<group>"; };
@@ -875,7 +874,6 @@
 		1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneBannerCell_v3.swift; sourceTree = "<group>"; };
 		1FD1BD502AF4208700BEF887 /* iPhoneBannerNLCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneBannerNLCell_v3.swift; sourceTree = "<group>"; };
 		1FD1BD522AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneArticle_2colsImg_cell_v3.swift; sourceTree = "<group>"; };
-		1FD1BD552AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = iPhoneArticle_vImg_v3.swift.txt; sourceTree = "<group>"; };
 		1FD1BD572AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneFooterCell_v3.swift; sourceTree = "<group>"; };
 		1FD2340329155F1700B85AE9 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		1FD23405291565F100B85AE9 /* MenuView_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView_misc.swift; sourceTree = "<group>"; };
@@ -1027,7 +1025,8 @@
 		1F7B9EBC296DEF5800D99C5D /* Story */ = {
 			isa = PBXGroup;
 			children = (
-				1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift */,
+				1FA1587F2B0D2F6A006EDCE0 /* StoryViewController.swift */,
+				1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift.txt */,
 				1F7B9EBD296DEFBA00D99C5D /* StoryContent.swift */,
 			);
 			path = Story;
@@ -1184,7 +1183,8 @@
 				1F2306BB291987D600755D71 /* OnOffView.swift */,
 				1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */,
 				1F9B4ADC2967745A00BE8850 /* RatingView.swift */,
-				1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift */,
+				1F916E8A2B0EAA0600A020BF /* AudioPlayerView.swift */,
+				1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift.txt */,
 				1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */,
 			);
 			path = components;
@@ -1226,7 +1226,6 @@
 			children = (
 				1FA48D952AFBD905009CEAAC /* iPhoneStory_vImg_v3.swift */,
 				1FA48D9D2AFC5DCC009CEAAC /* iPhoneStory_vTxt_v3.swift */,
-				1FD1BD552AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift.txt */,
 				1FA48D932AFBD2C1009CEAAC /* iPhoneAllNews_vImgCol_v3.swift */,
 				1FA48DA32AFC647B009CEAAC /* iPhoneAllNews_vTxtCol_v3.swift */,
 			);
@@ -1239,11 +1238,10 @@
 				1FE89CFF2AF1ADF200A6C99C /* iPhoneStory_vImg_cell_v3.swift */,
 				1FA48D992AFC5A9B009CEAAC /* iPhoneStory_vTxt_cell_v3.swift */,
 				1FD1BD522AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift */,
-				1F58C85E2B05CE7C00E0A151 /* iPhoneArticleSplit_2colsImg_cell_v3.swift */,
 				1FA48D9F2AFC6210009CEAAC /* iPhoneArticle_2colsTxt_cell_v3.swift */,
-				1F58C8602B05D01700E0A151 /* iPhoneArticleSplit_2colsTxt_cell_v3.swift */,
 				1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */,
 				1FA48DA12AFC62F7009CEAAC /* iPhoneStory_2colsTxt_cell_v3.swift */,
+				1FE89D012AF1AE1600A6C99C /* CustomCellView */,
 			);
 			path = "Subs (GroupItemCell_v3)";
 			sourceTree = "<group>";
@@ -1575,7 +1573,6 @@
 				1FD1BD572AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift */,
 				1F971CB72AF284BD0049BA42 /* GroupItemCell_v3.swift */,
 				1FA48D982AFBDD81009CEAAC /* Subs (GroupItemCell_v3) */,
-				1FE89D012AF1AE1600A6C99C /* CustomCellView */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2250,6 +2247,7 @@
 				1F38214629A6EA71004D4D29 /* CustomCellView.swift in Sources */,
 				1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */,
 				1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */,
+				1FA158802B0D2F6A006EDCE0 /* StoryViewController.swift in Sources */,
 				1FC73910298A1501003EB38D /* SignInView.swift in Sources */,
 				1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */,
 				1F9E28C52954DC0200041303 /* FAQViewController.swift in Sources */,
@@ -2280,7 +2278,6 @@
 				1FC557112AF2C86F00C0117A /* CustomCellView_v3.swift in Sources */,
 				1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */,
 				1F41FCCC29B24AFC002081AE /* FAQ_content.swift in Sources */,
-				1F58C8612B05D01700E0A151 /* iPhoneArticleSplit_2colsTxt_cell_v3.swift in Sources */,
 				1FC7390B298A05A8003EB38D /* SignInUpViewController.swift in Sources */,
 				1FD5BDF328DC11DC003E650F /* PopupView.swift in Sources */,
 				1FF61CBE28DAE50B006DF9AC /* StoryCI_cell.swift in Sources */,
@@ -2302,7 +2299,7 @@
 				1FF326C128CA71DA006FF2CE /* MainFeedTopic.swift in Sources */,
 				1F025CB028E12F2900AA866D /* Banner.swift in Sources */,
 				1F38214429A6E52C004D4D29 /* ArticleBigImageView.swift in Sources */,
-				1F7B9EBB296DEC7200D99C5D /* StoryViewController.swift in Sources */,
+				1F7B9EBB296DEC7200D99C5D /* StoryViewController.swift.txt in Sources */,
 				1F2D9FD428D36F6A00CE3008 /* ArticleWT_cell.swift in Sources */,
 				1F39574F28DCDE8900DE3C07 /* CustomCollectionView.swift in Sources */,
 				1FF6FBAA2912F10F00673146 /* SplitHeaderCell.swift in Sources */,
@@ -2316,7 +2313,6 @@
 				1FEBAF192A1D6B7900A6E55E /* StringExtensionArray.swift in Sources */,
 				1FA8AA3228D0D29000B6C956 /* DP_item.swift in Sources */,
 				1F8EAED029085FE30015F6F6 /* BreadcrumbsView.swift.txt in Sources */,
-				1F58C85F2B05CE7C00E0A151 /* iPhoneArticleSplit_2colsImg_cell_v3.swift in Sources */,
 				1FE541C62A03FA9A000A2CF3 /* ResetPassViewController.swift in Sources */,
 				1FEE16ED28C83CED0079BE54 /* TopicSelectorView.swift.txt in Sources */,
 				1F22E2E528C6590F007F00D1 /* UILabelExtension.swift in Sources */,
@@ -2337,6 +2333,7 @@
 				1F7B9EC0296E032D00D99C5D /* MainFeedStory.swift in Sources */,
 				1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */,
 				1FE89CF22AF19E9700A6C99C /* MainFeed_v3_list.swift in Sources */,
+				1F916E8B2B0EAA0600A020BF /* AudioPlayerView.swift in Sources */,
 				1F90105C28C5ADE700A5BDC9 /* UIImageExtension.swift in Sources */,
 				1F22E2E328C64BA4007F00D1 /* FloatingButton.swift in Sources */,
 				1FE9169F29A79805007F8AAF /* ArticleHImageView.swift in Sources */,
@@ -2384,7 +2381,7 @@
 				1FA8AA3828D1778F00B6C956 /* SourceIcons.swift in Sources */,
 				1FC835282A1548B1007BCE56 /* HMAC.swift in Sources */,
 				1F3E5E3C292FC2BF00FA090B /* SourceFilterViewController.swift in Sources */,
-				1FC1A2B92A3222FA001998B0 /* AudioPlayerView.swift in Sources */,
+				1FC1A2B92A3222FA001998B0 /* AudioPlayerView.swift.txt in Sources */,
 				1FA4CE7928C3DCFB0068DE4A /* SlidersPanel.swift in Sources */,
 				1FE89CF02AF19E9700A6C99C /* MainFeed_v3_dataProvider.swift in Sources */,
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
@@ -2399,7 +2396,6 @@
 				1FA4CE7528C306590068DE4A /* UIViewExtension.swift in Sources */,
 				1F9EDD4729AE5819007A97A6 /* iPadFooterCell.swift in Sources */,
 				1FE89CF92AF1A97900A6C99C /* DP3_groupItem.swift in Sources */,
-				1FD1BD562AF495A200BEF887 /* iPhoneArticle_vImg_v3.swift.txt in Sources */,
 				1F1493F32AF95DBF001BF4B7 /* UIDeviceExtension.swift in Sources */,
 				1F0BFFFF28F5F2C7007280FF /* MoreCell.swift in Sources */,
 				1F3E5E3E292FD24E00FA090B /* FilterTextView.swift in Sources */,
@@ -2591,7 +2587,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2628,7 +2624,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2719,7 +2715,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

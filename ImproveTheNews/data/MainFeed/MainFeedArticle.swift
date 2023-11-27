@@ -34,8 +34,17 @@ struct MainFeedArticle {
         self.title = json[2] as! String
         self.url = FIX_URL(json[3] as! String)
         self.imgUrl = FIX_URL(json[4] as! String)
-        self.LR = (json[8] as! NSNumber).intValue
-        self.PE = (json[9] as! NSNumber).intValue
+        
+        self.LR = 1
+        if let _LR = json[8] as? NSNumber {
+            self.LR = _LR.intValue
+        }
+        
+        self.PE = 1
+        if let _PE = json[9] as? NSNumber {
+            self.PE = _PE.intValue
+        }
+        
         self.country = json[10] as! String
                         //        self.ampCode = json[5] as! String
                         //        self.ampUrl = json[6] as! String

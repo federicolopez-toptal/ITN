@@ -15,6 +15,7 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
     
     var view1_heightConstraint: NSLayoutConstraint!
     var view2_heightConstraint: NSLayoutConstraint!
+    var vLine = UIView()
 
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -52,6 +53,12 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
         self.view2_heightConstraint = view2.heightAnchor.constraint(equalToConstant: 1)
         self.view2_heightConstraint.isActive = true
         self.subViews.append(view2)
+        
+        self.vLine = VLINE(into: self.contentView)
+        self.vLine.activateConstraints([
+            self.vLine.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.vLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+        ])
     }
 
     // MARK: Overrides
@@ -59,6 +66,13 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
         super.populate(with: group)
         view1_heightConstraint.constant = (self.subViews[0] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
         view2_heightConstraint.constant = (self.subViews[1] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
+        
+        if(MUST_SPLIT() == 0) {
+            self.vLine.hide()
+        } else {
+            self.vLine.show()
+        }
+        
         self.refreshDisplayMode()
     }
     
@@ -68,6 +82,8 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
         for V in self.subViews {
             V.refreshDisplayMode()
         }
+        
+        self.vLine.backgroundColor = CSS.shared.displayMode().line_color
     }
     
     // MARK: misc

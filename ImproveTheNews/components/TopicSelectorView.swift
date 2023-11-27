@@ -228,7 +228,7 @@ extension TopicSelectorView {
                 let view = (C as! UIView)
                 if(view.tag == 1) { // lines
                     view.backgroundColor = self.backgroundColor
-                    self.addDashesTo(view)
+                    ADD_DASHES(to: view)                    
                 }
             }
         }
@@ -238,28 +238,7 @@ extension TopicSelectorView {
         }
     }
     
-    private func addDashesTo(_ view: UIView) {
-        REMOVE_ALL_SUBVIEWS(from: view)
-        
-        var valX: CGFloat = 0
-        var maxDim: CGFloat = SCREEN_SIZE().width
-        if(SCREEN_SIZE().height > maxDim) { maxDim = SCREEN_SIZE().height }
-        
-        while(valX < maxDim) {
-            let dashView = UIView()
-            dashView.backgroundColor = CSS.shared.displayMode().line_color
-            view.addSubview(dashView)
-            dashView.activateConstraints([
-                dashView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: valX),
-                dashView.widthAnchor.constraint(equalToConstant: CSS.shared.dashedLine_width),
-                dashView.topAnchor.constraint(equalTo: view.topAnchor),
-                dashView.heightAnchor.constraint(equalToConstant: 1)
-            ])
-        
-            valX += (CSS.shared.dashedLine_width * 2)
-        }
-    }
-    
+
     static func HEIGHT() -> CGFloat {
         return CSS.shared.topicSelector_height
     }

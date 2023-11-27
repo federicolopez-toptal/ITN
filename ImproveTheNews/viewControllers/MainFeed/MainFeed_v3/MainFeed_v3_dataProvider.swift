@@ -81,7 +81,7 @@ extension MainFeed_v3_viewController {
                 var articleRows = 0
                 // Add Articles -------------------------------------------
                     while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
-                        let newGroupItem = DP3_iPhoneArticleSplit_2colsTxt()
+                        let newGroupItem = DP3_iPhoneArticle_2cols()
                         
                         if let _leftArt = articlesLeft.first {
                             newGroupItem.articles.append(_leftArt)
@@ -112,7 +112,7 @@ extension MainFeed_v3_viewController {
                     
                     while(_T.stillHasStories() || storyRows<4) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
-                            let newGroupItem = DP3_iPhoneStory_vTxt()
+                            let newGroupItem = DP3_iPhoneStory_1Wide()
                             newGroupItem.articles.append(_ST)
                             self.data.addCountTo(topic: _T.name)
                             artCount += 1
@@ -187,7 +187,7 @@ extension MainFeed_v3_viewController {
                 var articleRows = 0
                 // Add Articles -------------------------------------------
                     while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
-                        let newGroupItem = DP3_iPhoneArticleSplit_2colsImg()
+                        let newGroupItem = DP3_iPhoneArticle_2cols()
                         
                         if let _leftArt = articlesLeft.first {
                             newGroupItem.articles.append(_leftArt)
@@ -218,7 +218,7 @@ extension MainFeed_v3_viewController {
                 
                     while(_T.stillHasStories() && storyRows<4) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
-                            let newGroupItem = DP3_iPhoneStory_vTxt(showSources: true)
+                            let newGroupItem = DP3_iPhoneStory_1Wide()
                             newGroupItem.articles.append(_ST)
                             self.data.addCountTo(topic: _T.name)
                             artCount += 1
@@ -262,14 +262,14 @@ extension MainFeed_v3_viewController {
                 switch(itemInTopic) {
                     case 1, 2, 5:
                         if(_T.stillHasStories()) {
-                            newGroupItem = DP3_iPhoneStory_vImg() // Story, VImage
+                            newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
                         } else {
                             itemInTopic += 1
                         }
                     case 3, 4, 9, 10:
-                        newGroupItem = DP3_iPhoneArticle_2colsImg() // Row: 2 articles
+                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
                     case 6, 7, 8:
-                        newGroupItem = DP3_iPhoneStory_2colsImg() // Row: 2 stories
+                        newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
                 
                     default:
                         NOTHING()
@@ -289,19 +289,19 @@ extension MainFeed_v3_viewController {
                 
                     // Extra spacer(s) - specific situtations
                     if let _last = self.dataProvider.last {
-                        if(_last is DP3_iPhoneStory_vImg && _newGroupItem is DP3_iPhoneArticle_2colsImg) {
+                        if(_last is DP3_iPhoneStory_1Wide && _newGroupItem is DP3_iPhoneArticle_2cols) {
                             let spacer = DP3_spacer(size: 10)
                             self.dataProvider.append(spacer)
                         }
                     }
                     if let _last = self.dataProvider.last {
-                        if(_last is DP3_iPhoneArticle_2colsImg && _newGroupItem is DP3_iPhoneStory_vImg) {
+                        if(_last is DP3_iPhoneArticle_2cols && _newGroupItem is DP3_iPhoneStory_1Wide) {
                             let spacer = DP3_spacer(size: 20)
                             self.dataProvider.append(spacer)
                         }
                     }
                     if let _last = self.dataProvider.last {
-                        if(_last is DP3_iPhoneStory_vImg && _newGroupItem is DP3_iPhoneStory_2colsImg) {
+                        if(_last is DP3_iPhoneStory_1Wide && _newGroupItem is DP3_iPhoneStory_2cols) {
                             let spacer = DP3_spacer(size: 10)
                             self.dataProvider.append(spacer)
                         }
@@ -354,14 +354,14 @@ extension MainFeed_v3_viewController {
                 switch(itemInTopic) {
                     case 1, 2, 5:
                         if(_T.stillHasStories()) {
-                            newGroupItem = DP3_iPhoneStory_vTxt() // Story, VImage
+                            newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
                         } else {
                             itemInTopic += 1
                         }
                     case 3, 4, 9, 10:
-                        newGroupItem = DP3_iPhoneArticle_2colsTxt() // Row: 2 articles
+                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
                     case 6, 7, 8:
-                        newGroupItem = DP3_iPhoneStory_2colsTxt() // Row: 2 stories
+                        newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
                         
                     default:
                         NOTHING()

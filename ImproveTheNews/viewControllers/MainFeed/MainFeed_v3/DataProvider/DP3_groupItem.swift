@@ -18,9 +18,9 @@ class DP3_groupItem: DP3_item {
 
 ////////////////////////////////////////////////////////////////////////
 // MARK: Subclasses
-class DP3_iPhoneStory_vImg: DP3_groupItem {
+class DP3_iPhoneStory_1Wide: DP3_groupItem {
 
-    // 1 big story with image
+    // 1 big/wide story (image & text versions)
     override init() {
         super.init()
         
@@ -31,41 +31,20 @@ class DP3_iPhoneStory_vImg: DP3_groupItem {
     }
 }
 
-class DP3_iPhoneStory_vTxt: DP3_groupItem {
-    // 1 big story (only text)
-    init(showSources: Bool = false) {
+class DP3_iPhoneStory_2cols: DP3_groupItem {
+    // 2 stories in a row, 2 columns (image & text versions)
+    override init() {
         super.init()
         self.articles = [MainFeedArticle]()
-        self.MaxNumOfItems = 1
-        self.storyFlags = [true]
+        
+        self.MaxNumOfItems = 2
+        self.storyFlags = [true, true]
     }
 }
 
 // --------------------------
-class DP3_iPhoneStory_2colsImg: DP3_groupItem {
-    // 2 stories in a row, 2 columns (image)
-    override init() {
-        super.init()
-        self.articles = [MainFeedArticle]()
-        
-        self.MaxNumOfItems = 2
-        self.storyFlags = [true, true]
-    }
-}
-
-class DP3_iPhoneStory_2colsTxt: DP3_groupItem {
-    // 2 stories in a row, 2 columns (text)
-    override init() {
-        super.init()
-        self.articles = [MainFeedArticle]()
-        
-        self.MaxNumOfItems = 2
-        self.storyFlags = [true, true]
-    }
-}
-
-class DP3_iPhoneArticle_2colsImg: DP3_groupItem {
-    // 2 articles in a row, 2 columns (image)
+class DP3_iPhoneArticle_2cols: DP3_groupItem {
+    // 2 articles in a row, 2 columns (image & text versions)
     override init() {
         super.init()
         self.articles = [MainFeedArticle]()
@@ -75,35 +54,4 @@ class DP3_iPhoneArticle_2colsImg: DP3_groupItem {
     }
 }
 
-class DP3_iPhoneArticleSplit_2colsImg: DP3_groupItem {
-    // 2 articles in a row, 2 columns (image) - Split
-    override init() {
-        super.init()
-        self.articles = [MainFeedArticle]()
-        
-        self.MaxNumOfItems = 2
-        self.storyFlags = [false, false]
-    }
-}
 
-class DP3_iPhoneArticle_2colsTxt: DP3_groupItem {
-    // 2 articles in a row, 2 columns (text)
-    override init() {
-        super.init()
-        self.articles = [MainFeedArticle]()
-        
-        self.MaxNumOfItems = 2
-        self.storyFlags = [false, false]
-    }
-}
-
-class DP3_iPhoneArticleSplit_2colsTxt: DP3_groupItem {
-    // 2 articles in a row, 2 columns (text) - Split
-    override init() {
-        super.init()
-        self.articles = [MainFeedArticle]()
-        
-        self.MaxNumOfItems = 2
-        self.storyFlags = [false, false]
-    }
-}

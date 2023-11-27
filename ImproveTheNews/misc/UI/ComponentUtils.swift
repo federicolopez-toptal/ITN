@@ -123,3 +123,26 @@ func VLINE(into container: UIView) -> (UIView) {
     
     return line
 }
+
+func ADD_DASHES(to view: UIView) {
+    REMOVE_ALL_SUBVIEWS(from: view)
+    
+    var valX: CGFloat = 0
+    var maxDim: CGFloat = SCREEN_SIZE().width
+    if(SCREEN_SIZE().height > maxDim) { maxDim = SCREEN_SIZE().height }
+    
+    view.backgroundColor = CSS.shared.displayMode().main_bgColor
+    while(valX < maxDim) {
+        let dashView = UIView()
+        dashView.backgroundColor = CSS.shared.displayMode().line_color
+        view.addSubview(dashView)
+        dashView.activateConstraints([
+            dashView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: valX),
+            dashView.widthAnchor.constraint(equalToConstant: CSS.shared.dashedLine_width),
+            dashView.topAnchor.constraint(equalTo: view.topAnchor),
+            dashView.heightAnchor.constraint(equalToConstant: 1)
+        ])
+    
+        valX += (CSS.shared.dashedLine_width * 2)
+    }
+}

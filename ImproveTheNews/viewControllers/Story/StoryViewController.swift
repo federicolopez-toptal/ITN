@@ -18,10 +18,10 @@ class StoryViewController: BaseViewController {
     var groupedSources = [(String, String)]()
     
     let navBar = NavBarView()
-    let line = UIView()
     let scrollView = UIScrollView()
     let contentView = UIView()
     var VStack: UIStackView!
+    var time_leading: NSLayoutConstraint?
     
     var show3 = true
     var facts: [Fact]!
@@ -51,24 +51,17 @@ class StoryViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.backToFeed])
+            self.navBar.addComponents([.back])
             
             self.buildContent()
         }
     }
     
     func buildContent() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
-        CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         
-        self.view.addSubview(self.line)
-        self.line.backgroundColor = .red
-        self.line.activateConstraints([
-            self.line.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.line.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.line.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
-            self.line.heightAnchor.constraint(equalToConstant: 1)
-        ])
+        //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
         
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
@@ -96,11 +89,11 @@ class StoryViewController: BaseViewController {
         
         self.VStack = VSTACK(into: self.contentView)
         self.VStack.backgroundColor = .green
-        self.VStack.spacing = 8
+        self.VStack.spacing = 0
         self.VStack.activateConstraints([
             self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
             self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
-            self.VStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 20),
+            self.VStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -13),
             //VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
         ])
@@ -125,8 +118,9 @@ class StoryViewController: BaseViewController {
     
     override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
-        self.line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
+        
+        //DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     }
     
 }
@@ -186,7 +180,7 @@ extension StoryViewController {
     func addContent(_ story: MainFeedStory) {
         REMOVE_ALL_SUBVIEWS(from: self.VStack)
         
-        self.addPill()
+        //self.addPill()
         self.addTitle(text: story.title)
         self.addAudioPlayer(story.audio)
         
@@ -202,13 +196,19 @@ extension StoryViewController {
 //        if(!self.story!.time.isEmpty) { // self.story
 //            self.addTime(time: self.story!.time)
 //        }
-        if(!story.time.isEmpty) { // self.story
-            self.addTime(time: story.time)
-        }
+//        if(!story.time.isEmpty) { // self.story
+//            self.addTime(time: story.time)
+//        }
+//        
+//        if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
+//            self.addImageCredit(story.image_credit_title, story.image_credit_url)
+//        }
         
-        if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
-            self.addImageCredit(story.image_credit_title, story.image_credit_url)
-        }
+        self.addStoryMetaData(time: story.time)
+//        story.time
+//        
+//        MainFeedArticle
+//        MainFeedStory
         
         self.addFactsStructure()
             self.facts = story.facts
@@ -228,6 +228,8 @@ extension StoryViewController {
             self.addSplitArticles(type: story.splitType, story.articles)
         }
         
+        
+        ADD_SPACER(to: VStack, height: 200)
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
@@ -756,12 +758,12 @@ extension StoryViewController {
     
     private func addSpins(_ spins: [Spin]) {
         self.spins = spins
-        ADD_SPACER(to: self.VStack, height: 12)
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
     
         let HStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: HStack, width: 12)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let innerHStack = VSTACK(into: HStack)
-        ADD_SPACER(to: HStack, width: 12)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         
        if(spins.count == 0) {
             let noSpinsLabel = UILabel()
@@ -773,11 +775,11 @@ extension StoryViewController {
             innerHStack.addArrangedSubview(noSpinsLabel)
         } else {
             let SpinsLabel = UILabel()
-            SpinsLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+            SpinsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
             if(IPAD()){ SpinsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
             }
             SpinsLabel.text = "Spin"
-            SpinsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            SpinsLabel.textColor = CSS.shared.displayMode().main_textColor
             innerHStack.addArrangedSubview(SpinsLabel)
             
             ADD_SPACER(to: innerHStack, height: 12)
@@ -789,23 +791,23 @@ extension StoryViewController {
                 }
                 
                 let titleLabel = UILabel()
-                titleLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+                titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
                 titleLabel.text = _title
                 titleLabel.numberOfLines = 0
-                titleLabel.textColor = UIColor(hex: 0xDA4933)
+                titleLabel.textColor = CSS.shared.displayMode().sec_textColor
                 innerHStack.addArrangedSubview(titleLabel)
                 
                 ADD_SPACER(to: innerHStack, height: 10)
                 let descriptionLabel = UILabel()
-                descriptionLabel.font = ROBOTO(14)
+                descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
                 descriptionLabel.numberOfLines = 0
                 descriptionLabel.text = S.description
-                descriptionLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+                descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
                 innerHStack.addArrangedSubview(descriptionLabel)
                 
                 //if(!S.image.isEmpty && !S.subTitle.isEmpty && !S.media_title.isEmpty) {
                 if(!S.image.isEmpty && !S.media_title.isEmpty) {
-                    ADD_SPACER(to: innerHStack, height: 16)
+                    ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding * 2)
                     let HStack_image = HSTACK(into: innerHStack)
                     //HStack_image.backgroundColor = .orange
 
@@ -851,7 +853,7 @@ extension StoryViewController {
                     subTitleLabel.numberOfLines = 0
                     subTitleLabel.text = S.subTitle
                     VStack_data.addArrangedSubview(subTitleLabel)
-                    ADD_SPACER(to: VStack_data, height: 8)
+                    ADD_SPACER(to: VStack_data, height: CSS.shared.iPhoneSide_padding)
                     
                     let HStack_source = HSTACK(into: VStack_data)
                     HStack_source.activateConstraints([
@@ -946,43 +948,54 @@ extension StoryViewController {
                         line.heightAnchor.constraint(equalToConstant: 2.0)
                     ])
                     
-                    if(i < spins.count-1) {
-                        // Dashes
-                        line.clipsToBounds = true
-                        let dash_long: CGFloat = 5
-                        let dash_sep: CGFloat = 2
-                        var val_x: CGFloat = 0
-                        let dash_color = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1D242F).withAlphaComponent(0.2)
-                        
-                        var maxDim = SCREEN_SIZE().width
-                        if(SCREEN_SIZE().height > maxDim){ maxDim = SCREEN_SIZE().height }
-                        
-                        while(val_x < maxDim) {
-                            let dash = UIView()
-                            dash.backgroundColor = dash_color
-                            line.addSubview(dash)
-                            dash.frame = CGRect(x: val_x, y: 0, width: dash_long, height: 2.0)
-                            
-                            val_x += dash_long + dash_sep
-                        }
-                        
-                        ADD_SPACER(to: innerHStack, height: 20) // Space to next item
-                    } else {
-                        ADD_SPACER(to: innerHStack, height: 1) // Space to next item
-                    }
+//                    if(i < spins.count-1) {
+//                        // Dashes
+//                        line.clipsToBounds = true
+//                        let dash_long: CGFloat = 5
+//                        let dash_sep: CGFloat = 2
+//                        var val_x: CGFloat = 0
+//                        let dash_color = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1D242F).withAlphaComponent(0.2)
+//                        
+//                        var maxDim = SCREEN_SIZE().width
+//                        if(SCREEN_SIZE().height > maxDim){ maxDim = SCREEN_SIZE().height }
+//                        
+//                        while(val_x < maxDim) {
+//                            let dash = UIView()
+//                            dash.backgroundColor = dash_color
+//                            line.addSubview(dash)
+//                            dash.frame = CGRect(x: val_x, y: 0, width: dash_long, height: 2.0)
+//                            
+//                            val_x += dash_long + dash_sep
+//                        }
+//                        
+//                        ADD_SPACER(to: innerHStack, height: 20) // Space to next item
+//                    } else {
+//                        ADD_SPACER(to: innerHStack, height: 1) // Space to next item
+//                    }
                     
                     
                 }
                 
             }
         }
+        
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+        
+        let line2 = UIView()
+        self.VStack.addArrangedSubview(line2)
+        line2.activateConstraints([
+            line2.heightAnchor.constraint(equalToConstant: 1),
+        ])
+        ADD_DASHES(to: line2)
+        
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
     }
     
     private func populateFacts() {
         let VStack = self.view.viewWithTag(140) as! UIStackView
         //VStack.backgroundColor = .systemPink
         REMOVE_ALL_SUBVIEWS(from: VStack)
-        ADD_SPACER(to: VStack, height: 20)
+        //ADD_SPACER(to: VStack, height: 20)
         
         if(self.facts.count==0) {
             let noFactsLabel = UILabel()
@@ -994,35 +1007,67 @@ extension StoryViewController {
             VStack.addArrangedSubview(noFactsLabel)
         } else {
             let FactsLabel = UILabel()
-            FactsLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+            FactsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            
+            //DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
             if(IPAD()){ FactsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
             }
-            FactsLabel.text = "  Facts"
-            FactsLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            FactsLabel.text = " The Facts"
+            FactsLabel.textColor = CSS.shared.displayMode().main_textColor
+            //DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(FactsLabel)
             
-            ADD_SPACER(to: VStack, height: 16)
+            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
+            let lineColor: UIColor = CSS.shared.displayMode().factLines_color
             
             var lastSourceIndex = -1
             for (i, F) in self.facts.enumerated() {
-                let HStack = HSTACK(into: VStack)
-                //HStack.backgroundColor = .green
+                if(i==0) {
+                    let hStackZero = HSTACK(into: VStack)
+                    ADD_SPACER(to: hStackZero, height: CSS.shared.iPhoneSide_padding)
+                    
+                    let vLine = UIView()
+                    vLine.backgroundColor = lineColor
+                    hStackZero.addSubview(vLine)
+                    vLine.activateConstraints([
+                        vLine.leadingAnchor.constraint(equalTo: hStackZero.leadingAnchor, constant: 11),
+                        vLine.topAnchor.constraint(equalTo: hStackZero.topAnchor),
+                        vLine.bottomAnchor.constraint(equalTo: hStackZero.bottomAnchor),
+                        vLine.widthAnchor.constraint(equalToConstant: 2.0)
+                    ])
+                }
                 
-                ADD_SPACER(to: HStack, width: 20)
+                let HStack = HSTACK(into: VStack)
+                
+                ADD_SPACER(to: HStack, width: 34)
 
                 let dot = UIView()
-                dot.backgroundColor = UIColor(hex: 0xDA4933)
+                dot.backgroundColor = HStack.backgroundColor
                 HStack.addSubview(dot)
                 dot.activateConstraints([
-                    dot.widthAnchor.constraint(equalToConstant: 8),
-                    dot.heightAnchor.constraint(equalToConstant: 8),
-                    dot.leadingAnchor.constraint(equalTo: HStack.leadingAnchor, constant: 4),
-                    dot.topAnchor.constraint(equalTo: HStack.topAnchor, constant: 5)
+                    dot.widthAnchor.constraint(equalToConstant: 24),
+                    dot.heightAnchor.constraint(equalToConstant: 24),
+                    dot.leadingAnchor.constraint(equalTo: HStack.leadingAnchor, constant: 0),
+                    dot.topAnchor.constraint(equalTo: HStack.topAnchor, constant: 0)
+                ])
+                dot.layer.cornerRadius = 12
+                dot.layer.borderWidth = 2.0
+                dot.layer.borderColor = lineColor.cgColor
+
+                let extraH: CGFloat = (CSS.shared.iPhoneSide_padding * 3)
+                let vLineBelow = UIView()
+                vLineBelow.backgroundColor = lineColor
+                HStack.addSubview(vLineBelow)
+                vLineBelow.activateConstraints([
+                    vLineBelow.leadingAnchor.constraint(equalTo: HStack.leadingAnchor, constant: 11),
+                    vLineBelow.topAnchor.constraint(equalTo: HStack.topAnchor, constant: 24),
+                    vLineBelow.bottomAnchor.constraint(equalTo: HStack.bottomAnchor, constant: extraH),
+                    vLineBelow.widthAnchor.constraint(equalToConstant: 2.0)
                 ])
 
                 let contentLabel = UILabel()
                 contentLabel.numberOfLines = 0
-                contentLabel.font = DM_SERIF_DISPLAY_fixed(12) //MERRIWEATHER(12)
+                contentLabel.font = CSS.shared.iPhoneStoryContent_textFont
                 //contentLabel.text = F.title
                 contentLabel.attributedText = self.attrText(F.title, index: F.sourceIndex+1)
                 HStack.addArrangedSubview(contentLabel)
@@ -1039,7 +1084,7 @@ extension StoryViewController {
                 numberButton.tag = 77 + F.sourceIndex
                 numberButton.addTarget(self, action: #selector(numberButtonOnTap(_:)), for: .touchUpInside)
                 
-                ADD_SPACER(to: VStack, height: 15) // separation from next item
+                ADD_SPACER(to: VStack, height: (CSS.shared.iPhoneSide_padding * 3)) // separation from next item
                 
                 if(self.show3 && i==2) {
                     lastSourceIndex =  F.sourceIndex
@@ -1047,12 +1092,12 @@ extension StoryViewController {
                 }
             }
             
-            ADD_SPACER(to: VStack, height: 20)
+            //ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
             //////////////////////////////////////
             let showMoreLabel = UILabel()
-            showMoreLabel.textColor = UIColor(hex: 0xDA4933)
+            showMoreLabel.textColor = CSS.shared.orange
             showMoreLabel.textAlignment = .center
-            showMoreLabel.font = ROBOTO(15)
+            showMoreLabel.font = CSS.shared.iPhoneStoryContent_textFont
             showMoreLabel.text = self.show3 ? "Show more" : "Show fewer facts"
             VStack.addArrangedSubview(showMoreLabel)
             
@@ -1067,23 +1112,23 @@ extension StoryViewController {
             ])
             showMoreButton.addTarget(self, action: #selector(showMoreButtonOnTap(_:)), for: .touchUpInside)
             //////////////////////////////////////
-            ADD_SPACER(to: VStack, height: 30)
-            let line = UIView()
-            line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
-            VStack.addArrangedSubview(line)
-            line.activateConstraints([
-                line.heightAnchor.constraint(equalToConstant: 1)
-            ])
-            ADD_SPACER(to: VStack, height: 20)
+            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding * 2)
+//            let line = UIView()
+//            line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
+//            VStack.addArrangedSubview(line)
+//            line.activateConstraints([
+//                line.heightAnchor.constraint(equalToConstant: 1)
+//            ])
+//            ADD_SPACER(to: VStack, height: 20)
             //////////////////////////////////////
             let SourcesLabel = UILabel()
             SourcesLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
             if(IPAD()){ SourcesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
             }
-            SourcesLabel.text = "  Sources"
-            SourcesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            SourcesLabel.text = "Sources"
+            SourcesLabel.textColor = CSS.shared.displayMode().sec_textColor
             VStack.addArrangedSubview(SourcesLabel)
-            ADD_SPACER(to: VStack, height: 15)
+            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
             
             let HStack_sources = HSTACK(into: VStack)
             //HStack_sources.backgroundColor = .green
@@ -1128,9 +1173,9 @@ extension StoryViewController {
             
             for (i, S) in groupedSourcesCopy.enumerated() {
                 let sourceLabel = UILabel()
-                sourceLabel.font = ROBOTO(15)
+                sourceLabel.font = CSS.shared.iPhoneStoryContent_textFont //ROBOTO(15)
                 //sourceLabel.backgroundColor = .blue
-                sourceLabel.textColor = UIColor(hex: 0xDA4933)
+                sourceLabel.textColor = CSS.shared.orange
                 sourceLabel.text = "[" + String(i+1) + "] " + S.0
                 //print("SOURCE:", sourceLabel.text)
                 
@@ -1195,8 +1240,16 @@ extension StoryViewController {
             ADD_SPACER(to: VStack, height: 15)
         }
         
-        ADD_SPACER(to: VStack, height: 15)
+        ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding * 2)
         //print("--------------------")
+        let line2 = UIView()
+        self.VStack.addArrangedSubview(line2)
+        line2.activateConstraints([
+            line2.heightAnchor.constraint(equalToConstant: 1),
+        ])
+        ADD_DASHES(to: line2)
+
+        
     }
     @objc func numberButtonOnTap(_ sender: UIButton) {
         let index = sender.tag-77
@@ -1209,18 +1262,19 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: 1)
     
         let HStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: HStack, width: 12)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let VStack_borders = VSTACK(into: HStack)
-        ADD_SPACER(to: HStack, width: 12)
-        VStack_borders.layer.borderWidth = 8.0
-        VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE1E3E3).cgColor
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+        //VStack_borders.layer.borderWidth = 8.0
+        //VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE1E3E3).cgColor
 
+        VStack_borders.backgroundColor = self.view.backgroundColor
         let innerHStack = HSTACK(into: VStack_borders)
         //innerHStack.backgroundColor = .blue
-        ADD_SPACER(to: innerHStack, width: 13)
+        //ADD_SPACER(to: innerHStack, width: 13)
         let innerVStack = VSTACK(into: innerHStack)
         innerVStack.tag = 140
-        ADD_SPACER(to: innerHStack, width: 13)
+        //ADD_SPACER(to: innerHStack, width: 13)
     }
     
     private func addImageCredit(_ title: String, _ url: String) {
@@ -1277,8 +1331,8 @@ extension StoryViewController {
     }
 
     private func addImage(imageUrl: String) {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .darkGray
+        let imageView = CustomImageView()
+        //imageView.backgroundColor = .darkGray
         
         if(IPAD()) {
         
@@ -1306,44 +1360,107 @@ extension StoryViewController {
             self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 200)
             self.imageHeightConstraint?.isActive = true
             
-            imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, options: .retryFailed) { (img, error, cacheType, url) in
-                if let _img = img {
-                    let W: CGFloat = SCREEN_SIZE().width
-                    let H = (_img.size.height * W)/_img.size.width
-                    self.imageHeightConstraint?.constant = H
-                } else if(error != nil) {
-                    imageView.image = nil
+            imageView.showCorners(true)
+            imageView.load(url: imageUrl) { (success, imgSize) in
+                if success, let _imgSize = imgSize {
+                    let compW = SCREEN_SIZE().width
+                    let compH = (_imgSize.height * compW)/_imgSize.width
+                    self.imageHeightConstraint?.constant = compH
                 }
             }
+            
+//            imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, options: .retryFailed) { (img, error, cacheType, url) in
+//                if let _img = img {
+//                    let W: CGFloat = SCREEN_SIZE().width
+//                    let H = (_img.size.height * W)/_img.size.width
+//                    self.imageHeightConstraint?.constant = H
+//                } else if(error != nil) {
+//                    imageView.image = nil
+//                }
+//            }
+
+            ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
         }
         
-        ADD_SPACER(to: self.VStack, height: 4)
+        //ADD_SPACER(to: self.VStack, height: 4)
     }
 
     private func addAudioPlayer(_ audioFile: AudioFile?) {
         if let _audioFile = audioFile {
             self.audioPlayer.buildInto(self.VStack, file: _audioFile)
             self.secondaryAudioPlayer.buildInto(self.view, file: _audioFile)
-            self.secondaryAudioPlayer.customHide()
+            //self.secondaryAudioPlayer.customHide()
+            self.secondaryAudioPlayer.customShow()
         }
     }
 
+    private func addStoryMetaData(time: String) {
+        let rowView = UIView()
+        rowView.activateConstraints([
+            rowView.heightAnchor.constraint(equalToConstant: 24)
+        ])
+        rowView.clipsToBounds = false
+        rowView.backgroundColor = self.view.backgroundColor
+    
+        let HStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+        HStack.addArrangedSubview(rowView)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+        
+        let pill = StoryPillView()
+        pill.buildInto(rowView)
+        pill.activateConstraints([
+            pill.topAnchor.constraint(equalTo: rowView.topAnchor),
+            pill.leadingAnchor.constraint(equalTo: rowView.leadingAnchor)
+        ])
+        
+        let sources = SourceIconsView()
+        sources.buildInto(rowView)
+        sources.activateConstraints([
+            sources.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
+            sources.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
+        ])
+        sources.load(self.story!.storySources)
+        sources.refreshDisplayMode()
+        
+        let timeLabel = UILabel()
+    
+        timeLabel.font = CSS.shared.iPhoneStory_textFont
+        timeLabel.textAlignment = .right
+        timeLabel.text = time.uppercased()
+        timeLabel.textColor = CSS.shared.displayMode().sec_textColor
+        rowView.addSubview(timeLabel)
+        timeLabel.activateConstraints([
+            timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
+            timeLabel.leadingAnchor.constraint(equalTo: sources.trailingAnchor, constant: 8)
+        ])
+//        self.time_leading = timeLabel.leadingAnchor.constraint(equalTo: sources.trailingAnchor, constant: 8)
+//        self.time_leading?.isActive = true
+        
+        //self.timeLabel.text = article.time.uppercased()
+        
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+    }
+    
     private func addTitle(text: String) {
         let titleLabel = UILabel()
-        titleLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+        titleLabel.font = CSS.shared.iPhoneStoryContent_titleFont //DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
         titleLabel.numberOfLines = 0
         titleLabel.text = text
-        titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+        titleLabel.textColor = CSS.shared.displayMode().main_textColor
+        //DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
         
         let HStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: HStack, width: 13)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         HStack.addArrangedSubview(titleLabel)
-        ADD_SPACER(to: HStack, width: 13)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         
         ADD_SPACER(to: self.VStack, height: 1)
         
-        let W: CGFloat = SCREEN_SIZE().width - 13 - 13
+        let W: CGFloat = SCREEN_SIZE().width - ( CSS.shared.iPhoneSide_padding * 2)
         self.titleLabelHeight = titleLabel.calculateHeightFor(width: W)
+        
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
     }
 
     private func addPill() {
@@ -1390,8 +1507,8 @@ extension StoryViewController: UIGestureRecognizerDelegate {
     }
     
     func attrText(_ text: String, index: Int) -> NSAttributedString {
-        let font = UIFont(name: "DMSerifDisplay-Regular", size: 15)
-        let fontItalic = UIFont(name: "Merriweather-Italic", size: 13)
+        let font = UIFont(name: "Aileron-Regular", size: 15)
+        let fontItalic = UIFont(name: "Aileron-Regular", size: 15)
         //let fontItalic = UIFont(name: "Merriweather-LightItalic", size: 14)
         let extraText = "[" + String(index) + "]"
         let mText = text + " " + extraText
@@ -1403,13 +1520,13 @@ extension StoryViewController: UIGestureRecognizerDelegate {
         
         var range = NSRange(location: 0, length: attr.string.count)
         mAttr.addAttribute(NSAttributedString.Key.foregroundColor,
-            value: DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F),
+            value: CSS.shared.displayMode().main_textColor,
             range: range)
         
         range = NSRange(location: attr.string.count - extraText.count, length: extraText.count)
         
         mAttr.addAttribute(NSAttributedString.Key.foregroundColor,
-            value: UIColor(hex: 0xDA4933),
+            value: CSS.shared.orange,
             range: range)
         mAttr.addAttribute(NSAttributedString.Key.font,
             value: fontItalic!,
@@ -1532,18 +1649,15 @@ extension StoryViewController {
 extension StoryViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let extraMargin: CGFloat = 15
-        let playerHeight: CGFloat = self.audioPlayer.getHeight()
-        let playerBottom: CGFloat = 20 + 23 + 16 + self.titleLabelHeight + 16 + playerHeight
-        
-        
-        
-        
-        if(scrollView.contentOffset.y > playerBottom) {
-            self.secondaryAudioPlayer.customShow()
-        } else {
-            self.secondaryAudioPlayer.customHide()
-        }
+//        let extraMargin: CGFloat = 15
+//        let playerHeight: CGFloat = self.audioPlayer.getHeight()
+//        let playerBottom: CGFloat = 20 + 23 + 16 + self.titleLabelHeight + 16 + playerHeight
+//        
+//        if(scrollView.contentOffset.y > playerBottom) {
+//            self.secondaryAudioPlayer.customShow()
+//        } else {
+//            self.secondaryAudioPlayer.customHide()
+//        }
     }
     
 }

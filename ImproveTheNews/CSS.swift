@@ -28,6 +28,11 @@ class CSS_displayMode {
     var imageView_bgColor: UIColor = .black
     var imageView_iconColor: UIColor = .black
     var loading_color: UIColor = .black
+    
+    var factLines_color: UIColor = .black
+    
+    var audioPlayer_bgColor: UIColor = .black
+    var audioPlayer_sliderTrack_color: UIColor = .black
 }
 
 // -----------------
@@ -70,6 +75,10 @@ class CSS {
     
     let tour_backButton_font = AILERON_BOLD(14)
     
+    let iPhoneStoryContent_titleFont = DM_SERIF_DISPLAY(23)
+    let iPhoneStoryContent_subTitleFont = DM_SERIF_DISPLAY(20)
+    let iPhoneStoryContent_textFont = AILERON(16)
+    
     // ----------
     let iPhoneSide_padding: CGFloat = 16
     let dashedLine_width: CGFloat = 5
@@ -92,6 +101,9 @@ class CSS {
         self.darkMode.imageView_bgColor = UIColor(hex: 0x232326)
         self.darkMode.imageView_iconColor = UIColor(hex: 0x34343A)
         self.darkMode.loading_color = .white.withAlphaComponent(0.4)
+        self.darkMode.factLines_color = UIColor(hex: 0x2D2D31)
+        self.darkMode.audioPlayer_bgColor = UIColor(hex: 0x2D2D31)
+        self.darkMode.audioPlayer_sliderTrack_color = UIColor(hex: 0x19191C)
         
         self.lightMode.main_bgColor = UIColor(hex: 0xF0F0F0)
         self.lightMode.main_textColor = UIColor(hex: 0x19191C)
@@ -107,6 +119,9 @@ class CSS {
         self.lightMode.imageView_bgColor = UIColor(hex: 0xE3E3E3)
         self.lightMode.imageView_iconColor = UIColor(hex: 0xBBBDC0)
         self.lightMode.loading_color = .black.withAlphaComponent(0.4)
+        self.lightMode.factLines_color = UIColor(hex: 0xD9D9D9)
+        self.lightMode.audioPlayer_bgColor = .white
+        self.lightMode.audioPlayer_sliderTrack_color = UIColor(hex: 0xE3E3E3)
     }
 }
 
