@@ -247,13 +247,13 @@ extension StoryViewController {
         
         let sectionView = UIView()
         //sectionView.backgroundColor = .yellow.withAlphaComponent(0.3)
-        ADD_SPACER(to: self.VStack, height: 10)
+        //ADD_SPACER(to: self.VStack, height: 10)
         self.VStack.addArrangedSubview(sectionView)
         
         let title = UILabel()
-        title.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        title.textColor = CSS.shared.displayMode().main_textColor
         //title.backgroundColor = .red.withAlphaComponent(0.3)
-        title.font = DM_SERIF_DISPLAY_fixed(20)
+        title.font = CSS.shared.iPhoneStoryContent_subTitleFont
         title.text = "Go Deeper"
         sectionView.addSubview(title)
         title.activateConstraints([
@@ -262,45 +262,103 @@ extension StoryViewController {
             title.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -15)
         ])
         
-        let W: CGFloat = SCREEN_SIZE().width - (13*2) - (15*2)
+        var W: CGFloat = SCREEN_SIZE().width - (15*2)
         var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20
-        let columnW: CGFloat = (W-15)/2
+        W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
         
-        var col = 1
-        var prevH: CGFloat = 0
-        for (i, ST) in stories.enumerated() {
-            let storyView = FAQ_normalStoryView()
-            sectionView.addSubview(storyView)
-            storyView.activateConstraints([
-                storyView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: (col == 1) ? 15 : (15+columnW+15)),
-                storyView.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY),
-                storyView.widthAnchor.constraint(equalToConstant: columnW)
+        var storiesCopy = stories
+        while(storiesCopy.count>0) {
+
+            let colsHStack = HSTACK(into: sectionView, spacing: CSS.shared.iPhoneSide_padding)
+            //colsHStack.backgroundColor = .green
+            colsHStack.activateConstraints([
+                colsHStack.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor,
+                    constant: CSS.shared.iPhoneSide_padding),
+                colsHStack.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor,
+                    constant: -CSS.shared.iPhoneSide_padding),
+                colsHStack.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY)
             ])
             
-            storyView.populate(MainFeedArticle(story: ST))
-            storyView.refreshDisplayMode()
+            var H1: CGFloat = 1
+            var H2: CGFloat = 1
+            let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
+            let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
             
-            let H = storyView.getHeight(forColumnWidth: columnW)
-            storyView.heightAnchor.constraint(equalToConstant: H).isActive = true
-            
-            if(col==1) {
-                prevH = H
+            // item 1
+            if let _A = storiesCopy.first {
+                VIEW1.refreshDisplayMode()
+                VIEW1.populate(story: _A)
+                H1 = VIEW1.calculateHeight()
+                colsHStack.addArrangedSubview(VIEW1)
+                VIEW1.activateConstraints([
+                    VIEW1.widthAnchor.constraint(equalToConstant: W)
+                ])
+                
+                storiesCopy.removeFirst()
+            } else {
+                H1 = 0
+                ADD_SPACER(to: colsHStack, width: W)
             }
             
-            col += 1
-            if(col == 3) {
-                col = 1
-                var max = H
-                if(prevH > max){ max = prevH }
-                posY += max + 15
-            } else if(i == stories.count-1) {
+            // item 2
+            if let _A = storiesCopy.first {
+                VIEW2.refreshDisplayMode()
+                VIEW2.populate(story: _A)
+                H2 = VIEW2.calculateHeight()
+                colsHStack.addArrangedSubview(VIEW2)
+                VIEW2.activateConstraints([
+                    VIEW2.widthAnchor.constraint(equalToConstant: W)
+                ])
+                
+                storiesCopy.removeFirst()
+            } else {
+                H2 = 0
+                ADD_SPACER(to: colsHStack, width: W)
+            }
+            
+            let maxH = (H1 > H2) ? H1 : H2
+            VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+            VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+
+            posY += maxH
+        }
+        
+        
+//        var col = 1
+//        var prevH: CGFloat = 0
+//        for (i, ST) in stories.enumerated() {
+//            let storyView = FAQ_normalStoryView()
+//            sectionView.addSubview(storyView)
+//            storyView.activateConstraints([
+//                storyView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: (col == 1) ? 15 : (15+columnW+15)),
+//                storyView.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY),
+//                storyView.widthAnchor.constraint(equalToConstant: columnW)
+//            ])
+//            
+//            storyView.populate(MainFeedArticle(story: ST))
+//            storyView.refreshDisplayMode()
+//            
+//            let H = storyView.getHeight(forColumnWidth: columnW)
+//            storyView.heightAnchor.constraint(equalToConstant: H).isActive = true
+//            
+//            if(col==1) {
+//                prevH = H
+//            }
+//            
+//            col += 1
+//            if(col == 3) {
+//                col = 1
 //                var max = H
 //                if(prevH > max){ max = prevH }
 //                posY += max + 15
-
-                posY += H + 15
-            }
-        }
+//            } else if(i == stories.count-1) {
+////                var max = H
+////                if(prevH > max){ max = prevH }
+////                posY += max + 15
+//
+//                posY += H + 15
+//            }
+//        }
         
         sectionView.activateConstraints([
             sectionView.heightAnchor.constraint(equalToConstant: posY)
@@ -313,9 +371,9 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: 12)
     
         let HStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: HStack, width: 12)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let innerHStack = VSTACK(into: HStack)
-        ADD_SPACER(to: HStack, width: 12)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         
         if(articles.count == 0) {
             let noArticlesLabel = UILabel()
@@ -548,17 +606,17 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: 12)
 
         let HStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: HStack, width: 12)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let innerHStack = VSTACK(into: HStack)
-        ADD_SPACER(to: HStack, width: 12)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         
        if(articles.count == 0) {
             let noArticlesLabel = UILabel()
-            noArticlesLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+            noArticlesLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
             if(IPAD()){ noArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
             }
             noArticlesLabel.text = "No articles available"
-            noArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            noArticlesLabel.textColor = CSS.shared.displayMode().main_textColor
             innerHStack.addArrangedSubview(noArticlesLabel)
         } else {
             
@@ -569,35 +627,81 @@ extension StoryViewController {
             }
         
             let ArticlesLabel = UILabel()
-            ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+            ArticlesLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
             ArticlesLabel.text = title
             if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
             }
-            ArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            ArticlesLabel.textColor = CSS.shared.displayMode().main_textColor
             innerHStack.addArrangedSubview(ArticlesLabel)
             ADD_SPACER(to: innerHStack, height: 15)
-            
-            let headers = HSTACK(into: innerHStack)
-            headers.spacing = 20
-            headers.backgroundColor = .clear //.orange
-            headers.distribution = .fillEqually
-            for i in 1...2 {
-                var text = ""
-                if(type.uppercased() == "PE") {
-                    if(i==1) { text = "CRITICAL" }
-                    else { text = "PRO" }
-                } else {
-                    if(i==1) { text = "LEFT" }
-                    else { text = "RIGHT" }
-                }
-                
-                let headerLabel = UILabel()
-                headerLabel.text = text
-                headerLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
-                headerLabel.font = ROBOTO_BOLD(14)
-                headers.addArrangedSubview(headerLabel)
-            }
+        
+        /// headers
+            let headers = UIView()
+            //headers.backgroundColor = .red.withAlphaComponent(0.5)
             innerHStack.addArrangedSubview(headers)
+            headers.activateConstraints([
+                headers.heightAnchor.constraint(equalToConstant: 45)
+            ])
+            
+            var T1 = "LEFT"
+            var T2 = "RIGHT"
+            if(type.uppercased() == "PE") {
+                T1 = "CRITICAL"
+                T2 = "PRO"
+            }
+            
+            for i in 1...2 {
+                let headerLabel = UILabel()
+                headerLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                headerLabel.textColor = CSS.shared.displayMode().header_textColor
+                headerLabel.textAlignment = .center
+                
+                let W = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding*3)
+                headers.addSubview(headerLabel)
+                headerLabel.activateConstraints([
+                    headerLabel.widthAnchor.constraint(equalToConstant: W/2),
+                    headerLabel.centerYAnchor.constraint(equalTo: headers.centerYAnchor)
+                ])
+                
+                if(i==1) {
+                    headerLabel.leadingAnchor.constraint(equalTo: headers.leadingAnchor).isActive = true
+                    headerLabel.text = T1
+                } else {
+                    headerLabel.leadingAnchor.constraint(equalTo: headers.leadingAnchor,
+                        constant: (W/2) + CSS.shared.iPhoneSide_padding).isActive = true
+                    headerLabel.text = T2
+                }
+            }
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding/2)
+        /// headers
+            
+            
+//            let headers = HSTACK(into: innerHStack)
+//            headers.activateConstraints([
+//                headers.heightAnchor.constraint(equalToConstant: 45)
+//            ])
+//            headers.backgroundColor = .red.withAlphaComponent(0.5)
+//            headers.spacing = CSS.shared.iPhoneSide_padding
+//            //headers.backgroundColor = .clear //.orange
+//            headers.distribution = .fillEqually
+//            for i in 1...2 {
+//                var text = ""
+//                if(type.uppercased() == "PE") {
+//                    if(i==1) { text = "CRITICAL" }
+//                    else { text = "PRO" }
+//                } else {
+//                    if(i==1) { text = "LEFT" }
+//                    else { text = "RIGHT" }
+//                }
+//                
+//                let headerLabel = UILabel()
+//                headerLabel.text = text
+//                headerLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+//                headerLabel.font = ROBOTO_BOLD(14)
+//                headers.backgroundColor = .green.withAlphaComponent(0.25)
+//                headers.addArrangedSubview(headerLabel)
+//            }
+//            innerHStack.addArrangedSubview(headers)
             
             // Sorting --------------------------------
             var articlesLeft = [StoryArticle]()
@@ -620,31 +724,80 @@ extension StoryViewController {
             }
             
             // Show columns --------------------------------
+            var colsHStack = UIStackView()
+            let W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
             while(articlesLeft.count>0 || articlesRight.count>0) {
                 let aLeft = articlesLeft.first
                 let aRight = articlesRight.first
                 
-                let hStackColumns = HSTACK(into: innerHStack)
-                hStackColumns.spacing = 20
-                hStackColumns.distribution = .fillEqually
+                colsHStack = HSTACK(into: innerHStack, spacing: CSS.shared.iPhoneSide_padding)
                 
-                hStackColumns.addArrangedSubview(articleColumnView(aLeft))
-                hStackColumns.addArrangedSubview(articleColumnView(aRight))
+                var H1: CGFloat = 1
+                var H2: CGFloat = 1
+                let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
+                let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
                 
-                if(aLeft != nil){ articlesLeft.removeFirst() }
-                if(aRight != nil){ articlesRight.removeFirst() }
+                // item 1
+                if let _A = aLeft {
+                    VIEW1.refreshDisplayMode()
+                    VIEW1.populate(article: _A)
+                    H1 = VIEW1.calculateHeight()
+                    colsHStack.addArrangedSubview(VIEW1)
+                    VIEW1.activateConstraints([
+                        VIEW1.widthAnchor.constraint(equalToConstant: W)
+                    ])
+                    articlesLeft.removeFirst()
+                } else {
+                    H1 = 0
+                    ADD_SPACER(to: colsHStack, width: W)
+                }
                 
-                // Vertical divider --------------------------------
-                let line = UIView()
-                line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
-                innerHStack.addSubview(line)
-                line.activateConstraints([
-                    line.widthAnchor.constraint(equalToConstant: 1.5),
-                    line.centerXAnchor.constraint(equalTo: innerHStack.centerXAnchor),
-                    line.topAnchor.constraint(equalTo: headers.topAnchor),
-                    line.bottomAnchor.constraint(equalTo: hStackColumns.bottomAnchor)
-                ])
+                // item 2
+                if let _A = aRight {
+                    VIEW2.refreshDisplayMode()
+                    VIEW2.populate(article: _A)
+                    H2 = VIEW2.calculateHeight()
+                    colsHStack.addArrangedSubview(VIEW2)
+                    VIEW2.activateConstraints([
+                        VIEW2.widthAnchor.constraint(equalToConstant: W)
+                    ])
+                    articlesRight.removeFirst()
+                } else {
+                    H2 = 0
+                    ADD_SPACER(to: colsHStack, width: W)
+                }
+                
+                let maxH = (H1 > H2) ? H1 : H2
+                VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+                VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+                
+                ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+                
+                
+                
+                //let hStackColumns = HSTACK(into: innerHStack)
+                //hStackColumns.spacing = 20
+                //hStackColumns.distribution = .fillEqually
+                
+//                hStackColumns.addArrangedSubview(articleColumnView(aLeft))
+//                hStackColumns.addArrangedSubview(articleColumnView(aRight))
+                
+//                if(aLeft != nil){ articlesLeft.removeFirst() }
+//                if(aRight != nil){ articlesRight.removeFirst() }
+                
+                
             }
+            
+            // Vertical divider --------------------------------
+            let line = UIView()
+            line.backgroundColor = CSS.shared.displayMode().line_color
+            innerHStack.addSubview(line)
+            line.activateConstraints([
+                line.widthAnchor.constraint(equalToConstant: 1),
+                line.centerXAnchor.constraint(equalTo: innerHStack.centerXAnchor),
+                line.topAnchor.constraint(equalTo: headers.topAnchor),
+                line.bottomAnchor.constraint(equalTo: colsHStack.bottomAnchor)
+            ])
             
             self.addNeutralArticles(type: type, articlesNeutral)
         }
@@ -669,28 +822,69 @@ extension StoryViewController {
         
             
         let ArticlesLabel = UILabel()
-        ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+        ArticlesLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
         ArticlesLabel.text = title
         if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
         }
-        ArticlesLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+        ArticlesLabel.textColor = CSS.shared.displayMode().main_textColor
         innerHStack.addArrangedSubview(ArticlesLabel)
         ADD_SPACER(to: innerHStack, height: 18)
         
         var articlesCopy = articles
         // Show columns --------------------------------
+        let W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
         while(articlesCopy.count>0) {
             let aLeft = articlesCopy.first
             var aRight: StoryArticle? = nil
             if(articlesCopy.count>1){ aRight = articlesCopy[1] }
             
-            let hStackColumns = HSTACK(into: innerHStack)
-            hStackColumns.spacing = 20
-            hStackColumns.distribution = .fillEqually
+            let colsHStack = HSTACK(into: innerHStack, spacing: CSS.shared.iPhoneSide_padding)
+            var H1: CGFloat = 1
+            var H2: CGFloat = 1
+            let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
+            let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
             
-            hStackColumns.addArrangedSubview(articleColumnView(aLeft))
-            hStackColumns.addArrangedSubview(articleColumnView(aRight))
+            // item 1
+            if let _A = aLeft {
+                VIEW1.refreshDisplayMode()
+                VIEW1.populate(article: _A)
+                H1 = VIEW1.calculateHeight()
+                colsHStack.addArrangedSubview(VIEW1)
+                VIEW1.activateConstraints([
+                    VIEW1.widthAnchor.constraint(equalToConstant: W)
+                ])
+            } else {
+                H1 = 0
+                ADD_SPACER(to: colsHStack, width: W)
+            }
             
+            // item 2
+            if let _A = aRight {
+                VIEW2.refreshDisplayMode()
+                VIEW2.populate(article: _A)
+                H2 = VIEW2.calculateHeight()
+                colsHStack.addArrangedSubview(VIEW2)
+                VIEW2.activateConstraints([
+                    VIEW2.widthAnchor.constraint(equalToConstant: W)
+                ])
+            } else {
+                H2 = 0
+                ADD_SPACER(to: colsHStack, width: W)
+            }
+            
+            let maxH = (H1 > H2) ? H1 : H2
+            VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+            VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+            
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+            
+//            let hStackColumns = HSTACK(into: innerHStack)
+//            hStackColumns.spacing = 20
+//            hStackColumns.distribution = .fillEqually
+//            
+//            hStackColumns.addArrangedSubview(articleColumnView(aLeft))
+//            hStackColumns.addArrangedSubview(articleColumnView(aRight))
+//            
             if(aLeft != nil){ articlesCopy.removeFirst() }
             if(aRight != nil){ articlesCopy.removeFirst() }
         }

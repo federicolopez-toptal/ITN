@@ -134,7 +134,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         articleComponents.append(self.articleStanceIcon)
         
         let stanceIconButton = UIButton(type: .system)
-        stanceIconButton.backgroundColor = .red.withAlphaComponent(0.5)
+        //stanceIconButton.backgroundColor = .red.withAlphaComponent(0.5)
         self.addSubview(stanceIconButton)
         stanceIconButton.activateConstraints([
             stanceIconButton.leadingAnchor.constraint(equalTo: self.articleStanceIcon.leadingAnchor,
@@ -166,7 +166,13 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
 //        popup.pushFromBottom()
     }
     
+    
     // MARK: Overrides
+    func populate(story: StorySearchResult) {
+        self.article = MainFeedArticle(story: story)
+        self.populate(article)
+    }
+    
     func populate(article: StoryArticle) {
         self.article = MainFeedArticle(url: article.url)
         self.article.LR = article.LR
