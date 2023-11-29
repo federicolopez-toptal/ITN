@@ -82,5 +82,18 @@ extension String {
         
         return parameters
     }
+    
+    func containsItemInArray(_ strings: [String]) -> Bool {
+        var result = false
+        
+        for STR in strings {
+            if(self.lowercased().contains(STR.lowercased())) {
+                result = true
+                break
+            }
+        }
+        
+        return result
+    }
 
 }

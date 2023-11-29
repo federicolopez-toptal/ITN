@@ -43,18 +43,41 @@ class MainFeedv3 {
                 print(_error.localizedDescription)
                 callback(_error)
             } else {
+//                let textFromFile = READ_LOCAL(resFile: "fakeJson_OK.txt")
+//                let textFromFile = READ_LOCAL(resFile: "fakeJson_FAIL.txt")
+//                let mData = ADD_MAIN_NODE(to: textFromFile.data(using: .utf8))
+
                 let mData = ADD_MAIN_NODE(to: data)
-                if let _json = JSON(fromData: mData) {
-                    self.parse(_json)
-                    callback(nil)
+                if let jsonString = String(data: mData, encoding: .utf8) {
+                    if(jsonString.containsItemInArray(["Invalid topic requested", "Oops"])) {
+                        print("SERVER ERROR", "Invalid topic requested", "Oops")
+                        
+                        let _error = CustomError.jsonParseError
+                        callback(_error)
+                    } else {
+                        if let _json = JSON(fromData: mData) {
+                            self.parse(_json)
+                            callback(nil)
+                        } else {
+                            let _error = CustomError.jsonParseError
+                            callback(_error)
+                        }
+                    }
                 } else {
                     let _error = CustomError.jsonParseError
                     callback(_error)
                 }
+                ///
             }
         }
 
         task.resume()
+    }
+    
+    private func checkFor(strings: [String]) -> Bool {
+        var result = false
+        
+        return result
     }
     
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {

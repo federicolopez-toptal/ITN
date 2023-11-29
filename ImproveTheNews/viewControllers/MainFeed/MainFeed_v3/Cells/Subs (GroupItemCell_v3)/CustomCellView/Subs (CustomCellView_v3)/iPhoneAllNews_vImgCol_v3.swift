@@ -133,13 +133,138 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.articleStanceIcon.delegate = self
         articleComponents.append(self.articleStanceIcon)
         
+        let stanceIconButton = UIButton(type: .system)
+        stanceIconButton.backgroundColor = .red.withAlphaComponent(0.5)
+        self.addSubview(stanceIconButton)
+        stanceIconButton.activateConstraints([
+            stanceIconButton.leadingAnchor.constraint(equalTo: self.articleStanceIcon.leadingAnchor,
+                constant: -10),
+            stanceIconButton.trailingAnchor.constraint(equalTo: self.articleStanceIcon.trailingAnchor,
+                constant: 10),
+            stanceIconButton.topAnchor.constraint(equalTo: self.articleStanceIcon.topAnchor,
+                constant: -10),
+            stanceIconButton.bottomAnchor.constraint(equalTo: self.articleStanceIcon.bottomAnchor,
+                constant: 10),
+        ])
+        stanceIconButton.tag = 64
+        stanceIconButton.addTarget(self, action: #selector(stanceIconOnTap(_:)), for: .touchUpInside)
+        
         self.refreshDisplayMode()
         // -------------------
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewOnTap(_:)))
         self.addGestureRecognizer(tapGesture)
     }
+    @objc func stanceIconOnTap(_ sender: UIButton) {
+        self.onStanceIconTap(sender: self.articleStanceIcon)
+    
+    
+        //self.articleStanceIcon.viewOnTap(sender: nil)
+        
+//        let popup = StancePopupView()
+//        popup.populate(sourceName: spin.media_name, country: spin.media_country_code,
+//            LR: spin.LR, PE: spin.CP)
+//        popup.pushFromBottom()
+    }
     
     // MARK: Overrides
+    func populate(article: StoryArticle) {
+        self.article = MainFeedArticle(url: article.url)
+        self.article.LR = article.LR
+        self.article.PE = article.PE
+        self.article.country = article.media_country_code
+        self.article.source = article.media_title
+        
+        self.mainImageView.load(url: article.image)
+        self.mainImageView.showCorners(false)
+        
+        //self.articleTitleLabel.font = CSS.shared.iPhoneStory_titleFont_small
+        self.articleTitleLabel.text = article.title
+            
+        var sourcesArray = [String]()
+        if let _identifier = Sources.shared.search(name: article.media_title) {
+            sourcesArray.append(_identifier)
+        }
+        self.articleSource.load(sourcesArray)
+        
+        self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.media_title).uppercased() + "    " + SHORT_TIME(input: article.timeRelative)
+        self.articleStanceIcon.setValues(article.LR, article.PE)
+        
+        for V in self.storyComponents {
+            V.hide()
+        }
+        for V in self.articleComponents {
+            V.show()
+        }
+        
+        if(PREFS_SHOW_SOURCE_ICONS()) {
+            self.articleSource.show()
+            self.sourceTime_leading?.constant = 5
+        } else {
+            self.articleSource.customHide()
+            self.sourceTime_leading?.constant = 0
+        }
+        
+        if(PREFS_SHOW_STANCE_ICONS()) {
+            self.articleStanceIcon.show()
+        } else {
+            self.articleStanceIcon.hide()
+        }
+    }
+    
+    
+    func populate(spin: Spin) {
+        self.article = MainFeedArticle(url: spin.url)
+        self.article.LR = spin.LR
+        self.article.PE = spin.CP
+        self.article.country = spin.media_country_code
+        self.article.source = spin.media_name
+        ///
+
+        self.mainImageView.load(url: spin.image)
+        self.mainImageView.showCorners(false)
+        
+        self.articleTitleLabel.font = CSS.shared.iPhoneStory_titleFont_small
+        self.articleTitleLabel.text = spin.subTitle
+            
+        var sourcesArray = [String]()
+        if let _identifier = Sources.shared.search(name: spin.media_title) {
+            sourcesArray.append(_identifier)
+        }
+        self.articleSource.load(sourcesArray)
+        
+        self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: spin.media_title).uppercased() + "    " + SHORT_TIME(input: spin.timeRelative)
+        self.articleStanceIcon.setValues(spin.LR, spin.CP)
+        
+        for V in self.storyComponents {
+            V.hide()
+        }
+        for V in self.articleComponents {
+            V.show()
+        }
+        
+        
+        if(PREFS_SHOW_SOURCE_ICONS()) {
+            self.articleSource.show()
+            self.sourceTime_leading?.constant = 5
+        } else {
+            self.articleSource.customHide()
+            self.sourceTime_leading?.constant = 0
+        }
+        
+        if(PREFS_SHOW_STANCE_ICONS()) {
+            self.articleStanceIcon.show()
+        } else {
+            self.articleStanceIcon.hide()
+        }
+        
+        if(spin.LR==0 && spin.CP==0) {
+            if let button = self.viewWithTag(64) {
+                button.hide()
+                self.articleStanceIcon.hide()
+            }
+        }
+    }
+    
     override func populate(_ article: MainFeedArticle) {
         self.article = article
         
@@ -201,6 +326,15 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
                 self.articleStanceIcon.hide()
             }
         }
+        
+        if let button = self.viewWithTag(64) {
+            if(self.article.isStory) {
+                button.hide()
+            } else {
+                button.show()
+            }
+        }
+
     }
     
     override func refreshDisplayMode() {
@@ -242,7 +376,6 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     // MARK: Actions
     @objc func viewOnTap(_ gesture: UITapGestureRecognizer) {
         CustomNavController.shared.tour?.cancel()
-        
         if(self.article.isEmpty()) { return }
         
         if(self.article.isStory) {
@@ -258,13 +391,22 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
 }
 
 extension iPhoneAllNews_vImgCol_v3: StanceIconViewDelegate {
+    
     func onStanceIconTap(sender: StanceIconView) {
-        let info: [String : Any] = [
-            "LR": self.article.LR,
-            "PE": self.article.PE,
-            "source": CLEAN_SOURCE(from: self.article.source),
-            "country": self.article.country
-        ]
-        NOTIFY(Notification_stanceIconTap, userInfo: info)
+//        let info: [String : Any] = [
+//            "LR": self.article.LR,
+//            "PE": self.article.PE,
+//            "source": CLEAN_SOURCE(from: self.article.source),
+//            "country": self.article.country
+//        ]
+//        NOTIFY(Notification_stanceIconTap, userInfo: info)
+        
+
+        let popup = StancePopupView()
+        let sourceName = CLEAN_SOURCE(from: self.article.source)
+        popup.populate(sourceName: sourceName, country: self.article.country,
+            LR: self.article.LR, PE: self.article.PE)
+        popup.pushFromBottom()
     }
+    
 }

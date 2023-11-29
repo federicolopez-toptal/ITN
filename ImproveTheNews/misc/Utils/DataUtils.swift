@@ -67,3 +67,17 @@ func READ(_ key: String) -> String? {
         return nil
     }
 }
+
+func READ_LOCAL(resFile: String) -> String {
+    var result = ""
+    
+    if let path = Bundle.main.path(forResource: resFile, ofType: nil) {
+        do {
+            result = try String(contentsOfFile: path, encoding: .utf8)
+        } catch {
+            print(error)
+        }
+    }
+
+    return result
+}

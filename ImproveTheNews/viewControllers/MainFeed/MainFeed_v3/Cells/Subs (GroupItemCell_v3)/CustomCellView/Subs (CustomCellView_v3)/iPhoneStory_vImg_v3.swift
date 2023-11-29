@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import SDWebImage
 
 class iPhoneStory_vImg_v3: CustomCellView_v3 {
     
