@@ -106,7 +106,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         
         if(article.isStory) {
             self.storyTitleLabel.text = article.title
-            self.storyTimeLabel.text = SHORT_TIME(input: article.time)
+            self.storyTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title
             
@@ -115,7 +115,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
                 sourcesArray.append(_identifier)
             }
             
-            self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.source).uppercased() + "    " + SHORT_TIME(input: article.time)
+            self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.source).uppercased() + "    " + SHORT_TIME(input:FIX_TIME(article.time))
             self.articleStanceIcon.setValues(article.LR, article.PE)
         }
         

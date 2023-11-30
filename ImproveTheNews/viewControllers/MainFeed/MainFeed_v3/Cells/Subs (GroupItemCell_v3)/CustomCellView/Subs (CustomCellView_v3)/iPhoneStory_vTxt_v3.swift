@@ -77,7 +77,7 @@ class iPhoneStory_vTxt_v3: CustomCellView_v3 {
         self.article = article
         
         self.titleLabel.text = article.title
-        self.timeLabel.text = article.time.uppercased()
+        self.timeLabel.text = FIX_TIME(article.time).uppercased()
         
         if(PREFS_SHOW_SOURCE_ICONS() && Layout.current() == .textImages) {
             self.sources.load(article.storySources)

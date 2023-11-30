@@ -99,7 +99,7 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         self.mainImageView.showCorners(true)
         
         self.titleLabel.text = article.title
-        self.timeLabel.text = article.time.uppercased()
+        self.timeLabel.text = FIX_TIME(article.time).uppercased()
         
         if(PREFS_SHOW_SOURCE_ICONS()) {
             self.sources.load(article.storySources)

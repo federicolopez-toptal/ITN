@@ -192,7 +192,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         }
         self.articleSource.load(sourcesArray)
         
-        self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.media_title).uppercased() + "    " + SHORT_TIME(input: article.timeRelative)
+        self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.media_title).uppercased() + "    " + SHORT_TIME(input:FIX_TIME(article.timeRelative))
         self.articleStanceIcon.setValues(article.LR, article.PE)
         
         for V in self.storyComponents {
@@ -238,7 +238,8 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         }
         self.articleSource.load(sourcesArray)
         
-        self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: spin.media_title).uppercased() + "    " + SHORT_TIME(input: spin.timeRelative)
+        self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: spin.media_title).uppercased() + "    " +
+            SHORT_TIME(input:FIX_TIME(spin.timeRelative))
         self.articleStanceIcon.setValues(spin.LR, spin.CP)
         
         for V in self.storyComponents {
@@ -280,7 +281,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         if(article.isStory) {
             self.storyTitleLabel.text = article.title
             self.storySources.load(article.storySources)
-            self.storyTimeLabel.text = SHORT_TIME(input: article.time)
+            self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title
             
@@ -290,7 +291,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             }
             self.articleSource.load(sourcesArray)
             
-            self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.source).uppercased() + "    " + SHORT_TIME(input: article.time)
+            self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.source).uppercased() + "    " + SHORT_TIME(input:FIX_TIME(article.time))
             self.articleStanceIcon.setValues(article.LR, article.PE)
         }
         

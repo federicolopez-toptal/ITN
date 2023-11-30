@@ -21,7 +21,15 @@ class ArticleViewController: BaseViewController {
 
 
     deinit {
-        if(self.showComponentsOnClose){ CustomNavController.shared.showPanelAndButtonWithAnimation() }
+        if let lastVC = CustomNavController.shared.viewControllers.last {
+            if(!(lastVC is StoryViewController)) {
+                if(self.showComponentsOnClose){
+                    CustomNavController.shared.showPanelAndButtonWithAnimation()
+                }
+            }
+        }
+    
+        
         self.hideLoading()
     }
 

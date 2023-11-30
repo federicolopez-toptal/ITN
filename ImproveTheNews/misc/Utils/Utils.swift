@@ -81,6 +81,44 @@ func CLEAN_SOURCE(from input: String) -> String {
     return result
 }
 
+func FIX_TIME(_ time: String) -> String {
+    var result = time
+    
+    // Example: "209 hours ago"
+    let parts = time.components(separatedBy: " ")
+    if let num = Int(parts[0]) {
+        let type = parts[1].lowercased()
+        
+        switch(type) {
+            case "hours":
+                if(num>23) {
+                    let days = Int(num/24)
+                    result = String(days) + " day"
+                    if(days>1){ result += "s" }
+                    result += " ago"
+                    
+                    if(days>29) {
+                        result = FIX_TIME(result)
+                    }
+                }
+            case "days":
+                if(num>29) {
+                    let months = Int(num/30)
+                    result = String(months) + " month"
+                    if(months>1){ result += "s" }
+                    result += " ago"
+                }
+        
+            default:
+                NOTHING()
+        }
+    } else {
+        result = time
+    }
+    
+    return result
+}
+
 func SHORT_TIME(input: String) -> String {
     var result = input.uppercased().replacingOccurrences(of: " AGO", with: "")
     result = result.replacingOccurrences(of: "HOURS", with: "HRS")
@@ -89,6 +127,51 @@ func SHORT_TIME(input: String) -> String {
     result = result.replacingOccurrences(of: "MINUTE", with: "MIN")
     result = result.replacingOccurrences(of: "SECONDS", with: "SECS")
     result = result.replacingOccurrences(of: "SECOND", with: "SEC")
+    
+    return result
+}
+
+func DATE_TO_TIMEAGO(_ date: String) -> String {
+    var result = date
+    
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    if let _inputDate = formatter.date(from: date) {
+        //Example: 39347427.55886698
+        let secs = Date().timeIntervalSince(_inputDate) //Seconds
+        let mins = secs/60
+        let hours = mins/60
+        let days = hours/24
+        let months = days/30
+        let years = months/12
+        
+        var type = ""
+        var num = 0
+        
+        if(Int(years) > 0) {
+            num = Int(years)
+            type = "year"
+        } else if(Int(months) > 0) {
+            num = Int(months)
+            type = "month"
+        } else if(Int(days) > 0) {
+            num = Int(days)
+            type = "day"
+        } else if(Int(hours) > 0) {
+            num = Int(hours)
+            type = "hour"
+        } else if(Int(mins) > 0) {
+            num = Int(mins)
+            type = "minute"
+        } else if(Int(secs) > 0) {
+            num = Int(secs)
+            type = "second"
+        }
+        
+        result = String(num) + " " + type
+        if(num>1){ result += "s" }
+        result += " ago"
+    }
     
     return result
 }

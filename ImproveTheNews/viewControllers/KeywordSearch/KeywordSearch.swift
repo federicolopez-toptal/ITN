@@ -213,12 +213,14 @@ struct StorySearchResult {
         self.image_url = data["image_url"] as! String
         self.slug = data["slug"] as! String
         
+        //print("TIME RELATIVE:", data["timeRelative"])
         if let _timeAgo = data["timeago"] as? String {
             self.timeago = _timeAgo
         } else if let _timeAgo = data["timeRelative"] as? String {
             self.timeago = _timeAgo
         } else if let _timeAgo = data["updated"] as? String {
-            self.timeago = self.formattedUpdatedTime(input: _timeAgo)
+            //self.timeago = self.formattedUpdatedTime(input: _timeAgo)
+            self.timeago = DATE_TO_TIMEAGO(_timeAgo)
         }
         
         self.title = data["title"] as! String
@@ -240,7 +242,12 @@ struct StorySearchResult {
     }
     
     func formattedUpdatedTime(input: String) -> String {
-        //Example: "2023-04-30 21:31:29"
+        /*
+            Examples:
+                input:  2023-04-30 21:31:29
+                output: APR 28, 2023
+         */
+        //Examples: ""
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

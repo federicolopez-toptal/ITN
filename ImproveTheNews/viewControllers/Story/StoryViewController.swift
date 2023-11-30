@@ -228,8 +228,9 @@ extension StoryViewController {
             self.addSplitArticles(type: story.splitType, story.articles)
         }
         
-        
-        ADD_SPACER(to: VStack, height: 200)
+        if(story.audio != nil) {
+            ADD_SPACER(to: VStack, height: 200)
+        }
         
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
@@ -1697,7 +1698,7 @@ extension StoryViewController {
     
         timeLabel.font = CSS.shared.iPhoneStory_textFont
         timeLabel.textAlignment = .right
-        timeLabel.text = time.uppercased()
+        timeLabel.text = FIX_TIME(time).uppercased()
         timeLabel.textColor = CSS.shared.displayMode().sec_textColor
         rowView.addSubview(timeLabel)
         timeLabel.activateConstraints([
