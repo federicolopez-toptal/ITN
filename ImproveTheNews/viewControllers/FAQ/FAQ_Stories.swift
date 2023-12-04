@@ -14,6 +14,7 @@ class FAQ_Stories {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
     
+        print(url)
         let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
             if let _error = error {
                 print(_error.localizedDescription)

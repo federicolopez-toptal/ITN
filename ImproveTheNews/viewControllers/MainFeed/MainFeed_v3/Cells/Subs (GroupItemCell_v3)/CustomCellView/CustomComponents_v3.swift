@@ -203,8 +203,12 @@ class StoryPillView: UIView {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? CSS.shared.orange.withAlphaComponent(0.2) : CSS.shared.orange
-        self.label.textColor = DARK_MODE() ? CSS.shared.orange : .white
+        self.backgroundColor = CSS.shared.orange
+        self.label.textColor = .white
+        
+        // OLD
+//        self.backgroundColor = DARK_MODE() ? CSS.shared.orange.withAlphaComponent(0.2) : CSS.shared.orange
+//        self.label.textColor = DARK_MODE() ? CSS.shared.orange : .white
     }
     
 }
