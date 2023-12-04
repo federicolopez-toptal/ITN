@@ -33,6 +33,7 @@ class StoryViewController: BaseViewController {
     var audioPlayer = AudioPlayerView()
     var secondaryAudioPlayer = AudioPlayerView(secondary: true)
     var titleLabelHeight: CGFloat = 0
+    var lastSourceIndex = -1
     
     var isContext: Bool = false
     
@@ -217,6 +218,8 @@ extension StoryViewController {
         
         self.addSpins(story.spins)
         
+        self.addSourcesStructure()
+            self.populateSources()
 
         if(story.splitType.isEmpty) {
             if(self.isContext) {
@@ -1067,7 +1070,7 @@ extension StoryViewController {
                 ])
                 
                 ADD_SPACER(to: ART_HStack, width: W/2)
-                ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+                //ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
             ///
                 
                 
@@ -1249,14 +1252,14 @@ extension StoryViewController {
         
         ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
         
-        let line2 = UIView()
-        self.VStack.addArrangedSubview(line2)
-        line2.activateConstraints([
-            line2.heightAnchor.constraint(equalToConstant: 1),
-        ])
-        ADD_DASHES(to: line2)
-        
-        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+//        let line2 = UIView()
+//        self.VStack.addArrangedSubview(line2)
+//        line2.activateConstraints([
+//            line2.heightAnchor.constraint(equalToConstant: 1),
+//        ])
+//        ADD_DASHES(to: line2)
+//        
+//        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
     }
     
     private func populateFacts() {
@@ -1289,7 +1292,7 @@ extension StoryViewController {
             ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
             let lineColor: UIColor = CSS.shared.displayMode().factLines_color
             
-            var lastSourceIndex = -1
+            self.lastSourceIndex = -1
             for (i, F) in self.facts.enumerated() {
                 if(i==0) {
                     let hStackZero = HSTACK(into: VStack)
@@ -1356,13 +1359,15 @@ extension StoryViewController {
                 ADD_SPACER(to: VStack, height: (CSS.shared.iPhoneSide_padding * 3)) // separation from next item
                 
                 if(self.show3 && i==2) {
-                    lastSourceIndex =  F.sourceIndex
+                    self.lastSourceIndex =  F.sourceIndex
                     break
                 }
             }
             
             //ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
             //////////////////////////////////////
+            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
+            
             let showMoreLabel = UILabel()
             showMoreLabel.textColor = CSS.shared.orange
             showMoreLabel.textAlignment = .center
@@ -1381,7 +1386,7 @@ extension StoryViewController {
             ])
             showMoreButton.addTarget(self, action: #selector(showMoreButtonOnTap(_:)), for: .touchUpInside)
             //////////////////////////////////////
-            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding * 2)
+            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
 //            let line = UIView()
 //            line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
 //            VStack.addArrangedSubview(line)
@@ -1390,126 +1395,11 @@ extension StoryViewController {
 //            ])
 //            ADD_SPACER(to: VStack, height: 20)
             //////////////////////////////////////
-            let SourcesLabel = UILabel()
-            SourcesLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
-            if(IPAD()){ SourcesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
-            }
-            SourcesLabel.text = "Sources"
-            SourcesLabel.textColor = CSS.shared.displayMode().sec_textColor
-            VStack.addArrangedSubview(SourcesLabel)
-            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
-            
-            let HStack_sources = HSTACK(into: VStack)
-            //HStack_sources.backgroundColor = .green
-            ADD_SPACER(to: HStack_sources, width: 8)
-            
-            let VStack_sources = VSTACK(into: HStack_sources)
-            VStack_sources.spacing = 10
-            //VStack_sources.backgroundColor = .blue
-            
-            ADD_SPACER(to: HStack_sources, width: 8)
-            //------------------------------------------
-            let HSep: CGFloat = 12
-            let W: CGFloat = SCREEN_SIZE().width - 12 - 12 - 13 - 13 - 8 - 8 - HSep
-            let sourceHeight: CGFloat = 18
-            
-            var row = 1
-            var val_X: CGFloat = 0
-            //------------------------------------------
-            var groupedSourcesCopy = [(String, String)]()
-            let letters = "abcdefghijklmnopqrstuvwxyz"
-            
-            for S in self.groupedSources {
-                var total = 0
-                var current = -1
-                for _tmp in self.groupedSources {
-                    if(_tmp.0 == S.0) {
-                        if(_tmp.1 == S.1) {
-                            current = total
-                        }
-                        total += 1
-                    }
-                }
-                
-                var title = S.0
-                let url = S.1
-                
-                if(total>1) {
-                    title = S.0 + " (" + letters.getCharAt(index: current)! + ")"
-                }
-                groupedSourcesCopy.append( (title, url) )
-            }
-            
-            for (i, S) in groupedSourcesCopy.enumerated() {
-                let sourceLabel = UILabel()
-                sourceLabel.font = CSS.shared.iPhoneStoryContent_textFont //ROBOTO(15)
-                //sourceLabel.backgroundColor = .blue
-                sourceLabel.textColor = CSS.shared.orange
-                sourceLabel.text = "[" + String(i+1) + "] " + S.0
-                //print("SOURCE:", sourceLabel.text)
-                
-                sourceLabel.heightAnchor.constraint(equalToConstant: sourceHeight).isActive = true
-                let labelWidth = sourceLabel.calculateWidthFor(height: sourceHeight)
-                sourceLabel.widthAnchor.constraint(equalToConstant: labelWidth).isActive = true
-                
-                var limit = val_X + labelWidth
-                if(val_X > 0) { limit += HSep }
-                if(limit > W) {
-                    let HStack_row =  VStack_sources.arrangedSubviews[row-1] as! UIStackView
-                    ADD_SPACER(to: HStack_row)
-                    
-                    row += 1
-                    val_X = 0
-                } else {
-                    if(val_X == 0) {
-                        val_X += labelWidth
-                    } else {
-                        val_X += HSep + labelWidth
-                    }
-                }
-                
-                var HStack_row: UIStackView
-                if(VStack_sources.arrangedSubviews.count < row) {
-                    HStack_row = HSTACK(into: VStack_sources)
-                    HStack_row.spacing = HSep
-                    //HStack_row.backgroundColor = .yellow
-                    
-                    if(row>1) {
-                        val_X += labelWidth
-                    }
-                } else {
-                    HStack_row =  VStack_sources.arrangedSubviews[row-1] as! UIStackView
-                }
-                
-                HStack_row.addArrangedSubview(sourceLabel)
-                
-                var isLast = false
-                if(self.show3 && i==lastSourceIndex){ isLast = true }
-                if( (i+1 == self.groupedSources.count) || isLast) { // last item
-                    ADD_SPACER(to: HStack_row)
-                }
-                
-                let sourceButton = UIButton(type: .system)
-                //sourceLabel.backgroundColor = .blue.withAlphaComponent(0.3)
-                HStack_row.addSubview(sourceButton)
-                sourceButton.activateConstraints([
-                    sourceButton.leadingAnchor.constraint(equalTo: sourceLabel.leadingAnchor),
-                    sourceButton.trailingAnchor.constraint(equalTo: sourceLabel.trailingAnchor),
-                    sourceButton.topAnchor.constraint(equalTo: sourceLabel.topAnchor),
-                    sourceButton.bottomAnchor.constraint(equalTo: sourceLabel.bottomAnchor)
-                ])
-                sourceButton.tag = 200 + i
-                sourceButton.addTarget(self, action: #selector(sourceButtonOnTap(_:)), for: .touchUpInside)
-                
-                if(isLast) {
-                    break
-                }
-            }
 
             ADD_SPACER(to: VStack, height: 15)
         }
         
-        ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding * 2)
+        //ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding * 2)
         //print("--------------------")
         let line2 = UIView()
         self.VStack.addArrangedSubview(line2)
@@ -1517,9 +1407,129 @@ extension StoryViewController {
             line2.heightAnchor.constraint(equalToConstant: 1),
         ])
         ADD_DASHES(to: line2)
-
-        
     }
+    
+    func populateSources() {
+        let VStack = self.view.viewWithTag(150) as! UIStackView
+        REMOVE_ALL_SUBVIEWS(from: VStack)
+        
+        let SourcesLabel = UILabel()
+        SourcesLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+        if(IPAD()){ SourcesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+        }
+        SourcesLabel.text = "Sources"
+        SourcesLabel.textColor = CSS.shared.displayMode().sec_textColor
+        VStack.addArrangedSubview(SourcesLabel)
+        ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
+        
+        let HStack_sources = HSTACK(into: VStack)
+        //HStack_sources.backgroundColor = .green
+        ADD_SPACER(to: HStack_sources, width: 8)
+        
+        let VStack_sources = VSTACK(into: HStack_sources)
+        VStack_sources.spacing = CSS.shared.iPhoneSide_padding
+        //VStack_sources.backgroundColor = .blue
+        
+        ADD_SPACER(to: HStack_sources, width: 8)
+        //------------------------------------------
+        let HSep: CGFloat = 12
+        let W: CGFloat = SCREEN_SIZE().width - 12 - 12 - 13 - 13 - 8 - 8 - HSep
+        let sourceHeight: CGFloat = 18
+        
+        var row = 1
+        var val_X: CGFloat = 0
+        //------------------------------------------
+        var groupedSourcesCopy = [(String, String)]()
+        let letters = "abcdefghijklmnopqrstuvwxyz"
+        
+        for S in self.groupedSources {
+            var total = 0
+            var current = -1
+            for _tmp in self.groupedSources {
+                if(_tmp.0 == S.0) {
+                    if(_tmp.1 == S.1) {
+                        current = total
+                    }
+                    total += 1
+                }
+            }
+            
+            var title = S.0
+            let url = S.1
+            
+            if(total>1) {
+                title = S.0 + " (" + letters.getCharAt(index: current)! + ")"
+            }
+            groupedSourcesCopy.append( (title, url) )
+        }
+        
+        for (i, S) in groupedSourcesCopy.enumerated() {
+            let sourceLabel = UILabel()
+            sourceLabel.font = CSS.shared.iPhoneStoryContent_textFont //ROBOTO(15)
+            //sourceLabel.backgroundColor = .blue
+            sourceLabel.textColor = CSS.shared.orange
+            sourceLabel.text = "[" + String(i+1) + "] " + S.0
+            //print("SOURCE:", sourceLabel.text)
+            
+            sourceLabel.heightAnchor.constraint(equalToConstant: sourceHeight).isActive = true
+            let labelWidth = sourceLabel.calculateWidthFor(height: sourceHeight)
+            sourceLabel.widthAnchor.constraint(equalToConstant: labelWidth).isActive = true
+            
+            var limit = val_X + labelWidth
+            if(val_X > 0) { limit += HSep }
+            if(limit > W) {
+                let HStack_row =  VStack_sources.arrangedSubviews[row-1] as! UIStackView
+                ADD_SPACER(to: HStack_row)
+                
+                row += 1
+                val_X = 0
+            } else {
+                if(val_X == 0) {
+                    val_X += labelWidth
+                } else {
+                    val_X += HSep + labelWidth
+                }
+            }
+            
+            var HStack_row: UIStackView
+            if(VStack_sources.arrangedSubviews.count < row) {
+                HStack_row = HSTACK(into: VStack_sources)
+                HStack_row.spacing = HSep
+                //HStack_row.backgroundColor = .yellow
+                
+                if(row>1) {
+                    val_X += labelWidth
+                }
+            } else {
+                HStack_row =  VStack_sources.arrangedSubviews[row-1] as! UIStackView
+            }
+            
+            HStack_row.addArrangedSubview(sourceLabel)
+            
+            var isLast = false
+            //if(self.show3 && i==self.lastSourceIndex){ isLast = true }
+            if( (i+1 == self.groupedSources.count) || isLast) { // last item
+                ADD_SPACER(to: HStack_row)
+            }
+            
+            let sourceButton = UIButton(type: .system)
+            //sourceLabel.backgroundColor = .blue.withAlphaComponent(0.3)
+            HStack_row.addSubview(sourceButton)
+            sourceButton.activateConstraints([
+                sourceButton.leadingAnchor.constraint(equalTo: sourceLabel.leadingAnchor),
+                sourceButton.trailingAnchor.constraint(equalTo: sourceLabel.trailingAnchor),
+                sourceButton.topAnchor.constraint(equalTo: sourceLabel.topAnchor),
+                sourceButton.bottomAnchor.constraint(equalTo: sourceLabel.bottomAnchor)
+            ])
+            sourceButton.tag = 200 + i
+            sourceButton.addTarget(self, action: #selector(sourceButtonOnTap(_:)), for: .touchUpInside)
+            
+            if(isLast) {
+                break
+            }
+        }
+    }
+    
     @objc func numberButtonOnTap(_ sender: UIButton) {
         let index = sender.tag-77
         let tmpButton = UIButton(type: .custom)
@@ -1545,6 +1555,33 @@ extension StoryViewController {
         innerVStack.tag = 140
         //ADD_SPACER(to: innerHStack, width: 13)
     }
+    
+    private func addSourcesStructure() {
+        let HStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+        let VStack_borders = VSTACK(into: HStack)
+        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+
+        VStack_borders.backgroundColor = self.view.backgroundColor
+        let innerHStack = HSTACK(into: VStack_borders)
+        //innerHStack.backgroundColor = .blue
+        //ADD_SPACER(to: innerHStack, width: 13)
+        let innerVStack = VSTACK(into: innerHStack)
+        innerVStack.tag = 150
+        //ADD_SPACER(to: innerHStack, width: 13)
+        
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding*2)
+        
+        let line2 = UIView()
+        self.VStack.addArrangedSubview(line2)
+        line2.activateConstraints([
+            line2.heightAnchor.constraint(equalToConstant: 1),
+        ])
+        ADD_DASHES(to: line2)
+        
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+    }
+    
     
     private func addImageCredit(_ title: String, _ url: String) {
         let creditLabel = UILabel()
@@ -1860,6 +1897,7 @@ extension StoryViewController {
     @objc func showMoreButtonOnTap(_ sender: UIButton) {
         self.show3 = !self.show3
         self.populateFacts()
+        //self.populateSources()
     }
     
     @objc func spinOnTap(_ sender: UIButton) {
