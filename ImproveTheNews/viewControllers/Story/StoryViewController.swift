@@ -623,7 +623,7 @@ extension StoryViewController {
             noArticlesLabel.textColor = CSS.shared.displayMode().main_textColor
             innerHStack.addArrangedSubview(noArticlesLabel)
         } else {
-            
+            var H: CGFloat = 0
         
             var title = "Political split"
             if(type.uppercased() == "PE") {
@@ -646,6 +646,7 @@ extension StoryViewController {
             headers.activateConstraints([
                 headers.heightAnchor.constraint(equalToConstant: 45)
             ])
+            H += 45
             
             var T1 = "LEFT"
             var T2 = "RIGHT"
@@ -776,7 +777,7 @@ extension StoryViewController {
                 VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
                 
                 ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
-                
+                H += maxH + CSS.shared.iPhoneSide_padding
                 
                 
                 //let hStackColumns = HSTACK(into: innerHStack)
@@ -802,6 +803,7 @@ extension StoryViewController {
                 line.topAnchor.constraint(equalTo: headers.topAnchor),
                 line.bottomAnchor.constraint(equalTo: colsHStack.bottomAnchor)
             ])
+            ADD_VDASHES(to: line, height: H)
             
             self.addNeutralArticles(type: type, articlesNeutral)
         }
@@ -1406,7 +1408,7 @@ extension StoryViewController {
         line2.activateConstraints([
             line2.heightAnchor.constraint(equalToConstant: 1),
         ])
-        ADD_DASHES(to: line2)
+        ADD_HDASHES(to: line2)
     }
     
     func populateSources() {
@@ -1577,7 +1579,7 @@ extension StoryViewController {
         line2.activateConstraints([
             line2.heightAnchor.constraint(equalToConstant: 1),
         ])
-        ADD_DASHES(to: line2)
+        ADD_HDASHES(to: line2)
         
         ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
     }

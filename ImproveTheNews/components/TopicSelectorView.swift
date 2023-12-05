@@ -228,7 +228,7 @@ extension TopicSelectorView {
                 let view = (C as! UIView)
                 if(view.tag == 1) { // lines
                     view.backgroundColor = self.backgroundColor
-                    ADD_DASHES(to: view)                    
+                    ADD_HDASHES(to: view)                    
                 }
             }
         }

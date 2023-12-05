@@ -49,7 +49,7 @@ class MainFeedv3 {
 
                 let mData = ADD_MAIN_NODE(to: data)
                 if let jsonString = String(data: mData, encoding: .utf8) {
-                    if(jsonString.containsItemInArray(["Invalid topic requested", "Oops"])) {
+                    if(jsonString.containsItemInArray(["Invalid topic requested"])) {
                         print("SERVER ERROR", "Invalid topic requested", "Oops")
                         
                         let _error = CustomError.jsonParseError
