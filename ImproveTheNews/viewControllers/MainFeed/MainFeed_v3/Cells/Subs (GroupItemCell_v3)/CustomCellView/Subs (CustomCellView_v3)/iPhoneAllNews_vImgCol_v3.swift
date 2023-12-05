@@ -229,7 +229,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.mainImageView.load(url: spin.image)
         self.mainImageView.showCorners(false)
         
-        self.articleTitleLabel.font = CSS.shared.iPhoneStory_titleFont_small
+        //self.articleTitleLabel.font = CSS.shared.iPhoneStory_titleFont_small
         self.articleTitleLabel.text = spin.subTitle
             
         var sourcesArray = [String]()

@@ -36,6 +36,7 @@ class StoryViewController: BaseViewController {
     var lastSourceIndex = -1
     
     var isContext: Bool = false
+    var thirdPillText = "Articles"
     
     deinit {
         self.audioPlayer.close()
@@ -181,7 +182,26 @@ extension StoryViewController {
     func addContent(_ story: MainFeedStory) {
         REMOVE_ALL_SUBVIEWS(from: self.VStack)
         
+        let line2 = UIView()
+        self.VStack.addArrangedSubview(line2)
+        line2.activateConstraints([
+            line2.heightAnchor.constraint(equalToConstant: 1),
+        ])
+        ADD_HDASHES(to: line2)
+        
         //self.addPill()
+        if(story.splitType.isEmpty) {
+            if(self.isContext) {
+                self.thirdPillText = "Go deeper"
+            } else {
+                self.thirdPillText = "Articles"
+            }
+        } else {
+            self.thirdPillText = "Split"
+        }
+        
+        
+        self.addTabs()
         self.addTitle(text: story.title)
         self.addAudioPlayer(story.audio)
         
@@ -246,10 +266,102 @@ extension StoryViewController {
     }
 
     //----
+    func addTabs() {
+    ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding*1.5)
+        let containerView = UIView()
+        self.VStack.addArrangedSubview(containerView)
+        containerView.activateConstraints([
+            containerView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        let W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding*4))/3
+        var val_X: CGFloat = CSS.shared.iPhoneSide_padding
+        
+        for i in 1...3 {
+            let tab = UIView()
+            tab.backgroundColor = CSS.shared.displayMode().main_bgColor
+            tab.layer.cornerRadius = 20
+            tab.layer.borderWidth = 1.0
+            tab.layer.borderColor = CSS.shared.displayMode().line_color.cgColor
+            
+            containerView.addSubview(tab)
+            tab.activateConstraints([
+                tab.heightAnchor.constraint(equalToConstant: 40),
+                tab.widthAnchor.constraint(equalToConstant: W),
+                tab.topAnchor.constraint(equalTo: containerView.topAnchor),
+                tab.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: val_X)
+            ])
+            
+            let label = UILabel()
+            label.text = "oOoOoOoOo"
+            label.font = CSS.shared.topicSelector_font
+            label.textColor = CSS.shared.displayMode().sec_textColor
+            tab.addSubview(label)
+            label.activateConstraints([
+                label.centerXAnchor.constraint(equalTo: tab.centerXAnchor),
+                label.centerYAnchor.constraint(equalTo: tab.centerYAnchor)
+            ])
+            
+            switch(i) {
+                case 1:
+                    label.text = "The Facts"
+                case 2:
+                    label.text = "The Spin"
+                case 3:
+                    label.text = self.thirdPillText
+                
+                default:
+                    NOTHING()
+            }
+            
+            let button = UIButton(type: .system)
+            //button.backgroundColor = .red.withAlphaComponent(0.5)
+            tab.addSubview(button)
+            button.activateConstraints([
+                button.leadingAnchor.constraint(equalTo: tab.leadingAnchor, constant: -5),
+                button.trailingAnchor.constraint(equalTo: tab.trailingAnchor, constant: 5),
+                button.topAnchor.constraint(equalTo: tab.topAnchor, constant: -5),
+                button.bottomAnchor.constraint(equalTo: tab.bottomAnchor, constant: 5)
+            ])
+            button.tag = 300 + i
+            button.addTarget(self, action: #selector(onTabButtonTap(_:)), for: .touchUpInside)
+            
+            //------------------
+            val_X += W + CSS.shared.iPhoneSide_padding
+        }
+        
+    ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+    }
+    
+    @objc func onTabButtonTap(_ sender: UIButton) {
+        let tag = sender.tag - 300
+        
+        var val_Y: CGFloat = 0
+        
+        var view = UIView()
+        switch(tag) {
+            case 1:
+                let view = self.view.viewWithTag(140)!
+                val_Y = -self.contentView.convert(view.frame.origin, to: view).y
+            case 2:
+                view = self.view.viewWithTag(160)!
+                val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+            case 3:
+                view = self.view.viewWithTag(170)!
+                val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+        
+            default:
+                NOTHING()
+        }
+        
+        self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y), animated: true)
+    }
+    
     private func addGoDeeper(stories: [StorySearchResult]) {
         if(stories.count==0){ return }
         
         let sectionView = UIView()
+        sectionView.tag = 170
         //sectionView.backgroundColor = .yellow.withAlphaComponent(0.3)
         //ADD_SPACER(to: self.VStack, height: 10)
         self.VStack.addArrangedSubview(sectionView)
@@ -375,6 +487,7 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: 12)
     
         let HStack = HSTACK(into: self.VStack)
+        HStack.tag = 170
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let innerHStack = VSTACK(into: HStack)
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
@@ -610,6 +723,7 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: 12)
 
         let HStack = HSTACK(into: self.VStack)
+        HStack.tag = 170
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let innerHStack = VSTACK(into: HStack)
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
@@ -1012,6 +1126,8 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding*2)
     
         let HStack = HSTACK(into: self.VStack)
+        HStack.tag = 160
+        
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let innerHStack = VSTACK(into: HStack)
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
@@ -1062,8 +1178,8 @@ extension StoryViewController {
                 ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
                 let ART_HStack = HSTACK(into: innerHStack)
                 
-                let W = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 2)
-                let ART = iPhoneAllNews_vImgCol_v3(width: W/2)
+                let W = SCREEN_SIZE().width //- (CSS.shared.iPhoneSide_padding * 2)
+                let ART = iPhoneAllNews_vImgCol_v3(width: W)
                 ART.refreshDisplayMode()
                 ART.populate(spin: S)
                 ART_HStack.addArrangedSubview(ART)
@@ -1071,7 +1187,7 @@ extension StoryViewController {
                     ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
                 ])
                 
-                ADD_SPACER(to: ART_HStack, width: W/2)
+                //ADD_SPACER(to: ART_HStack, width: W/2)
                 //ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
             ///
                 
@@ -1266,6 +1382,7 @@ extension StoryViewController {
     
     private func populateFacts() {
         let VStack = self.view.viewWithTag(140) as! UIStackView
+        
         //VStack.backgroundColor = .systemPink
         REMOVE_ALL_SUBVIEWS(from: VStack)
         //ADD_SPACER(to: VStack, height: 20)
