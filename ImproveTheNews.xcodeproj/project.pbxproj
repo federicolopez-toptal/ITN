@@ -63,6 +63,7 @@
 		1F6506472AD6FA2C00535337 /* FAQ_Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6506462AD6FA2C00535337 /* FAQ_Stories.swift */; };
 		1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */; };
 		1F66798429DF026000CFB714 /* iPadSpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798329DF026000CFB714 /* iPadSpacerCell.swift */; };
+		1F6DA4092B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6DA4082B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift */; };
 		1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */; };
 		1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */; };
 		1F70BE712913FD940061E3FA /* SearchTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE702913FD940061E3FA /* SearchTextView.swift */; };
@@ -526,6 +527,7 @@
 		1F6506462AD6FA2C00535337 /* FAQ_Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_Stories.swift; sourceTree = "<group>"; };
 		1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_rowNoStoriesCell.swift; sourceTree = "<group>"; };
 		1F66798329DF026000CFB714 /* iPadSpacerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSpacerCell.swift; sourceTree = "<group>"; };
+		1F6DA4082B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneArticle_vImg_v3.swift; sourceTree = "<group>"; };
 		1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1F70BE702913FD940061E3FA /* SearchTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextView.swift; sourceTree = "<group>"; };
@@ -1229,6 +1231,7 @@
 			isa = PBXGroup;
 			children = (
 				1FA48D952AFBD905009CEAAC /* iPhoneStory_vImg_v3.swift */,
+				1F6DA4082B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift */,
 				1FA48D9D2AFC5DCC009CEAAC /* iPhoneStory_vTxt_v3.swift */,
 				1FA48D932AFBD2C1009CEAAC /* iPhoneAllNews_vImgCol_v3.swift */,
 				1FA48DA32AFC647B009CEAAC /* iPhoneAllNews_vTxtCol_v3.swift */,
@@ -2447,6 +2450,7 @@
 				1F22E2EB28C6E5E0007F00D1 /* UINavigationControllerExtension.swift in Sources */,
 				1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */,
 				1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */,
+				1F6DA4092B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

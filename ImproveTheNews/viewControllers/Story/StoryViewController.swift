@@ -1128,9 +1128,9 @@ extension StoryViewController {
         let HStack = HSTACK(into: self.VStack)
         HStack.tag = 160
         
-        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+        //ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let innerHStack = VSTACK(into: HStack)
-        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+        //ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         
        if(spins.count == 0) {
             let noSpinsLabel = UILabel()
@@ -1143,14 +1143,19 @@ extension StoryViewController {
             
             ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
         } else {
-            let SpinsLabel = UILabel()
-            SpinsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
-            if(IPAD()){ SpinsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
-            }
-            SpinsLabel.text = "Spin"
-            SpinsLabel.textColor = CSS.shared.displayMode().main_textColor
-            innerHStack.addArrangedSubview(SpinsLabel)
+            let titleHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: titleHStack, width: CSS.shared.iPhoneSide_padding)
             
+                let SpinsLabel = UILabel()
+                SpinsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                if(IPAD()){ SpinsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+                }
+                SpinsLabel.text = "Spin"
+                SpinsLabel.textColor = CSS.shared.displayMode().main_textColor
+                titleHStack.addArrangedSubview(SpinsLabel)
+                
+            ADD_SPACER(to: titleHStack, width: CSS.shared.iPhoneSide_padding)
+                
             ADD_SPACER(to: innerHStack, height: 12)
             for (i, S) in spins.enumerated() {
                 var _title = S.title
@@ -1159,33 +1164,40 @@ extension StoryViewController {
                     _title = "Narrative " + letters.getCharAt(index: i)!
                 }
                 
-                let titleLabel = UILabel()
-                titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
-                titleLabel.text = _title
-                titleLabel.numberOfLines = 0
-                titleLabel.textColor = CSS.shared.displayMode().sec_textColor
-                innerHStack.addArrangedSubview(titleLabel)
+                let natitleHStack = HSTACK(into: innerHStack)
+                ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                    let titleLabel = UILabel()
+                    titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                    titleLabel.text = _title
+                    titleLabel.numberOfLines = 0
+                    titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                    natitleHStack.addArrangedSubview(titleLabel)
+                ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                 
                 ADD_SPACER(to: innerHStack, height: 10)
-                let descriptionLabel = UILabel()
-                descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
-                descriptionLabel.numberOfLines = 0
-                descriptionLabel.text = S.description
-                descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
-                innerHStack.addArrangedSubview(descriptionLabel)
+                let descrHStack = HSTACK(into: innerHStack)
+                ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
+                    let descriptionLabel = UILabel()
+                    descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
+                    descriptionLabel.numberOfLines = 0
+                    descriptionLabel.text = S.description
+                    descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
+                    descrHStack.addArrangedSubview(descriptionLabel)
+                ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
                 
             ///
                 ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
                 let ART_HStack = HSTACK(into: innerHStack)
                 
                 let W = SCREEN_SIZE().width //- (CSS.shared.iPhoneSide_padding * 2)
-                let ART = iPhoneAllNews_vImgCol_v3(width: W)
+                let ART = iPhoneArticle_vImg_v3(width: W)
                 ART.refreshDisplayMode()
                 ART.populate(spin: S)
                 ART_HStack.addArrangedSubview(ART)
                 ART.activateConstraints([
                     ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
                 ])
+                ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
                 
                 //ADD_SPACER(to: ART_HStack, width: W/2)
                 //ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
