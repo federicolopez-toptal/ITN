@@ -124,7 +124,7 @@ extension MainFeed_v3_viewController {
                         self.hideLoading()
                         self.list.hideRefresher()
                         
-                        // TOUR
+//                        // TOUR
                         if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
                             if(CustomNavController.shared.viewControllers.first! == self) {
                                 WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")

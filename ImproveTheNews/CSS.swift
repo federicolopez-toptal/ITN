@@ -71,11 +71,12 @@ class CSS {
     let menu_font = AILERON(15)
     let menu_versionFont = AILERON(14)
     
-    let actionButton_bgColor = UIColor(hex: 0x60C4D6)
-    let actionButton_textColor = UIColor(hex: 0x2D2D31)
-    let actionButton_iPhone_font = AILERON_SEMIBOLD(15)
+    let actionButton_bgColor = UIColor(hex: 0x60C4D6) //!!!
+    let actionButton_textColor = UIColor(hex: 0x2D2D31) //!!!
+    let actionButton_iPhone_font = AILERON_SEMIBOLD(15) //!!!
     
-    let tour_backButton_font = AILERON_BOLD(14)
+    let tour_backButton_font = AILERON_BOLD(16)
+    let tour_textFont = AILERON(16)
     
     let iPhoneStoryContent_titleFont = DM_SERIF_DISPLAY(23)
     let iPhoneStoryContent_subTitleFont = DM_SERIF_DISPLAY(20)

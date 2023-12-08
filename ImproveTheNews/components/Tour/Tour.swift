@@ -107,7 +107,13 @@ class Tour {
     }
 
     func start() {
-        self.showStep(1)
+//        self.showStep(2)
+//        
+//        CustomNavController.shared.darkView.show()
+//        CustomNavController.shared.darkView.alpha = 1
+
+        let popup = TourIntroPopupView()
+        popup.pushFromBottom()
     }
     
     func cancel() {
@@ -116,6 +122,7 @@ class Tour {
     
     func finish() {
         self.write("10") // never cancelled
+        CustomNavController.shared.darkView.hide()
         self.hideAllSteps()
     }
 
@@ -127,6 +134,8 @@ class Tour {
         for v in self.rects {
             v.hide()
         }
+        
+        //CustomNavController.shared.darkView.hide()
     }
 
     func showStep(_ num: Int) {
@@ -164,6 +173,8 @@ class Tour {
                         self.circleAnim.bottomConstraint?.constant -= 25
                     }
                 }
+                
+                CustomNavController.shared.darkView.isUserInteractionEnabled = false
             }
         }
         

@@ -26,6 +26,7 @@ class PopupView: UIView {
         UIView.animate(withDuration: 0.2) {
             darkView.alpha = 1.0
         } completion: { _ in
+            darkView.isUserInteractionEnabled = true
             self.bottomConstraint?.constant = 0
             UIView.animate(withDuration: 0.4) {
                 self.superview!.layoutIfNeeded()
