@@ -1158,7 +1158,7 @@
 				1F70BE72291457960061E3FA /* Search */,
 				1FBD426F2A40EDB500BFE68B /* KeywordSearch */,
 				1F9E28C12954B1FD00041303 /* PrivacyPolicy */,
-				1FBD090529B24A5A00AC20F5 /* FAQ */,
+				1FBD090529B24A5A00AC20F5 /* FAQ (new About) */,
 				1F7B9EBC296DEF5800D99C5D /* Story */,
 				1FC7390E298A149C003EB38D /* SignInUp */,
 				1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */,
@@ -1336,7 +1336,7 @@
 			path = TextFields;
 			sourceTree = "<group>";
 		};
-		1FBD090529B24A5A00AC20F5 /* FAQ */ = {
+		1FBD090529B24A5A00AC20F5 /* FAQ (new About) */ = {
 			isa = PBXGroup;
 			children = (
 				1F9E28C42954DC0200041303 /* FAQViewController.swift */,
@@ -1345,7 +1345,7 @@
 				1FB6A0B02ADF01E4008F968A /* FAQ_normalStoryView.swift */,
 				1FB6A0B22ADF1537008F968A /* FAQ_contextStoryView.swift */,
 			);
-			path = FAQ;
+			path = "FAQ (new About)";
 			sourceTree = "<group>";
 		};
 		1FBD426F2A40EDB500BFE68B /* KeywordSearch */ = {

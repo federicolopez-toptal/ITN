@@ -1852,6 +1852,9 @@ extension StoryViewController {
             pill.topAnchor.constraint(equalTo: rowView.topAnchor),
             pill.leadingAnchor.constraint(equalTo: rowView.leadingAnchor)
         ])
+        if(self.isContext) {
+            pill.setAsContext()
+        }
         
         let sources = SourceIconsView()
         sources.buildInto(rowView)

@@ -17,6 +17,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     private let imgHeight: CGFloat = 88
     
     let mainImageView = CustomImageView()
+    var isContext = false
     
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
@@ -30,6 +31,8 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         let articleSourceTimeLabel = UILabel()
         let articleStanceIcon = StanceIconView()
         var sourceTime_leading: NSLayoutConstraint?
+    
+
     
     // MARK: - Start
     required init?(coder: NSCoder) {
@@ -169,6 +172,11 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     
     // MARK: Overrides
     func populate(story: StorySearchResult) {
+        if(story.type == 2) {
+            self.isContext = true
+            self.storyPill.setAsContext()
+        }
+        
         self.article = MainFeedArticle(story: story)
         self.populate(article)
     }
@@ -277,7 +285,19 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     override func populate(_ article: MainFeedArticle) {
         self.article = article
         
-        self.mainImageView.load(url: article.imgUrl)
+        if let _videoFile = article.videoFile {
+            if let _url = URL(string: YOUTUBE_GET_THUMB_IMG(id: _videoFile)) {
+                self.mainImageView.sd_setImage(with: _url)
+            }
+        } else {
+            self.mainImageView.load(url: article.imgUrl)
+        }
+        
+//        if(!self.isContext) {
+//            
+//        } else {
+//            
+//        }
         self.mainImageView.showCorners(self.article.isStory)
         
         if(article.isStory) {
@@ -390,6 +410,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         if(self.article.isStory) {
             let vc = StoryViewController()
             vc.story = self.article
+            vc.isContext = self.isContext
             CustomNavController.shared.pushViewController(vc, animated: true)
         } else {
             let vc = ArticleViewController()

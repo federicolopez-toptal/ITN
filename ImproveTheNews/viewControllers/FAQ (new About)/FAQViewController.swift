@@ -178,44 +178,66 @@ class FAQViewController: BaseViewController {
             descr.trailingAnchor.constraint(equalTo: title.trailingAnchor)
         ])
         
+        
         let W: CGFloat = SCREEN_SIZE().width - (13*2) - (15*2)
         var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20 + descr.calculateHeightFor(width: W) + 20
-        let columnW: CGFloat = (W-15)/2
         
-        var col = 1
-        var prevH: CGFloat = 0
-        for (i, ST) in stories.enumerated() {
-            let storyView = (type == 1) ? FAQ_normalStoryView() : FAQ_contextStoryView()
-            sectionView.addSubview(storyView)
-            storyView.activateConstraints([
-                storyView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: (col == 1) ? 15 : (15+columnW+15)),
-                storyView.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY),
-                storyView.widthAnchor.constraint(equalToConstant: columnW)
+        let W2 = (W - CSS.shared.iPhoneSide_padding)/2
+
+        var storiesCopy = stories
+        while(storiesCopy.count>0) {
+            let colsHStack = HSTACK(into: sectionView, spacing: CSS.shared.iPhoneSide_padding)
+            
+            colsHStack.activateConstraints([
+                colsHStack.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor,
+                    constant: CSS.shared.iPhoneSide_padding),
+                colsHStack.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor,
+                    constant: -CSS.shared.iPhoneSide_padding),
+                colsHStack.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY)
             ])
             
-            storyView.populate(MainFeedArticle(story: ST))
-            storyView.refreshDisplayMode()
+            var H1: CGFloat = 1
+            var H2: CGFloat = 1
+            let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W2)
+            let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W2)
             
-            let H = storyView.getHeight(forColumnWidth: columnW)
-            storyView.heightAnchor.constraint(equalToConstant: H).isActive = true
-            
-            if(col==1) {
-                prevH = H
+            // item 1
+            if let _A = storiesCopy.first {
+                VIEW1.refreshDisplayMode()
+                VIEW1.populate(story: _A)
+                H1 = VIEW1.calculateHeight()
+                colsHStack.addArrangedSubview(VIEW1)
+                VIEW1.activateConstraints([
+                    VIEW1.widthAnchor.constraint(equalToConstant: W2)
+                ])
+                
+                storiesCopy.removeFirst()
+            } else {
+                H1 = 0
+                ADD_SPACER(to: colsHStack, width: W2)
             }
             
-            col += 1
-            if(col == 3) {
-                col = 1
-                var max = H
-                if(prevH > max){ max = prevH }
-                posY += max + 15
-            } else if(i == stories.count-1) {
-//                var max = H
-//                if(prevH > max){ max = prevH }
-//                posY += max + 15
+            // item 2
+            if let _A = storiesCopy.first {
+                VIEW2.refreshDisplayMode()
+                VIEW2.populate(story: _A)
+                H2 = VIEW2.calculateHeight()
+                colsHStack.addArrangedSubview(VIEW2)
+                VIEW2.activateConstraints([
+                    VIEW2.widthAnchor.constraint(equalToConstant: W2)
+                ])
+                
+                storiesCopy.removeFirst()
+            } else {
+                H2 = 0
+                ADD_SPACER(to: colsHStack, width: W2)
+            }
+            
+            let maxH = (H1 > H2) ? H1 : H2
+            VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+            VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
 
-                posY += H + 15
-            }
+            posY += maxH
         }
         
         sectionView.activateConstraints([

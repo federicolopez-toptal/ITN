@@ -169,6 +169,7 @@ class CustomImageView: UIImageView {
 class StoryPillView: UIView {
     
     let label = UILabel()
+    private var widthConstraint: NSLayoutConstraint? = nil
     
     init() {
         super.init(frame: .zero)
@@ -183,8 +184,9 @@ class StoryPillView: UIView {
         let F: CGFloat = 11
         
         container.addSubview(self)
+        self.widthConstraint = self.widthAnchor.constraint(equalToConstant: W)
         self.activateConstraints([
-            self.widthAnchor.constraint(equalToConstant: W),
+            self.widthConstraint!,
             self.heightAnchor.constraint(equalToConstant: H)
         ])
         self.layer.cornerRadius = H/2
@@ -205,10 +207,13 @@ class StoryPillView: UIView {
     func refreshDisplayMode() {
         self.backgroundColor = CSS.shared.orange
         self.label.textColor = .white
-        
-        // OLD
-//        self.backgroundColor = DARK_MODE() ? CSS.shared.orange.withAlphaComponent(0.2) : CSS.shared.orange
-//        self.label.textColor = DARK_MODE() ? CSS.shared.orange : .white
+    }
+    
+    func setAsContext() {
+        self.label.text = "CONTEXT"
+        self.label.textColor = UIColor(hex: 0x19191C)
+        self.backgroundColor = UIColor(hex: 0x71D656)
+        self.widthConstraint?.constant = 69
     }
     
 }
@@ -217,6 +222,7 @@ class StoryPillView: UIView {
 class StoryPillMiniView: UIView {
     
     let label = UILabel()
+    private var widthConstraint: NSLayoutConstraint? = nil
     
     init() {
         super.init(frame: .zero)
@@ -231,8 +237,10 @@ class StoryPillMiniView: UIView {
         let F: CGFloat = 8
         
         container.addSubview(self)
+        self.widthConstraint = self.widthAnchor.constraint(equalToConstant: W)
+        
         self.activateConstraints([
-            self.widthAnchor.constraint(equalToConstant: W),
+            self.widthConstraint!,
             self.heightAnchor.constraint(equalToConstant: H)
         ])
         self.layer.cornerRadius = H/2
@@ -253,10 +261,13 @@ class StoryPillMiniView: UIView {
     func refreshDisplayMode() {
         self.backgroundColor = CSS.shared.orange
         self.label.textColor = .white
+    }
     
-        // OLD
-//        self.backgroundColor = DARK_MODE() ? CSS.shared.orange.withAlphaComponent(0.2) : CSS.shared.orange
-//        self.label.textColor = DARK_MODE() ? CSS.shared.orange : .white
+    func setAsContext() {
+        self.label.text = "CONTEXT"
+        self.label.textColor = UIColor(hex: 0x19191C)
+        self.backgroundColor = UIColor(hex: 0x71D656)
+        self.widthConstraint?.constant = 53
     }
     
 }
