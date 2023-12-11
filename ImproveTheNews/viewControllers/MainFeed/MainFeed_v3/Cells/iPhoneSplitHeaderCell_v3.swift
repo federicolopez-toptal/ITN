@@ -47,7 +47,7 @@ class iPhoneSplitHeaderCell_v3: UITableViewCell {
         
         self.vLine = VLINE(into: self.contentView)
         self.vLine.activateConstraints([
-            self.vLine.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.vLine.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
             self.vLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
     }
@@ -57,6 +57,8 @@ class iPhoneSplitHeaderCell_v3: UITableViewCell {
         self.rightLabel.text = item.rightTitle
     
         self.refreshDisplayMode()
+        
+        ADD_VDASHES(to: self.vLine, height: 40)
     }
     
     func refreshDisplayMode() {

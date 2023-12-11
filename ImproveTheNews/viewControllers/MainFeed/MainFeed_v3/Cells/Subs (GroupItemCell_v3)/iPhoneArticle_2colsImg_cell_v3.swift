@@ -74,6 +74,9 @@ class iPhoneArticle_2colsImg_cell_v3: GroupItemCell_v3 {
         }
         
         self.refreshDisplayMode()
+        if(MUST_SPLIT() > 0) {
+            ADD_VDASHES(to: self.vLine, height: self.calculateGroupHeight())
+        }
     }
     
     override func refreshDisplayMode() {
