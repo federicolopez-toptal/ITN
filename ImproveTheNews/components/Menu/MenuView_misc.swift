@@ -51,7 +51,7 @@ extension MenuView {
                 result = "Tour"
                 
             case .more: // ▼ ▲
-                result = "More"
+                result = "more..."
 
             case .sliders:
                 result = "How the\nsliders work"
@@ -66,7 +66,7 @@ extension MenuView {
                 result = "Privacy policy"
                 
             case .profile:
-                result = "Profile"
+                result = "My Profile"
                 
             case .logout:
                 result = "Logout"

@@ -34,7 +34,7 @@ class MenuItemCell: UITableViewCell {
         gap.backgroundColor = .clear //.systemPink
         self.addSubview(gap)
         gap.activateConstraints([
-            gap.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
+            gap.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 37),
             gap.heightAnchor.constraint(equalToConstant: 30),
             gap.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
@@ -52,13 +52,13 @@ class MenuItemCell: UITableViewCell {
         ])
         
         self.titleLabel.backgroundColor = .clear //.orange
-        self.titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+        self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.titleLabel.font = CSS.shared.menu_font
         self.titleLabel.text = "TEST TOPIC"
         self.titleLabel.numberOfLines = 0
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.icon.trailingAnchor, constant: 12),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.icon.trailingAnchor, constant: 23),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         

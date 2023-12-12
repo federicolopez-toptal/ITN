@@ -68,7 +68,7 @@ class CSS {
     let iPhoneFooter_font = AILERON_SEMIBOLD(15)
         
     let menu_width: CGFloat = 280
-    let menu_font = AILERON(15)
+    let menu_font = AILERON(16)
     let menu_versionFont = AILERON(14)
     
     let actionButton_bgColor = UIColor(hex: 0x60C4D6) //!!!

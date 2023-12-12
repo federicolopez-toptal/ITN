@@ -14,6 +14,7 @@ class MenuView: UIView {
     var menuLeadingConstraint: NSLayoutConstraint?
     var list = UITableView()
     var versionLabel = UILabel()
+    var logo = UIImageView()
     
     var isShowingMore = false
     
@@ -21,25 +22,26 @@ class MenuView: UIView {
     
     let dataProvider_A: [MenuITem] = [ // Items order
         .headlines,
+        .profile,
         .displayMode,
         .tour,
         .preferences,
         .layout,
-        .profile,
-        .logout,
         .faq,
+        .logout,
+
         .more
     ]
     
     let dataProvider_B: [MenuITem] = [ // Items order
         .headlines,
+        .profile,
         .displayMode,
         .tour,
         .preferences,
         .layout,
-        .profile,
-        .logout,
         .faq,
+        .logout,
         .more,
         
         .sliders,
@@ -71,7 +73,7 @@ class MenuView: UIView {
         ])
         
         let topSpace: CGFloat = Y_TOP_NOTCH_FIX(54)
-        var bottomSpace: CGFloat = 5
+        var bottomSpace: CGFloat = 30
         if let _extraSpace = SAFE_AREA()?.bottom {
             bottomSpace += _extraSpace * 0.6
         }
@@ -90,17 +92,28 @@ class MenuView: UIView {
         self.list.dataSource = self
         self.list.register(MenuItemCell.self, forCellReuseIdentifier: MenuItemCell.identifier)
         
-        let vInfo = "version " + Bundle.main.releaseVersionNumber! +
-            " (build " + Bundle.main.buildVersionNumber! + ")"
+        let vInfo = "V. " + Bundle.main.releaseVersionNumber! +
+            " (" + Bundle.main.buildVersionNumber! + ")"
         
         self.addSubview(self.versionLabel)
-        self.versionLabel.textColor = CSS.shared.orange
-        self.versionLabel.font =  AILERON_BOLD(14)
+        self.versionLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        //self.versionLabel.backgroundColor = .yellow.withAlphaComponent(0.2)
+        self.versionLabel.font =  AILERON(13)
         self.versionLabel.text = vInfo
-        self.versionLabel.textAlignment = .center
+        self.versionLabel.textAlignment = .right
         self.versionLabel.activateConstraints([
-            self.versionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            //self.versionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.versionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             self.versionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace)
+        ])
+        
+        self.logo = UIImageView(image: UIImage(named: DisplayMode.imageName("verity.logo")))
+        self.addSubview(self.logo)
+        self.logo.activateConstraints([
+            self.logo.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace),
+            self.logo.widthAnchor.constraint(equalToConstant: 115),
+            self.logo.heightAnchor.constraint(equalToConstant: 23.42),
+            self.logo.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 41)
         ])
         
         let closeImage = UIImage(named: DisplayMode.imageName("circle.close"))
@@ -148,7 +161,9 @@ class MenuView: UIView {
         closeIcon.image = UIImage(named: DisplayMode.imageName("circle.close"))
         
         //closeIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        self.versionLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
 
+        self.logo.image = UIImage(named: DisplayMode.imageName("verity.logo"))
         self.list.reloadData()
     }
     
@@ -509,7 +524,7 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
         
         var gap: CGFloat = 0
         if(!self.dataProvider_A.contains(dpItem)) {
-            gap = 25
+            gap = 37
         }
         cell.setLeftGap(gap)
         
