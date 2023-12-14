@@ -38,6 +38,13 @@ class Banner {
         return result
     }
     
+    func isPodcast() -> Bool {
+        var result = false
+        if(self.code.lowercased() == "pc"){ result = true }
+        
+        return result
+    }
+    
     func trace() {
         print("BANNER")
         print(self.headerText, self.mainText, self.colorScheme, self.type, self.code, self.imgSize, self.imgUrl, self.url)

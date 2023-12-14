@@ -38,6 +38,7 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneArticle_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)
         
         self.list.register(iPhoneBannerCell_v3.self, forCellReuseIdentifier: iPhoneBannerCell_v3.identifier)
+        self.list.register(iPhoneBannerPCCell_v3.self, forCellReuseIdentifier: iPhoneBannerPCCell_v3.identifier)
         self.list.register(iPhoneBannerNLCell_v3.self, forCellReuseIdentifier: iPhoneBannerNLCell_v3.identifier)
         self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
         self.list.register(iPhoneFooterCell_v3.self, forCellReuseIdentifier: iPhoneFooterCell_v3.identifier)
@@ -128,6 +129,9 @@ extension MainFeed_v3_viewController {
                 if(self.data.banner!.isNewsLetter()) {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerNLCell_v3.identifier)!
                     (cell as! iPhoneBannerNLCell_v3).populate(with: self.data.banner!)
+                } else if(self.data.banner!.isPodcast()) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerPCCell_v3.identifier)!
+                    (cell as! iPhoneBannerPCCell_v3).populate(with: self.data.banner!)
                 } else {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerCell_v3.identifier)!
                     (cell as! iPhoneBannerCell_v3).populate(with: self.data.banner!)
@@ -167,6 +171,8 @@ extension MainFeed_v3_viewController {
         } else if(item is DP3_banner) { // Banners
             if(self.data.banner!.isNewsLetter()) {
                 result = (self.getCell(indexPath) as! iPhoneBannerNLCell_v3).calculateHeight()
+            } else if(self.data.banner!.isPodcast()) {
+                result = (self.getCell(indexPath) as! iPhoneBannerPCCell_v3).calculateHeight()
             } else {
                 result = (self.getCell(indexPath) as! iPhoneBannerCell_v3).calculateHeight()
             }
