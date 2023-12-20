@@ -20,6 +20,8 @@ class UUID {
     }
     
     func checkIfGenerated(callback: @escaping (Bool) -> ()) {
+        //WRITE(LocalKeys.user.UUID, value: "3754192065771029328")
+        
         if(READ(LocalKeys.user.UUID) != nil) {
             callback(true)
         } else {

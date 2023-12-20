@@ -1130,6 +1130,7 @@ extension StoryViewController {
         
         //ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let innerHStack = VSTACK(into: HStack)
+        //innerHStack.backgroundColor = .systemPink
         //ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         
        if(spins.count == 0) {
@@ -1180,10 +1181,12 @@ extension StoryViewController {
                     let descriptionLabel = UILabel()
                     descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
                     descriptionLabel.numberOfLines = 0
+                    //descriptionLabel.backgroundColor = .green.withAlphaComponent(0.2)
                     descriptionLabel.text = S.description
+                    descriptionLabel.setLineSpacing(lineSpacing: 7.0)
                     descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
                     descrHStack.addArrangedSubview(descriptionLabel)
-                ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
+                ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
                 
             ///
                 ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
@@ -1399,7 +1402,7 @@ extension StoryViewController {
         REMOVE_ALL_SUBVIEWS(from: VStack)
         //ADD_SPACER(to: VStack, height: 20)
         
-        ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
+        ADD_SPACER(to: VStack, height: 2)
         if(self.facts.count==0) {
             let noFactsLabel = UILabel()
             noFactsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
@@ -1473,6 +1476,7 @@ extension StoryViewController {
                 contentLabel.font = CSS.shared.iPhoneStoryContent_textFont
                 //contentLabel.text = F.title
                 contentLabel.attributedText = self.attrText(F.title, index: F.sourceIndex+1)
+                contentLabel.setLineSpacing(lineSpacing: 7.0)
                 HStack.addArrangedSubview(contentLabel)
                 
                 let numberButton = UIButton(type: .custom)
@@ -1672,9 +1676,10 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: 1)
     
         let HStack = HSTACK(into: self.VStack)
+        //HStack.backgroundColor = .green
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         let VStack_borders = VSTACK(into: HStack)
-        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+        ADD_SPACER(to: HStack, width: 35)
         //VStack_borders.layer.borderWidth = 8.0
         //VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE1E3E3).cgColor
 
@@ -1774,7 +1779,6 @@ extension StoryViewController {
         //imageView.backgroundColor = .darkGray
         
         if(IPAD()) {
-        
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             let HStack = HSTACK(into: self.VStack)
@@ -1807,6 +1811,8 @@ extension StoryViewController {
                     self.imageHeightConstraint?.constant = compH
                 }
             }
+            
+            imageView.refreshDisplayMode()
             
 //            imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, options: .retryFailed) { (img, error, cacheType, url) in
 //                if let _img = img {

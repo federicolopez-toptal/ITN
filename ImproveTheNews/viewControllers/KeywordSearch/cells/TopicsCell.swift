@@ -111,14 +111,23 @@ class TopicsCell: UITableViewCell {
     
     func loadTopic(_ topic: String) {
         if(IPHONE()) {
-            let vc = MainFeedViewController()
+            let vc = MainFeed_v3_viewController()
             vc.topic = topic
             CustomNavController.shared.viewControllers = [vc]
-
+        
             DELAY(0.1) {
                 CustomNavController.shared.slidersPanel.show()
                 CustomNavController.shared.floatingButton.show()
             }
+        
+//            let vc = MainFeedViewController()
+//            vc.topic = topic
+//            CustomNavController.shared.viewControllers = [vc]
+//
+//            DELAY(0.1) {
+//                CustomNavController.shared.slidersPanel.show()
+//                CustomNavController.shared.floatingButton.show()
+//            }
         } else {
             let vc = MainFeed_v2ViewController()
             vc.topic = topic
