@@ -19,10 +19,11 @@ class KeywordSearchTextView: UIView {
     private let charactersLimit: Int = 28
     weak var delegate: KeywordSearchTextViewDelegate?
     
-    let lupa = UIImageView(image: UIImage(named: DisplayMode.imageName("navBar.search"))?.withRenderingMode(.alwaysTemplate))
+    let lupa = UIImageView(image: UIImage(named: DisplayMode.imageName("lupa2")))
     let placeHolderLabel = UILabel()
     let searchTextField = UITextField()
-    let closeIcon = UIImageView(image: UIImage(named: "menu.close")!.withRenderingMode(.alwaysTemplate))
+    //let closeIcon = UIImageView(image: UIImage(named: "menu.close")!.withRenderingMode(.alwaysTemplate))
+
     
     // MARK: - Init(s)
     init() {
@@ -37,7 +38,7 @@ class KeywordSearchTextView: UIView {
         viewController.view.addSubview(self)
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xF2F2F2)
+        bgColorView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x232326) : UIColor(hex: 0xE3E3E3)
         self.addSubview(bgColorView)
         bgColorView.activateConstraints([
             bgColorView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -45,31 +46,31 @@ class KeywordSearchTextView: UIView {
             bgColorView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             bgColorView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
-        bgColorView.layer.cornerRadius = 4.0
+        bgColorView.layer.cornerRadius = 24
         
         bgColorView.addSubview(self.lupa)
         self.lupa.activateConstraints([
-            self.lupa.leadingAnchor.constraint(equalTo: bgColorView.leadingAnchor, constant: 11),
+            self.lupa.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -9),
             self.lupa.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor),
-            self.lupa.widthAnchor.constraint(equalToConstant: 24),
-            self.lupa.heightAnchor.constraint(equalToConstant: 24)
+            self.lupa.widthAnchor.constraint(equalToConstant: 32),
+            self.lupa.heightAnchor.constraint(equalToConstant: 32)
         ])
-        self.lupa.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.75) : UIColor(hex: 0x1D242F)
-        
-        let roboto = ROBOTO(14)
-        
+        //self.lupa.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.75) : UIColor(hex: 0x1D242F)
+                
         self.placeHolderLabel.text = "Search topics" // "Headlines, stories & article splits"
-        self.placeHolderLabel.font = roboto
-        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5) : UIColor(hex: 0x1D242F).withAlphaComponent(0.5)
+        self.placeHolderLabel.font = AILERON(16)
+        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        self.placeHolderLabel.alpha = 0.5
+        
         bgColorView.addSubview(self.placeHolderLabel)
         self.placeHolderLabel.activateConstraints([
-            self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.lupa.trailingAnchor, constant: 4),
+            self.placeHolderLabel.leadingAnchor.constraint(equalTo: bgColorView.leadingAnchor, constant: 24),
             self.placeHolderLabel.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor),
         ])
         
-        self.searchTextField.font = roboto
-        self.searchTextField.textColor = UIColor(hex: 0xDA4933)
-        self.searchTextField.tintColor = UIColor(hex: 0xDA4933)
+        self.searchTextField.font = self.placeHolderLabel.font
+        self.searchTextField.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        self.searchTextField.tintColor = self.searchTextField.textColor
         self.searchTextField.returnKeyType = .done
         self.searchTextField.autocapitalizationType = .none
         self.searchTextField.autocorrectionType = .no
@@ -80,33 +81,35 @@ class KeywordSearchTextView: UIView {
         self.searchTextField.keyboardType = .asciiCapable
         bgColorView.addSubview(self.searchTextField)
         self.searchTextField.activateConstraints([
-            self.searchTextField.leadingAnchor.constraint(equalTo: self.lupa.trailingAnchor, constant: 4),
-            self.searchTextField.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor),
-            self.searchTextField.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -42)
+            self.searchTextField.leadingAnchor.constraint(equalTo: bgColorView.leadingAnchor, constant: 24),
+            self.searchTextField.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -42),
+            self.searchTextField.topAnchor.constraint(equalTo: bgColorView.topAnchor),
+            self.searchTextField.bottomAnchor.constraint(equalTo: bgColorView.bottomAnchor)
         ])
         self.searchTextField.addTarget(self, action: #selector(onSearchTextChange(_:)), for: .editingChanged)
         self.searchTextField.delegate = self
+        //self.searchTextField.backgroundColor = .red
         
-        bgColorView.addSubview(self.closeIcon)
-        self.closeIcon.activateConstraints([
-            self.closeIcon.widthAnchor.constraint(equalToConstant: 25),
-            self.closeIcon.heightAnchor.constraint(equalToConstant: 25),
-            self.closeIcon.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -8),
-            self.closeIcon.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor)
-        ])
-        self.closeIcon.tintColor = UIColor(hex: 0xDA4933)
-        self.closeIcon.hide()
-        
-        let closeButton = UIButton(type: .system)
-        closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-        bgColorView.addSubview(closeButton)
-        closeButton.activateConstraints([
-            closeButton.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -5),
-            closeButton.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: -5),
-            closeButton.trailingAnchor.constraint(equalTo: closeIcon.trailingAnchor, constant: 5),
-            closeButton.bottomAnchor.constraint(equalTo: closeIcon.bottomAnchor, constant: 5),
-        ])
-        closeButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
+//        bgColorView.addSubview(self.closeIcon)
+//        self.closeIcon.activateConstraints([
+//            self.closeIcon.widthAnchor.constraint(equalToConstant: 25),
+//            self.closeIcon.heightAnchor.constraint(equalToConstant: 25),
+//            self.closeIcon.trailingAnchor.constraint(equalTo: bgColorView.trailingAnchor, constant: -8),
+//            self.closeIcon.centerYAnchor.constraint(equalTo: bgColorView.centerYAnchor)
+//        ])
+//        self.closeIcon.tintColor = UIColor(hex: 0xDA4933)
+//        self.closeIcon.hide()
+//        
+//        let closeButton = UIButton(type: .system)
+//        closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+//        bgColorView.addSubview(closeButton)
+//        closeButton.activateConstraints([
+//            closeButton.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -5),
+//            closeButton.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: -5),
+//            closeButton.trailingAnchor.constraint(equalTo: closeIcon.trailingAnchor, constant: 5),
+//            closeButton.bottomAnchor.constraint(equalTo: closeIcon.bottomAnchor, constant: 5),
+//        ])
+//        closeButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
     }
     
     // MARK: - misc
@@ -121,13 +124,13 @@ extension KeywordSearchTextView {
     
         if(sender.text!.isEmpty) {
             self.placeHolderLabel.show()
-            self.lupa.image = UIImage(named: "navBar.search.dark")
-            self.closeIcon.hide()
+            //self.lupa.image = UIImage(named: "navBar.search.dark")
+            //self.closeIcon.hide()
         } else {
             self.placeHolderLabel.hide()
-            self.lupa.image = UIImage(named: "navBar.search.dark")?.withRenderingMode(.alwaysTemplate)
-            self.lupa.tintColor = UIColor(hex: 0xDA4933)
-            self.closeIcon.show()
+            //self.lupa.image = UIImage(named: "navBar.search.dark")?.withRenderingMode(.alwaysTemplate)
+            //self.lupa.tintColor = UIColor(hex: 0xDA4933)
+            //self.closeIcon.show()
         }
         
         self.delegate?.KeywordSearchTextView_onTextChange(sender: self, text: sender.text!)

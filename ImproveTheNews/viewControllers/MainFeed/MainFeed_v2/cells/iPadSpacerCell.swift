@@ -12,7 +12,9 @@ class iPadSpacerCell: UITableViewCell {
     static let identifier = "iPadSpacerCell"
 
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        
+        //.systemPink //DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     }
 
 }

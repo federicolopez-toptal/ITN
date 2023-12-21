@@ -45,7 +45,7 @@ class CenteredTextCell: UITableViewCell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.customTextLabel.textColor = UIColor(hex: 0xDA4933)
     }
 

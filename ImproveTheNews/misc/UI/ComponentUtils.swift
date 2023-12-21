@@ -28,7 +28,9 @@ func ADD_SHADOW(to view: UIView, offset: CGSize = CGSize(width: 5, height: 5)) {
 
 // MARK: misc
 func HIDE_KEYBOARD(view: UIView) {
-    view.endEditing(true)
+    MAIN_THREAD {
+        view.endEditing(true)
+    }
 }
 
 // MARK: UIStackView related

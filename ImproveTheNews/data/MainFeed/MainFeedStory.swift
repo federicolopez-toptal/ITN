@@ -23,6 +23,7 @@ struct MainFeedStory {
     var goDeeper = [StorySearchResult]()
     
     var audio: AudioFile?
+    var video: String = ""
     
     init (_ json: [String: Any]) {
     // main fields
@@ -59,6 +60,9 @@ struct MainFeedStory {
         if(!_file.isEmpty && !_duration.isEmpty && !_created.isEmpty && !_title.isEmpty) {
             self.audio = AudioFile(file: _file, duration: Int(_duration)!, created: _created, title: _title)
         }
+        
+        self.video = getSTRING(mainNode["videofile"])
+        
 
     // Facts
         let factsNode = removeNULL(from: json["facts"])

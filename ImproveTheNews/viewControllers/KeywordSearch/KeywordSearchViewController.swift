@@ -11,8 +11,8 @@ class KeywordSearchViewController: BaseViewController {
 
     var resultType: Int = 0
     var lastKeyTapTime: Date?
-    var dataProvider = [DataProviderItem]()
-    var filteredDataProvider = [DataProviderItem]()
+    var dataProvider = [DP3_item]()
+    var filteredDataProvider = [DP3_item]()
     
     var searchTextfield = KeywordSearchTextView()
     let searchSelector = TopicSelectorView()
@@ -34,7 +34,7 @@ class KeywordSearchViewController: BaseViewController {
     // MARK: - Init(s)
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.buildContent()
         
         NotificationCenter.default.addObserver(self,
@@ -62,17 +62,18 @@ class KeywordSearchViewController: BaseViewController {
 extension KeywordSearchViewController {
 
     func buildContent() {
-        let topValue: CGFloat = Y_TOP_NOTCH_FIX(56)
+        let topValue = Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)
         
-        let closeIcon = UIImageView(image: UIImage(named: "menu.close")?.withRenderingMode(.alwaysTemplate))
+        let closeImage = UIImage(named: DisplayMode.imageName("circle.close"))
+        let closeIcon = UIImageView(image: closeImage)
+        closeIcon.tag = 77
         self.view.addSubview(closeIcon)
         closeIcon.activateConstraints([
             closeIcon.widthAnchor.constraint(equalToConstant: 32),
             closeIcon.heightAnchor.constraint(equalToConstant: 32),
-            closeIcon.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
+            closeIcon.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             closeIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topValue)
         ])
-        closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.75) : UIColor(hex: 0x1D242F)
         
         let closeButton = UIButton(type: .system)
         closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
@@ -85,16 +86,27 @@ extension KeywordSearchViewController {
         ])
         closeButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
                 
+        let titleLabel = UILabel()
+        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.textColor = CSS.shared.displayMode().main_textColor
+        titleLabel.text = "Search Verity"
+        self.view.addSubview(titleLabel)
+        titleLabel.activateConstraints([
+            titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: 21)
+        ])
+                
+                
         self.searchTextfield.delegate = self
         self.searchTextfield.buildInto(viewController: self)
         self.searchTextfield.activateConstraints([
-            self.searchTextfield.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 11),
-            self.searchTextfield.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -11),
-            self.searchTextfield.heightAnchor.constraint(equalToConstant: 40),
-            self.searchTextfield.topAnchor.constraint(equalTo: closeIcon.bottomAnchor, constant: 10)
+            self.searchTextfield.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.searchTextfield.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.searchTextfield.heightAnchor.constraint(equalToConstant: 48),
+            self.searchTextfield.topAnchor.constraint(equalTo: closeIcon.bottomAnchor, constant: 47)
         ])
         
-        self.searchSelector.buildInto(self.view, yOffset: topValue+32+10+40+22)
+        self.searchSelector.buildInto(self.view, yOffset: topValue+32+47+48+25)
         self.searchSelector.setTopics(["ALL", "TOPICS", "STORIES", "ARTICLES"])
         self.searchSelector.delegate = self
         
@@ -105,7 +117,7 @@ extension KeywordSearchViewController {
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: listMargins),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -listMargins),
-            self.list.topAnchor.constraint(equalTo: self.searchSelector.bottomAnchor, constant: 12),
+            self.list.topAnchor.constraint(equalTo: self.searchSelector.bottomAnchor, constant: 0),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
@@ -113,7 +125,8 @@ extension KeywordSearchViewController {
     }
     
     @objc func onCloseButtonTap(_ sender: UIButton) {
-        CustomNavController.shared.popViewController(animated: true)
+        //CustomNavController.shared.popViewController(animated: true)
+        CustomNavController.shared.customPopToBottomViewController()
     }
 
 }
@@ -167,7 +180,7 @@ extension KeywordSearchViewController {
         self.articleSearchPage = 1
             
         
-        self.dataProvider = [DataProviderItem]()
+        self.dataProvider = [DP3_item]()
         self.showLoading()
         //print("SEARCHING...")
         
@@ -185,8 +198,11 @@ extension KeywordSearchViewController {
                 self.refreshList()
             } else {
                 if(self.searchCount==1) {
-                    HIDE_KEYBOARD(view: self.view)
-                    SERVER_ERROR_POPUP(text: "Oops: we're having a temprary\ndatabase problem - this one is on\nus!")
+                    MAIN_THREAD {
+                        HIDE_KEYBOARD(view: self.view)
+                        SERVER_ERROR_POPUP(text: "Oops: we're having a temprary\ndatabase problem - this one is on\nus!")
+                    }
+                    
                 
 //                    ALERT(vc: self, title: "Server error",
 //                            message: "There was an error while retrieving the information. Please try again later", onCompletion: {
@@ -255,7 +271,7 @@ extension KeywordSearchViewController: UITableViewDelegate, UITableViewDataSourc
 extension KeywordSearchViewController {
 
     func fillDataProvider(tapOnTab: Bool = false) {
-        self.dataProvider = [DataProviderItem]()
+        self.dataProvider = [DP3_item]()
     
         self.addTopics()
         let _ = self.addStories(tapOnTab: true)
@@ -282,7 +298,7 @@ extension KeywordSearchViewController {
         self.addHeaderWith(text: "TOPICS")
         
         if(KeywordSearch.shared.topics.count == 0) {
-            let empty = DataProviderCenteredText(text: "No topics found")
+            let empty = DP3_text(text: "No topics found")
             self.dataProvider.append(empty)
         } else {
             var topics = [TopicSearchResult]()
@@ -292,7 +308,7 @@ extension KeywordSearchViewController {
                 topics = Array(KeywordSearch.shared.topics[0...self.TOPICS_MAX_COUNT-1])
             }
             
-            let topicsItem = DataProviderTopicsItem(topics: topics)
+            let topicsItem = DP3_topics(topics: topics)
             self.dataProvider.append(topicsItem)
         }
     }
@@ -302,20 +318,26 @@ extension KeywordSearchViewController {
         if(index == -1){ self.addHeaderWith(text: "STORIES") }
         
         if(KeywordSearch.shared.stories.count == 0) {
-            let empty = DataProviderCenteredText(text: "No stories found")
+            let empty = DP3_text(text: "No stories found")
             self.dataProvider.append(empty)
             return 0
         }
         
-        let div = IPHONE() ? 1 : 2
+        let div = 2 //IPHONE() ? 1 : 2
         for i in 1...(self.PAGE_SIZE/div) {
-            let group = DataProviderGroupItem()
-            group.MaxNumOfItems = IPHONE() ? 1 : 2
+            let group = DP3_groupItem()
+            group.MaxNumOfItems = 2 //IPHONE() ? 1 : 2
             group.storyFlags = [true]
             
             for (i, ST) in KeywordSearch.shared.stories.enumerated() {
                 if(ST.used == false) {
-                    group.articles.append( MainFeedArticle(story: ST) )
+                    //StorySearchResult
+                    var _ST = MainFeedArticle(story: ST)
+                    if(ST.type == 2) {
+                        _ST.isContext = true
+                    }
+                    
+                    group.articles.append(_ST)
                     count += 1
                     KeywordSearch.shared.stories[i].used = true
                     
@@ -335,10 +357,9 @@ extension KeywordSearchViewController {
         }
         
         if(index == -1 && count==self.PAGE_SIZE) {
-            let moreItem = DataProviderMoreItem(topic: "ST", completed: false)
+            let moreItem = DP3_more(topic: "ST", completed: false)
             self.dataProvider.append(moreItem)
         }
-        ///
         
         return count
     }
@@ -361,14 +382,15 @@ extension KeywordSearchViewController {
         if(index == -1){ self.addHeaderWith(text: "ARTICLES") }
         
         if(KeywordSearch.shared.articles.count == 0) {
-            let empty = DataProviderCenteredText(text: "No articles found")
+            let empty = DP3_text(text: "No articles found")
             self.dataProvider.append(empty)
             return 0
         }
         
-        for i in 1...self.PAGE_SIZE {
-            let group = DataProviderGroupItem()
-            group.MaxNumOfItems = 1
+        let div = 2 //IPHONE() ? 1 : 2
+        for i in 1...(self.PAGE_SIZE/div) {
+            let group = DP3_groupItem()
+            group.MaxNumOfItems = 2 //IPHONE() ? 1 : 2
             group.storyFlags = [false]
             
             for (i, AR) in KeywordSearch.shared.articles.enumerated() {
@@ -393,7 +415,7 @@ extension KeywordSearchViewController {
         }
         
         if(index == -1 && count==self.PAGE_SIZE) {
-            let moreItem = DataProviderMoreItem(topic: "AR", completed: false)
+            let moreItem = DP3_more(topic: "AR", completed: false)
             self.dataProvider.append(moreItem)
         }
         
@@ -414,13 +436,15 @@ extension KeywordSearchViewController {
     
     /////////
     private func addHeaderWith(text: String) {
-        let header = DataProviderHeaderItem(title: text)
+        self.addSpacerWith(size: 10)
+            
+        let header = DP3_headerItem(title: text.capitalized)
         self.dataProvider.append(header)
         self.addSpacerWith(size: 8)
     }
     
     private func addSpacerWith(size S: CGFloat) {
-        let spacer = DataProviderSpacer(size: S)
+        let spacer = DP3_spacer(size: S)
         self.dataProvider.append(spacer)
     }
     

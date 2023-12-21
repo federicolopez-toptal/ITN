@@ -26,6 +26,7 @@ struct MainFeedArticle {
     
     var used: Bool = false
     var videoFile: String?
+    var isContext: Bool = false
     
     
     init (_ json: [Any]) {

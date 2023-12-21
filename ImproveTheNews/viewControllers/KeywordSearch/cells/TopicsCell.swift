@@ -30,22 +30,23 @@ class TopicsCell: UITableViewCell {
         //self.tagsContainer.backgroundColor = .green
         self.contentView.addSubview(self.tagsContainer)
         self.tagsContainer.activateConstraints([
-            self.tagsContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5),
-            self.tagsContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10),
-            self.tagsContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5)
+            self.tagsContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 12),
+            self.tagsContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -12),
+            self.tagsContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0)
         ])
         self.tagsContainerHeightLayout = self.tagsContainer.heightAnchor.constraint(equalToConstant: 100)
         self.tagsContainerHeightLayout.isActive = true
     }
     
     static func calculateHeightFor(topics: [TopicSearchResult]) -> CGFloat {
-        return 5 + TopicsCell.lastHeight + 5
+        //return 5 + TopicsCell.lastHeight + 5
+        return TopicsCell.lastHeight
     }
     
     func populate(with topics: [TopicSearchResult]) {
         self.topics = topics
         
-        let H: CGFloat = 28.0
+        let H: CGFloat = 32
         let SEP: CGFloat = 8.0
         let LIMIT = SCREEN_SIZE().width - 15
         var val_x: CGFloat = 0
@@ -54,14 +55,15 @@ class TopicsCell: UITableViewCell {
         REMOVE_ALL_SUBVIEWS(from: self.tagsContainer)
         for (i, T) in topics.enumerated() {
             let label = UILabel()
-            label.font = ROBOTO(13)
-            label.textColor = UIColor(hex: 0xDA4933)
-            label.backgroundColor = UIColor(hex: 0xFF643C).withAlphaComponent(0.2)
+            label.font = AILERON(16)
+            label.textColor = CSS.shared.displayMode().sec_textColor
+            label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xE3E3E3)
+            //UIColor(hex: 0xFF643C).withAlphaComponent(0.2)
             label.textAlignment = .center
             label.text = T.name
             label.layer.cornerRadius = H/2
-            label.layer.borderWidth = 1
-            label.layer.borderColor = UIColor(hex: 0xFF643C).cgColor
+//            label.layer.borderWidth = 1
+//            label.layer.borderColor = UIColor(hex: 0xFF643C).cgColor
             label.clipsToBounds = true
             
             let W = label.calculateWidthFor(height: H) + 26
@@ -100,7 +102,7 @@ class TopicsCell: UITableViewCell {
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
     }
     
     // MARK: - Event(s)

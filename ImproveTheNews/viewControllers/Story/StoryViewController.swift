@@ -206,6 +206,7 @@ extension StoryViewController {
         self.addAudioPlayer(story.audio)
         
         if(self.isContext) {
+            self.story?.videoFile = story.video
             self.addVideo()
         } else {
             self.addImage(imageUrl: story.image_src)

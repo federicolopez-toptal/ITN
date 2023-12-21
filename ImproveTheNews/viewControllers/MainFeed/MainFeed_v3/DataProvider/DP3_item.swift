@@ -53,6 +53,25 @@ class DP3_more: DP3_item {
 }
 
 // --------------------------
+class DP3_text: DP3_item {
+    var text: String = ""
+    var alignment: NSTextAlignment = .center
+   
+    init(text: String, alignment: NSTextAlignment = .center) {
+        self.text = text
+        self.alignment = alignment
+    }
+}
+
+class DP3_topics: DP3_item {
+    var topics: [TopicSearchResult] = []
+    
+    init(topics: [TopicSearchResult]) {
+        self.topics = topics
+    }
+}
+
+// --------------------------
 class DP3_footer: DP3_item {
 }
 

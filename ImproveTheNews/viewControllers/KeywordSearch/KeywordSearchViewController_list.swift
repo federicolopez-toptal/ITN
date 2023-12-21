@@ -38,14 +38,13 @@ extension KeywordSearchViewController {
     
     // MARK: - Cell registration
     func listRegisterCells() {
-        self.list.register(iPadHeaderCell.self, forCellReuseIdentifier: iPadHeaderCell.identifier)
-        self.list.register(iPadSpacerCell.self, forCellReuseIdentifier: iPadSpacerCell.identifier)
-        self.list.register(iPhoneGroupItem_1AR_Cell.self, forCellReuseIdentifier: iPhoneGroupItem_1AR_Cell.identifier)
-        self.list.register(iPhoneGroupItem_1ST_Cell.self, forCellReuseIdentifier: iPhoneGroupItem_1ST_Cell.identifier)
-        self.list.register(iPadGroupItem_2ST_Cell.self, forCellReuseIdentifier: iPadGroupItem_2ST_Cell.identifier)
+        self.list.register(iPhoneHeaderCell_v3.self, forCellReuseIdentifier: iPhoneHeaderCell_v3.identifier)
+        self.list.register(iPhoneStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
+        self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
         self.list.register(TopicsCell.self, forCellReuseIdentifier: TopicsCell.identifier)
         self.list.register(CenteredTextCell.self, forCellReuseIdentifier: CenteredTextCell.identifier)
-        self.list.register(iPadMoreCell.self, forCellReuseIdentifier: iPadMoreCell.identifier)
     }
     
     // MARK: - Cell component
@@ -57,41 +56,33 @@ extension KeywordSearchViewController {
         
         let dpItem = self.filteredDataProvider[indexPath.row]
         
-        if let _ = dpItem as? DataProviderHeaderItem {
-            cell = self.list.dequeueReusableCell(withIdentifier: iPadHeaderCell.identifier) as! iPadHeaderCell
-            (cell as! iPadHeaderCell).populate(with: (dpItem as! DataProviderHeaderItem))
-            if(IPAD()){ (cell as! iPadHeaderCell).titleLabel.font = DM_SERIF_DISPLAY_fixed(20) //MERRIWEATHER_BOLD(20)
-            }
-        } else if let _item = dpItem as? DataProviderMoreItem {
-            cell = self.list.dequeueReusableCell(withIdentifier: iPadMoreCell.identifier) as! iPadMoreCell
-            (cell as! iPadMoreCell).populate(with: _item)
-            (cell as! iPadMoreCell).delegate = self
-        } else if let _group = dpItem as? DataProviderGroupItem {
+        if let _dpItem = dpItem as? DP3_headerItem {
+            cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier) as! iPhoneHeaderCell_v3
+            (cell as! iPhoneHeaderCell_v3).populate(with: _dpItem)
+        } else if let _item = dpItem as? DP3_more {
+            cell = self.list.dequeueReusableCell(withIdentifier: iPhoneMoreCell_v3.identifier) as! iPhoneMoreCell_v3
+            (cell as! iPhoneMoreCell_v3).populate(with: _item)
+            (cell as! iPhoneMoreCell_v3).delegate = self
+        } else if let _group = dpItem as? DP3_groupItem {
             let article = _group.articles.first!
             
             if(article.isStory) {
-                if(IPHONE()) {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGroupItem_1ST_Cell.identifier) as! iPhoneGroupItem_1ST_Cell
-                    (cell as! iPhoneGroupItem_1ST_Cell).populate(with: _group)
-                    (cell as! iPhoneGroupItem_1ST_Cell).highlight(text: self.searchTextfield.text())
-                } else {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPadGroupItem_2ST_Cell.identifier) as! iPadGroupItem_2ST_Cell
-                    (cell as! iPadGroupItem_2ST_Cell).populate(with: _group)
-                    (cell as! iPadGroupItem_2ST_Cell).highlight(text: self.searchTextfield.text())
-                }
+                // Stories
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)!
             } else {
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGroupItem_1AR_Cell.identifier) as! iPhoneGroupItem_1AR_Cell
-                (cell as! iPhoneGroupItem_1AR_Cell).populate(with: _group)
-                (cell as! iPhoneGroupItem_1AR_Cell).highlight(text: self.searchTextfield.text())
+                // Articles
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
             }
-
-        } else if let _group = dpItem as? DataProviderTopicsItem {
+            
+            (cell as! GroupItemCell_v3).populate(with: _group)
+            
+        } else if let _group = dpItem as? DP3_topics {
             cell = self.list.dequeueReusableCell(withIdentifier: TopicsCell.identifier) as! TopicsCell
             (cell as! TopicsCell).populate(with: _group.topics)
-        } else if let _ = dpItem as? DataProviderSpacer {
-            cell = self.list.dequeueReusableCell(withIdentifier: iPadSpacerCell.identifier) as! iPadSpacerCell
-            (cell as! iPadSpacerCell).refreshDisplayMode()
-        } else if let _item = dpItem as? DataProviderCenteredText {
+        } else if let _ = dpItem as? DP3_spacer {
+            cell = self.list.dequeueReusableCell(withIdentifier: SpacerCell_v3.identifier) as! SpacerCell_v3
+            (cell as! SpacerCell_v3).refreshDisplayMode()
+        } else if let _item = dpItem as? DP3_text {
             cell = self.list.dequeueReusableCell(withIdentifier: CenteredTextCell.identifier) as! CenteredTextCell
             (cell as! CenteredTextCell).populate(with: _item.text, offsetY: -15)
         }
@@ -108,27 +99,24 @@ extension KeywordSearchViewController {
         
         let dpItem = self.filteredDataProvider[indexPath.row]
         
-        if let _ = dpItem as? DataProviderHeaderItem {
-            result = 30
-        } else if let _ = dpItem as? DataProviderMoreItem {
+        if let _ = dpItem as? DP3_headerItem {
+            //result = (self.getCell(indexPath) as! iPhoneHeaderCell_v3).calculateHeight()
+            result = 50
+        } else if let _ = dpItem as? DP3_more {
             result = 70
-        } else if let _group = dpItem as? DataProviderGroupItem {
-            let article = _group.articles.first!
-            
-            if(article.isStory) {
-                if(IPHONE()) {
-                    result = iPhoneGroupItem_1ST_Cell.calculateHeightFor(_group.articles) + 10
-                } else {
-                    result = 350 + 20
-                }
-            } else {
-                result = iPhoneGroupItem_1AR_Cell.calculateHeightFor(_group.articles) + 5
+        } else if let _ = dpItem as? DP3_groupItem {
+            let cell = self.getCell(indexPath)
+        
+            if(cell is iPhoneStory_2colsImg_cell_v3) {
+                result = (cell as! iPhoneStory_2colsImg_cell_v3).calculateGroupHeight()
+            } else if(cell is iPhoneArticle_2colsImg_cell_v3) {
+                result = (cell as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
             }
-        } else if let _group = dpItem as? DataProviderTopicsItem {
-            result = TopicsCell.calculateHeightFor(topics: _group.topics) + 10
-        } else if let _item = dpItem as? DataProviderSpacer  {
+        } else if let _group = dpItem as? DP3_topics {
+            result = TopicsCell.calculateHeightFor(topics: _group.topics)
+        } else if let _item = dpItem as? DP3_spacer  {
             return _item.size
-        } else if let _ = dpItem as? DataProviderCenteredText {
+        } else if let _ = dpItem as? DP3_text {
             return CenteredTextCell.height + 10
         }
         
@@ -138,9 +126,9 @@ extension KeywordSearchViewController {
 }
 
 // MARK: - iPadMoreCellDelegate
-extension KeywordSearchViewController: iPadMoreCellDelegate {
+extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
 
-    func onShowMoreButtonTap(sender: iPadMoreCell) {
+    func onShowMoreButtonTap(sender: iPhoneMoreCell_v3) {
         if(sender.topic == "ST") {
             self.loadMoreStories()
         } else {
@@ -228,13 +216,13 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
         var found = false
         var result = -1
         for (i, item) in self.dataProvider.enumerated() {
-            if(!found && item is DataProviderGroupItem) {
-                if((item as! DataProviderGroupItem).articles.first!.isStory == isStory) {
+            if(!found && item is DP3_groupItem) {
+                if((item as! DP3_groupItem).articles.first!.isStory == isStory) {
                     found = true
                 }
             }
 
-            if(found && item is DataProviderMoreItem) {
+            if(found && item is DP3_more) {
                 self.dataProvider.remove(at: i)
                 result = i
                 break
@@ -246,21 +234,21 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
     
     func addMoreItem(forStories: Bool) {
         if(forStories==false) {
-            let moreItem = DataProviderMoreItem(topic: "AR", completed: false)
+            let moreItem = DP3_more(topic: "AR", completed: false)
             self.dataProvider.append(moreItem)
             return
         }
         
         var found = false
         for (i, item) in self.dataProvider.enumerated() {
-            if(!found && item is DataProviderGroupItem) {
-                if((item as! DataProviderGroupItem).articles.first!.isStory == forStories) {
+            if(!found && item is DP3_groupItem) {
+                if((item as! DP3_groupItem).articles.first!.isStory == forStories) {
                     found = true
                 }
             }
             
-            if(forStories==true && found && item is DataProviderHeaderItem) {
-                let moreItem = DataProviderMoreItem(topic: "ST", completed: false)
+            if(forStories==true && found && item is DP3_headerItem) {
+                let moreItem = DP3_more(topic: "ST", completed: false)
                 self.dataProvider.insert(moreItem, at: i)
                 break
             }
@@ -304,13 +292,13 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
     func removeAddMore(isStory: Bool) {
         var found = false
         for (i, item) in self.dataProvider.enumerated() {
-            if(item is DataProviderGroupItem) {
-                if((item as! DataProviderGroupItem).articles.first!.isStory == isStory) {
+            if(item is DP3_groupItem) {
+                if((item as! DP3_groupItem).articles.first!.isStory == isStory) {
                     found = true
                 }
             }
 
-            if(found && item is DataProviderMoreItem) {
+            if(found && item is DP3_more) {
                 self.dataProvider.remove(at: i)
                 break
             }
@@ -322,7 +310,7 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
     }
     
     func updateFilteredDataProvider() {
-        self.filteredDataProvider = [DataProviderItem]()
+        self.filteredDataProvider = [DP3_item]()
         
         if(self.resultType == 0) {
             for _item in self.dataProvider {
@@ -331,7 +319,7 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
         } else {
             var count = 0
             for _item in self.dataProvider {
-                if(_item is DataProviderHeaderItem) {
+                if(_item is DP3_headerItem) {
                     count += 1
                 }
                 
@@ -339,6 +327,9 @@ extension KeywordSearchViewController: iPadMoreCellDelegate {
                     self.filteredDataProvider.append(_item)
                 }
             }
+            
+            let spacer = DP3_spacer(size: 10)
+            self.filteredDataProvider.insert(spacer, at: 0)
         }
         
     }

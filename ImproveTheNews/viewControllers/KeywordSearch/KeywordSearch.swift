@@ -235,6 +235,9 @@ struct StorySearchResult {
         if let _type = data["storytype"] as? Int {
             self.type = _type
         }
+        if let _type = data["storytype"] as? String, _type.lowercased() == "context" {
+            self.type = 2
+        }
         
         if let _videoFile = data["videofile"] as? String {
             self.videoFile = _videoFile

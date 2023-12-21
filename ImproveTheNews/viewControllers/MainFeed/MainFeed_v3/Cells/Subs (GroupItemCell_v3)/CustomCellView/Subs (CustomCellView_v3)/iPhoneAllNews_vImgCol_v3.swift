@@ -283,15 +283,22 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     }
     
     override func populate(_ article: MainFeedArticle) {
+        self.isContext = article.isContext
+        if(self.isContext) {
+            self.storyPill.setAsContext()
+        }
+        
         self.article = article
         
-        if let _videoFile = article.videoFile {
-            if let _url = URL(string: YOUTUBE_GET_THUMB_IMG(id: _videoFile)) {
-                self.mainImageView.sd_setImage(with: _url)
-            }
-        } else {
-            self.mainImageView.load(url: article.imgUrl)
-        }
+//        if let _videoFile = article.videoFile {
+//            if let _url = URL(string: YOUTUBE_GET_THUMB_IMG(id: _videoFile)) {
+//                self.mainImageView.sd_setImage(with: _url)
+//            }
+//        } else {
+//            self.mainImageView.load(url: article.imgUrl)
+//        }
+        
+        self.mainImageView.load(url: article.imgUrl)
         
 //        if(!self.isContext) {
 //            
@@ -368,7 +375,10 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     
     override func refreshDisplayMode() {
         self.storyTitleLabel.textColor = CSS.shared.displayMode().main_textColor
-        self.storyPill.refreshDisplayMode()
+        if(!self.isContext) {
+            self.storyPill.refreshDisplayMode()
+        }
+        
         self.storySources.refreshDisplayMode()
         self.storyTimeLabel.textColor = CSS.shared.displayMode().sec_textColor
         

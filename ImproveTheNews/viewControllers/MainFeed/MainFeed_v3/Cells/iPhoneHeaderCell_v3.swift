@@ -27,7 +27,8 @@ class iPhoneHeaderCell_v3: UITableViewCell {
         self.titleLabel.font = CSS.shared.iPhoneHeader_font
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: CSS.shared.iPhoneHeader_vMargins),
+//            self.titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: CSS.shared.iPhoneHeader_vMargins),
+            self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
     }

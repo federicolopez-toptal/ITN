@@ -442,7 +442,8 @@ extension NavBarView {
 //        CustomNavController.shared.present(vc, animated: true)
 
         let vc = KeywordSearchViewController()
-        CustomNavController.shared.pushViewController(vc, animated: true)
+        //pushViewController(vc, animated: true)
+        CustomNavController.shared.customAlphaPushViewController(vc)
     }
     
     @objc func onShareButtonTap(_ sender: UIButton) {

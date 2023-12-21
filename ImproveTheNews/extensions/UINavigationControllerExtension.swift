@@ -19,6 +19,15 @@ extension UINavigationController {
         view.layer.add(transition, forKey: nil)
         popViewController(animated: false)
     }
+    
+    func customPopToBottomViewController() {
+        let transition: CATransition = CATransition()
+        transition.duration = 0.3
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromBottom
+        view.layer.add(transition, forKey: nil)
+        popViewController(animated: false)
+    }
 
     func customPushViewController(_ viewController: UIViewController) {
         let transition: CATransition = CATransition()
@@ -28,5 +37,15 @@ extension UINavigationController {
         view.layer.add(transition, forKey: nil)
         pushViewController(viewController, animated: false)
     }
+    
+    func customAlphaPushViewController(_ viewController: UIViewController) {
+        let transition: CATransition = CATransition()
+        transition.duration = 0.3
+        transition.type = CATransitionType.fade
+        //transition.subtype = CATransitionSubtype.
+        view.layer.add(transition, forKey: nil)
+        pushViewController(viewController, animated: false)
+    }
+    
     
 }
