@@ -1801,17 +1801,22 @@ extension StoryViewController {
             }
         } else {
             self.VStack.addArrangedSubview(imageView)
-            self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 200)
+            //self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 200)
+            
+            let H: CGFloat = (213 * SCREEN_SIZE().width)/370
+            self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: H)
             self.imageHeightConstraint?.isActive = true
             
             imageView.showCorners(true)
-            imageView.load(url: imageUrl) { (success, imgSize) in
-                if success, let _imgSize = imgSize {
-                    let compW = SCREEN_SIZE().width
-                    let compH = (_imgSize.height * compW)/_imgSize.width
-                    self.imageHeightConstraint?.constant = compH
-                }
-            }
+            imageView.load(url: imageUrl)
+
+//            imageView.load(url: imageUrl) { (success, imgSize) in
+//                if success, let _imgSize = imgSize {
+//                    let compW = SCREEN_SIZE().width
+//                    let compH = (_imgSize.height * compW)/_imgSize.width
+//                    self.imageHeightConstraint?.constant = compH
+//                }
+//            }
             
             imageView.refreshDisplayMode()
             
