@@ -87,7 +87,7 @@ class FAQViewController: BaseViewController {
         self.descrLabel!.activateConstraints([
             self.descrLabel!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
             self.descrLabel!.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
-            self.descrLabel!.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 13)
+            self.descrLabel!.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16*2)
         ])
         
         let FAQ = UILabel()
