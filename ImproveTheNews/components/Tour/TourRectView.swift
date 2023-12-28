@@ -95,7 +95,7 @@ class TourRectView: UIView {
         label.font = CSS.shared.tour_textFont
         label.numberOfLines = 0
         label.text = text
-        label.setLineSpacing(lineSpacing: 4.0)
+        label.setLineSpacing(lineSpacing: 6.0)
         self.addSubview(label)
         label.activateConstraints([
             label.leadingAnchor.constraint(equalTo: self.leadingAnchor,
@@ -112,8 +112,8 @@ class TourRectView: UIView {
         closeIcon.activateConstraints([
             closeIcon.widthAnchor.constraint(equalToConstant: 24),
             closeIcon.heightAnchor.constraint(equalToConstant: 24),
-            closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 14),
-            closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14)
+            closeIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 11),
+            closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -11)
         ])
         closeIcon.tintColor = label.textColor//UIColor(hex: 0xBBBDC0)
         

@@ -1051,6 +1051,14 @@
 			path = CustomCollectionView;
 			sourceTree = "<group>";
 		};
+		1F83CB202B3D2182008EAF7E /* old */ = {
+			isa = PBXGroup;
+			children = (
+				1F88B405293FC67E0024904E /* TourView.swift */,
+			);
+			path = old;
+			sourceTree = "<group>";
+		};
 		1F897CE428CC37F100438FC5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1215,7 +1223,7 @@
 		1F9B89E929DF21FE004697DD /* Tour */ = {
 			isa = PBXGroup;
 			children = (
-				1F88B405293FC67E0024904E /* TourView.swift */,
+				1F83CB202B3D2182008EAF7E /* old */,
 				1F9B89E729DF0FDC004697DD /* Tour.swift */,
 				1F1B2B1029DF23B600993CE4 /* TourRectView.swift */,
 			);

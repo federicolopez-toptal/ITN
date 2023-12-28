@@ -122,6 +122,8 @@ class FAQViewController: BaseViewController {
         self.heightConstraints = [NSLayoutConstraint]()
         
         for i in 1...(15-1) {
+            print("I", i)
+            
             self.addSection(title: self.titles(i), content: self.contents(i),
                 linkTexts: self.linkedTexts(i), urls: self.urls(i), index: i)
         }
@@ -361,8 +363,21 @@ class FAQViewController: BaseViewController {
             hTopLine.topAnchor.constraint(equalTo: sectionView.topAnchor),
             hTopLine.heightAnchor.constraint(equalToConstant: 1)
         ])
-        
         ADD_HDASHES(to: hTopLine)
+        
+        if(index==14) {
+            let hBottomLine = UIView()
+            hBottomLine.backgroundColor = self.view.backgroundColor
+            sectionView.addSubview(hBottomLine)
+            hBottomLine.activateConstraints([
+                hBottomLine.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor),
+                hBottomLine.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor),
+                hBottomLine.bottomAnchor.constraint(equalTo: sectionView.bottomAnchor),
+                hBottomLine.heightAnchor.constraint(equalToConstant: 1)
+            ])
+            ADD_HDASHES(to: hBottomLine)
+        }
+        
         self.updateSectionHeight(index: self.VStack.arrangedSubviews.count, open: false)
     }
     func updateSectionHeight(index: Int, open: Bool, animate: Bool = false) {

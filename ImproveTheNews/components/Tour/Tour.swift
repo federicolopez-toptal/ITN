@@ -31,7 +31,7 @@ class Tour {
     
     private let backButtonSTATEs = [false,
         false,
-        true,
+        false,
         true,
         true,
         true,
@@ -54,7 +54,14 @@ class Tour {
         self.rects = [TourRectView]()
         
         for i in 1...totalSteps {
-            let newRect = TourRectView(buildInto: container, index: i,
+            var _h: CGFloat = 150
+            if(i==4) {
+                _h = 115
+            } else if(i>=5) {
+                _h = 140
+            }
+        
+            let newRect = TourRectView(buildInto: container, index: i, height: _h,
                 text: self.TEXTs[i], nextButtonText: self.nextButtonTEXTs[i],
                 backButton: self.backButtonSTATEs[i]
             )
@@ -118,6 +125,13 @@ class Tour {
     
     func cancel() {
         self.hideAllSteps()
+        
+        let darkView = CustomNavController.shared.darkView
+        UIView.animate(withDuration: 0.2) {
+            darkView.alpha = 0.0
+        } completion: { _ in
+            darkView.hide()
+        }
     }
     
     func finish() {

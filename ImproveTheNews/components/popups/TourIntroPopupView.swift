@@ -31,10 +31,10 @@ class TourIntroPopupView: PopupView {
         vLogo.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x2D2D31)
         self.addSubview(vLogo)
         vLogo.activateConstraints([
-            vLogo.widthAnchor.constraint(equalToConstant: 32),
-            vLogo.heightAnchor.constraint(equalToConstant: 38),
+            vLogo.widthAnchor.constraint(equalToConstant: 32 * 1.25),
+            vLogo.heightAnchor.constraint(equalToConstant: 38 * 1.25),
             vLogo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            vLogo.topAnchor.constraint(equalTo: self.topAnchor, constant: 18),
+            vLogo.topAnchor.constraint(equalTo: self.topAnchor, constant: 22),
         ])
         
         let welcomeLabel = UILabel()
@@ -49,9 +49,11 @@ class TourIntroPopupView: PopupView {
         
         let subTextLabel = UILabel()
         subTextLabel.numberOfLines = 0
-        subTextLabel.text = "It looks like you're new here, would you\n like a tour?"
+        subTextLabel.text = "It looks like you're new here,\nwould you like a tour?"
         subTextLabel.font = AILERON(16)
         subTextLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x2D2D31)
+        subTextLabel.setLineSpacing(lineSpacing: 6.0)
+        subTextLabel.textAlignment = .center
         self.addSubview(subTextLabel)
         subTextLabel.activateConstraints([
             subTextLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -71,7 +73,7 @@ class TourIntroPopupView: PopupView {
         let cancelLabel = UILabel()
         cancelLabel.text = "No thanks"
         cancelLabel.textAlignment = .center
-        cancelLabel.font = AILERON_SEMIBOLD(16)
+        cancelLabel.font = AILERON_SEMIBOLD(15)
         cancelLabel.backgroundColor = DARK_MODE() ? .white : UIColor(hex: 0xE3E3E3)
         cancelLabel.textColor = UIColor(hex: 0x19191C)
         buttonsContainer.addSubview(cancelLabel)
@@ -81,13 +83,13 @@ class TourIntroPopupView: PopupView {
             cancelLabel.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor),
             cancelLabel.topAnchor.constraint(equalTo: buttonsContainer.topAnchor)
         ])
-        cancelLabel.layer.cornerRadius = 10
+        cancelLabel.layer.cornerRadius = 6
         cancelLabel.layer.masksToBounds = true
         
         let goLabel = UILabel()
         goLabel.text = "Show me"
         goLabel.textAlignment = .center
-        goLabel.font = AILERON_SEMIBOLD(16)
+        goLabel.font = AILERON_SEMIBOLD(15)
         goLabel.backgroundColor = UIColor(hex: 0x60C4D6)
         goLabel.textColor = UIColor(hex: 0x19191C)
         buttonsContainer.addSubview(goLabel)
@@ -97,7 +99,7 @@ class TourIntroPopupView: PopupView {
             goLabel.leadingAnchor.constraint(equalTo: cancelLabel.trailingAnchor, constant: 16),
             goLabel.topAnchor.constraint(equalTo: buttonsContainer.topAnchor)
         ])
-        goLabel.layer.cornerRadius = 10
+        goLabel.layer.cornerRadius = 6
         goLabel.layer.masksToBounds = true
         
         let cancelButton = UIButton(type: .custom)
