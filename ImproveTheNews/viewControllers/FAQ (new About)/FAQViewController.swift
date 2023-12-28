@@ -52,7 +52,8 @@ class FAQViewController: BaseViewController {
     }
     
     func buildContent() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
+        //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
     
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
@@ -91,7 +92,7 @@ class FAQViewController: BaseViewController {
         let FAQ = UILabel()
         FAQ.tag = 951
         FAQ.text = "Frequently Asked Questions"
-        FAQ.font = DM_SERIF_DISPLAY_fixed(20) //MERRIWEATHER_BOLD(20)
+        FAQ.font = DM_SERIF_DISPLAY(23)
         FAQ.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.contentView.addSubview(FAQ)
         FAQ.activateConstraints([
@@ -104,9 +105,9 @@ class FAQViewController: BaseViewController {
         self.VStack.backgroundColor = .clear //.systemPink
         self.VStack.spacing = 0
         self.VStack.activateConstraints([
-            self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 13),
-            self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -13),
-            self.VStack.topAnchor.constraint(equalTo: FAQ.bottomAnchor, constant: 15),
+            self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
+            self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
+            self.VStack.topAnchor.constraint(equalTo: FAQ.bottomAnchor, constant: 30),
             //self.VStack.topAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 13),
             self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -26),
             //VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
@@ -156,7 +157,7 @@ class FAQViewController: BaseViewController {
         let title = UILabel()
         title.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         //title.backgroundColor = .red.withAlphaComponent(0.3)
-        title.font = DM_SERIF_DISPLAY_fixed(20)
+        title.font = DM_SERIF_DISPLAY(23)
         title.text = mainText
         sectionView.addSubview(title)
         title.activateConstraints([
@@ -166,21 +167,20 @@ class FAQViewController: BaseViewController {
         ])
         
         let descr = UILabel()
-        descr.font = ROBOTO(15)
+        descr.font = AILERON(16)
         descr.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         descr.numberOfLines = 0
         descr.text = secText
         //descr.backgroundColor = .green
         sectionView.addSubview(descr)
         descr.activateConstraints([
-            descr.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20),
+            descr.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 25),
             descr.leadingAnchor.constraint(equalTo: title.leadingAnchor),
             descr.trailingAnchor.constraint(equalTo: title.trailingAnchor)
         ])
         
-        
         let W: CGFloat = SCREEN_SIZE().width - (13*2) - (15*2)
-        var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20 + descr.calculateHeightFor(width: W) + 20
+        var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20 + descr.calculateHeightFor(width: W) + 20 + 15
         
         let W2 = (W - CSS.shared.iPhoneSide_padding)/2
 
@@ -250,7 +250,7 @@ class FAQViewController: BaseViewController {
         
         let sectionView = UIView()
         sectionView.tag = 0
-        sectionView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xF4F6F8)
+        sectionView.backgroundColor = self.view.backgroundColor // DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xF4F6F8)
         self.VStack.addArrangedSubview(sectionView)
         
         let heightConstraint = sectionView.heightAnchor.constraint(equalToConstant: 50)
@@ -277,12 +277,13 @@ class FAQViewController: BaseViewController {
         ])
         
         let titleLabel = UILabel()
-        titleLabel.font = DM_SERIF_DISPLAY_fixed(20) //MERRIWEATHER_BOLD(20)
+        titleLabel.font = DM_SERIF_DISPLAY(20)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         titleLabel.numberOfLines = 0
         titleLabel.text = tText
         titleLabel.backgroundColor = .clear //.yellow
         titleHStack.addArrangedSubview(titleLabel)
+        //titleLabel.backgroundColor = .yellow.withAlphaComponent(0.25)
         
         ADD_SPACER(to: titleHStack, backgroundColor: .clear, width: 50)
         
@@ -316,6 +317,7 @@ class FAQViewController: BaseViewController {
             contentLabel.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -15),
             contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24)
         ])
+        //contentLabel.backgroundColor = .yellow.withAlphaComponent(0.25)
         
         let imageInfo = self.images(index)
         let image: UIImage? = imageInfo?.0
@@ -351,7 +353,7 @@ class FAQViewController: BaseViewController {
         }
         
         let hTopLine = UIView()
-        hTopLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.35) : .black.withAlphaComponent(0.1)
+        hTopLine.backgroundColor = self.view.backgroundColor //DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.35) : .black.withAlphaComponent(0.1)
         sectionView.addSubview(hTopLine)
         hTopLine.activateConstraints([
             hTopLine.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor),
@@ -360,10 +362,13 @@ class FAQViewController: BaseViewController {
             hTopLine.heightAnchor.constraint(equalToConstant: 1)
         ])
         
+        ADD_HDASHES(to: hTopLine)
         self.updateSectionHeight(index: self.VStack.arrangedSubviews.count, open: false)
     }
     func updateSectionHeight(index: Int, open: Bool, animate: Bool = false) {
-        var W: CGFloat = SCREEN_SIZE().width - 13 - 13 - 15 - 15 - 50
+        var W: CGFloat = SCREEN_SIZE().width - 15 - 15
+        
+        //13 - 13 - 15 - 15 - 50
         if(IPAD()) {
             if(SCREEN_SIZE().height < W){
                 W = SCREEN_SIZE().height - 13 - 13 - 15 - 15
@@ -385,14 +390,14 @@ class FAQViewController: BaseViewController {
         var height: CGFloat = 0
         if(open) {
             sectionView.tag = 1
-            height = 24 + titleLabel.calculateHeightFor(width: W) + 24 + contentLabel.calculateHeightFor(width: W+50) + 24
+            height = 24 + titleLabel.calculateHeightFor(width: W-50) + 24 + contentLabel.calculateHeightFor(width: W) + 24
             contentLabel.show()
             vLine.backgroundColor = UIColor(hex: 0xFF643C)
             titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
             
-            var imageName = "minusLight"
-            if(DARK_MODE()){ imageName = "minusDark" }
-            icon.image = UIImage(named: imageName)
+//            var imageName = "minusLight"
+//            if(DARK_MODE()){ imageName = "minusDark" }
+            icon.image = UIImage(named: DisplayMode.imageName("about-up"))
             
             imageView?.show()
             var H: CGFloat = 0
@@ -413,11 +418,11 @@ class FAQViewController: BaseViewController {
             
         } else {
             sectionView.tag = 0
-            height = 24 + titleLabel.calculateHeightFor(width: W) + 24
+            height = 24 + titleLabel.calculateHeightFor(width: W-50) + 24
             contentLabel.hide()
             vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x4C596C) : UIColor(hex: 0x1D242F)
             titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-            icon.image = UIImage(named: "plus")
+            icon.image = UIImage(named: DisplayMode.imageName("about-down"))
             imageView?.hide()
         }
         
@@ -440,7 +445,8 @@ class FAQViewController: BaseViewController {
     
 
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
+        //DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         //self.descrLabel!.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.scrollView.backgroundColor = self.view.backgroundColor
         self.contentView.backgroundColor = self.view.backgroundColor
