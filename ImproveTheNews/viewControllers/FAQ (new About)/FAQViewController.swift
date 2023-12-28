@@ -35,6 +35,7 @@ class FAQViewController: BaseViewController {
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.back, .title])
             self.navBar.setTitle("About")
+            self.navBar.addBottomLine()
             
             self.buildContent()
             if(self.firstItemOpened) {

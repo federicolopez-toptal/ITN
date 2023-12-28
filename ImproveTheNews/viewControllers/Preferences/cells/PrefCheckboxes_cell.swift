@@ -10,7 +10,7 @@ import UIKit
 class PrefCheckboxes_cell: UITableViewCell {
 
     static let identifier = "PrefCheckboxes_cell"
-    static let heigth: CGFloat = 335
+    static let heigth: CGFloat = 300+16
 
     private let settings = [
         ("Show newspaper flags", LocalKeys.preferences.showSourceFlags),
@@ -43,18 +43,29 @@ class PrefCheckboxes_cell: UITableViewCell {
         self.mainContainer.activateConstraints([
             self.mainContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
-            self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
+            self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
+            self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
         
-        self.titleLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+        self.titleLabel.font = DM_SERIF_DISPLAY(22)
         self.titleLabel.text = "Feed preferences"
         self.mainContainer.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
-            self.titleLabel.topAnchor.constraint(equalTo: self.mainContainer.topAnchor, constant: 28),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 0),
+            self.titleLabel.topAnchor.constraint(equalTo: self.mainContainer.topAnchor, constant: 32),
         ])
         self.addSettings()
+        
+        let hBottomLine = UIView()
+        hBottomLine.backgroundColor = self.contentView.backgroundColor
+        self.contentView.addSubview(hBottomLine)
+        hBottomLine.activateConstraints([
+            hBottomLine.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            hBottomLine.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            hBottomLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            hBottomLine.heightAnchor.constraint(equalToConstant: 1)
+        ])
+        ADD_HDASHES(to: hBottomLine)
         
         self.refreshDisplayMode()
     }
@@ -62,12 +73,12 @@ class PrefCheckboxes_cell: UITableViewCell {
     func addSettings() {
         let vStack = VSTACK(into: self.mainContainer)
         vStack.backgroundColor = .clear
-        vStack.spacing = 12
+        vStack.spacing = 16
         vStack.tag = 22
         vStack.activateConstraints([
-            vStack.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
-            vStack.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16),
-            vStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 25)
+            vStack.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 0),
+            vStack.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0),
+            vStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 16)
         ])
     
         for (i, data) in self.settings.enumerated() {
@@ -75,7 +86,7 @@ class PrefCheckboxes_cell: UITableViewCell {
             hStack.backgroundColor = .clear //.green
             
             let itemText = UILabel()
-            itemText.font = ROBOTO(15)
+            itemText.font = AILERON(16)
             itemText.text = data.0
             itemText.textColor = .white
             hStack.addArrangedSubview(itemText)
@@ -89,7 +100,7 @@ class PrefCheckboxes_cell: UITableViewCell {
             let check = OnOffView()
             check.status = value
             check.thumbOnColor = UIColor(hex: 0xDA4933)
-            check.thumbOffColor = .white
+            check.thumbOffColor = UIColor(hex: 0xBBBDC0)
             check.delegate = self
             check.tag = 50 + i
             hStack.addArrangedSubview(check)
@@ -97,22 +108,22 @@ class PrefCheckboxes_cell: UITableViewCell {
         
         self.mainContainer.addSubview(self.sourcesButton)
         self.sourcesButton.activateConstraints([
-            self.sourcesButton.heightAnchor.constraint(equalToConstant: 35),
-            self.sourcesButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 45)
+            self.sourcesButton.heightAnchor.constraint(equalToConstant: 40),
+            self.sourcesButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 24)
         ])
         if(IPHONE()) {
-            self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16).isActive = true
-            self.sourcesButton.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16).isActive = true
+            self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 0).isActive = true
+            self.sourcesButton.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0).isActive = true
         } else {
             self.sourcesButton.widthAnchor.constraint(equalToConstant: 400).isActive = true
             self.sourcesButton.centerXAnchor.constraint(equalTo: self.mainContainer.centerXAnchor).isActive = true
         }
         
-        self.sourcesButton.layer.cornerRadius = 4
+        self.sourcesButton.layer.cornerRadius = 6
         self.sourcesButton.addTarget(self, action: #selector(sourcesButtonTap(_:)), for: .touchUpInside)
         
-        self.sourcesLabel.font = ROBOTO_BOLD(11)
-        self.sourcesLabel.text = "SHOW SOURCE FILTERS"
+        self.sourcesLabel.font = AILERON_SEMIBOLD(16)
+        self.sourcesLabel.text = "Show source filters"
         self.mainContainer.addSubview(self.sourcesLabel)
         self.sourcesLabel.activateConstraints([
             self.sourcesLabel.centerXAnchor.constraint(equalTo: self.sourcesButton.centerXAnchor),
@@ -123,8 +134,8 @@ class PrefCheckboxes_cell: UITableViewCell {
     
     //MARK: - misc
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
-        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF4F6F8)
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.mainContainer.backgroundColor = self.contentView.backgroundColor
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         
         let vStack = self.mainContainer.viewWithTag(22) as! UIStackView
@@ -134,16 +145,16 @@ class PrefCheckboxes_cell: UITableViewCell {
             let label = hStack.arrangedSubviews[0] as! UILabel
             label.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
             
-            let onOff = hStack.arrangedSubviews[1] as! OnOffView
-            if(onOff.status) {
-                onOff.backgroundColor = DARK_MODE() ? UIColor(hex: 0x823129) : UIColor(hex: 0xE6A49D)
-            } else {
-                onOff.backgroundColor = DARK_MODE() ? UIColor(hex: 0x68686A) : UIColor(hex: 0xA1A2A3)
-            }
+//            let onOff = hStack.arrangedSubviews[1] as! OnOffView
+//            if(onOff.status) {
+//                onOff.backgroundColor = DARK_MODE() ? UIColor(hex: 0x823129) : UIColor(hex: 0xE6A49D)
+//            } else {
+//                onOff.backgroundColor = DARK_MODE() ? UIColor(hex: 0x68686A) : UIColor(hex: 0xA1A2A3)
+//            }
         }
         
-        self.sourcesButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xB4BDCA)
-        self.sourcesLabel.textColor = DARK_MODE() ? .white : .white
+        self.sourcesButton.backgroundColor = UIColor(hex: 0x60C4D6)
+        self.sourcesLabel.textColor = UIColor(hex: 0x19191C)
     }
     
     // MARK: - Event(s)

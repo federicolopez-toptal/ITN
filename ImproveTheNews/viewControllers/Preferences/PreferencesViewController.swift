@@ -24,7 +24,7 @@ class PreferencesViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
     }
     
     override func viewDidLayoutSubviews() {
@@ -36,6 +36,7 @@ class PreferencesViewController: BaseViewController {
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.back, .title])
             self.navBar.setTitle("Preferences")
+            self.navBar.addBottomLine()
             
             self.buildContent()
             self.firstTime = true
@@ -73,7 +74,7 @@ class PreferencesViewController: BaseViewController {
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.list.backgroundColor = self.view.backgroundColor
         self.navBar.refreshDisplayMode()
         

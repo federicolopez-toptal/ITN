@@ -61,7 +61,7 @@ class NavBarView: UIView {
     
     func addBottomLine() {
         let line2 = UIView()
-        line2.backgroundColor = CSS.shared.displayMode().line_color
+        line2.backgroundColor = CSS.shared.displayMode().main_bgColor
         
         self.addSubview(line2)
         line2.activateConstraints([
@@ -70,6 +70,7 @@ class NavBarView: UIView {
             line2.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             line2.heightAnchor.constraint(equalToConstant: 1)
         ])
+        ADD_HDASHES(to: line2)
     }
     
     func addComponents(_ components: [NavBarViewComponents]) {

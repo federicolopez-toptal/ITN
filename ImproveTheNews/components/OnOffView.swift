@@ -64,6 +64,8 @@ class OnOffView: UIView {
                 self.checkMark.hide()
                 self.dashMark.show()
             }
+            
+            self.backgroundColor = .white
         }
     }
     
@@ -72,7 +74,7 @@ class OnOffView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         
-        self.backgroundColor = UIColor.gray
+        self.backgroundColor = .white //UIColor.gray
         self.layer.cornerRadius = self.HEIGHT/2
         self.clipsToBounds = true
         self.activateConstraints([
@@ -103,6 +105,7 @@ class OnOffView: UIView {
             checkMark.heightAnchor.constraint(equalToConstant: 18),
             checkMark.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5)
         ])
+        checkMark.alpha = 0
         
         let cfg = UIImage.SymbolConfiguration(weight: .bold)
         dashMark.image = UIImage(systemName: "minus", withConfiguration: cfg)?.withRenderingMode(.alwaysTemplate)
@@ -114,7 +117,7 @@ class OnOffView: UIView {
             dashMark.heightAnchor.constraint(equalToConstant: 18),
             dashMark.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -7)
         ])
-        
+        dashMark.alpha = 0
         
         
         let button = UIButton(type: .custom)
@@ -143,11 +146,11 @@ class OnOffView: UIView {
         
         self.thumb.backgroundColor = colorTo
         if(self._status) {
-            self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x823129) : UIColor(hex: 0xE6A49D)
+            self.backgroundColor = .white //DARK_MODE() ? UIColor(hex: 0x823129) : UIColor(hex: 0xE6A49D)
             self.checkMark.show()
             self.dashMark.hide()
         } else {
-            self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x68686A) : UIColor(hex: 0xA1A2A3)
+            self.backgroundColor = .white //DARK_MODE() ? UIColor(hex: 0x68686A) : UIColor(hex: 0xA1A2A3)
             self.checkMark.hide()
             self.dashMark.show()
         }
@@ -166,5 +169,7 @@ class OnOffView: UIView {
         self.thumb.backgroundColor = self._status ? self.thumbOnColor : self.thumbOffColor
         let dim: CGFloat = self.HEIGHT-(self.BORDER*2)
         self.thumbLeadingConstraint?.constant = self._status ? (self.WIDTH-self.BORDER-dim) : 2
+        
+        self.backgroundColor = .white
     }
 }

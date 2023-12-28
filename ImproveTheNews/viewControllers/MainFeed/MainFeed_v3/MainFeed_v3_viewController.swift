@@ -60,6 +60,8 @@ class MainFeed_v3_viewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             self.loadData()
+            
+            //CustomNavController.shared.menu.presentPreferences() //!!!
         }
         
         if(self.mustReloadOnShow) {

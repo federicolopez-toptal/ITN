@@ -132,14 +132,14 @@ extension HyperlinkLabel {
         onTap: @escaping (URL) -> Void) -> HyperlinkLabel {
         
         let attributedString = NSMutableAttributedString(string: text, attributes: [
-            .font: ROBOTO(15),
-            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+            .font: AILERON(16),
+            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         ])
 
         for (i, url) in urls.enumerated() {
             let attributes: [NSAttributedString.Key: Any] = [
                 .hyperlink: URL(string: url)!,
-                .font: ROBOTO(15)
+                .font: AILERON(16)
             ]
             let urlAttributedString = NSAttributedString(string: linkTexts[i], attributes: attributes)
             let range = (attributedString.string as NSString).range(of: "[\(i)]")
@@ -156,6 +156,8 @@ extension HyperlinkLabel {
         label.attributedText = attributedString
         label.translatesAutoresizingMaskIntoConstraints = false
         label.didTapOnURL = onTap
+        label.setLineSpacing(lineSpacing: 6)
+        
         return label
     }
     //-----

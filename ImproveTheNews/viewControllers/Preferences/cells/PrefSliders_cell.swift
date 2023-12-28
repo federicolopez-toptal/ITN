@@ -14,7 +14,7 @@ class PrefSliders_cell: UITableViewCell {
     
     let mainContainer = UIView()
     let titleLabel = UILabel()
-    let sliderRowsHeight: CGFloat = 190
+    let sliderRowsHeight: CGFloat = 190 + 10
     let buttonsHeight: CGFloat = 35
     var saveButton = UIButton()
     
@@ -39,17 +39,17 @@ class PrefSliders_cell: UITableViewCell {
         self.mainContainer.activateConstraints([
             self.mainContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.mainContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 12),
-            self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
+            self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
+            self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
         
-        self.titleLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+        self.titleLabel.font = DM_SERIF_DISPLAY(22)
         self.titleLabel.text = "Slider preferences"
         self.mainContainer.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16),
-            self.titleLabel.topAnchor.constraint(equalTo: self.mainContainer.topAnchor, constant: 28),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 0),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0),
+            self.titleLabel.topAnchor.constraint(equalTo: self.mainContainer.topAnchor, constant: 16*2),
         ])
         
         //-----
@@ -67,7 +67,7 @@ class PrefSliders_cell: UITableViewCell {
         self.place(view: paragraph_02, below: title2)
         
         let sliders1 = self.sliderRows(1)
-        self.place(view: sliders1, below: paragraph_02)
+        self.place(view: sliders1, below: paragraph_02, extraMargin: 20)
         
         //-----
         let title3 = self.orangeTitle(text: "What writing style do you want?")
@@ -78,7 +78,7 @@ class PrefSliders_cell: UITableViewCell {
         self.place(view: paragraph_03, below: title3)
         
         let sliders2 = self.sliderRows(2)
-        self.place(view: sliders2, below: paragraph_03)
+        self.place(view: sliders2, below: paragraph_03, extraMargin: 20)
         
         //-----
         let title4 = self.orangeTitle(text: "Do you want evergreen or fresh?")
@@ -92,32 +92,32 @@ class PrefSliders_cell: UITableViewCell {
         self.place(view: sliders3, below: paragraph_04)
         
         //-----
-        self.saveButton = self.longButton(color: UIColor(hex: 0xDA4933), tag: 100)
+        self.saveButton = self.longButton(color: UIColor(hex: 0x60C4D6), tag: 100)
         self.place(view: self.saveButton, below: sliders3, extraMargin: 40)
-        self.setText("SAVE SLIDER PREFERENCES", toButton: self.saveButton)
+        self.setText("Save slider preferences", toButton: self.saveButton)
         self.saveButton.isEnabled = false
-        self.saveButton.alpha = 0.5
+        //self.saveButton.alpha = 0.5
         
-        let resetButton = self.longButton(color: DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xB4BDCA), tag: 200)
+        let resetButton = self.longButton(color: UIColor(hex: 0xBBBDC0), tag: 200)
         self.place(view: resetButton, below: saveButton)
-        self.setText("RESET TO DEFAULT SETTINGS", toButton: resetButton)
+        self.setText("Reset to default settings", toButton: resetButton)
         
         
-        let W = SCREEN_SIZE().width - 32 - 32
+        let W = SCREEN_SIZE().width - 32
         let vMargin: CGFloat = 20
-        PrefSliders_cell.height = 12 + 28 + self.titleLabel.calculateHeightFor(width: W) + vMargin +
+        PrefSliders_cell.height = 16 + 16 + self.titleLabel.calculateHeightFor(width: W) + vMargin +
                             paragraph_01.calculateHeightFor(width: W) + vMargin +
                             title2.calculateHeightFor(width: W) + vMargin +
-                            paragraph_02.calculateHeightFor(width: W) + vMargin +
+                            paragraph_02.calculateHeightFor(width: W) + vMargin + vMargin +
                             self.sliderRowsHeight + vMargin +
                             title3.calculateHeightFor(width: W) + vMargin +
-                            paragraph_03.calculateHeightFor(width: W) + vMargin +
+                            paragraph_03.calculateHeightFor(width: W) + vMargin + vMargin +
                             self.sliderRowsHeight + vMargin +
                             title4.calculateHeightFor(width: W) + vMargin +
                             paragraph_04.calculateHeightFor(width: W) +
                             self.sliderRowsHeight + vMargin +
-                            self.buttonsHeight + (vMargin*3) +
-                            self.buttonsHeight + (vMargin*2) +
+                            40 + (vMargin*3) +
+                            40 + (vMargin*2) +
                             12 + 28
         
 //        let red = UIView()
@@ -131,8 +131,8 @@ class PrefSliders_cell: UITableViewCell {
 
     // MARK: - misc
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
-        self.mainContainer.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF4F6F8)
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.mainContainer.backgroundColor = self.contentView.backgroundColor
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
     }
     
@@ -148,8 +148,8 @@ extension PrefSliders_cell {
     func orangeTitle(text: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textColor = UIColor(hex: 0xDA4933)
-        label.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+        label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        label.font = DM_SERIF_DISPLAY(21)
         return label
     }
     
@@ -160,8 +160,8 @@ extension PrefSliders_cell {
         ])
         
         if(IPHONE()) {
-            view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16).isActive = true
-            view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16).isActive = true
+            view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 0).isActive = true
+            view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0).isActive = true
         } else {
             if(view is UIButton) {
                 view.widthAnchor.constraint(equalToConstant: 400).isActive = true
@@ -178,7 +178,7 @@ extension PrefSliders_cell {
         button.backgroundColor = color
         button.layer.cornerRadius = 4
         button.activateConstraints([
-            button.heightAnchor.constraint(equalToConstant: self.buttonsHeight)
+            button.heightAnchor.constraint(equalToConstant: 40)
         ])
         button.tag = tag
         button.addTarget(self, action: #selector(onLongButtonTap(sender:)), for: .touchUpInside)
@@ -187,8 +187,8 @@ extension PrefSliders_cell {
     }
     func setText(_ text: String, toButton button: UIButton) {
         let label = UILabel()
-        label.font = ROBOTO_BOLD(11)
-        label.textColor = .white
+        label.font = AILERON_SEMIBOLD(16)
+        label.textColor = UIColor(hex: 0x19191C)
         label.text = text
         label.tag = button.tag + 1
         self.mainContainer.addSubview(label)
@@ -296,7 +296,7 @@ extension PrefSliders_cell {
             }
             
             slider.setValue(Float(value), animated: false)
-            valY = 100
+            valY = 100+10
         }
         
         return view
@@ -373,7 +373,7 @@ extension PrefSliders_cell {
             // Save
             self.saveSliderValues()
             self.saveButton.isEnabled = false
-            self.saveButton.alpha = 0.5
+            //self.saveButton.alpha = 0.5
             
             if let label = self.mainContainer.viewWithTag(sender!.tag+1) as? UILabel {
                 label.text = "SAVED!"
@@ -390,13 +390,13 @@ extension PrefSliders_cell {
             self.saveSliderValues()
             
             self.saveButton.isEnabled = false
-            self.saveButton.alpha = 0.5
+            //self.saveButton.alpha = 0.5
         }
     }
     
     @objc func sliderOnValueChange(_ sender: UISlider) {
         self.saveButton.isEnabled = true
-        self.saveButton.alpha = 1.0
+        //self.saveButton.alpha = 1.0
     }
     
 }
