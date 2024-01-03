@@ -31,7 +31,7 @@ class SignInView: UIView {
     // MARK: - Init
     func buildInto(view containerView: UIView) {
         containerView.addSubview(self)
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
         
         self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
@@ -81,7 +81,7 @@ class SignInView: UIView {
     }
     
     private func buildForm() {
-        ADD_SPACER(to: self.VStack, height: 24)
+        ADD_SPACER(to: self.VStack, height: 32)
         
         let hStackTabs = HSTACK(into: self.VStack)
         
@@ -147,6 +147,8 @@ class SignInView: UIView {
         var extraHMargin: CGFloat = 0
         if(IPAD()){ extraHMargin += 80 }
 
+        ADD_SPACER(to: self.VStack, height: 32)
+
         let HStack_form = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack_form, width: 16+extraHMargin)
         let VStack_form = VSTACK(into: HStack_form)
@@ -155,45 +157,45 @@ class SignInView: UIView {
 
         let titleLabel = UILabel()
         titleLabel.text = "Sign in"
-        titleLabel.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
-        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
-        ADD_SPACER(to: VStack_form, height: 30)
+        ADD_SPACER(to: VStack_form, height: 32)
 
         let emailLabel = UILabel()
         emailLabel.text = "Email"
-        emailLabel.font = ROBOTO(14)
-        emailLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        emailLabel.font = AILERON(16)
+        emailLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(emailLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.emailText.buildInto(vstack: VStack_form)
         self.emailText.customize(keyboardType: .emailAddress, returnType: .next,
-            charactersLimit: 50, placeHolderText: "Your Email", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F) )
+            charactersLimit: 50, placeHolderText: "Your Email", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.emailText.delegate = self
-        ADD_SPACER(to: VStack_form, height: 20)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         let passLabel = UILabel()
         passLabel.text = "Password"
-        passLabel.font = ROBOTO(14)
-        passLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        passLabel.font = AILERON(16)
+        passLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(passLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.passText.buildInto(vstack: VStack_form)
         self.passText.customize(keyboardType: .asciiCapable, returnType: .done,
-            charactersLimit: 20, placeHolderText: "Choose Password", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F))
+            charactersLimit: 20, placeHolderText: "Your Password", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.passText.setPasswordMode(true)
         self.passText.delegate = self
-        ADD_SPACER(to: VStack_form, height: 14)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         let forgotPassLabel = UILabel()
         forgotPassLabel.textColor = UIColor(hex: 0xDA4933)
-        forgotPassLabel.font = ROBOTO(15)
-        forgotPassLabel.text = "Forgot password"
+        forgotPassLabel.font = AILERON(16)
+        forgotPassLabel.text = "I've forgotten my password!"
         forgotPassLabel.addUnderline()
         VStack_form.addArrangedSubview(forgotPassLabel)
-        ADD_SPACER(to: VStack_form, height: 14)
+        ADD_SPACER(to: VStack_form, height: 24)
         
         let forgotPassButton = UIButton(type: .custom)
         forgotPassButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
@@ -208,7 +210,7 @@ class SignInView: UIView {
         
         let hStack_mainActionButton = HSTACK(into: VStack_form)
         
-        self.mainActionButton.backgroundColor = UIColor(hex: 0xDA4933)
+        self.mainActionButton.backgroundColor = UIColor(hex: 0x60C4D6)
         self.mainActionButton.layer.cornerRadius = 4.0
         
         if(IPHONE()) {
@@ -230,18 +232,19 @@ class SignInView: UIView {
         }
         
         self.mainActionButton.addTarget(self, action: #selector(mainActionButtonTap(_:)), for: .touchUpInside)
-        ADD_SPACER(to: VStack_form, height: 24)
+        ADD_SPACER(to: VStack_form, height: 50) // form bottom space
         
         let mainActionLabel = UILabel()
-        mainActionLabel.text = "SIGN IN"
-        mainActionLabel.textColor = .white
-        mainActionLabel.font = ROBOTO_BOLD(13)
+        mainActionLabel.text = "Sign in"
+        mainActionLabel.textColor = UIColor(hex: 0x19191C)
+        mainActionLabel.font = AILERON_SEMIBOLD(16)
         VStack_form.addSubview(mainActionLabel)
         mainActionLabel.activateConstraints([
             mainActionLabel.centerXAnchor.constraint(equalTo: self.mainActionButton.centerXAnchor),
             mainActionLabel.centerYAnchor.constraint(equalTo: self.mainActionButton.centerYAnchor)
         ])
         
+        /*
         // ---- SOCIAL
         let socialLabel = UILabel()
         socialLabel.font = ROBOTO(16)
@@ -320,7 +323,7 @@ class SignInView: UIView {
         questionButton.addTarget(self, action: #selector(tabButtonOnTap(_:)), for: .touchUpInside)
         
         ADD_SPACER(to: VStack_form, height: 16)
-        
+        */
         
         // --------
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentViewOnTap(_:)))
@@ -334,9 +337,9 @@ class SignInView: UIView {
 extension SignInView {
 
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.scrollView.backgroundColor = self.backgroundColor
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.contentView.backgroundColor = self.backgroundColor
 
         for v in self.VStack.arrangedSubviews {
             self.setColorToView(v)

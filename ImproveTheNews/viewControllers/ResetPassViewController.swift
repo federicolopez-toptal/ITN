@@ -41,7 +41,8 @@ class ResetPassViewController: BaseViewController {
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.back, .title])
             self.navBar.setTitle("User account")
-
+            self.navBar.addBottomLine()
+            
             self.buildContent()
             CustomNavController.shared.hidePanelAndButtonWithAnimation()
         }
@@ -94,7 +95,7 @@ class ResetPassViewController: BaseViewController {
         var extraHMargin: CGFloat = 0
         if(IPAD()){ extraHMargin += 80 }
     
-        ADD_SPACER(to: self.VStack, height: 26)
+        ADD_SPACER(to: self.VStack, height: 32)
     
         let HStack_form = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack_form, width: 16+extraHMargin)
@@ -104,33 +105,33 @@ class ResetPassViewController: BaseViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = "Forgot Password"
-        titleLabel.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
-        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
-        ADD_SPACER(to: VStack_form, height: 20)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         let blablaLabel = UILabel()
         blablaLabel.numberOfLines = 0
         blablaLabel.text = "Enter your email address below to reset your password."
-        blablaLabel.font = ROBOTO(14)
-        blablaLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        blablaLabel.font = AILERON(16)
+        blablaLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(blablaLabel)
-        ADD_SPACER(to: VStack_form, height: 30)
+        ADD_SPACER(to: VStack_form, height: 32)
         
         let emailLabel = UILabel()
         emailLabel.text = "Email"
-        emailLabel.font = ROBOTO(14)
-        emailLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        emailLabel.font = AILERON(16)
+        emailLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(emailLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.emailText.buildInto(vstack: VStack_form)
         self.emailText.customize(keyboardType: .emailAddress, returnType: .done,
-            charactersLimit: 50, placeHolderText: "Your Email", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F) )
+            charactersLimit: 50, placeHolderText: "Your Email", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.emailText.delegate = self
-        ADD_SPACER(to: VStack_form, height: 20)
+        ADD_SPACER(to: VStack_form, height: 24)
         
-        self.mainActionButton.backgroundColor = UIColor(hex: 0xDA4933)
+        self.mainActionButton.backgroundColor = UIColor(hex: 0x60C4D6)
         self.mainActionButton.layer.cornerRadius = 4.0
         VStack_form.addArrangedSubview(self.mainActionButton)
         mainActionButton.activateConstraints([
@@ -140,9 +141,9 @@ class ResetPassViewController: BaseViewController {
         ADD_SPACER(to: VStack_form, height: 32)
         
         let mainActionLabel = UILabel()
-        mainActionLabel.text = "RESET PASSWORD"
-        mainActionLabel.textColor = .white
-        mainActionLabel.font = ROBOTO_BOLD(13)
+        mainActionLabel.text = "Reset password"
+        mainActionLabel.textColor = UIColor(hex: 0x19191C)
+        mainActionLabel.font = AILERON_SEMIBOLD(16)
         VStack_form.addSubview(mainActionLabel)
         mainActionLabel.activateConstraints([
             mainActionLabel.centerXAnchor.constraint(equalTo: self.mainActionButton.centerXAnchor),
@@ -150,7 +151,7 @@ class ResetPassViewController: BaseViewController {
         ])
         
         let questionLabel = UILabel()
-        questionLabel.font = ROBOTO(16)
+        questionLabel.font = AILERON(16)
         questionLabel.textAlignment = .center
         questionLabel.text = "Click here to sign up!"
         questionLabel.textColor = UIColor(hex: 0xDA4933)
@@ -171,14 +172,14 @@ class ResetPassViewController: BaseViewController {
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.navBar.refreshDisplayMode()
         
         self.scrollView.backgroundColor = self.view.backgroundColor
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.contentView.backgroundColor = self.view.backgroundColor
         
-        self.contentView.layer.borderWidth = 6
-        self.contentView.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE2E3E3).cgColor
+//        self.contentView.layer.borderWidth = 6
+//        self.contentView.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE2E3E3).cgColor
     }
 
 }

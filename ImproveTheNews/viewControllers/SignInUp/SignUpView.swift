@@ -32,7 +32,7 @@ class SignUpView: UIView {
     // MARK: - Init
     func buildInto(view containerView: UIView) {
         containerView.addSubview(self)
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
         
         self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
@@ -145,7 +145,7 @@ class SignUpView: UIView {
 //        HLine2.tag = 100
 //        ADD_SPACER(to: self.VStack, height: 26)
 
-        ADD_SPACER(to: self.VStack, height: 24)
+        ADD_SPACER(to: self.VStack, height: 32)
         
         let hStackTabs = HSTACK(into: self.VStack)
         
@@ -210,6 +210,8 @@ class SignUpView: UIView {
         var extraHMargin: CGFloat = 0
         if(IPAD()){ extraHMargin += 80 }
 
+        ADD_SPACER(to: self.VStack, height: 32)
+
         let HStack_form = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack_form, width: 16+extraHMargin)
         let VStack_form = VSTACK(into: HStack_form)
@@ -218,72 +220,73 @@ class SignUpView: UIView {
 
         let titleLabel = UILabel()
         titleLabel.text = "Sign up"
-        titleLabel.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
-        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
-        ADD_SPACER(to: VStack_form, height: 6)
+        ADD_SPACER(to: VStack_form, height: 32)
 
-        let signUpNoteLabel = UILabel()
-        signUpNoteLabel.text = "Sign up for an Improve The News account"
-        signUpNoteLabel.numberOfLines = 0
-        signUpNoteLabel.font = ROBOTO(14)
-        signUpNoteLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        VStack_form.addArrangedSubview(signUpNoteLabel)
-        ADD_SPACER(to: VStack_form, height: 22)
+//        let signUpNoteLabel = UILabel()
+//        signUpNoteLabel.text = "Sign up for an Improve The News account"
+//        signUpNoteLabel.numberOfLines = 0
+//        signUpNoteLabel.font = ROBOTO(14)
+//        signUpNoteLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+//        VStack_form.addArrangedSubview(signUpNoteLabel)
+//        ADD_SPACER(to: VStack_form, height: 22)
         
         let emailLabel = UILabel()
         emailLabel.text = "Email"
-        emailLabel.font = ROBOTO(14)
-        emailLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        emailLabel.font = AILERON(16)
+        emailLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(emailLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.emailText.buildInto(vstack: VStack_form)
         self.emailText.customize(keyboardType: .emailAddress, returnType: .next,
-            charactersLimit: 50, placeHolderText: "Your Email", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F) )
+            charactersLimit: 50, placeHolderText: "Your Email", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.emailText.delegate = self
-        ADD_SPACER(to: VStack_form, height: 20)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         let passLabel = UILabel()
-        passLabel.text = "Password"
-        passLabel.font = ROBOTO(14)
-        passLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        passLabel.text = "* Choose a password"
+        passLabel.font = AILERON(16)
+        passLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(passLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.passText.buildInto(vstack: VStack_form)
         self.passText.customize(keyboardType: .asciiCapable, returnType: .next,
-            charactersLimit: 20, placeHolderText: "Choose Password", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F))
+            charactersLimit: 20, placeHolderText: "Your Password", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.passText.setPasswordMode(true)
         self.passText.delegate = self
-        ADD_SPACER(to: VStack_form, height: 20)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         let pass2Label = UILabel()
-        pass2Label.text = "Confirm password"
-        pass2Label.font = ROBOTO(14)
-        pass2Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        pass2Label.text = "* Confirm password"
+        pass2Label.font = AILERON(16)
+        pass2Label.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(pass2Label)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.pass2Text.buildInto(vstack: VStack_form)
         self.pass2Text.customize(keyboardType: .asciiCapable, returnType: .done,
-            charactersLimit: 20, placeHolderText: "Confirm password", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F))
+            charactersLimit: 20, placeHolderText: "Your password", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.pass2Text.setPasswordMode(true)
         self.pass2Text.delegate = self
-        ADD_SPACER(to: VStack_form, height: 14)
+        ADD_SPACER(to: VStack_form, height: 24)
         
         let passNoteLabel = UILabel()
-        passNoteLabel.textColor = UIColor(hex: 0x93A0B4)
-        passNoteLabel.font = ROBOTO(14)
+        passNoteLabel.textColor = titleLabel.textColor
+        passNoteLabel.font = AILERON(16)
         passNoteLabel.numberOfLines = 0
         passNoteLabel.text = "* Password must contain minimum eight characters, at least one letter and one number."
         VStack_form.addArrangedSubview(passNoteLabel)
-        ADD_SPACER(to: VStack_form, height: 14)
+        ADD_SPACER(to: VStack_form, height: 24)
         
         let hStack_mainActionButton = HSTACK(into: VStack_form)
         
-        self.mainActionButton.backgroundColor = UIColor(hex: 0xDA4933)
+        self.mainActionButton.backgroundColor = UIColor(hex: 0x60C4D6)
         self.mainActionButton.layer.cornerRadius = 4.0
+        
         if(IPHONE()) {
             hStack_mainActionButton.addArrangedSubview(self.mainActionButton)
             mainActionButton.activateConstraints([
@@ -306,15 +309,16 @@ class SignUpView: UIView {
         ADD_SPACER(to: VStack_form, height: 24)
         
         let mainActionLabel = UILabel()
-        mainActionLabel.text = "SIGN IN"
-        mainActionLabel.textColor = .white
-        mainActionLabel.font = ROBOTO_BOLD(13)
+        mainActionLabel.text = "Sign up"
+        mainActionLabel.textColor = UIColor(hex: 0x19191C)
+        mainActionLabel.font = AILERON_SEMIBOLD(16)
         VStack_form.addSubview(mainActionLabel)
         mainActionLabel.activateConstraints([
             mainActionLabel.centerXAnchor.constraint(equalTo: self.mainActionButton.centerXAnchor),
             mainActionLabel.centerYAnchor.constraint(equalTo: self.mainActionButton.centerYAnchor)
         ])
         
+        /*
         // ---- SOCIAL
         let socialLabel = UILabel()
         socialLabel.font = ROBOTO(16)
@@ -441,6 +445,7 @@ class SignUpView: UIView {
         }
         ADD_SPACER(to: VStackRect, height: 30)
         ADD_SPACER(to: VStack_form, height: 50)
+        */
         
         // --------
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentViewOnTap(_:)))
@@ -454,9 +459,9 @@ class SignUpView: UIView {
 extension SignUpView {
 
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.scrollView.backgroundColor = self.backgroundColor
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.contentView.backgroundColor = self.backgroundColor
 
         for v in self.VStack.arrangedSubviews {
             self.setColorToView(v)

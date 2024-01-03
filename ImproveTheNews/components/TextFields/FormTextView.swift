@@ -40,21 +40,22 @@ class FormTextView: UIView {
             self.heightAnchor.constraint(equalToConstant: 44)
         ])
 
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1E1E1E) : .white
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.layer.cornerRadius = 4.0
         self.layer.borderWidth = 1.0
-        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0xBBBBBB).withAlphaComponent(0.5).cgColor : UIColor(hex: 0xBBBBBB).cgColor
+        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x4C4E50).cgColor : UIColor(hex: 0xBBBDC0).cgColor
 
         self.placeHolderLabel.text = "Example text"
         self.placeHolderLabel.textColor = .yellow
-        self.placeHolderLabel.font = ROBOTO(14)
-        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBBBB).withAlphaComponent(0.5) : UIColor(hex: 0xBBBBBB)
+        self.placeHolderLabel.font = AILERON(16)
+        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0x4C4E50) : UIColor(hex: 0xBBBDC0)
         self.addSubview(self.placeHolderLabel)
         self.placeHolderLabel.activateConstraints([
             self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
             self.placeHolderLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
         ])
 
-        self.mainTextField.font = AILERON(15)
+        self.mainTextField.font = AILERON(16)
         self.mainTextField.textColor = .white
         self.mainTextField.tintColor = .white
         self.mainTextField.returnKeyType = .done
