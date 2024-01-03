@@ -82,68 +82,130 @@ class SignUpView: UIView {
     }
     
     private func buildForm() {
-        let HLine = UIView()
-        HLine.backgroundColor = .red
-        self.VStack.addArrangedSubview(HLine)
-        HLine.activateConstraints([
-            HLine.heightAnchor.constraint(equalToConstant: 6)
-        ])
-        HLine.tag = 100
+//        let HLine = UIView()
+//        HLine.backgroundColor = .clear
+//        self.VStack.addArrangedSubview(HLine)
+//        HLine.activateConstraints([
+//            HLine.heightAnchor.constraint(equalToConstant: 6)
+//        ])
+//        HLine.tag = 100
+//
+//        let hStack = HSTACK(into: VStack)
+//        hStack.backgroundColor = .clear
+//        hStack.activateConstraints([
+//            hStack.heightAnchor.constraint(equalToConstant: 67)
+//        ])
+//        hStack.tag = 101
+//
+//        let tab1Label = UILabel()
+//        tab1Label.text = "SIGN IN".capitalized
+//        tab1Label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
+//        tab1Label.textAlignment = .center
+//        tab1Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+//        hStack.addArrangedSubview(tab1Label)
+//        tab1Label.activateConstraints([
+//            tab1Label.widthAnchor.constraint(equalToConstant: (SCREEN_SIZE().width/2)-1)
+//        ])
+//
+//        let vLine = UIView()
+//        vLine.backgroundColor = .clear
+//        hStack.addArrangedSubview(vLine)
+//        vLine.activateConstraints([
+//            vLine.widthAnchor.constraint(equalToConstant: 6)
+//        ])
+//        vLine.tag = 100
+//
+//        let tab2Label = UILabel()
+//        tab2Label.text = "SIGN UP".capitalized
+//        tab2Label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
+//        tab2Label.textAlignment = .center
+//        tab2Label.textColor = UIColor(hex: 0xFF643C)
+//        hStack.addArrangedSubview(tab2Label)
+//
+//        let tabButton = UIButton(type: .custom)
+//        tabButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+//        hStack.addSubview(tabButton)
+//        tabButton.activateConstraints([
+//            tabButton.leadingAnchor.constraint(equalTo: tab1Label.leadingAnchor),
+//            tabButton.trailingAnchor.constraint(equalTo: tab1Label.trailingAnchor),
+//            tabButton.topAnchor.constraint(equalTo: tab1Label.topAnchor),
+//            tabButton.bottomAnchor.constraint(equalTo: tab1Label.bottomAnchor)
+//        ])
+//        tabButton.addTarget(self, action: #selector(tabButtonOnTap(_:)), for: .touchUpInside)
+//
+//        let HLine2 = UIView()
+//        HLine2.backgroundColor = .clear
+//        VStack.addSubview(HLine2)
+//        HLine2.activateConstraints([
+//            HLine2.leadingAnchor.constraint(equalTo: VStack.leadingAnchor, constant: 0),
+//            HLine2.topAnchor.constraint(equalTo: VStack.topAnchor, constant: 67),
+//            HLine2.heightAnchor.constraint(equalToConstant: 6),
+//            HLine2.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width/2)
+//        ])
+//        HLine2.tag = 100
+//        ADD_SPACER(to: self.VStack, height: 26)
 
-        let hStack = HSTACK(into: VStack)
-        hStack.backgroundColor = .blue
-        hStack.activateConstraints([
-            hStack.heightAnchor.constraint(equalToConstant: 67)
+        ADD_SPACER(to: self.VStack, height: 24)
+        
+        let hStackTabs = HSTACK(into: self.VStack)
+        
+            ADD_SPACER(to: hStackTabs, width: 16)
+        let tabsBgView = UIView()
+        tabsBgView.backgroundColor = .red
+        tabsBgView.layer.cornerRadius = 20
+        tabsBgView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xE3E3E3)
+        hStackTabs.addArrangedSubview(tabsBgView)
+        tabsBgView.activateConstraints([
+            tabsBgView.heightAnchor.constraint(equalToConstant: 40)
         ])
-        hStack.tag = 101
-
+            ADD_SPACER(to: hStackTabs, width: 16)
+        
+        let tabsHighlight = UIView()
+        tabsHighlight.backgroundColor = DARK_MODE() ? .white  : UIColor(hex: 0x2D2D31)
+        tabsHighlight.layer.cornerRadius = 20
+        tabsBgView.addSubview(tabsHighlight)
+        tabsHighlight.activateConstraints([
+            tabsHighlight.trailingAnchor.constraint(equalTo: tabsBgView.trailingAnchor),
+            tabsHighlight.topAnchor.constraint(equalTo: tabsBgView.topAnchor),
+            tabsHighlight.heightAnchor.constraint(equalToConstant: 40),
+            tabsHighlight.widthAnchor.constraint(equalTo: tabsBgView.widthAnchor, multiplier: 0.5)
+        ])
+        
+        let W: CGFloat = SCREEN_SIZE().width - 32
         let tab1Label = UILabel()
-        tab1Label.text = "SIGN IN".capitalized
-        tab1Label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
+        tab1Label.text = "Sign in"
+        tab1Label.font = AILERON(16)
         tab1Label.textAlignment = .center
-        tab1Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        hStack.addArrangedSubview(tab1Label)
+        tab1Label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
+        tabsHighlight.addSubview(tab1Label)
         tab1Label.activateConstraints([
-            tab1Label.widthAnchor.constraint(equalToConstant: (SCREEN_SIZE().width/2)-1)
+            tab1Label.centerYAnchor.constraint(equalTo: tabsHighlight.centerYAnchor),
+            tab1Label.centerXAnchor.constraint(equalTo: tabsBgView.centerXAnchor, constant: -(W/4))
         ])
-
-        let vLine = UIView()
-        vLine.backgroundColor = .red
-        hStack.addArrangedSubview(vLine)
-        vLine.activateConstraints([
-            vLine.widthAnchor.constraint(equalToConstant: 6)
-        ])
-        vLine.tag = 100
-
+    
         let tab2Label = UILabel()
-        tab2Label.text = "SIGN UP".capitalized
-        tab2Label.font = DM_SERIF_DISPLAY_fixed(16) //MERRIWEATHER_BOLD(16)
+        tab2Label.text = "Sign up"
+        tab2Label.font = AILERON(16)
         tab2Label.textAlignment = .center
-        tab2Label.textColor = UIColor(hex: 0xFF643C)
-        hStack.addArrangedSubview(tab2Label)
-
+        tab2Label.textColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        tabsBgView.addSubview(tab2Label)
+        tab2Label.activateConstraints([
+            tab2Label.centerYAnchor.constraint(equalTo: tabsHighlight.centerYAnchor),
+            tab2Label.centerXAnchor.constraint(equalTo: tabsHighlight.centerXAnchor)
+        ])
+    
         let tabButton = UIButton(type: .custom)
         tabButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-        hStack.addSubview(tabButton)
+        hStackTabs.addSubview(tabButton)
         tabButton.activateConstraints([
-            tabButton.leadingAnchor.constraint(equalTo: tab1Label.leadingAnchor),
-            tabButton.trailingAnchor.constraint(equalTo: tab1Label.trailingAnchor),
+            tabButton.leadingAnchor.constraint(equalTo: tab1Label.leadingAnchor, constant: -20),
+            tabButton.trailingAnchor.constraint(equalTo: tab1Label.trailingAnchor, constant: 20),
             tabButton.topAnchor.constraint(equalTo: tab1Label.topAnchor),
             tabButton.bottomAnchor.constraint(equalTo: tab1Label.bottomAnchor)
         ])
         tabButton.addTarget(self, action: #selector(tabButtonOnTap(_:)), for: .touchUpInside)
 
-        let HLine2 = UIView()
-        HLine2.backgroundColor = .red
-        VStack.addSubview(HLine2)
-        HLine2.activateConstraints([
-            HLine2.leadingAnchor.constraint(equalTo: VStack.leadingAnchor, constant: 0),
-            HLine2.topAnchor.constraint(equalTo: VStack.topAnchor, constant: 67),
-            HLine2.heightAnchor.constraint(equalToConstant: 6),
-            HLine2.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width/2)
-        ])
-        HLine2.tag = 100
-        ADD_SPACER(to: self.VStack, height: 26)
+        //---
 
         var extraHMargin: CGFloat = 0
         if(IPAD()){ extraHMargin += 80 }
@@ -404,28 +466,28 @@ extension SignUpView {
             self.setColorToView(v)
         }
         
-        self.contentView.layer.borderWidth = 6
-        self.contentView.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE2E3E3).cgColor
+//        self.contentView.layer.borderWidth = 6
+//        self.contentView.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE2E3E3).cgColor
     }
     
     // ------------
     func setColorToView(_ view: UIView) {
-        switch(view.tag) {
-            case 100:
-                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3) // lines
-
-            case 101:
-                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white // tabs
-
-            default:
-                NOTHING()
-        }
-
-        if(view is UIStackView) {
-            for v in (view as! UIStackView).arrangedSubviews {
-                self.setColorToView(v)
-            }
-        }
+//        switch(view.tag) {
+//            case 100:
+//                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3) // lines
+//
+//            case 101:
+//                view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white // tabs
+//
+//            default:
+//                NOTHING()
+//        }
+//
+//        if(view is UIStackView) {
+//            for v in (view as! UIStackView).arrangedSubviews {
+//                self.setColorToView(v)
+//            }
+//        }
     }
 }
 

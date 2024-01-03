@@ -15,8 +15,6 @@ class SignInUpViewController: BaseViewController {
     var signUp = SignUpView()
     
     
-    
-    
     // MARK: - End
     deinit {
         self.signIn.removeKeyboardObservers()
@@ -37,6 +35,7 @@ class SignInUpViewController: BaseViewController {
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.back, .title])
             self.navBar.setTitle("User account")
+            self.navBar.addBottomLine()
 
             self.buildContent()
             CustomNavController.shared.hidePanelAndButtonWithAnimation()
