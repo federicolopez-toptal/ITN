@@ -65,6 +65,8 @@ extension SignInUpViewController: SignInViewDelegate, SignUpViewDelegate {
     func SignInViewOnTabTap() {
         self.signIn.hide()
         self.signUp.show()
+
+//        self.signIn.showEmailNotVerified()
     }
     
     func SignInViewShowLoading(state: Bool) {

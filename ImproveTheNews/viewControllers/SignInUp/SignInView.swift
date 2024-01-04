@@ -435,17 +435,21 @@ extension SignInView {
                     }
                     
                     if(showYesNo) {
-                        let _msg = serverMsg + "\n\n" + "Resend the verification email?"
-                        CustomNavController.shared.ask(question: _msg) { (result) in
-                            if(result) { self.resend_verificationEmail() }
-                        }
+//                        let _msg = serverMsg + "\n\n" + "Resend the verification email?"
+//                        CustomNavController.shared.ask(question: _msg) { (result) in
+//                            if(result) { self.resend_verificationEmail() }
+//                        }
+
+                        self.delegate?.SignInViewShowLoading(state: false)
+                        self.showEmailNotVerified()
                     } else {
                         CustomNavController.shared.infoAlert(message: serverMsg)
+                        
+                        DELAY(2.0) {
+                            self.delegate?.SignInViewShowLoading(state: false)
+                        }
                     }
-                    
-                    DELAY(2.0) {
-                        self.delegate?.SignInViewShowLoading(state: false)
-                    }
+
                 }
             }
 
@@ -471,7 +475,7 @@ extension SignInView {
         }
     }
     
-    private func resend_verificationEmail() {
+    func resend_verificationEmail() {
         self.delegate?.SignInViewShowLoading(state: true)
         
         API.shared.resendVerificationEmail(email: self.emailText.text()) { (success, serverMsg) in
@@ -549,4 +553,13 @@ extension SignInView {
 
 }
 
-
+extension SignInView {
+    
+    func showEmailNotVerified() {
+        MAIN_THREAD {
+            let popup = EmailNotVerifiedPopupView()
+            popup.pushFromBottom()
+        }
+    }
+    
+}
