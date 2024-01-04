@@ -530,7 +530,7 @@ extension SignInView {
     @objc func keyboardEvent(n: Notification) {
         let H = getKeyboardHeight(fromNotification: n)
         
-        if(n.name==UIResponder.keyboardWillShowNotification){
+        if(n.name==UIResponder.keyboardWillShowNotification) {
             self.scrollViewBottomConstraint.constant = 0 - H
         } else if(n.name==UIResponder.keyboardWillHideNotification) {
             self.scrollViewBottomConstraint.constant = 0

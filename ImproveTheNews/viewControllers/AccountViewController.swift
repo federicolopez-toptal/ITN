@@ -24,8 +24,8 @@ class AccountViewController: BaseViewController {
     var subscriptionType = 0
     let subscriptionStateLabel = UILabel()
     let subscribeButtonLabel = UILabel()
-    let circle1 = UIImageView(image: UIImage(named: "slidersOrangeThumb"))
-    let circle2 = UIImageView(image: UIImage(named: "slidersOrangeThumb"))
+    let circle1 = UIImageView(image: UIImage(named: "slidersOrangeThumb")?.withRenderingMode(.alwaysTemplate))
+    let circle2 = UIImageView(image: UIImage(named: "slidersOrangeThumb")?.withRenderingMode(.alwaysTemplate))
     
     let circleMark1 = UIImageView(image: UIImage(named: "slidersOrangeThumb")?.withRenderingMode(.alwaysTemplate))
     let circleMark2 = UIImageView(image: UIImage(named: "slidersOrangeThumb")?.withRenderingMode(.alwaysTemplate))
@@ -133,80 +133,80 @@ class AccountViewController: BaseViewController {
         //VStack_form.backgroundColor = .green
         ADD_SPACER(to: HStack_form, width: 20+extraHMargin)
 
-        ADD_SPACER(to: VStack_form, height: 15)
+        ADD_SPACER(to: VStack_form, height: 32)
 
-        let blablaLabel = UILabel()
-        blablaLabel.numberOfLines = 0
-        blablaLabel.text = "Hi! You can manage your account settings below."
-        blablaLabel.font = ROBOTO(14)
-        blablaLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
-        VStack_form.addArrangedSubview(blablaLabel)
-        ADD_SPACER(to: VStack_form, height: 25)
+//        let blablaLabel = UILabel()
+//        blablaLabel.numberOfLines = 0
+//        blablaLabel.text = "Hi! You can manage your account settings below."
+//        blablaLabel.font = ROBOTO(14)
+//        blablaLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+//        VStack_form.addArrangedSubview(blablaLabel)
+//        ADD_SPACER(to: VStack_form, height: 25)
     
         let titleLabel = UILabel()
         titleLabel.text = "My details"
-        titleLabel.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
-        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
-        ADD_SPACER(to: VStack_form, height: 25)
+        ADD_SPACER(to: VStack_form, height: 24)
         
         // -------
         let firstNameLabel = UILabel()
         firstNameLabel.text = "First name"
-        firstNameLabel.font = ROBOTO(14)
-        firstNameLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        firstNameLabel.font = AILERON(16)
+        firstNameLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(firstNameLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.firstNameText.buildInto(vstack: VStack_form)
         self.firstNameText.customize(keyboardType: .asciiCapable, returnType: .next,
-            charactersLimit: 30, placeHolderText: "First name", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F) )
+            charactersLimit: 30, placeHolderText: "First name", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.firstNameText.delegate = self
-        ADD_SPACER(to: VStack_form, height: 20)
+        ADD_SPACER(to: VStack_form, height: 16)
         // -------
         let lastNameLabel = UILabel()
         lastNameLabel.text = "Last name"
-        lastNameLabel.font = ROBOTO(14)
-        lastNameLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        lastNameLabel.font = AILERON(16)
+        lastNameLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(lastNameLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.lastNameText.buildInto(vstack: VStack_form)
         self.lastNameText.customize(keyboardType: .asciiCapable, returnType: .next,
-            charactersLimit: 30, placeHolderText: "Last name", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F) )
+            charactersLimit: 30, placeHolderText: "Last name", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.lastNameText.delegate = self
         ADD_SPACER(to: VStack_form, height: 20)
         // -------
         let userNameLabel = UILabel()
         userNameLabel.text = "Screen name"
-        userNameLabel.font = ROBOTO(14)
-        userNameLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        userNameLabel.font = AILERON(16)
+        userNameLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(userNameLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.userNameText.buildInto(vstack: VStack_form)
         self.userNameText.customize(keyboardType: .asciiCapable, returnType: .next,
-            charactersLimit: 30, placeHolderText: "Screen name", textColor: DARK_MODE() ? .white : UIColor(hex: 0x1D242F) )
+            charactersLimit: 30, placeHolderText: "Screen name", textColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C) )
         self.userNameText.delegate = self
         ADD_SPACER(to: VStack_form, height: 20)
         // -------
         let EmailLabel = UILabel()
         EmailLabel.text = "Email address"
-        EmailLabel.font = ROBOTO(14)
-        EmailLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        EmailLabel.font = AILERON(16)
+        EmailLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(EmailLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 16)
         
         self.emailText.buildInto(vstack: VStack_form)
         self.emailText.customize(keyboardType: .emailAddress, returnType: .next,
             charactersLimit: 30, placeHolderText: "Email address", textColor: DARK_MODE() ? .lightGray : .darkGray )
         self.emailText.setEnabled(false)
-        ADD_SPACER(to: VStack_form, height: 35)
+        ADD_SPACER(to: VStack_form, height: 32)
         // -------
         let hStack_saveUserInfoButton = HSTACK(into: VStack_form)
         
         let saveUserInfoButton = UIButton(type: .custom)
-        saveUserInfoButton.backgroundColor = UIColor(hex: 0xDA4933)
+        saveUserInfoButton.backgroundColor = UIColor(hex: 0x60C4D6)
         saveUserInfoButton.layer.cornerRadius = 4.0
         
         if(IPHONE()) {
@@ -228,12 +228,12 @@ class AccountViewController: BaseViewController {
         }
 
         saveUserInfoButton.addTarget(self, action: #selector(saveUserInfoButtonTap(_:)), for: .touchUpInside)
-        ADD_SPACER(to: VStack_form, height: 30)
+        ADD_SPACER(to: VStack_form, height: 32)
         
         let saveUserInfoLabel = UILabel()
-        saveUserInfoLabel.text = "SAVE"
-        saveUserInfoLabel.textColor = .white
-        saveUserInfoLabel.font = ROBOTO_BOLD(13)
+        saveUserInfoLabel.text = "Save"
+        saveUserInfoLabel.textColor = UIColor(hex: 0x19191C)
+        saveUserInfoLabel.font = AILERON_SEMIBOLD(16)
         VStack_form.addSubview(saveUserInfoLabel)
         saveUserInfoLabel.activateConstraints([
             saveUserInfoLabel.centerXAnchor.constraint(equalTo: saveUserInfoButton.centerXAnchor),
@@ -242,17 +242,18 @@ class AccountViewController: BaseViewController {
         // -------
         
         let line1 = UIView()
-        line1.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+        line1.backgroundColor = CSS.shared.displayMode().main_bgColor
         line1.activateConstraints([
             line1.heightAnchor.constraint(equalToConstant: 0.75)
         ])
         VStack_form.addArrangedSubview(line1)
-        ADD_SPACER(to: VStack_form, height: 30)
+        ADD_HDASHES(to: line1)
+        ADD_SPACER(to: VStack_form, height: 32)
         
         let titleLabel2 = UILabel()
         titleLabel2.text = "Newsletter Preferences"
-        titleLabel2.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
-        titleLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        titleLabel2.font = DM_SERIF_DISPLAY(23)
+        titleLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel2)
         ADD_SPACER(to: VStack_form, height: 25)
         
@@ -262,22 +263,27 @@ class AccountViewController: BaseViewController {
             hStackSubscription.heightAnchor.constraint(equalToConstant: 44)
         ])
         
-        let logo = UIImageView(image: UIImage(named: ("navBar.circleLogo")))
-        hStackSubscription.addArrangedSubview(logo)
+        let vStackLogo = VSTACK(into: hStackSubscription)
+        ADD_SPACER(to: vStackLogo, height: 6)
+        let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("ITNF_logo")))
+        vStackLogo.addArrangedSubview(logo)
         logo.activateConstraints([
-            logo.widthAnchor.constraint(equalToConstant: 44),
-            logo.heightAnchor.constraint(equalToConstant: 44)
+            logo.widthAnchor.constraint(equalToConstant: 108),
+            logo.heightAnchor.constraint(equalToConstant: 32)
         ])
-        ADD_SPACER(to: hStackSubscription, width: 10)
+        ADD_SPACER(to: vStackLogo, height: 6)
+        ADD_SPACER(to: hStackSubscription, width: 20)
         
-        self.subscriptionStateLabel.text = "Loading..."
-        self.subscriptionStateLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.subscriptionStateLabel.font = ROBOTO(14)
+        self.subscriptionStateLabel.numberOfLines = 0
+        self.subscriptionStateLabel.text = "loading..."
+        self.subscriptionStateLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        self.subscriptionStateLabel.font = AILERON(16)
+        //self.subscriptionStateLabel.backgroundColor = .red.withAlphaComponent(0.25)
         hStackSubscription.addArrangedSubview(self.subscriptionStateLabel)
         ADD_SPACER(to: hStackSubscription)
         
         let subscribeButton = UIButton(type: .custom)
-        subscribeButton.backgroundColor = UIColor(hex: 0xDA4933)
+        subscribeButton.backgroundColor = UIColor(hex: 0x60C4D6)
         subscribeButton.layer.cornerRadius = 4.0
         hStackSubscription.addArrangedSubview(subscribeButton)
         subscribeButton.activateConstraints([
@@ -287,8 +293,8 @@ class AccountViewController: BaseViewController {
         subscribeButton.addTarget(self, action: #selector(subscribeButtonTap(_:)), for: .touchUpInside)
         
         self.subscribeButtonLabel.text = "..."
-        self.subscribeButtonLabel.textColor = .white
-        self.subscribeButtonLabel.font = ROBOTO_BOLD(13)
+        self.subscribeButtonLabel.textColor = UIColor(hex: 0x19191C)
+        self.subscribeButtonLabel.font = AILERON_SEMIBOLD(16)
         hStackSubscription.addSubview(self.subscribeButtonLabel)
         self.subscribeButtonLabel.activateConstraints([
             self.subscribeButtonLabel.centerXAnchor.constraint(equalTo: subscribeButton.centerXAnchor),
@@ -298,8 +304,8 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: VStack_form, height: 30)
         let newsletterFreqLabel = UILabel()
         newsletterFreqLabel.text = "Newsletter frequency"
-        newsletterFreqLabel.font = ROBOTO(14)
-        newsletterFreqLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        newsletterFreqLabel.font = AILERON(16)
+        newsletterFreqLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(newsletterFreqLabel)
         ADD_SPACER(to: VStack_form, height: 12)
         
@@ -312,11 +318,12 @@ class AccountViewController: BaseViewController {
             circle1.heightAnchor.constraint(equalToConstant: 20)
         ])
         self.circle1.alpha = 0.3
+        self.circle1.tintColor = UIColor(hex: 0x60C4D6)
         ADD_SPACER(to: hStackSubscriptionStyle, width: 8)
         let dailyNewsletterLabel = UILabel()
         dailyNewsletterLabel.text = "Daily"
-        dailyNewsletterLabel.font = ROBOTO(14)
-        dailyNewsletterLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        dailyNewsletterLabel.font = AILERON(16)
+        dailyNewsletterLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackSubscriptionStyle.addArrangedSubview(dailyNewsletterLabel)
         
         let buttonCircle1 = UIButton(type: .custom)
@@ -339,11 +346,12 @@ class AccountViewController: BaseViewController {
             circle2.heightAnchor.constraint(equalToConstant: 20)
         ])
         self.circle2.alpha = 0.3
+        self.circle2.tintColor = UIColor(hex: 0x60C4D6)
         ADD_SPACER(to: hStackSubscriptionStyle, width: 8)
         let weeklyNewsletterLabel = UILabel()
         weeklyNewsletterLabel.text = "Weekly"
-        weeklyNewsletterLabel.font = ROBOTO(14)
-        weeklyNewsletterLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        weeklyNewsletterLabel.font = AILERON(16)
+        weeklyNewsletterLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackSubscriptionStyle.addArrangedSubview(weeklyNewsletterLabel)
         
         let buttonCircle2 = UIButton(type: .custom)
@@ -358,7 +366,7 @@ class AccountViewController: BaseViewController {
         buttonCircle2.tag = 2
         buttonCircle2.addTarget(self, action: #selector(subscriptionTypeButtonTap(_:)), for: .touchUpInside)
         ADD_SPACER(to: hStackSubscriptionStyle)
-        ADD_SPACER(to: VStack_form, height: 30)
+        ADD_SPACER(to: VStack_form, height: 32)
         
         hStackSubscriptionStyle.addSubview(self.circleMark1)
         self.circleMark1.tintColor = .black.withAlphaComponent(0.5)
@@ -387,151 +395,152 @@ class AccountViewController: BaseViewController {
             line2.heightAnchor.constraint(equalToConstant: 0.75)
         ])
         VStack_form.addArrangedSubview(line2)
-        ADD_SPACER(to: VStack_form, height: 30)
-        
-    //--- SOCIAL
-        let titleLabel_21 = UILabel()
-        titleLabel_21.text = "Connected social accounts"
-        titleLabel_21.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
-        titleLabel_21.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        VStack_form.addArrangedSubview(titleLabel_21)
-        ADD_SPACER(to: VStack_form, height: 20)
-        
-        // >> Linkedin
-        let hStackSocial1 = HSTACK(into: VStack_form)
-        let socialImgView1 = UIImageView(image: UIImage(named: "footerSocial_2"))
-        hStackSocial1.addArrangedSubview(socialImgView1)
-        socialImgView1.activateConstraints([
-            socialImgView1.widthAnchor.constraint(equalToConstant: 35),
-            socialImgView1.heightAnchor.constraint(equalToConstant: 35)
-        ])
-        ADD_SPACER(to: hStackSocial1, width: 15)
-        let socialNameLabel1 = UILabel()
-        socialNameLabel1.text = "Linkedin"
-        socialNameLabel1.font = ROBOTO(16)
-        socialNameLabel1.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        hStackSocial1.addArrangedSubview(socialNameLabel1)
-        ADD_SPACER(to: hStackSocial1)
-        
-        let socialButton1 = UIButton(type: .custom)
-        socialButton1.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
-        socialButton1.layer.cornerRadius = 4.0
-        hStackSocial1.addArrangedSubview(socialButton1)
-        socialButton1.activateConstraints([
-            socialButton1.widthAnchor.constraint(equalToConstant: 125),
-            socialButton1.heightAnchor.constraint(equalToConstant: 44)
-        ])
-        socialButton1.tag = 100+1
-        socialButton1.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
-        
-        let socialButtonLabel1 = UILabel()
-        socialButtonLabel1.text = "..."
-        socialButtonLabel1.textColor = .white
-        socialButtonLabel1.font = ROBOTO_BOLD(13)
-        hStackSocial1.addSubview(socialButtonLabel1)
-        socialButtonLabel1.activateConstraints([
-            socialButtonLabel1.centerXAnchor.constraint(equalTo: socialButton1.centerXAnchor),
-            socialButtonLabel1.centerYAnchor.constraint(equalTo: socialButton1.centerYAnchor)
-        ])
-        socialButtonLabel1.tag = 200+1
-        ADD_SPACER(to: VStack_form, height: 30)
-        // Linkedin <<
-        // -------------------------------------
-        
-        // >> Twitter
-        let hStackSocial2 = HSTACK(into: VStack_form)
-        let socialImgView2 = UIImageView(image: UIImage(named: "footerSocial_1"))
-        hStackSocial2.addArrangedSubview(socialImgView2)
-        socialImgView2.activateConstraints([
-            socialImgView2.widthAnchor.constraint(equalToConstant: 35),
-            socialImgView2.heightAnchor.constraint(equalToConstant: 35)
-        ])
-        ADD_SPACER(to: hStackSocial2, width: 15)
-        let socialNameLabel2 = UILabel()
-        socialNameLabel2.text = "Twitter"
-        socialNameLabel2.font = ROBOTO(16)
-        socialNameLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        hStackSocial2.addArrangedSubview(socialNameLabel2)
-        ADD_SPACER(to: hStackSocial2)
-
-        let socialButton2 = UIButton(type: .custom)
-        socialButton2.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
-        socialButton2.layer.cornerRadius = 4.0
-        hStackSocial2.addArrangedSubview(socialButton2)
-        socialButton2.activateConstraints([
-            socialButton2.widthAnchor.constraint(equalToConstant: 125),
-            socialButton2.heightAnchor.constraint(equalToConstant: 44)
-        ])
-        socialButton2.tag = 100+2
-        socialButton2.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
-
-        let socialButtonLabel2 = UILabel()
-        socialButtonLabel2.text = "..."
-        socialButtonLabel2.textColor = .white
-        socialButtonLabel2.font = ROBOTO_BOLD(13)
-        hStackSocial2.addSubview(socialButtonLabel2)
-        socialButtonLabel2.activateConstraints([
-            socialButtonLabel2.centerXAnchor.constraint(equalTo: socialButton2.centerXAnchor),
-            socialButtonLabel2.centerYAnchor.constraint(equalTo: socialButton2.centerYAnchor)
-        ])
-        socialButtonLabel2.tag = 200+2
-        ADD_SPACER(to: VStack_form, height: 30)
-        // Twitter <<
-        // -------------------------------------
-        
-        // >> Facebook
-        let hStackSocial3 = HSTACK(into: VStack_form)
-        let socialImgView3 = UIImageView(image: UIImage(named: "footerSocial_3"))
-        hStackSocial3.addArrangedSubview(socialImgView3)
-        socialImgView3.activateConstraints([
-            socialImgView3.widthAnchor.constraint(equalToConstant: 35),
-            socialImgView3.heightAnchor.constraint(equalToConstant: 35)
-        ])
-        ADD_SPACER(to: hStackSocial3, width: 15)
-        let socialNameLabel3 = UILabel()
-        socialNameLabel3.text = "Facebook"
-        socialNameLabel3.font = ROBOTO(16)
-        socialNameLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        hStackSocial3.addArrangedSubview(socialNameLabel3)
-        ADD_SPACER(to: hStackSocial3)
-
-        let socialButton3 = UIButton(type: .custom)
-        socialButton3.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
-        socialButton3.layer.cornerRadius = 4.0
-        hStackSocial3.addArrangedSubview(socialButton3)
-        socialButton3.activateConstraints([
-            socialButton3.widthAnchor.constraint(equalToConstant: 125),
-            socialButton3.heightAnchor.constraint(equalToConstant: 44)
-        ])
-        socialButton3.tag = 100+3
-        socialButton3.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
-
-        let socialButtonLabel3 = UILabel()
-        socialButtonLabel3.text = "..."
-        socialButtonLabel3.textColor = .white
-        socialButtonLabel3.font = ROBOTO_BOLD(13)
-        hStackSocial3.addSubview(socialButtonLabel3)
-        socialButtonLabel3.activateConstraints([
-            socialButtonLabel3.centerXAnchor.constraint(equalTo: socialButton3.centerXAnchor),
-            socialButtonLabel3.centerYAnchor.constraint(equalTo: socialButton3.centerYAnchor)
-        ])
-        socialButtonLabel3.tag = 200+3
-        ADD_SPACER(to: VStack_form, height: 30)
-        // Facebook <<
-
-        let line21 = UIView()
-        line21.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
-        line21.activateConstraints([
-            line21.heightAnchor.constraint(equalToConstant: 0.75)
-        ])
-        VStack_form.addArrangedSubview(line21)
-        ADD_SPACER(to: VStack_form, height: 30)
-        
-    //---
+        ADD_HDASHES(to: line2)
+        ADD_SPACER(to: VStack_form, height: 32)
+//
+//    //--- SOCIAL
+//        let titleLabel_21 = UILabel()
+//        titleLabel_21.text = "Connected social accounts"
+//        titleLabel_21.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
+//        titleLabel_21.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+//        VStack_form.addArrangedSubview(titleLabel_21)
+//        ADD_SPACER(to: VStack_form, height: 20)
+//        
+//        // >> Linkedin
+//        let hStackSocial1 = HSTACK(into: VStack_form)
+//        let socialImgView1 = UIImageView(image: UIImage(named: "footerSocial_2"))
+//        hStackSocial1.addArrangedSubview(socialImgView1)
+//        socialImgView1.activateConstraints([
+//            socialImgView1.widthAnchor.constraint(equalToConstant: 35),
+//            socialImgView1.heightAnchor.constraint(equalToConstant: 35)
+//        ])
+//        ADD_SPACER(to: hStackSocial1, width: 15)
+//        let socialNameLabel1 = UILabel()
+//        socialNameLabel1.text = "Linkedin"
+//        socialNameLabel1.font = ROBOTO(16)
+//        socialNameLabel1.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+//        hStackSocial1.addArrangedSubview(socialNameLabel1)
+//        ADD_SPACER(to: hStackSocial1)
+//        
+//        let socialButton1 = UIButton(type: .custom)
+//        socialButton1.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
+//        socialButton1.layer.cornerRadius = 4.0
+//        hStackSocial1.addArrangedSubview(socialButton1)
+//        socialButton1.activateConstraints([
+//            socialButton1.widthAnchor.constraint(equalToConstant: 125),
+//            socialButton1.heightAnchor.constraint(equalToConstant: 44)
+//        ])
+//        socialButton1.tag = 100+1
+//        socialButton1.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
+//        
+//        let socialButtonLabel1 = UILabel()
+//        socialButtonLabel1.text = "..."
+//        socialButtonLabel1.textColor = .white
+//        socialButtonLabel1.font = ROBOTO_BOLD(13)
+//        hStackSocial1.addSubview(socialButtonLabel1)
+//        socialButtonLabel1.activateConstraints([
+//            socialButtonLabel1.centerXAnchor.constraint(equalTo: socialButton1.centerXAnchor),
+//            socialButtonLabel1.centerYAnchor.constraint(equalTo: socialButton1.centerYAnchor)
+//        ])
+//        socialButtonLabel1.tag = 200+1
+//        ADD_SPACER(to: VStack_form, height: 30)
+//        // Linkedin <<
+//        // -------------------------------------
+//        
+//        // >> Twitter
+//        let hStackSocial2 = HSTACK(into: VStack_form)
+//        let socialImgView2 = UIImageView(image: UIImage(named: "footerSocial_1"))
+//        hStackSocial2.addArrangedSubview(socialImgView2)
+//        socialImgView2.activateConstraints([
+//            socialImgView2.widthAnchor.constraint(equalToConstant: 35),
+//            socialImgView2.heightAnchor.constraint(equalToConstant: 35)
+//        ])
+//        ADD_SPACER(to: hStackSocial2, width: 15)
+//        let socialNameLabel2 = UILabel()
+//        socialNameLabel2.text = "Twitter"
+//        socialNameLabel2.font = ROBOTO(16)
+//        socialNameLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+//        hStackSocial2.addArrangedSubview(socialNameLabel2)
+//        ADD_SPACER(to: hStackSocial2)
+//
+//        let socialButton2 = UIButton(type: .custom)
+//        socialButton2.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
+//        socialButton2.layer.cornerRadius = 4.0
+//        hStackSocial2.addArrangedSubview(socialButton2)
+//        socialButton2.activateConstraints([
+//            socialButton2.widthAnchor.constraint(equalToConstant: 125),
+//            socialButton2.heightAnchor.constraint(equalToConstant: 44)
+//        ])
+//        socialButton2.tag = 100+2
+//        socialButton2.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
+//
+//        let socialButtonLabel2 = UILabel()
+//        socialButtonLabel2.text = "..."
+//        socialButtonLabel2.textColor = .white
+//        socialButtonLabel2.font = ROBOTO_BOLD(13)
+//        hStackSocial2.addSubview(socialButtonLabel2)
+//        socialButtonLabel2.activateConstraints([
+//            socialButtonLabel2.centerXAnchor.constraint(equalTo: socialButton2.centerXAnchor),
+//            socialButtonLabel2.centerYAnchor.constraint(equalTo: socialButton2.centerYAnchor)
+//        ])
+//        socialButtonLabel2.tag = 200+2
+//        ADD_SPACER(to: VStack_form, height: 30)
+//        // Twitter <<
+//        // -------------------------------------
+//        
+//        // >> Facebook
+//        let hStackSocial3 = HSTACK(into: VStack_form)
+//        let socialImgView3 = UIImageView(image: UIImage(named: "footerSocial_3"))
+//        hStackSocial3.addArrangedSubview(socialImgView3)
+//        socialImgView3.activateConstraints([
+//            socialImgView3.widthAnchor.constraint(equalToConstant: 35),
+//            socialImgView3.heightAnchor.constraint(equalToConstant: 35)
+//        ])
+//        ADD_SPACER(to: hStackSocial3, width: 15)
+//        let socialNameLabel3 = UILabel()
+//        socialNameLabel3.text = "Facebook"
+//        socialNameLabel3.font = ROBOTO(16)
+//        socialNameLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+//        hStackSocial3.addArrangedSubview(socialNameLabel3)
+//        ADD_SPACER(to: hStackSocial3)
+//
+//        let socialButton3 = UIButton(type: .custom)
+//        socialButton3.backgroundColor = .lightGray //UIColor(hex: 0xFF643C)
+//        socialButton3.layer.cornerRadius = 4.0
+//        hStackSocial3.addArrangedSubview(socialButton3)
+//        socialButton3.activateConstraints([
+//            socialButton3.widthAnchor.constraint(equalToConstant: 125),
+//            socialButton3.heightAnchor.constraint(equalToConstant: 44)
+//        ])
+//        socialButton3.tag = 100+3
+//        socialButton3.addTarget(self, action: #selector(socialButtonTap(_:)), for: .touchUpInside)
+//
+//        let socialButtonLabel3 = UILabel()
+//        socialButtonLabel3.text = "..."
+//        socialButtonLabel3.textColor = .white
+//        socialButtonLabel3.font = ROBOTO_BOLD(13)
+//        hStackSocial3.addSubview(socialButtonLabel3)
+//        socialButtonLabel3.activateConstraints([
+//            socialButtonLabel3.centerXAnchor.constraint(equalTo: socialButton3.centerXAnchor),
+//            socialButtonLabel3.centerYAnchor.constraint(equalTo: socialButton3.centerYAnchor)
+//        ])
+//        socialButtonLabel3.tag = 200+3
+//        ADD_SPACER(to: VStack_form, height: 30)
+//        // Facebook <<
+//
+//        let line21 = UIView()
+//        line21.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+//        line21.activateConstraints([
+//            line21.heightAnchor.constraint(equalToConstant: 0.75)
+//        ])
+//        VStack_form.addArrangedSubview(line21)
+//        ADD_SPACER(to: VStack_form, height: 30)
+//        
+//    //---
         let titleLabel3 = UILabel()
         titleLabel3.text = "Sign out"
-        titleLabel3.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
-        titleLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        titleLabel3.font = DM_SERIF_DISPLAY(23)
+        titleLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel3)
         ADD_SPACER(to: VStack_form, height: 5)
         
@@ -539,14 +548,14 @@ class AccountViewController: BaseViewController {
         
         let signOutLabel = UILabel()
         signOutLabel.text = "Sign out"
-        signOutLabel.font = ROBOTO(14)
-        signOutLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        signOutLabel.font = AILERON(16)
+        signOutLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackSignOut.addArrangedSubview(signOutLabel)
         
         ADD_SPACER(to: hStackSignOut)
         
         let signOutButton = UIButton(type: .custom)
-        signOutButton.backgroundColor = UIColor(hex: 0xDA4933)
+        signOutButton.backgroundColor = UIColor(hex: 0x60C4D6)
         signOutButton.layer.cornerRadius = 4.0
         hStackSignOut.addArrangedSubview(signOutButton)
         signOutButton.activateConstraints([
@@ -556,16 +565,16 @@ class AccountViewController: BaseViewController {
         signOutButton.addTarget(self, action: #selector(signOutButtonTap(_:)), for: .touchUpInside)
         
         let signOutButtonLabel = UILabel()
-        signOutButtonLabel.text = "SIGN OUT"
-        signOutButtonLabel.textColor = .white
-        signOutButtonLabel.font = ROBOTO_BOLD(13)
+        signOutButtonLabel.text = "Sign out"
+        signOutButtonLabel.textColor = UIColor(hex: 0x19191C)
+        signOutButtonLabel.font = AILERON_SEMIBOLD(16)
         hStackSignOut.addSubview(signOutButtonLabel)
         signOutButtonLabel.activateConstraints([
             signOutButtonLabel.centerXAnchor.constraint(equalTo: signOutButton.centerXAnchor),
             signOutButtonLabel.centerYAnchor.constraint(equalTo: signOutButton.centerYAnchor)
         ])
         
-        ADD_SPACER(to: VStack_form, height: 30)
+        ADD_SPACER(to: VStack_form, height: 32)
         
         
         //---
@@ -575,13 +584,14 @@ class AccountViewController: BaseViewController {
             line3.heightAnchor.constraint(equalToConstant: 0.75)
         ])
         VStack_form.addArrangedSubview(line3)
-        ADD_SPACER(to: VStack_form, height: 30)
+        ADD_HDASHES(to: line3)
+        ADD_SPACER(to: VStack_form, height: 32)
         
         ///////////////////
         let titleLabel4 = UILabel()
         titleLabel4.text = "Delete my account"
-        titleLabel4.font = DM_SERIF_DISPLAY_fixed(18) //MERRIWEATHER_BOLD(18)
-        titleLabel4.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        titleLabel4.font = DM_SERIF_DISPLAY(23)
+        titleLabel4.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel4)
         ADD_SPACER(to: VStack_form, height: 5)
         
@@ -598,14 +608,14 @@ class AccountViewController: BaseViewController {
         
         let deleteLabel = UILabel()
         deleteLabel.text = "Delete account"
-        deleteLabel.font = ROBOTO(14)
-        deleteLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+        deleteLabel.font = AILERON(16)
+        deleteLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackDelete.addArrangedSubview(deleteLabel)
         
         ADD_SPACER(to: hStackDelete)
         
         let deleteButton = UIButton(type: .custom)
-        deleteButton.backgroundColor = UIColor(hex: 0xDA4933)
+        deleteButton.backgroundColor = UIColor(hex: 0x60C4D6)
         deleteButton.layer.cornerRadius = 4.0
         hStackDelete.addArrangedSubview(deleteButton)
         deleteButton.activateConstraints([
@@ -615,9 +625,9 @@ class AccountViewController: BaseViewController {
         deleteButton.addTarget(self, action: #selector(deleteButtonTap(_:)), for: .touchUpInside)
         
         let deleteButtonLabel = UILabel()
-        deleteButtonLabel.text = "DELETE"
-        deleteButtonLabel.textColor = .white
-        deleteButtonLabel.font = ROBOTO_BOLD(13)
+        deleteButtonLabel.text = "Delete"
+        deleteButtonLabel.textColor = UIColor(hex: 0x19191C)
+        deleteButtonLabel.font = AILERON_SEMIBOLD(16)
         hStackDelete.addSubview(deleteButtonLabel)
         deleteButtonLabel.activateConstraints([
             deleteButtonLabel.centerXAnchor.constraint(equalTo: deleteButton.centerXAnchor),
@@ -671,15 +681,15 @@ class AccountViewController: BaseViewController {
         let type = self.subscriptionType
     
         if(type==0) {
-            self.subscriptionStateLabel.text = "Not subscribed"
-            self.subscribeButtonLabel.text = "SUBSCRIBE"
+            self.subscriptionStateLabel.text = "Status:\nnot subscribed"
+            self.subscribeButtonLabel.text = "SUBSCRIBE".capitalized
             self.circle1.alpha = 0.3
             self.circle2.alpha = 0.3
             self.circleMark1.hide()
             self.circleMark2.hide()
         } else {
-            self.subscriptionStateLabel.text = "Subscribed"
-            self.subscribeButtonLabel.text = "UNSUBSCRIBE"
+            self.subscriptionStateLabel.text = "Status:\nsubscribed"
+            self.subscribeButtonLabel.text = "UNSUBSCRIBE".capitalized
             self.circle1.alpha = 1.0
             self.circle2.alpha = 1.0
             

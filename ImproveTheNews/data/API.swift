@@ -251,6 +251,9 @@ class API {
             "userId": UUID.shared.getValue()
         ]
         
+        print("USER_ID", UUID.shared.getValue())
+        print("AUTH", self.getBearerAuth() )
+        
         self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
             if let _json = json, success {
                 if let _msg = _json["message"] as? String, _msg == "OK" {
@@ -426,7 +429,7 @@ extension API {
         callback: @escaping (Bool, [String: Any]?, String) -> ()) {
         
         let url = BIASPEDIA_URL() + urlPath
-        
+
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = method
         let body = try? JSONSerialization.data(withJSONObject: bodyJson)

@@ -306,7 +306,9 @@ class SignUpView: UIView {
         }
 
         self.mainActionButton.addTarget(self, action: #selector(mainActionButtonTap(_:)), for: .touchUpInside)
-        ADD_SPACER(to: VStack_form, height: 24)
+        ADD_SPACER(to: VStack_form, height: 50) // form bottom space
+        
+        ADD_SPACER(to: VStack_form) // form bottom space
         
         let mainActionLabel = UILabel()
         mainActionLabel.text = "Sign up"

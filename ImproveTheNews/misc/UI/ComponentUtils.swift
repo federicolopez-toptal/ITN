@@ -134,6 +134,7 @@ func ADD_HDASHES(to view: UIView) {
     if(SCREEN_SIZE().height > maxDim) { maxDim = SCREEN_SIZE().height }
     
     view.backgroundColor = CSS.shared.displayMode().main_bgColor
+    view.clipsToBounds = true
     
     while(valX < maxDim) {
         let dashView = UIView()
