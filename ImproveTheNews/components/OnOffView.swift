@@ -65,7 +65,7 @@ class OnOffView: UIView {
                 self.dashMark.show()
             }
             
-            self.backgroundColor = .white
+            self.setBackgroundColor()
         }
     }
     
@@ -74,7 +74,7 @@ class OnOffView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         
-        self.backgroundColor = .white //UIColor.gray
+        self.setBackgroundColor()
         self.layer.cornerRadius = self.HEIGHT/2
         self.clipsToBounds = true
         self.activateConstraints([
@@ -146,11 +146,11 @@ class OnOffView: UIView {
         
         self.thumb.backgroundColor = colorTo
         if(self._status) {
-            self.backgroundColor = .white //DARK_MODE() ? UIColor(hex: 0x823129) : UIColor(hex: 0xE6A49D)
+            self.setBackgroundColor()
             self.checkMark.show()
             self.dashMark.hide()
         } else {
-            self.backgroundColor = .white //DARK_MODE() ? UIColor(hex: 0x68686A) : UIColor(hex: 0xA1A2A3)
+            self.setBackgroundColor()
             self.checkMark.hide()
             self.dashMark.show()
         }
@@ -169,7 +169,10 @@ class OnOffView: UIView {
         self.thumb.backgroundColor = self._status ? self.thumbOnColor : self.thumbOffColor
         let dim: CGFloat = self.HEIGHT-(self.BORDER*2)
         self.thumbLeadingConstraint?.constant = self._status ? (self.WIDTH-self.BORDER-dim) : 2
-        
-        self.backgroundColor = .white
+        self.setBackgroundColor()
+    }
+    
+    func setBackgroundColor() {
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : .white
     }
 }
