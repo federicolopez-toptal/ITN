@@ -181,13 +181,12 @@ extension StoryViewController {
 
     func addContent(_ story: MainFeedStory) {
         REMOVE_ALL_SUBVIEWS(from: self.VStack)
-        
-        let line2 = UIView()
-        self.VStack.addArrangedSubview(line2)
-        line2.activateConstraints([
-            line2.heightAnchor.constraint(equalToConstant: 1),
-        ])
-        ADD_HDASHES(to: line2)
+//        let line2 = UIView()
+//        self.VStack.addArrangedSubview(line2)
+//        line2.activateConstraints([
+//            line2.heightAnchor.constraint(equalToConstant: 1),
+//        ])
+//        ADD_HDASHES(to: line2)
         
         //self.addPill()
         if(story.splitType.isEmpty) {
