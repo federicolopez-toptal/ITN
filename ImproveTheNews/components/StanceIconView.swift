@@ -14,7 +14,9 @@ protocol StanceIconViewDelegate: AnyObject {
 
 class StanceIconView: UIView {
 
-    private let DIM: CGFloat = 23
+    var DIM: CGFloat = 18
+    var THUMB: CGFloat = 3
+    
     weak var delegate: StanceIconViewDelegate?
 
     let slider1 = UIView()
@@ -28,7 +30,7 @@ class StanceIconView: UIView {
     
 
     // MARK: - Init(s)
-    init() {
+    init() {        
         super.init(frame: CGRect.zero)
         self.layer.cornerRadius = (DIM/2)
         self.activateConstraints([
@@ -39,19 +41,19 @@ class StanceIconView: UIView {
         slider1.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0xB3B3B3)
         self.addSubview(slider1)
         slider1.activateConstraints([
-            slider1.widthAnchor.constraint(equalToConstant: 12),
+            slider1.widthAnchor.constraint(equalToConstant: 10),
             slider1.heightAnchor.constraint(equalToConstant: 0.5),
             slider1.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            slider1.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -4)
+            slider1.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -3)
         ])
         
         let thumb1 = UIView()
-        thumb1.layer.cornerRadius = 2
+        thumb1.layer.cornerRadius = 1.5
         thumb1.backgroundColor = UIColor(hex: 0xDA4933)
         slider1.addSubview(thumb1)
         thumb1.activateConstraints([
-            thumb1.widthAnchor.constraint(equalToConstant: 4),
-            thumb1.heightAnchor.constraint(equalToConstant: 4),
+            thumb1.widthAnchor.constraint(equalToConstant: self.THUMB),
+            thumb1.heightAnchor.constraint(equalToConstant: self.THUMB),
             thumb1.centerYAnchor.constraint(equalTo: slider1.centerYAnchor)
         ])
         self.thumb1LeadingConstraint = thumb1.leadingAnchor.constraint(equalTo: slider1.leadingAnchor)
@@ -61,19 +63,19 @@ class StanceIconView: UIView {
         slider2.backgroundColor = UIColor(hex: 0x93A0B4)
         self.addSubview(slider2)
         slider2.activateConstraints([
-            slider2.widthAnchor.constraint(equalToConstant: 12),
+            slider2.widthAnchor.constraint(equalToConstant: 10),
             slider2.heightAnchor.constraint(equalToConstant: 0.5),
             slider2.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            slider2.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 4)
+            slider2.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 3)
         ])
         
         let thumb2 = UIView()
-        thumb2.layer.cornerRadius = 2
+        thumb2.layer.cornerRadius = 1.5
         thumb2.backgroundColor = UIColor(hex: 0xDA4933)
         slider2.addSubview(thumb2)
         thumb2.activateConstraints([
-            thumb2.widthAnchor.constraint(equalToConstant: 4),
-            thumb2.heightAnchor.constraint(equalToConstant: 4),
+            thumb2.widthAnchor.constraint(equalToConstant: self.THUMB),
+            thumb2.heightAnchor.constraint(equalToConstant: self.THUMB),
             thumb2.centerYAnchor.constraint(equalTo: slider2.centerYAnchor)
         ])
         self.thumb2LeadingConstraint = thumb2.leadingAnchor.constraint(equalTo: slider2.leadingAnchor)
@@ -113,7 +115,8 @@ class StanceIconView: UIView {
     func setValues(_ value1: Int, _ value2: Int) {
         let mValue1 = value1.clamp(lower: 1, upper: 5)
         let mValue2 = value2.clamp(lower: 1, upper: 5)
-        let positions: [CGFloat] = [0, 2, 4, 6, 8]
+        let half = self.THUMB/2
+        let positions: [CGFloat] = [0, 1.75, 3.5, 5.25, 7]
         
         self.value1 = mValue1
         self.value2 = mValue2

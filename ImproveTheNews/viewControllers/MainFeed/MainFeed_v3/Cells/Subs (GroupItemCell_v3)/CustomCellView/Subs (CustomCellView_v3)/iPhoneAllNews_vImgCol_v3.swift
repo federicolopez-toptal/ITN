@@ -193,7 +193,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         
         //self.articleTitleLabel.font = CSS.shared.iPhoneStory_titleFont_small
         self.articleTitleLabel.text = article.title
-            
+        
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: article.media_title) {
             sourcesArray.append(_identifier)
@@ -313,6 +313,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title
+            self.articleTitleLabel.setLineSpacing(lineSpacing: 6.0)
             
             var sourcesArray = [String]()
             if let _identifier = Sources.shared.search(name: article.source) {
@@ -441,7 +442,6 @@ extension iPhoneAllNews_vImgCol_v3: StanceIconViewDelegate {
 //        ]
 //        NOTIFY(Notification_stanceIconTap, userInfo: info)
         
-
         let popup = StancePopupView()
         let sourceName = CLEAN_SOURCE(from: self.article.source)
         popup.populate(sourceName: sourceName, country: self.article.country,
