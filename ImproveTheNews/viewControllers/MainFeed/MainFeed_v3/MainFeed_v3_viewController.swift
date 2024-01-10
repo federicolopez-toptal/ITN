@@ -31,7 +31,7 @@ class MainFeed_v3_viewController: BaseViewController {
         
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.preferencesSetDefaultValues()
-        self.addNotificationObservers()
+        self.addNotificationObservers()        
     }
     
     override func viewDidLayoutSubviews() {
@@ -133,6 +133,11 @@ extension MainFeed_v3_viewController {
                                 CustomNavController.shared.startTour()
                             }
                         }
+                        
+                        DELAY(1.0) {
+                            self.list.scrollToBottom()
+                        }
+                        
                         
                     }
                 }

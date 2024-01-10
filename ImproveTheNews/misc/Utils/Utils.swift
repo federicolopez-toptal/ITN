@@ -175,3 +175,28 @@ func DATE_TO_TIMEAGO(_ date: String) -> String {
     
     return result
 }
+
+
+// MARK: - OS theme related
+func DISPLAY_MODE_iOS() -> DisplayMode {
+    let style = UIViewController().traitCollection.userInterfaceStyle
+    if(style == .dark) {
+        return .dark
+    } else {
+        return .bright
+    }
+}
+
+func DARK_MODE_iOS() -> Bool {
+    return (DISPLAY_MODE_iOS() == .dark)
+}
+
+func LIGHT_MODE_iOS() -> Bool {
+    return BRIGHT_MODE_iOS()
+}
+
+func BRIGHT_MODE_iOS() -> Bool {
+    return (DISPLAY_MODE_iOS() == .bright)
+}
+
+

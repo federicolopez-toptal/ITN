@@ -9,30 +9,35 @@ import Foundation
 import UIKit
 
 
-enum MenuITem {
-    case displayMode
+enum MenuItem {
     case headlines
-    case layout
-    case preferences
+    case theme
+        case themeDefault
+        case themeLight
+        case themeDark
     case tour
-    case more
+    case newsletter
+    case preferences
     case profile
-    case logout
     
+    case layout
+    case more
+    case logout
     case sliders
-    case faq
+    case about
     case feedback
     case privacy
+    case spacer
 }
 
 // ------------
 extension MenuView {
     
-    func getText(forItem item: MenuITem) -> String {
+    func getText(forItem item: MenuItem) -> String {
         var result = ""
         
         switch(item) {
-            case .displayMode:
+            case .theme:
 //                result = "Light mode"
 //                if(BRIGHT_MODE()){ result = "Dark mode" }
                 result = "Theme"
@@ -42,7 +47,7 @@ extension MenuView {
                 
             case .layout:
                 result = "Text & Images"
-                if(TEXT_IMAGES()){ result = "Text-Only" }
+                if(TEXT_IMAGES()){ result = "Text Only" }
                 
             case .preferences:
                 result = "Preferences"
@@ -56,7 +61,7 @@ extension MenuView {
             case .sliders:
                 result = "How the\nsliders work"
                 
-            case .faq:
+            case .about:
                 result = "About"
                 
             case .feedback:
@@ -71,6 +76,18 @@ extension MenuView {
             case .logout:
                 result = "Logout"
                 
+            case .themeDefault:
+                result = "OS Default"
+                
+            case .themeLight:
+                result = "Light"
+                
+            case .themeDark:
+                result = "Dark"
+                
+            case .newsletter:
+                result = "Newsletter Archive"
+                
             default:
                 result = ""
         }
@@ -78,11 +95,11 @@ extension MenuView {
         return result//.capitalized
     }
     
-    func getIcon(forItem item: MenuITem) -> UIImage? {
+    func getIcon(forItem item: MenuItem) -> UIImage? {
         var icon = "menu.headlines"
         
         switch(item) {
-            case .displayMode:
+            case .theme:
                 icon = "theme"
 //                icon = "gotoLight"
 //                if(BRIGHT_MODE()){ icon = "gotoDark" }
@@ -107,7 +124,7 @@ extension MenuView {
             case .sliders:
                 icon = "sliders"
             
-            case .faq:
+            case .about:
                 icon = "about"
                 
             case .feedback:
@@ -122,8 +139,20 @@ extension MenuView {
             case .logout:
                 icon = "logout"
             
-//            default:
-//                icon = ""
+            case .themeDefault:
+                icon = "theme"
+                
+            case .themeLight:
+                icon = "light"
+                
+            case .themeDark:
+                icon = "dark"
+            
+            case .newsletter:
+                icon = "newsletter"
+            
+            default:
+                return nil
         }
         
         return UIImage(named: "menu." + icon)?.withRenderingMode(.alwaysTemplate)
@@ -131,10 +160,11 @@ extension MenuView {
     
     
     
-    func tapOnItem(_ item: MenuITem) {
+    func tapOnItem(_ item: MenuItem) {
         switch(item) {
-            case .displayMode:
-                self.changeDisplayMode()
+            case .theme:
+                //self.changeDisplayMode()
+                self.changeThemeState()
                 
             case .headlines:
                 self.gotoHeadlines()
@@ -151,7 +181,7 @@ extension MenuView {
             case .more:
                 self.showMore()
                 
-            case .sliders, .faq, .feedback, .privacy:
+            case .sliders, .about, .feedback, .privacy, .newsletter:
                 self.showContent(item)
                 
             case .profile:
@@ -160,6 +190,15 @@ extension MenuView {
             case .logout:
                 self.askForLogout()
                 
+            case .themeLight:
+                self.changeDisplayMode(to: .bright)
+            
+            case .themeDark:
+                self.changeDisplayMode(to: .dark)
+            
+            case .themeDefault:
+                self.setOSTheme()
+            
             default:
                 NOTHING()
         }

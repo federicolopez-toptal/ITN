@@ -63,6 +63,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 NOTIFY(Notification_reloadMainFeedOnShow)
             }
         }
+        
+        self.checkForOSThemeChange()
+    }
+    
+    func checkForOSThemeChange() {
+        if(DisplayMode.menuCurrent() == 1) {
+            CustomNavController.shared.menu.setOSTheme()
+        }
     }
 }
 

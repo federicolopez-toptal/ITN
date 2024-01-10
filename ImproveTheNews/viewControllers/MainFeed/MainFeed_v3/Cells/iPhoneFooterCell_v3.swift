@@ -58,19 +58,20 @@ class iPhoneFooterCell_v3: UITableViewCell {
         
         let feedback = self.createItemWith(text: "Feedback", into: self.contentView, tag: 3)
         feedback.activateConstraints([
-            feedback.topAnchor.constraint(equalTo: sliders.topAnchor),
-            feedback.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: SCREEN_SIZE().width/2)
+            feedback.topAnchor.constraint(equalTo: about.bottomAnchor, constant: vSep),
+            feedback.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
         
-        let privacy = self.createItemWith(text: "Privacy Policy", into: self.contentView, tag: 4)
-        privacy.activateConstraints([
-            privacy.topAnchor.constraint(equalTo: about.topAnchor),
-            privacy.leadingAnchor.constraint(equalTo: feedback.leadingAnchor)
-        ])
+        
+//        let feedback = self.createItemWith(text: "Feedback", into: self.contentView, tag: 3)
+//        feedback.activateConstraints([
+//            feedback.topAnchor.constraint(equalTo: sliders.topAnchor),
+//            feedback.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: SCREEN_SIZE().width/2)
+//        ])
         
         let twitter = self.createSocialButton("twitter", into: self.contentView, tag: 1)
         twitter.activateConstraints([
-            twitter.topAnchor.constraint(equalTo: about.bottomAnchor, constant: 44),
+            twitter.topAnchor.constraint(equalTo: feedback.bottomAnchor, constant: 44),
             twitter.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
         
@@ -86,15 +87,28 @@ class iPhoneFooterCell_v3: UITableViewCell {
             linkedin.leadingAnchor.constraint(equalTo: facebook.trailingAnchor, constant: 12)
         ])
         
+        // -------
         let ITNLogo = UIImageView(image: UIImage(named: DisplayMode.imageName("ITNF_logo")))
         self.contentView.addSubview(ITNLogo)
         ITNLogo.activateConstraints([
             ITNLogo.centerYAnchor.constraint(equalTo: twitter.centerYAnchor),
-            ITNLogo.leadingAnchor.constraint(equalTo: feedback.leadingAnchor),
+            ITNLogo.leadingAnchor.constraint(equalTo: linkedin.trailingAnchor, constant: 94),
             ITNLogo.widthAnchor.constraint(equalToConstant: 108),
             ITNLogo.heightAnchor.constraint(equalToConstant: 32)
         ])
         ITNLogo.tag = 88
+        
+        let newsletter = self.createItemWith(text: "Newsletter Archive", into: self.contentView, tag: 5)
+        newsletter.activateConstraints([
+            newsletter.topAnchor.constraint(equalTo: sliders.topAnchor),
+            newsletter.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor)
+        ])
+        
+        let privacy = self.createItemWith(text: "Privacy Policy", into: self.contentView, tag: 4)
+        privacy.activateConstraints([
+            privacy.topAnchor.constraint(equalTo: newsletter.bottomAnchor, constant: vSep),
+            privacy.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor)
+        ])
         
         self.refreshDisplayMode()
     }
@@ -157,6 +171,9 @@ class iPhoneFooterCell_v3: UITableViewCell {
                 
             case 4:
                 self.privacyPolicyButtonTap()
+                
+            case 5:
+                self.newsletterArchiveOnTap()
                 
             default:
                 NOTHING()
@@ -233,7 +250,7 @@ extension iPhoneFooterCell_v3 {
     }
     
     static func getHeight() -> CGFloat {
-        return 330
+        return 330 + 40
     }
 }
 
@@ -275,5 +292,8 @@ extension iPhoneFooterCell_v3 {
         }
     }
     
+    func newsletterArchiveOnTap() {
+        OPEN_URL( ITN_URL() + "/newsletters" )
+    }
     
 }

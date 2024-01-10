@@ -489,12 +489,13 @@ extension MainFeedv3 {
             result += "01" // default value: True
         }
         // More Preferences: Show newspaper flags
-        result += "VA"
-        if let _showFlags = READ(LocalKeys.preferences.showSourceFlags) {
-            result += _showFlags
-        } else {
-            result += "01" // default value: True
-        }
+//        result += "VA"
+//        if let _showFlags = READ(LocalKeys.preferences.showSourceFlags) {
+//            result += _showFlags
+//        } else {
+//            result += "01" // default value: True
+//        }
+        result += "VA00"
         
         
         

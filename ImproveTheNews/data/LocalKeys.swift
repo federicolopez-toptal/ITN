@@ -35,6 +35,8 @@ class LocalKeys { // Keys to store local values
     }
     
     class LocalKeys_preferences {
+        let menuDisplayMode = "pref_menuDisplayMode"
+    
         let displayMode = "pref_displayMode"
         let layout = "pref_layout"
         let sourceFilters = "pref_sourceFilters_3"

@@ -12,13 +12,34 @@ enum DisplayMode {
     case bright
     
     static func current() -> DisplayMode {
-        if let _mode = READ(LocalKeys.preferences.displayMode) {
-            let mode = Int(_mode)!
-            if(mode==0) { return .dark }
-            else { return .bright }
+        if(DisplayMode.menuCurrent() == 1) {
+            if(DARK_MODE_iOS()){ return .dark }
+            else{ return .bright }
         } else {
-            return .dark // default value
+            if let _mode = READ(LocalKeys.preferences.displayMode) {
+                let mode = Int(_mode)!
+                if(mode==0) { return .dark }
+                else { return .bright }
+            } else {
+                return .dark // default value
+            }
         }
+    }
+    
+    static func menuCurrent() -> Int {
+        var result = -1
+    
+        if let _value = READ(LocalKeys.preferences.menuDisplayMode) {
+            result = Int(_value)!
+        } else {
+            if(DisplayMode.current() == .bright) {
+                result = 2
+            } else {
+                result = 3
+            }
+        }
+        
+        return result
     }
     
     static func imageName(_ name: String) -> String {

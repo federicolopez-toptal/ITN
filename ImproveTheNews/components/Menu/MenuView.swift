@@ -1,4 +1,5 @@
 //
+//
 //  MenuView.swift
 //  ImproveTheNews
 //
@@ -16,38 +17,70 @@ class MenuView: UIView {
     var versionLabel = UILabel()
     var logo = UIImageView()
     
-    var isShowingMore = false
+    var dataProvider = [MenuItem]()
     
-    var dataProvider = [MenuITem]()
-    
-    let dataProvider_A: [MenuITem] = [ // Items order
+    let dp_mainItems: [MenuItem] = [ // Items order
         .headlines,
         .profile,
-        .displayMode,
+        
+        .theme,
+        
         .tour,
+        .newsletter,
         .preferences,
         .layout,
-        .faq,
-        .logout,
-
-        .more
+        .about,
+        
+        //.more
     ]
     
-    let dataProvider_B: [MenuITem] = [ // Items order
-        .headlines,
-        .profile,
-        .displayMode,
-        .tour,
-        .preferences,
-        .layout,
-        .faq,
-        .logout,
-        .more,
-        
+    var themeIsOpened = false
+    let dp_themeSubItems: [MenuItem] = [
+        .themeDefault,
+        .themeLight,
+        .themeDark
+    ]
+    
+    var moreIsOpened = false
+    let dp_moreSubItems: [MenuItem] = [
         .sliders,
         .feedback,
         .privacy
     ]
+    
+    // --------
+    
+    
+    
+//    var isShowingMore = false
+//    let dataProvider_A: [MenuItem] = [ // Items order
+//        .headlines,
+//        .profile,
+//        .theme,
+//        .tour,
+//        .preferences,
+//        .layout,
+//        .about,
+//        .logout,
+//
+//        .more
+//    ]
+//    
+//    let dataProvider_B: [MenuItem] = [ // Items order
+//        .headlines,
+//        .profile,
+//        .theme,
+//        .tour,
+//        .preferences,
+//        .layout,
+//        .about,
+//        .logout,
+//        .more,
+//        
+//        .sliders,
+//        .feedback,
+//        .privacy
+//    ]
     
     
 
@@ -141,9 +174,7 @@ class MenuView: UIView {
         // -------------------
         self.menuLeadingConstraint?.constant = -self.MENU_WIDTH
         
-        self.dataProvider = self.dataProvider_A
-        self.removeLogoutIfApply()
-        
+        self.updateDataProvider()
         self.refreshDisplayMode()
     }
     
@@ -291,6 +322,38 @@ extension MenuView {
 
     }
     // ---------
+    func changeThemeState() {
+        self.themeIsOpened = !self.themeIsOpened
+        self.updateDataProvider()
+        self.refreshDisplayMode() // reload list implicit
+    }
+    
+    func setOSTheme() {
+        if(DARK_MODE_iOS()) {
+            self.changeDisplayMode(to: .dark)
+        } else {
+            self.changeDisplayMode(to: .bright)
+        }
+        
+        WRITE(LocalKeys.preferences.menuDisplayMode, value: "1")
+        self.refreshDisplayMode() // reload list implicit
+    }
+    
+    func changeDisplayMode(to newMode: DisplayMode) {
+        var newValue = "0"
+        if(newMode == .bright){ newValue = "1" }
+        WRITE(LocalKeys.preferences.displayMode, value: newValue)
+        
+        if(newMode == .bright) {
+            WRITE(LocalKeys.preferences.menuDisplayMode, value: "2")
+        } else {
+            WRITE(LocalKeys.preferences.menuDisplayMode, value: "3")
+        }
+        
+        CustomNavController.shared.refreshDisplayMode()
+        self.dismissMe()
+    }
+    
     func changeDisplayMode() {
         var changeTo: DisplayMode = .bright
         if(DisplayMode.current() == .bright) {
@@ -388,20 +451,24 @@ extension MenuView {
     
     // ---------
     func showMore() {
-        self.isShowingMore = !self.isShowingMore
-        
-        if(self.isShowingMore) {
-            self.dataProvider = self.dataProvider_B
-        } else {
-            self.dataProvider = self.dataProvider_A
-        }
-        
-        self.removeLogoutIfApply()
+        self.moreIsOpened = !self.moreIsOpened
+        self.updateDataProvider()
         self.refreshDisplayMode() // reload list implicit
+    
+//        self.isShowingMore = !self.isShowingMore
+//        
+//        if(self.isShowingMore) {
+//            self.dataProvider = self.dataProvider_B
+//        } else {
+//            self.dataProvider = self.dataProvider_A
+//        }
+//        
+//        self.removeLogoutIfApply()
+//        self.refreshDisplayMode() // reload list implicit
     }
     
     // ---------
-    func showContent(_ item: MenuITem) {
+    func showContent(_ item: MenuItem) {
         self.dismissMe()
         CustomNavController.shared.hidePanelAndButtonWithAnimation()
         
@@ -414,7 +481,7 @@ extension MenuView {
                 }
 
             // -----
-            case .faq:
+            case .about:
                 let vc = FAQViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)
             
@@ -425,6 +492,9 @@ extension MenuView {
             case .privacy:
                 let vc = PrivacyPolicyViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)
+
+            case .newsletter:
+                OPEN_URL( ITN_URL() + "/newsletters" )
 
             default:
                 NOTHING()
@@ -509,29 +579,22 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
         let cell = self.list.dequeueReusableCell(withIdentifier: MenuItemCell.identifier) as! MenuItemCell
         let dpItem = self.dataProvider[indexPath.row]
         
-        let text = self.getText(forItem: dpItem)
-        cell.titleLabel.text = text
-        
-        cell.titleLabel.font = CSS.shared.menu_font
-//        if(text == self.getText(forItem: .sliders)) {
-//            cell.titleLabel.font = AILERON(13.5)
-//        }
-        
-        cell.titleLabel.addCharacterSpacing(kernValue: 1.0)
-        //cell.titleLabel.backgroundColor = .systemPink
-        cell.icon.image = self.getIcon(forItem: dpItem)
-        cell.icon.tintColor = CSS.shared.displayMode().menuItem_color
-        
-        var gap: CGFloat = 0
-        if(!self.dataProvider_A.contains(dpItem)) {
-            gap = 37
-        }
-        cell.setLeftGap(gap)
-        
+        cell.setText(self.getText(forItem: dpItem))
+        cell.setIcon(self.getIcon(forItem: dpItem))
+        cell.showArrow(self.mustShowArrow(for: dpItem))
+        cell.setLeftGap(self.gapValue(for: dpItem))
+        cell.select(state: self.mustSelect(for: dpItem))
+
+        cell.refreshDisplayMode()
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let dpItem = self.dataProvider[indexPath.row]
+        if(dpItem == .spacer) {
+            return 25
+        }
+        
         return MenuItemCell.heigth
     }
     
@@ -541,23 +604,23 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
         self.tapOnItem(item)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let item = self.dataProvider[indexPath.row]
-        var animation: Animation?
-        
-        // Animation (only for subitems in "more")
-        if(self.isShowingMore) {
-            if(!self.dataProvider_A.contains(item)) {
-                animation = AnimationFactory.makeMoveDownWithFade(rowHeight: MenuItemCell.heigth, duration: 0.35, delayFactor: 0)
-            }
-        }
-        
-        if let _animation = animation {
-            let animator = Animator(animation: _animation)
-            animator.animate(cell: cell, at: indexPath, in: tableView)
-        }
-        
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let item = self.dataProvider[indexPath.row]
+//        var animation: Animation?
+//        
+//        // Animation (only for subitems in "more")
+//        if(self.isShowingMore) {
+//            if(!self.dataProvider_A.contains(item)) {
+//                animation = AnimationFactory.makeMoveDownWithFade(rowHeight: MenuItemCell.heigth, duration: 0.35, delayFactor: 0)
+//            }
+//        }
+//        
+//        if let _animation = animation {
+//            let animator = Animator(animation: _animation)
+//            animator.animate(cell: cell, at: indexPath, in: tableView)
+//        }
+//        
+//    }
     
 }
 
@@ -565,28 +628,111 @@ extension MenuView: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Logout
 extension MenuView {
     
-    func removeLogoutIfApply() {
-        if(!USER_AUTHENTICATED()) {
-            for (i, item) in self.dataProvider.enumerated() {
-                if(item == .logout) {
-                    self.dataProvider.remove(at: i)
-                    break
-                }
-            }
-        }
-    }
+//    func removeLogoutIfApply() {
+//        if(!USER_AUTHENTICATED()) {
+//            for (i, item) in self.dataProvider.enumerated() {
+//                if(item == .logout) {
+//                    self.dataProvider.remove(at: i)
+//                    break
+//                }
+//            }
+//        }
+//    }
     
     func updateLogout() {
-        if(self.isShowingMore) {
-            self.dataProvider = self.dataProvider_B
-        } else {
-            self.dataProvider = self.dataProvider_A
-        }
-        
-        self.removeLogoutIfApply()
+        self.updateDataProvider()
         self.refreshDisplayMode() // reload list implicit
+//        if(self.isShowingMore) {
+//            self.dataProvider = self.dataProvider_B
+//        } else {
+//            self.dataProvider = self.dataProvider_A
+//        }
+//        
+//        self.removeLogoutIfApply()
+//        self.refreshDisplayMode() // reload list implicit
     }
     
     
     
 }
+
+extension MenuView {
+
+    func updateDataProvider() {
+        self.dataProvider = [MenuItem]()
+        
+        for item in self.dp_mainItems {
+            self.dataProvider.append(item)
+            
+            // Theme
+            if(self.themeIsOpened) {
+                if(item == .theme) {
+                    for subItem in self.dp_themeSubItems {
+                        self.dataProvider.append(subItem)
+                    }
+                }
+            }
+            
+            // More
+            if(self.moreIsOpened) {
+                if(item == .more) {
+                    for subItem in self.dp_moreSubItems {
+                        self.dataProvider.append(subItem)
+                    }
+                }
+            }
+        }
+        
+        if(USER_AUTHENTICATED()) {
+            self.dataProvider.append(.spacer)
+            self.dataProvider.append(.logout)
+        }
+        
+    }
+    
+    func mustShowArrow(for item: MenuItem) -> Int {
+        var showArrow = 0
+        if(item == .theme){
+            if(self.themeIsOpened) {
+                showArrow = -1
+            } else {
+                showArrow = 1
+            }
+        } else if(item == .more){
+            if(self.moreIsOpened) {
+                showArrow = -1
+            } else {
+                showArrow = 1
+            }
+        }
+        
+        return showArrow
+    }
+    
+    func gapValue(for item: MenuItem) -> CGFloat {
+        var addGap = false
+        var gap: CGFloat = 0
+        if(self.dp_themeSubItems.contains(item)) { addGap = true }
+        else if(self.dp_moreSubItems.contains(item)) { addGap = true }
+        
+        if(addGap){ gap = 42 }
+        return gap
+    }
+    
+    func mustSelect(for item: MenuItem) -> Bool {
+        var result = false
+        let value = DisplayMode.menuCurrent()
+    
+        if(item == .themeDefault && value == 1) {
+            result = true
+        } else if(item == .themeLight && value == 2) {
+            result = true
+        } else if(item == .themeDark && value == 3) {
+            result = true
+        }
+        
+        return result
+    }
+
+}
+
