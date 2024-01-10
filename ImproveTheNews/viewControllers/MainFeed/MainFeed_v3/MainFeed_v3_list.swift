@@ -88,11 +88,12 @@ extension MainFeed_v3_viewController {
         if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
             if(_groupItem is DP3_iPhoneStory_1Wide) {
                 if(Layout.current() == .textImages) {
-                    if(MUST_SPLIT() == 0) {
-                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
-                    } else {
-                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxt_cell_v3.identifier)!
-                    }
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
+//                    if(MUST_SPLIT() == 0) {
+//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
+//                    } else {
+//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxt_cell_v3.identifier)!
+//                    }
                 } else {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxt_cell_v3.identifier)!
                 }
@@ -160,11 +161,12 @@ extension MainFeed_v3_viewController {
             result = (self.getCell(indexPath) as! iPhoneMoreCell_v3).calculateHeight()
         } else if(item is DP3_iPhoneStory_1Wide) { // 1 wide story
             if(Layout.current() == .textImages) {
-                if(MUST_SPLIT() == 0) {
-                    result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
-                } else {
-                    result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
-                }
+                result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
+//                if(MUST_SPLIT() == 0) {
+//                    result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
+//                } else {
+//                    result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
+//                }
             } else {
                 result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
             }

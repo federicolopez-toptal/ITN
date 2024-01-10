@@ -61,6 +61,17 @@ func WRITE(_ key: String, value: Any) {
 }
 
 func READ(_ key: String) -> String? {
+//    if let _value = UserDefaults.standard.object(forKey: key) {
+//        if let _string = _value as? String {
+//            print("VALUE", _string)
+//            return _string
+//        } else {
+//            return nil
+//        }
+//    } else {
+//        return nil
+//    }
+    
     if let _value = UserDefaults.standard.string(forKey: key) {
         return _value
     } else {

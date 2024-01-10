@@ -27,16 +27,28 @@ enum DisplayMode {
     }
     
     static func menuCurrent() -> Int {
-        var result = -1
-    
+        var result = 2 // Default: DARK
+            
         if let _value = READ(LocalKeys.preferences.menuDisplayMode) {
             result = Int(_value)!
         } else {
-            if(DisplayMode.current() == .bright) {
+            var dMode: DisplayMode = .dark
+        
+            if let _mode = READ(LocalKeys.preferences.displayMode) {
+                let mode = Int(_mode)!
+                if(mode==0) { dMode = .dark }
+                else { dMode = .bright }
+            } else {
+                dMode = .dark // default value
+            }
+
+            if(dMode == .bright) {
                 result = 2
             } else {
                 result = 3
             }
+
+            WRITE(LocalKeys.preferences.menuDisplayMode, value: result)
         }
         
         return result
