@@ -28,7 +28,9 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     var articleComponents = [UIView]()
         let articleTitleLabel = UILabel()
         let articleSource = SourceIconsView(size: 18, border: 2, separation: 15)
-        let articleSourceTimeLabel = UILabel()
+        let articleSourceNameLabel = UILabel()
+        let openIcon = UIImageView(image: UIImage(named: "openArticleIcon"))
+        let articleTimeLabel = UILabel()
         let articleStanceIcon = StanceIconView()
         var sourceTime_leading: NSLayoutConstraint?
     
@@ -116,17 +118,31 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         ])
         articleComponents.append(self.articleSource)
         
-        self.articleSourceTimeLabel.font = CSS.shared.iPhoneArticle_textFont
-        self.articleSourceTimeLabel.numberOfLines = 0
-        self.articleSourceTimeLabel.textAlignment = .left
-        self.addSubview(self.articleSourceTimeLabel)
-        self.articleSourceTimeLabel.activateConstraints([
-            self.articleSourceTimeLabel.centerYAnchor.constraint(equalTo: self.articleSource.centerYAnchor),
-            self.articleSourceTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -35)
+        self.articleSourceNameLabel.font = CSS.shared.iPhoneArticle_textFont
+        self.articleSourceNameLabel.numberOfLines = 0
+        self.articleSourceNameLabel.textAlignment = .left
+        self.addSubview(self.articleSourceNameLabel)
+        self.articleSourceNameLabel.activateConstraints([
+            self.articleSourceNameLabel.centerYAnchor.constraint(equalTo: self.articleSource.centerYAnchor)
         ])
-        self.sourceTime_leading = self.articleSourceTimeLabel.leadingAnchor.constraint(equalTo: self.articleSource.trailingAnchor, constant: 5)
+        self.sourceTime_leading = self.articleSourceNameLabel.leadingAnchor.constraint(equalTo: self.articleSource.trailingAnchor, constant: 4)
         self.sourceTime_leading?.isActive = true
-        articleComponents.append(self.articleSourceTimeLabel)
+        articleComponents.append(self.articleSourceNameLabel)
+        
+        self.addSubview(self.openIcon)
+        self.openIcon.activateConstraints([
+            self.openIcon.widthAnchor.constraint(equalToConstant: 12),
+            self.openIcon.heightAnchor.constraint(equalToConstant: 12),
+            self.openIcon.topAnchor.constraint(equalTo: self.articleSourceNameLabel.topAnchor),
+            self.openIcon.leadingAnchor.constraint(equalTo: self.articleSourceNameLabel.trailingAnchor, constant: 6)
+        ])
+        
+        self.articleTimeLabel.font = self.articleSourceNameLabel.font
+        self.addSubview(self.articleTimeLabel)
+        self.articleTimeLabel.activateConstraints([
+            self.articleTimeLabel.centerYAnchor.constraint(equalTo: self.articleSourceNameLabel.centerYAnchor),
+            self.articleTimeLabel.leadingAnchor.constraint(equalTo: self.openIcon.trailingAnchor, constant: 6)
+        ])
         
         self.addSubview(self.articleStanceIcon)
         self.articleStanceIcon.activateConstraints([
@@ -182,6 +198,9 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     }
     
     func populate(article: StoryArticle) {
+        //print("from StoryContent/Split & articles")
+    
+        self.openIcon.show()
         self.article = MainFeedArticle(url: article.url)
         self.article.LR = article.LR
         self.article.PE = article.PE
@@ -200,7 +219,16 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         }
         self.articleSource.load(sourcesArray)
         
-        self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.media_title).uppercased() + "    " + SHORT_TIME(input:FIX_TIME(article.timeRelative))
+        let sourceName = CLEAN_SOURCE(from: article.media_title).uppercased()
+        if(sourceName.count<=10) {
+            self.articleSourceNameLabel.text = sourceName
+            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.timeRelative))
+        } else {
+            self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.timeRelative))
+            self.articleTimeLabel.text = ""
+        }
+        
+        
         self.articleStanceIcon.setValues(article.LR, article.PE)
         
         for V in self.storyComponents {
@@ -212,7 +240,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         
         if(PREFS_SHOW_SOURCE_ICONS()) {
             self.articleSource.show()
-            self.sourceTime_leading?.constant = 5
+            self.sourceTime_leading?.constant = 4
         } else {
             self.articleSource.customHide()
             self.sourceTime_leading?.constant = 0
@@ -227,6 +255,9 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     
     
     func populate(spin: Spin) {
+        //print("from Spin?")
+    
+        self.openIcon.show()
         self.article = MainFeedArticle(url: spin.url)
         self.article.LR = spin.LR
         self.article.PE = spin.CP
@@ -248,8 +279,16 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         }
         self.articleSource.load(sourcesArray)
         
-        self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: spin.media_title).uppercased() + "    " +
-            SHORT_TIME(input:FIX_TIME(spin.timeRelative))
+        let sourceName = CLEAN_SOURCE(from: article.source).uppercased()
+        if(sourceName.count<=10) {
+            self.articleSourceNameLabel.text = sourceName
+            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+        } else {
+            self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
+            self.articleTimeLabel.text = ""
+        }
+        
+        
         self.articleStanceIcon.setValues(spin.LR, spin.CP)
         
         for V in self.storyComponents {
@@ -283,6 +322,9 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     }
     
     override func populate(_ article: MainFeedArticle) {
+        //print("from MAIN_FEED, SEARCH, ABOUT")
+        
+        self.openIcon.hide()
         self.isContext = article.isContext
         if(self.isContext) {
             self.storyPill.setAsContext()
@@ -321,7 +363,19 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             }
             self.articleSource.load(sourcesArray)
             
-            self.articleSourceTimeLabel.text = CLEAN_SOURCE(from: article.source).uppercased() + "    " + SHORT_TIME(input:FIX_TIME(article.time))
+            self.openIcon.show()
+            let sourceName = CLEAN_SOURCE(from: article.source).uppercased()
+            if(sourceName.count<=10) {
+                self.articleSourceNameLabel.text = sourceName
+                self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+            } else {
+                self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
+                self.articleTimeLabel.text = ""
+            }
+            
+            
+            
+            //+ "    " + SHORT_TIME(input:FIX_TIME(article.time))
             self.articleStanceIcon.setValues(article.LR, article.PE)
         }
         
@@ -385,7 +439,8 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         
         self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.articleSource.refreshDisplayMode()
-        self.articleSourceTimeLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.articleSourceNameLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.articleTimeLabel.textColor = self.articleSourceNameLabel.textColor
         self.articleStanceIcon.refreshDisplayMode()
         
         self.mainImageView.refreshDisplayMode()
