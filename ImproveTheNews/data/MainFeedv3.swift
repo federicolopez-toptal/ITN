@@ -461,12 +461,14 @@ extension MainFeedv3 {
         }
         
         // More Preferences: Show stories
-        result += "ST"
-        if let _showStories = READ(LocalKeys.preferences.showStories) {
-            result += _showStories
-        } else {
-            result += "01" // default value: True
-        }
+//        result += "ST"
+//        if let _showStories = READ(LocalKeys.preferences.showStories) {
+//            result += _showStories
+//        } else {
+//            result += "01" // default value: True
+//        }
+        result += "ST01"
+
         // More Preferences: Show source icons
         result += "VD"
         if let _showSourceIcons = READ(LocalKeys.preferences.showSourceIcons) {
