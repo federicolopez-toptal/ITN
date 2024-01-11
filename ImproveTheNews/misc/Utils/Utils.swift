@@ -88,7 +88,7 @@ func FIX_TIME(_ time: String) -> String {
     let parts = time.components(separatedBy: " ")
     if let num = Int(parts[0]) {
         let type = parts[1].lowercased()
-        
+
         switch(type) {
             case "hours":
                 if(num>23) {
@@ -112,9 +112,22 @@ func FIX_TIME(_ time: String) -> String {
             default:
                 NOTHING()
         }
+        
+        if(num==1) {
+            result = result.replacingOccurrences(of: "seconds", with: "seconds")
+            result = result.replacingOccurrences(of: "minutes", with: "minute")
+            result = result.replacingOccurrences(of: "hours", with: "hour")
+            result = result.replacingOccurrences(of: "days", with: "day")
+            result = result.replacingOccurrences(of: "weeks", with: "week")
+            result = result.replacingOccurrences(of: "months", with: "month")
+            result = result.replacingOccurrences(of: "years", with: "year")
+        }
     } else {
         result = time
     }
+    
+    print("output:", result)
+    print("-----------------------")
     
     return result
 }
