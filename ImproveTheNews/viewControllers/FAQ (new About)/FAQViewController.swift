@@ -82,6 +82,7 @@ class FAQViewController: BaseViewController {
 
         self.descrLabel = HyperlinkLabel.parrafo2(text: self.mainContent(), linkTexts: ["Max Tegmark"],
             urls: ["https://physics.mit.edu/faculty/max-tegmark/"], onTap: self.onLinkTap(_:))
+        self.descrLabel?.setLineSpacing(lineSpacing: 6)
             
         self.contentView.addSubview(self.descrLabel!)
         self.descrLabel!.activateConstraints([
@@ -174,6 +175,7 @@ class FAQViewController: BaseViewController {
         descr.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         descr.numberOfLines = 0
         descr.text = secText
+        descr.setLineSpacing(lineSpacing: 6)
         //descr.backgroundColor = .green
         sectionView.addSubview(descr)
         descr.activateConstraints([
@@ -314,6 +316,7 @@ class FAQViewController: BaseViewController {
         
         let contentLabel = HyperlinkLabel.parrafo2(text: content, linkTexts: linkTexts,
             urls: urls, onTap: self.onLinkTap(_:))
+        contentLabel.setLineSpacing(lineSpacing: 6)
         sectionView.addSubview(contentLabel)
         contentLabel.activateConstraints([
             contentLabel.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: 15),
