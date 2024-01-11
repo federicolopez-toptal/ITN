@@ -739,9 +739,9 @@ extension StoryViewController {
         } else {
             var H: CGFloat = 0
         
-            var title = "Political split"
+            var title = "Political Split"
             if(type.uppercased() == "PE") {
-                title = "Establishment split"
+                title = "Establishment Split"
             }
         
             let ArticlesLabel = UILabel()
@@ -1507,7 +1507,7 @@ extension StoryViewController {
             showMoreLabel.textColor = CSS.shared.orange
             showMoreLabel.textAlignment = .center
             showMoreLabel.font = CSS.shared.iPhoneStoryContent_textFont
-            showMoreLabel.text = self.show3 ? "Show more" : "Show fewer facts"
+            showMoreLabel.text = self.show3 ? "Show More" : "Show Fewer Facts"
             VStack.addArrangedSubview(showMoreLabel)
             
             let showMoreButton = UIButton(type: .custom)
@@ -1536,12 +1536,13 @@ extension StoryViewController {
         
         //ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding * 2)
         //print("--------------------")
-        let line2 = UIView()
-        self.VStack.addArrangedSubview(line2)
-        line2.activateConstraints([
-            line2.heightAnchor.constraint(equalToConstant: 1),
-        ])
-        ADD_HDASHES(to: line2)
+        
+//        let line2 = UIView()
+//        self.VStack.addArrangedSubview(line2)
+//        line2.activateConstraints([
+//            line2.heightAnchor.constraint(equalToConstant: 1),
+//        ])
+//        ADD_HDASHES(to: line2)
     }
     
     func populateSources() {
@@ -1562,7 +1563,7 @@ extension StoryViewController {
         ADD_SPACER(to: HStack_sources, width: 8)
         
         let VStack_sources = VSTACK(into: HStack_sources)
-        VStack_sources.spacing = CSS.shared.iPhoneSide_padding
+        VStack_sources.spacing = CSS.shared.iPhoneSide_padding + 8
         //VStack_sources.backgroundColor = .blue
         
         ADD_SPACER(to: HStack_sources, width: 8)
@@ -1713,7 +1714,7 @@ extension StoryViewController {
         line2.activateConstraints([
             line2.heightAnchor.constraint(equalToConstant: 1),
         ])
-        ADD_HDASHES(to: line2)
+        //ADD_HDASHES(to: line2)
         
         ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
     }

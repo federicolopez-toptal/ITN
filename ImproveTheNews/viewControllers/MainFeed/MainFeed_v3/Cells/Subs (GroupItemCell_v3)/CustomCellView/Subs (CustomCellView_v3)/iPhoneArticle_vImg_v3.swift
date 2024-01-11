@@ -23,7 +23,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
     let articleSourceNameLabel = UILabel()
     let openIcon = UIImageView(image: UIImage(named: "openArticleIcon"))
     let articleTimeLabel = UILabel()
-    let articleStanceIcon = StanceIconView()
+    let articleStanceIcon = StanceBigIconView()
     var sourceTime_leading: NSLayoutConstraint?
     
     // MARK: - Start
@@ -133,7 +133,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         self.addGestureRecognizer(tapGesture)
     }
     @objc func stanceIconOnTap(_ sender: UIButton) {
-        self.onStanceIconTap(sender: self.articleStanceIcon)
+        self.onStanceBigIconTap(sender: self.articleStanceIcon)
     
     
         //self.articleStanceIcon.viewOnTap(sender: nil)
@@ -174,6 +174,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         
 //        self.articleSourceNameLabel.text = CLEAN_SOURCE(from: spin.media_title).uppercased() + "    " +
 //            SHORT_TIME(input:FIX_TIME(spin.timeRelative))
+        
         self.articleStanceIcon.setValues(spin.LR, spin.CP)
         
         for V in self.articleComponents {
@@ -240,9 +241,9 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
     }
 }
 
-extension iPhoneArticle_vImg_v3: StanceIconViewDelegate {
+extension iPhoneArticle_vImg_v3: StanceBigIconViewDelegate {
     
-    func onStanceIconTap(sender: StanceIconView) {
+    func onStanceBigIconTap(sender: StanceBigIconView) {
         let popup = StancePopupView()
         let sourceName = CLEAN_SOURCE(from: self.article.source)
         popup.populate(sourceName: sourceName, country: self.article.country,

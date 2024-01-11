@@ -13,7 +13,7 @@ class PrefCheckboxes_cell: UITableViewCell {
     static let heigth: CGFloat = 300+16
 
     private let settings = [
-        //("Show newspaper flags", LocalKeys.preferences.showSourceFlags),
+        ("Show newspaper flags", LocalKeys.preferences.showSourceFlags),
         ("Show newspaper logo", LocalKeys.preferences.showSourceIcons),
         ("Show newspaper stance icon", LocalKeys.preferences.showStanceIcons),
         //("Enable newspaper info popups", LocalKeys.preferences.showStancePopups),

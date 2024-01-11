@@ -380,6 +380,7 @@
 		1FACBF8329AD01D0009A8E0F /* iPadSplitHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */; };
 		1FB6A0B12ADF01E4008F968A /* FAQ_normalStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB6A0B02ADF01E4008F968A /* FAQ_normalStoryView.swift */; };
 		1FB6A0B32ADF1537008F968A /* FAQ_contextStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB6A0B22ADF1537008F968A /* FAQ_contextStoryView.swift */; };
+		1FB820422B5048C00038082C /* StanceBigIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB820412B5048C00038082C /* StanceBigIconView.swift */; };
 		1FBD426E2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBD426D2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift */; };
 		1FBD42712A40EDF200BFE68B /* KeywordSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBD42702A40EDF200BFE68B /* KeywordSearchViewController.swift */; };
 		1FBDA3932AABA6950013FD6A /* verityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FBDA3922AABA6950013FD6A /* verityLogo.png */; };
@@ -850,6 +851,7 @@
 		1FACBF8229AD01D0009A8E0F /* iPadSplitHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSplitHeaderCell.swift; sourceTree = "<group>"; };
 		1FB6A0B02ADF01E4008F968A /* FAQ_normalStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_normalStoryView.swift; sourceTree = "<group>"; };
 		1FB6A0B22ADF1537008F968A /* FAQ_contextStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_contextStoryView.swift; sourceTree = "<group>"; };
+		1FB820412B5048C00038082C /* StanceBigIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StanceBigIconView.swift; sourceTree = "<group>"; };
 		1FBD426D2A40EC8A00BFE68B /* KeywordSearchViewController_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordSearchViewController_list.swift; sourceTree = "<group>"; };
 		1FBD42702A40EDF200BFE68B /* KeywordSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeywordSearchViewController.swift; sourceTree = "<group>"; };
 		1FBDA3922AABA6950013FD6A /* verityLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verityLogo.png; sourceTree = "<group>"; };
@@ -1199,6 +1201,7 @@
 				1FEE16EC28C83CED0079BE54 /* TopicSelectorView.swift.txt */,
 				1FC5571B2AF2FC4200C0117A /* TopicSelectorView.swift */,
 				1FA1728528D2AF6E00693B85 /* StanceIconView.swift */,
+				1FB820412B5048C00038082C /* StanceBigIconView.swift */,
 				1F8EAECF29085FE30015F6F6 /* BreadcrumbsView.swift.txt */,
 				1F2306BB291987D600755D71 /* OnOffView.swift */,
 				1F2D3227294230CA00BA1B00 /* CircleAnimation.swift */,
@@ -2279,6 +2282,7 @@
 				1FC73910298A1501003EB38D /* SignInView.swift in Sources */,
 				1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */,
 				1F9E28C52954DC0200041303 /* FAQViewController.swift in Sources */,
+				1FB820422B5048C00038082C /* StanceBigIconView.swift in Sources */,
 				1F38213E29A6DA32004D4D29 /* MainFeed_v2_list.swift in Sources */,
 				1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */,
 				1F5012F72AFA70E800494772 /* iPhoneMoreCell_v3.swift in Sources */,
