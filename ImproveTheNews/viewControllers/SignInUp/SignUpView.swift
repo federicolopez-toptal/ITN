@@ -26,6 +26,7 @@ class SignUpView: UIView {
     let emailText = FormTextView()
     let passText = FormTextView()
     let pass2Text = FormTextView()
+    let newsLetterCheck = FormCheckView()
     let mainActionButton = UIButton(type: .custom)
 
 
@@ -280,6 +281,10 @@ class SignUpView: UIView {
         passNoteLabel.numberOfLines = 0
         passNoteLabel.text = "* Password must contain minimum eight characters, at least one letter and one number."
         VStack_form.addArrangedSubview(passNoteLabel)
+        ADD_SPACER(to: VStack_form, height: 22)
+        
+        self.newsLetterCheck.text = "Sign me up for the newsletter!"
+        VStack_form.addArrangedSubview(self.newsLetterCheck)
         ADD_SPACER(to: VStack_form, height: 24)
         
         let hStack_mainActionButton = HSTACK(into: VStack_form)
@@ -526,6 +531,7 @@ extension SignUpView {
     }
     
     @objc func mainActionButtonTap(_ sender: UIButton) {
+    
 //        self.emailText.setText("federico@improvethenews.org")
 //        self.passText.setText("federico123")
 //        self.pass2Text.setText("federico123")
@@ -545,13 +551,13 @@ extension SignUpView {
             
             let email = self.emailText.text()
             let password = self.passText.text()
-            API.shared.signUp(email: email, password: password) { (success, serverMsg) in
+            API.shared.signUp(email: email, password: password, newsletter: self.newsLetterCheck.status) { (success, msg) in
                 if(success) {
                     let msg = "Registration successful. You'll receive a validation email to complete the process"
                     CustomNavController.shared.infoAlert(message: msg)
                     UUID.shared.trace()
                 } else {
-                    CustomNavController.shared.infoAlert(message: serverMsg)
+                    CustomNavController.shared.infoAlert(message: msg)
                 }
                 
                 DELAY(2.0) {

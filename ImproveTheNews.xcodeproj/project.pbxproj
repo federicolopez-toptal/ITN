@@ -452,6 +452,7 @@
 		1FE916A129A7A32A007F8AAF /* ArticleVImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A029A7A32A007F8AAF /* ArticleVImageView.swift */; };
 		1FE916A329A7AEF1007F8AAF /* GroupItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */; };
 		1FE916A529A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */; };
+		1FE92BBB2B56F9DF003C2F86 /* FormCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE92BBA2B56F9DF003C2F86 /* FormCheckView.swift */; };
 		1FE98DE62A43F22600FE0260 /* TopicsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE98DE52A43F22600FE0260 /* TopicsCell.swift */; };
 		1FEBAF192A1D6B7900A6E55E /* StringExtensionArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEBAF182A1D6B7900A6E55E /* StringExtensionArray.swift */; };
 		1FEE16EB28C833BF0079BE54 /* NavBarView.swift.txt in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE16EA28C833BF0079BE54 /* NavBarView.swift.txt */; };
@@ -923,6 +924,7 @@
 		1FE916A029A7A32A007F8AAF /* ArticleVImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleVImageView.swift; sourceTree = "<group>"; };
 		1FE916A229A7AEF1007F8AAF /* GroupItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupItemCell.swift; sourceTree = "<group>"; };
 		1FE916A429A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_rowCell.swift; sourceTree = "<group>"; };
+		1FE92BBA2B56F9DF003C2F86 /* FormCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCheckView.swift; sourceTree = "<group>"; };
 		1FE98DE52A43F22600FE0260 /* TopicsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsCell.swift; sourceTree = "<group>"; };
 		1FEBAF182A1D6B7900A6E55E /* StringExtensionArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionArray.swift; sourceTree = "<group>"; };
 		1FEE16EA28C833BF0079BE54 /* NavBarView.swift.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = NavBarView.swift.txt; sourceTree = "<group>"; };
@@ -1209,6 +1211,7 @@
 				1F916E8A2B0EAA0600A020BF /* AudioPlayerView.swift */,
 				1FC1A2B82A3222FA001998B0 /* AudioPlayerView.swift.txt */,
 				1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */,
+				1FE92BBA2B56F9DF003C2F86 /* FormCheckView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -2399,6 +2402,7 @@
 				1FE89CFD2AF1AD3A00A6C99C /* SpacerCell_v3.swift in Sources */,
 				1FF32A282A2FAEF100948FA4 /* KeywordSearch.swift in Sources */,
 				1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */,
+				1FE92BBB2B56F9DF003C2F86 /* FormCheckView.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift.txt in Sources */,
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
 				1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */,
