@@ -126,8 +126,8 @@ func FIX_TIME(_ time: String) -> String {
         result = time
     }
     
-    print("output:", result)
-    print("-----------------------")
+//    print("output:", result)
+//    print("-----------------------")
     
     return result
 }

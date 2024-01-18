@@ -53,7 +53,8 @@ class StoryViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.back])
+            self.navBar.addComponents([.back, .headlines, .share])
+            self.navBar.setShareUrl(self.story!.url, vc: self)
             
             self.buildContent()
         }

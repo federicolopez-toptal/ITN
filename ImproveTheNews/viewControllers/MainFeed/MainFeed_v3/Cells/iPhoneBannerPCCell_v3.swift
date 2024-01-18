@@ -76,7 +76,7 @@ class iPhoneBannerPCCell_v3: UITableViewCell {
         ])
         
         self.subTextLabel.font = AILERON(16)
-        self.subTextLabel.text = "We’re on Youtube, Spotify & Apple"
+        self.subTextLabel.text = "We’re on Youtube, Spotify, Apple & Amazon"
         self.containerView.addSubview(self.subTextLabel)
         self.subTextLabel.activateConstraints([
             self.subTextLabel.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 16),
@@ -84,9 +84,9 @@ class iPhoneBannerPCCell_v3: UITableViewCell {
         ])
         
         var posX: CGFloat = 15
-        let icons = [1, 4, 2]
+        let icons = [1, 4, 2, 3]
         
-        for i in 1...3 {
+        for i in 1...4 {
             let pcIcon = UIImageView(image: UIImage(named: "podcast_" + String(icons[i-1]) + ".dark"))
             self.containerView.addSubview(pcIcon)
             pcIcon.activateConstraints([
@@ -186,6 +186,9 @@ class iPhoneBannerPCCell_v3: UITableViewCell {
             
             case 3:
                 url = "https://open.spotify.com/show/6f0N5HoyXABPBM8vS0iI8H"
+            
+            case 4:
+                url = "https://music.amazon.com/podcasts/f5de9928-7979-4710-ab1a-13dc22007e70/improve-the-news"
             
             default:
                 NOTHING()
