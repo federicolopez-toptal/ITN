@@ -16,6 +16,8 @@ let Notification_stanceIconTap = Notification.Name("StanceIconTap")             
 
 let Notification_tryAgainButtonTap = Notification.Name("TryAgainButtonTap")         // User taps on a "Try again" button
 
+let Notification_customBackButtonTap = Notification.Name("CustomBackButtonTap")     // User taps on a custom Back button
+
 
 func NOTIFY(_ name: Notification.Name, userInfo: [AnyHashable: Any]? = nil) {
     NotificationCenter.default.post(name: name, object: nil, userInfo: userInfo)

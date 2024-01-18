@@ -38,6 +38,10 @@ class StoryViewController: BaseViewController {
     var isContext: Bool = false
     var thirdPillText = "Articles"
     
+    var sections_y = [CGFloat]()
+    var backGoTo: Int = -1
+    
+    
     deinit {
         self.audioPlayer.close()
         self.secondaryAudioPlayer.close()
@@ -53,7 +57,7 @@ class StoryViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.back, .headlines, .share])
+            self.navBar.addComponents([.customBack, .headlines, .share])
             self.navBar.setShareUrl(self.story!.url, vc: self)
             
             self.buildContent()
@@ -100,6 +104,10 @@ class StoryViewController: BaseViewController {
             self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -13),
             //VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
         ])
+                
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.onCustomBackButtonTap),
+            name: Notification_customBackButtonTap, object: nil)
         
         self.scrollView.hide()
         self.refreshDisplayMode()
@@ -150,6 +158,10 @@ extension StoryViewController {
                     
                     if let _story = story {
                         self.addContent(_story)
+                        
+                        DELAY(1.0) {
+                            self.calculateSectionsY()
+                        }
                     }
                 }
             }
@@ -2115,5 +2127,98 @@ extension StoryViewController: UIScrollViewDelegate {
 //            self.secondaryAudioPlayer.customHide()
 //        }
     }
+     
+    func calculateSectionsY() {
+        self.sections_y = [CGFloat]()
+        self.sections_y.append(0)
+        
+        for i in 1...3 {
+            switch(i) {
+                case 1:
+                    let targetView = self.view.viewWithTag(140)!
+                    let value = -self.contentView.convert(targetView.frame.origin, to: targetView).y
+                    self.sections_y.append(value)
+                case 2:
+                    let targetView = self.view.viewWithTag(160)!
+                    let value = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
+                    self.sections_y.append(value)
+                case 3:
+                    let targetView = self.view.viewWithTag(170)!
+                    let value = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
+                    self.sections_y.append(value)
+                default:
+                    NOTHING()
+            }
+        }
+    }
+    
+    @objc func onCustomBackButtonTap(_ notification: Notification) {
+        let currentOffsetY = self.scrollView.contentOffset.y
+        
+        if(currentOffsetY == 0.0) {
+            CustomNavController.shared.popViewController(animated: true)
+        } else {
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        }
+            
+    }
+    
+    @objc func onCustomBackButtonTap_2(_ notification: Notification) {
+        //print("------------------------------")
+        let currentOffsetY = self.scrollView.contentOffset.y
+        //print("sections_y", self.sections_y)
+        //print("currentOffsetY", currentOffsetY)
+        
+        for i in 1...4 {
+            let section_y = self.sections_y[i-1]
+            //print("Compare", Int(currentOffsetY), Int(section_y) )
+            if(Int(currentOffsetY) > Int(section_y)) {
+                //print("yep")
+                self.backGoTo = i-1
+            }
+        }
+        //print("calculated backGoTo", self.backGoTo)
+        
+        switch(self.backGoTo) {
+            case -1:
+                CustomNavController.shared.popViewController(animated: true)
+                
+            default:
+                let destination_y = self.sections_y[self.backGoTo]
+                if(destination_y == 0){ self.backGoTo = -1 }
+                self.scrollView.setContentOffset(CGPoint(x: 0, y: destination_y), animated: true)
+                
+                //print("destination_y", destination_y)
+                //print("final backGoTo", self.backGoTo)
+        }
+        
+    }
+    
     
 }
+
+/*
+@objc func onTabButtonTap(_ sender: UIButton) {
+        let tag = sender.tag - 300
+        
+        var val_Y: CGFloat = 0
+        
+        var view = UIView()
+        switch(tag) {
+            case 1:
+                let view = self.view.viewWithTag(140)!
+                val_Y = -self.contentView.convert(view.frame.origin, to: view).y
+            case 2:
+                view = self.view.viewWithTag(160)!
+                val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+            case 3:
+                view = self.view.viewWithTag(170)!
+                val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+        
+            default:
+                NOTHING()
+        }
+        
+        self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y), animated: true)
+    }
+ */

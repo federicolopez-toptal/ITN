@@ -9,11 +9,13 @@ import UIKit
 
 
 enum NavBarViewComponents {
+    case back
+    case customBack
+    case backToFeed
+
     case logo
     case menuIcon
     case searchIcon
-    case back
-    case backToFeed
     case title
     case share
     case user
@@ -250,6 +252,34 @@ class NavBarView: UIView {
                 self.left_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
             }
             
+            if(C == .customBack) {
+                self.left_x -= 10
+                // Back
+                let backIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.back")))
+                self.addSubview(backIcon)
+                backIcon.activateConstraints([
+                    backIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x+10),
+                    backIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    backIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
+                    backIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                ])
+                backIcon.tag = 6
+                self.displayModeComponents.append(backIcon)
+
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: backIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: backIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.trailingAnchor.constraint(equalTo: backIcon.trailingAnchor, constant: self.buttonsMargin),
+                    button.bottomAnchor.constraint(equalTo: backIcon.bottomAnchor, constant: self.buttonsMargin)
+                ])
+                button.addTarget(self, action: #selector(onCustomBackButtonTap(_:)), for: .touchUpInside)
+                
+                self.left_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
+            }
+            
             if(C == .title) {
                 let label = UILabel()
                 label.text = " "
@@ -419,6 +449,10 @@ extension NavBarView {
     
     @objc func onBackButtonTap(_ sender: UIButton) {
         CustomNavController.shared.popViewController(animated: true)
+    }
+    
+    @objc func onCustomBackButtonTap(_ sender: UIButton) {
+        NOTIFY(Notification_customBackButtonTap)
     }
     
     @objc func onLogoButtonTap(_ sender: UIButton) {
