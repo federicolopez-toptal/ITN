@@ -144,7 +144,7 @@ class AccountViewController: BaseViewController {
 //        ADD_SPACER(to: VStack_form, height: 25)
     
         let titleLabel = UILabel()
-        titleLabel.text = "My details"
+        titleLabel.text = "My account"
         titleLabel.font = DM_SERIF_DISPLAY(23)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
@@ -248,14 +248,23 @@ class AccountViewController: BaseViewController {
         ])
         VStack_form.addArrangedSubview(line1)
         ADD_HDASHES(to: line1)
-        ADD_SPACER(to: VStack_form, height: 32)
+        ADD_SPACER(to: VStack_form, height: 24)
         
         let titleLabel2 = UILabel()
-        titleLabel2.text = "Newsletter Preferences"
+        titleLabel2.text = "Verity Newsletter"
         titleLabel2.font = DM_SERIF_DISPLAY(23)
         titleLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel2)
-        ADD_SPACER(to: VStack_form, height: 25)
+        ADD_SPACER(to: VStack_form, height: 24)
+        
+        let line1b = UIView()
+        line1b.backgroundColor = CSS.shared.displayMode().main_bgColor
+        line1b.activateConstraints([
+            line1b.heightAnchor.constraint(equalToConstant: 0.75)
+        ])
+        VStack_form.addArrangedSubview(line1b)
+        ADD_HDASHES(to: line1b)
+        ADD_SPACER(to: VStack_form, height: 32)
         
         // ------
         let hStackSubscription = HSTACK(into: VStack_form)
@@ -264,18 +273,40 @@ class AccountViewController: BaseViewController {
         ])
         
         let vStackLogo = VSTACK(into: hStackSubscription)
-        ADD_SPACER(to: vStackLogo, height: 6)
-        let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("ITNF_logo")))
-        vStackLogo.addArrangedSubview(logo)
-        logo.activateConstraints([
-            logo.widthAnchor.constraint(equalToConstant: 108),
-            logo.heightAnchor.constraint(equalToConstant: 32)
-        ])
-        ADD_SPACER(to: vStackLogo, height: 6)
-        ADD_SPACER(to: hStackSubscription, width: 20)
+        ADD_SPACER(to: vStackLogo, height: 2)
+        
+            let logoBgView = UIView()
+            logoBgView.backgroundColor = DARK_MODE() ? .white : .black
+            vStackLogo.addArrangedSubview(logoBgView)
+            logoBgView.activateConstraints([
+                logoBgView.widthAnchor.constraint(equalToConstant: 40),
+                logoBgView.heightAnchor.constraint(equalToConstant: 40)
+            ])
+            logoBgView.layer.cornerRadius = 20
+        
+            let letterV = UIImageView(image: UIImage(named: "VLogo")?.withRenderingMode(.alwaysTemplate))
+            letterV.tintColor = DARK_MODE() ? .black : .white
+            logoBgView.addSubview(letterV)
+            letterV.activateConstraints([
+                letterV.widthAnchor.constraint(equalToConstant: 15),
+                letterV.heightAnchor.constraint(equalToConstant: 19),
+                letterV.centerXAnchor.constraint(equalTo: logoBgView.centerXAnchor),
+                letterV.centerYAnchor.constraint(equalTo: logoBgView.centerYAnchor)
+            ])
+        
+//        let logo = UIImageView(image: UIImage(named: DisplayMode.imageName("verityLogo")))
+//        vStackLogo.addArrangedSubview(logo)
+//        logo.activateConstraints([
+//            logo.widthAnchor.constraint(equalToConstant: 40),
+//            logo.heightAnchor.constraint(equalToConstant: 40)
+//        ])
+//        logo.layer.cornerRadius = 20
+        
+        ADD_SPACER(to: vStackLogo, height: 2)
+        ADD_SPACER(to: hStackSubscription, width: 10)
         
         self.subscriptionStateLabel.numberOfLines = 0
-        self.subscriptionStateLabel.text = "loading..."
+        self.subscriptionStateLabel.text = "Newsletter"
         self.subscriptionStateLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         self.subscriptionStateLabel.font = AILERON(16)
         //self.subscriptionStateLabel.backgroundColor = .red.withAlphaComponent(0.25)
@@ -307,7 +338,7 @@ class AccountViewController: BaseViewController {
         newsletterFreqLabel.font = AILERON(16)
         newsletterFreqLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(newsletterFreqLabel)
-        ADD_SPACER(to: VStack_form, height: 12)
+        ADD_SPACER(to: VStack_form, height: 32)
         
         //---
         let hStackSubscriptionStyle = HSTACK(into: VStack_form)
@@ -396,7 +427,7 @@ class AccountViewController: BaseViewController {
         ])
         VStack_form.addArrangedSubview(line2)
         ADD_HDASHES(to: line2)
-        ADD_SPACER(to: VStack_form, height: 32)
+        ADD_SPACER(to: VStack_form, height: 24)
 //
 //    //--- SOCIAL
 //        let titleLabel_21 = UILabel()
@@ -542,12 +573,21 @@ class AccountViewController: BaseViewController {
         titleLabel3.font = DM_SERIF_DISPLAY(23)
         titleLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel3)
-        ADD_SPACER(to: VStack_form, height: 5)
+        ADD_SPACER(to: VStack_form, height: 24)
         
+        let line2b = UIView()
+        line2b.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+        line2b.activateConstraints([
+            line2b.heightAnchor.constraint(equalToConstant: 0.75)
+        ])
+        VStack_form.addArrangedSubview(line2b)
+        ADD_HDASHES(to: line2b)
+        ADD_SPACER(to: VStack_form, height: 32)
+
         let hStackSignOut = HSTACK(into: VStack_form)
         
         let signOutLabel = UILabel()
-        signOutLabel.text = "Sign out"
+        signOutLabel.text = "Sign out of your Verity account"
         signOutLabel.font = AILERON(16)
         signOutLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackSignOut.addArrangedSubview(signOutLabel)
@@ -585,50 +625,63 @@ class AccountViewController: BaseViewController {
         ])
         VStack_form.addArrangedSubview(line3)
         ADD_HDASHES(to: line3)
-        ADD_SPACER(to: VStack_form, height: 32)
+        ADD_SPACER(to: VStack_form, height: 24)
         
         ///////////////////
         let titleLabel4 = UILabel()
-        titleLabel4.text = "Delete my account"
+        titleLabel4.text = "Close my account"
         titleLabel4.font = DM_SERIF_DISPLAY(23)
         titleLabel4.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel4)
-        ADD_SPACER(to: VStack_form, height: 5)
+        ADD_SPACER(to: VStack_form, height: 24)
         
-        let hStackDelete = HSTACK(into: VStack_form)
+            let line3b = UIView()
+            line3b.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+            line3b.activateConstraints([
+                line3b.heightAnchor.constraint(equalToConstant: 0.75)
+            ])
+            VStack_form.addArrangedSubview(line3b)
+            ADD_HDASHES(to: line3b)
+            ADD_SPACER(to: VStack_form, height: 32)
         
-        let deleteIcon = UIImageView(image: UIImage(systemName: "x.circle.fill")?.withRenderingMode(.alwaysTemplate))
-        deleteIcon.tintColor = UIColor(hex: 0xDA4933)
-        hStackDelete.addArrangedSubview(deleteIcon)
-        deleteIcon.activateConstraints([
-            deleteIcon.widthAnchor.constraint(equalToConstant: 44),
-            deleteIcon.heightAnchor.constraint(equalToConstant: 44)
-        ])
-        ADD_SPACER(to: hStackDelete, width: 10)
+        
+        //let hStackDelete = HSTACK(into: VStack_form)
+        
+//        let deleteIcon = UIImageView(image: UIImage(systemName: "x.circle.fill")?.withRenderingMode(.alwaysTemplate))
+//        deleteIcon.tintColor = UIColor(hex: 0xDA4933)
+//        hStackDelete.addArrangedSubview(deleteIcon)
+//        deleteIcon.activateConstraints([
+//            deleteIcon.widthAnchor.constraint(equalToConstant: 44),
+//            deleteIcon.heightAnchor.constraint(equalToConstant: 44)
+//        ])
+//        ADD_SPACER(to: hStackDelete, width: 10)
         
         let deleteLabel = UILabel()
-        deleteLabel.text = "Delete account"
+        deleteLabel.numberOfLines = 0
+        deleteLabel.text = "Close my account and disconnect any\nsocial accounts"
         deleteLabel.font = AILERON(16)
+        deleteLabel.setLineSpacing(lineSpacing: 6.0)
         deleteLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
-        hStackDelete.addArrangedSubview(deleteLabel)
+        VStack_form.addArrangedSubview(deleteLabel)
+        ADD_SPACER(to: VStack_form, height: 18)
         
-        ADD_SPACER(to: hStackDelete)
+        //ADD_SPACER(to: hStackDelete)
         
         let deleteButton = UIButton(type: .custom)
         deleteButton.backgroundColor = UIColor(hex: 0x60C4D6)
         deleteButton.layer.cornerRadius = 4.0
-        hStackDelete.addArrangedSubview(deleteButton)
+        VStack_form.addArrangedSubview(deleteButton)
         deleteButton.activateConstraints([
             deleteButton.widthAnchor.constraint(equalToConstant: 125),
-            deleteButton.heightAnchor.constraint(equalToConstant: 44)
+            deleteButton.heightAnchor.constraint(equalToConstant: 56)
         ])
         deleteButton.addTarget(self, action: #selector(deleteButtonTap(_:)), for: .touchUpInside)
         
         let deleteButtonLabel = UILabel()
-        deleteButtonLabel.text = "Delete"
+        deleteButtonLabel.text = "Close"
         deleteButtonLabel.textColor = UIColor(hex: 0x19191C)
         deleteButtonLabel.font = AILERON_SEMIBOLD(16)
-        hStackDelete.addSubview(deleteButtonLabel)
+        deleteButton.addSubview(deleteButtonLabel)
         deleteButtonLabel.activateConstraints([
             deleteButtonLabel.centerXAnchor.constraint(equalTo: deleteButton.centerXAnchor),
             deleteButtonLabel.centerYAnchor.constraint(equalTo: deleteButton.centerYAnchor)
@@ -681,14 +734,14 @@ class AccountViewController: BaseViewController {
         let type = self.subscriptionType
     
         if(type==0) {
-            self.subscriptionStateLabel.text = "Status:\nnot subscribed"
+            //self.subscriptionStateLabel.text = "Status:\nnot subscribed"
             self.subscribeButtonLabel.text = "SUBSCRIBE".capitalized
             self.circle1.alpha = 0.3
             self.circle2.alpha = 0.3
             self.circleMark1.hide()
             self.circleMark2.hide()
         } else {
-            self.subscriptionStateLabel.text = "Status:\nsubscribed"
+            //self.subscriptionStateLabel.text = "Status:\nsubscribed"
             self.subscribeButtonLabel.text = "UNSUBSCRIBE".capitalized
             self.circle1.alpha = 1.0
             self.circle2.alpha = 1.0
