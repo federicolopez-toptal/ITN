@@ -2154,8 +2154,7 @@ extension StoryViewController: UIScrollViewDelegate {
     
     @objc func onCustomBackButtonTap(_ notification: Notification) {
         let currentOffsetY = self.scrollView.contentOffset.y
-        
-        if(currentOffsetY == 0.0) {
+        if(currentOffsetY <= 30) {
             CustomNavController.shared.popViewController(animated: true)
         } else {
             self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
