@@ -23,6 +23,7 @@ class KeywordSearch {
     
     var task: URLSessionDataTask? = nil
     
+    var lastSearch: String = ""
     
     
     
@@ -32,6 +33,7 @@ class KeywordSearch {
     
     func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool, Int) -> () ) {
         self.searchType = type
+        self.lastSearch = text
         let offset = self.searchPageSize * (pageNumber-1)
         
         if(type == .all) {
@@ -112,11 +114,21 @@ class KeywordSearch {
         
         if(self.searchType == .all) {
             // TOPICS
-            if let _topics = json["topics"] as? [Any] {
-                count += _topics.count
-                for TOP in _topics {
-                    let newTopic = TopicSearchResult(TOP as! [String: String])
-                    self.topics.append(newTopic)
+            if(self.lastSearch.isEmpty) {
+                let defaultTopics = self.defaultTopics()
+                count += defaultTopics.count
+                for T in defaultTopics {
+                    self.topics.append(T)
+                }
+            } else {
+                if let _topics = json["topics"] as? [Any] {
+                    count += _topics.count
+                    for TOP in _topics {
+                        let newTopic = TopicSearchResult(TOP as! [String: String])
+                        newTopic.trace()
+                        
+                        self.topics.append(newTopic)
+                    }
                 }
             }
             
@@ -170,6 +182,78 @@ class KeywordSearch {
         }
         
         return count
+    }
+    
+    func defaultTopics() -> [TopicSearchResult] {
+        var topics = [TopicSearchResult]()
+        
+        topics.append(TopicSearchResult([
+            "label": "news",
+            "lcname": "headline",
+            "name": "Headlines"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "world",
+            "lcname": "world",
+            "name": "World"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "crime_justice",
+            "lcname": "crime & justice",
+            "name": "Crime & justice"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "social_issues",
+            "lcname": "social issues",
+            "name": "Social issues"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "sci_tech",
+            "lcname": "science & technology",
+            "name": "Science & technology"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "education",
+            "lcname": "education",
+            "name": "Education"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "health",
+            "lcname": "health",
+            "name": "Health"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "environment_energy",
+            "lcname": "environment/energy",
+            "name": "Environment/energy"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "military",
+            "lcname": "military",
+            "name": "Military"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "politics",
+            "lcname": "politics",
+            "name": "Politics"
+        ]) )
+        
+        topics.append(TopicSearchResult([
+            "label": "money",
+            "lcname": "money",
+            "name": "Money"
+        ]) )
+        
+        return topics
     }
 }
 
@@ -280,6 +364,13 @@ struct TopicSearchResult {
         self.label = data["label"]!
         self.lcName = data["lcname"]!
         self.name = data["name"]!
+    }
+    
+    func trace() {
+        print("TopicSearchResult -------------")
+        print("label", self.label)
+        print("lcname", self.lcName)
+        print("name", self.name)
     }
 }
 

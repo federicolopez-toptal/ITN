@@ -37,7 +37,14 @@ class CustomNavController: UINavigationController {
         self.loading.buildInto(self.view)
         self.darkView.buildInto(self.view)
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(darkViewOnTap(sender:)))
+        self.darkView.addGestureRecognizer(tapGesture)
+
         self.addInitialViewController() // Start!
+    }
+    
+    @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {
+        self.dismissMenu()
     }
     
     override func viewDidLayoutSubviews() {
@@ -135,7 +142,7 @@ extension CustomNavController {
             self.view.layoutIfNeeded()
         }
 
-        self.tour?.cancel()
+        self.tour?.cancel(dissapearDarkBackground: false)
         self.slidersPanel.hide()
         self.floatingButton.hide()
     }

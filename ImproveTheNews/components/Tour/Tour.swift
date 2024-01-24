@@ -123,14 +123,16 @@ class Tour {
         popup.pushFromBottom()
     }
     
-    func cancel() {
+    func cancel(dissapearDarkBackground: Bool = true) {
         self.hideAllSteps()
         
-        let darkView = CustomNavController.shared.darkView
-        UIView.animate(withDuration: 0.2) {
-            darkView.alpha = 0.0
-        } completion: { _ in
-            darkView.hide()
+        if(dissapearDarkBackground) {
+            let darkView = CustomNavController.shared.darkView
+            UIView.animate(withDuration: 0.2) {
+                darkView.alpha = 0.0
+            } completion: { _ in
+                darkView.hide()
+            }
         }
     }
     

@@ -21,7 +21,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
     let articleTitleLabel = UILabel()
     let articleSource = SourceIconsView(size: 30, border: 2, separation: 15)
     let articleSourceNameLabel = UILabel()
-    let openIcon = UIImageView(image: UIImage(named: "openArticleIcon"))
+    let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
     let articleTimeLabel = UILabel()
     let articleStanceIcon = StanceBigIconView()
     var sourceTime_leading: NSLayoutConstraint?
@@ -210,6 +210,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         self.articleSourceNameLabel.textColor = CSS.shared.displayMode().main_textColor
         self.articleTimeLabel.textColor = self.articleSourceNameLabel.textColor
         self.articleStanceIcon.refreshDisplayMode()
+        self.openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         
         self.mainImageView.refreshDisplayMode()
     }

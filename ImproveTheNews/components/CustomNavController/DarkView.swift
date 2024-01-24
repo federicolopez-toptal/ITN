@@ -28,16 +28,14 @@ class DarkView: UIView {
             self.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         ])
         
-        self.isUserInteractionEnabled = false
+        self.isUserInteractionEnabled = true
         
         self.hide()
         self.refreshDisplayMode()
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C).withAlphaComponent(0.4) : UIColor(hex: 0x19191C).withAlphaComponent(0.2)
-        
-        //self.backgroundColor = .red.withAlphaComponent(0.5)
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C).withAlphaComponent(0.6) : UIColor(hex: 0x19191C).withAlphaComponent(0.4)
     }
 
 }
