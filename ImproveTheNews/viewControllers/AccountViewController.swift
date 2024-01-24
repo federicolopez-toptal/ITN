@@ -81,7 +81,7 @@ class AccountViewController: BaseViewController {
     }
     
     func buildContent() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
@@ -130,6 +130,7 @@ class AccountViewController: BaseViewController {
         let HStack_form = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack_form, width: 16+extraHMargin)
         let VStack_form = VSTACK(into: HStack_form)
+        VStack_form.tag = 50
         //VStack_form.backgroundColor = .green
         ADD_SPACER(to: HStack_form, width: 20+extraHMargin)
 
@@ -242,12 +243,13 @@ class AccountViewController: BaseViewController {
         // -------
         
         let line1 = UIView()
-        line1.backgroundColor = CSS.shared.displayMode().main_bgColor
+        line1.backgroundColor = .systemPink
         line1.activateConstraints([
             line1.heightAnchor.constraint(equalToConstant: 0.75)
         ])
+        line1.tag = 200+1
         VStack_form.addArrangedSubview(line1)
-        ADD_HDASHES(to: line1)
+        //ADD_HDASHES(to: line1)
         ADD_SPACER(to: VStack_form, height: 24)
         
         let titleLabel2 = UILabel()
@@ -258,12 +260,13 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: VStack_form, height: 24)
         
         let line1b = UIView()
-        line1b.backgroundColor = CSS.shared.displayMode().main_bgColor
+        line1b.backgroundColor = .systemPink
         line1b.activateConstraints([
             line1b.heightAnchor.constraint(equalToConstant: 0.75)
         ])
+        line1b.tag = 200 + 2
         VStack_form.addArrangedSubview(line1b)
-        ADD_HDASHES(to: line1b)
+        //ADD_HDASHES(to: line1b)
         ADD_SPACER(to: VStack_form, height: 32)
         
         // ------
@@ -421,12 +424,13 @@ class AccountViewController: BaseViewController {
         
         //---
         let line2 = UIView()
-        line2.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+        line2.backgroundColor = .systemPink //DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
         line2.activateConstraints([
             line2.heightAnchor.constraint(equalToConstant: 0.75)
         ])
+        line2.tag = 200 + 3
         VStack_form.addArrangedSubview(line2)
-        ADD_HDASHES(to: line2)
+        //ADD_HDASHES(to: line2)
         ADD_SPACER(to: VStack_form, height: 24)
 //
 //    //--- SOCIAL
@@ -576,12 +580,13 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: VStack_form, height: 24)
         
         let line2b = UIView()
-        line2b.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+        line2b.backgroundColor = .systemPink //DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
         line2b.activateConstraints([
             line2b.heightAnchor.constraint(equalToConstant: 0.75)
         ])
+        line2b.tag = 200 + 4
         VStack_form.addArrangedSubview(line2b)
-        ADD_HDASHES(to: line2b)
+        //ADD_HDASHES(to: line2b)
         ADD_SPACER(to: VStack_form, height: 32)
 
         let hStackSignOut = HSTACK(into: VStack_form)
@@ -619,12 +624,13 @@ class AccountViewController: BaseViewController {
         
         //---
         let line3 = UIView()
-        line3.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+        line3.backgroundColor = .systemPink //DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
         line3.activateConstraints([
             line3.heightAnchor.constraint(equalToConstant: 0.75)
         ])
+        line3.tag = 200+5
         VStack_form.addArrangedSubview(line3)
-        ADD_HDASHES(to: line3)
+        //ADD_HDASHES(to: line3)
         ADD_SPACER(to: VStack_form, height: 24)
         
         ///////////////////
@@ -636,12 +642,13 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: VStack_form, height: 24)
         
             let line3b = UIView()
-            line3b.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
+            line3b.backgroundColor = .systemPink //DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
             line3b.activateConstraints([
                 line3b.heightAnchor.constraint(equalToConstant: 0.75)
             ])
+            line3b.tag = 200+6
             VStack_form.addArrangedSubview(line3b)
-            ADD_HDASHES(to: line3b)
+            //ADD_HDASHES(to: line3b)
             ADD_SPACER(to: VStack_form, height: 32)
         
         
@@ -688,14 +695,15 @@ class AccountViewController: BaseViewController {
         ])
         
         ADD_SPACER(to: VStack_form, height: 60)
+        self.addHLines()
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.navBar.refreshDisplayMode()
         
         self.scrollView.backgroundColor = self.view.backgroundColor
-        self.contentView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
     }
     
     func loadUserData() {
@@ -1024,3 +1032,28 @@ extension AccountViewController {
 
 }
 
+extension AccountViewController {
+
+    func addHLines() {
+        for i in 1...6 {
+            if let line = self.view.viewWithTag(200+i) {
+                line.hide()
+                
+                let newLine = UIView()
+                self.contentView.addSubview(newLine)
+                newLine.activateConstraints([
+                    newLine.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                    newLine.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+                    newLine.topAnchor.constraint(equalTo: line.topAnchor),
+                    newLine.heightAnchor.constraint(equalTo: line.heightAnchor),
+                ])
+                
+                newLine.backgroundColor = CSS.shared.displayMode().main_bgColor
+                ADD_HDASHES(to: newLine)
+            }
+        }
+    }
+    
+    
+
+}
