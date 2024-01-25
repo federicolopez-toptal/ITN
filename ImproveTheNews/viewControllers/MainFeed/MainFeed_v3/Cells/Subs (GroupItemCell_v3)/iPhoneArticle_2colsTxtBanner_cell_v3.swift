@@ -1,5 +1,5 @@
 //
-//  iPhoneArticle_2colsTxt_cell_v3.swift
+//  iPhoneArticle_2colsTxtBanner_cell_v3.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 08/11/2023.
@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 
-class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
+class iPhoneArticle_2colsTxtBanner_cell_v3: GroupItemCell_v3 {
 
-    static let identifier = "iPhoneArticle_2colsTxt_cell_v3"
+    static let identifier = "iPhoneArticle_2colsTxtBanner_cell_v3"
     var isBanner = false
     
     var view1_heightConstraint: NSLayoutConstraint!
@@ -32,7 +32,7 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
         let col_WIDTH: CGFloat = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
         
         ///
-        let view1 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH)
+        let view1 = iPhoneBannerPodCast_v3(width: col_WIDTH)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -65,7 +65,7 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
     // MARK: Overrides
     override func populate(with group: DP3_groupItem) {
         super.populate(with: group)
-        view1_heightConstraint.constant = (self.subViews[0] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
+        view1_heightConstraint.constant = (self.subViews[0] as! iPhoneBannerPodCast_v3).calculateHeight()
         view2_heightConstraint.constant = (self.subViews[1] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
         
         if(MUST_SPLIT() == 0) {
@@ -92,10 +92,15 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
     
     // MARK: misc
     func calculateGroupHeight() -> CGFloat {
-        let height_1 = (self.subViews[0] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
+        let height_1 = (self.subViews[0] as! iPhoneBannerPodCast_v3).calculateHeight()
         let height_2 = (self.subViews[1] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
     
-        return (height_1 > height_2) ? height_1 : height_2
+        var result = (height_1 > height_2) ? height_1 : height_2
+        if(height_1 >= height_2) {
+            result += 22
+        }
+        
+        return result
     }
 
 }

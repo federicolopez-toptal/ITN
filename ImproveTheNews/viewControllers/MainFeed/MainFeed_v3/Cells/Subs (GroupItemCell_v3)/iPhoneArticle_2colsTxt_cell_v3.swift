@@ -12,6 +12,7 @@ import UIKit
 class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
 
     static let identifier = "iPhoneArticle_2colsTxt_cell_v3"
+    var isBanner = false
     
     var view1_heightConstraint: NSLayoutConstraint!
     var view2_heightConstraint: NSLayoutConstraint!

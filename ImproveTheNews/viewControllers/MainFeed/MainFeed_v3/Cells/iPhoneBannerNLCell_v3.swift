@@ -43,14 +43,14 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
-            self.titleLabel.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: CSS.shared.iPhoneSide_padding*3)
+            self.titleLabel.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 20)
         ])
         
         let formHStack = HSTACK(into: self.containerView)
         formHStack.activateConstraints([
             formHStack.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
             formHStack.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
-            formHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: CSS.shared.iPhoneSide_padding/2),
+            formHStack.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 16),
             formHStack.heightAnchor.constraint(equalToConstant: 48)
         ])
         
@@ -69,23 +69,23 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
         ADD_SPACER(to: formHStack, width: CSS.shared.iPhoneSide_padding)
         
         let actionButton = UIButton(type: .custom)
-        actionButton.setTitle("Go!", for: .normal)
+        actionButton.setTitle("Go", for: .normal)
         actionButton.layer.cornerRadius = 4.0
         actionButton.backgroundColor = CSS.shared.actionButton_bgColor
         actionButton.titleLabel?.font = CSS.shared.actionButton_iPhone_font
         actionButton.setTitleColor(CSS.shared.actionButton_textColor, for: .normal)
         formHStack.addArrangedSubview(actionButton)
         actionButton.activateConstraints([
-            actionButton.widthAnchor.constraint(equalToConstant: 69)
+            actionButton.widthAnchor.constraint(equalToConstant: 78)
         ])
         actionButton.addTarget(self, action: #selector(onSubscribeButtonTap), for: .touchUpInside)
         
         self.containerView.addSubview(self.closeIcon)
         self.closeIcon.activateConstraints([
-            self.closeIcon.widthAnchor.constraint(equalToConstant: 32),
-            self.closeIcon.heightAnchor.constraint(equalToConstant: 32),
-            self.closeIcon.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
-            self.closeIcon.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: CSS.shared.iPhoneSide_padding)
+            self.closeIcon.widthAnchor.constraint(equalToConstant: 24),
+            self.closeIcon.heightAnchor.constraint(equalToConstant: 24),
+            self.closeIcon.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -12),
+            self.closeIcon.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 12)
         ])
         
         let closeButton = UIButton(type: .system)
@@ -125,9 +125,11 @@ class iPhoneBannerNLCell_v3: UITableViewCell {
     func calculateHeight() -> CGFloat {
         let W: CGFloat = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 2)
         
-        return (CSS.shared.iPhoneSide_padding*3) + self.titleLabel.calculateHeightFor(width: W) +
-                (CSS.shared.iPhoneSide_padding/2) + 48 +
-                (CSS.shared.iPhoneSide_padding * 2)
+//        return (CSS.shared.iPhoneSide_padding*3) + self.titleLabel.calculateHeightFor(width: W) +
+//                (CSS.shared.iPhoneSide_padding/2) + 48 +
+//                (CSS.shared.iPhoneSide_padding * 2)
+
+        return 20 + self.titleLabel.calculateHeightFor(width: W) + 16 + 44 + 25
     }
     
 }

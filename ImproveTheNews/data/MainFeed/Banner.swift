@@ -9,6 +9,8 @@ import Foundation
 
 class Banner {
 
+    static let DEFAULT_TITLE = "*** BANNER ***"
+
     static var imageHeight: CGFloat? = nil
 
     var headerText: String

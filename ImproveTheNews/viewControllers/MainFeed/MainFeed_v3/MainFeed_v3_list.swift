@@ -35,7 +35,10 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)
         self.list.register(iPhoneStory_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsTxt_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneArticle_2colsImgBanner_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImgBanner_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)
+        self.list.register(iPhoneArticle_2colsTxtBanner_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsTxtBanner_cell_v3.identifier)
+        
         
         self.list.register(iPhoneBannerCell_v3.self, forCellReuseIdentifier: iPhoneBannerCell_v3.identifier)
         self.list.register(iPhoneBannerPCCell_v3.self, forCellReuseIdentifier: iPhoneBannerPCCell_v3.identifier)
@@ -80,6 +83,21 @@ extension MainFeed_v3_viewController: UITableViewDelegate, UITableViewDataSource
 
 extension MainFeed_v3_viewController {
     
+    func hasColumnBanner(index: Int) -> Bool {
+        var result = false
+    
+        if let _2cols = self.dataProvider[index] as? DP3_iPhoneArticle_2cols {
+            for A in _2cols.articles {
+                if(A.title == Banner.DEFAULT_TITLE) {
+                    result = true
+                    break
+                }
+            }
+        }
+    
+        return result
+    }
+    
     // Cell(s)
     func getCell(_ indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
@@ -104,10 +122,18 @@ extension MainFeed_v3_viewController {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_2colsTxt_cell_v3.identifier)!
                 }
             } else if(_groupItem is DP3_iPhoneArticle_2cols) {
-                if(Layout.current() == .textImages) {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
+                if(self.hasColumnBanner(index: indexPath.row)) {
+                    if(Layout.current() == .textImages) {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImgBanner_cell_v3.identifier)!
+                    } else {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxtBanner_cell_v3.identifier)!
+                    }
                 } else {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
+                    if(Layout.current() == .textImages) {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
+                    } else {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
+                    }
                 }
             }
             
@@ -185,10 +211,18 @@ extension MainFeed_v3_viewController {
                 result = (self.getCell(indexPath) as! iPhoneStory_2colsTxt_cell_v3).calculateGroupHeight()
             }
         } else if(item is DP3_iPhoneArticle_2cols) { // row: 2 articles
-            if(Layout.current() == .textImages) {
-                result = (self.getCell(indexPath) as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
+            if(self.hasColumnBanner(index: indexPath.row)) {
+                if(Layout.current() == .textImages) {
+                    result = (self.getCell(indexPath) as! iPhoneArticle_2colsImgBanner_cell_v3).calculateGroupHeight()
+                } else {
+                    result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxtBanner_cell_v3).calculateGroupHeight()
+                }
             } else {
-                result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxt_cell_v3).calculateGroupHeight()
+                if(Layout.current() == .textImages) {
+                    result = (self.getCell(indexPath) as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
+                } else {
+                    result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxt_cell_v3).calculateGroupHeight()
+                }
             }
         } else if(item is DP3_footer) { // footer
             return iPhoneFooterCell_v3.getHeight()

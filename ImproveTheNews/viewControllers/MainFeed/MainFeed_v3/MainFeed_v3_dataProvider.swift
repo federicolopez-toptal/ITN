@@ -320,7 +320,7 @@ extension MainFeed_v3_viewController {
             } // while
             
             // Banner, only for 1rst topic (if apply)
-            if(i==0) { self.insertBanner() }
+            if(i==0) { self.insertNewBanner() }
 
             // "Load more" item
             self.addLoadMore(topicName: _T.name)
@@ -397,7 +397,7 @@ extension MainFeed_v3_viewController {
             } // while
             
             //Banner, only for 1rst topic (if apply)
-            if(i==0) { self.insertBanner() }
+            if(i==0) { self.insertNewBanner() }
 
             // "Load more" item
             self.addLoadMore(topicName: _T.name)
@@ -423,7 +423,51 @@ extension MainFeed_v3_viewController {
         self.dataProvider.append(splitHeader)
     }
     
-    private func insertBanner() {
+    private func insertNewBanner() {
+        // chequeos previos...
+            // El orden es podcast, youtube, newsletter (ver si se puede saltear youtube)
+        
+        if(MUST_SPLIT() == 0) { // Already in the first topic...
+            if let _banner = self.data.banner {
+                if(_banner.isPodcast()) {
+                    for (i, item) in self.dataProvider.enumerated() {
+                        if let _item = item as? DP3_iPhoneArticle_2cols, let _article = _item.articles.first {
+                            // Replace article with podcast banner
+                            var A = _article
+                            A.title = Banner.DEFAULT_TITLE
+                            (self.dataProvider[i] as! DP3_iPhoneArticle_2cols).articles[0] = A
+                            
+                            break
+                        }
+                    }
+                } else if(_banner.isNewsLetter()) {
+                    let spacerAtTop = DP3_spacer(size: 10) // Space before the "Show more"
+                    self.dataProvider.append(spacerAtTop)
+                    
+                    let banner = DP3_banner()
+                    self.dataProvider.append(banner)
+                    
+                    let spacerToBottom = DP3_spacer(size: 24) // Space after the "Show more"
+                    self.dataProvider.append(spacerToBottom)
+                }
+            }
+        }
+        
+        if(self.data.banner != nil && MUST_SPLIT()==0) {
+            
+        
+//            let spacerAtTop = DP3_spacer(size: 10) // Space before the "Show more"
+//            self.dataProvider.append(spacerAtTop)
+//            
+//            let banner = DP3_banner()
+//            self.dataProvider.append(banner)
+//            
+//            let spacerToBottom = DP3_spacer(size: 24) // Space after the "Show more"
+//            self.dataProvider.append(spacerToBottom)
+        }
+    }
+    
+    private func insertBanner() { // OLD
         var mustShow = true
         if let _value = READ(LocalKeys.misc.bannerDontShowAgain), (_value == "1") {
             mustShow = false
