@@ -72,22 +72,37 @@ class iPhoneBannerPodCast_v3: CustomCellView_v3 {
             self.titleLabel.topAnchor.constraint(equalTo: podcastIcon.bottomAnchor, constant: 15)
         ])
     
-        var posX: CGFloat = 15
+        let iconsDim: CGFloat = 48
+        let iconsSep: CGFloat = 9
+        let iconsCount: CGFloat = 3
+        let sumW: CGFloat = (iconsDim * iconsCount) + (iconsSep * (iconsCount-1))
+    
+        let iconsContainer = UIView()
+        iconsContainer.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.addSubview(iconsContainer)
+        iconsContainer.activateConstraints([
+            iconsContainer.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 16),
+            iconsContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            iconsContainer.heightAnchor.constraint(equalToConstant: iconsDim),
+            iconsContainer.widthAnchor.constraint(equalToConstant: sumW)
+        ])
+    
+        var posX: CGFloat = 0
         let icons = [1, 2, 3]
         
-        for i in 1...3 {
+        for i in 1...Int(iconsCount) {
             let pcIcon = UIImageView(image: UIImage(named: "podcast_" + String(icons[i-1]) + ".dark"))
-            self.addSubview(pcIcon)
+            iconsContainer.addSubview(pcIcon)
             pcIcon.activateConstraints([
-                pcIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: posX),
-                pcIcon.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 16),
-                pcIcon.widthAnchor.constraint(equalToConstant: 48),
-                pcIcon.heightAnchor.constraint(equalToConstant: 48)
+                pcIcon.leadingAnchor.constraint(equalTo: iconsContainer.leadingAnchor, constant: posX),
+                pcIcon.topAnchor.constraint(equalTo: iconsContainer.topAnchor, constant: 0),
+                pcIcon.widthAnchor.constraint(equalToConstant: iconsDim),
+                pcIcon.heightAnchor.constraint(equalToConstant: iconsDim)
             ])
             
             let button = UIButton(type: .system)
             //button.backgroundColor = .red.withAlphaComponent(0.5)
-            self.addSubview(button)
+            iconsContainer.addSubview(button)
             button.activateConstraints([
                 button.leadingAnchor.constraint(equalTo: pcIcon.leadingAnchor, constant: -5),
                 button.trailingAnchor.constraint(equalTo: pcIcon.trailingAnchor, constant: 5),
@@ -97,7 +112,7 @@ class iPhoneBannerPodCast_v3: CustomCellView_v3 {
             button.tag = 300 + i
             button.addTarget(self, action: #selector(onPodcastIconButtonTap), for: .touchUpInside)
             
-            posX += 48 + 9
+            posX += iconsDim + iconsSep
         }
         
         self.addSubview(self.gotItView)
