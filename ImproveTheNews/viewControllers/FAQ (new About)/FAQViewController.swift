@@ -83,12 +83,16 @@ class FAQViewController: BaseViewController {
         self.descrLabel = HyperlinkLabel.parrafo2(text: self.mainContent(), linkTexts: ["Max Tegmark"],
             urls: ["https://physics.mit.edu/faculty/max-tegmark/"], onTap: self.onLinkTap(_:))
         self.descrLabel?.setLineSpacing(lineSpacing: 6)
-            
+           
+        var sideMargin: CGFloat = 18
+        if(IPAD()){ sideMargin = 60 }
+           
         self.contentView.addSubview(self.descrLabel!)
         self.descrLabel!.activateConstraints([
-            self.descrLabel!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
-            self.descrLabel!.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
-            self.descrLabel!.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16*2)
+            self.descrLabel!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sideMargin),
+            self.descrLabel!.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sideMargin),
+            self.descrLabel!.topAnchor.constraint(equalTo: self.contentView.topAnchor,
+                constant: IPHONE() ? 16*2 : 60)
         ])
         
         let FAQ = UILabel()
@@ -98,17 +102,20 @@ class FAQViewController: BaseViewController {
         FAQ.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.contentView.addSubview(FAQ)
         FAQ.activateConstraints([
-            FAQ.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 18),
-            FAQ.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -18),
-            FAQ.topAnchor.constraint(equalTo: self.descrLabel!.bottomAnchor, constant: 25)
+            FAQ.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sideMargin),
+            FAQ.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sideMargin),
+            FAQ.topAnchor.constraint(equalTo: self.descrLabel!.bottomAnchor,
+                constant: IPHONE() ? 25 :  50)
         ])
 
         self.VStack = VSTACK(into: self.contentView)
         self.VStack.backgroundColor = .clear //.systemPink
         self.VStack.spacing = 0
         self.VStack.activateConstraints([
-            self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
-            self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
+            self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,
+                constant: IPHONE() ? 0 : 60),
+            self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor,
+                constant: IPHONE() ? 0 : -60),
             self.VStack.topAnchor.constraint(equalTo: FAQ.bottomAnchor, constant: 30),
             //self.VStack.topAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 13),
             self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -26),
@@ -184,14 +191,18 @@ class FAQViewController: BaseViewController {
             descr.trailingAnchor.constraint(equalTo: title.trailingAnchor)
         ])
         
-        let W: CGFloat = SCREEN_SIZE().width - (13*2) - (15*2)
+        var sideMargin: CGFloat = 15
+        if(IPAD()){ sideMargin = 60 }
+        let W: CGFloat = SCREEN_SIZE().width - (13*2) - (sideMargin*2)
         var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20 + descr.calculateHeightFor(width: W) + 20 + 15
         
-        let W2 = (W - CSS.shared.iPhoneSide_padding)/2
+        var hSep: CGFloat = CSS.shared.iPhoneSide_padding
+        if(IPAD()){ hSep = 32 }
+        let W2 = (W - hSep)/2
 
         var storiesCopy = stories
         while(storiesCopy.count>0) {
-            let colsHStack = HSTACK(into: sectionView, spacing: CSS.shared.iPhoneSide_padding)
+            let colsHStack = HSTACK(into: sectionView, spacing: hSep)
             
             colsHStack.activateConstraints([
                 colsHStack.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor,
@@ -242,7 +253,7 @@ class FAQViewController: BaseViewController {
             VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
             VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
 
-            posY += maxH
+            posY += maxH + (IPAD() ? 32 : 0)
         }
         
         sectionView.activateConstraints([
@@ -333,8 +344,9 @@ class FAQViewController: BaseViewController {
         if let _image = image {
             var W: CGFloat = SCREEN_SIZE().width - 13 - 13 - 15 - 15
             if(IPAD()) {
+                W = SCREEN_SIZE().width - 60 - 60 - 15 - 15
                 if(SCREEN_SIZE().height < W){
-                    W = SCREEN_SIZE().height - 13 - 13 - 15 - 15
+                    W = SCREEN_SIZE().height - 60 - 60 - 15 - 15
                 }
             }
             
