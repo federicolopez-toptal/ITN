@@ -63,13 +63,16 @@ class PrivacyPolicyViewController: BaseViewController {
             H
         ])
 
+        var sideMargin: CGFloat = 13
+        if(IPAD()){ sideMargin = 60 }
+
         self.VStack = VSTACK(into: self.contentView)
         self.VStack.backgroundColor = .clear //.yellow
         self.VStack.spacing = 13
         self.VStack.activateConstraints([
-            self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 13),
-            self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -13),
-            self.VStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 13),
+            self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sideMargin),
+            self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sideMargin),
+            self.VStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: sideMargin),
             self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -26),
             //VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
         ])
