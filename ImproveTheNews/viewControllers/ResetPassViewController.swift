@@ -93,9 +93,9 @@ class ResetPassViewController: BaseViewController {
     
     private func buildForm() {
         var extraHMargin: CGFloat = 0
-        if(IPAD()){ extraHMargin += 80 }
+        if(IPAD()){ extraHMargin += 150 }
     
-        ADD_SPACER(to: self.VStack, height: 32)
+        ADD_SPACER(to: self.VStack, height: IPHONE() ? 32 : 60)
     
         let HStack_form = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack_form, width: 16+extraHMargin)

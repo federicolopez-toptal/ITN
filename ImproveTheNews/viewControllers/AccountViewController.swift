@@ -125,7 +125,7 @@ class AccountViewController: BaseViewController {
     
     private func buildForm() {
         var extraHMargin: CGFloat = 0
-        if(IPAD()){ extraHMargin += 80 }
+        if(IPAD()){ extraHMargin += 120 }
     
         let HStack_form = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack_form, width: 16+extraHMargin)

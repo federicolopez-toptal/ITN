@@ -81,11 +81,12 @@ class SignInView: UIView {
     }
     
     private func buildForm() {
-        ADD_SPACER(to: self.VStack, height: 32)
+        ADD_SPACER(to: self.VStack, height: IPHONE() ? 32 : 60)
         
         let hStackTabs = HSTACK(into: self.VStack)
+        //hStackTabs.backgroundColor = .green
         
-            ADD_SPACER(to: hStackTabs, width: 16)
+            ADD_SPACER(to: hStackTabs, width: IPHONE() ? 16 : 120)
         let tabsBgView = UIView()
         tabsBgView.backgroundColor = .red
         tabsBgView.layer.cornerRadius = 20
@@ -94,7 +95,7 @@ class SignInView: UIView {
         tabsBgView.activateConstraints([
             tabsBgView.heightAnchor.constraint(equalToConstant: 40)
         ])
-            ADD_SPACER(to: hStackTabs, width: 16)
+            ADD_SPACER(to: hStackTabs, width: IPHONE() ? 16 : 120)
         
         let tabsHighlight = UIView()
         tabsHighlight.backgroundColor = DARK_MODE() ? .white  : UIColor(hex: 0x2D2D31)
@@ -118,8 +119,8 @@ class SignInView: UIView {
             tab1Label.centerXAnchor.constraint(equalTo: tabsHighlight.centerXAnchor)
         ])
     
-        let W: CGFloat = SCREEN_SIZE().width - 32
-        
+        var W: CGFloat = SCREEN_SIZE().width - 32
+        if(IPAD()){ W = SCREEN_SIZE().width - 240 }
         
         let tab2Label = UILabel()
         tab2Label.text = "Sign up"
@@ -145,7 +146,7 @@ class SignInView: UIView {
 
         //---
         var extraHMargin: CGFloat = 0
-        if(IPAD()){ extraHMargin += 80 }
+        if(IPAD()){ extraHMargin += 200 }
 
         ADD_SPACER(to: self.VStack, height: 32)
 
@@ -208,6 +209,7 @@ class SignInView: UIView {
         ])
         forgotPassButton.addTarget(self, action: #selector(forgotPassButtonTap(_:)), for: .touchUpInside)
         
+        if(IPAD()){ ADD_SPACER(to: VStack_form, height: 32) }
         let hStack_mainActionButton = HSTACK(into: VStack_form)
         
         self.mainActionButton.backgroundColor = UIColor(hex: 0x60C4D6)

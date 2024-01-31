@@ -18,10 +18,17 @@ class TourIntroPopupView: PopupView {
         let navControllerView = CustomNavController.shared.view!
         self.bottomConstraint = self.bottomAnchor.constraint(equalTo: navControllerView.bottomAnchor)
         
+        var W: CGFloat = SCREEN_SIZE().width
+        if(IPAD()) {
+            W = 550
+            self.layer.cornerRadius = 20
+            self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
+        
         navControllerView.addSubview(self)
         self.activateConstraints([
-            self.leadingAnchor.constraint(equalTo: navControllerView.leadingAnchor),
-            self.trailingAnchor.constraint(equalTo: navControllerView.trailingAnchor),
+            self.centerXAnchor.constraint(equalTo: navControllerView.centerXAnchor),
+            self.widthAnchor.constraint(equalToConstant: W),
             self.heightAnchor.constraint(equalToConstant: self.height),
             self.bottomConstraint!
         ])
