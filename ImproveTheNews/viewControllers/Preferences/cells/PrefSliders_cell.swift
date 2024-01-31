@@ -35,10 +35,13 @@ class PrefSliders_cell: UITableViewCell {
         self.backgroundColor = .systemPink
         self.allSliders = [UISlider]()
         
+        var sideMargin: CGFloat = 16
+        if(IPAD()){ sideMargin = 60 }
+        
         self.contentView.addSubview(self.mainContainer)
         self.mainContainer.activateConstraints([
-            self.mainContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            self.mainContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            self.mainContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sideMargin),
+            self.mainContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sideMargin),
             self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
@@ -105,7 +108,8 @@ class PrefSliders_cell: UITableViewCell {
         
         let W = SCREEN_SIZE().width - 32
         let vMargin: CGFloat = 20
-        PrefSliders_cell.height = 16 + 16 + self.titleLabel.calculateHeightFor(width: W) + vMargin +
+        
+        PrefSliders_cell.height = sideMargin + sideMargin + self.titleLabel.calculateHeightFor(width: W) + vMargin +
                             paragraph_01.calculateHeightFor(width: W) + vMargin +
                             title2.calculateHeightFor(width: W) + vMargin +
                             paragraph_02.calculateHeightFor(width: W) + vMargin + vMargin +
@@ -167,8 +171,8 @@ extension PrefSliders_cell {
                 view.widthAnchor.constraint(equalToConstant: 400).isActive = true
                 view.centerXAnchor.constraint(equalTo: self.mainContainer.centerXAnchor).isActive = true
             } else {
-                view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 16).isActive = true
-                view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: -16).isActive = true
+                view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 0).isActive = true
+                view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0).isActive = true
             }
         }
     }

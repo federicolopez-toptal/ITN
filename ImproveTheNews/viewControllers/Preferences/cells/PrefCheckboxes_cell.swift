@@ -39,10 +39,13 @@ class PrefCheckboxes_cell: UITableViewCell {
     private func buildContent() {
         self.backgroundColor = .systemPink
         
+        var sideMargin: CGFloat = 16
+        if(IPAD()){ sideMargin = 60 }
+        
         self.contentView.addSubview(self.mainContainer)
         self.mainContainer.activateConstraints([
-            self.mainContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            self.mainContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            self.mainContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sideMargin),
+            self.mainContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sideMargin),
             self.mainContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])

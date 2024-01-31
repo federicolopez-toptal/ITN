@@ -161,6 +161,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         
         //self.articleTitleLabel.font = CSS.shared.iPhoneStory_titleFont_small
         self.articleTitleLabel.text = spin.subTitle
+        self.articleTitleLabel.setLineSpacing(lineSpacing: 6)
             
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: spin.media_title) {
@@ -170,7 +171,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         
         let sourceName = CLEAN_SOURCE(from: spin.media_title).uppercased()
         self.articleSourceNameLabel.text = sourceName
-        self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(spin.timeRelative))
+        self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(spin.timeRelative)) + " AGO"
         
 //        self.articleSourceNameLabel.text = CLEAN_SOURCE(from: spin.media_title).uppercased() + "    " +
 //            SHORT_TIME(input:FIX_TIME(spin.timeRelative))
