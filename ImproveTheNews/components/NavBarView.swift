@@ -495,6 +495,10 @@ extension NavBarView {
         if let _vc = CustomNavController.shared.viewControllers.last as? MainFeed_v3_viewController {
             _vc.list.scrollToTop()
         }
+        
+        if let _vc = CustomNavController.shared.viewControllers.last as? MainFeediPad_v3_viewController {
+            _vc.list.scrollToTop()
+        }
     }
     
     @objc func onUserButtonTap(_ sender: UIButton) {

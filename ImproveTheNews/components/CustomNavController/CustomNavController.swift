@@ -172,6 +172,9 @@ extension CustomNavController {
         if let _ = self.viewControllers.first as? MainFeed_v3_viewController {
             showComponents = true
         }
+        if let _ = self.viewControllers.first as? MainFeediPad_v3_viewController {
+            showComponents = true
+        }
         
         if(showComponents) {
             self.slidersPanel.show()

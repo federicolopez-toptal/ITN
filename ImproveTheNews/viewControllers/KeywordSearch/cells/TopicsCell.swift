@@ -133,7 +133,7 @@ class TopicsCell: UITableViewCell {
 //                CustomNavController.shared.floatingButton.show()
 //            }
         } else {
-            let vc = MainFeed_v2ViewController()
+            let vc = MainFeediPad_v3_viewController()
             vc.topic = topic
             CustomNavController.shared.viewControllers = [vc]
 

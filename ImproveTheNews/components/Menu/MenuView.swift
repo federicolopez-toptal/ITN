@@ -250,7 +250,7 @@ extension MenuView {
             }
         } else {
             var firstIsMainFeed = false
-            if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeed_v2ViewController {
+            if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeediPad_v3_viewController {
                 if(firstVC.topic == "news"){ firstIsMainFeed = true }
             }
             
@@ -288,9 +288,13 @@ extension MenuView {
                 _vc.list.scrollToTop()
             }
         } else {
-            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeed_v2ViewController {
-                _vc.scrollToZero()
+            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeediPad_v3_viewController {
+                _vc.list.scrollToTop()
             }
+        
+//            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeed_v2ViewController {
+//                _vc.scrollToZero()
+//            }
         }
     }
     
@@ -414,7 +418,7 @@ extension MenuView {
                 }
             }
         } else {
-            let firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeed_v2ViewController
+            let firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeediPad_v3_viewController
             if(firstIsMainFeed) {
                 self.dismissMe()
             } else {
