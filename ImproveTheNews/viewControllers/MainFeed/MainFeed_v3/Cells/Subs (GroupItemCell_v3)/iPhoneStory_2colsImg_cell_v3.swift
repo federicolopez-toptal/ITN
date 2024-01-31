@@ -27,7 +27,11 @@ class iPhoneStory_2colsImg_cell_v3: GroupItemCell_v3 {
 
     private func buildContent() {
         self.subViews = [CustomCellView_v3]()
-        let col_WIDTH: CGFloat = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
+        
+        var col_WIDTH: CGFloat = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
+        if(IPAD()) {
+            col_WIDTH = (SCREEN_SIZE().width - 40 - (CSS.shared.iPhoneSide_padding * 3))/2
+        }
         
         ///
         let view1 = iPhoneAllNews_vImgCol_v3(width: col_WIDTH)

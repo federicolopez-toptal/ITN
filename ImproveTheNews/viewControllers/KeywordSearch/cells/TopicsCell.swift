@@ -30,8 +30,10 @@ class TopicsCell: UITableViewCell {
         //self.tagsContainer.backgroundColor = .green
         self.contentView.addSubview(self.tagsContainer)
         self.tagsContainer.activateConstraints([
-            self.tagsContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 12),
-            self.tagsContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -12),
+            self.tagsContainer.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,
+                constant: IPAD() ? 0 : 12),
+            self.tagsContainer.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor,
+                constant: IPAD() ? 0 : -12),
             self.tagsContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0)
         ])
         self.tagsContainerHeightLayout = self.tagsContainer.heightAnchor.constraint(equalToConstant: 100)
@@ -48,7 +50,7 @@ class TopicsCell: UITableViewCell {
         
         let H: CGFloat = 32
         let SEP: CGFloat = 8.0
-        let LIMIT = SCREEN_SIZE().width - 15
+        let LIMIT = IPHONE() ? (SCREEN_SIZE().width - 15) : (SCREEN_SIZE().width - 40)
         var val_x: CGFloat = 0
         var val_y: CGFloat = 0
         
