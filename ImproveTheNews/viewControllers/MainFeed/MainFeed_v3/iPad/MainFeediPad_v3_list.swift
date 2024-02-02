@@ -33,12 +33,17 @@ extension MainFeediPad_v3_viewController {
         self.list.register(iPhoneStory_vTxt_cell_v3.self, forCellReuseIdentifier: iPhoneStory_vTxt_cell_v3.identifier)
         
         self.list.register(iPhoneStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneStory_4colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_4colsImg_cell_v3.identifier)
         self.list.register(iPhoneStory_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsTxt_cell_v3.identifier)
+        self.list.register(iPhoneStory_4colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneStory_4colsTxt_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneArticle_4colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_4colsImg_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsImgBanner_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImgBanner_cell_v3.identifier)
+        self.list.register(iPhoneArticle_4colsImgBanner_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_4colsImgBanner_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)
+        self.list.register(iPhoneArticle_4colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_4colsTxt_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsTxtBanner_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsTxtBanner_cell_v3.identifier)
-        
+        self.list.register(iPhoneArticle_4colsTxtBanner_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_4colsTxtBanner_cell_v3.identifier)
         
         self.list.register(iPhoneBannerCell_v3.self, forCellReuseIdentifier: iPhoneBannerCell_v3.identifier)
         self.list.register(iPhoneBannerPCCell_v3.self, forCellReuseIdentifier: iPhoneBannerPCCell_v3.identifier)
@@ -83,11 +88,26 @@ extension MainFeediPad_v3_viewController: UITableViewDelegate, UITableViewDataSo
 
 extension MainFeediPad_v3_viewController {
     
-    func hasColumnBanner(index: Int) -> Bool {
+    func has2ColumnBanner(index: Int) -> Bool {
         var result = false
     
         if let _2cols = self.dataProvider[index] as? DP3_iPhoneArticle_2cols {
             for A in _2cols.articles {
+                if(A.title == Banner.DEFAULT_TITLE) {
+                    result = true
+                    break
+                }
+            }
+        }
+    
+        return result
+    }
+    
+    func has4ColumnBanner(index: Int) -> Bool {
+        var result = false
+    
+        if let _4cols = self.dataProvider[index] as? DP3_iPhoneArticle_4cols {
+            for A in _4cols.articles {
                 if(A.title == Banner.DEFAULT_TITLE) {
                     result = true
                     break
@@ -107,11 +127,6 @@ extension MainFeediPad_v3_viewController {
             if(_groupItem is DP3_iPhoneStory_1Wide) {
                 if(Layout.current() == .textImages) {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
-//                    if(MUST_SPLIT() == 0) {
-//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
-//                    } else {
-//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxt_cell_v3.identifier)!
-//                    }
                 } else {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxt_cell_v3.identifier)!
                 }
@@ -121,8 +136,14 @@ extension MainFeediPad_v3_viewController {
                 } else {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_2colsTxt_cell_v3.identifier)!
                 }
+            } else if(_groupItem is DP3_iPhoneStory_4cols) {
+                if(Layout.current() == .textImages) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_4colsImg_cell_v3.identifier)!
+                } else {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_4colsTxt_cell_v3.identifier)!
+                }
             } else if(_groupItem is DP3_iPhoneArticle_2cols) {
-                if(self.hasColumnBanner(index: indexPath.row)) {
+                if(self.has2ColumnBanner(index: indexPath.row)) {
                     if(Layout.current() == .textImages) {
                         cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImgBanner_cell_v3.identifier)!
                     } else {
@@ -135,6 +156,34 @@ extension MainFeediPad_v3_viewController {
                         cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
                     }
                 }
+            } else if(_groupItem is DP3_iPhoneArticle_4cols) {
+                if(self.has4ColumnBanner(index: indexPath.row)) {
+                    if(Layout.current() == .textImages) {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_4colsImgBanner_cell_v3.identifier)!
+                    } else {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_4colsTxtBanner_cell_v3.identifier)!
+                    }
+                } else {
+                    if(Layout.current() == .textImages) {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_4colsImg_cell_v3.identifier)!
+                    } else {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_4colsTxt_cell_v3.identifier)!
+                    }
+                }
+            
+//                if(self.hasColumnBanner(index: indexPath.row)) {
+//                    if(Layout.current() == .textImages) {
+//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImgBanner_cell_v3.identifier)!
+//                    } else {
+//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxtBanner_cell_v3.identifier)!
+//                    }
+//                } else {
+//                    if(Layout.current() == .textImages) {
+//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
+//                    } else {
+//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
+//                    }
+//                }
             }
             
             (cell as! GroupItemCell_v3).populate(with: _groupItem)
@@ -188,11 +237,6 @@ extension MainFeediPad_v3_viewController {
         } else if(item is DP3_iPhoneStory_1Wide) { // 1 wide story
             if(Layout.current() == .textImages) {
                 result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
-//                if(MUST_SPLIT() == 0) {
-//                    result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
-//                } else {
-//                    result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
-//                }
             } else {
                 result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
             }
@@ -210,8 +254,14 @@ extension MainFeediPad_v3_viewController {
             } else {
                 result = (self.getCell(indexPath) as! iPhoneStory_2colsTxt_cell_v3).calculateGroupHeight()
             }
+        } else if(item is DP3_iPhoneStory_4cols) { // row: 4 stories
+            if(Layout.current() == .textImages) {
+                result = (self.getCell(indexPath) as! iPhoneStory_4colsImg_cell_v3).calculateGroupHeight()
+            } else {
+                result = (self.getCell(indexPath) as! iPhoneStory_4colsTxt_cell_v3).calculateGroupHeight()
+            }
         } else if(item is DP3_iPhoneArticle_2cols) { // row: 2 articles
-            if(self.hasColumnBanner(index: indexPath.row)) {
+            if(self.has2ColumnBanner(index: indexPath.row)) {
                 if(Layout.current() == .textImages) {
                     result = (self.getCell(indexPath) as! iPhoneArticle_2colsImgBanner_cell_v3).calculateGroupHeight()
                 } else {
@@ -222,6 +272,20 @@ extension MainFeediPad_v3_viewController {
                     result = (self.getCell(indexPath) as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
                 } else {
                     result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxt_cell_v3).calculateGroupHeight()
+                }
+            }
+        } else if(item is DP3_iPhoneArticle_4cols) { // row: 4 articles
+            if(self.has4ColumnBanner(index: indexPath.row)) {
+                if(Layout.current() == .textImages) {
+                    result = (self.getCell(indexPath) as! iPhoneArticle_4colsImgBanner_cell_v3).calculateGroupHeight()
+                } else {
+                    result = (self.getCell(indexPath) as! iPhoneArticle_4colsTxtBanner_cell_v3).calculateGroupHeight()
+                }
+            } else {
+                if(Layout.current() == .textImages) {
+                    result = (self.getCell(indexPath) as! iPhoneArticle_4colsImg_cell_v3).calculateGroupHeight()
+                } else {
+                    result = (self.getCell(indexPath) as! iPhoneArticle_4colsTxt_cell_v3).calculateGroupHeight()
                 }
             }
         } else if(item is DP3_footer) { // footer

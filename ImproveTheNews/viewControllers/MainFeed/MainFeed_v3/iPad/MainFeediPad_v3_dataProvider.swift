@@ -260,17 +260,22 @@ extension MainFeediPad_v3_viewController {
                 var newGroupItem: DP3_groupItem?
                 
                 switch(itemInTopic) {
-                    case 1, 2, 5:
+                    case 1:
                         if(_T.stillHasStories()) {
                             newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
                         } else {
                             itemInTopic += 1
                         }
-                    case 3, 4, 9, 10:
-                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
-                    case 6, 7, 8:
+                
+                    case 3, 6:
+                        newGroupItem = DP3_iPhoneArticle_4cols() // Row: 4 articles
+                
+                    case 2, 4:
                         newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
                 
+                    case 5:
+                        newGroupItem = DP3_iPhoneStory_4cols() // Row: 4 stories
+                                
                     default:
                         NOTHING()
                 }
@@ -312,10 +317,9 @@ extension MainFeediPad_v3_viewController {
                 } // fill ///////////////////
                 
                 
-                if(itemInTopic==11) {
-                    itemInTopic = 7
+                if(itemInTopic==7) {
+                    itemInTopic = 5
                 }
-                
                 
             } // while
             
@@ -352,17 +356,22 @@ extension MainFeediPad_v3_viewController {
                 var newGroupItem: DP3_groupItem?
                 
                 switch(itemInTopic) {
-                    case 1, 2, 5:
+                    case 1:
                         if(_T.stillHasStories()) {
                             newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
                         } else {
                             itemInTopic += 1
                         }
-                    case 3, 4, 9, 10:
-                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
-                    case 6, 7, 8:
+                
+                    case 3, 6:
+                        newGroupItem = DP3_iPhoneArticle_4cols() // Row: 4 articles
+                
+                    case 2, 4:
                         newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
-                        
+                
+                    case 5:
+                        newGroupItem = DP3_iPhoneStory_4cols() // Row: 4 stories
+                                
                     default:
                         NOTHING()
                 }
@@ -389,8 +398,8 @@ extension MainFeediPad_v3_viewController {
                 } // fill ///////////////////
                 
                 
-                if(itemInTopic==11) {
-                    itemInTopic = 7
+                if(itemInTopic==7) {
+                    itemInTopic = 5
                 }
                 
                 
@@ -436,6 +445,13 @@ extension MainFeediPad_v3_viewController {
                             var A = _article
                             A.title = Banner.DEFAULT_TITLE
                             (self.dataProvider[i] as! DP3_iPhoneArticle_2cols).articles[0] = A
+                            
+                            break
+                        } else if let _item = item as? DP3_iPhoneArticle_4cols, let _article = _item.articles.first {
+                            // Replace article with podcast banner
+                            var A = _article
+                            A.title = Banner.DEFAULT_TITLE
+                            (self.dataProvider[i] as! DP3_iPhoneArticle_4cols).articles[0] = A
                             
                             break
                         }

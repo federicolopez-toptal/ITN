@@ -515,6 +515,9 @@ extension NavBarView {
     
     @objc func onHeadlinesButtonTap(_ sender: UIButton) {
         CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
+        
+        CustomNavController.shared.slidersPanel.show(rows: 0, animated: false)
+        CustomNavController.shared.showPanelAndButtonWithAnimation()
     }
     
     
