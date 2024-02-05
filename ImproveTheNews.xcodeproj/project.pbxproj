@@ -1313,6 +1313,10 @@
 			children = (
 				1FE89CFF2AF1ADF200A6C99C /* iPhoneStory_vImg_cell_v3.swift */,
 				1FA48D992AFC5A9B009CEAAC /* iPhoneStory_vTxt_cell_v3.swift */,
+				1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */,
+				1F9C711D2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift */,
+				1FD699222B6B288700C4B0F9 /* iPhoneStory_4colsTxt_cell_v3.swift */,
+				1FA48DA12AFC62F7009CEAAC /* iPhoneStory_2colsTxt_cell_v3.swift */,
 				1FD1BD522AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift */,
 				1FD0145C2B61E4F300209A63 /* iPhoneArticle_2colsImgBanner_cell_v3.swift */,
 				1F9C711F2B6AE5AF0060BB66 /* iPhoneArticle_4colsImg_cell_v3.swift */,
@@ -1321,10 +1325,6 @@
 				1FD699202B6B26C000C4B0F9 /* iPhoneArticle_4colsTxt_cell_v3.swift */,
 				1FD699262B6B2D0400C4B0F9 /* iPhoneArticle_4colsTxtBanner_cell_v3.swift */,
 				1FD014622B61FAAD00209A63 /* iPhoneArticle_2colsTxtBanner_cell_v3.swift */,
-				1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */,
-				1F9C711D2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift */,
-				1FD699222B6B288700C4B0F9 /* iPhoneStory_4colsTxt_cell_v3.swift */,
-				1FA48DA12AFC62F7009CEAAC /* iPhoneStory_2colsTxt_cell_v3.swift */,
 				1FE89D012AF1AE1600A6C99C /* CustomCellView */,
 			);
 			path = "Subs (GroupItemCell_v3)";
@@ -2695,7 +2695,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2732,7 +2732,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2823,7 +2823,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

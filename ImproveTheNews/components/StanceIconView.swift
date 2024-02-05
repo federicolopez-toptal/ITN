@@ -14,8 +14,8 @@ protocol StanceIconViewDelegate: AnyObject {
 
 class StanceIconView: UIView {
 
-    var DIM: CGFloat = 18
-    var THUMB: CGFloat = 3
+    var DIM: CGFloat = 24
+    var THUMB: CGFloat = 3.5
     
     weak var delegate: StanceIconViewDelegate?
 
@@ -41,10 +41,10 @@ class StanceIconView: UIView {
         slider1.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0xB3B3B3)
         self.addSubview(slider1)
         slider1.activateConstraints([
-            slider1.widthAnchor.constraint(equalToConstant: 10),
+            slider1.widthAnchor.constraint(equalToConstant: 12),
             slider1.heightAnchor.constraint(equalToConstant: 0.5),
             slider1.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            slider1.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -3)
+            slider1.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -4)
         ])
         
         let thumb1 = UIView()
@@ -63,10 +63,10 @@ class StanceIconView: UIView {
         slider2.backgroundColor = UIColor(hex: 0x93A0B4)
         self.addSubview(slider2)
         slider2.activateConstraints([
-            slider2.widthAnchor.constraint(equalToConstant: 10),
+            slider2.widthAnchor.constraint(equalToConstant: 12),
             slider2.heightAnchor.constraint(equalToConstant: 0.5),
             slider2.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            slider2.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 3)
+            slider2.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 4)
         ])
         
         let thumb2 = UIView()
@@ -115,9 +115,10 @@ class StanceIconView: UIView {
     func setValues(_ value1: Int, _ value2: Int) {
         let mValue1 = value1.clamp(lower: 1, upper: 5)
         let mValue2 = value2.clamp(lower: 1, upper: 5)
+
         let half = self.THUMB/2
-        let positions: [CGFloat] = [0, 1.75, 3.5, 5.25, 7]
-        
+        let positions: [CGFloat] = [0, 3-half, 6-half, 9-half, 12-self.THUMB]
+
         self.value1 = mValue1
         self.value2 = mValue2
         

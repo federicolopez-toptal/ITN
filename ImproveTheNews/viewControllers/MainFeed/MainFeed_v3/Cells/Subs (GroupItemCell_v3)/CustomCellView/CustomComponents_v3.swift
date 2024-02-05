@@ -382,3 +382,63 @@ class SourceIconsView: UIView {
     }
     
 }
+
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+class FlagView: UIView {
+    
+    private var SIZE: CGFloat
+    
+    let imgFlag = UIImageView()
+    var widthConstraint: NSLayoutConstraint?
+    
+    init(size: CGFloat = 24) {
+        self.SIZE = size
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func buildInto(_ container: UIView) {
+        self.backgroundColor = .gray
+        self.layer.cornerRadius = self.SIZE/2
+        
+        container.addSubview(self)
+        self.widthConstraint = self.widthAnchor.constraint(equalToConstant: self.SIZE)
+        self.activateConstraints([
+            self.widthConstraint!,
+            self.heightAnchor.constraint(equalToConstant: self.SIZE)
+        ])
+        
+        self.addSubview(self.imgFlag)
+        self.imgFlag.activateConstraints([
+            self.imgFlag.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.imgFlag.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.imgFlag.topAnchor.constraint(equalTo: self.topAnchor),
+            self.imgFlag.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+        
+        self.clipsToBounds = true
+    }
+    
+    func setFlag(_ countryCode: String) {
+        if let _image = UIImage(named: countryCode.uppercased() + "64.png") {
+            self.imgFlag.image = _image
+        } else {
+            self.imgFlag.image = UIImage(named: "noFlag.png")
+        }
+    }
+    
+    func customShow() {
+        self.show()
+        self.widthConstraint?.constant = self.SIZE
+    }
+    
+    func customHide() {
+        self.hide()
+        self.widthConstraint?.constant = 0
+    }
+    
+}

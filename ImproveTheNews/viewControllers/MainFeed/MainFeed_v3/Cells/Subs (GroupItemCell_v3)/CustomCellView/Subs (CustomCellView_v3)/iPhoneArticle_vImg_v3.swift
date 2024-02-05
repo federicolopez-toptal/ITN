@@ -19,6 +19,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
     let mainImageView = CustomImageView()
         var articleComponents = [UIView]()
     let articleTitleLabel = UILabel()
+    let articleFlag = FlagView(size: 30)
     let articleSource = SourceIconsView(size: 30, border: 2, separation: 15)
     let articleSourceNameLabel = UILabel()
     let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
@@ -67,11 +68,18 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         ])
         articleComponents.append(self.articleTitleLabel)
         
+        self.articleFlag.buildInto(self)
+        self.articleFlag.activateConstraints([
+            self.articleFlag.leadingAnchor.constraint(equalTo: self.leadingAnchor,
+                constant: CSS.shared.iPhoneSide_padding),
+            self.articleFlag.topAnchor.constraint(equalTo: self.articleTitleLabel.bottomAnchor, constant: 12+2)
+        ])
+        articleComponents.append(self.articleFlag)
         
         self.articleSource.buildInto(self)
         self.articleSource.activateConstraints([
-            self.articleSource.leadingAnchor.constraint(equalTo: self.leadingAnchor,
-                constant: CSS.shared.iPhoneSide_padding),
+            self.articleSource.leadingAnchor.constraint(equalTo: self.articleFlag.trailingAnchor,
+                constant: 4),
             self.articleSource.topAnchor.constraint(equalTo: self.articleTitleLabel.bottomAnchor, constant: 12)
         ])
         articleComponents.append(self.articleSource)
@@ -191,6 +199,18 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
             self.sourceTime_leading?.constant = 0
         }
         
+        if(PREFS_SHOW_FLAGS()) {
+            self.articleFlag.setFlag(spin.media_country_code)
+            self.articleFlag.customShow()
+//            self.source_leading?.constant = 2
+            if(!PREFS_SHOW_SOURCE_ICONS()) {
+                self.sourceTime_leading?.constant += 3
+            }
+        } else {
+            self.articleFlag.customHide()
+            //self.source_leading?.constant = 0
+        }
+        
         if(PREFS_SHOW_STANCE_ICONS()) {
             self.articleStanceIcon.show()
         } else {
@@ -202,6 +222,10 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
                 button.hide()
                 self.articleStanceIcon.hide()
             }
+        }
+        
+        if(!PREFS_SHOW_SOURCE_ICONS() && !PREFS_SHOW_FLAGS()) {
+            self.sourceTime_leading?.constant = 0
         }
     }
     

@@ -27,13 +27,15 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
 
     var articleComponents = [UIView]()
         let articleTitleLabel = UILabel()
-        let articleSource = SourceIconsView(size: 18, border: 2, separation: 15)
+        let articleFlag = FlagView(size: 24)
+        let articleSource = SourceIconsView(size: 24, border: 2, separation: 15)
         let articleSourceNameLabel = UILabel()
         let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
         let articleTimeLabel = UILabel()
         let articleStanceIcon = StanceIconView()
+        
         var sourceTime_leading: NSLayoutConstraint?
-    
+        var source_leading: NSLayoutConstraint?
 
     
     // MARK: - Start
@@ -110,10 +112,18 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         ])
         articleComponents.append(self.articleTitleLabel)
         
+        self.articleFlag.buildInto(self)
+        self.articleFlag.activateConstraints([
+            self.articleFlag.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.articleFlag.topAnchor.constraint(equalTo: self.articleTitleLabel.bottomAnchor, constant: 12+2)
+        ])
+        articleComponents.append(self.articleFlag)
         
         self.articleSource.buildInto(self)
+        self.source_leading = self.articleSource.leadingAnchor.constraint(equalTo: self.articleFlag.trailingAnchor, constant: 2)
+        
         self.articleSource.activateConstraints([
-            self.articleSource.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.source_leading!,
             self.articleSource.topAnchor.constraint(equalTo: self.articleTitleLabel.bottomAnchor, constant: 12)
         ])
         articleComponents.append(self.articleSource)
@@ -133,15 +143,15 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.openIcon.activateConstraints([
             self.openIcon.widthAnchor.constraint(equalToConstant: 12),
             self.openIcon.heightAnchor.constraint(equalToConstant: 12),
-            self.openIcon.topAnchor.constraint(equalTo: self.articleSourceNameLabel.topAnchor),
-            self.openIcon.leadingAnchor.constraint(equalTo: self.articleSourceNameLabel.trailingAnchor, constant: 6)
+            self.openIcon.centerYAnchor.constraint(equalTo: self.articleSource.centerYAnchor),
+            self.openIcon.leadingAnchor.constraint(equalTo: self.articleSourceNameLabel.trailingAnchor, constant: 0)
         ])
         
         self.articleTimeLabel.font = self.articleSourceNameLabel.font
         self.addSubview(self.articleTimeLabel)
         self.articleTimeLabel.activateConstraints([
             self.articleTimeLabel.centerYAnchor.constraint(equalTo: self.articleSourceNameLabel.centerYAnchor),
-            self.articleTimeLabel.leadingAnchor.constraint(equalTo: self.openIcon.trailingAnchor, constant: 6)
+            self.articleTimeLabel.leadingAnchor.constraint(equalTo: self.openIcon.trailingAnchor, constant: 5)
         ])
         
         self.addSubview(self.articleStanceIcon)
@@ -220,13 +230,16 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.articleSource.load(sourcesArray)
         
         let sourceName = CLEAN_SOURCE(from: article.media_title).uppercased()
-        if(sourceName.count<=10) {
-            self.articleSourceNameLabel.text = sourceName
-            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.timeRelative))
-        } else {
-            self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.timeRelative))
-            self.articleTimeLabel.text = ""
-        }
+        self.articleSourceNameLabel.text = ""
+        self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.timeRelative))
+        
+//        if(sourceName.count<=10) {
+//            self.articleSourceNameLabel.text = sourceName
+//            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.timeRelative))
+//        } else {
+//            self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.timeRelative))
+//            self.articleTimeLabel.text = ""
+//        }
         
         
         self.articleStanceIcon.setValues(article.LR, article.PE)
@@ -244,6 +257,18 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         } else {
             self.articleSource.customHide()
             self.sourceTime_leading?.constant = 0
+        }
+        
+        if(PREFS_SHOW_FLAGS()) {
+            self.articleFlag.setFlag(article.media_country_code)
+            self.articleFlag.customShow()
+            self.source_leading?.constant = 2
+            if(!PREFS_SHOW_SOURCE_ICONS()) {
+                self.source_leading?.constant = 5
+            }
+        } else {
+            self.articleFlag.customHide()
+            self.source_leading?.constant = 0
         }
         
         if(PREFS_SHOW_STANCE_ICONS()) {
@@ -280,13 +305,16 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.articleSource.load(sourcesArray)
         
         let sourceName = CLEAN_SOURCE(from: article.source).uppercased()
-        if(sourceName.count<=10) {
-            self.articleSourceNameLabel.text = sourceName
-            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
-        } else {
-            self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
-            self.articleTimeLabel.text = ""
-        }
+        self.articleSourceNameLabel.text = ""
+        self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+        
+//        if(sourceName.count<=10) {
+//            self.articleSourceNameLabel.text = sourceName
+//            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+//        } else {
+//            self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
+//            self.articleTimeLabel.text = ""
+//        }
         
         
         self.articleStanceIcon.setValues(spin.LR, spin.CP)
@@ -311,6 +339,18 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             self.articleStanceIcon.show()
         } else {
             self.articleStanceIcon.hide()
+        }
+        
+        if(PREFS_SHOW_FLAGS()) {
+            self.articleFlag.setFlag(spin.media_country_code)
+            self.articleFlag.customShow()
+            self.source_leading?.constant = 2
+            if(!PREFS_SHOW_SOURCE_ICONS()) {
+                self.source_leading?.constant = 5
+            }
+        } else {
+            self.articleFlag.customHide()
+            self.source_leading?.constant = 0
         }
         
         if(spin.LR==0 && spin.CP==0) {
@@ -365,13 +405,15 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             
             self.openIcon.show()
             let sourceName = CLEAN_SOURCE(from: article.source).uppercased()
-            if(sourceName.count<=10) {
-                self.articleSourceNameLabel.text = sourceName
-                self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
-            } else {
-                self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
-                self.articleTimeLabel.text = ""
-            }
+            self.articleSourceNameLabel.text = ""
+            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+//            if(sourceName.count<=10) {
+//                self.articleSourceNameLabel.text = sourceName
+//                self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+//            } else {
+//                self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
+//                self.articleTimeLabel.text = ""
+//            }
             
             
             
@@ -409,6 +451,18 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             } else {
                 self.articleSource.customHide()
                 self.sourceTime_leading?.constant = 0
+            }
+            
+            if(PREFS_SHOW_FLAGS()) {
+                self.articleFlag.setFlag(article.country)
+                self.articleFlag.customShow()
+                self.source_leading?.constant = 2
+                if(!PREFS_SHOW_SOURCE_ICONS()) {
+                    self.source_leading?.constant = 5
+                }
+            } else {
+                self.articleFlag.customHide()
+                self.source_leading?.constant = 0
             }
             
             if(PREFS_SHOW_STANCE_ICONS()) {
