@@ -148,6 +148,24 @@ extension MainFeedArticle {
         self.PE = 2
     }
     
+    init(story A: StoryArticle) {
+        self.title = A.title
+        self.imgUrl = A.image
+        self.time = A.timeRelative
+        self.storySources = []
+        self.url = A.url
+        
+        self.markups = [Markup]()
+        self.isStory = false
+        self.used = false
+        self.videoFile = nil
+        
+        self.country = A.media_country_code
+        self.source = CLEAN_SOURCE(from: A.media_title)
+        self.LR = A.LR
+        self.PE = A.PE
+    }
+    
 }
 
 struct Markup {

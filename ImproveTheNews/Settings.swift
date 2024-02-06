@@ -9,13 +9,18 @@ import Foundation
 import UIKit
 
 //////////////////////////////////////////////////
-let NEWS_INIT_REQ_COUNT: Int = 9
-let NEWS_INIT_REQ_STORIES: Int = 5
+let NEWS_REQ_ITEMS_TOTAL: Int = 9
+let NEWS_REQ_STORIES_COUNT: Int = 5
+let NEWS_REQ_MORE_ITEMS_TOTAL: Int = 8
+let NEWS_REQ_MORE_STORIES_COUNT: Int = 4
 
-let NEWS_MORE_REQ_COUNT: Int = 8
-let NEWS_MORE_REQ_STORIES: Int = 4
+let NEWS_REQ_SPLIT_ITEMS_TOTAL: Int = 8
+let NEWS_REQ_SPLIT_STORIES_COUNT: Int = 2
+let NEWS_REQ_SPLIT_MORE_ITEMS_TOTAL: Int = 8
+let NEWS_REQ_SPLIT_MORE_STORIES_COUNT: Int = 2
 
-let MAX_ARTICLES_PER_TOPIC: Int = (NEWS_MORE_REQ_COUNT * 15) + NEWS_INIT_REQ_COUNT
+
+let MAX_ARTICLES_PER_TOPIC: Int = (NEWS_REQ_MORE_ITEMS_TOTAL * 15) + NEWS_REQ_ITEMS_TOTAL
 
 let SPACER_COLOR: UIColor? = nil //.systemPink
 //////////////////////////////////////////////////

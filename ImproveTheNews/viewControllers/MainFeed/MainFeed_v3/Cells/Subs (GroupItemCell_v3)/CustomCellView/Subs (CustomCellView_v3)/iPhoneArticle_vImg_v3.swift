@@ -40,6 +40,10 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
     }
     
     private func calculateImageViewHeight() -> CGFloat {
+        if(TEXT_ONLY()) {
+            return 0
+        }
+        
         let H = (self.WIDTH * imgHeight)/imgWidth
         return H
     }

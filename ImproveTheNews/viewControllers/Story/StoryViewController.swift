@@ -531,15 +531,39 @@ extension StoryViewController {
             var completed = false
             while(!completed) {
                 let colsHStack = HSTACK(into: innerHStack, spacing: CSS.shared.iPhoneSide_padding)
+                
                 var H1: CGFloat = 0
                 var H2: CGFloat = 0
-                var VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
+                var VIEW1: CustomCellView_v3!
+                var VIEW2: CustomCellView_v3!
                 
+                if(TEXT_IMAGES()) {
+                    VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
+                } else {
+                    VIEW2 = iPhoneAllNews_vTxtCol_v3(width: W)
+                }
+
                 let A1 = articles[artNum]
-                let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
+                if(TEXT_IMAGES()) {
+                    VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
+                } else {
+                    VIEW1 = iPhoneAllNews_vTxtCol_v3(width: W)
+                }
+                
                 VIEW1.refreshDisplayMode()
-                VIEW1.populate(article: A1)
-                H1 = VIEW1.calculateHeight()
+                if let _V1 = VIEW1 as? iPhoneAllNews_vImgCol_v3 {
+                    _V1.populate(article: A1)
+                } else if let _V1 = VIEW1 as? iPhoneAllNews_vTxtCol_v3 {
+                    let _A1 = MainFeedArticle(story: A1)
+                    _V1.populate(_A1)
+                }
+                
+                if let _V1 = VIEW1 as? iPhoneAllNews_vImgCol_v3 {
+                    H1 = _V1.calculateHeight()
+                } else if let _V1 = VIEW1 as? iPhoneAllNews_vTxtCol_v3 {
+                    H1 = _V1.calculateHeight()
+                }
+
                 colsHStack.addArrangedSubview(VIEW1)
                 VIEW1.activateConstraints([
                     VIEW1.widthAnchor.constraint(equalToConstant: W)
@@ -553,8 +577,20 @@ extension StoryViewController {
                 } else {
                     let A2 = articles[artNum]
                     VIEW2.refreshDisplayMode()
-                    VIEW2.populate(article: A2)
-                    H2 = VIEW2.calculateHeight()
+                    
+                    if let _V2 = VIEW2 as? iPhoneAllNews_vImgCol_v3 {
+                        _V2.populate(article: A2)
+                    } else if let _V2 = VIEW2 as? iPhoneAllNews_vTxtCol_v3 {
+                        let _A2 = MainFeedArticle(story: A2)
+                        _V2.populate(_A2)
+                    }
+
+                    if let _V2 = VIEW2 as? iPhoneAllNews_vImgCol_v3 {
+                        H2 = _V2.calculateHeight()
+                    } else if let _V2 = VIEW2 as? iPhoneAllNews_vTxtCol_v3 {
+                        H2 = _V2.calculateHeight()
+                    }
+                    
                     colsHStack.addArrangedSubview(VIEW2)
                     VIEW2.activateConstraints([
                         VIEW2.widthAnchor.constraint(equalToConstant: W),
@@ -570,162 +606,6 @@ extension StoryViewController {
                 var maxH = (H1 > H2) ? H1 : H2
                 VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
                 VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
-                
-                
-//                continue
-//                if(!A.image.isEmpty && !A.title.isEmpty) {//} && !A.media_title.isEmpty) {
-//                    ADD_SPACER(to: innerHStack, height: 16)
-//                    let HStack_image = HSTACK(into: innerHStack)
-//                    //HStack_image.backgroundColor = .orange
-//
-//                    let VStack_image = VSTACK(into: HStack_image)
-//                    //VStack_image.backgroundColor = .yellow
-//                    let imageView = UIImageView()
-//                    imageView.contentMode = .scaleAspectFill
-//                    imageView.clipsToBounds = true
-//                    imageView.backgroundColor = .darkGray
-//                    VStack_image.addArrangedSubview(imageView)
-//                    imageView.activateConstraints([
-//                        imageView.widthAnchor.constraint(equalToConstant: 146 * 0.8),
-//                        imageView.heightAnchor.constraint(equalToConstant: 98 * 0.8)
-//                    ])
-//                    imageView.sd_setImage(with: URL(string: A.image))
-//                    ADD_SPACER(to: VStack_image) // V fill
-//
-//                    ADD_SPACER(to: HStack_image, width: 12)
-//
-//                    let VStack_data = VSTACK(into: HStack_image)
-//                    //VStack_data.backgroundColor = .green
-//                    let subTitleLabel = UILabel()
-//                    subTitleLabel.font = DM_SERIF_DISPLAY_fixed(14) //MERRIWEATHER_BOLD(14)
-//                    subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
-//                    subTitleLabel.numberOfLines = 0
-//                    subTitleLabel.text = A.title
-//                    VStack_data.addArrangedSubview(subTitleLabel)
-//                    ADD_SPACER(to: VStack_data, height: 8)
-//                    
-//                    let HStack_source = HSTACK(into: VStack_data)
-//                    HStack_source.activateConstraints([
-//                        HStack_source.heightAnchor.constraint(equalToConstant: 28)
-//                    ])
-//                    //HStack_source.backgroundColor = .systemPink
-//
-//                    if(!A.media_country_code.isEmpty) {
-//                        let VStack_flag = VSTACK(into: HStack_source)
-//                        //VStack_flag.backgroundColor = .green
-//                        let flagImageView = UIImageView()
-//                        
-//                        if let _image = UIImage(named: A.media_country_code.uppercased() + "64.png") {
-//                            flagImageView.image = _image
-//                        } else {
-//                            flagImageView.image = UIImage(named: "noFlag.png")
-//                        }
-//                        
-//                        ADD_SPACER(to: VStack_flag, height: 5)
-//                        VStack_flag.addArrangedSubview(flagImageView)
-//                        flagImageView.activateConstraints([
-//                            flagImageView.widthAnchor.constraint(equalToConstant: 18),
-//                            flagImageView.heightAnchor.constraint(equalToConstant: 18)
-//                        ])
-//                        ADD_SPACER(to: VStack_flag, height: 5)
-//                        
-//                        ADD_SPACER(to: HStack_source, width: 6)
-//                    }
-//                         
-//                    var LR = 0
-//                    var PE = 0
-//                         
-//                    let sourceName = A.media_title.components(separatedBy: " #").first!
-//                    self.getSourceIcon(name: sourceName) { (icon) in
-//                        if let _icon = icon {
-//                            let sourcesContainer = UIStackView()
-//                            HStack_source.addArrangedSubview(sourcesContainer)
-//                            ADD_SOURCE_ICONS(data: [_icon.identifier],
-//                                to: sourcesContainer, containerHeight: 28)
-//                                
-//                            LR = _icon.LR
-//                            PE = _icon.PE
-//                        }
-//                    }
-//                    
-//                    let sourceLabel = UILabel()
-//                    sourceLabel.text = sourceName
-//                    sourceLabel.font = ROBOTO(12)
-//                    sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
-//                    HStack_source.addArrangedSubview(sourceLabel)
-//                    ADD_SPACER(to: HStack_source, width: 8)
-//
-//                    let stanceIcon = StanceIconView()
-//                    stanceIcon.tag = 767
-//                    HStack_source.addArrangedSubview(stanceIcon)
-//                    stanceIcon.setValues(LR, PE)
-//                    stanceIcon.alpha = 1
-//                    if(LR==0 || PE==0) {
-//                        stanceIcon.alpha = 0
-//                    }
-//                    
-//                    ADD_SPACER(to: HStack_source) // H fill
-//
-//                    if(!A.timeRelative.isEmpty) {
-//                        let timeLabel = UILabel()
-//                        timeLabel.text = "updated " + A.timeRelative
-//                        timeLabel.font = ROBOTO(12)
-//                        timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
-//                        VStack_data.addArrangedSubview(timeLabel)
-//                    }
-//
-//                    ADD_SPACER(to: VStack_data) // V fill
-//
-//                    let mainButton = UIButton(type: .custom)
-//                    //mainButton.backgroundColor = .red.withAlphaComponent(0.25)
-//                    HStack_image.addSubview(mainButton)
-//                    mainButton.activateConstraints([
-//                        mainButton.leadingAnchor.constraint(equalTo: HStack_image.leadingAnchor),
-//                        mainButton.trailingAnchor.constraint(equalTo: HStack_image.trailingAnchor),
-//                        mainButton.topAnchor.constraint(equalTo: HStack_image.topAnchor),
-//                        mainButton.bottomAnchor.constraint(equalTo: HStack_image.bottomAnchor)
-//                    ])
-//                    mainButton.tag = 300+i
-//                    mainButton.addTarget(self, action: #selector(articleOnTap(_:)), for: .touchUpInside)
-//
-//                    let miniButton = UIButton(type: .custom)
-//                    //miniButton.backgroundColor = .red.withAlphaComponent(0.25)
-//                    HStack_image.addSubview(miniButton)
-//                    miniButton.activateConstraints([
-//                        miniButton.leadingAnchor.constraint(equalTo: stanceIcon.leadingAnchor),
-//                        miniButton.trailingAnchor.constraint(equalTo: stanceIcon.trailingAnchor),
-//                        miniButton.topAnchor.constraint(equalTo: stanceIcon.topAnchor),
-//                        miniButton.bottomAnchor.constraint(equalTo: stanceIcon.bottomAnchor)
-//                    ])
-//                    miniButton.tag = 400+i
-//                    miniButton.addTarget(self, action: #selector(articleStanceIconOnTap(_:)), for: .touchUpInside)
-////
-//                    ADD_SPACER(to: innerHStack, height: 20) // Space to next item
-////                    let line = UIView()
-////                    //line.backgroundColor = .black
-////                    innerHStack.addArrangedSubview(line)
-////                    line.activateConstraints([
-////                        line.heightAnchor.constraint(equalToConstant: 2.0)
-////                    ])
-////                        // Dashes
-////                        line.clipsToBounds = true
-////                        let dash_long: CGFloat = 5
-////                        let dash_sep: CGFloat = 2
-////                        var val_x: CGFloat = 0
-////                        let dash_color = DARK_MODE() ? UIColor(hex: 0x93A0B4) : UIColor(hex: 0x1D242F)
-////                        while(val_x < SCREEN_SIZE().width) {
-////                            let dash = UIView()
-////                            dash.backgroundColor = dash_color
-////                            line.addSubview(dash)
-////                            dash.frame = CGRect(x: val_x, y: 0, width: dash_long, height: 2.0)
-////
-////                            val_x += dash_long + dash_sep
-////                        }
-////
-////                    ADD_SPACER(to: innerHStack, height: 20) // Space to next item
-//                }
-//                
-//                ///11
             }
             // --- //
         }
@@ -807,34 +687,6 @@ extension StoryViewController {
             ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding/2)
         /// headers
             
-            
-//            let headers = HSTACK(into: innerHStack)
-//            headers.activateConstraints([
-//                headers.heightAnchor.constraint(equalToConstant: 45)
-//            ])
-//            headers.backgroundColor = .red.withAlphaComponent(0.5)
-//            headers.spacing = CSS.shared.iPhoneSide_padding
-//            //headers.backgroundColor = .clear //.orange
-//            headers.distribution = .fillEqually
-//            for i in 1...2 {
-//                var text = ""
-//                if(type.uppercased() == "PE") {
-//                    if(i==1) { text = "CRITICAL" }
-//                    else { text = "PRO" }
-//                } else {
-//                    if(i==1) { text = "LEFT" }
-//                    else { text = "RIGHT" }
-//                }
-//                
-//                let headerLabel = UILabel()
-//                headerLabel.text = text
-//                headerLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
-//                headerLabel.font = ROBOTO_BOLD(14)
-//                headers.backgroundColor = .green.withAlphaComponent(0.25)
-//                headers.addArrangedSubview(headerLabel)
-//            }
-//            innerHStack.addArrangedSubview(headers)
-            
             // Sorting --------------------------------
             var articlesLeft = [StoryArticle]()
             var articlesRight = [StoryArticle]()
@@ -866,14 +718,36 @@ extension StoryViewController {
                 
                 var H1: CGFloat = 1
                 var H2: CGFloat = 1
-                let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
-                let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
+                var VIEW1: CustomCellView_v3!
+                var VIEW2: CustomCellView_v3!
                 
+                if(TEXT_IMAGES()) {
+                    VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
+                    VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
+                } else {
+                    VIEW1 = iPhoneAllNews_vTxtCol_v3(width: W)
+                    VIEW2 = iPhoneAllNews_vTxtCol_v3(width: W)
+                }
+
                 // item 1
                 if let _A = aLeft {
                     VIEW1.refreshDisplayMode()
-                    VIEW1.populate(article: _A)
-                    H1 = VIEW1.calculateHeight()
+                    
+                    // Populate
+                    if let _V1 = VIEW1 as? iPhoneAllNews_vImgCol_v3 {
+                        _V1.populate(article: _A)
+                    } else if let _V1 = VIEW1 as? iPhoneAllNews_vTxtCol_v3 {
+                        let _A1 = MainFeedArticle(story: _A)
+                        _V1.populate(_A1)
+                    }
+                    
+                    // Height
+                    if let _V1 = VIEW1 as? iPhoneAllNews_vImgCol_v3 {
+                        H1 = _V1.calculateHeight()
+                    } else if let _V1 = VIEW1 as? iPhoneAllNews_vTxtCol_v3 {
+                        H1 = _V1.calculateHeight()
+                    }
+                    
                     colsHStack.addArrangedSubview(VIEW1)
                     VIEW1.activateConstraints([
                         VIEW1.widthAnchor.constraint(equalToConstant: W)
@@ -887,8 +761,22 @@ extension StoryViewController {
                 // item 2
                 if let _A = aRight {
                     VIEW2.refreshDisplayMode()
-                    VIEW2.populate(article: _A)
-                    H2 = VIEW2.calculateHeight()
+                    
+                    // Populate
+                    if let _V2 = VIEW2 as? iPhoneAllNews_vImgCol_v3 {
+                        _V2.populate(article: _A)
+                    } else if let _V2 = VIEW2 as? iPhoneAllNews_vTxtCol_v3 {
+                        let _A2 = MainFeedArticle(story: _A)
+                        _V2.populate(_A2)
+                    }
+                    
+                    // Height
+                    if let _V2 = VIEW2 as? iPhoneAllNews_vImgCol_v3 {
+                        H2 = _V2.calculateHeight()
+                    } else if let _V2 = VIEW2 as? iPhoneAllNews_vTxtCol_v3 {
+                        H2 = _V2.calculateHeight()
+                    }
+                    
                     colsHStack.addArrangedSubview(VIEW2)
                     VIEW2.activateConstraints([
                         VIEW2.widthAnchor.constraint(equalToConstant: W)
@@ -905,19 +793,6 @@ extension StoryViewController {
                 
                 ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
                 H += maxH + CSS.shared.iPhoneSide_padding
-                
-                
-                //let hStackColumns = HSTACK(into: innerHStack)
-                //hStackColumns.spacing = 20
-                //hStackColumns.distribution = .fillEqually
-                
-//                hStackColumns.addArrangedSubview(articleColumnView(aLeft))
-//                hStackColumns.addArrangedSubview(articleColumnView(aRight))
-                
-//                if(aLeft != nil){ articlesLeft.removeFirst() }
-//                if(aRight != nil){ articlesRight.removeFirst() }
-                
-                
             }
             
             // Vertical divider --------------------------------
@@ -974,14 +849,36 @@ extension StoryViewController {
             let colsHStack = HSTACK(into: innerHStack, spacing: CSS.shared.iPhoneSide_padding)
             var H1: CGFloat = 1
             var H2: CGFloat = 1
-            let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
-            let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
+            var VIEW1: CustomCellView_v3!
+            var VIEW2: CustomCellView_v3!
+            
+            if(TEXT_IMAGES()) {
+                VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
+                VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
+            } else {
+                VIEW1 = iPhoneAllNews_vTxtCol_v3(width: W)
+                VIEW2 = iPhoneAllNews_vTxtCol_v3(width: W)
+            }
             
             // item 1
             if let _A = aLeft {
                 VIEW1.refreshDisplayMode()
-                VIEW1.populate(article: _A)
-                H1 = VIEW1.calculateHeight()
+                
+                // Populate
+                if let _V1 = VIEW1 as? iPhoneAllNews_vImgCol_v3 {
+                    _V1.populate(article: _A)
+                } else if let _V1 = VIEW1 as? iPhoneAllNews_vTxtCol_v3 {
+                    let _A1 = MainFeedArticle(story: _A)
+                    _V1.populate(_A1)
+                }
+                
+                // Height
+                if let _V1 = VIEW1 as? iPhoneAllNews_vImgCol_v3 {
+                    H1 = _V1.calculateHeight()
+                } else if let _V1 = VIEW1 as? iPhoneAllNews_vTxtCol_v3 {
+                    H1 = _V1.calculateHeight()
+                }
+                
                 colsHStack.addArrangedSubview(VIEW1)
                 VIEW1.activateConstraints([
                     VIEW1.widthAnchor.constraint(equalToConstant: W)
@@ -994,8 +891,22 @@ extension StoryViewController {
             // item 2
             if let _A = aRight {
                 VIEW2.refreshDisplayMode()
-                VIEW2.populate(article: _A)
-                H2 = VIEW2.calculateHeight()
+                
+                // Populate
+                if let _V2 = VIEW2 as? iPhoneAllNews_vImgCol_v3 {
+                    _V2.populate(article: _A)
+                } else if let _V2 = VIEW2 as? iPhoneAllNews_vTxtCol_v3 {
+                    let _A2 = MainFeedArticle(story: _A)
+                    _V2.populate(_A2)
+                }
+                
+                // Height
+                if let _V2 = VIEW2 as? iPhoneAllNews_vImgCol_v3 {
+                    H2 = _V2.calculateHeight()
+                } else if let _V2 = VIEW2 as? iPhoneAllNews_vTxtCol_v3 {
+                    H2 = _V2.calculateHeight()
+                }
+                
                 colsHStack.addArrangedSubview(VIEW2)
                 VIEW2.activateConstraints([
                     VIEW2.widthAnchor.constraint(equalToConstant: W)

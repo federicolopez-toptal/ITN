@@ -36,17 +36,8 @@ extension MainFeed_v3_viewController {
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
             
-        // Headers
+        // main Header
             self.addHeader(text: _T.capitalizedName)
-            
-            var _L = "LEFT"
-            var _R = "RIGHT"
-            if(MUST_SPLIT() == 2) {
-                _L = "CRITICAL"
-                _R = "PRO"
-            }
-        
-            self.addSplitHeaders(L: _L, R: _R)
             
         // Articles sorting  ----------------------------------
             var articlesLeft = [MainFeedArticle]()
@@ -73,14 +64,49 @@ extension MainFeed_v3_viewController {
                     break
                 }
             }
-            
+        // ------------------------------------------------------
             let total = _T.articles.count
             var artCount = 0
             while(artCount<total) {
                 var storyRows = 0
                 var articleRows = 0
+                // Add Stories -----------------------------------
+                    if(self.dataProvider.count>0 && _T.stillHasStories()) {
+                        let spacer = DP3_spacer(size: 20)
+                        self.dataProvider.append(spacer)
+                    }
+
+                    while(_T.stillHasStories()) {
+                        if let _ST = _T.nextAvailableArticle(isStory: true) {
+                            let newGroupItem = DP3_iPhoneStory_1Wide()
+                            newGroupItem.articles.append(_ST)
+                            self.data.addCountTo(topic: _T.name)
+                            artCount += 1
+                            
+                            self.dataProvider.append(newGroupItem)
+                            storyRows += 1
+                            
+                            if(storyRows==2) {
+                                break
+                            }
+                        } else {
+                            break
+                        }
+                    }
+                    
+                // Split headers --------------------------------------------
+                var _L = "LEFT"
+                var _R = "RIGHT"
+                if(MUST_SPLIT() == 2) {
+                    _L = "CRITICAL"
+                    _R = "PRO"
+                }
+                
+                self.addHeader(text: "Split")
+                self.addSplitHeaders(L: _L, R: _R)
+                
                 // Add Articles -------------------------------------------
-                    while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
+                    while(articlesLeft.count>0 || articlesRight.count>0) {
                         let newGroupItem = DP3_iPhoneArticle_2cols()
                         
                         if let _leftArt = articlesLeft.first {
@@ -101,24 +127,8 @@ extension MainFeed_v3_viewController {
                                         
                         self.dataProvider.append(newGroupItem)
                         articleRows += 1
-                    }
-                    articleRows = 0
-                    
-                // Add Stories -----------------------------------
-                    if(_T.stillHasStories()) {
-                        let spacer = DP3_spacer(size: 20)
-                        self.dataProvider.append(spacer)
-                    }
-                    
-                    while(_T.stillHasStories() || storyRows<4) {
-                        if let _ST = _T.nextAvailableArticle(isStory: true) {
-                            let newGroupItem = DP3_iPhoneStory_1Wide()
-                            newGroupItem.articles.append(_ST)
-                            self.data.addCountTo(topic: _T.name)
-                            artCount += 1
-                            self.dataProvider.append(newGroupItem)
-                            storyRows += 1
-                        } else {
+                        
+                        if(articleRows==3){
                             break
                         }
                     }
@@ -126,6 +136,8 @@ extension MainFeed_v3_viewController {
             }
         
             // "Load more" item
+            let spacer = DP3_spacer(size: 20)
+            self.dataProvider.append(spacer)
             self.addLoadMore(topicName: _T.name)
         } // for
         
@@ -142,17 +154,8 @@ extension MainFeed_v3_viewController {
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
             
-        // Headers
+        // main Header
             self.addHeader(text: _T.capitalizedName)
-            
-            var _L = "LEFT"
-            var _R = "RIGHT"
-            if(MUST_SPLIT() == 2) {
-                _L = "CRITICAL"
-                _R = "PRO"
-            }
-        
-            self.addSplitHeaders(L: _L, R: _R)
 
         // Articles sorting  ----------------------------------
             var articlesLeft = [MainFeedArticle]()
@@ -179,14 +182,49 @@ extension MainFeed_v3_viewController {
                     break
                 }
             }
-            
+        // ------------------------------------------------------
             let total = _T.articles.count
             var artCount = 0
             while(artCount<total) {
                 var storyRows = 0
                 var articleRows = 0
+                // Add Stories -----------------------------------
+                    if(self.dataProvider.count>0 && _T.stillHasStories()) {
+                        let spacer = DP3_spacer(size: 20)
+                        self.dataProvider.append(spacer)
+                    }
+
+                    while(_T.stillHasStories()) {
+                        if let _ST = _T.nextAvailableArticle(isStory: true) {
+                            let newGroupItem = DP3_iPhoneStory_1Wide()
+                            newGroupItem.articles.append(_ST)
+                            self.data.addCountTo(topic: _T.name)
+                            artCount += 1
+                            
+                            self.dataProvider.append(newGroupItem)
+                            storyRows += 1
+                            
+                            if(storyRows==2) {
+                                break
+                            }
+                        } else {
+                            break
+                        }
+                    }
+                    
+                // Split headers --------------------------------------------
+                var _L = "LEFT"
+                var _R = "RIGHT"
+                if(MUST_SPLIT() == 2) {
+                    _L = "CRITICAL"
+                    _R = "PRO"
+                }
+                
+                self.addHeader(text: "Split")
+                self.addSplitHeaders(L: _L, R: _R)
+                    
                 // Add Articles -------------------------------------------
-                    while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
+                    while(articlesLeft.count>0 || articlesRight.count>0) {
                         let newGroupItem = DP3_iPhoneArticle_2cols()
                         
                         if let _leftArt = articlesLeft.first {
@@ -207,24 +245,8 @@ extension MainFeed_v3_viewController {
                                         
                         self.dataProvider.append(newGroupItem)
                         articleRows += 1
-                    }
-                    
-                    //articleRows = 0
-                // Add Stories -----------------------------------
-                    if(_T.stillHasStories()) {
-                        let spacer = DP3_spacer(size: 20)
-                        self.dataProvider.append(spacer)
-                    }
-                
-                    while(_T.stillHasStories() && storyRows<4) {
-                        if let _ST = _T.nextAvailableArticle(isStory: true) {
-                            let newGroupItem = DP3_iPhoneStory_1Wide()
-                            newGroupItem.articles.append(_ST)
-                            self.data.addCountTo(topic: _T.name)
-                            artCount += 1
-                            self.dataProvider.append(newGroupItem)
-                            storyRows += 1
-                        } else {
+                        
+                        if(articleRows==3){
                             break
                         }
                     }
@@ -232,6 +254,8 @@ extension MainFeed_v3_viewController {
             }
         
             // "Load more" item
+            let spacer = DP3_spacer(size: 20)
+            self.dataProvider.append(spacer)
             self.addLoadMore(topicName: _T.name)
         } // for
         

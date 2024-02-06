@@ -25,9 +25,16 @@ class MainFeedv3 {
         self.banner = nil
         self.topic = topic
         
-        let strUrl = self.buildUrl(topic: topic, A: NEWS_INIT_REQ_COUNT,
-                                                B: NEWS_INIT_REQ_COUNT,
-                                                C: NEWS_INIT_REQ_STORIES,
+        var totalItems = NEWS_REQ_ITEMS_TOTAL
+        var storiesCount = NEWS_REQ_STORIES_COUNT
+        if(MUST_SPLIT() > 0) {
+            totalItems = NEWS_REQ_SPLIT_ITEMS_TOTAL
+            storiesCount = NEWS_REQ_SPLIT_STORIES_COUNT
+        }
+        
+        let strUrl = self.buildUrl(topic: topic, A: totalItems,
+                                                B: totalItems,
+                                                C: storiesCount,
                                                 S: 0)
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
@@ -83,22 +90,22 @@ class MainFeedv3 {
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
         
         var S_value = self.skipForTopic(T)
-        if(MUST_SPLIT()==0){ S_value += 1 }
+        //if(MUST_SPLIT()==0){ S_value += 1 }
         
-        //if(T != self.topic){ S_value += 1 }
-        
-//        if(S_value-self.prevS <= 2) {
-//            callback(nil, 0)
-//        } else {
+        var totalItems = NEWS_REQ_MORE_ITEMS_TOTAL
+        var storiesCount = NEWS_REQ_MORE_STORIES_COUNT
+        if(MUST_SPLIT() > 0) {
+            totalItems = NEWS_REQ_SPLIT_MORE_ITEMS_TOTAL
+            storiesCount = NEWS_REQ_SPLIT_MORE_STORIES_COUNT
+        }
             
-//            let strUrl = self.buildUrl(topic: T, A: 11, B: 0, S: S_value )
-//            var _B = 0
-//            if(MUST_SPLIT()>0) {
-//                _B = 12
-//            }
+        let strUrl = self.buildUrl(topic: topic, A: totalItems,
+                                                B: 0,
+                                                C: storiesCount,
+                                                S: S_value)
             
-            let strUrl = self.buildUrl(topic: T, A: NEWS_MORE_REQ_COUNT, B: 0,
-                                            C: NEWS_MORE_REQ_STORIES, S: S_value )
+//            let strUrl = self.buildUrl(topic: T, A: NEWS_REQ_MORE_ITEMS_TOTAL, B: 0,
+//                                            C: NEWS_REQ_MORE_STORIES_COUNT, S: S_value )
             var request = URLRequest(url: URL(string: strUrl)!)
             request.httpMethod = "GET"
                 
@@ -307,17 +314,18 @@ extension MainFeedv3 {
                 &uid=3978511592857187948&v=I1.5.0&dev=iPhone_X
         */
         
-        var _A = A
-        var _B = B
-        if(MUST_SPLIT() > 0){
-            _A = 12
-            if(B>0) { _B = _A }
-        }
+//        var _A = A
+//        var _B = B
+//        if(MUST_SPLIT() > 0){
+//            _A = 12
+//            if(B>0) { _B = _A }
+//        }
         
         var result = ITN_URL() + "/appserver.php/?topic=" + topic
-        result += ".A" + String(_A)
-        result += ".B" + String(_B)
-        if(PREFS_SHOW_STORIES() && MUST_SPLIT()==0){ result += ".C" + String(C) }
+        result += ".A" + String(A)
+        result += ".B" + String(B)
+        result += ".C" + String(C)
+        //if(PREFS_SHOW_STORIES() && MUST_SPLIT()==0){ result += ".C" + String(C) }
         result += ".S" + String(S)
         result += "&sliders=" + MainFeedv3.sliderValues()  //self.sliderValues()
         result += "&uid=" + UUID.shared.getValue()
