@@ -328,6 +328,16 @@ class SourceIconsView: UIView {
         
         img.layer.borderColor = UIColor.red.cgColor
         img.layer.borderWidth = self.BORDER
+        
+        let subImage = UIImageView()
+        subImage.backgroundColor = .green
+        img.addSubview(subImage)
+        subImage.activateConstraints([
+            subImage.leadingAnchor.constraint(equalTo: img.leadingAnchor, constant: self.BORDER),
+            subImage.topAnchor.constraint(equalTo: img.topAnchor, constant: self.BORDER),
+            subImage.trailingAnchor.constraint(equalTo: img.trailingAnchor, constant: -self.BORDER),
+            subImage.bottomAnchor.constraint(equalTo: img.bottomAnchor, constant: -self.BORDER)
+        ])
     }
     
     func load(_ sources: [String]) {
@@ -342,12 +352,14 @@ class SourceIconsView: UIView {
                 let img = self.imgs[num-1]
                 img.show()
                 
-                if(!_icon.url!.contains(".svg")) {
-                    img.sd_setImage(with: URL(string: _icon.url!))
-                } else {
-                    img.image = UIImage(named: _icon.identifier + ".png")
+                if let subImage = img.subviews.first as? UIImageView {
+                    if(!_icon.url!.contains(".svg")) {
+                        subImage.sd_setImage(with: URL(string: _icon.url!))
+                    } else {
+                        subImage.image = UIImage(named: _icon.identifier + ".png")
+                    }
                 }
-
+                
                 switch(num) {
                     case 1:
                     self.widthConstraint?.constant = self.size()

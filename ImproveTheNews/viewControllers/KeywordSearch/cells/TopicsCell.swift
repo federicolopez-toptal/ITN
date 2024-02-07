@@ -57,13 +57,13 @@ class TopicsCell: UITableViewCell {
         REMOVE_ALL_SUBVIEWS(from: self.tagsContainer)
         for (i, T) in topics.enumerated() {
             let label = UILabel()
-            label.font = AILERON(16)
+            label.font = AILERON(14)
             label.textColor = CSS.shared.displayMode().sec_textColor
             label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xE3E3E3)
             //UIColor(hex: 0xFF643C).withAlphaComponent(0.2)
             label.textAlignment = .center
-            label.text = T.name
-            label.layer.cornerRadius = H/2
+            label.text = "#" + T.name.uppercased()
+            label.layer.cornerRadius = 6
 //            label.layer.borderWidth = 1
 //            label.layer.borderColor = UIColor(hex: 0xFF643C).cgColor
             label.clipsToBounds = true

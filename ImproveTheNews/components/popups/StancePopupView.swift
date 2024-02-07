@@ -19,7 +19,7 @@ class StancePopupView: PopupView {
     init() {
         super.init(frame: CGRect.zero)
         
-        self.height = 340
+        self.height = 390
         if let _bottom = SAFE_AREA()?.bottom, (_bottom == 0) {
             self.height -= 34
         }
@@ -75,7 +75,7 @@ class StancePopupView: PopupView {
             titleHStack.heightAnchor.constraint(equalToConstant: 28)
         ])
         
-        titleHStack.addArrangedSubview(self.stanceIcon)
+        //titleHStack.addArrangedSubview(self.stanceIcon)
         
         self.titleLabel.font = DM_SERIF_DISPLAY(18)
         //MERRIWEATHER_BOLD(16)
@@ -85,7 +85,7 @@ class StancePopupView: PopupView {
         
         // ------------------
         self.addSubview(self.descriptionLabel)
-        self.descriptionLabel.font = AILERON(15)  //MERRIWEATHER(15)
+        self.descriptionLabel.font = AILERON(16)  //MERRIWEATHER(15)
         self.descriptionLabel.backgroundColor = .clear //.systemPink
         self.descriptionLabel.numberOfLines = 3
         self.descriptionLabel.reduceFontSizeIfNeededDownTo(scaleFactor: 0.65)
@@ -96,7 +96,7 @@ class StancePopupView: PopupView {
         ])
         
         // ------------------
-        let characterSpacing: Double = 1.5
+        let characterSpacing: Double = 2.5
         let vStack = VSTACK(into: self)
         vStack.backgroundColor = .clear //.yellow
         self.addSubview(vStack)
@@ -107,6 +107,14 @@ class StancePopupView: PopupView {
         ])
         
         for i in 1...2 {
+            let sliderTitle = UILabel()
+            sliderTitle.text = (i==1) ? "POLITICAL STANCE" : "ESTABLISHMENT STANCE"
+            sliderTitle.font = AILERON_BOLD(13)
+            sliderTitle.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x0A0A0C)
+            sliderTitle.addCharacterSpacing(kernValue: characterSpacing)
+            vStack.addArrangedSubview(sliderTitle)
+            ADD_SPACER(to: vStack, height: 20)
+            
             let sliderHStack = HSTACK(into: self)
             sliderHStack.backgroundColor = .clear //.systemPink
             vStack.addArrangedSubview(sliderHStack)
@@ -141,7 +149,7 @@ class StancePopupView: PopupView {
         
         let moreInfoLabel = UILabel()
         moreInfoLabel.text = "More info"
-        moreInfoLabel.textColor = UIColor(hex: 0xDA4933)
+        moreInfoLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         moreInfoLabel.font = ROBOTO(16)
         moreInfoLabel.backgroundColor = .clear //.black
         self.addSubview(moreInfoLabel)
@@ -151,7 +159,8 @@ class StancePopupView: PopupView {
         ])
         
         let moreInfoIcon = UIImageView(image: UIImage(named: "infoIcon")?.withRenderingMode(.alwaysTemplate))
-        moreInfoIcon.tintColor = UIColor(hex: 0xDA4933)
+//        let moreInfoIcon = UIImageView(image: UIImage(systemName: "info.circle")?.withRenderingMode(.alwaysTemplate))
+        moreInfoIcon.tintColor = UIColor(hex: 0x60C4D6)
         self.addSubview(moreInfoIcon)
         moreInfoIcon.activateConstraints([
             moreInfoIcon.widthAnchor.constraint(equalToConstant: 20),
@@ -194,16 +203,31 @@ class StancePopupView: PopupView {
             if let slider = self.viewWithTag(20+i) as? UISlider {
                 slider.minimumTrackTintColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xE3E3E3)
                 slider.maximumTrackTintColor = slider.minimumTrackTintColor
-                slider.setThumbImage(UIImage(named: DisplayMode.imageName("slidersGrayThumb")), for: .normal)
+                slider.setThumbImage(UIImage(named: DisplayMode.imageName("sliderThumb.2")), for: .normal)
+                
+                let line = UIView()
+                line.backgroundColor = .red
+                slider.addSubview(line)
+                line.activateConstraints([
+                    line.leadingAnchor.constraint(equalTo: slider.leadingAnchor),
+                    line.trailingAnchor.constraint(equalTo: slider.trailingAnchor),
+                    line.heightAnchor.constraint(equalToConstant: 6),
+                    line.centerYAnchor.constraint(equalTo: slider.centerYAnchor, constant: 1)
+                ])
+                line.layer.cornerRadius = 3.5
+                line.backgroundColor = slider.minimumTrackTintColor
+                line.isUserInteractionEnabled = false
+                slider.sendSubviewToBack(line)
             }
         }
     }
     
     func populate(sourceName: String, country: String, LR: Int, PE: Int) {
         self.stanceIcon.setValues(LR, PE)
-        self.titleLabel.text = sourceName + " Bias"
+        self.titleLabel.text = sourceName + " bias"
         self.descriptionLabel.text = "The " + sourceName + " is from " + self.country(country) +
             " and has a " + self.LR_text(LR) + " and " + self.PE_text(PE) + " stance"
+        self.descriptionLabel.setLineSpacing(lineSpacing: 6)
             
         // sliders
         for i in 1...2 {
