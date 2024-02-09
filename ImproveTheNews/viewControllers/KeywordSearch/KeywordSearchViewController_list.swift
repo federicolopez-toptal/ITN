@@ -72,6 +72,7 @@ extension KeywordSearchViewController {
             } else {
                 // Articles
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
+                (cell as! iPhoneArticle_2colsImg_cell_v3).forceHideVLine = true
             }
             
             (cell as! GroupItemCell_v3).populate(with: _group)
@@ -112,6 +113,7 @@ extension KeywordSearchViewController {
             } else if(cell is iPhoneArticle_2colsImg_cell_v3) {
                 result = (cell as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
             }
+                        
         } else if let _group = dpItem as? DP3_topics {
             result = TopicsCell.calculateHeightFor(topics: _group.topics)
         } else if let _item = dpItem as? DP3_spacer  {
@@ -119,8 +121,8 @@ extension KeywordSearchViewController {
         } else if let _ = dpItem as? DP3_text {
             return CenteredTextCell.height + 10
         }
-        
-        return result
+    
+        return round(result)
     }
     
 }

@@ -114,6 +114,8 @@ extension KeywordSearchViewController {
         
         self.view.addSubview(self.list)
         self.list.backgroundColor = self.view.backgroundColor
+        
+        //self.view.backgroundColor
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: listMargins),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -listMargins),

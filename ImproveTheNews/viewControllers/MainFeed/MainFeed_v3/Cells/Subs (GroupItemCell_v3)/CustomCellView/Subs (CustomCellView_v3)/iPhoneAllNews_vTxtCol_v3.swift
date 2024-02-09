@@ -20,10 +20,15 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
 
     var articleComponents = [UIView]()
         let articleTitleLabel = UILabel()
+        let articleFlag = FlagView(size: 24)
+        let articleSource = SourceIconsView(size: 24, border: 2, separation: 15)
         let articleSourceNameLabel = UILabel()
         let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
         let articleTimeLabel = UILabel()
         let articleStanceIcon = StanceIconView()
+    
+        var sourceTime_leading: NSLayoutConstraint?
+        var source_leading: NSLayoutConstraint?
     
     // MARK: - Start
     required init?(coder: NSCoder) {
@@ -77,22 +82,39 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         ])
         articleComponents.append(self.articleTitleLabel)
 
+        self.articleFlag.buildInto(self)
+        self.articleFlag.activateConstraints([
+            self.articleFlag.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.articleFlag.topAnchor.constraint(equalTo: self.articleTitleLabel.bottomAnchor, constant: 12+2)
+        ])
+        articleComponents.append(self.articleFlag)
+
+        self.articleSource.buildInto(self)
+        self.source_leading = self.articleSource.leadingAnchor.constraint(equalTo: self.articleFlag.trailingAnchor, constant: 2)
+        
+        self.articleSource.activateConstraints([
+            self.source_leading!,
+            self.articleSource.topAnchor.constraint(equalTo: self.articleTitleLabel.bottomAnchor, constant: 12)
+        ])
+        articleComponents.append(self.articleSource)
+
         self.articleSourceNameLabel.font = CSS.shared.iPhoneArticle_textFont
         self.articleSourceNameLabel.numberOfLines = 0
         self.articleSourceNameLabel.textAlignment = .left
         self.addSubview(self.articleSourceNameLabel)
         self.articleSourceNameLabel.activateConstraints([
-            self.articleSourceNameLabel.topAnchor.constraint(equalTo: articleTitleLabel.bottomAnchor, constant: 12),
-            self.articleSourceNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0)
+            self.articleSourceNameLabel.centerYAnchor.constraint(equalTo: self.articleSource.centerYAnchor)
         ])
+        self.sourceTime_leading = self.articleSourceNameLabel.leadingAnchor.constraint(equalTo: self.articleSource.trailingAnchor, constant: 4)
+        self.sourceTime_leading?.isActive = true
         articleComponents.append(self.articleSourceNameLabel)
         
         self.addSubview(self.openIcon)
         self.openIcon.activateConstraints([
             self.openIcon.widthAnchor.constraint(equalToConstant: 12),
             self.openIcon.heightAnchor.constraint(equalToConstant: 12),
-            self.openIcon.topAnchor.constraint(equalTo: self.articleSourceNameLabel.topAnchor),
-            self.openIcon.leadingAnchor.constraint(equalTo: self.articleSourceNameLabel.trailingAnchor, constant: 6)
+            self.openIcon.centerYAnchor.constraint(equalTo: self.articleSource.centerYAnchor),
+            self.openIcon.leadingAnchor.constraint(equalTo: self.articleSourceNameLabel.trailingAnchor, constant: 0)
         ])
         
         self.articleTimeLabel.font = self.articleSourceNameLabel.font
@@ -127,21 +149,30 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
             self.storyTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title
+            self.articleTitleLabel.setLineSpacing(lineSpacing: 6.0)
             
+//            var sourcesArray = [String]()
+//            if let _identifier = Sources.shared.search(name: article.source) {
+//                sourcesArray.append(_identifier)
+//            }
+
             var sourcesArray = [String]()
             if let _identifier = Sources.shared.search(name: article.source) {
                 sourcesArray.append(_identifier)
             }
+            self.articleSource.load(sourcesArray)
             
             self.openIcon.show()
             let sourceName = CLEAN_SOURCE(from: article.source).uppercased()
-            if(sourceName.count<=10) {
-                self.articleSourceNameLabel.text = sourceName
-                self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
-            } else {
-                self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
-                self.articleTimeLabel.text = ""
-            }
+            self.articleSourceNameLabel.text = ""
+            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+//            if(sourceName.count<=10) {
+//                self.articleSourceNameLabel.text = sourceName
+//                self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+//            } else {
+//                self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
+//                self.articleTimeLabel.text = ""
+//            }
                         
             self.articleStanceIcon.setValues(article.LR, article.PE)
         }
@@ -163,11 +194,53 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         }
         ///
         
-        if(!self.article.isStory) {
+//        if(!self.article.isStory) {
+//            if(PREFS_SHOW_STANCE_ICONS()) {
+//                self.articleStanceIcon.show()
+//            } else {
+//                self.articleStanceIcon.hide()
+//            }
+//        }
+
+        if(self.article.isStory) {
+//            if(PREFS_SHOW_SOURCE_ICONS()) {
+//                self.storySources.show()
+//            } else {
+//                self.storySources.customHide()
+//            }
+        } else {
+            if(PREFS_SHOW_SOURCE_ICONS()) {
+                self.articleSource.show()
+                self.sourceTime_leading?.constant = 5
+            } else {
+                self.articleSource.customHide()
+                self.sourceTime_leading?.constant = 0
+            }
+            
+            if(PREFS_SHOW_FLAGS()) {
+                self.articleFlag.setFlag(article.country)
+                self.articleFlag.customShow()
+                self.source_leading?.constant = 2
+                if(!PREFS_SHOW_SOURCE_ICONS()) {
+                    self.source_leading?.constant = 5
+                }
+            } else {
+                self.articleFlag.customHide()
+                self.source_leading?.constant = 0
+            }
+            
             if(PREFS_SHOW_STANCE_ICONS()) {
                 self.articleStanceIcon.show()
             } else {
                 self.articleStanceIcon.hide()
+            }
+        }
+        
+        if let button = self.viewWithTag(64) {
+            if(self.article.isStory) {
+                button.hide()
+            } else {
+                button.show()
             }
         }
     }
@@ -181,6 +254,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.articleSourceNameLabel.textColor = CSS.shared.displayMode().main_textColor
         self.articleTimeLabel.textColor = self.articleSourceNameLabel.textColor
+        self.articleSource.refreshDisplayMode()
         self.articleStanceIcon.refreshDisplayMode()
     }
     
@@ -201,7 +275,12 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
             result += self.calculateHeightForArticle()
         }
 
-        return result + 25
+        var extra: CGFloat = 0
+        if(PREFS_SHOW_FLAGS() || PREFS_SHOW_SOURCE_ICONS()) {
+            extra = 10
+        }
+        
+        return result + 25 + extra
     }
     
     // MARK: Actions

@@ -270,6 +270,13 @@ class StoryPillMiniView: UIView {
         self.widthConstraint?.constant = 53
     }
     
+    func setAsStory() {
+        self.label.text = "STORY"
+        self.label.textColor = .white
+        self.backgroundColor = CSS.shared.orange
+        self.widthConstraint?.constant = 43
+    }
+    
 }
 
 /////////////////////////////////////////////////////////////////////////////////

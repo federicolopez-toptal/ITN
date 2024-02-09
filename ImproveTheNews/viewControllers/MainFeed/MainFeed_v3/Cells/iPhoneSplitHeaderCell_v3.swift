@@ -27,45 +27,44 @@ class iPhoneSplitHeaderCell_v3: UITableViewCell {
     private func buildContent() {
         let W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding*3))/2
     
-        self.leftLabel.font = CSS.shared.iPhoneHeader_font
-        self.leftLabel.textAlignment = .center
+        self.leftLabel.font = AILERON(16)
+        self.leftLabel.textAlignment = .left
         self.contentView.addSubview(self.leftLabel)
         self.leftLabel.activateConstraints([
             self.leftLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
             self.leftLabel.widthAnchor.constraint(equalToConstant: W),
-            self.leftLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+            self.leftLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -4)
         ])
         
-        self.rightLabel.font = CSS.shared.iPhoneHeader_font
-        self.rightLabel.textAlignment = .center
+        self.rightLabel.font = self.leftLabel.font
+        self.rightLabel.textAlignment = .left
         self.contentView.addSubview(self.rightLabel)
         self.rightLabel.activateConstraints([
             self.rightLabel.leadingAnchor.constraint(equalTo: self.leftLabel.trailingAnchor, constant: CSS.shared.iPhoneSide_padding),
             self.rightLabel.widthAnchor.constraint(equalToConstant: W),
-            self.rightLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+            self.rightLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -4)
         ])
         
-        self.vLine = VLINE(into: self.contentView)
-        self.vLine.activateConstraints([
-            self.vLine.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
-            self.vLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-        ])
+//        self.vLine = VLINE(into: self.contentView)
+//        self.vLine.activateConstraints([
+//            self.vLine.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
+//            self.vLine.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+//        ])
     }
     
     func populate(with item: DP3_splitHeaderItem) {
-        self.leftLabel.text = item.leftTitle
-        self.rightLabel.text = item.rightTitle
-    
+        self.leftLabel.text = item.leftTitle.uppercased()
+        self.rightLabel.text = item.rightTitle.uppercased()
         self.refreshDisplayMode()
         
-        ADD_VDASHES(to: self.vLine, height: 40)
+        //ADD_VDASHES(to: self.vLine, height: 40)
     }
     
     func refreshDisplayMode() {
-        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor        
         self.leftLabel.textColor = CSS.shared.displayMode().header_textColor
         self.rightLabel.textColor = CSS.shared.displayMode().header_textColor
-        self.vLine.backgroundColor = CSS.shared.displayMode().line_color
+        //self.vLine.backgroundColor = CSS.shared.displayMode().line_color
     }
     
     func calculateHeight() -> CGFloat {

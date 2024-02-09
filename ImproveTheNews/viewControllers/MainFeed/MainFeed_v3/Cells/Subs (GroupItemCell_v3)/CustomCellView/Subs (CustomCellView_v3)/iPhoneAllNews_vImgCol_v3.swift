@@ -201,6 +201,9 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         if(story.type == 2) {
             self.isContext = true
             self.storyPill.setAsContext()
+        } else {
+            self.isContext = false
+            self.storyPill.setAsStory()
         }
         
         self.article = MainFeedArticle(story: story)
@@ -368,6 +371,8 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.isContext = article.isContext
         if(self.isContext) {
             self.storyPill.setAsContext()
+        } else {
+            self.storyPill.setAsStory()
         }
         
         self.article = article

@@ -17,6 +17,7 @@ class iPhoneArticle_2colsImg_cell_v3: GroupItemCell_v3 {
     var view1_heightConstraint: NSLayoutConstraint!
     var view2_heightConstraint: NSLayoutConstraint!
     var vLine = UIView()
+    var forceHideVLine = false
 
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -81,6 +82,10 @@ class iPhoneArticle_2colsImg_cell_v3: GroupItemCell_v3 {
         self.refreshDisplayMode()
         if(MUST_SPLIT() > 0) {
             ADD_VDASHES(to: self.vLine, height: self.calculateGroupHeight())
+        }
+        
+        if(self.forceHideVLine) {
+            self.vLine.hide()
         }
     }
     
