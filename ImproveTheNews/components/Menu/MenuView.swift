@@ -474,7 +474,9 @@ extension MenuView {
     // ---------
     func showContent(_ item: MenuItem) {
         self.dismissMe()
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
+        if(item != .newsletter) {
+            CustomNavController.shared.hidePanelAndButtonWithAnimation()
+        }
         
         switch(item) {
             case .sliders:

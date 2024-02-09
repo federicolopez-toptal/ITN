@@ -200,7 +200,7 @@ class AccountViewController: BaseViewController {
         
         self.emailText.buildInto(vstack: VStack_form)
         self.emailText.customize(keyboardType: .emailAddress, returnType: .next,
-            charactersLimit: 30, placeHolderText: "Email address", textColor: DARK_MODE() ? .lightGray : .darkGray )
+            charactersLimit: 30, placeHolderText: "Email address", textColor: DARK_MODE() ? UIColor(hex: 0x4C4E50) : UIColor(hex: 0xBBBDC0) )
         self.emailText.setEnabled(false)
         ADD_SPACER(to: VStack_form, height: 32)
         // -------
@@ -253,7 +253,7 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: VStack_form, height: 24)
         
         let titleLabel2 = UILabel()
-        titleLabel2.text = "Verity Newsletter"
+        titleLabel2.text = "Verity newsletter"
         titleLabel2.font = DM_SERIF_DISPLAY(23)
         titleLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel2)
@@ -573,7 +573,7 @@ class AccountViewController: BaseViewController {
 //        
 //    //---
         let titleLabel3 = UILabel()
-        titleLabel3.text = "Sign out"
+        titleLabel3.text = "Sign Out"
         titleLabel3.font = DM_SERIF_DISPLAY(23)
         titleLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel3)
