@@ -163,7 +163,7 @@ extension SourceFilterViewController: FilterTextViewDelegate {
             }
         }
         
-        self.dataProvider = self.dataProvider.sorted(by: { $0.name < $1.name })
+        //self.dataProvider = self.dataProvider.sorted(by: { $0.name < $1.name })
         //print("FILTER", self.dataProvider.count)
         //---------------------
         REMOVE_ALL_SUBVIEWS(from: self.contentView)

@@ -66,6 +66,10 @@ class Sources {
                 self.all?.append(newSource)
             }
         }
+         
+        self.all = self.all!.sorted {
+            $0.name.lowercased() < $1.name.lowercased()
+        }
     }
     
     func search(identifier: String) -> SourceIcon? {
