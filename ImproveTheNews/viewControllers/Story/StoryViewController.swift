@@ -234,13 +234,15 @@ extension StoryViewController {
 //            self.addTime(time: story.time)
 //        }
 //        
-//        if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
-//            self.addImageCredit(story.image_credit_title, story.image_credit_url)
-//        }
         
         self.addStoryMetaData(time: story.time)
+
+        if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
+            self.addImageCredit(story.image_credit_title, story.image_credit_url)
+        }
+
 //        story.time
-//        
+//
 //        MainFeedArticle
 //        MainFeedStory
         
@@ -1649,13 +1651,23 @@ extension StoryViewController {
         creditLabel.numberOfLines = 0
         creditLabel.font = ROBOTO(14)
         creditLabel.textColor = UIColor(hex: 0xDA4933)
-        creditLabel.text = "Image credit: " + title
-        creditLabel.addUnderline()
+        creditLabel.text = "Photo: " + title
+        //creditLabel.addUnderline()
         
         let HStack = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack, width: 13)
         HStack.addArrangedSubview(creditLabel)
         ADD_SPACER(to: HStack, width: 13)
+        
+        let photoOverLabel = UILabel()
+        photoOverLabel.font = creditLabel.font
+        photoOverLabel.textColor = .white
+        photoOverLabel.text = "Photo:"
+        self.VStack.addSubview(photoOverLabel)
+        photoOverLabel.activateConstraints([
+            photoOverLabel.leadingAnchor.constraint(equalTo: creditLabel.leadingAnchor, constant: 0),
+            photoOverLabel.topAnchor.constraint(equalTo: creditLabel.topAnchor, constant: 0)
+        ])
         
         let creditButton = UIButton(type: .system)
         creditLabel.backgroundColor = .clear
@@ -1669,6 +1681,9 @@ extension StoryViewController {
         creditButton.addTarget(self, action: #selector(onImageCreditButtonTap(_:)), for: .touchUpInside)
         
         self.imageCreditUrl = url
+        ADD_SPACER(to: self.VStack, height: 12)
+        
+        
     }
     
     private func addTime(time: String) {
