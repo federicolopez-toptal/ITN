@@ -77,7 +77,7 @@ class StancePopupView: PopupView {
         
         //titleHStack.addArrangedSubview(self.stanceIcon)
         
-        self.titleLabel.font = DM_SERIF_DISPLAY(18)
+        self.titleLabel.font = DM_SERIF_DISPLAY(21)
         //MERRIWEATHER_BOLD(16)
         self.titleLabel.text = "ASDHKJSDH ASJDSAJDLK"
         titleHStack.addArrangedSubview(self.titleLabel)
@@ -225,7 +225,7 @@ class StancePopupView: PopupView {
     func populate(sourceName: String, country: String, LR: Int, PE: Int) {
         self.stanceIcon.setValues(LR, PE)
         self.titleLabel.text = sourceName + " bias"
-        self.descriptionLabel.text = "The " + sourceName + " is from " + self.country(country) +
+        self.descriptionLabel.text = sourceName + " is from " + self.country(country) +
             " and has a " + self.LR_text(LR) + " and " + self.PE_text(PE) + " stance"
         self.descriptionLabel.setLineSpacing(lineSpacing: 6)
             

@@ -573,7 +573,7 @@ class AccountViewController: BaseViewController {
 //        
 //    //---
         let titleLabel3 = UILabel()
-        titleLabel3.text = "Sign Out"
+        titleLabel3.text = "Sign out"
         titleLabel3.font = DM_SERIF_DISPLAY(23)
         titleLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel3)

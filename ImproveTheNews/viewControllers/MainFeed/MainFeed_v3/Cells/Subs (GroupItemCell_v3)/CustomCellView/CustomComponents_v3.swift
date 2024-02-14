@@ -337,7 +337,7 @@ class SourceIconsView: UIView {
         img.layer.borderWidth = self.BORDER
         
         let subImage = UIImageView()
-        subImage.backgroundColor = .green
+        subImage.backgroundColor = img.backgroundColor
         img.addSubview(subImage)
         subImage.activateConstraints([
             subImage.leadingAnchor.constraint(equalTo: img.leadingAnchor, constant: self.BORDER),
