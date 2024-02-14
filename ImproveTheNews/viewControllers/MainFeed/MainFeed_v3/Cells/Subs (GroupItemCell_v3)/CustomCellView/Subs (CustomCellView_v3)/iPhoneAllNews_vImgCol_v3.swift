@@ -396,10 +396,18 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         
         if(article.isStory) {
             self.storyTitleLabel.text = article.title
+            if let _searchTerm = KeywordSearch.searchTerm {
+                self.storyTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().main_textColor)
+            }
+            
             self.storySources.load(article.storySources)
             self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title
+            if let _searchTerm = KeywordSearch.searchTerm {
+                self.articleTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().sec_textColor)
+            }
+            
             self.articleTitleLabel.setLineSpacing(lineSpacing: 6.0)
             
             var sourcesArray = [String]()
@@ -488,7 +496,12 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     }
     
     override func refreshDisplayMode() {
-        self.storyTitleLabel.textColor = CSS.shared.displayMode().main_textColor
+        if(KeywordSearch.searchTerm == nil) {
+            self.storyTitleLabel.textColor = CSS.shared.displayMode().main_textColor
+            self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
+        }
+        
+        
         if(!self.isContext) {
             self.storyPill.refreshDisplayMode()
         }
@@ -496,7 +509,6 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.storySources.refreshDisplayMode()
         self.storyTimeLabel.textColor = CSS.shared.displayMode().sec_textColor
         
-        self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.articleSource.refreshDisplayMode()
         self.articleSourceNameLabel.textColor = CSS.shared.displayMode().main_textColor
         self.articleTimeLabel.textColor = self.articleSourceNameLabel.textColor

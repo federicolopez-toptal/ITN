@@ -62,5 +62,31 @@ extension UILabel {
             NSRange.init(location: 0, length: attributedString.length));
         self.attributedText = attributedString
     }
+    
+    func remarkSearchTerm(_ term: String, color: UIColor) {
+        if(term.isEmpty) {
+            self.textColor = color
+            return
+        }
+        
+        let ogText = self.text!
+        let ogFont = self.font!
+
+        let attributedString = NSMutableAttributedString(string: ogText, attributes: [
+            .font: ogFont,
+            .foregroundColor: color
+        ])
+        
+        let orangeAttributedString = NSMutableAttributedString(string: term, attributes: [
+            .font: ogFont,
+            .foregroundColor: CSS.shared.orange
+        ])
+
+        let range = (attributedString.string.lowercased() as NSString).range(of: term.lowercased())
+        attributedString.replaceCharacters(in: range, with: orangeAttributedString)
+                
+        self.attributedText = attributedString
+    }
   
 }
+

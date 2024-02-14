@@ -11,6 +11,7 @@ import Foundation
 class KeywordSearch {
 
     static var shared = KeywordSearch()
+    static var searchTerm: String?
     
     private var searchUrl = "https://www.improvethenews.org/php/util/search-topics.php"
     //private var searchUrl = "http://ec2-18-191-221-195.us-east-2.compute.amazonaws.com/php/util/search-topics.php"
@@ -125,7 +126,7 @@ class KeywordSearch {
                     count += _topics.count
                     for TOP in _topics {
                         let newTopic = TopicSearchResult(TOP as! [String: String])
-                        newTopic.trace()
+                        //newTopic.trace()
                         
                         self.topics.append(newTopic)
                     }

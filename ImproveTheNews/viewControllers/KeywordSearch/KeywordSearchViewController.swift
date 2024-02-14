@@ -32,6 +32,10 @@ class KeywordSearchViewController: BaseViewController {
     
 
     // MARK: - Init(s)
+    deinit {
+        KeywordSearch.searchTerm = nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
@@ -186,11 +190,13 @@ extension KeywordSearchViewController {
         self.showLoading()
         //print("SEARCHING...")
         
-        ///
+        KeywordSearch.searchTerm = nil
         KeywordSearch.shared.search(text, type: sType) { (success, _) in
             self.searchCount += 1
             
             if(success) {
+                KeywordSearch.searchTerm = text
+            
                 self.fillDataProvider()
                 self.updateFilteredDataProvider()
 
