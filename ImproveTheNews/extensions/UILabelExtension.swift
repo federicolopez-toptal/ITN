@@ -63,6 +63,26 @@ extension UILabel {
         self.attributedText = attributedString
     }
     
+    func setAsImageCreditWith(prefix: String) {
+        let ogText = self.text!
+        let ogFont = self.font!
+    
+        let attributedString = NSMutableAttributedString(string: ogText, attributes: [
+            .font: ogFont,
+            .foregroundColor: CSS.shared.orange
+        ])
+        
+        let orangeAttributedString = NSMutableAttributedString(string: prefix, attributes: [
+            .font: ogFont,
+            .foregroundColor: CSS.shared.displayMode().main_textColor
+        ])
+        
+        let range = (attributedString.string.lowercased() as NSString).range(of: prefix.lowercased())
+        attributedString.replaceCharacters(in: range, with: orangeAttributedString)
+                
+        self.attributedText = attributedString
+    }
+    
     func remarkSearchTerm(_ term: String, color: UIColor) {
         if(term.isEmpty) {
             self.textColor = color

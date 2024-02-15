@@ -270,6 +270,7 @@ struct ArticleSearchResult {
     var LR: Int = 1
     var PE: Int = 1
     var used: Bool = false
+    var media_id: Int = -1
     
     init(_ data: [String: Any]) {
         self.title = data["title"] as! String
@@ -280,6 +281,7 @@ struct ArticleSearchResult {
         self.mediaName = data["medianame"] as! String
         self.LR = data["LR"] as! Int
         self.PE = data["PE"] as! Int
+        self.media_id = data["media_id"] as! Int
     }
 }
 

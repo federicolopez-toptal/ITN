@@ -1647,11 +1647,12 @@ extension StoryViewController {
     
     
     private func addImageCredit(_ title: String, _ url: String) {
+        let prefix = "Photo: "
         let creditLabel = UILabel()
         creditLabel.numberOfLines = 0
         creditLabel.font = ROBOTO(14)
-        creditLabel.textColor = UIColor(hex: 0xDA4933)
-        creditLabel.text = "Photo: " + title
+        creditLabel.text = prefix + title
+        creditLabel.setAsImageCreditWith(prefix: prefix)
         //creditLabel.addUnderline()
         
         let HStack = HSTACK(into: self.VStack)
@@ -1659,18 +1660,7 @@ extension StoryViewController {
         HStack.addArrangedSubview(creditLabel)
         ADD_SPACER(to: HStack, width: 13)
         
-        let photoOverLabel = UILabel()
-        photoOverLabel.font = creditLabel.font
-        photoOverLabel.textColor = .white
-        photoOverLabel.text = "Photo:"
-        self.VStack.addSubview(photoOverLabel)
-        photoOverLabel.activateConstraints([
-            photoOverLabel.leadingAnchor.constraint(equalTo: creditLabel.leadingAnchor, constant: 0),
-            photoOverLabel.topAnchor.constraint(equalTo: creditLabel.topAnchor, constant: 0)
-        ])
-        
         let creditButton = UIButton(type: .system)
-        creditLabel.backgroundColor = .clear
         HStack.addSubview(creditButton)
         creditButton.activateConstraints([
             creditButton.leadingAnchor.constraint(equalTo: creditLabel.leadingAnchor),

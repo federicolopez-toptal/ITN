@@ -129,7 +129,7 @@ class TopicSelectorView: UIView {
                 label.font = CSS.shared.topicSelector_font
                 label.backgroundColor = .clear
                 
-                label.text = T.capitalized
+                label.text = T //T.capitalized
                 if(T.lowercased() == "headlines") {
                     label.text = "Home"
                 }

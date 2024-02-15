@@ -126,6 +126,10 @@ extension MainFeedArticle {
         self.isStory = false
         self.storySources = [String]()
         self.used = false
+        
+        if(A.media_id == -1) {
+            self.country = "LINK"
+        }
     }
     
     init(story A: StorySearchResult) {

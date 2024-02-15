@@ -479,7 +479,12 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             }
             
             if(PREFS_SHOW_STANCE_ICONS()) {
-                self.articleStanceIcon.show()
+                if(article.country != "LINK") {
+                    self.articleStanceIcon.show()
+                } else {
+                    self.articleStanceIcon.hide()
+                }
+                
             } else {
                 self.articleStanceIcon.hide()
             }
