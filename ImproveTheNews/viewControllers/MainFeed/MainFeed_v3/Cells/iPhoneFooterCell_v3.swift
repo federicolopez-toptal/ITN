@@ -98,15 +98,16 @@ class iPhoneFooterCell_v3: UITableViewCell {
         ])
         ITNLogo.tag = 88
         
-        let newsletter = self.createItemWith(text: "Newsletter Archive", into: self.contentView, tag: 5)
-        newsletter.activateConstraints([
-            newsletter.topAnchor.constraint(equalTo: sliders.topAnchor),
-            newsletter.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor)
-        ])
+//        let newsletter = self.createItemWith(text: "Newsletter Archive", into: self.contentView, tag: 5)
+//        newsletter.activateConstraints([
+//            newsletter.topAnchor.constraint(equalTo: sliders.topAnchor),
+//            newsletter.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor)
+//        ])
         
         let privacy = self.createItemWith(text: "Privacy Policy", into: self.contentView, tag: 4)
         privacy.activateConstraints([
-            privacy.topAnchor.constraint(equalTo: newsletter.bottomAnchor, constant: vSep),
+            //privacy.topAnchor.constraint(equalTo: newsletter.bottomAnchor, constant: vSep),
+            privacy.topAnchor.constraint(equalTo: sliders.topAnchor),
             privacy.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor)
         ])
         

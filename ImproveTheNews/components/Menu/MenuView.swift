@@ -26,7 +26,7 @@ class MenuView: UIView {
         .theme,
         
         .tour,
-        .newsletter,
+        //.newsletter,
         .preferences,
         .layout,
         .about,
