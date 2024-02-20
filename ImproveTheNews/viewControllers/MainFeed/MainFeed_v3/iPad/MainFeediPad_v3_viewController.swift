@@ -160,3 +160,11 @@ extension MainFeediPad_v3_viewController {
     }
 
 }
+
+extension MainFeediPad_v3_viewController {
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.setupList()
+    }
+
+}

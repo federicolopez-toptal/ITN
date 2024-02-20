@@ -11,6 +11,8 @@ import UIKit
 extension MainFeediPad_v3_viewController {
 
     func setupList() {
+        self.list = CustomFeedList()
+    
         self.list.backgroundColor = self.view.backgroundColor
         self.list.separatorStyle = .none
         self.list.customDelegate = self

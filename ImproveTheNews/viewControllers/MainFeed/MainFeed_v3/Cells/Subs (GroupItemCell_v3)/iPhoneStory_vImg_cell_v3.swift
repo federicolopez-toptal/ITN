@@ -25,7 +25,8 @@ class iPhoneStory_vImg_cell_v3: GroupItemCell_v3 {
     private func buildContent() {
         self.subViews = [CustomCellView_v3]()
         
-        ///
+        print("SCREEN_SIZE().width", SCREEN_SIZE().width)
+        
         let view1 = iPhoneStory_vImg_v3(width: SCREEN_SIZE().width)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
@@ -50,7 +51,7 @@ class iPhoneStory_vImg_cell_v3: GroupItemCell_v3 {
         
         for V in self.subViews {
             V.refreshDisplayMode()
-        }
+        }        
     }
     
     // MARK: misc
