@@ -9,7 +9,7 @@ import UIKit
 
 class FAQViewController: BaseViewController {
 
-    var descrLabel: HyperlinkLabel?
+    var descrLabel = HyperlinkLabel()
             
     let navBar = NavBarView()
     let scrollView = UIScrollView()
@@ -18,6 +18,7 @@ class FAQViewController: BaseViewController {
     var firstItemOpened: Bool = false
     var heightConstraints = [NSLayoutConstraint]()
     
+    var initialTextOpened = false
     var stories: FAQ_Stories? = FAQ_Stories()
     
     // MARK: - Init
@@ -44,7 +45,7 @@ class FAQViewController: BaseViewController {
                 
                 let FAQ = self.contentView.viewWithTag(951) as! UILabel
                 let W = SCREEN_SIZE().width - 18 - 18
-                let H = 13 + descrLabel!.calculateHeightFor(width: W) + 25 + FAQ.calculateHeightFor(width: W + 15)
+                let H = 13 + descrLabel.calculateHeightFor(width: W) + 25 + FAQ.calculateHeightFor(width: W + 15)
                 DELAY(0.5) {
                     self.scrollView.setContentOffset(CGPoint(x: 0, y: H), animated: true)
                 }
@@ -79,19 +80,16 @@ class FAQViewController: BaseViewController {
             self.contentView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor),
             H
         ])
-
-        self.descrLabel = HyperlinkLabel.parrafo2(text: self.mainContent(), linkTexts: ["Max Tegmark"],
-            urls: ["https://physics.mit.edu/faculty/max-tegmark/"], onTap: self.onLinkTap(_:))
-        self.descrLabel?.setLineSpacing(lineSpacing: 6)
-           
+        self.changeInitialText(setValueTo: false)
+        
         var sideMargin: CGFloat = 18
         if(IPAD()){ sideMargin = 60 }
            
-        self.contentView.addSubview(self.descrLabel!)
-        self.descrLabel!.activateConstraints([
-            self.descrLabel!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sideMargin),
-            self.descrLabel!.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sideMargin),
-            self.descrLabel!.topAnchor.constraint(equalTo: self.contentView.topAnchor,
+        self.contentView.addSubview(self.descrLabel)
+        self.descrLabel.activateConstraints([
+            self.descrLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sideMargin),
+            self.descrLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sideMargin),
+            self.descrLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor,
                 constant: IPHONE() ? 16*2 : 60)
         ])
         
@@ -104,7 +102,7 @@ class FAQViewController: BaseViewController {
         FAQ.activateConstraints([
             FAQ.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sideMargin),
             FAQ.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sideMargin),
-            FAQ.topAnchor.constraint(equalTo: self.descrLabel!.bottomAnchor,
+            FAQ.topAnchor.constraint(equalTo: self.descrLabel.bottomAnchor,
                 constant: IPHONE() ? 25 :  50)
         ])
 
@@ -123,6 +121,28 @@ class FAQViewController: BaseViewController {
         ])
     
         self.refreshDisplayMode()
+    }
+    
+    func changeInitialText(setValueTo value: Bool? = nil) {
+        if let _newValue = value {
+            self.initialTextOpened = _newValue
+        } else {
+            self.initialTextOpened = !self.initialTextOpened
+        }
+        
+        if(self.initialTextOpened) {
+            self.setParrafo2to(label: self.descrLabel, text: self.mainContent_A(),
+                linkTexts: ["Max Tegmark"],
+                urls: ["https://physics.mit.edu/faculty/max-tegmark/"],
+                onTap: self.onLinkTap(_:))
+        } else {
+            self.setParrafo2to(label: self.descrLabel, text: self.mainContent_B(),
+                linkTexts: ["Show More"],
+                urls: ["local://initialText"],
+                onTap: self.onLinkTap(_:))
+        }
+        
+        self.descrLabel.setLineSpacing(lineSpacing: 6)
     }
     
     func addContent() {
@@ -472,8 +492,6 @@ class FAQViewController: BaseViewController {
             self.updateSectionHeight(index: tag, open: false, animate: true)
         }
     }
-    
-    
 
     override func refreshDisplayMode() {
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
@@ -484,6 +502,35 @@ class FAQViewController: BaseViewController {
         self.navBar.refreshDisplayMode()
         
         self.addContent()
+    }
+
+    func setParrafo2to(label: HyperlinkLabel,text: String, linkTexts: [String], urls: [String],
+        onTap: @escaping (URL) -> Void) {
+        
+        let attributedString = NSMutableAttributedString(string: text, attributes: [
+            .font: AILERON(16),
+            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        ])
+
+        for (i, url) in urls.enumerated() {
+            let attributes: [NSAttributedString.Key: Any] = [
+                .hyperlink: URL(string: url)!,
+                .font: AILERON(16)
+            ]
+            let urlAttributedString = NSAttributedString(string: linkTexts[i], attributes: attributes)
+            let range = (attributedString.string as NSString).range(of: "[\(i)]")
+            attributedString.replaceCharacters(in: range, with: urlAttributedString)
+        }
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length))
+        
+        // -------------------------
+        label.attributedText = attributedString
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.didTapOnURL = onTap
     }
 
 }
@@ -499,6 +546,8 @@ extension FAQViewController {
             } else if(url.absoluteString.contains("privacyPolicy")) {
                 let vc = PrivacyPolicyViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)
+            } else if(url.absoluteString.contains("initialText")) {
+                self.changeInitialText()
             }
         } else {
             OPEN_URL(url.absoluteString)

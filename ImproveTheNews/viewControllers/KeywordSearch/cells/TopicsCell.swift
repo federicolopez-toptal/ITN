@@ -36,7 +36,7 @@ class TopicsCell: UITableViewCell {
                 constant: IPAD() ? 0 : -12),
             self.tagsContainer.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0)
         ])
-        self.tagsContainer.backgroundColor = .green
+        //self.tagsContainer.backgroundColor = .green
         self.tagsContainerHeightLayout = self.tagsContainer.heightAnchor.constraint(equalToConstant: 100)
         self.tagsContainerHeightLayout.isActive = true
     }

@@ -192,5 +192,4 @@ extension HyperlinkLabel {
         return label
     }
     
-    
 }
