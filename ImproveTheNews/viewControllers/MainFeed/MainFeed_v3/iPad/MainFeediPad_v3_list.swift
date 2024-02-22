@@ -11,20 +11,30 @@ import UIKit
 extension MainFeediPad_v3_viewController {
 
     func setupList() {
+        if(self.list.superview != nil) {
+            self.list.removeFromSuperview()
+        }        
         self.list = CustomFeedList()
-    
+        
         self.list.backgroundColor = self.view.backgroundColor
         self.list.separatorStyle = .none
         self.list.customDelegate = self
         
-        let topValue: CGFloat = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
+        if(self.topValue == -1) {
+            self.topValue = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
+        }
 
+//        if(self.prevOffsetY != nil) {
+//            self.list.hide()
+//        }
+        
         self.view.addSubview(self.list)
+        self.listAdded = true
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topValue) // navBar + topicSelector
+            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.topValue) // navBar + topicSelector
         ])
         
         self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
@@ -55,6 +65,14 @@ extension MainFeediPad_v3_viewController {
         
         self.list.delegate = self
         self.list.dataSource = self
+        
+        DELAY(0.2) {
+            if let _middleIndexPath = self.middleIndexPath {
+                self.list.scrollToRow(at: _middleIndexPath, at: .middle, animated: false)
+            }
+
+        }
+        
     }
     
     @objc func refreshList() {
