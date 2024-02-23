@@ -30,7 +30,7 @@ class iPhoneStory_2colsTxt_cell_v3: GroupItemCell_v3 {
         let col_WIDTH: CGFloat = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
         
         ///
-        let view1 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH)
+        let view1 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH, fontSize: 26)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -42,7 +42,7 @@ class iPhoneStory_2colsTxt_cell_v3: GroupItemCell_v3 {
         self.subViews.append(view1)
         
         ///
-        let view2 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH)
+        let view2 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH, fontSize: 26)
         self.contentView.addSubview(view2)
         view2.activateConstraints([
             view2.topAnchor.constraint(equalTo: self.contentView.topAnchor),

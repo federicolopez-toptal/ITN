@@ -30,7 +30,7 @@ class iPhoneStory_2colsImg_cell_v3: GroupItemCell_v3 {
         
         var col_WIDTH: CGFloat = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
         if(IPAD()) {
-            col_WIDTH = (SCREEN_SIZE().width - 40 - (CSS.shared.iPhoneSide_padding * 3))/2
+            col_WIDTH = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
         }
         
         ///

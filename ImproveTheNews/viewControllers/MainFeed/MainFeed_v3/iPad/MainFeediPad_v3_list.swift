@@ -44,6 +44,10 @@ extension MainFeediPad_v3_viewController {
         self.list.register(iPhoneStory_vImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_vImg_cell_v3.identifier)
         self.list.register(iPhoneStory_vTxt_cell_v3.self, forCellReuseIdentifier: iPhoneStory_vTxt_cell_v3.identifier)
         
+        self.list.register(iPadStory_vImg_cell_v3.self, forCellReuseIdentifier: iPadStory_vImg_cell_v3.identifier)
+        self.list.register(iPadStory_vTxt_cell_v3.self, forCellReuseIdentifier: iPadStory_vTxt_cell_v3.identifier)
+        
+        
         self.list.register(iPhoneStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)
         self.list.register(iPhoneStory_4colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_4colsImg_cell_v3.identifier)
         self.list.register(iPhoneStory_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsTxt_cell_v3.identifier)
@@ -146,9 +150,9 @@ extension MainFeediPad_v3_viewController {
         if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
             if(_groupItem is DP3_iPhoneStory_1Wide) {
                 if(Layout.current() == .textImages) {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPadStory_vImg_cell_v3.identifier)!
                 } else {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxt_cell_v3.identifier)!
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPadStory_vTxt_cell_v3.identifier)!
                 }
             } else if(_groupItem is DP3_iPhoneStory_2cols) {
                 if(Layout.current() == .textImages) {
@@ -214,6 +218,11 @@ extension MainFeediPad_v3_viewController {
             } else if let _item = item as? DP3_headerItem {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier)!
                 (cell as! iPhoneHeaderCell_v3).populate(with: _item)
+                if(indexPath.row == 0) {
+                    (cell as! iPhoneHeaderCell_v3).secTitleLabel.show()
+                } else {
+                    (cell as! iPhoneHeaderCell_v3).secTitleLabel.hide()
+                }
             } else if let _item = item as? DP3_splitHeaderItem {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneSplitHeaderCell_v3.identifier)!
                 (cell as! iPhoneSplitHeaderCell_v3).populate(with: _item)
@@ -256,9 +265,9 @@ extension MainFeediPad_v3_viewController {
             result = (self.getCell(indexPath) as! iPhoneMoreCell_v3).calculateHeight()
         } else if(item is DP3_iPhoneStory_1Wide) { // 1 wide story
             if(Layout.current() == .textImages) {
-                result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
+                result = (self.getCell(indexPath) as! iPadStory_vImg_cell_v3).calculateGroupHeight()
             } else {
-                result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
+                result = (self.getCell(indexPath) as! iPadStory_vTxt_cell_v3).calculateGroupHeight()
             }
         } else if(item is DP3_banner) { // Banners
             if(self.data.banner!.isNewsLetter()) {

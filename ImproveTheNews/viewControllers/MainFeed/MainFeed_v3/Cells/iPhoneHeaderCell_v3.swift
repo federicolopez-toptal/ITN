@@ -12,6 +12,7 @@ class iPhoneHeaderCell_v3: UITableViewCell {
     static let identifier = "iPhoneHeaderCell_v3"
 
     let titleLabel = UILabel()
+    let secTitleLabel = UILabel()
 
 
     // MARK: - Start
@@ -31,6 +32,17 @@ class iPhoneHeaderCell_v3: UITableViewCell {
             self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
+        
+        self.secTitleLabel.font = self.titleLabel.font
+        self.secTitleLabel.text = "Your Fact Viewfinder"
+        self.contentView.addSubview(self.secTitleLabel)
+        
+        self.secTitleLabel.activateConstraints([
+            self.secTitleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            self.secTitleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor,
+                constant: -CSS.shared.iPhoneSide_padding)
+        ])
+        self.secTitleLabel.hide()
     }
     
     func populate(with item: DP3_headerItem) {
@@ -41,6 +53,7 @@ class iPhoneHeaderCell_v3: UITableViewCell {
     func refreshDisplayMode() {
         self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.titleLabel.textColor = CSS.shared.displayMode().header_textColor
+        self.secTitleLabel.textColor = CSS.shared.displayMode().main_textColor
     }
     
     func calculateHeight() -> CGFloat {

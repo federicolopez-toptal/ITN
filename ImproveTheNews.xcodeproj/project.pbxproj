@@ -416,6 +416,10 @@
 		1FC835282A1548B1007BCE56 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC835272A1548B1007BCE56 /* HMAC.swift */; };
 		1FC8352A2A1549B5007BCE56 /* SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC835292A1549B5007BCE56 /* SHA1.swift */; };
 		1FC8352C2A1549E5007BCE56 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8352B2A1549E5007BCE56 /* DataExtension.swift */; };
+		1FC9C4562B8851C700E77FD5 /* iPadStory_vImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC9C4552B8851C700E77FD5 /* iPadStory_vImg_cell_v3.swift */; };
+		1FC9C4582B8852CC00E77FD5 /* iPadStory_vImg_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC9C4572B8852CC00E77FD5 /* iPadStory_vImg_v3.swift */; };
+		1FC9C45A2B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC9C4592B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift */; };
+		1FC9C45C2B88607700E77FD5 /* iPadStory_vTxt_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC9C45B2B88607700E77FD5 /* iPadStory_vTxt_v3.swift */; };
 		1FCD55A92AAF569A00CCAE3B /* Aileron-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1FCD55A82AAF569A00CCAE3B /* Aileron-Regular.otf */; };
 		1FCD55AD2AAF57B200CCAE3B /* Aileron-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1FCD55AC2AAF57B200CCAE3B /* Aileron-SemiBold.otf */; };
 		1FCD55AF2AAF5B4600CCAE3B /* Aileron-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1FCD55AE2AAF5B4600CCAE3B /* Aileron-Bold.otf */; };
@@ -902,6 +906,10 @@
 		1FC835272A1548B1007BCE56 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		1FC835292A1549B5007BCE56 /* SHA1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA1.swift; sourceTree = "<group>"; };
 		1FC8352B2A1549E5007BCE56 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
+		1FC9C4552B8851C700E77FD5 /* iPadStory_vImg_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadStory_vImg_cell_v3.swift; sourceTree = "<group>"; };
+		1FC9C4572B8852CC00E77FD5 /* iPadStory_vImg_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadStory_vImg_v3.swift; sourceTree = "<group>"; };
+		1FC9C4592B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadStory_vTxt_cell_v3.swift; sourceTree = "<group>"; };
+		1FC9C45B2B88607700E77FD5 /* iPadStory_vTxt_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadStory_vTxt_v3.swift; sourceTree = "<group>"; };
 		1FCD55A82AAF569A00CCAE3B /* Aileron-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Regular.otf"; sourceTree = "<group>"; };
 		1FCD55AC2AAF57B200CCAE3B /* Aileron-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-SemiBold.otf"; sourceTree = "<group>"; };
 		1FCD55AE2AAF5B4600CCAE3B /* Aileron-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Aileron-Bold.otf"; sourceTree = "<group>"; };
@@ -1302,7 +1310,9 @@
 			children = (
 				1FD014602B61E84E00209A63 /* iPhoneBannerPodCast_v3.swift */,
 				1FA48D952AFBD905009CEAAC /* iPhoneStory_vImg_v3.swift */,
+				1FC9C4572B8852CC00E77FD5 /* iPadStory_vImg_v3.swift */,
 				1F6DA4082B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift */,
+				1FC9C45B2B88607700E77FD5 /* iPadStory_vTxt_v3.swift */,
 				1FA48D9D2AFC5DCC009CEAAC /* iPhoneStory_vTxt_v3.swift */,
 				1FA48D932AFBD2C1009CEAAC /* iPhoneAllNews_vImgCol_v3.swift */,
 				1FA48DA32AFC647B009CEAAC /* iPhoneAllNews_vTxtCol_v3.swift */,
@@ -1314,7 +1324,9 @@
 			isa = PBXGroup;
 			children = (
 				1FE89CFF2AF1ADF200A6C99C /* iPhoneStory_vImg_cell_v3.swift */,
+				1FC9C4552B8851C700E77FD5 /* iPadStory_vImg_cell_v3.swift */,
 				1FA48D992AFC5A9B009CEAAC /* iPhoneStory_vTxt_cell_v3.swift */,
+				1FC9C4592B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift */,
 				1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */,
 				1F9C711D2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift */,
 				1FD699222B6B288700C4B0F9 /* iPhoneStory_4colsTxt_cell_v3.swift */,
@@ -2342,7 +2354,9 @@
 				1F38214629A6EA71004D4D29 /* CustomCellView.swift in Sources */,
 				1F8A7A9F2B6B60C60049328A /* UIViewExtension.swift in Sources */,
 				1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */,
+				1FC9C45A2B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift in Sources */,
 				1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */,
+				1FC9C4562B8851C700E77FD5 /* iPadStory_vImg_cell_v3.swift in Sources */,
 				1FA158802B0D2F6A006EDCE0 /* StoryViewController.swift in Sources */,
 				1FC73910298A1501003EB38D /* SignInView.swift in Sources */,
 				1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */,
@@ -2421,6 +2435,7 @@
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
 				1FE89CD72AF1552400A6C99C /* ComponentUtils.swift in Sources */,
 				1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */,
+				1FC9C4582B8852CC00E77FD5 /* iPadStory_vImg_v3.swift in Sources */,
 				1FEE16EB28C833BF0079BE54 /* NavBarView.swift.txt in Sources */,
 				1F721AF82A43C9970052ADC4 /* ArrayExtension.swift in Sources */,
 				1FC1A2BB2A3224CD001998B0 /* AudioPlayerViewController.swift in Sources */,
@@ -2470,6 +2485,7 @@
 				1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */,
 				1FE92BBB2B56F9DF003C2F86 /* FormCheckView.swift in Sources */,
 				1FD699272B6B2D0400C4B0F9 /* iPhoneArticle_4colsTxtBanner_cell_v3.swift in Sources */,
+				1FC9C45C2B88607700E77FD5 /* iPadStory_vTxt_v3.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift.txt in Sources */,
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
 				1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */,

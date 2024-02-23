@@ -12,6 +12,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
 
     var article: MainFeedArticle!
     private var WIDTH: CGFloat = 1
+    private var fontSize: CGFloat = 18
     
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
@@ -35,9 +36,10 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat) {
+    init(width: CGFloat, fontSize: CGFloat = 18) {
         super.init(frame: .zero)
         self.WIDTH = width
+        self.fontSize = fontSize
         
         self.buildContent()
     }
@@ -46,7 +48,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
 
     // Story
         self.storyTitleLabel.numberOfLines = 0
-        self.storyTitleLabel.font = CSS.shared.iPhoneStory_titleFont_small
+        self.storyTitleLabel.font = DM_SERIF_DISPLAY(self.fontSize)
         self.addSubview(self.storyTitleLabel)
         self.storyTitleLabel.activateConstraints([
             self.storyTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
