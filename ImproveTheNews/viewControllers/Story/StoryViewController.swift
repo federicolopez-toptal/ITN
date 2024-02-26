@@ -1797,17 +1797,19 @@ extension StoryViewController {
             pill.setAsContext()
         }
         
-        let sources = SourceIconsView()
-        sources.buildInto(rowView)
-        sources.activateConstraints([
-            sources.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
-            sources.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
-        ])
-        sources.load(self.story!.storySources)
-        sources.refreshDisplayMode()
-        
+        var sources: SourceIconsView!
+        if(PREFS_SHOW_SOURCE_ICONS()) {
+            sources = SourceIconsView()
+            sources.buildInto(rowView)
+            sources.activateConstraints([
+                sources.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
+                sources.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            ])
+            sources.load(self.story!.storySources)
+            sources.refreshDisplayMode()
+        }
+
         let timeLabel = UILabel()
-    
         timeLabel.font = CSS.shared.iPhoneStory_textFont
         timeLabel.textAlignment = .right
         timeLabel.text = FIX_TIME(time).uppercased()
@@ -1815,8 +1817,16 @@ extension StoryViewController {
         rowView.addSubview(timeLabel)
         timeLabel.activateConstraints([
             timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
-            timeLabel.leadingAnchor.constraint(equalTo: sources.trailingAnchor, constant: 8)
         ])
+        
+        if(PREFS_SHOW_SOURCE_ICONS()) {
+            timeLabel.leadingAnchor.constraint(equalTo: sources.trailingAnchor, constant: 8).isActive = true
+        } else {
+            timeLabel.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding).isActive = true
+        }
+        
+        
+        
 //        self.time_leading = timeLabel.leadingAnchor.constraint(equalTo: sources.trailingAnchor, constant: 8)
 //        self.time_leading?.isActive = true
         

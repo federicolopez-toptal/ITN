@@ -95,12 +95,14 @@ class iPhoneArticle_2colsImgBanner_cell_v3: GroupItemCell_v3 {
         let height_1 = (self.subViews[0] as! iPhoneBannerPodCast_v3).calculateHeight()
         let height_2 = (self.subViews[1] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
         
-        let diff = abs(height_1 - height_2)
+        //let diff = abs(height_1 - height_2)
         var result = (height_1 > height_2) ? height_1 : height_2
         
-        if(diff<8) {
-            result += 16
-        }
+//        if(diff<8) {
+//            result += 16
+//        }
+        result += 16
+        
         return result
     }
 
