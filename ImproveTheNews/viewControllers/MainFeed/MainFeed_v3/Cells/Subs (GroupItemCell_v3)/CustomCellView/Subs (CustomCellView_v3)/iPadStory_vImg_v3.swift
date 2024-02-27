@@ -10,8 +10,8 @@ import UIKit
 
 class iPadStory_vImg_v3: CustomCellView_v3 {
     
-    private let imgWidth: CGFloat = 370
-    private let imgHeight: CGFloat = 213
+    private let imgWidth: CGFloat = 16
+    private let imgHeight: CGFloat = 7.4
     
     private var WIDTH: CGFloat = 1
     
@@ -38,6 +38,8 @@ class iPadStory_vImg_v3: CustomCellView_v3 {
     }
     
     private func calculateImageViewHeight() -> CGFloat {
+        // 16:9
+    
         let W = self.WIDTH - (CSS.shared.iPhoneSide_padding * 2)
         let H = (W * imgHeight)/imgWidth
         return H
@@ -50,9 +52,15 @@ class iPadStory_vImg_v3: CustomCellView_v3 {
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -250),
             self.titleLabel.topAnchor.constraint(equalTo: self.topAnchor)
         ])
+
+        if(MUST_SPLIT()==0) {
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -250).isActive = true
+        } else {
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding).isActive = true
+        }
+        
 
         self.addSubview(self.mainImageView)
         self.mainImageView.activateConstraints([

@@ -1782,6 +1782,10 @@ extension StoryViewController {
         rowView.clipsToBounds = false
         rowView.backgroundColor = self.view.backgroundColor
     
+        if(IPAD()) {
+            ADD_SPACER(to: self.VStack, height: 10)
+        }
+    
         let HStack = HSTACK(into: self.VStack)
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         HStack.addArrangedSubview(rowView)

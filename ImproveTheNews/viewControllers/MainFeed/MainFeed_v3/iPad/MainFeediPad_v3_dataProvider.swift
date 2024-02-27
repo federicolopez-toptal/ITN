@@ -36,17 +36,8 @@ extension MainFeediPad_v3_viewController {
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
             
-        // Headers
+        // main Header
             self.addHeader(text: _T.capitalizedName)
-            
-            var _L = "LEFT"
-            var _R = "RIGHT"
-            if(MUST_SPLIT() == 2) {
-                _L = "CRITICAL"
-                _R = "PRO"
-            }
-        
-            self.addSplitHeaders(L: _L, R: _R)
             
         // Articles sorting  ----------------------------------
             var articlesLeft = [MainFeedArticle]()
@@ -73,14 +64,49 @@ extension MainFeediPad_v3_viewController {
                     break
                 }
             }
-            
+        // ------------------------------------------------------
             let total = _T.articles.count
             var artCount = 0
             while(artCount<total) {
                 var storyRows = 0
                 var articleRows = 0
+                // Add Stories -----------------------------------
+//                    if(self.dataProvider.count>0 && _T.stillHasStories()) {
+//                        let spacer = DP3_spacer(size: 20)
+//                        self.dataProvider.append(spacer)
+//                    }
+
+                    while(_T.stillHasStories()) {
+                        if let _ST = _T.nextAvailableArticle(isStory: true) {
+                            let newGroupItem = DP3_iPhoneStory_1Wide()
+                            newGroupItem.articles.append(_ST)
+                            self.data.addCountTo(topic: _T.name)
+                            artCount += 1
+                            
+                            self.dataProvider.append(newGroupItem)
+                            storyRows += 1
+                            
+                            if(storyRows==2) {
+                                break
+                            }
+                        } else {
+                            break
+                        }
+                    }
+                    
+                // Split headers --------------------------------------------
+                var _L = "LEFT"
+                var _R = "RIGHT"
+                if(MUST_SPLIT() == 2) {
+                    _L = "CRITICAL"
+                    _R = "PRO"
+                }
+                
+                self.addHeader(text: "Split")
+                self.addSplitHeaders(L: _L, R: _R)
+                
                 // Add Articles -------------------------------------------
-                    while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
+                    while(articlesLeft.count>0 || articlesRight.count>0) {
                         let newGroupItem = DP3_iPhoneArticle_2cols()
                         
                         if let _leftArt = articlesLeft.first {
@@ -101,24 +127,8 @@ extension MainFeediPad_v3_viewController {
                                         
                         self.dataProvider.append(newGroupItem)
                         articleRows += 1
-                    }
-                    articleRows = 0
-                    
-                // Add Stories -----------------------------------
-                    if(_T.stillHasStories()) {
-                        let spacer = DP3_spacer(size: 20)
-                        self.dataProvider.append(spacer)
-                    }
-                    
-                    while(_T.stillHasStories() || storyRows<4) {
-                        if let _ST = _T.nextAvailableArticle(isStory: true) {
-                            let newGroupItem = DP3_iPhoneStory_1Wide()
-                            newGroupItem.articles.append(_ST)
-                            self.data.addCountTo(topic: _T.name)
-                            artCount += 1
-                            self.dataProvider.append(newGroupItem)
-                            storyRows += 1
-                        } else {
+                        
+                        if(articleRows==3){
                             break
                         }
                     }
@@ -126,14 +136,120 @@ extension MainFeediPad_v3_viewController {
             }
         
             // "Load more" item
+            let spacer = DP3_spacer(size: 20)
+            self.dataProvider.append(spacer)
             self.addLoadMore(topicName: _T.name)
         } // for
         
         //Footer at the end of all
         self.addFooter()
     }
+//    private func populateDataProvider_iPhone_textOnly_split() {
+//        self.data.resetCounting()
+//        self.dataProvider = [DP3_item]()
+//        
+//        if(self.data.topic.count==0) { return }
+//        for i in 0...self.data.topics.count-1 {
+//            var _T = self.data.topics[i]
+//            
+//        // Headers
+//            self.addHeader(text: _T.capitalizedName)
+//            
+//            var _L = "LEFT"
+//            var _R = "RIGHT"
+//            if(MUST_SPLIT() == 2) {
+//                _L = "CRITICAL"
+//                _R = "PRO"
+//            }
+//        
+//            self.addSplitHeaders(L: _L, R: _R)
+//            
+//        // Articles sorting  ----------------------------------
+//            var articlesLeft = [MainFeedArticle]()
+//            var articlesRight = [MainFeedArticle]()
+//            
+//            while(_T.stillHasArticles()) {
+//                if let _A = _T.nextAvailableArticle(isStory: false) {
+//                    if(MUST_SPLIT() == 1) {
+//                        if(_A.LR < 3) {
+//                            articlesLeft.append(_A)
+//                        } else {
+//                            articlesRight.append(_A)
+//                        }
+//                        self.data.addCountTo(topic: _T.name)
+//                    } else if(MUST_SPLIT() == 2) {
+//                        if(_A.PE < 3) {
+//                            articlesLeft.append(_A)
+//                        } else {
+//                            articlesRight.append(_A)
+//                        }
+//                        self.data.addCountTo(topic: _T.name)
+//                    }
+//                } else {
+//                    break
+//                }
+//            }
+//            
+//            let total = _T.articles.count
+//            var artCount = 0
+//            while(artCount<total) {
+//                var storyRows = 0
+//                var articleRows = 0
+//                // Add Articles -------------------------------------------
+//                    while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
+//                        let newGroupItem = DP3_iPhoneArticle_2cols()
+//                        
+//                        if let _leftArt = articlesLeft.first {
+//                            newGroupItem.articles.append(_leftArt)
+//                            articlesLeft.removeFirst()
+//                            artCount += 1
+//                        } else {
+//                            newGroupItem.articles.append( MainFeedArticle.createEmpty(defaultValue: 1) )
+//                        }
+//                        
+//                        if let _rightArt = articlesRight.first {
+//                            newGroupItem.articles.append(_rightArt)
+//                            articlesRight.removeFirst()
+//                            artCount += 1
+//                        } else {
+//                            newGroupItem.articles.append( MainFeedArticle.createEmpty(defaultValue: 5) )
+//                        }
+//                                        
+//                        self.dataProvider.append(newGroupItem)
+//                        articleRows += 1
+//                    }
+//                    articleRows = 0
+//                    
+//                // Add Stories -----------------------------------
+//                    if(_T.stillHasStories()) {
+//                        let spacer = DP3_spacer(size: 20)
+//                        self.dataProvider.append(spacer)
+//                    }
+//                    
+//                    while(_T.stillHasStories() || storyRows<4) {
+//                        if let _ST = _T.nextAvailableArticle(isStory: true) {
+//                            let newGroupItem = DP3_iPhoneStory_1Wide()
+//                            newGroupItem.articles.append(_ST)
+//                            self.data.addCountTo(topic: _T.name)
+//                            artCount += 1
+//                            self.dataProvider.append(newGroupItem)
+//                            storyRows += 1
+//                        } else {
+//                            break
+//                        }
+//                    }
+//                // -------------------------------------------
+//            }
+//        
+//            // "Load more" item
+//            self.addLoadMore(topicName: _T.name)
+//        } // for
+//        
+//        //Footer at the end of all
+//        self.addFooter()
+//    }
     
-    // Split + Text & Images
+//    // Split + Text & Images
     private func populateDataProvider_iPhone_textImages_split() {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
@@ -142,17 +258,8 @@ extension MainFeediPad_v3_viewController {
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
             
-        // Headers
+        // main Header
             self.addHeader(text: _T.capitalizedName)
-            
-            var _L = "LEFT"
-            var _R = "RIGHT"
-            if(MUST_SPLIT() == 2) {
-                _L = "CRITICAL"
-                _R = "PRO"
-            }
-        
-            self.addSplitHeaders(L: _L, R: _R)
 
         // Articles sorting  ----------------------------------
             var articlesLeft = [MainFeedArticle]()
@@ -179,14 +286,49 @@ extension MainFeediPad_v3_viewController {
                     break
                 }
             }
-            
+        // ------------------------------------------------------
             let total = _T.articles.count
             var artCount = 0
             while(artCount<total) {
                 var storyRows = 0
                 var articleRows = 0
+                // Add Stories -----------------------------------
+//                    if(self.dataProvider.count>0 && _T.stillHasStories()) {
+//                        let spacer = DP3_spacer(size: 20)
+//                        self.dataProvider.append(spacer)
+//                    }
+
+                    while(_T.stillHasStories()) {
+                        if let _ST = _T.nextAvailableArticle(isStory: true) {
+                            let newGroupItem = DP3_iPhoneStory_1Wide()
+                            newGroupItem.articles.append(_ST)
+                            self.data.addCountTo(topic: _T.name)
+                            artCount += 1
+                            
+                            self.dataProvider.append(newGroupItem)
+                            storyRows += 1
+                            
+                            if(storyRows==2) {
+                                break
+                            }
+                        } else {
+                            break
+                        }
+                    }
+                    
+                // Split headers --------------------------------------------
+                var _L = "LEFT"
+                var _R = "RIGHT"
+                if(MUST_SPLIT() == 2) {
+                    _L = "CRITICAL"
+                    _R = "PRO"
+                }
+                
+                self.addHeader(text: "Split")
+                self.addSplitHeaders(L: _L, R: _R)
+                    
                 // Add Articles -------------------------------------------
-                    while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
+                    while(articlesLeft.count>0 || articlesRight.count>0) {
                         let newGroupItem = DP3_iPhoneArticle_2cols()
                         
                         if let _leftArt = articlesLeft.first {
@@ -207,24 +349,8 @@ extension MainFeediPad_v3_viewController {
                                         
                         self.dataProvider.append(newGroupItem)
                         articleRows += 1
-                    }
-                    
-                    //articleRows = 0
-                // Add Stories -----------------------------------
-                    if(_T.stillHasStories()) {
-                        let spacer = DP3_spacer(size: 20)
-                        self.dataProvider.append(spacer)
-                    }
-                
-                    while(_T.stillHasStories() && storyRows<4) {
-                        if let _ST = _T.nextAvailableArticle(isStory: true) {
-                            let newGroupItem = DP3_iPhoneStory_1Wide()
-                            newGroupItem.articles.append(_ST)
-                            self.data.addCountTo(topic: _T.name)
-                            artCount += 1
-                            self.dataProvider.append(newGroupItem)
-                            storyRows += 1
-                        } else {
+                        
+                        if(articleRows==3){
                             break
                         }
                     }
@@ -232,12 +358,119 @@ extension MainFeediPad_v3_viewController {
             }
         
             // "Load more" item
+            let spacer = DP3_spacer(size: 20)
+            self.dataProvider.append(spacer)
             self.addLoadMore(topicName: _T.name)
         } // for
         
         //Footer at the end of all
         self.addFooter()
     }
+
+//    private func populateDataProvider_iPhone_textImages_split() {
+//        self.data.resetCounting()
+//        self.dataProvider = [DP3_item]()
+//        
+//        if(self.data.topic.count==0) { return }
+//        for i in 0...self.data.topics.count-1 {
+//            var _T = self.data.topics[i]
+//            
+//        // Headers
+//            self.addHeader(text: _T.capitalizedName)
+//            
+//            var _L = "LEFT"
+//            var _R = "RIGHT"
+//            if(MUST_SPLIT() == 2) {
+//                _L = "CRITICAL"
+//                _R = "PRO"
+//            }
+//        
+//            self.addSplitHeaders(L: _L, R: _R)
+//
+//        // Articles sorting  ----------------------------------
+//            var articlesLeft = [MainFeedArticle]()
+//            var articlesRight = [MainFeedArticle]()
+//            
+//            while(_T.stillHasArticles()) {
+//                if let _A = _T.nextAvailableArticle(isStory: false) {
+//                    if(MUST_SPLIT() == 1) {
+//                        if(_A.LR < 3) {
+//                            articlesLeft.append(_A)
+//                        } else {
+//                            articlesRight.append(_A)
+//                        }
+//                        self.data.addCountTo(topic: _T.name)
+//                    } else if(MUST_SPLIT() == 2) {
+//                        if(_A.PE < 3) {
+//                            articlesLeft.append(_A)
+//                        } else {
+//                            articlesRight.append(_A)
+//                        }
+//                        self.data.addCountTo(topic: _T.name)
+//                    }
+//                } else {
+//                    break
+//                }
+//            }
+//            
+//            let total = _T.articles.count
+//            var artCount = 0
+//            while(artCount<total) {
+//                var storyRows = 0
+//                var articleRows = 0
+//                // Add Articles -------------------------------------------
+//                    while(articleRows<4 && (articlesLeft.count>0 || articlesRight.count>0)) {
+//                        let newGroupItem = DP3_iPhoneArticle_2cols()
+//                        
+//                        if let _leftArt = articlesLeft.first {
+//                            newGroupItem.articles.append(_leftArt)
+//                            articlesLeft.removeFirst()
+//                            artCount += 1
+//                        } else {
+//                            newGroupItem.articles.append( MainFeedArticle.createEmpty(defaultValue: 1) )
+//                        }
+//                        
+//                        if let _rightArt = articlesRight.first {
+//                            newGroupItem.articles.append(_rightArt)
+//                            articlesRight.removeFirst()
+//                            artCount += 1
+//                        } else {
+//                            newGroupItem.articles.append( MainFeedArticle.createEmpty(defaultValue: 5) )
+//                        }
+//                                        
+//                        self.dataProvider.append(newGroupItem)
+//                        articleRows += 1
+//                    }
+//                    
+//                    //articleRows = 0
+//                // Add Stories -----------------------------------
+//                    if(_T.stillHasStories()) {
+//                        let spacer = DP3_spacer(size: 20)
+//                        self.dataProvider.append(spacer)
+//                    }
+//                
+//                    while(_T.stillHasStories() && storyRows<4) {
+//                        if let _ST = _T.nextAvailableArticle(isStory: true) {
+//                            let newGroupItem = DP3_iPhoneStory_1Wide()
+//                            newGroupItem.articles.append(_ST)
+//                            self.data.addCountTo(topic: _T.name)
+//                            artCount += 1
+//                            self.dataProvider.append(newGroupItem)
+//                            storyRows += 1
+//                        } else {
+//                            break
+//                        }
+//                    }
+//                // -------------------------------------------
+//            }
+//        
+//            // "Load more" item
+//            self.addLoadMore(topicName: _T.name)
+//        } // for
+//        
+//        //Footer at the end of all
+//        self.addFooter()
+//    }
     
     // Text & Images (Split off)
     private func populateDataProvider_iPhone_textImages() {
@@ -292,7 +525,7 @@ extension MainFeediPad_v3_viewController {
                         }
                     }
                 
-                    // Extra spacer(s) - specific situtations
+                    // Extra spacer(s) - specific situations
                     if let _last = self.dataProvider.last {
                         if(_last is DP3_iPhoneStory_1Wide && _newGroupItem is DP3_iPhoneArticle_2cols) {
                             let spacer = DP3_spacer(size: 10)

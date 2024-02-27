@@ -219,7 +219,11 @@ extension MainFeediPad_v3_viewController {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier)!
                 (cell as! iPhoneHeaderCell_v3).populate(with: _item)
                 if(indexPath.row == 0) {
-                    (cell as! iPhoneHeaderCell_v3).secTitleLabel.show()
+                    if(MUST_SPLIT()==0) {
+                        (cell as! iPhoneHeaderCell_v3).secTitleLabel.show()
+                    } else {
+                        (cell as! iPhoneHeaderCell_v3).secTitleLabel.hide()
+                    }
                 } else {
                     (cell as! iPhoneHeaderCell_v3).secTitleLabel.hide()
                 }

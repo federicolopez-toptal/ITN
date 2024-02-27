@@ -40,10 +40,19 @@ class iPhoneSplitHeaderCell_v3: UITableViewCell {
         self.rightLabel.textAlignment = .left
         self.contentView.addSubview(self.rightLabel)
         self.rightLabel.activateConstraints([
-            self.rightLabel.leadingAnchor.constraint(equalTo: self.leftLabel.trailingAnchor, constant: CSS.shared.iPhoneSide_padding),
             self.rightLabel.widthAnchor.constraint(equalToConstant: W),
             self.rightLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -4)
         ])
+        
+        if(IPHONE()) {
+            self.rightLabel.leadingAnchor.constraint(equalTo: self.leftLabel.trailingAnchor, constant: CSS.shared.iPhoneSide_padding).isActive = true
+        } else {
+            if(Layout.current() == .textImages) {
+                self.rightLabel.leadingAnchor.constraint(equalTo: self.leftLabel.trailingAnchor, constant:  (CSS.shared.iPhoneSide_padding*2)+2).isActive = true
+            } else {
+                self.rightLabel.leadingAnchor.constraint(equalTo: self.leftLabel.trailingAnchor, constant: CSS.shared.iPhoneSide_padding+10).isActive = true
+            }
+        }
         
 //        self.vLine = VLINE(into: self.contentView)
 //        self.vLine.activateConstraints([
