@@ -103,7 +103,7 @@ class serverErrorPopupView: PopupView {
     }
     
     override func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
     }
     
     // ----------------
