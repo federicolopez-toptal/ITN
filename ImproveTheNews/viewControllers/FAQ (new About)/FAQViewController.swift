@@ -21,6 +21,10 @@ class FAQViewController: BaseViewController {
     var initialTextOpened = false
     var stories: FAQ_Stories? = FAQ_Stories()
     
+    var normalStories = [StorySearchResult]()
+    var contextStories = [StorySearchResult]()
+    
+    
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,14 +164,14 @@ class FAQViewController: BaseViewController {
         //-----
         self.stories?.loadData(callback: { (stories, error) in
             if let _stories = stories {
-                let _normalStories = _stories.filter { $0.type == 1 }
-                let _contextStories = _stories.filter { $0.type == 2 }
-                
+                self.normalStories = _stories.filter { $0.type == 1 }
+                self.contextStories = _stories.filter { $0.type == 2 }
+                                
                 MAIN_THREAD {
-                    self.addStories(_normalStories, type: 1, mainText: "Do you create your own stories?",
+                    self.addStories(self.normalStories, type: 1, mainText: "Do you create your own stories?",
                         secText: "Yes, we have a full editorial team who create specially curated stories, screened from the most popular articles of the day — check out some of the latest added stories below to get started on Verity!")
                         
-                    self.addStories(_contextStories, type: 2, mainText: "What if I need more context?",
+                    self.addStories(self.contextStories, type: 2, mainText: "What if I need more context?",
                         secText: "Check out some of our evergreen context articles if you want to take a deeper dive into a story")
                         
                     //self.scrollTo(valY: 6000) //!!!
@@ -181,6 +185,7 @@ class FAQViewController: BaseViewController {
         if(stories.count==0){ return }
         
         let sectionView = UIView()
+        sectionView.tag = 600 + type
         //sectionView.backgroundColor = .yellow.withAlphaComponent(0.3)
         ADD_SPACER(to: self.VStack, height: 10)
         self.VStack.addArrangedSubview(sectionView)
@@ -574,4 +579,23 @@ extension FAQViewController {
         self.scrollView.setContentOffset(bottomOffset, animated: true)
     }
 
+}
+
+extension FAQViewController {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        if let _view1 = self.view.viewWithTag(600+1) {
+            _view1.removeFromSuperview()
+        }
+        if let _view2 = self.view.viewWithTag(600+2) {
+            _view2.removeFromSuperview()
+        }
+        
+        self.addStories(self.normalStories, type: 1, mainText: "Do you create your own stories?",
+                        secText: "Yes, we have a full editorial team who create specially curated stories, screened from the most popular articles of the day — check out some of the latest added stories below to get started on Verity!")
+                        
+        self.addStories(self.contextStories, type: 2, mainText: "What if I need more context?",
+                        secText: "Check out some of our evergreen context articles if you want to take a deeper dive into a story")
+    }
 }
