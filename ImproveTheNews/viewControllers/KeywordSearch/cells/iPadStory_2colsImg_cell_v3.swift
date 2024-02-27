@@ -1,5 +1,5 @@
 //
-//  iPhoneStory_2colsImg_cell_v3.swift
+//  iPadStory_2colsImg_cell_v3.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 07/11/2023.
@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 
-class iPhoneStory_2colsImg_cell_v3: GroupItemCell_v3 {
+class iPadStory_2colsImg_cell_v3: GroupItemCell_v3 {
 
-    static let identifier = "iPhoneStory_2colsImg_cell_v3"
+    static let identifier = "iPadStory_2colsImg_cell_v3"
     
     var view1_heightConstraint: NSLayoutConstraint!
     var view2_heightConstraint: NSLayoutConstraint!
@@ -28,17 +28,14 @@ class iPhoneStory_2colsImg_cell_v3: GroupItemCell_v3 {
     private func buildContent() {
         self.subViews = [CustomCellView_v3]()
         
-        var col_WIDTH: CGFloat = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
-        if(IPAD()) {
-            col_WIDTH = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
-        }
+        var col_WIDTH: CGFloat = (SCREEN_SIZE().width - 40 - CSS.shared.iPhoneSide_padding)/2
         
         ///
         let view1 = iPhoneAllNews_vImgCol_v3(width: col_WIDTH)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            view1.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
+            view1.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             view1.widthAnchor.constraint(equalToConstant: col_WIDTH)
         ])
         self.view1_heightConstraint = view1.heightAnchor.constraint(equalToConstant: 1)
@@ -50,7 +47,7 @@ class iPhoneStory_2colsImg_cell_v3: GroupItemCell_v3 {
         self.contentView.addSubview(view2)
         view2.activateConstraints([
             view2.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            view2.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
+            view2.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             view2.widthAnchor.constraint(equalToConstant: col_WIDTH)
         ])
         self.view2_heightConstraint = view2.heightAnchor.constraint(equalToConstant: 1)
@@ -71,7 +68,7 @@ class iPhoneStory_2colsImg_cell_v3: GroupItemCell_v3 {
         
         for V in self.subViews {
             V.refreshDisplayMode()
-        }        
+        }
     }
     
     // MARK: misc

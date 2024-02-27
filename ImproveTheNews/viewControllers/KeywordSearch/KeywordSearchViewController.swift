@@ -26,7 +26,7 @@ class KeywordSearchViewController: BaseViewController {
     var storySearchPage: Int = 1
     var articleSearchPage: Int = 1
     
-    
+    var middleIndexPath: IndexPath?
             
             
     
@@ -113,19 +113,6 @@ extension KeywordSearchViewController {
         self.searchSelector.buildInto(self.view, yOffset: topValue+32+47+48+25)
         self.searchSelector.setTopics(["ALL", "TOPICS", "STORIES", "ARTICLES"])
         self.searchSelector.delegate = self
-        
-        let listMargins: CGFloat = IPAD() ? 20 : 0.0
-        
-        self.view.addSubview(self.list)
-        self.list.backgroundColor = self.view.backgroundColor
-        
-        //self.view.backgroundColor
-        self.list.activateConstraints([
-            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: listMargins),
-            self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -listMargins),
-            self.list.topAnchor.constraint(equalTo: self.searchSelector.bottomAnchor, constant: 0),
-            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ])
         
         self.listInit()
     }
@@ -456,4 +443,17 @@ extension KeywordSearchViewController {
         self.dataProvider.append(spacer)
     }
     
+}
+
+extension KeywordSearchViewController {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        if let _rows = self.list.indexPathsForVisibleRows, let _rowA = _rows.first, let _rowZ = _rows.last {
+            let middleRow = (_rowA.row + _rowZ.row)/2
+            self.middleIndexPath = IndexPath(row: middleRow, section: 0)
+        }
+        
+        self.listInit()
+    }
 }

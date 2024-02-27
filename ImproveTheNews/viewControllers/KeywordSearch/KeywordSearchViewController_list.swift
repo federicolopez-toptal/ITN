@@ -12,6 +12,23 @@ extension KeywordSearchViewController {
     
     // MARK: - Start
     func listInit() {
+        if(self.list.superview != nil) {
+            self.list.removeFromSuperview()
+        }
+        self.list = UITableView()
+    
+        let listMargins: CGFloat = IPAD() ? 20 : 0.0
+        
+        self.view.addSubview(self.list)
+        self.list.backgroundColor = self.view.backgroundColor
+        
+        self.list.activateConstraints([
+            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: listMargins),
+            self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -listMargins),
+            self.list.topAnchor.constraint(equalTo: self.searchSelector.bottomAnchor, constant: 0),
+            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
+    
         self.list.separatorStyle = .none
         self.list.tableFooterView = UIView()
         self.listRegisterCells()
@@ -22,6 +39,12 @@ extension KeywordSearchViewController {
         
         self.list.delegate = self
         self.list.dataSource = self
+        
+        DELAY(0.2) {
+            if let _middleIndexPath = self.middleIndexPath {
+                self.list.scrollToRow(at: _middleIndexPath, at: .middle, animated: false)
+            }
+        }
     }
     
     @objc func refresh(_ sender: UIRefreshControl!) {
@@ -45,6 +68,7 @@ extension KeywordSearchViewController {
         self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
         self.list.register(TopicsCell.self, forCellReuseIdentifier: TopicsCell.identifier)
         self.list.register(CenteredTextCell.self, forCellReuseIdentifier: CenteredTextCell.identifier)
+        self.list.register(iPadStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPadStory_2colsImg_cell_v3.identifier)
     }
     
     // MARK: - Cell component
@@ -68,7 +92,11 @@ extension KeywordSearchViewController {
             
             if(article.isStory) {
                 // Stories
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)!
+                if(IPHONE()) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)!
+                } else {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPadStory_2colsImg_cell_v3.identifier)!
+                }
             } else {
                 // Articles
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
@@ -110,6 +138,8 @@ extension KeywordSearchViewController {
         
             if(cell is iPhoneStory_2colsImg_cell_v3) {
                 result = (cell as! iPhoneStory_2colsImg_cell_v3).calculateGroupHeight()
+            } else if(cell is iPadStory_2colsImg_cell_v3) {
+                result = (cell as! iPadStory_2colsImg_cell_v3).calculateGroupHeight()
             } else if(cell is iPhoneArticle_2colsImg_cell_v3) {
                 result = (cell as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
             }

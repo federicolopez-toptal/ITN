@@ -176,46 +176,8 @@ extension MainFeediPad_v3_viewController {
             let middleRow = (_rowA.row + _rowZ.row)/2
             self.middleIndexPath = IndexPath(row: middleRow, section: 0)
         }
-        
-//        let rows = self.list.indexPathsForVisibleRows!
-//        
-//        
-//        let middlePoint = CGPoint(x: self.list.bounds.size.width/2, y: self.list.bounds.size.height/2)
-//        self.middleIndexPath = self.list.indexPathForRow(at: middlePoint)
-//        
-//        print(middlePoint, self.middleIndexPath!.row)
-//        print("")
-        
-        
-        
-//        let cell = self.list.cellForRow(at: self.middleIndexPath!)
-//        print(cell)
-//        
-        self.setupList()
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        print(self.list.contentSize.height, self.list.contentOffset.y)
-//        let perc = (self.list.contentOffset.y * 100)/self.list.contentSize.height
-//        print(perc, "%")
-                
-//        self.list.setNeedsLayout()
-//        self.list.setNeedsDisplay()
-        
-//        DELAY(0.25) {
-//            if let _prevOffsetY = self.prevOffsetY {
-//                self.list.setContentOffset(CGPoint(x: 0, y: _prevOffsetY), animated: false)
-//            }
-//        }
-        
+        self.setupList()
     }
 
 }

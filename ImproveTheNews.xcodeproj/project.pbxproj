@@ -336,6 +336,7 @@
 		1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */; };
 		1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */; };
 		1F964CC12AE1C28B00A6B545 /* serverErrorPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F964CC02AE1C28B00A6B545 /* serverErrorPopupView.swift */; };
+		1F96C0E32B8D89A2000C8BC2 /* iPadStory_2colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F96C0E22B8D89A2000C8BC2 /* iPadStory_2colsImg_cell_v3.swift */; };
 		1F971CB82AF284BD0049BA42 /* GroupItemCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F971CB72AF284BD0049BA42 /* GroupItemCell_v3.swift */; };
 		1F984B1D2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F984B1C2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift */; };
 		1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B4ADC2967745A00BE8850 /* RatingView.swift */; };
@@ -826,6 +827,7 @@
 		1F95D96C29A7F5A100A43E9F /* iPadHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadHeaderCell.swift; sourceTree = "<group>"; };
 		1F95D96E29A80DA800A43E9F /* iPadMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadMoreCell.swift; sourceTree = "<group>"; };
 		1F964CC02AE1C28B00A6B545 /* serverErrorPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = serverErrorPopupView.swift; sourceTree = "<group>"; };
+		1F96C0E22B8D89A2000C8BC2 /* iPadStory_2colsImg_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadStory_2colsImg_cell_v3.swift; sourceTree = "<group>"; };
 		1F971CB72AF284BD0049BA42 /* GroupItemCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupItemCell_v3.swift; sourceTree = "<group>"; };
 		1F984B1C2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_2ST_Cell.swift; sourceTree = "<group>"; };
 		1F9B4ADC2967745A00BE8850 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
@@ -1451,6 +1453,7 @@
 		1FBD42722A40EDFC00BFE68B /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				1F96C0E22B8D89A2000C8BC2 /* iPadStory_2colsImg_cell_v3.swift */,
 				1F38DDC02A433E81007B0E18 /* iPhoneGroupItem_1AR_Cell.swift */,
 				1F0589F72A43C28200E7F8AB /* iPhoneGroupItem_1ST_Cell.swift */,
 				1F984B1C2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift */,
@@ -2376,6 +2379,7 @@
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */,
 				1FA8AA3628D0E3F500B6C956 /* ArticleWI_cell.swift in Sources */,
+				1F96C0E32B8D89A2000C8BC2 /* iPadStory_2colsImg_cell_v3.swift in Sources */,
 				1FD5BDF528DC1313003E650F /* DarkView.swift.txt in Sources */,
 				1FA1728A28D2BD3F00693B85 /* CGFloatExtension.swift in Sources */,
 				1FF6DF7929AE41960072D0D0 /* iPadBannerCell.swift in Sources */,
