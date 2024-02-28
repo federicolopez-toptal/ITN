@@ -42,7 +42,7 @@ class StoryViewController: BaseViewController {
     var backGoTo: Int = -1
     
     var loadedImage: UIImage? = nil
-    
+    var loadedStory: MainFeedStory!
     
     
     deinit {
@@ -160,6 +160,7 @@ extension StoryViewController {
                     self.scrollView.show()
                     
                     if let _story = story {
+                        self.loadedStory = _story
                         self.addContent(_story)
                         
                         DELAY(1.0) {
@@ -2164,15 +2165,20 @@ extension StoryViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        if let _img = self.loadedImage {
+        if(self.loadedImage != nil) {
             let imgWidth: CGFloat = 16
             let imgHeight: CGFloat = 7.4
                     
             let W: CGFloat = SCREEN_SIZE().width - 26
-            var H = (imgHeight * W)/imgWidth
-            //if(H>450){ H = 450 }
+            let H = (imgHeight * W)/imgWidth
             
             self.imageHeightConstraint?.constant = H
+        }
+        
+        if let _content = self.view.viewWithTag(170) {
+            _content.removeFromSuperview()
+            
+            self.addContent(self.loadedStory)
         }
 
     }
