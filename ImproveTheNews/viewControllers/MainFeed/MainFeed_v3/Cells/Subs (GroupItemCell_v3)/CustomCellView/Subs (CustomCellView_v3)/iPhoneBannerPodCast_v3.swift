@@ -33,6 +33,8 @@ class iPhoneBannerPodCast_v3: CustomCellView_v3 {
     private func buildContent() {
         self.layer.cornerRadius = 6
         
+        print("Podcast width", self.WIDTH)
+        
         self.addSubview(self.closeIcon)
         self.closeIcon.activateConstraints([
             self.closeIcon.widthAnchor.constraint(equalToConstant: 24),
@@ -72,10 +74,17 @@ class iPhoneBannerPodCast_v3: CustomCellView_v3 {
             self.titleLabel.topAnchor.constraint(equalTo: podcastIcon.bottomAnchor, constant: 15)
         ])
     
-        let iconsDim: CGFloat = 48
-        let iconsSep: CGFloat = 9
+        var iconsDim: CGFloat = 48
+        var iconsSep: CGFloat = 9
         let iconsCount: CGFloat = 3
-        let sumW: CGFloat = (iconsDim * iconsCount) + (iconsSep * (iconsCount-1))
+        var sumW: CGFloat = (iconsDim * iconsCount) + (iconsSep * (iconsCount-1))
+    
+        if(sumW > self.WIDTH-32) {
+            let availableSpace = self.WIDTH-32-(iconsSep * (iconsCount-1))
+            iconsDim = availableSpace/iconsCount
+            
+            sumW = (iconsDim * iconsCount) + (iconsSep * (iconsCount-1))
+        }
     
         let iconsContainer = UIView()
         iconsContainer.backgroundColor = .clear //.red.withAlphaComponent(0.5)
