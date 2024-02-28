@@ -88,10 +88,10 @@ class PrivacyPolicyViewController: BaseViewController {
         //ADD_SPACER(to: self.VStack, height: 1)
         for i in 1...12 {
             self.addSubTitle( self.subTitles(i) )
-            if(i==8) {
-                ADD_SPACER(to: self.VStack, height: 5)
-                self.addTitle("How we protect your data")
-            }
+//            if(i==8) {
+//                ADD_SPACER(to: self.VStack, height: 5)
+//                self.addTitle("How we protect your data")
+//            }
             self.addParagraph( self.paragraphs(i), linkTexts: self.linkTexts(i), urls: self.urls(i) )
         }
     }

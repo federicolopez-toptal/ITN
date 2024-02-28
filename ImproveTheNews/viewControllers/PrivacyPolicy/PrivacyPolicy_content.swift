@@ -18,7 +18,7 @@ extension PrivacyPolicyViewController {
             "Who we share your data with",
             "How long we retain your data",
             "What rights you have over your data",
-            "Additional information",
+            "How we protect your data", //"Additional information",
             "What data breach procedures we have in place",
             "What third parties we receive data from",
             "What automated decision making and/or profiling we do with user data",
