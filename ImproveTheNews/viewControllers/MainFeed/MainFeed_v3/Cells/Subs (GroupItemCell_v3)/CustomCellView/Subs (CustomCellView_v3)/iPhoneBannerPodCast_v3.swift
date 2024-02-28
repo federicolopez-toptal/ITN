@@ -58,7 +58,7 @@ class iPhoneBannerPodCast_v3: CustomCellView_v3 {
             podcastIcon.widthAnchor.constraint(equalToConstant: 48),
             podcastIcon.heightAnchor.constraint(equalToConstant: 48),
             podcastIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            podcastIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15 )
+            podcastIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15)
         ])
         
         self.titleLabel.font = DM_SERIF_DISPLAY(23)
@@ -68,7 +68,7 @@ class iPhoneBannerPodCast_v3: CustomCellView_v3 {
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 16),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.titleLabel.topAnchor.constraint(equalTo: podcastIcon.bottomAnchor, constant: 15)
         ])
     
@@ -82,10 +82,15 @@ class iPhoneBannerPodCast_v3: CustomCellView_v3 {
         self.addSubview(iconsContainer)
         iconsContainer.activateConstraints([
             iconsContainer.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 16),
-            iconsContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             iconsContainer.heightAnchor.constraint(equalToConstant: iconsDim),
             iconsContainer.widthAnchor.constraint(equalToConstant: sumW)
         ])
+        
+        if(IPHONE()) {
+            iconsContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        } else {
+            iconsContainer.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor).isActive = true
+        }
     
         var posX: CGFloat = 0
         let icons = [1, 2, 3]

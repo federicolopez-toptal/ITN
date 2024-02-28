@@ -71,10 +71,10 @@ extension MainFeed_v3_viewController {
                 var storyRows = 0
                 var articleRows = 0
                 // Add Stories -----------------------------------
-                    if(self.dataProvider.count>0 && _T.stillHasStories()) {
-                        let spacer = DP3_spacer(size: 20)
-                        self.dataProvider.append(spacer)
-                    }
+//                    if(self.dataProvider.count>0 && _T.stillHasStories()) {
+//                        let spacer = DP3_spacer(size: 20)
+//                        self.dataProvider.append(spacer)
+//                    }
 
                     while(_T.stillHasStories()) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
@@ -189,10 +189,10 @@ extension MainFeed_v3_viewController {
                 var storyRows = 0
                 var articleRows = 0
                 // Add Stories -----------------------------------
-                    if(self.dataProvider.count>0 && _T.stillHasStories()) {
-                        let spacer = DP3_spacer(size: 20)
-                        self.dataProvider.append(spacer)
-                    }
+//                    if(self.dataProvider.count>0 && _T.stillHasStories()) {
+//                        let spacer = DP3_spacer(size: 20)
+//                        self.dataProvider.append(spacer)
+//                    }
 
                     while(_T.stillHasStories()) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
