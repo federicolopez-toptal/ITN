@@ -41,6 +41,9 @@ class StoryViewController: BaseViewController {
     var sections_y = [CGFloat]()
     var backGoTo: Int = -1
     
+    var loadedImage: UIImage? = nil
+    
+    
     
     deinit {
         self.audioPlayer.close()
@@ -1721,9 +1724,13 @@ extension StoryViewController {
             
             imageView.sd_setImage(with: URL(string: imageUrl)) { (img, error, cacheType, url) in
                 if let _img = img {
+                    self.loadedImage = _img
+                
+                    let imgWidth: CGFloat = 16
+                    let imgHeight: CGFloat = 7.4
                     let W: CGFloat = SCREEN_SIZE().width - 26
-                    var H = (_img.size.height * W)/_img.size.width
-                    if(H>450){ H = 450 }
+                    var H = (imgHeight * W)/imgWidth
+                    //if(H>450){ H = 450 }
                     
                     self.imageHeightConstraint?.constant = H
                 }
@@ -2151,3 +2158,24 @@ extension StoryViewController: UIScrollViewDelegate {
         self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y), animated: true)
     }
  */
+
+extension StoryViewController {
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        if let _img = self.loadedImage {
+            let imgWidth: CGFloat = 16
+            let imgHeight: CGFloat = 7.4
+                    
+            let W: CGFloat = SCREEN_SIZE().width - 26
+            var H = (imgHeight * W)/imgWidth
+            //if(H>450){ H = 450 }
+            
+            self.imageHeightConstraint?.constant = H
+        }
+
+    }
+    
+}
+

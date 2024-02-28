@@ -444,7 +444,7 @@ extension MenuView {
             let vc = NAV_MAINFEED_VC()
             CustomNavController.shared.viewControllers = [vc]
         } else {
-            let vc = MainFeed_v2ViewController()
+            let vc = MainFeed_v3_viewController()
             CustomNavController.shared.viewControllers = [vc]
         }
         
