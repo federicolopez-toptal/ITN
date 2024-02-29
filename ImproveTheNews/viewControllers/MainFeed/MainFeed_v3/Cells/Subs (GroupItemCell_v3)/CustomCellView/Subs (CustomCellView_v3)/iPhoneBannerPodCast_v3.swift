@@ -33,8 +33,6 @@ class iPhoneBannerPodCast_v3: CustomCellView_v3 {
     private func buildContent() {
         self.layer.cornerRadius = 6
         
-        print("Podcast width", self.WIDTH)
-        
         self.addSubview(self.closeIcon)
         self.closeIcon.activateConstraints([
             self.closeIcon.widthAnchor.constraint(equalToConstant: 24),
