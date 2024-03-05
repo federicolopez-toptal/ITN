@@ -36,7 +36,7 @@ class PrefSliders_cell: UITableViewCell {
         self.allSliders = [UISlider]()
         
         var sideMargin: CGFloat = 16
-        if(IPAD()){ sideMargin = 60 }
+        //if(IPAD()){ sideMargin = 60 }
         
         self.contentView.addSubview(self.mainContainer)
         self.mainContainer.activateConstraints([
@@ -70,7 +70,7 @@ class PrefSliders_cell: UITableViewCell {
         self.place(view: paragraph_02, below: title2)
         
         let sliders1 = self.sliderRows(1)
-        self.place(view: sliders1, below: paragraph_02, extraMargin: 20)
+        self.place(view: sliders1, below: paragraph_02, extraMargin: 20, alreadyHasWidth: true)
         
         //-----
         let title3 = self.orangeTitle(text: "What writing style do you want?")
@@ -81,7 +81,7 @@ class PrefSliders_cell: UITableViewCell {
         self.place(view: paragraph_03, below: title3)
         
         let sliders2 = self.sliderRows(2)
-        self.place(view: sliders2, below: paragraph_03, extraMargin: 20)
+        self.place(view: sliders2, below: paragraph_03, extraMargin: 20, alreadyHasWidth: true)
         
         //-----
         let title4 = self.orangeTitle(text: "Do you want evergreen or fresh?")
@@ -92,17 +92,25 @@ class PrefSliders_cell: UITableViewCell {
         self.place(view: paragraph_04, below: title4)
         
         let sliders3 = self.sliderRows(3)
-        self.place(view: sliders3, below: paragraph_04)
+        self.place(view: sliders3, below: paragraph_04, extraMargin: 20, alreadyHasWidth: true)
         
         //-----
         self.saveButton = self.longButton(color: UIColor(hex: 0x60C4D6), tag: 100)
-        self.place(view: self.saveButton, below: sliders3, extraMargin: 40)
+        if(IPAD()) {
+            self.place(view: self.saveButton, below: sliders3, extraMargin: 50, centered: false)
+        } else {
+            self.place(view: self.saveButton, below: sliders3, extraMargin: 40)
+        }
         self.setText("Save slider preferences", toButton: self.saveButton)
         self.saveButton.isEnabled = false
         //self.saveButton.alpha = 0.5
         
         let resetButton = self.longButton(color: UIColor(hex: 0xBBBDC0), tag: 200)
-        self.place(view: resetButton, below: saveButton)
+        if(IPAD()) {
+            self.place(view: resetButton, nextTo: self.saveButton, extraMargin: 20)
+        } else {
+            self.place(view: resetButton, below: saveButton)
+        }
         self.setText("Reset to default settings", toButton: resetButton)
         
         
@@ -157,7 +165,7 @@ extension PrefSliders_cell {
         return label
     }
     
-    func place(view: UIView, below: UIView, extraMargin: CGFloat = 0) {
+    func place(view: UIView, below: UIView, extraMargin: CGFloat = 0, alreadyHasWidth: Bool = false, centered: Bool = true) {
         self.mainContainer.addSubview(view)
         view.activateConstraints([
             view.topAnchor.constraint(equalTo: below.bottomAnchor, constant: 20 + extraMargin)
@@ -168,13 +176,31 @@ extension PrefSliders_cell {
             view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0).isActive = true
         } else {
             if(view is UIButton) {
-                view.widthAnchor.constraint(equalToConstant: 400).isActive = true
-                view.centerXAnchor.constraint(equalTo: self.mainContainer.centerXAnchor).isActive = true
+                view.widthAnchor.constraint(equalToConstant: 250).isActive = true
+                
+                if(centered) {
+                    view.centerXAnchor.constraint(equalTo: self.mainContainer.centerXAnchor).isActive = true
+                } else {
+                    view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor).isActive = true
+                }
+                
             } else {
                 view.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 0).isActive = true
-                view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0).isActive = true
+                
+                if(!alreadyHasWidth) {
+                    view.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0).isActive = true
+                }
             }
         }
+    }
+    
+    func place(view: UIView, nextTo: UIView, extraMargin: CGFloat = 0) {
+        self.mainContainer.addSubview(view)
+        view.activateConstraints([
+            view.topAnchor.constraint(equalTo: nextTo.topAnchor),
+            view.leadingAnchor.constraint(equalTo: nextTo.trailingAnchor, constant: extraMargin),
+            view.widthAnchor.constraint(equalToConstant: 275)
+        ])
     }
     
     func longButton(color: UIColor, tag: Int) -> UIButton {
@@ -211,6 +237,10 @@ extension PrefSliders_cell {
             view.heightAnchor.constraint(equalToConstant: self.sliderRowsHeight)
         ])
         
+        if(IPAD()) {
+            view.widthAnchor.constraint(equalToConstant: 450).isActive = true
+        }
+        
         let aileronBold = AILERON_BOLD(13)
         let characterSpacing: Double = 1.5
         let titles = [
@@ -230,7 +260,7 @@ extension PrefSliders_cell {
         else if(index==3){ indexCode=4 }
         
         var margin: CGFloat = 0
-        if(IPAD()){ margin = 60 }
+        //if(IPAD()){ margin = 60 }
         
         var valY: CGFloat = 0
         for j in 1...2 {

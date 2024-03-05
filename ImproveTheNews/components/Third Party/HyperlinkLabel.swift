@@ -131,9 +131,13 @@ extension HyperlinkLabel {
     static func parrafo(text: String, linkTexts: [String], urls: [String],
         onTap: @escaping (URL) -> Void) -> HyperlinkLabel {
         
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .right
+        
         let attributedString = NSMutableAttributedString(string: text, attributes: [
             .font: AILERON(16),
-            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C),
+            .paragraphStyle: paragraphStyle
         ])
 
         for (i, url) in urls.enumerated() {
@@ -145,11 +149,6 @@ extension HyperlinkLabel {
             let range = (attributedString.string as NSString).range(of: "[\(i)]")
             attributedString.replaceCharacters(in: range, with: urlAttributedString)
         }
-
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .justified
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle,
-            range: NSRange(location: 0, length: attributedString.length))
         
         // -------------------------
         let label = HyperlinkLabel()

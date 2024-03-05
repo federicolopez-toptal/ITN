@@ -41,7 +41,7 @@ class PrefCheckboxes_cell: UITableViewCell {
         self.backgroundColor = .systemPink
         
         var sideMargin: CGFloat = 16
-        if(IPAD()){ sideMargin = 60 }
+        //if(IPAD()){ sideMargin = 60 }
         
         self.contentView.addSubview(self.mainContainer)
         self.mainContainer.activateConstraints([
@@ -87,13 +87,17 @@ class PrefCheckboxes_cell: UITableViewCell {
     
         for (i, data) in self.settings.enumerated() {
             let hStack = HSTACK(into: vStack)
-            hStack.backgroundColor = .clear //.green
+            //hStack.backgroundColor = .green
             
             let itemText = UILabel()
             itemText.font = AILERON(16)
             itemText.text = data.0
             itemText.textColor = .white
             hStack.addArrangedSubview(itemText)
+            
+            if(IPAD()) {
+                itemText.widthAnchor.constraint(equalToConstant: 400).isActive = true
+            }
             
             var value = true
             let key = self.settings[i].1
@@ -108,6 +112,10 @@ class PrefCheckboxes_cell: UITableViewCell {
             check.delegate = self
             check.tag = 50 + i
             hStack.addArrangedSubview(check)
+            
+            if(IPAD()) {
+                ADD_SPACER(to: hStack)
+            }
         }
         
         self.mainContainer.addSubview(self.sourcesButton)
@@ -119,8 +127,8 @@ class PrefCheckboxes_cell: UITableViewCell {
             self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor, constant: 0).isActive = true
             self.sourcesButton.trailingAnchor.constraint(equalTo: self.mainContainer.trailingAnchor, constant: 0).isActive = true
         } else {
-            self.sourcesButton.widthAnchor.constraint(equalToConstant: 400).isActive = true
-            self.sourcesButton.centerXAnchor.constraint(equalTo: self.mainContainer.centerXAnchor).isActive = true
+            self.sourcesButton.widthAnchor.constraint(equalToConstant: 275).isActive = true
+            self.sourcesButton.leadingAnchor.constraint(equalTo: self.mainContainer.leadingAnchor).isActive = true
         }
         
         self.sourcesButton.layer.cornerRadius = 6
