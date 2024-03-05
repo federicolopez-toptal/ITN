@@ -48,6 +48,9 @@ class Tour {
     let buttonForStep4 = UIButton()
     let buttonForStep5 = UIButton()
 
+    var prefNotes: UIView? = nil
+    var prefNotesHeightConstraint: NSLayoutConstraint? = nil
+
 
     // MARK: - Init(s)
     init(buildInto container: UIView) {
@@ -56,9 +59,11 @@ class Tour {
         for i in 1...totalSteps {
             var _h: CGFloat = 150
             if(i==4) {
-                _h = 115
+                //_h = 115
+                _h = 125
             } else if(i>=5) {
-                _h = 140
+                //_h = 140
+                _h = 154
             }
         
             let newRect = TourRectView(buildInto: container, index: i, height: _h,
@@ -248,4 +253,169 @@ extension Tour: TourRectViewDelegate {
         self.showStep(sender.index-1)
     }
     
+    func TourRectView_onTipsButtonTap(sender: TourRectView) {
+        self.showPreferencesNotes()
+    }
+    
+}
+
+extension Tour {
+    
+    private func createPreferencesNotes() {
+        self.prefNotes = UIView()
+        self.prefNotes?.backgroundColor = .white.withAlphaComponent(0.25)
+        
+        let containerView = CustomNavController.shared.view!
+        containerView.addSubview(self.prefNotes!)
+        self.prefNotes?.activateConstraints([
+            self.prefNotes!.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            self.prefNotes!.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            self.prefNotes!.topAnchor.constraint(equalTo: containerView.topAnchor),
+            self.prefNotes!.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+        
+        var rectWidth: CGFloat = 500
+        let availableSpace: CGFloat = SCREEN_SIZE().width - 33
+        
+        if(availableSpace < rectWidth) {
+            rectWidth = availableSpace
+        }
+        
+        let rect = UIView()
+        rect.backgroundColor = CSS.shared.displayMode().tour_bgColor
+        rect.layer.cornerRadius = 12.0
+        self.prefNotes!.addSubview(rect)
+        rect.activateConstraints([
+            rect.widthAnchor.constraint(equalToConstant: rectWidth),
+            rect.centerXAnchor.constraint(equalTo: prefNotes!.centerXAnchor),
+            rect.centerYAnchor.constraint(equalTo: prefNotes!.centerYAnchor)
+        ])
+        self.prefNotesHeightConstraint = rect.heightAnchor.constraint(equalToConstant: 200)
+        self.prefNotesHeightConstraint?.isActive = true
+        
+        let tipsTitle = UILabel()
+        tipsTitle.text = "Tip preferences"
+        tipsTitle.font = CSS.shared.iPhoneHeader_font
+        tipsTitle.textColor = CSS.shared.displayMode().main_textColor
+        rect.addSubview(tipsTitle)
+        tipsTitle.activateConstraints([
+            tipsTitle.leadingAnchor.constraint(equalTo: rect.leadingAnchor, constant: 16),
+            tipsTitle.topAnchor.constraint(equalTo: rect.topAnchor, constant: 16)
+        ])
+        
+        let tipsText_text = """
+        Keeping our useful tips switched on allows us to demonstrate important functionality and any new features we launch.
+        
+        You can choose to switch off our useful tips below - if you change your mind you can always switch them back on in the [0]
+        """
+        
+        let tipsText = HyperlinkLabel.parrafo(text: tipsText_text, linkTexts: ["general preferences."],
+            urls: ["local://prefs"], onTap: self.onLinkTap(_:))
+        rect.addSubview(tipsText)
+        tipsText.activateConstraints([
+            tipsText.leadingAnchor.constraint(equalTo: rect.leadingAnchor, constant: 16),
+            tipsText.trailingAnchor.constraint(equalTo: rect.trailingAnchor, constant: -16),
+            tipsText.topAnchor.constraint(equalTo: tipsTitle.bottomAnchor, constant: 16)
+        ])
+        
+        let tipsButton = UIButton(type: .custom)
+        tipsButton.backgroundColor = UIColor(hex: 0x60C4D6)
+        tipsButton.layer.cornerRadius = 6
+        rect.addSubview(tipsButton)
+        tipsButton.activateConstraints([
+            tipsButton.leadingAnchor.constraint(equalTo: rect.leadingAnchor, constant: 16),
+            tipsButton.topAnchor.constraint(equalTo: tipsText.bottomAnchor, constant: 25),
+            tipsButton.heightAnchor.constraint(equalToConstant: 40),
+            tipsButton.widthAnchor.constraint(equalToConstant: 200)
+        ])
+        tipsButton.addTarget(self, action: #selector(tipsButtonTap(_:)), for: .touchUpInside)
+        
+        let tipsButtonLabel = UILabel()
+        tipsButtonLabel.text = "Switch off all tooltips"
+        tipsButtonLabel.font = AILERON_SEMIBOLD(16)
+        tipsButtonLabel.textColor = UIColor(hex: 0x19191C)
+        rect.addSubview(tipsButtonLabel)
+        tipsButtonLabel.activateConstraints([
+            tipsButtonLabel.centerXAnchor.constraint(equalTo: tipsButton.centerXAnchor),
+            tipsButtonLabel.centerYAnchor.constraint(equalTo: tipsButton.centerYAnchor)
+        ])
+        
+        
+        // CLOSE -------------------------------
+        let closeIcon = UIImageView(image: UIImage(named: "popup.close.dark")?.withRenderingMode(.alwaysTemplate))
+        rect.addSubview(closeIcon)
+        closeIcon.activateConstraints([
+            closeIcon.widthAnchor.constraint(equalToConstant: 24),
+            closeIcon.heightAnchor.constraint(equalToConstant: 24),
+            closeIcon.topAnchor.constraint(equalTo: rect.topAnchor, constant: 16),
+            closeIcon.trailingAnchor.constraint(equalTo: rect.trailingAnchor, constant: -16)
+        ])
+        closeIcon.tintColor = tipsTitle.textColor
+        
+        let closeIconButton = UIButton(type: .custom)
+        closeIconButton.backgroundColor = .clear
+        rect.addSubview(closeIconButton)
+        closeIconButton.activateConstraints([
+            closeIconButton.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -5),
+            closeIconButton.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: -5),
+            closeIconButton.widthAnchor.constraint(equalTo: closeIcon.widthAnchor, constant: 10),
+            closeIconButton.heightAnchor.constraint(equalTo: closeIcon.heightAnchor, constant: 10)
+        ])
+        closeIconButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
+        
+        // --------------------------------------------------------------------------------
+        // Resize panel
+        let _w: CGFloat = rectWidth-16-16
+        let H: CGFloat = 16 + tipsTitle.calculateHeightFor(width: _w)
+                        + 16 + tipsText.calculateHeightFor(width: _w)
+                        + 25 + 40 + 25
+                        
+        self.prefNotesHeightConstraint?.constant = H
+    }
+    
+    func onLinkTap(_ url: URL) {
+        if(url.absoluteString == "local://prefs") {
+            for v in CustomNavController.shared.view.subviews {
+                if let popup = v as? PopupView {
+                    popup.dismissMe()
+                }
+            }
+        
+            self.prefNotes?.removeFromSuperview()
+            self.prefNotes = nil
+            self.cancel()
+        
+            CustomNavController.shared.hidePanelAndButtonWithAnimation()
+            DELAY(0.5) {
+                let vc = PreferencesViewController()
+                CustomNavController.shared.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    func showPreferencesNotes() {
+        if(self.prefNotes == nil) {
+            self.createPreferencesNotes()
+        }
+        
+        self.prefNotes?.show()
+    }
+    
+    @objc func onCloseButtonTap(_ sender: UIButton?) {
+        self.prefNotes?.removeFromSuperview()
+        self.prefNotes = nil
+    }
+    
+    @objc func tipsButtonTap(_ sender: UIButton?) {
+        for v in CustomNavController.shared.view.subviews {
+            if let popup = v as? PopupView {
+                popup.dismissMe()
+            }
+        }
+        
+        self.prefNotes?.hide()
+        self.cancel()
+    
+        WRITE(LocalKeys.preferences.showTips, value: "00")
+    }
 }

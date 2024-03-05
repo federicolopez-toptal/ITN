@@ -45,6 +45,7 @@ class CustomNavController: UINavigationController {
     
     @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {
         self.dismissMenu()
+        self.tour?.cancel()
         
         for V in self.view.subviews {
             if let popup = V as? PopupView {

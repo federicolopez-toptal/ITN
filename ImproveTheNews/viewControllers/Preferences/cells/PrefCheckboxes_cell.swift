@@ -10,12 +10,13 @@ import UIKit
 class PrefCheckboxes_cell: UITableViewCell {
 
     static let identifier = "PrefCheckboxes_cell"
-    static let heigth: CGFloat = 300+16
+    static let heigth: CGFloat = 300+16+16
 
     private let settings = [
         ("Show newspaper flags", LocalKeys.preferences.showSourceFlags),
         ("Show newspaper logo", LocalKeys.preferences.showSourceIcons),
         ("Show newspaper stance icon", LocalKeys.preferences.showStanceIcons),
+        ("Show tips for new features", LocalKeys.preferences.showTips)
         //("Enable newspaper info popups", LocalKeys.preferences.showStancePopups),
         //("Show stories", LocalKeys.preferences.showStories)
     ]

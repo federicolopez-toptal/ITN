@@ -133,7 +133,7 @@ extension MainFeed_v3_viewController {
                                 CustomNavController.shared.startTour()
                             }
                         }
-                        
+
 //                        DELAY(1.0) {
 //                            self.list.scrollToBottom()
 //                        }

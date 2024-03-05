@@ -11,6 +11,8 @@ protocol TourRectViewDelegate: AnyObject {
     func TourRectView_onCloseButtonTap(sender: TourRectView)
     func TourRectView_onNextButtonTap(sender: TourRectView)
     func TourRectView_onBackButtonTap(sender: TourRectView)
+    
+    func TourRectView_onTipsButtonTap(sender: TourRectView)
 }
 
 // ---------------------------
@@ -24,7 +26,7 @@ class TourRectView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     init(buildInto container: UIView, index: Int,
-        width: CGFloat = 342, height: CGFloat = 150, text: String,
+        width: CGFloat = 342, height: CGFloat = 155, text: String,
         nextButtonText: String?, backButton backButtonFlag: Bool = true) {
         
         super.init(frame: CGRect.zero)
@@ -219,6 +221,51 @@ class TourRectView: UIView {
             
             self.clipsToBounds = false
         }
+        
+        var offsetY: CGFloat = 0
+        if(index>=4) {
+            offsetY = 2
+        }
+        
+        // Tooltip
+        let tipsContainer = UIView()
+        tipsContainer.backgroundColor = .clear //.green
+        self.addSubview(tipsContainer)
+        tipsContainer.activateConstraints([
+            tipsContainer.heightAnchor.constraint(equalToConstant: 20),
+            tipsContainer.leadingAnchor.constraint(equalTo: label.leadingAnchor, constant: -4),
+            tipsContainer.widthAnchor.constraint(equalToConstant: 170),
+            tipsContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -22-offsetY)
+        ])
+        
+        let moreInfoIcon = UIImageView(image: UIImage(named: "infoIcon")?.withRenderingMode(.alwaysTemplate))
+        moreInfoIcon.tintColor = UIColor(hex: 0x60C4D6)
+        tipsContainer.addSubview(moreInfoIcon)
+        moreInfoIcon.activateConstraints([
+            moreInfoIcon.leadingAnchor.constraint(equalTo: tipsContainer.leadingAnchor),
+            moreInfoIcon.centerYAnchor.constraint(equalTo: tipsContainer.centerYAnchor)
+        ])
+        
+        let tipsLabel = UILabel()
+        tipsLabel.text = "Tooltip preferences"
+        tipsLabel.font = AILERON(14)
+        tipsLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x2D2D31)
+        tipsContainer.addSubview(tipsLabel)
+        tipsLabel.activateConstraints([
+            tipsLabel.leadingAnchor.constraint(equalTo: moreInfoIcon.trailingAnchor, constant: 8),
+            tipsLabel.centerYAnchor.constraint(equalTo: tipsContainer.centerYAnchor)
+        ])
+        
+        let tipsButton = UIButton(type: .custom)
+        tipsButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.addSubview(tipsButton)
+        tipsButton.activateConstraints([
+            tipsButton.leadingAnchor.constraint(equalTo: tipsContainer.leadingAnchor),
+            tipsButton.trailingAnchor.constraint(equalTo: tipsContainer.trailingAnchor),
+            tipsButton.topAnchor.constraint(equalTo: tipsContainer.topAnchor),
+            tipsButton.bottomAnchor.constraint(equalTo: tipsContainer.bottomAnchor)
+        ])
+        tipsButton.addTarget(self, action: #selector(onTipsButtonTap(_:)), for: .touchUpInside)
     
     }
 
@@ -236,5 +283,9 @@ extension TourRectView {
     
     @objc func onBackButtonTap(_ sender: UIButton?) {
         self.delegate?.TourRectView_onBackButtonTap(sender: self)
+    }
+    
+    @objc func onTipsButtonTap(_ sender: UIButton) {
+        self.delegate?.TourRectView_onTipsButtonTap(sender: self)
     }
 }

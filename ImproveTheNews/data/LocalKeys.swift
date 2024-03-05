@@ -49,6 +49,7 @@ class LocalKeys { // Keys to store local values
         let showStanceIcons = "pref_showStanceIcons"
         let showStancePopups = "pref_showStancePopups"
         let showStories = "pref_showStories"
+        let showTips = "pref_showTips_v3"
     }
     
 }

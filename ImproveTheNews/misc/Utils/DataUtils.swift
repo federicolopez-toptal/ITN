@@ -52,6 +52,9 @@ func PREFS_SHOW_STORIES() -> Bool {
 func PREFS_SHOW_FLAGS() -> Bool {
     return PREF(key: LocalKeys.preferences.showSourceFlags)
 }
+func PREFS_SHOW_TIPS() -> Bool {
+    return PREF(key: LocalKeys.preferences.showTips)
+}
 
 
 // MARK: Basics

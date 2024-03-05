@@ -13,7 +13,7 @@ class TourIntroPopupView: PopupView {
     // MARK: - Init(s)
     init() {
         super.init(frame: CGRect.zero)
-        self.height = 330
+        self.height = 330 + 24
         
         let navControllerView = CustomNavController.shared.view!
         self.bottomConstraint = self.bottomAnchor.constraint(equalTo: navControllerView.bottomAnchor)
@@ -131,6 +131,45 @@ class TourIntroPopupView: PopupView {
         ])
         goButton.addTarget(self, action: #selector(onGoButtonTap(_:)), for: .touchUpInside)
         
+        let tipsContainer = UIView()
+        tipsContainer.backgroundColor = .clear //.green
+        self.addSubview(tipsContainer)
+        tipsContainer.activateConstraints([
+            tipsContainer.heightAnchor.constraint(equalToConstant: 20),
+            tipsContainer.topAnchor.constraint(equalTo: buttonsContainer.bottomAnchor, constant: 24),
+            tipsContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            tipsContainer.widthAnchor.constraint(equalToConstant: 170)
+        ])
+        
+        let moreInfoIcon = UIImageView(image: UIImage(named: "infoIcon")?.withRenderingMode(.alwaysTemplate))
+        moreInfoIcon.tintColor = UIColor(hex: 0x60C4D6)
+        tipsContainer.addSubview(moreInfoIcon)
+        moreInfoIcon.activateConstraints([
+            moreInfoIcon.leadingAnchor.constraint(equalTo: tipsContainer.leadingAnchor),
+            moreInfoIcon.centerYAnchor.constraint(equalTo: tipsContainer.centerYAnchor)
+        ])
+        
+        let tipsLabel = UILabel()
+        tipsLabel.text = "Tooltip preferences"
+        tipsLabel.font = AILERON(14)
+        tipsLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x2D2D31)
+        tipsContainer.addSubview(tipsLabel)
+        tipsLabel.activateConstraints([
+            tipsLabel.leadingAnchor.constraint(equalTo: moreInfoIcon.trailingAnchor, constant: 8),
+            tipsLabel.centerYAnchor.constraint(equalTo: tipsContainer.centerYAnchor)
+        ])
+        
+        let tipsButton = UIButton(type: .custom)
+        tipsButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.addSubview(tipsButton)
+        tipsButton.activateConstraints([
+            tipsButton.leadingAnchor.constraint(equalTo: tipsContainer.leadingAnchor),
+            tipsButton.trailingAnchor.constraint(equalTo: tipsContainer.trailingAnchor),
+            tipsButton.topAnchor.constraint(equalTo: tipsContainer.topAnchor),
+            tipsButton.bottomAnchor.constraint(equalTo: tipsContainer.bottomAnchor)
+        ])
+        tipsButton.addTarget(self, action: #selector(onTipsButtonTap(_:)), for: .touchUpInside)
+        
         self.refreshDisplayMode()
     }
 
@@ -153,6 +192,10 @@ class TourIntroPopupView: PopupView {
         UIView.animate(withDuration: 0.4) {
             self.superview!.layoutIfNeeded()
         }
+    }
+    
+    @objc func onTipsButtonTap(_ sender: UIButton) {
+        CustomNavController.shared.tour?.showPreferencesNotes()
     }
 
 }
