@@ -136,8 +136,8 @@ class FAQViewController: BaseViewController {
         
         if(self.initialTextOpened) {
             self.setParrafo2to(label: self.descrLabel, text: self.mainContent_A(),
-                linkTexts: ["Max Tegmark"],
-                urls: ["https://physics.mit.edu/faculty/max-tegmark/"],
+                linkTexts: ["Max Tegmark", "Show Less"],
+                urls: ["https://physics.mit.edu/faculty/max-tegmark/", "local://shortText"],
                 onTap: self.onLinkTap(_:))
         } else {
             self.setParrafo2to(label: self.descrLabel, text: self.mainContent_B(),
@@ -553,7 +553,7 @@ extension FAQViewController {
             } else if(url.absoluteString.contains("privacyPolicy")) {
                 let vc = PrivacyPolicyViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)
-            } else if(url.absoluteString.contains("initialText")) {
+            } else if(url.absoluteString.contains("initialText") || url.absoluteString.contains("shortText") ) {
                 self.changeInitialText()
             }
         } else {
