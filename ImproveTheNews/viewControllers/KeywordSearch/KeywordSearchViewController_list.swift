@@ -17,7 +17,7 @@ extension KeywordSearchViewController {
         }
         self.list = UITableView()
     
-        let listMargins: CGFloat = IPAD() ? 20 : 0.0
+        let listMargins: CGFloat = IPAD() ? 16 : 0.0
         
         self.view.addSubview(self.list)
         self.list.backgroundColor = self.view.backgroundColor
@@ -64,6 +64,7 @@ extension KeywordSearchViewController {
         self.list.register(iPhoneHeaderCell_v3.self, forCellReuseIdentifier: iPhoneHeaderCell_v3.identifier)
         self.list.register(iPhoneStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)
         self.list.register(iPhoneArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)
+        self.list.register(iPadArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPadArticle_2colsImg_cell_v3.identifier)
         self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
         self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
         self.list.register(TopicsCell.self, forCellReuseIdentifier: TopicsCell.identifier)
@@ -82,7 +83,8 @@ extension KeywordSearchViewController {
         
         if let _dpItem = dpItem as? DP3_headerItem {
             cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier) as! iPhoneHeaderCell_v3
-            (cell as! iPhoneHeaderCell_v3).populate(with: _dpItem)
+            let mustRemovePadding = IPHONE() ? false : true
+            (cell as! iPhoneHeaderCell_v3).populate(with: _dpItem, removePadding: mustRemovePadding)
         } else if let _item = dpItem as? DP3_more {
             cell = self.list.dequeueReusableCell(withIdentifier: iPhoneMoreCell_v3.identifier) as! iPhoneMoreCell_v3
             (cell as! iPhoneMoreCell_v3).populate(with: _item)
@@ -99,8 +101,13 @@ extension KeywordSearchViewController {
                 }
             } else {
                 // Articles
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
-                (cell as! iPhoneArticle_2colsImg_cell_v3).forceHideVLine = true
+                if(IPHONE()) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
+                    (cell as! iPhoneArticle_2colsImg_cell_v3).forceHideVLine = true
+                } else {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPadArticle_2colsImg_cell_v3.identifier)!
+                    (cell as! iPadArticle_2colsImg_cell_v3).forceHideVLine = true
+                }
             }
             
             (cell as! GroupItemCell_v3).populate(with: _group)
@@ -142,6 +149,8 @@ extension KeywordSearchViewController {
                 result = (cell as! iPadStory_2colsImg_cell_v3).calculateGroupHeight()
             } else if(cell is iPhoneArticle_2colsImg_cell_v3) {
                 result = (cell as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
+            } else if(cell is iPadArticle_2colsImg_cell_v3) {
+                result = (cell as! iPadArticle_2colsImg_cell_v3).calculateGroupHeight()
             }
                         
         } else if let _group = dpItem as? DP3_topics {

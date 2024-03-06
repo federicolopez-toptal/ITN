@@ -168,11 +168,11 @@ class FAQViewController: BaseViewController {
                 self.contextStories = _stories.filter { $0.type == 2 }
                                 
                 MAIN_THREAD {
-                    self.addStories(self.normalStories, type: 1, mainText: "Do you create your own stories?",
+                    self.addStories(self.normalStories, type: 1, mainText: "Stories",
                         secText: "Yes, we have a full editorial team who create specially curated stories, screened from the most popular articles of the day — check out some of the latest added stories below to get started on Verity!")
                         
-                    self.addStories(self.contextStories, type: 2, mainText: "What if I need more context?",
-                        secText: "Check out some of our evergreen context articles if you want to take a deeper dive into a story")
+//                    self.addStories(self.contextStories, type: 2, mainText: "What if I need more context?",
+//                        secText: "Check out some of our evergreen context articles if you want to take a deeper dive into a story")
                         
                     //self.scrollTo(valY: 6000) //!!!
                 }
@@ -279,6 +279,8 @@ class FAQViewController: BaseViewController {
             VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
 
             posY += maxH + (IPAD() ? 32 : 0)
+            
+            break //new 🤷‍♂️
         }
         
         sectionView.activateConstraints([
@@ -592,10 +594,10 @@ extension FAQViewController {
             _view2.removeFromSuperview()
         }
         
-        self.addStories(self.normalStories, type: 1, mainText: "Do you create your own stories?",
+        self.addStories(self.normalStories, type: 1, mainText: "Stories",
                         secText: "Yes, we have a full editorial team who create specially curated stories, screened from the most popular articles of the day — check out some of the latest added stories below to get started on Verity!")
                         
-        self.addStories(self.contextStories, type: 2, mainText: "What if I need more context?",
-                        secText: "Check out some of our evergreen context articles if you want to take a deeper dive into a story")
+//        self.addStories(self.contextStories, type: 2, mainText: "What if I need more context?",
+//                        secText: "Check out some of our evergreen context articles if you want to take a deeper dive into a story")
     }
 }

@@ -13,7 +13,7 @@ class iPhoneHeaderCell_v3: UITableViewCell {
 
     let titleLabel = UILabel()
     let secTitleLabel = UILabel()
-
+    var titleLeadingConstraint: NSLayoutConstraint? = nil
 
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -29,9 +29,11 @@ class iPhoneHeaderCell_v3: UITableViewCell {
         self.contentView.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
 //            self.titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: CSS.shared.iPhoneHeader_vMargins),
-            self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            self.titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
+        self.titleLeadingConstraint = self.titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,
+            constant: CSS.shared.iPhoneSide_padding)
+        self.titleLeadingConstraint?.isActive = true
         
         self.secTitleLabel.font = self.titleLabel.font
         self.secTitleLabel.text = "Your Fact Viewfinder"
@@ -45,7 +47,8 @@ class iPhoneHeaderCell_v3: UITableViewCell {
         self.secTitleLabel.hide()
     }
     
-    func populate(with item: DP3_headerItem) {
+    func populate(with item: DP3_headerItem, removePadding: Bool = false) {
+        if(removePadding){ self.titleLeadingConstraint?.constant = 0 }
         self.titleLabel.text = item.title
         self.refreshDisplayMode()
     }
