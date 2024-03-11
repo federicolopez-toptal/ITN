@@ -21,9 +21,10 @@ extension MainFeed_v3_viewController {
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topValue) // navBar + topicSelector
+            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+        self.listTopConstraint = self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topValue)
+        self.listTopConstraint?.isActive = true
         
         self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
         self.list.register(iPhoneHeaderCell_v3.self, forCellReuseIdentifier: iPhoneHeaderCell_v3.identifier)
@@ -47,7 +48,7 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneFooterCell_v3.self, forCellReuseIdentifier: iPhoneFooterCell_v3.identifier)
         
         self.list.delegate = self
-        self.list.dataSource = self
+        self.list.dataSource = self        
     }
     
     @objc func refreshList() {
@@ -57,8 +58,6 @@ extension MainFeed_v3_viewController {
     }
 
 }
-
-
 
 extension MainFeed_v3_viewController: UITableViewDelegate, UITableViewDataSource {
     

@@ -24,6 +24,10 @@ class MainFeed_v3_viewController: BaseViewController {
     var mustReloadOnShow = false
     var bannerClosed = false
     
+    var listTopConstraint: NSLayoutConstraint? = nil
+    var lastScrollViewPosY: CGFloat = 0
+    var topBarsTransitioning = false
+    
     // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,4 +163,69 @@ extension MainFeed_v3_viewController {
         }
     }
 
+}
+
+extension MainFeed_v3_viewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        var saveLastPos = true
+        let currentPosY = scrollView.contentOffset.y
+        let diff = self.lastScrollViewPosY - currentPosY
+        
+        print(currentPosY)
+        if(diff < 0) {
+            // up
+            if(currentPosY >= 150) {
+                if(!self.navBar.isHidden) {
+                    self.hideTopBars()
+                    saveLastPos = false
+                }
+            }
+        } else {
+            // down
+            if(self.navBar.isHidden) {
+                self.showTopBars()
+            }
+        }
+        
+        if(saveLastPos) {
+            self.lastScrollViewPosY = currentPosY
+        }
+    }
+    
+    func hideTopBars() {
+        if(!self.topBarsTransitioning) {
+            self.topBarsTransitioning = true
+            
+            self.listTopConstraint?.constant = 0
+            UIView.animate(withDuration: 0.5) {
+                self.navBar.alpha = 0
+                self.topicSelector.alpha = 0
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.topBarsTransitioning = false
+                
+                self.navBar.hide()
+                self.topicSelector.hide()
+            }
+        }
+    }
+    
+    func showTopBars() {
+        if(!self.topBarsTransitioning) {
+            self.topBarsTransitioning = true
+            
+            self.navBar.show()
+                self.topicSelector.show()
+            self.listTopConstraint?.constant = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
+            UIView.animate(withDuration: 0.5) {
+                self.navBar.alpha = 1
+                self.topicSelector.alpha = 1
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.topBarsTransitioning = false
+            }
+        }
+    }
+    
 }

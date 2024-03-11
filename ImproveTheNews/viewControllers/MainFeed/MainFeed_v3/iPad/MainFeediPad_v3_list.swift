@@ -33,9 +33,11 @@ extension MainFeediPad_v3_viewController {
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.topValue) // navBar + topicSelector
+            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+        self.listTopConstraint = self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.topValue)
+        self.listTopConstraint?.isActive = true
+        
         
         self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
         self.list.register(iPhoneHeaderCell_v3.self, forCellReuseIdentifier: iPhoneHeaderCell_v3.identifier)
