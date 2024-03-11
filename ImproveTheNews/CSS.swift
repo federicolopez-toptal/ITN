@@ -86,7 +86,7 @@ class CSS {
     let iPhoneSide_padding: CGFloat = 16
     let dashedLine_width: CGFloat = 5
     let orange = UIColor(hex: 0xDA4933)
-    
+    let cyan = UIColor(hex: 0x60C4D6)
     
     
     init() {

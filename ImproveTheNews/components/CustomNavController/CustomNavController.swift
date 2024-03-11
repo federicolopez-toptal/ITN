@@ -41,6 +41,11 @@ class CustomNavController: UINavigationController {
         self.darkView.addGestureRecognizer(tapGesture)
 
         self.addInitialViewController() // Start!
+        
+        DELAY(1.0) {
+            let vc = NewsLetterArchiveViewController()
+            self.pushViewController(vc, animated: true)
+        }
     }
     
     @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {

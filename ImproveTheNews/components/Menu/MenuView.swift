@@ -26,7 +26,7 @@ class MenuView: UIView {
         .theme,
         
         .tour,
-        //.newsletter,
+        .newsletter,
         .preferences,
         .layout,
         .about,
@@ -474,9 +474,9 @@ extension MenuView {
     // ---------
     func showContent(_ item: MenuItem) {
         self.dismissMe()
-        if(item != .newsletter) {
-            CustomNavController.shared.hidePanelAndButtonWithAnimation()
-        }
+//        if(item != .newsletter) {
+//            CustomNavController.shared.hidePanelAndButtonWithAnimation()
+//        }
         
         switch(item) {
             case .sliders:
@@ -500,7 +500,9 @@ extension MenuView {
                 CustomNavController.shared.pushViewController(vc, animated: true)
 
             case .newsletter:
-                OPEN_URL( ITN_URL() + "/newsletters" )
+                let vc = NewsLetterArchiveViewController()
+                CustomNavController.shared.pushViewController(vc, animated: true)
+                //OPEN_URL( ITN_URL() + "/newsletters" )
 
             default:
                 NOTHING()

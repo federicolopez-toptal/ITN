@@ -349,6 +349,7 @@
 		1F9C711C2B6AD7030060BB66 /* MainFeediPad_v3_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C71182B6AD7030060BB66 /* MainFeediPad_v3_list.swift */; };
 		1F9C711E2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C711D2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift */; };
 		1F9C71202B6AE5AF0060BB66 /* iPhoneArticle_4colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C711F2B6AE5AF0060BB66 /* iPhoneArticle_4colsImg_cell_v3.swift */; };
+		1F9D2A8B2B9F7ED100B1908D /* NewsLetterArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D2A8A2B9F7ED100B1908D /* NewsLetterArchiveViewController.swift */; };
 		1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */; };
 		1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */; };
 		1F9E28C32954B22900041303 /* PrivacyPolicy_content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E28C22954B22900041303 /* PrivacyPolicy_content.swift */; };
@@ -841,6 +842,7 @@
 		1F9C71182B6AD7030060BB66 /* MainFeediPad_v3_list.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeediPad_v3_list.swift; sourceTree = "<group>"; };
 		1F9C711D2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_4colsImg_cell_v3.swift; sourceTree = "<group>"; };
 		1F9C711F2B6AE5AF0060BB66 /* iPhoneArticle_4colsImg_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneArticle_4colsImg_cell_v3.swift; sourceTree = "<group>"; };
+		1F9D2A8A2B9F7ED100B1908D /* NewsLetterArchiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterArchiveViewController.swift; sourceTree = "<group>"; };
 		1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		1F9E28BF2954A9D600041303 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		1F9E28C22954B22900041303 /* PrivacyPolicy_content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicy_content.swift; sourceTree = "<group>"; };
@@ -1217,6 +1219,7 @@
 				1FBD090529B24A5A00AC20F5 /* FAQ (new About) */,
 				1F7B9EBC296DEF5800D99C5D /* Story */,
 				1FC7390E298A149C003EB38D /* SignInUp */,
+				1F9D2A892B9F7EA800B1908D /* NewsletterArchive */,
 				1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */,
 				1FE541C52A03FA9A000A2CF3 /* ResetPassViewController.swift */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
@@ -1298,6 +1301,14 @@
 				1F9C71152B6AD7030060BB66 /* MainFeediPad_v3_misc.swift */,
 			);
 			path = iPad;
+			sourceTree = "<group>";
+		};
+		1F9D2A892B9F7EA800B1908D /* NewsletterArchive */ = {
+			isa = PBXGroup;
+			children = (
+				1F9D2A8A2B9F7ED100B1908D /* NewsLetterArchiveViewController.swift */,
+			);
+			path = NewsletterArchive;
 			sourceTree = "<group>";
 		};
 		1F9E28C12954B1FD00041303 /* PrivacyPolicy */ = {
@@ -2520,6 +2531,7 @@
 				1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */,
 				1FE916A129A7A32A007F8AAF /* ArticleVImageView.swift in Sources */,
 				1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */,
+				1F9D2A8B2B9F7ED100B1908D /* NewsLetterArchiveViewController.swift in Sources */,
 				1F7B9EBE296DEFBA00D99C5D /* StoryContent.swift in Sources */,
 				1FA48D9A2AFC5A9B009CEAAC /* iPhoneStory_vTxt_cell_v3.swift in Sources */,
 				1FACBF8329AD01D0009A8E0F /* iPadSplitHeaderCell.swift in Sources */,
