@@ -35,7 +35,9 @@ class DarkView: UIView {
     }
     
     func refreshDisplayMode() {
-        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C).withAlphaComponent(0.6) : UIColor(hex: 0x19191C).withAlphaComponent(0.4)
+        self.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.25) : UIColor(hex: 0x19191C).withAlphaComponent(0.4)
+    
+        //self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C).withAlphaComponent(0.6) : UIColor(hex: 0x19191C).withAlphaComponent(0.4)
     }
 
 }
