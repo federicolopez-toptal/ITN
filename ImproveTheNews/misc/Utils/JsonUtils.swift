@@ -30,3 +30,11 @@ func ADD_MAIN_NODE(to jsonData: Data?, name: String = "data") -> Data {
 
     return Data(str.utf8)
 }
+
+func CHECK(_ value: Any?) -> String {
+    if let _value = value as? String {
+        return _value
+    } else {
+        return ""
+    }
+}

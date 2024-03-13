@@ -26,6 +26,13 @@ class NewsLetterArchiveViewController: BaseViewController {
         var currentDate: Int = 0
         let datePickerButton = UIButton()
         
+        let datesView = UIView()
+        let dateFromPicker = UIDatePicker()
+        let dateToPicker = UIDatePicker()
+        
+    let scrollView = UIScrollView()
+    let mainContentView = UIView()
+    var storiesVStack: UIStackView!
         
     // MARK: - Init
     override func viewDidLoad() {
@@ -53,13 +60,38 @@ class NewsLetterArchiveViewController: BaseViewController {
         let margin = CSS.shared.iPhoneSide_padding
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         
-        self.vStack = VSTACK(into: self.view)
-        self.vStack.backgroundColor = self.view.backgroundColor //.green.withAlphaComponent(0.2)
-        self.view.addSubview(self.vStack)
+        // SCROLLVIEW + CONTENT VIEW ------------------------------------------------
+        self.view.addSubview(self.scrollView)
+        self.scrollView.backgroundColor = self.view.backgroundColor //.systemPink
+        self.scrollView.activateConstraints([
+            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.scrollView.topAnchor.constraint(equalTo: self.navBar.bottomAnchor),
+            self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
+
+            let H = self.mainContentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
+            H.priority = .defaultLow
+
+        self.scrollView.addSubview(self.mainContentView)
+        self.mainContentView.backgroundColor = self.viewPicker.backgroundColor
+        self.mainContentView.activateConstraints([
+            self.mainContentView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
+            self.mainContentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
+            self.mainContentView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
+            self.mainContentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor),
+            self.mainContentView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor),
+            H
+        ])
+        // ------------------------------------------------------------------------------
+        
+        self.vStack = VSTACK(into: self.mainContentView)
+        self.vStack.backgroundColor = self.view.backgroundColor
         self.vStack.activateConstraints([
-            self.vStack.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: margin),
-            self.vStack.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -margin),
-            self.vStack.topAnchor.constraint(equalTo: self.navBar.bottomAnchor, constant: margin)
+            self.vStack.leadingAnchor.constraint(equalTo: self.mainContentView.leadingAnchor, constant: margin),
+            self.vStack.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -margin),
+            self.vStack.topAnchor.constraint(equalTo: self.mainContentView.topAnchor, constant: margin),
+            self.vStack.bottomAnchor.constraint(equalTo: self.mainContentView.bottomAnchor, constant: -margin)
         ])
         
         let searchText = UILabel()
@@ -77,7 +109,13 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.vStack.addArrangedSubview(viewText)
         ADD_SPACER(to: self.vStack, height: margin/2)
         
-        self.viewSelector = self.createSelectorView(into: self.vStack, index: 1)
+        if(IPHONE()) {
+            self.viewSelector = self.createSelectorView(into: self.vStack, index: 1)
+        } else {
+            let viewHStack = HSTACK(into: self.vStack)
+            self.viewSelector = self.createSelectorView(into: viewHStack, index: 1)
+            ADD_SPACER(to: viewHStack)
+        }
         ADD_SPACER(to: self.vStack, height: margin)
         
         self.view.addSubview(self.viewPicker)
@@ -101,7 +139,7 @@ class NewsLetterArchiveViewController: BaseViewController {
             self.viewPickerButton.heightAnchor.constraint(equalToConstant: 30),
             self.viewPickerButton.topAnchor.constraint(equalTo: self.view.bottomAnchor,
                 constant: -self.viewPicker.frame.size.height+10),
-            self.viewPickerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -5),
+            self.viewPickerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
         ])
         self.viewPickerButton.hide()
         self.viewPickerButton.addTarget(self, action: #selector(viewSelectorOnSelect(_:)), for: .touchUpInside)
@@ -114,7 +152,13 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.vStack.addArrangedSubview(dateText)
         ADD_SPACER(to: self.vStack, height: margin/2)
         
-        self.dateSelector = self.createSelectorView(into: self.vStack, index: 2)
+        if(IPHONE()) {
+            self.dateSelector = self.createSelectorView(into: self.vStack, index: 2)
+        } else {
+            let dateHStack = HSTACK(into: self.vStack)
+            self.dateSelector = self.createSelectorView(into: dateHStack, index: 2)
+            ADD_SPACER(to: dateHStack)
+        }
         ADD_SPACER(to: self.vStack, height: margin*2)
         
         self.view.addSubview(self.datePicker)
@@ -143,6 +187,76 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.datePickerButton.hide()
         self.datePickerButton.addTarget(self, action: #selector(dateSelectorOnSelect(_:)), for: .touchUpInside)
         
+        // DATE(s)-------------------------------------
+        self.datesView.backgroundColor = .white
+        self.datesView.layer.cornerRadius = 8
+        self.view.addSubview(self.datesView)
+        self.datesView.activateConstraints([
+            self.datesView.widthAnchor.constraint(equalToConstant: 350),
+            self.datesView.heightAnchor.constraint(equalToConstant: 116 + 16 + 30),
+            self.datesView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.datesView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
+        
+        let startLabel = UILabel()
+        startLabel.text = "Beginning:"
+        startLabel.textColor = UIColor(hex: 0x19191C)
+        startLabel.font = UIFont.systemFont(ofSize: 17)
+        startLabel.backgroundColor = .clear //.systemPink
+        self.datesView.addSubview(startLabel)
+        startLabel.activateConstraints([
+            startLabel.heightAnchor.constraint(equalToConstant: 34),
+            startLabel.topAnchor.constraint(equalTo: self.datesView.topAnchor, constant: 16),
+            startLabel.leadingAnchor.constraint(equalTo: self.datesView.leadingAnchor, constant: 16)
+        ])
+        
+        self.dateFromPicker.date = Date()
+        self.datesView.addSubview(self.dateFromPicker)
+        self.dateFromPicker.datePickerMode = .date
+        self.dateFromPicker.backgroundColor = .lightGray
+        self.dateFromPicker.activateConstraints([
+            self.dateFromPicker.topAnchor.constraint(equalTo: self.datesView.topAnchor, constant: 16),
+            self.dateFromPicker.trailingAnchor.constraint(equalTo: self.datesView.trailingAnchor, constant: -16)
+        ])
+        
+        let endLabel = UILabel()
+        endLabel.text = "End:"
+        endLabel.textColor = UIColor(hex: 0x19191C)
+        endLabel.font = UIFont.systemFont(ofSize: 17)
+        endLabel.backgroundColor = .clear //.systemPink
+        self.datesView.addSubview(endLabel)
+        endLabel.activateConstraints([
+            endLabel.heightAnchor.constraint(equalToConstant: 34),
+            endLabel.topAnchor.constraint(equalTo: startLabel.bottomAnchor, constant: 16),
+            endLabel.leadingAnchor.constraint(equalTo: self.datesView.leadingAnchor, constant: 16)
+        ])
+        
+        let DAY: TimeInterval = 60 * 60 * 24
+        self.dateToPicker.date = Date() + DAY
+        self.datesView.addSubview(self.dateToPicker)
+        self.dateToPicker.datePickerMode = .date
+        self.dateToPicker.backgroundColor = .lightGray
+        self.dateToPicker.activateConstraints([
+            self.dateToPicker.topAnchor.constraint(equalTo: self.dateFromPicker.bottomAnchor, constant: 16),
+            self.dateToPicker.trailingAnchor.constraint(equalTo: self.datesView.trailingAnchor, constant: -16)
+        ])
+        
+        let datesButton = UIButton(type: .custom)
+        datesButton.layer.cornerRadius = 8
+        datesButton.setTitle("Set", for: .normal)
+        datesButton.titleLabel?.font = AILERON(15)
+        datesButton.setTitleColor(.white, for: .normal)
+        datesButton.backgroundColor = CSS.shared.orange
+        self.datesView.addSubview(datesButton)
+        datesButton.activateConstraints([
+            datesButton.widthAnchor.constraint(equalToConstant: 70),
+            datesButton.heightAnchor.constraint(equalToConstant: 30),
+            datesButton.topAnchor.constraint(equalTo: self.dateToPicker.bottomAnchor, constant: 16),
+            datesButton.centerXAnchor.constraint(equalTo: self.datesView.centerXAnchor)
+        ])
+        datesButton.addTarget(self, action: #selector(datesSetOnTap(_:)), for: .touchUpInside)
+        self.datesView.hide()
+        
         // LINE ---------------------------------------
         let sepLine = UIView()
         sepLine.backgroundColor = .red
@@ -152,6 +266,13 @@ class NewsLetterArchiveViewController: BaseViewController {
         ])
         ADD_HDASHES(to: sepLine)
         
+        // STORIES ---------------------------------------
+        ADD_SPACER(to: self.vStack, height: margin)
+        
+        self.storiesVStack = VSTACK(into: self.vStack)
+        self.storiesVStack.backgroundColor = self.view.backgroundColor
+        
+        // MISC ---------------------------------------
         self.darkView.buildInto(self.view)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(darkViewOnTap(sender:)))
         self.darkView.addGestureRecognizer(tapGesture)
@@ -163,31 +284,78 @@ class NewsLetterArchiveViewController: BaseViewController {
         
         self.refreshContent(index: 1)
         self.refreshContent(index: 2)
+        
+        self.view.bringSubviewToFront(self.datesView)
+        
+        DELAY(0.5) {
+            self.loadData()
+        }
+    }
+    
+    @objc func datesSetOnTap(_ sender: UIButton) {
+        let dateFrom = DATE_ZERO_HOUR(input: self.dateFromPicker.date)
+        let dateTo = DATE_ZERO_HOUR(input: self.dateToPicker.date)
+        
+        // validate
+        if(dateTo < dateFrom) {
+            CustomNavController.shared.infoAlert(message: "The end date must be after or equal to the start date")
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.darkView.alpha = 0
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.darkView.hide()
+                self.datesView.hide()
+            }
+            
+            self.loadData()
+        }
     }
     
     @objc func viewSelectorOnSelect(_ sender: UIButton) {
         self.darkViewOnTap(sender: nil)
         self.currentView = self.viewPicker.selectedRow(inComponent: 0)
         self.refreshContent(index: 1)
+        
+        self.loadData()
     }
     
     @objc func dateSelectorOnSelect(_ sender: UIButton) {
-        self.darkViewOnTap(sender: nil)
         self.currentDate = self.datePicker.selectedRow(inComponent: 0)
         self.refreshContent(index: 2)
+        
+        if(self.currentDate == 3) {
+            // Select date(s)
+            self.datePickerTopConstraint.constant = 0
+            self.datePickerButton.hide()
+
+            self.datesView.alpha = 0
+            self.datesView.show()
+            
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+                self.datesView.alpha = 1
+            } completion: { _ in
+            }
+        } else {
+            self.darkViewOnTap(sender: nil)
+            self.loadData()
+        }
     }
     
     @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {
-        self.viewPickerTopConstraint.constant = 0
-        self.datePickerTopConstraint.constant = 0
-        self.viewPickerButton.hide()
-        self.datePickerButton.hide()
-        
-        UIView.animate(withDuration: 0.3) {
-            self.darkView.alpha = 0
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.darkView.hide()
+        if(self.datesView.isHidden) {
+            self.viewPickerTopConstraint.constant = 0
+            self.datePickerTopConstraint.constant = 0
+            self.viewPickerButton.hide()
+            self.datePickerButton.hide()
+            
+            UIView.animate(withDuration: 0.3) {
+                self.darkView.alpha = 0
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.darkView.hide()
+            }
         }
     }
 
@@ -290,6 +458,10 @@ extension NewsLetterArchiveViewController {
         rect.activateConstraints([
             rect.heightAnchor.constraint(equalToConstant: 40)
         ])
+        
+        if(IPAD()) {
+            rect.widthAnchor.constraint(equalToConstant: 410).isActive = true
+        }
         
         let arrowDownImage = UIImage(named: "arrow.down.old")?.withRenderingMode(.alwaysTemplate)
         let arrowImageView = UIImageView(image: arrowDownImage)
@@ -478,4 +650,194 @@ extension NewsLetterArchiveViewController: UIPickerViewDataSource, UIPickerViewD
         return optionView
     }
     
+}
+
+extension NewsLetterArchiveViewController {
+
+    private func getType() -> String {
+        switch(self.currentView) {
+            case 0:
+                return "daily"
+            case 1:
+                return "weekly"
+            default:
+                return "all"
+        }
+    }
+    
+    private func getRange() -> String {
+        if(self.currentDate == 3) {
+            let dateFrom = DATE_ZERO_HOUR(input: self.dateFromPicker.date)
+            let dateTo = DATE_ZERO_HOUR(input: self.dateToPicker.date)
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+        
+            return formatter.string(from: dateFrom) + ":" + formatter.string(from: dateTo)
+        } else {
+            let DAY: TimeInterval = 60 * 60 * 24
+            let MONTH: TimeInterval = DAY * 30
+        
+            let endDate = Date()
+            var startDate = Date()
+            switch(self.currentDate) {
+                case 0:
+                    startDate = endDate - MONTH
+                case 1:
+                    startDate = endDate - (MONTH * 3)
+                case 2:
+                    startDate = endDate - (MONTH * 6)
+                
+                default:
+                    NOTHING()
+            }
+        
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+        
+            return formatter.string(from: startDate) + ":" + formatter.string(from: endDate)
+        }
+    }
+    
+    func loadData() {
+        self.showLoading()
+        NewsLetterData.shared.loadData(range: self.getRange(),
+            type: self.getType(), offset: 1) { (error, stories) in
+            
+            self.hideLoading()
+            
+            if let _ = error {
+                CustomNavController.shared.infoAlert(message: "Trouble loading the newsletter,\nplease try again later.")
+            } else {
+                MAIN_THREAD {
+                    self.add(stories: stories)
+                }
+            }
+        }
+    }
+    
+    private func add(stories: [NewsLetterStory]) {
+        self.storiesVStack.removeAllArrangedSubviews()
+        
+        if(stories.count == 0) {
+            ADD_SPACER(to: self.storiesVStack, height: 16)
+        
+            let infoLabel = UILabel()
+            infoLabel.text = "No result found"
+            infoLabel.textColor = CSS.shared.displayMode().main_textColor
+            infoLabel.font = AILERON(16)
+            infoLabel.textAlignment = .center
+            
+            self.storiesVStack.addArrangedSubview(infoLabel)
+        } else {
+            for ST in stories {
+                let newItem = self.createStoryView(ST)
+                self.storiesVStack.addArrangedSubview(newItem)
+                ADD_SPACER(to: self.storiesVStack, height: 15)
+            }
+        }
+    }
+    
+    private func createStoryView(_ data: NewsLetterStory) -> UIView {
+        let H: CGFloat = 100
+        let W = (16 * H)/9
+    
+        let storyView = UIView()
+        storyView.backgroundColor = self.view.backgroundColor
+
+        // DATE --------------------------
+        let dateLabel = UILabel()
+        dateLabel.textColor = CSS.shared.displayMode().sec_textColor
+        dateLabel.font = AILERON(14)
+        dateLabel.backgroundColor = .clear
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        if let _date = formatter.date(from: data.date) {
+            formatter.dateFormat = "dd MMMM yyyy"
+            dateLabel.text = formatter.string(from: _date)
+        } else {
+            dateLabel.text = data.date
+        }
+        dateLabel.text = dateLabel.text?.uppercased()
+        
+        storyView.addSubview(dateLabel)
+        dateLabel.activateConstraints([
+            dateLabel.leadingAnchor.constraint(equalTo: storyView.leadingAnchor),
+            dateLabel.topAnchor.constraint(equalTo: storyView.topAnchor),
+            dateLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        // IMAGE --------------------------
+        let imageView = CustomImageView()
+        imageView.showCorners(false)
+        storyView.addSubview(imageView)
+        imageView.activateConstraints([
+            imageView.leadingAnchor.constraint(equalTo: storyView.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
+            imageView.widthAnchor.constraint(equalToConstant: W),
+            imageView.heightAnchor.constraint(equalToConstant: H)
+        ])
+        imageView.load(url: data.image_url)
+        
+        // CIRCLE --------------------------
+        let circle = UIView()
+                
+        var circleBgColor = CSS.shared.cyan
+        if(data.type==2){ circleBgColor = CSS.shared.orange }
+        
+        var circleTextColor = UIColor(hex: 0x19191C)
+        if(data.type==2){ circleTextColor = .white }
+        
+        var itemText = "D"
+        if(data.type==2){ itemText = "W" }
+        
+        circle.backgroundColor = circleBgColor
+        storyView.addSubview(circle)
+        circle.activateConstraints([
+            circle.widthAnchor.constraint(equalToConstant: 26),
+            circle.heightAnchor.constraint(equalToConstant: 26),
+            circle.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -10),
+            circle.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10)
+        ])
+        circle.layer.cornerRadius = 13
+        
+        let letter = UILabel()
+        letter.text = itemText
+        letter.font = DM_SERIF_DISPLAY(16)
+        letter.textColor = circleTextColor
+        circle.addSubview(letter)
+        letter.activateConstraints([
+            letter.centerXAnchor.constraint(equalTo: circle.centerXAnchor),
+            letter.centerYAnchor.constraint(equalTo: circle.centerYAnchor)
+        ])
+        
+        // TEXT --------------------------
+        let titleLabel = UILabel()
+        titleLabel.numberOfLines = 0
+        titleLabel.text = data.title
+        titleLabel.textColor = CSS.shared.displayMode().main_textColor
+        titleLabel.font = DM_SERIF_DISPLAY(16)
+        storyView.addSubview(titleLabel)
+        titleLabel.activateConstraints([
+            titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: storyView.trailingAnchor, constant: -16),
+            titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor)
+        ])
+        
+        var totalH = H
+        let textW = SCREEN_SIZE().width - (16*4) - W
+        let textH: CGFloat = titleLabel.calculateHeightFor(width: textW) + 16
+        if(textH > H) {
+            totalH = textH
+        }
+        
+        storyView.activateConstraints([
+            storyView.heightAnchor.constraint(equalToConstant: totalH + 20 + 10)
+        ])
+        
+        storyView.bringSubviewToFront(dateLabel)
+        return storyView
+    }
+
 }

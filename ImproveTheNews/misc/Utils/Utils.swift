@@ -189,6 +189,9 @@ func DATE_TO_TIMEAGO(_ date: String) -> String {
     return result
 }
 
+func DATE_ZERO_HOUR(input: Date) -> Date {
+    return Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: input)!
+}
 
 // MARK: - OS theme related
 func DISPLAY_MODE_iOS() -> DisplayMode {

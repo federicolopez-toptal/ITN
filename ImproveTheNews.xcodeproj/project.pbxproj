@@ -52,6 +52,9 @@
 		1F41AE272A13DFDA00C0A0D2 /* Twitter_SDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F41AE262A13DFDA00C0A0D2 /* Twitter_SDK.swift */; };
 		1F41FCCC29B24AFC002081AE /* FAQ_content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F41FCCB29B24AFC002081AE /* FAQ_content.swift */; };
 		1F45108D2B7D6FD000AFCE59 /* LINK64.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F45108C2B7D6FD000AFCE59 /* LINK64.png */; };
+		1F455E7E2BA151BF00551336 /* NewsLetterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F455E7D2BA151BF00551336 /* NewsLetterData.swift */; };
+		1F455E802BA15BED00551336 /* NewsLetterStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F455E7F2BA15BED00551336 /* NewsLetterStory.swift */; };
+		1F455E822BA1754C00551336 /* UIStackViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F455E812BA1754C00551336 /* UIStackViewExtension.swift */; };
 		1F47CD8D290F5476003F0003 /* StoryCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */; };
 		1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */; };
 		1F5012F52AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */; };
@@ -542,6 +545,9 @@
 		1F41AE262A13DFDA00C0A0D2 /* Twitter_SDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Twitter_SDK.swift; sourceTree = "<group>"; };
 		1F41FCCB29B24AFC002081AE /* FAQ_content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQ_content.swift; sourceTree = "<group>"; };
 		1F45108C2B7D6FD000AFCE59 /* LINK64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LINK64.png; sourceTree = "<group>"; };
+		1F455E7D2BA151BF00551336 /* NewsLetterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterData.swift; sourceTree = "<group>"; };
+		1F455E7F2BA15BED00551336 /* NewsLetterStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterStory.swift; sourceTree = "<group>"; };
+		1F455E812BA1754C00551336 /* UIStackViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStackViewExtension.swift; sourceTree = "<group>"; };
 		1F47CD8C290F5476003F0003 /* StoryCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCT_cell.swift; sourceTree = "<group>"; };
 		1F47CD8E290F5683003F0003 /* ArticleCT_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCT_cell.swift; sourceTree = "<group>"; };
 		1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneStory_2colsImg_cell_v3.swift; sourceTree = "<group>"; };
@@ -1307,6 +1313,8 @@
 			isa = PBXGroup;
 			children = (
 				1F9D2A8A2B9F7ED100B1908D /* NewsLetterArchiveViewController.swift */,
+				1F455E7D2BA151BF00551336 /* NewsLetterData.swift */,
+				1F455E7F2BA15BED00551336 /* NewsLetterStory.swift */,
 			);
 			path = NewsletterArchive;
 			sourceTree = "<group>";
@@ -1405,6 +1413,7 @@
 				1F22E2EA28C6E5E0007F00D1 /* UINavigationControllerExtension.swift */,
 				1F36FB0128EBF0E0002A54BC /* CGRectExtension.swift */,
 				1FF088CC29F824ED00F31523 /* NSAttributedStringExtension.swift */,
+				1F455E812BA1754C00551336 /* UIStackViewExtension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -2361,6 +2370,7 @@
 				1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */,
 				1FD699252B6B29E400C4B0F9 /* iPhoneArticle_4colsImgBanner_cell_v3.swift in Sources */,
 				1FE89CEB2AF19DDB00A6C99C /* CSS.swift in Sources */,
+				1F455E822BA1754C00551336 /* UIStackViewExtension.swift in Sources */,
 				1F9E28C32954B22900041303 /* PrivacyPolicy_content.swift in Sources */,
 				1F106AED29071E30004B9943 /* MainFeed_cellTaps.swift in Sources */,
 				1F47CD8D290F5476003F0003 /* StoryCT_cell.swift in Sources */,
@@ -2371,6 +2381,7 @@
 				1F38214629A6EA71004D4D29 /* CustomCellView.swift in Sources */,
 				1F8A7A9F2B6B60C60049328A /* UIViewExtension.swift in Sources */,
 				1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */,
+				1F455E802BA15BED00551336 /* NewsLetterStory.swift in Sources */,
 				1FC9C45A2B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift in Sources */,
 				1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */,
 				1FC9C4562B8851C700E77FD5 /* iPadStory_vImg_cell_v3.swift in Sources */,
@@ -2578,6 +2589,7 @@
 				1FF326C328CA720E006FF2CE /* MainFeedArticle.swift in Sources */,
 				1F971CB82AF284BD0049BA42 /* GroupItemCell_v3.swift in Sources */,
 				1FD5BDF128DC0F91003E650F /* NoInternetPopupView.swift in Sources */,
+				1F455E7E2BA151BF00551336 /* NewsLetterData.swift in Sources */,
 				1F58C85D2B05BBBA00E0A151 /* iPhoneSplitHeaderCell_v3.swift in Sources */,
 				1FA8AA3428D0D50200B6C956 /* HeaderOverCell.swift in Sources */,
 				1F70BE712913FD940061E3FA /* SearchTextView.swift in Sources */,
@@ -2735,7 +2747,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2772,7 +2784,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2863,7 +2875,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

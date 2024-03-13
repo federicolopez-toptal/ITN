@@ -42,10 +42,10 @@ class CustomNavController: UINavigationController {
 
         self.addInitialViewController() // Start!
         
-        DELAY(1.0) {
-            let vc = NewsLetterArchiveViewController()
-            self.pushViewController(vc, animated: true)
-        }
+//        DELAY(1.0) {
+//            let vc = NewsLetterArchiveViewController()
+//            self.pushViewController(vc, animated: true)
+//        }
     }
     
     @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {
