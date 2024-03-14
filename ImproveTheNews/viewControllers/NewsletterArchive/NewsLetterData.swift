@@ -12,7 +12,7 @@ class NewsLetterData {
     static let shared = NewsLetterData()
     
     func loadData(range: String, type: String, offset: Int,
-        callback: @escaping (Error?, [NewsLetterStory]) -> ()) {
+        callback: @escaping (Error?, [NewsLetterStory], Int, Int) -> ()) {
         
         let url = ITN_URL() + "/php/stories/newsletters-archive.php" +
             "?range=" + range + "&type=" + type + "&offset=" + String(offset)
@@ -20,27 +20,27 @@ class NewsLetterData {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
-        print(url)
+        print("NEWSLETTER URL", url)
         let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
-                callback(error, [])
+                callback(error, [], -1, -1)
             }
             
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(_error, [])
+                callback(_error, [], -1, -1)
             } else {
                 if let _json = JSON(fromData: data) {
                     if let _ = _json["error"] {
                         if let _msg = _json["message"] as? String {
                             if(_msg.lowercased().contains("no record found")) {
-                                callback(nil, [])
+                                callback(nil, [], -1, -1)
                             } else {
-                                callback(CustomError.jsonParseError, [])
+                                callback(CustomError.jsonParseError, [], -1, -1)
                             }
                         } else {
-                            callback(CustomError.jsonParseError, [])
+                            callback(CustomError.jsonParseError, [], -1, -1)
                         }
                     } else {
                         if let storiesNode = _json["stories"] as? [[String: Any]] {
@@ -50,14 +50,17 @@ class NewsLetterData {
                                 stories.append(newItem)
                             }
                             
-                            callback(nil, stories)
+                            let pages = _json["pages"] as! Int
+                            let currentPage = _json["page_no"] as! Int
+                            
+                            callback(nil, stories, currentPage, pages)
                         } else {
-                            callback(CustomError.jsonParseError, [])
+                            callback(CustomError.jsonParseError, [], -1, -1)
                         }
                     }
                 } else {
                     let _error = CustomError.jsonParseError
-                    callback(_error, [])
+                    callback(_error, [], -1, -1)
                 }
             }
         }

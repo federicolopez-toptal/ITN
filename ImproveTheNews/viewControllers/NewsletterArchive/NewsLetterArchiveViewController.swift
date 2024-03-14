@@ -36,6 +36,9 @@ class NewsLetterArchiveViewController: BaseViewController {
     let mainContentView = UIView()
     var storiesVStack: UIStackView!
         
+    var stories: [NewsLetterStory]!
+    var offset: Int = 1
+        
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -793,9 +796,11 @@ extension NewsLetterArchiveViewController {
     }
     
     func loadData() {
+        self.offset = 1
+    
         self.showLoading()
         NewsLetterData.shared.loadData(range: self.getRange(),
-            type: self.getType(), offset: 1) { (error, stories) in
+            type: self.getType(), offset: self.offset) { (error, stories, current, total) in
             
             self.hideLoading()
             
@@ -803,14 +808,46 @@ extension NewsLetterArchiveViewController {
                 CustomNavController.shared.infoAlert(message: "Trouble loading the newsletter,\nplease try again later.")
             } else {
                 MAIN_THREAD {
-                    self.add(stories: stories)
+                    self.add(stories: stories, current, total)
                 }
             }
         }
     }
     
-    private func add(stories: [NewsLetterStory]) {
-        self.storiesVStack.removeAllArrangedSubviews()
+    func loadMoreData() {
+        self.offset += 1
+    
+        self.showLoading()
+        NewsLetterData.shared.loadData(range: self.getRange(),
+            type: self.getType(), offset: self.offset) { (error, stories, current, total) in
+            
+            self.hideLoading()
+            
+            if let _ = error {
+                CustomNavController.shared.infoAlert(message: "Trouble loading the newsletter,\nplease try again later.")
+            } else {
+                MAIN_THREAD {
+                    self.add(clean: false, stories: stories, current, total)
+                }
+            }
+        }
+    }
+    
+    private func add(clean: Bool = true, stories: [NewsLetterStory], _ current: Int, _ total: Int) {
+        print("current", current, "total", total)
+        
+        if(clean) {
+            self.stories = stories
+            self.storiesVStack.removeAllArrangedSubviews()
+        } else {
+            for ST in stories {
+                self.stories.append(ST)
+            }
+        
+            let last = self.storiesVStack.arrangedSubviews.last!
+            last.removeFromSuperview()
+            //self.storiesVStack.removeArrangedSubview(last)
+        }
         
         if(stories.count == 0) {
             ADD_SPACER(to: self.storiesVStack, height: 16)
@@ -823,8 +860,8 @@ extension NewsLetterArchiveViewController {
             
             self.storiesVStack.addArrangedSubview(infoLabel)
         } else {
-            for ST in stories {
-                let newItem = self.createStoryView(ST)
+            for (i, ST) in stories.enumerated() {
+                let newItem = self.createStoryView(i, ST)
                 self.storiesVStack.addArrangedSubview(newItem)
                 
                 if(IPHONE()) {
@@ -833,10 +870,45 @@ extension NewsLetterArchiveViewController {
                     ADD_SPACER(to: self.storiesVStack, height: 25)
                 }
             }
+            
+            if(total>0 && current<total) {
+                let newItem = self.createLoadMore()
+                self.storiesVStack.addArrangedSubview(newItem)
+            }
         }
     }
     
-    private func createStoryView(_ data: NewsLetterStory) -> UIView {
+    private func createLoadMore() -> UIView {
+        let loadMoreView = UIView()
+        loadMoreView.backgroundColor = self.view.backgroundColor
+        loadMoreView.activateConstraints([
+            loadMoreView.heightAnchor.constraint(equalToConstant: 88)
+        ])
+        
+        let button = UIButton(type: .custom)
+        loadMoreView.addSubview(button)
+        button.activateConstraints([
+            button.heightAnchor.constraint(equalToConstant: 42),
+            button.widthAnchor.constraint(equalToConstant: 150),
+            button.centerXAnchor.constraint(equalTo: loadMoreView.centerXAnchor),
+            button.centerYAnchor.constraint(equalTo: loadMoreView.centerYAnchor)
+        ])
+        button.setTitle("Show more", for: .normal)
+        button.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
+        button.titleLabel?.font = AILERON(15)
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 9
+        button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE8E9EA)
+        button.addTarget(self, action: #selector(loadMoreOnTap(_:)), for: .touchUpInside)
+        
+        return loadMoreView
+    }
+    
+    @objc func loadMoreOnTap(_ sender: UIButton) {
+        self.loadMoreData()
+    }
+    
+    private func createStoryView(_ index: Int, _ data: NewsLetterStory) -> UIView {
         var H: CGFloat = 100
         if(IPAD()){ H = 150 }
         let W = (16 * H)/9
@@ -934,8 +1006,20 @@ extension NewsLetterArchiveViewController {
         storyView.activateConstraints([
             storyView.heightAnchor.constraint(equalToConstant: totalH + 20 + 10)
         ])
-        
         storyView.bringSubviewToFront(dateLabel)
+        
+        let buttonArea = UIButton(type: .custom)
+        buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        storyView.addSubview(buttonArea)
+        buttonArea.activateConstraints([
+            buttonArea.leadingAnchor.constraint(equalTo: storyView.leadingAnchor, constant: 0),
+            buttonArea.topAnchor.constraint(equalTo: storyView.topAnchor, constant: 0),
+            buttonArea.trailingAnchor.constraint(equalTo: storyView.trailingAnchor, constant: 0),
+            buttonArea.bottomAnchor.constraint(equalTo: storyView.bottomAnchor, constant: 0)
+        ])
+        buttonArea.tag = index
+        buttonArea.addTarget(self, action: #selector(storyOnTap(_:)), for: .touchUpInside)
+        
         return storyView
     }
 
@@ -946,4 +1030,20 @@ extension NewsLetterArchiveViewController {
         return formatter.string(from: date)
     }
 
+    @objc func storyOnTap(_ sender: UIButton) {
+        let i = sender.tag
+        let ST = self.stories[i]
+//        
+//        print( ST.date )
+//        print( ST.type )
+
+        if(ST.type == 1) {
+            FUTURE_IMPLEMENTATION("Open Daily story")
+        } else {
+            FUTURE_IMPLEMENTATION("Open Weekly story")
+        }
+
+        
+    }
+    
 }
