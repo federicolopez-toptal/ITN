@@ -223,64 +223,116 @@ class FAQViewController: BaseViewController {
         
         var hSep: CGFloat = CSS.shared.iPhoneSide_padding
         if(IPAD()){ hSep = 32 }
-        let W2 = (W - hSep)/2
-
-        var storiesCopy = stories
-        while(storiesCopy.count>0) {
-            let colsHStack = HSTACK(into: sectionView, spacing: hSep)
+        var W2 = (W - hSep)/2
+        
+        if(IPHONE()) {
+            W2 = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 2)
+        
+            var storiesCopy = stories
+            while(storiesCopy.count>0) {
+                //CSS.shared.iPhoneSide_padding
             
-            colsHStack.activateConstraints([
-                colsHStack.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor,
-                    constant: CSS.shared.iPhoneSide_padding),
-                colsHStack.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor,
-                    constant: -CSS.shared.iPhoneSide_padding),
-                colsHStack.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY)
-            ])
-            
-            var H1: CGFloat = 1
-            var H2: CGFloat = 1
-            let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W2)
-            let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W2)
-            
-            // item 1
-            if let _A = storiesCopy.first {
-                VIEW1.refreshDisplayMode()
-                VIEW1.populate(story: _A)
-                H1 = VIEW1.calculateHeight()
-                colsHStack.addArrangedSubview(VIEW1)
-                VIEW1.activateConstraints([
-                    VIEW1.widthAnchor.constraint(equalToConstant: W2)
+                var H1: CGFloat = 1
+                var H2: CGFloat = 1
+                let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W2)
+                let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W2)
+                
+                // item 1
+                if let _A = storiesCopy.first {
+                    VIEW1.refreshDisplayMode()
+                    VIEW1.populate(story: _A)
+                    H1 = VIEW1.calculateHeight()
+                    sectionView.addSubview(VIEW1)
+                    
+                    VIEW1.activateConstraints([
+                        VIEW1.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
+                        VIEW1.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
+                        VIEW1.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY),
+                        VIEW1.heightAnchor.constraint(equalToConstant: H1)
+                    ])
+                    
+                    posY += H1
+                    storiesCopy.removeFirst()
+                }
+                
+                // item 2
+                if let _A = storiesCopy.first {
+                    VIEW2.refreshDisplayMode()
+                    VIEW2.populate(story: _A)
+                    H2 = VIEW2.calculateHeight()
+                    sectionView.addSubview(VIEW2)
+                    
+                    VIEW2.activateConstraints([
+                        VIEW2.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
+                        VIEW2.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
+                        VIEW2.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY),
+                        VIEW2.heightAnchor.constraint(equalToConstant: H2)
+                    ])
+                    
+                    posY += H2
+                    storiesCopy.removeFirst()
+                }
+                
+                break //new 🤷‍♂️
+            }
+        } else {
+            var storiesCopy = stories
+            while(storiesCopy.count>0) {
+                let colsHStack = HSTACK(into: sectionView, spacing: hSep)
+                
+                colsHStack.activateConstraints([
+                    colsHStack.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor,
+                        constant: CSS.shared.iPhoneSide_padding),
+                    colsHStack.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor,
+                        constant: -CSS.shared.iPhoneSide_padding),
+                    colsHStack.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY)
                 ])
                 
-                storiesCopy.removeFirst()
-            } else {
-                H1 = 0
-                ADD_SPACER(to: colsHStack, width: W2)
-            }
-            
-            // item 2
-            if let _A = storiesCopy.first {
-                VIEW2.refreshDisplayMode()
-                VIEW2.populate(story: _A)
-                H2 = VIEW2.calculateHeight()
-                colsHStack.addArrangedSubview(VIEW2)
-                VIEW2.activateConstraints([
-                    VIEW2.widthAnchor.constraint(equalToConstant: W2)
-                ])
+                var H1: CGFloat = 1
+                var H2: CGFloat = 1
+                let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W2)
+                let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W2)
                 
-                storiesCopy.removeFirst()
-            } else {
-                H2 = 0
-                ADD_SPACER(to: colsHStack, width: W2)
-            }
-            
-            let maxH = (H1 > H2) ? H1 : H2
-            VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
-            VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+                // item 1
+                if let _A = storiesCopy.first {
+                    VIEW1.refreshDisplayMode()
+                    VIEW1.populate(story: _A)
+                    H1 = VIEW1.calculateHeight()
+                    colsHStack.addArrangedSubview(VIEW1)
+                    VIEW1.activateConstraints([
+                        VIEW1.widthAnchor.constraint(equalToConstant: W2)
+                    ])
+                    
+                    storiesCopy.removeFirst()
+                } else {
+                    H1 = 0
+                    ADD_SPACER(to: colsHStack, width: W2)
+                }
+                
+                // item 2
+                if let _A = storiesCopy.first {
+                    VIEW2.refreshDisplayMode()
+                    VIEW2.populate(story: _A)
+                    H2 = VIEW2.calculateHeight()
+                    colsHStack.addArrangedSubview(VIEW2)
+                    VIEW2.activateConstraints([
+                        VIEW2.widthAnchor.constraint(equalToConstant: W2)
+                    ])
+                    
+                    storiesCopy.removeFirst()
+                } else {
+                    H2 = 0
+                    ADD_SPACER(to: colsHStack, width: W2)
+                }
+                
+                let maxH = (H1 > H2) ? H1 : H2
+                VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+                VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
 
-            posY += maxH + (IPAD() ? 32 : 0)
-            
-            break //new 🤷‍♂️
+                posY += maxH + (IPAD() ? 32 : 0)
+                
+                break //new 🤷‍♂️
+            }
         }
         
         sectionView.activateConstraints([
