@@ -38,6 +38,17 @@ extension String {
         return String(self[range])
     }
     
+    func subString2(from: Int, count: Int) -> String? {
+        if(from<0 || from>=self.count){ return nil }
+        if(from+count-1<0 || from+count-1>=self.count){ return nil }
+        
+        let start = self.index(self.startIndex, offsetBy: from)
+        let end = self.index(self.startIndex, offsetBy: from+count)
+        let range = start...end
+        
+        return String(self[range])
+    }
+    
     func getHeight(font: UIFont, width: CGFloat) -> CGFloat {
       let attributes: [NSAttributedString.Key: Any] = [ .font: font ]
       let attributedText = NSAttributedString(string: self, attributes: attributes)

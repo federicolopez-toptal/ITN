@@ -84,6 +84,10 @@ extension UILabel {
     }
     
     func remarkSearchTerm(_ term: String, color: UIColor) {
+        print(self.text)
+        print(term)
+        print("----------")
+        
         if(term.isEmpty) {
             self.textColor = color
             return
@@ -97,14 +101,18 @@ extension UILabel {
             .foregroundColor: color
         ])
         
-        let orangeAttributedString = NSMutableAttributedString(string: term, attributes: [
-            .font: ogFont,
-            .foregroundColor: CSS.shared.orange
-        ])
-
         let range = (attributedString.string.lowercased() as NSString).range(of: term.lowercased())
-        attributedString.replaceCharacters(in: range, with: orangeAttributedString)
-                
+        let newTerm = ogText.subString2(from: range.location, count: range.length-1)
+
+        if let _newTerm = newTerm {
+            let orangeAttributedString = NSMutableAttributedString(string: _newTerm, attributes: [
+                .font: ogFont,
+                .foregroundColor: CSS.shared.orange
+            ])
+            
+            attributedString.replaceCharacters(in: range, with: orangeAttributedString)
+        }
+        
         self.attributedText = attributedString
     }
   
