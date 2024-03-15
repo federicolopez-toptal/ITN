@@ -20,7 +20,7 @@ class AccountViewController: BaseViewController {
     let lastNameText = FormTextView()
     let userNameText = FormTextView()
     let emailText = FormTextView()
-
+    
     var subscriptionType = 0
     let subscriptionStateLabel = UILabel()
     let subscribeButtonLabel = UILabel()
@@ -55,7 +55,7 @@ class AccountViewController: BaseViewController {
 
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.back, .title])
-            self.navBar.setTitle("My account")
+            self.navBar.setTitle("My Account")
             self.navBar.addBottomLine()
 
             self.buildContent()
@@ -145,7 +145,7 @@ class AccountViewController: BaseViewController {
 //        ADD_SPACER(to: VStack_form, height: 25)
     
         let titleLabel = UILabel()
-        titleLabel.text = "My account"
+        titleLabel.text = "My Account"
         titleLabel.font = DM_SERIF_DISPLAY(23)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
@@ -253,7 +253,7 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: VStack_form, height: 24)
         
         let titleLabel2 = UILabel()
-        titleLabel2.text = "Verity newsletter"
+        titleLabel2.text = "Verity Newsletter"
         titleLabel2.font = DM_SERIF_DISPLAY(23)
         titleLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel2)
@@ -573,7 +573,7 @@ class AccountViewController: BaseViewController {
 //        
 //    //---
         let titleLabel3 = UILabel()
-        titleLabel3.text = "Sign out"
+        titleLabel3.text = "Sign Out"
         titleLabel3.font = DM_SERIF_DISPLAY(23)
         titleLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel3)
@@ -592,7 +592,7 @@ class AccountViewController: BaseViewController {
         let hStackSignOut = HSTACK(into: VStack_form)
         
         let signOutLabel = UILabel()
-        signOutLabel.text = "Sign out of your Verity account"
+        signOutLabel.text = "Sign Out of your Verity Account"
         signOutLabel.font = AILERON(16)
         signOutLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackSignOut.addArrangedSubview(signOutLabel)
@@ -610,7 +610,7 @@ class AccountViewController: BaseViewController {
         signOutButton.addTarget(self, action: #selector(signOutButtonTap(_:)), for: .touchUpInside)
         
         let signOutButtonLabel = UILabel()
-        signOutButtonLabel.text = "Sign out"
+        signOutButtonLabel.text = "Sign Out"
         signOutButtonLabel.textColor = UIColor(hex: 0x19191C)
         signOutButtonLabel.font = AILERON_SEMIBOLD(16)
         hStackSignOut.addSubview(signOutButtonLabel)
@@ -635,7 +635,7 @@ class AccountViewController: BaseViewController {
         
         ///////////////////
         let titleLabel4 = UILabel()
-        titleLabel4.text = "Close my account"
+        titleLabel4.text = "Close My Account"
         titleLabel4.font = DM_SERIF_DISPLAY(23)
         titleLabel4.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel4)
@@ -665,7 +665,7 @@ class AccountViewController: BaseViewController {
         
         let deleteLabel = UILabel()
         deleteLabel.numberOfLines = 0
-        deleteLabel.text = "Close my account and disconnect any\nsocial accounts"
+        deleteLabel.text = "Close my Account and disconnect any\nsocial accounts"
         deleteLabel.font = AILERON(16)
         deleteLabel.setLineSpacing(lineSpacing: 6.0)
         deleteLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
