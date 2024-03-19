@@ -11,6 +11,7 @@ class NewsLetterData {
     
     static let shared = NewsLetterData()
     
+    // Load newsletter list
     func loadData(range: String, type: String, offset: Int,
         callback: @escaping (Error?, [NewsLetterStory], Int, Int) -> ()) {
         
@@ -61,6 +62,43 @@ class NewsLetterData {
                 } else {
                     let _error = CustomError.jsonParseError
                     callback(_error, [], -1, -1)
+                }
+            }
+        }
+
+        task.resume()
+    }
+    
+    // load daily/weely newsletter
+    func loadNewsletter(_ ST: NewsLetterStory,
+        callback: @escaping (Error?) -> () ) {
+        
+        var url = ""
+        if(ST.type == 1) {
+            url = ITN_URL() + "/php/stories/daily-newsletters.php?date=" + ST.date
+        } else {
+            url = ITN_URL() + "/php/stories/weekly-newsletters.php?date=" + ST.date
+        }
+        
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        
+        print("Loading NEWSLETTER", url)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+                callback(error)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    callback(nil)
+                } else {
+                    let _error = CustomError.jsonParseError
+                    callback(_error)
                 }
             }
         }

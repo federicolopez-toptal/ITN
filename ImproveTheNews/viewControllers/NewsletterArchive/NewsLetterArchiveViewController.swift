@@ -1033,17 +1033,22 @@ extension NewsLetterArchiveViewController {
     @objc func storyOnTap(_ sender: UIButton) {
         let i = sender.tag
         let ST = self.stories[i]
-//        
+        
+        let vc = NewsLetterContentViewController()
+        vc.refData = ST
+        CustomNavController.shared.pushViewController(vc, animated: true)
+        
+        //NewsLetterData.shared.loadNewsletter(ST)
+        
+//
 //        print( ST.date )
 //        print( ST.type )
-
-        if(ST.type == 1) {
-            FUTURE_IMPLEMENTATION("Open Daily story")
-        } else {
-            FUTURE_IMPLEMENTATION("Open Weekly story")
-        }
-
-        
+//
+//        if(ST.type == 1) {
+//            FUTURE_IMPLEMENTATION("Open Daily story")
+//        } else {
+//            FUTURE_IMPLEMENTATION("Open Weekly story")
+//        }
     }
     
 }

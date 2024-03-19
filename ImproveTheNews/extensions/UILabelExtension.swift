@@ -84,10 +84,7 @@ extension UILabel {
     }
     
     func remarkSearchTerm(_ term: String, color: UIColor) {
-        print(self.text)
-        print(term)
-        print("----------")
-        
+
         if(term.isEmpty) {
             self.textColor = color
             return

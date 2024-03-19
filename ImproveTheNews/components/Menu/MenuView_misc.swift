@@ -28,6 +28,8 @@ enum MenuItem {
     case feedback
     case privacy
     case spacer
+    
+    case publicFigures
 }
 
 // ------------
@@ -88,6 +90,9 @@ extension MenuView {
             case .newsletter:
                 result = "Newsletter Archive"
                 
+            case .publicFigures:
+                result = "Public Figures"
+                
             default:
                 result = ""
         }
@@ -135,6 +140,9 @@ extension MenuView {
             
             case .profile:
                 icon = "profile"
+            
+            case .publicFigures:
+                icon = "profile.circle"
             
             case .logout:
                 icon = "logout"
@@ -198,6 +206,9 @@ extension MenuView {
             
             case .themeDefault:
                 self.setOSTheme()
+            
+            case .publicFigures:
+                self.showPublicFigures()
             
             default:
                 NOTHING()

@@ -199,7 +199,6 @@ extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
         let currentPosY = scrollView.contentOffset.y
         let diff = self.lastScrollViewPosY - currentPosY
         
-        print(currentPosY)
         if(diff < 0) {
             // up
             if(currentPosY >= 150) {

@@ -137,6 +137,18 @@ extension MainFeed_v3_viewController {
                             }
                         }
 
+                        DELAY(0.25) {
+                            let vc = PublicFiguresViewController()
+                            CustomNavController.shared.pushViewController(vc, animated: true)
+                        }
+                
+
+//                        DELAY(0.5) {
+//                            let vc = NewsLetterContentViewController()
+//                            vc.refData = NewsLetterStory(type: 1)
+//                            CustomNavController.shared.pushViewController(vc, animated: true)
+//                        }
+
 //                        DELAY(1.0) {
 //                            self.list.scrollToBottom()
 //                        }
@@ -171,7 +183,6 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
         let currentPosY = scrollView.contentOffset.y
         let diff = self.lastScrollViewPosY - currentPosY
         
-        print(currentPosY)
         if(diff < 0) {
             // up
             if(currentPosY >= 150) {

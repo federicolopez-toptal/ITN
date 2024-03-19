@@ -21,7 +21,8 @@ class MenuView: UIView {
     
     let dp_mainItems: [MenuItem] = [ // Items order
         .headlines,
-        .profile,
+        .publicFigures,
+        //.profile,
         
         .theme,
         
@@ -522,6 +523,15 @@ extension MenuView {
         }
         
         CustomNavController.shared.pushViewController(vc!, animated: true)
+    }
+    
+    // ---------
+    func showPublicFigures() {
+        self.dismissMe()
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
+        
+        let vc = PublicFiguresViewController()
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
     // ---------
