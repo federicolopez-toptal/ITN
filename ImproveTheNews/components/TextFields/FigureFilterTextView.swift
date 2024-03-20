@@ -71,7 +71,7 @@ class FigureFilterTextView: UIView {
         self.searchTextField.font = self.placeHolderLabel.font
         self.searchTextField.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         self.searchTextField.tintColor = self.searchTextField.textColor
-        self.searchTextField.returnKeyType = .done
+        self.searchTextField.returnKeyType = .search
         self.searchTextField.autocapitalizationType = .none
         self.searchTextField.autocorrectionType = .no
         self.searchTextField.smartDashesType = .no

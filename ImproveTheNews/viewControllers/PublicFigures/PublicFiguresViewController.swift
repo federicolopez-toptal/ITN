@@ -12,6 +12,7 @@ import SDWebImage
 class PublicFiguresViewController: BaseViewController {
 
     let navBar = NavBarView()
+    var lastKeyTapTime: Date?
     
     var page: Int = 0
     var allItems = [PublicFigureListItem]()
@@ -19,6 +20,8 @@ class PublicFiguresViewController: BaseViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
     let showMoreView = UIView()
+
+    let noItemsLabel = UILabel()
 
         var filterTextfield = FigureFilterTextView()
         let itemsContainer = UIView()
@@ -84,7 +87,7 @@ class PublicFiguresViewController: BaseViewController {
             H
         ])
         
-        //self.filterTextfield.delegate = self
+        self.filterTextfield.delegate = self
         self.filterTextfield.buildInto(view: self.contentView)
         self.filterTextfield.activateConstraints([
             self.filterTextfield.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16*2),
@@ -137,6 +140,18 @@ class PublicFiguresViewController: BaseViewController {
         showMoreButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE8E9EA)
         showMoreButton.addTarget(self, action: #selector(loadMoreOnTap(_:)), for: .touchUpInside)
         
+        self.noItemsLabel.font = AILERON(16)
+        self.noItemsLabel.textAlignment = .center
+        self.noItemsLabel.textColor = CSS.shared.displayMode().sec_textColor
+        self.noItemsLabel.numberOfLines = 0
+        self.noItemsLabel.text = "No items found\nPlease, try another search"
+        self.contentView.addSubview(self.noItemsLabel)
+        self.noItemsLabel.activateConstraints([
+            self.noItemsLabel.topAnchor.constraint(equalTo: self.itemsContainer.topAnchor, constant: 20),
+            self.noItemsLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor)
+        ])
+        self.noItemsLabel.hide()
+        
         self.scrollView.hide()
         self.refreshDisplayMode()
     }
@@ -151,10 +166,17 @@ class PublicFiguresViewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             
-            self.page = 1
-            self.allItems = [PublicFigureListItem]()
+            self.resetListParams()
             self.loadContent(page: self.page)
         }
+    }
+    
+    func resetListParams() {
+        self.COL = 0
+        self.ROW = 0
+        self.page = 1
+        self.allItems = [PublicFigureListItem]()
+        REMOVE_ALL_SUBVIEWS(from: self.itemsContainer)
     }
     
     override func refreshDisplayMode() {
@@ -173,7 +195,7 @@ extension PublicFiguresViewController {
     
     private func loadContent(page P: Int) {
         self.showLoading()
-        PublicFigureData.shared.loadList(page: P) { (error, total, items) in
+        PublicFigureData.shared.loadList(term: self.filterTextfield.text(), page: P) { (error, total, items) in
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading the Public Figures,\nplease try again later.", onCompletion: {
@@ -224,6 +246,12 @@ extension PublicFiguresViewController {
         }
         
         self.scrollView.show()
+        
+        if(total == 0) {
+            self.noItemsLabel.show()
+        } else {
+            self.noItemsLabel.hide()
+        }
     }
     
     private func createItemView(data: PublicFigureListItem) -> UIView {
@@ -290,8 +318,10 @@ extension PublicFiguresViewController {
     
     @objc func listItemOnTap(_ sender: UIButton) {
         if let _item = self.allItems.first(where: { $0.id == sender.tag }) {
-            print(_item.title)
-        }        
+            let vc = FigureDetailsViewController()
+            vc.slug = _item.slug
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
     }
     
 }
@@ -305,4 +335,27 @@ extension PublicFiguresViewController: UIGestureRecognizerDelegate {
         
         return true
     }
+}
+
+// MARK:
+extension PublicFiguresViewController: FigureFilterTextViewDelegate {
+
+    func FigureFilterTextView_onTextChange(sender: FigureFilterTextView, text: String) {
+        let limitDiff: TimeInterval = 0.8
+        self.lastKeyTapTime = Date()
+
+        DELAY(limitDiff) {
+            let diff = Date().timeIntervalSince(self.lastKeyTapTime!)
+            if(diff >= limitDiff) {
+                //self.search(self.searchTextfield.text(), type: .all)
+                self.resetListParams()
+                self.loadContent(page: self.page)
+            }
+        }
+    }
+    
+    func FigureFilterTextView_onSearchTap(sender: FigureFilterTextView) {
+        NOTHING()
+    }
+    
 }

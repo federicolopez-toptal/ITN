@@ -95,6 +95,10 @@ class NewsLetterData {
                 callback(_error)
             } else {
                 if let _json = JSON(fromData: data) {
+                    if(ST.type==2) {
+                        let info = WeeklyNewsletter(jsonObj: _json)
+                    }
+                    
                     callback(nil)
                 } else {
                     let _error = CustomError.jsonParseError
@@ -104,6 +108,54 @@ class NewsLetterData {
         }
 
         task.resume()
+    }
+    
+}
+
+class WeeklyNewsletter {
+    
+    var enconding: String = ""
+    
+    init(jsonObj: [String: Any]) {
+        if let _stories = jsonObj["stories"] as? [[String: String]],
+            let _first = _stories.first,
+            let _encoding = _first["encoding"] {
+            
+            self.enconding = _encoding
+            
+            let sections = self.enconding.components(separatedBy: "#")
+            for S in sections {
+                if(!S.isEmpty) {
+                    parseSection(S)
+                }
+            }
+        }
+        
+    }
+    
+    private func parseSection(_ S: String) {
+        var found = false
+        var title = ""
+        var content = ""
+        
+        for i in 0...S.count-1 {
+            if(S[i]==":") {
+                title = S.subString(from: 0, count: i)!
+                content = S.replacingOccurrences(of: title, with: "")
+                break
+            }
+        }
+        
+        //clean title
+        title = title.replacingOccurrences(of: ":", with: "")
+        
+        // clean content
+        let topics = ["news", "world", "politics", "health", "crime_justice", "sci_tech", "social_issues", "sports", "money", "entertainment", "environment_energy", "military", "culture", "weather", "media"]
+        
+        print(">\(title)<")
+        print("CONTENT start")
+        print(content)
+        print("CONTENT end")
     }
     
 }

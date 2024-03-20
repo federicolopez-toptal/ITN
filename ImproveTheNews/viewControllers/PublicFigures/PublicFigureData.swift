@@ -31,8 +31,14 @@ class PublicFigureData {
     
     static let shared = PublicFigureData()
     
-    func loadList(page: Int, callback: @escaping (Error?, Int?, [PublicFigureListItem]?) -> () ) {
-        let url = ITN_URL() + "/api/public-figures?page=\(page)"
+    func loadList(term: String = "", page: Int, callback: @escaping (Error?, Int?, [PublicFigureListItem]?) -> () ) {
+        
+        var url = ITN_URL()
+        if(term.isEmpty) {
+            url += "/api/public-figures?page=\(page)"
+        } else {
+            url += "/api/public-figures?page=\(page)&filter=\(term.urlEncodedString())"
+        }
         
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"

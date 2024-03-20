@@ -265,6 +265,15 @@ extension MainFeedv3 {
         return result
     }
     
+    func topicNamesss() -> [String] {
+        var result = [String]()
+        for T in self.topics {
+            result.append(T.name)
+        }
+        
+        return result
+    }
+    
        
 }
 

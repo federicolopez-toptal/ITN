@@ -123,6 +123,9 @@ extension MainFeed_v3_viewController {
                     
                         self.navBar.setTitle(self.getTopicName(topic: self.topic))
                         self.topicSelector.setTopics(self.data.topicNames())
+                        
+                        //print(self.data.topicNamesss())
+                        
                         self.populateDataProvider()
                         self.refreshList()
 
@@ -138,14 +141,17 @@ extension MainFeed_v3_viewController {
                         }
 
                         DELAY(0.25) {
-                            let vc = PublicFiguresViewController()
+                            //let vc = PublicFiguresViewController()
+                            
+                            let vc = FigureDetailsViewController()
+                            vc.slug = "elon-musk"
                             CustomNavController.shared.pushViewController(vc, animated: true)
                         }
                 
 
 //                        DELAY(0.5) {
 //                            let vc = NewsLetterContentViewController()
-//                            vc.refData = NewsLetterStory(type: 1)
+//                            vc.refData = NewsLetterStory(type: 2)
 //                            CustomNavController.shared.pushViewController(vc, animated: true)
 //                        }
 
