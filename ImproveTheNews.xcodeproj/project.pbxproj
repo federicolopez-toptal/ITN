@@ -73,6 +73,7 @@
 		1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */; };
 		1F66798429DF026000CFB714 /* iPadSpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66798329DF026000CFB714 /* iPadSpacerCell.swift */; };
 		1F68CD012BAB1DB6007AC92C /* FigureDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F68CD002BAB1DB6007AC92C /* FigureDetailsViewController.swift */; };
+		1F68CD032BACC7C7007AC92C /* FigureDetails_extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F68CD022BACC7C7007AC92C /* FigureDetails_extras.swift */; };
 		1F6C51FF2B989A8500C7EE14 /* iPadArticle_2colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6C51FE2B989A8400C7EE14 /* iPadArticle_2colsImg_cell_v3.swift */; };
 		1F6DA4092B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6DA4082B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift */; };
 		1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */; };
@@ -571,6 +572,7 @@
 		1F66798129DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGroupItem_rowNoStoriesCell.swift; sourceTree = "<group>"; };
 		1F66798329DF026000CFB714 /* iPadSpacerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSpacerCell.swift; sourceTree = "<group>"; };
 		1F68CD002BAB1DB6007AC92C /* FigureDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureDetailsViewController.swift; sourceTree = "<group>"; };
+		1F68CD022BACC7C7007AC92C /* FigureDetails_extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureDetails_extras.swift; sourceTree = "<group>"; };
 		1F6C51FE2B989A8400C7EE14 /* iPadArticle_2colsImg_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadArticle_2colsImg_cell_v3.swift; sourceTree = "<group>"; };
 		1F6DA4082B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneArticle_vImg_v3.swift; sourceTree = "<group>"; };
 		1F70BE6C2913F4F70061E3FA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -1033,6 +1035,7 @@
 				1F0700AB2BA9BD95007CE44C /* PublicFigureData.swift */,
 				1F0700A52BA99E3A007CE44C /* PublicFiguresViewController.swift */,
 				1F68CD002BAB1DB6007AC92C /* FigureDetailsViewController.swift */,
+				1F68CD022BACC7C7007AC92C /* FigureDetails_extras.swift */,
 			);
 			path = PublicFigures;
 			sourceTree = "<group>";
@@ -2499,6 +2502,7 @@
 				1FE89CD72AF1552400A6C99C /* ComponentUtils.swift in Sources */,
 				1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */,
 				1FC9C4582B8852CC00E77FD5 /* iPadStory_vImg_v3.swift in Sources */,
+				1F68CD032BACC7C7007AC92C /* FigureDetails_extras.swift in Sources */,
 				1FEE16EB28C833BF0079BE54 /* NavBarView.swift.txt in Sources */,
 				1F721AF82A43C9970052ADC4 /* ArrayExtension.swift in Sources */,
 				1FC1A2BB2A3224CD001998B0 /* AudioPlayerViewController.swift in Sources */,

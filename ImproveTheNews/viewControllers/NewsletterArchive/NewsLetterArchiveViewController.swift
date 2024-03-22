@@ -16,14 +16,14 @@ class NewsLetterArchiveViewController: BaseViewController {
     var viewSelector: UIView!
         var viewPicker = UIPickerView()
         var viewPickerTopConstraint: NSLayoutConstraint!
-        var currentView: Int = 0
+        var currentView: Int = 2
         let viewPickerButton = UIButton()
         
     var dateSelector: UIView!
         var dateOptions = ["Last month", "Last 3 months", "Last 6 months", "Specific dates"]
         var datePicker = UIPickerView()
         var datePickerTopConstraint: NSLayoutConstraint!
-        var currentDate: Int = 0
+        var currentDate: Int = 2
         let datePickerButton = UIButton()
         
         let datesView = UIView()

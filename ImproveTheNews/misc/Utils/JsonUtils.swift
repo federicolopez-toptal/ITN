@@ -38,3 +38,11 @@ func CHECK(_ value: Any?) -> String {
         return ""
     }
 }
+
+func CHECK_NUM(_ value: Any?) -> Int {
+    if let _value = value as? Int {
+        return _value
+    } else {
+        return -1
+    }
+}

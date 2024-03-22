@@ -74,6 +74,25 @@ struct MainFeedArticle {
         self.used = false
     }
     
+    init(jsonFromFigure jsonObj: [String: Any]) {
+        self.source = ""
+        self.title = CHECK(jsonObj["title"])
+        self.url = ITN_URL() + CHECK(jsonObj["url"])
+        self.imgUrl = CHECK(jsonObj["image"])
+        self.LR = 1
+        self.PE = 1
+        self.country = ""
+        self.markups = [Markup]()
+        self.isStory = true
+        self.used = false
+        self.time = CHECK(jsonObj["time"])
+        
+        self.storySources = [String]()
+        if let _mediaList = jsonObj["mediaList"] as? [String] {
+            self.storySources = _mediaList
+        }
+    }
+    
     init(url: String) {
         self.source = ""
         self.time = ""

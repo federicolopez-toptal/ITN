@@ -150,6 +150,11 @@ extension MainFeediPad_v3_viewController {
                             }
                         }
                         
+                        DELAY(0.25) {   
+                            let vc = FigureDetailsViewController()
+                            vc.slug = "elon-musk"
+                            CustomNavController.shared.pushViewController(vc, animated: true)
+                        }
 //                        DELAY(1.0) {
 //                            self.list.scrollToBottom()
 //                        }
