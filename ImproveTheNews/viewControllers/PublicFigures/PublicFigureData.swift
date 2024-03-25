@@ -100,6 +100,43 @@ class PublicFigureData {
         task.resume()
     }
     
+    //-----------------------------
+    func loadStories(slug: String, topic: String, page: Int,
+        callback: @escaping (Error?, [MainFeedArticle]?, Int?) -> ()) {
+        
+        let url = ITN_URL() + "/claims-api/public-figure/\(slug)?page=\(page)&topic=\(topic)"
+        
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        
+        print("STORIES for TOPIC", topic, url)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+                callback(error, nil, nil)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil, nil)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    if let _ = _json["error"] {
+                        callback(CustomError.jsonParseError, nil, nil)
+                    } else {
+                        let figure = PublicFigure(jsonObj: _json)
+                        callback(nil, figure.stories, figure.storiesCount)
+                    }
+                } else {
+                    let _error = CustomError.jsonParseError
+                    callback(_error, nil, nil)
+                }
+            }
+        }
+
+        task.resume()
+    }
+    
 }
 
 

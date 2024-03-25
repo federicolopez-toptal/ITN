@@ -17,6 +17,8 @@
 		1F0700AA2BA9AA46007CE44C /* FigureFilterTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0700A92BA9AA46007CE44C /* FigureFilterTextView.swift */; };
 		1F0700AC2BA9BD95007CE44C /* PublicFigureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0700AB2BA9BD95007CE44C /* PublicFigureData.swift */; };
 		1F0741B32A43FFB6005F90E5 /* CenteredTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0741B22A43FFB6005F90E5 /* CenteredTextCell.swift */; };
+		1F081BF32BB1AB1900B66326 /* FigureDetails_topics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F081BF22BB1AB1900B66326 /* FigureDetails_topics.swift */; };
+		1F081BF72BB1B2CB00B66326 /* FigureDetails_stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F081BF62BB1B2CB00B66326 /* FigureDetails_stories.swift */; };
 		1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B000028F5FD35007280FF /* FooterCell.swift */; };
 		1F0B000328F61D14007280FF /* FontUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B000228F61D14007280FF /* FontUtils.swift */; };
 		1F0BFFFF28F5F2C7007280FF /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */; };
@@ -515,6 +517,8 @@
 		1F0700A92BA9AA46007CE44C /* FigureFilterTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FigureFilterTextView.swift; sourceTree = "<group>"; };
 		1F0700AB2BA9BD95007CE44C /* PublicFigureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicFigureData.swift; sourceTree = "<group>"; };
 		1F0741B22A43FFB6005F90E5 /* CenteredTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredTextCell.swift; sourceTree = "<group>"; };
+		1F081BF22BB1AB1900B66326 /* FigureDetails_topics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureDetails_topics.swift; sourceTree = "<group>"; };
+		1F081BF62BB1B2CB00B66326 /* FigureDetails_stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureDetails_stories.swift; sourceTree = "<group>"; };
 		1F0B000028F5FD35007280FF /* FooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterCell.swift; sourceTree = "<group>"; };
 		1F0B000228F61D14007280FF /* FontUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontUtils.swift; sourceTree = "<group>"; };
 		1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
@@ -1034,10 +1038,20 @@
 			children = (
 				1F0700AB2BA9BD95007CE44C /* PublicFigureData.swift */,
 				1F0700A52BA99E3A007CE44C /* PublicFiguresViewController.swift */,
-				1F68CD002BAB1DB6007AC92C /* FigureDetailsViewController.swift */,
-				1F68CD022BACC7C7007AC92C /* FigureDetails_extras.swift */,
+				1F081BF42BB1AB1F00B66326 /* Details */,
 			);
 			path = PublicFigures;
+			sourceTree = "<group>";
+		};
+		1F081BF42BB1AB1F00B66326 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				1F68CD002BAB1DB6007AC92C /* FigureDetailsViewController.swift */,
+				1F081BF22BB1AB1900B66326 /* FigureDetails_topics.swift */,
+				1F68CD022BACC7C7007AC92C /* FigureDetails_extras.swift */,
+				1F081BF62BB1B2CB00B66326 /* FigureDetails_stories.swift */,
+			);
+			path = Details;
 			sourceTree = "<group>";
 		};
 		1F18C88B28F8CC0400197F38 /* MainFeed_v1 */ = {
@@ -2529,6 +2543,7 @@
 				1F9EDD5129AEA40B007A97A6 /* iPadGroupItem_splitStoriesCell.swift in Sources */,
 				1F0589F82A43C28200E7F8AB /* iPhoneGroupItem_1ST_Cell.swift in Sources */,
 				1F88B406293FC67E0024904E /* TourView.swift in Sources */,
+				1F081BF72BB1B2CB00B66326 /* FigureDetails_stories.swift in Sources */,
 				1FE89CD92AF18F6600A6C99C /* DeviceUtils.swift in Sources */,
 				1FD699212B6B26C000C4B0F9 /* iPhoneArticle_4colsTxt_cell_v3.swift in Sources */,
 				1F9EDD5529AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift in Sources */,
@@ -2638,6 +2653,7 @@
 				1F22E2EB28C6E5E0007F00D1 /* UINavigationControllerExtension.swift in Sources */,
 				1F70BE6D2913F4F70061E3FA /* PreferencesViewController.swift in Sources */,
 				1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */,
+				1F081BF32BB1AB1900B66326 /* FigureDetails_topics.swift in Sources */,
 				1F6DA4092B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2787,7 +2803,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 78;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2824,7 +2840,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 78;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2915,7 +2931,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 78;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

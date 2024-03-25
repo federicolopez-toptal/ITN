@@ -1,8 +1,8 @@
 //
-//  FigureDetails_extras.swift
+//  FigureDetails_topics.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 21/03/2024.
+//  Created by Federico Lopez on 25/03/2024.
 //
 
 import UIKit
@@ -75,14 +75,14 @@ extension FigureDetailsViewController {
         containerView.heightAnchor.constraint(equalToConstant: val_y + H).isActive = true
         mainView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: M*2).isActive = true
         
-        self.selectTopic(index: 0)
+        self.selectTopic(index: 0, mustLoad: false)
     }
     @objc func topicButtonOnTap(_ sender: UIButton) {
         let i = sender.tag - 400
         self.selectTopic(index: i)
     }
     
-    func selectTopic(index: Int) {
+    func selectTopic(index: Int, mustLoad: Bool = true) {
         if let containerView = self.view.viewWithTag(333) {
             var i = -1
             for V in containerView.subviews {
@@ -98,34 +98,40 @@ extension FigureDetailsViewController {
                 }
             }
         }
-    }
-
-}
-
-extension FigureDetailsViewController {
-    // Utils -------------------------------
-    func W() -> CGFloat {
-        if(IPHONE()) {
-            return SCREEN_SIZE().width - (M*2)
-        } else {
-            return self.iPad_W
+        
+        if(mustLoad) {
+            self.currentTopic = index
+            self.storiesPage = 1
+            self.stories = []
+            self.storiesBuffer = []
+            
+            let T = self.topics[index]
+            self.loadTopicData(T.slug, page: self.storiesPage)
         }
     }
     
-    func createContainerView(bgColor: UIColor = .clear, height: CGFloat? = nil) -> UIView {
-        let containerView = UIView()
-        containerView.backgroundColor = bgColor
-        self.vStack.addArrangedSubview(containerView)
+    func loadTopicData(_ T: String, page P: Int) {
+        self.showLoading()
         
-        if let _H = height {
-            containerView.heightAnchor.constraint(equalToConstant: _H).isActive = true
+        PublicFigureData.shared.loadStories(slug: self.slug, topic: T, page: P) { (error, stories, count) in
+            if let _ = error {
+                ALERT(vc: self, title: "Server error",
+                message: "Trouble loading topic stories,\nplease try again later.", onCompletion: {
+                    CustomNavController.shared.popViewController(animated: true)
+                })
+            } else {
+                MAIN_THREAD {
+                    self.hideLoading()
+
+                    if let _stories = stories, let _count = count {
+                        self.fillStoriesToShow(_stories)
+                        self.lastStoriesCount = _count
+                        self.addStories(self.stories, count: _count)
+                    }
+
+                }
+            }
         }
-        
-        return containerView
     }
-    
-    func scrollToBottom() {
-        let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - self.scrollView.bounds.height)
-        self.scrollView.setContentOffset(bottomOffset, animated: true)
-    }
+
 }

@@ -21,7 +21,16 @@ class FigureDetailsViewController: BaseViewController {
 
     var slug: String = ""
     var topics = [SimpleTopic]()
+    
+
+    let STORIES_DIV = 2
+    var storiesPage = 1
     var stories = [MainFeedArticle]()
+    var storiesBuffer = [MainFeedArticle]()
+    var storiesContainerViewHeightConstraint: NSLayoutConstraint?
+    var lastStoriesCount = 0
+    var currentTopic = 0
+    
 
 
     // MARK: - Init
@@ -113,7 +122,9 @@ extension FigureDetailsViewController: UIGestureRecognizerDelegate {
 // MARK: Data
 extension FigureDetailsViewController {
     
-    private func loadData() {
+    func loadData() {
+        self.storiesPage = 1
+    
         self.showLoading()
         PublicFigureData.shared.loadFigure(slug: self.slug) { (error, figure) in
             if let _ = error {
@@ -140,7 +151,12 @@ extension FigureDetailsViewController {
         self.addCredit(name: figure.sourceText, url: figure.sourceUrl)
         self.addStoriesTitle(name: figure.name)
         self.addTopics(figure.topics)
-        self.addStories(figure.stories, count: figure.storiesCount)
+        
+        self.addStories_structure()
+            self.storiesBuffer = []
+            self.fillStoriesToShow(figure.stories)
+            self.lastStoriesCount = figure.storiesCount
+            self.addStories(self.stories, count: figure.storiesCount)
         
 //        DELAY(0.5) {
 //            self.scrollToBottom()
@@ -151,76 +167,24 @@ extension FigureDetailsViewController {
 
 extension FigureDetailsViewController {
     
-    func addStories(_ stories: [MainFeedArticle], count: Int) {
-        self.stories = stories
+    func addStories_structure() {
         let mainView = self.createContainerView()
+        //mainView.backgroundColor = .red
         
         let containerView = UIView()
         mainView.addSubview(containerView)
-        //containerView.backgroundColor = .yellow
+        //containerView.backgroundColor = .orange
         mainView.addSubview(containerView)
         containerView.activateConstraints([
             containerView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
             containerView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor),
             containerView.topAnchor.constraint(equalTo: mainView.topAnchor)
-        ])
+        ]) 
         containerView.tag = 222
-        
-        var col: CGFloat = 0
-        var item_W: CGFloat = SCREEN_SIZE().width
-        if(IPAD()){ item_W = (W()-M)/2 }
-        var val_y: CGFloat = 0
-        for (i, ST) in stories.enumerated() {
-            let stView = iPhoneStory_vImg_v3(width: item_W)
-            var val_x: CGFloat = col * item_W
-            if(IPAD() && col==1) {
-                val_x += M
-            }
-            
-            containerView.addSubview(stView)
-            stView.activateConstraints([
-                stView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: val_y),
-                stView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: val_x),
-                stView.widthAnchor.constraint(equalToConstant: item_W)
-            ])
-            stView.populate(ST)
-            
-            let buttonArea = UIButton(type: .custom)
-            //buttonArea.backgroundColor = .red.withAlphaComponent(0.5)
-            containerView.addSubview(buttonArea)
-            buttonArea.activateConstraints([
-                buttonArea.leadingAnchor.constraint(equalTo: stView.leadingAnchor),
-                buttonArea.trailingAnchor.constraint(equalTo: stView.trailingAnchor),
-                buttonArea.topAnchor.constraint(equalTo: stView.topAnchor),
-                buttonArea.heightAnchor.constraint(equalToConstant: stView.calculateHeight())
-            ])
-            buttonArea.addTarget(self, action: #selector(storyOnTap(_:)), for: .touchUpInside)
-            buttonArea.tag = 700 + i
-            
-            if(IPAD()) {
-                col += 1
-                if(col==2) {
-                    col = 0
-                    val_y += stView.calculateHeight()
-                }
-            } else {
-                val_y += stView.calculateHeight()
-            }
-            
-        }
-        
-        containerView.heightAnchor.constraint(equalToConstant: val_y).isActive = true
-        mainView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: M).isActive = true
-    }
-    @objc func storyOnTap(_ sender: UIButton) {
-        let index = sender.tag - 700
-        
-        let vc = StoryViewController()
-        vc.story = self.stories[index]
-        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
-    // addTopics in "FigureDetails_extras.swift"
+    // addStories
+    // addTopics
     
     func addStoriesTitle(name: String) {
         let containerView = self.createContainerView()
