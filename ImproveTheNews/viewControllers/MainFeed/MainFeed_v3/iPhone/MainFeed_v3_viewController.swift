@@ -64,6 +64,12 @@ class MainFeed_v3_viewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             self.loadData()
+            
+            DELAY(0.25) {
+                let vc = FigureDetailsViewController()
+                vc.slug = "elon-musk"
+                CustomNavController.shared.pushViewController(vc, animated: true)
+            }
             //CustomNavController.shared.menu.presentPreferences() //!!!
         }
         
@@ -140,13 +146,13 @@ extension MainFeed_v3_viewController {
                             }
                         }
 
-                        DELAY(0.25) {
-                            //let vc = PublicFiguresViewController()
-                            
-                            let vc = FigureDetailsViewController()
-                            vc.slug = "elon-musk"
-                            CustomNavController.shared.pushViewController(vc, animated: true)
-                        }
+//                        DELAY(0.25) {
+//                            //let vc = PublicFiguresViewController()
+//                            
+//                            let vc = FigureDetailsViewController()
+//                            vc.slug = "elon-musk"
+//                            CustomNavController.shared.pushViewController(vc, animated: true)
+//                        }
                 
 
 //                        DELAY(0.5) {

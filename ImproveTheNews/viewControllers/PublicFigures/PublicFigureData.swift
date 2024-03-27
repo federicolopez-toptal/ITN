@@ -101,8 +101,8 @@ class PublicFigureData {
     }
     
     //-----------------------------
-    func loadStories(slug: String, topic: String, page: Int,
-        callback: @escaping (Error?, [MainFeedArticle]?, Int?) -> ()) {
+    func loadMore(slug: String, topic: String, page: Int,
+        callback: @escaping (Error?, PublicFigure?) -> ()) {
         
         let url = ITN_URL() + "/claims-api/public-figure/\(slug)?page=\(page)&topic=\(topic)"
         
@@ -113,23 +113,23 @@ class PublicFigureData {
         let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
-                callback(error, nil, nil)
+                callback(error, nil)
             }
             
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(_error, nil, nil)
+                callback(_error, nil)
             } else {
                 if let _json = JSON(fromData: data) {
                     if let _ = _json["error"] {
-                        callback(CustomError.jsonParseError, nil, nil)
+                        callback(CustomError.jsonParseError, nil)
                     } else {
                         let figure = PublicFigure(jsonObj: _json)
-                        callback(nil, figure.stories, figure.storiesCount)
+                        callback(nil, figure)
                     }
                 } else {
                     let _error = CustomError.jsonParseError
-                    callback(_error, nil, nil)
+                    callback(_error, nil)
                 }
             }
         }
@@ -195,6 +195,11 @@ class PublicFigure {
     var stories = [MainFeedArticle]()
     var storiesCount: Int = 0
 
+    var claims = [Claim]()
+    var claimsCount: Int = 0
+    
+    
+
     init(jsonObj: [String: Any]) {
         self.name = CHECK(jsonObj["title"])
         self.image = CHECK(jsonObj["image"])
@@ -235,7 +240,91 @@ class PublicFigure {
             self.storiesCount = total
         }
         
+        if let claimsObj = jsonObj["claims"] as? [String: Any],
+            let data = claimsObj["data"] as? [[String: Any]],
+            let total = claimsObj["total"] as? Int  {
+            
+            for jsonObj in data {
+                let CL = Claim(jsonObj: jsonObj)
+                
+                self.claims.append(CL)
+            }
+            
+            self.claimsCount = total
+        }
+
+        
+        
     }
 
 }
 
+// --------------------------------------------------
+class Claim {
+    
+    var figureName: String = ""
+    var figureImage: String = ""
+    var figureSlug: String = ""
+    
+    var time: String = ""
+    var title: String = ""
+    
+    var controversyTitle: String = ""
+    var controversySlug: String = ""
+    
+    var sources: [ClaimSource] = []
+    
+    var description: String = ""
+    var claim: String = ""
+    
+    
+    
+    init(jsonObj: [String: Any]) {
+
+        if let figureObj = jsonObj["figure"] as? [String: Any] {
+            self.figureName = CHECK(figureObj["title"])
+            self.figureImage = CHECK(figureObj["image"])
+            self.figureSlug = CHECK(figureObj["slug"])
+        }
+        
+        self.time = CHECK(jsonObj["time"])
+        self.title = CHECK(jsonObj["title"])
+        
+        if let clusterObj = jsonObj["cluster"] as? [String: Any] {
+            self.controversyTitle = CHECK(clusterObj["title"])
+            self.controversySlug = CHECK(clusterObj["slug"])
+        }
+        
+        if let sourcesArray = jsonObj["sources"] as? [[String: Any]] {
+            for S in sourcesArray {
+                let sourceObj = ClaimSource(jsonObj: S)
+                self.sources.append(sourceObj)
+            }
+        }
+        
+        self.description = CHECK(jsonObj["description"])
+        self.claim = CHECK(jsonObj["claim"])
+    }
+    
+}
+
+// --------------------------------------------------
+class ClaimSource {
+    var numId: Int = -1
+    var strId: String = ""
+    
+    var name: String = ""
+    var url: String = ""
+    
+    init(jsonObj: [String: Any]) {
+        if let _id = jsonObj["id"] as? Int {
+            self.numId = _id
+        }
+        if let _id = jsonObj["id"] as? String {
+            self.strId = _id
+        }
+        
+        self.name = CHECK(jsonObj["name"])
+        self.url = CHECK(jsonObj["url"])
+    }
+}

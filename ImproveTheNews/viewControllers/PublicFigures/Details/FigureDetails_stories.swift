@@ -10,6 +10,25 @@ import UIKit
 
 extension FigureDetailsViewController {
     
+    func addStories_structure() {
+        let mainView = self.createContainerView()
+        
+        let containerView = UIView()
+        mainView.addSubview(containerView)
+        //containerView.backgroundColor = .orange
+        mainView.addSubview(containerView)
+        containerView.activateConstraints([
+            containerView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
+            containerView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor),
+            containerView.topAnchor.constraint(equalTo: mainView.topAnchor)
+        ])
+        containerView.tag = 222
+        
+        self.storiesContainerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 0)
+        self.storiesContainerViewHeightConstraint!.isActive = true
+        mainView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: M).isActive = true
+    }
+    
     func addStories(_ stories: [MainFeedArticle], count: Int) {
         let containerView = self.view.viewWithTag(222)!
         let mainView = containerView.superview!
@@ -65,20 +84,11 @@ extension FigureDetailsViewController {
         // Show more --------------
         var extraH: CGFloat = 0
         if(self.stories.count < count) {
-            self.addShowMore(at: val_y)
+            self.addShowMoreStories(at: val_y)
             extraH = 88
-        }
+        } // ----------------------
         
-        // Show more --------------
-        
-        if(self.storiesContainerViewHeightConstraint == nil) {
-            self.storiesContainerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: val_y+extraH)
-            self.storiesContainerViewHeightConstraint!.isActive = true
-            
-            mainView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: M).isActive = true
-        } else {
-            self.storiesContainerViewHeightConstraint!.constant = val_y+extraH
-        }
+        self.storiesContainerViewHeightConstraint!.constant = val_y+extraH
     }
     @objc func storyOnTap(_ sender: UIButton) {
         let index = sender.tag - 700
@@ -88,12 +98,12 @@ extension FigureDetailsViewController {
         CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
-    func fillStoriesToShow(_ stories: [MainFeedArticle]) {
+    func fillStories(_ stories: [MainFeedArticle]) {
         for ST in stories {
             self.storiesBuffer.append(ST)
         }
         
-        var limit = self.STORIES_DIV
+        var limit = self.STORIES_PER_TIME
         if(self.storiesBuffer.count < limit) { limit = self.storiesBuffer.count }
         
         for _ in 0...limit-1 {
@@ -106,7 +116,6 @@ extension FigureDetailsViewController {
     func addMoreStories(_ stories: [MainFeedArticle], count: Int) {
         let containerView = self.view.viewWithTag(222)!
         if let _moreView = self.view.viewWithTag(888) {
-            print("REMOVE more!")
             _moreView.removeFromSuperview()
         }
         
@@ -175,14 +184,14 @@ extension FigureDetailsViewController {
         
         var extraH: CGFloat = 0
         if(self.stories.count < count) {
-            self.addShowMore(at: val_y)
+            self.addShowMoreStories(at: val_y)
             extraH = 88
         }
         
         self.storiesContainerViewHeightConstraint!.constant = val_y+extraH
     }
     
-    func addShowMore(at val_y: CGFloat) {
+    func addShowMoreStories(at val_y: CGFloat) {
         let containerView = self.view.viewWithTag(222)!
         
         let moreView = UIView()
@@ -215,7 +224,7 @@ extension FigureDetailsViewController {
     
     @objc func loadMoreStoriesOnTap(_ sender: UIButton) {
         if(self.storiesBuffer.count > 0) {
-            var limit = self.STORIES_DIV
+            var limit = self.STORIES_PER_TIME
             if(self.storiesBuffer.count < limit) { limit = self.storiesBuffer.count }
             
             for _ in 0...limit-1 {
@@ -223,13 +232,13 @@ extension FigureDetailsViewController {
                 self.storiesBuffer.remove(at: 0)
             }
             
-            self.addMoreStories(self.stories, count: self.lastStoriesCount)
+            self.addMoreStories(self.stories, count: self.storiesCount)
         } else {
             self.storiesPage += 1
             let T = self.topics[self.currentTopic]
             
             self.showLoading()
-            PublicFigureData.shared.loadStories(slug: self.slug, topic: T.slug, page: self.storiesPage) { (error, stories, count) in
+            PublicFigureData.shared.loadMore(slug: self.slug, topic: T.slug, page: self.storiesPage) { (error, figure) in
                 if let _ = error {
                     ALERT(vc: self, title: "Server error",
                     message: "Trouble loading topic stories,\nplease try again later.", onCompletion: {
@@ -239,14 +248,12 @@ extension FigureDetailsViewController {
                     MAIN_THREAD {
                         self.hideLoading()
 
-                        if let _stories = stories, let _count = count {
-                            self.fillStoriesToShow(_stories)
-                            self.lastStoriesCount = _count
-                            
-//                            self.addStories(self.stories, count: _count)
-                            self.addMoreStories(self.stories, count: _count)
+                        if let _figure = figure {
+                            self.fillStories(_figure.stories)
+                            self.storiesCount = _figure.storiesCount
+                            self.addMoreStories(self.stories, count: self.storiesCount)
                         }
-
+                        
                     }
                 }
             }

@@ -30,6 +30,8 @@
 		1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AA29363353003F528E /* MainFeedv2.swift */; };
 		1F1788AD2937CBC1003F528E /* trash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1788AC2937CBC1003F528E /* trash.swift */; };
 		1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18C88828F89EF600197F38 /* MenuItemCell.swift */; };
+		1F1938692BB2FDBD0039D7BA /* FigureDetails_claims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1938682BB2FDBD0039D7BA /* FigureDetails_claims.swift */; };
+		1F19386B2BB443640039D7BA /* ClaimCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19386A2BB443640039D7BA /* ClaimCellView.swift */; };
 		1F1A1A9C28D27D3100256785 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A1A9B28D27D3100256785 /* StringExtension.swift */; };
 		1F1B2B1129DF23B600993CE4 /* TourRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B2B1029DF23B600993CE4 /* TourRectView.swift */; };
 		1F1BBA4329E87D6000D8C697 /* iPadBannerNewsletterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1BBA4229E87D6000D8C697 /* iPadBannerNewsletterCell.swift */; };
@@ -530,6 +532,8 @@
 		1F1788AA29363353003F528E /* MainFeedv2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedv2.swift; sourceTree = "<group>"; };
 		1F1788AC2937CBC1003F528E /* trash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trash.swift; sourceTree = "<group>"; };
 		1F18C88828F89EF600197F38 /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
+		1F1938682BB2FDBD0039D7BA /* FigureDetails_claims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureDetails_claims.swift; sourceTree = "<group>"; };
+		1F19386A2BB443640039D7BA /* ClaimCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimCellView.swift; sourceTree = "<group>"; };
 		1F1A1A9B28D27D3100256785 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		1F1B2B1029DF23B600993CE4 /* TourRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourRectView.swift; sourceTree = "<group>"; };
 		1F1BBA4229E87D6000D8C697 /* iPadBannerNewsletterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadBannerNewsletterCell.swift; sourceTree = "<group>"; };
@@ -1050,6 +1054,8 @@
 				1F081BF22BB1AB1900B66326 /* FigureDetails_topics.swift */,
 				1F68CD022BACC7C7007AC92C /* FigureDetails_extras.swift */,
 				1F081BF62BB1B2CB00B66326 /* FigureDetails_stories.swift */,
+				1F1938682BB2FDBD0039D7BA /* FigureDetails_claims.swift */,
+				1F19386A2BB443640039D7BA /* ClaimCellView.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -2570,6 +2576,7 @@
 				1FD699272B6B2D0400C4B0F9 /* iPhoneArticle_4colsTxtBanner_cell_v3.swift in Sources */,
 				1FC9C45C2B88607700E77FD5 /* iPadStory_vTxt_v3.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift.txt in Sources */,
+				1F19386B2BB443640039D7BA /* ClaimCellView.swift in Sources */,
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
 				1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */,
 				1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */,
@@ -2599,6 +2606,7 @@
 				1F9D2A8B2B9F7ED100B1908D /* NewsLetterArchiveViewController.swift in Sources */,
 				1F7B9EBE296DEFBA00D99C5D /* StoryContent.swift in Sources */,
 				1FA48D9A2AFC5A9B009CEAAC /* iPhoneStory_vTxt_cell_v3.swift in Sources */,
+				1F1938692BB2FDBD0039D7BA /* FigureDetails_claims.swift in Sources */,
 				1FACBF8329AD01D0009A8E0F /* iPadSplitHeaderCell.swift in Sources */,
 				1F9EDD4729AE5819007A97A6 /* iPadFooterCell.swift in Sources */,
 				1FE89CF92AF1A97900A6C99C /* DP3_groupItem.swift in Sources */,

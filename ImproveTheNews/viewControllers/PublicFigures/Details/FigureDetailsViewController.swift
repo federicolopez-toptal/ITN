@@ -23,14 +23,18 @@ class FigureDetailsViewController: BaseViewController {
     var topics = [SimpleTopic]()
     
 
-    let STORIES_DIV = 2
-    var storiesPage = 1
+    let STORIES_PER_TIME = 2
     var stories = [MainFeedArticle]()
     var storiesBuffer = [MainFeedArticle]()
+    var storiesPage = 1
     var storiesContainerViewHeightConstraint: NSLayoutConstraint?
-    var lastStoriesCount = 0
+    var storiesCount = 0
     var currentTopic = 0
     
+    var claims = [Claim]()
+    var claimsContainerViewHeightConstraint: NSLayoutConstraint?
+    var claimShowMoreViewHeightConstraint: NSLayoutConstraint?
+    var claimsPage = 1
 
 
     // MARK: - Init
@@ -123,6 +127,7 @@ extension FigureDetailsViewController: UIGestureRecognizerDelegate {
 extension FigureDetailsViewController {
     
     func loadData() {
+        self.claimsPage = 1
         self.storiesPage = 1
     
         self.showLoading()
@@ -153,38 +158,28 @@ extension FigureDetailsViewController {
         self.addTopics(figure.topics)
         
         self.addStories_structure()
+            self.stories = []
             self.storiesBuffer = []
-            self.fillStoriesToShow(figure.stories)
-            self.lastStoriesCount = figure.storiesCount
+            self.fillStories(figure.stories)
+            self.storiesCount = figure.storiesCount //
             self.addStories(self.stories, count: figure.storiesCount)
         
-//        DELAY(0.5) {
-//            self.scrollToBottom()
-//        }
+        self.addClaims_structure(name: figure.name)
+            self.claims = []
+            self.fillClaims(figure.claims)
+            self.addClaims(self.claims, count: figure.claimsCount)
+        
+        DELAY(0.5) {
+            self.scrollToBottom()
+        }
     }
     
 }
 
 extension FigureDetailsViewController {
     
-    func addStories_structure() {
-        let mainView = self.createContainerView()
-        //mainView.backgroundColor = .red
-        
-        let containerView = UIView()
-        mainView.addSubview(containerView)
-        //containerView.backgroundColor = .orange
-        mainView.addSubview(containerView)
-        containerView.activateConstraints([
-            containerView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
-            containerView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor),
-            containerView.topAnchor.constraint(equalTo: mainView.topAnchor)
-        ]) 
-        containerView.tag = 222
-    }
-    
-    // addStories
-    // addTopics
+    // addStories_structure + addStories
+    // addClaims_structure + addTopics
     
     func addStoriesTitle(name: String) {
         let containerView = self.createContainerView()

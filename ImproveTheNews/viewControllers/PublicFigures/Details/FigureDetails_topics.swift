@@ -113,7 +113,7 @@ extension FigureDetailsViewController {
     func loadTopicData(_ T: String, page P: Int) {
         self.showLoading()
         
-        PublicFigureData.shared.loadStories(slug: self.slug, topic: T, page: P) { (error, stories, count) in
+        PublicFigureData.shared.loadMore(slug: self.slug, topic: T, page: P) { (error, figure) in
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading topic stories,\nplease try again later.", onCompletion: {
@@ -123,12 +123,12 @@ extension FigureDetailsViewController {
                 MAIN_THREAD {
                     self.hideLoading()
 
-                    if let _stories = stories, let _count = count {
-                        self.fillStoriesToShow(_stories)
-                        self.lastStoriesCount = _count
-                        self.addStories(self.stories, count: _count)
+                    if let _figure = figure {
+                        self.fillStories(_figure.stories)
+                        self.storiesCount = _figure.storiesCount
+                        self.addStories(self.stories, count: self.storiesCount)
                     }
-
+                    
                 }
             }
         }
