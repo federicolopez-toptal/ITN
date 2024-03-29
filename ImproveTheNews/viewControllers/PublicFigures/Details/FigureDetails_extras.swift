@@ -13,6 +13,16 @@ extension FigureDetailsViewController {
         if(IPHONE()) {
             return SCREEN_SIZE().width - (M*2)
         } else {
+            if(self.iPad_W == -1) {
+                var value: CGFloat = 0
+                let w = SCREEN_SIZE().width
+                let h = SCREEN_SIZE().height
+                
+                if(w<h){ value = w }
+                else{ value = h }
+                self.iPad_W = value - 74
+            }
+        
             return self.iPad_W
         }
     }

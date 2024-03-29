@@ -191,4 +191,35 @@ extension HyperlinkLabel {
         return label
     }
     
+    
+    static func controversyParagraph(text: String) -> HyperlinkLabel {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .right
+        
+        let attributedString = NSMutableAttributedString(string: text, attributes: [
+            .font: AILERON(16),
+            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C),
+            .paragraphStyle: paragraphStyle
+        ])
+
+//        for (i, url) in urls.enumerated() {
+//            let attributes: [NSAttributedString.Key: Any] = [
+//                .hyperlink: URL(string: url)!,
+//                .font: AILERON(16)
+//            ]
+//            let urlAttributedString = NSAttributedString(string: linkTexts[i], attributes: attributes)
+//            let range = (attributedString.string as NSString).range(of: "[\(i)]")
+//            attributedString.replaceCharacters(in: range, with: urlAttributedString)
+//        }
+        
+        // -------------------------
+        let label = HyperlinkLabel()
+        label.attributedText = attributedString
+        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.didTapOnURL = onTap
+        label.setLineSpacing(lineSpacing: 6)
+        
+        return label
+    }
 }

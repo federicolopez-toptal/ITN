@@ -218,7 +218,7 @@ extension FigureDetailsViewController {
         button.titleLabel?.font = AILERON(15)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 9
-        button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE8E9EA)
+        button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xBBBDC0)
         button.addTarget(self, action: #selector(loadMoreStoriesOnTap(_:)), for: .touchUpInside)
     }
     

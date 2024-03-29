@@ -28,7 +28,7 @@ class PublicFiguresViewController: BaseViewController {
         var itemsContainerHeightConstraint: NSLayoutConstraint!
         
         let items_DIM: CGFloat = 92
-        let items_H_SEP: CGFloat = 92
+        var items_H_SEP: CGFloat = 92
         let items_V_SEP: CGFloat = 30
         var items_COLS: CGFloat = IPHONE() ? 2 : 5
         let imgs_DIM: CGFloat = 66
@@ -101,7 +101,21 @@ class PublicFiguresViewController: BaseViewController {
             self.filterTextfield.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         }
 
-        let W: CGFloat = (self.items_COLS * self.items_DIM) + ((self.items_COLS-1) * self.items_H_SEP)
+        var W: CGFloat = (self.items_COLS * self.items_DIM) + ((self.items_COLS-1) * self.items_H_SEP)
+        if(IPAD()) {
+            var value: CGFloat = 0
+            let w = SCREEN_SIZE().width
+            let h = SCREEN_SIZE().height
+            
+            value = w
+            if(h<w){ value = h }
+            
+            value -= (30 * 2)
+            W = value
+            value -= (self.items_COLS * self.items_DIM)
+            
+            self.items_H_SEP = value / (self.items_COLS-1)
+        }
         
         self.contentView.addSubview(self.itemsContainer)
         //self.itemsContainer.backgroundColor = .orange

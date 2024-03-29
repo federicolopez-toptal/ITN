@@ -23,6 +23,7 @@
 	<array>
 		<string>fbapi</string>
 		<string>fb-messenger-share-api</string>
+		<string>twitter</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

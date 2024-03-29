@@ -35,6 +35,27 @@ func OPEN_URL(_ url: String) {
     }
 }
 
+func SHARE_ON_TWITTER(text: String) { // LSApplicationQueriesSchemes must include "twitter"
+    var url = "twitter://post?message=" + text
+        
+    if(UIApplication.shared.canOpenURL(URL(string: url)!)) {
+        OPEN_URL(url)
+    } else {
+        url = "https://twitter.com/intent/post?text=" + text.urlEncodedString()
+        OPEN_URL(url)
+    }
+}
+
+func SHARE_ON_FACEBOOK(url: String, text: String) {
+    var url = "https://www.facebook.com/sharer/sharer.php?u=\(url)&quote=\(text.urlEncodedString())"
+    OPEN_URL(url)
+}
+
+func SHARE_ON_LINKEDIN(url: String, text: String) {
+    var url = "https://www.linkedin.com/shareArticle?url=\(url)&title=\(text.urlEncodedString())"    
+    OPEN_URL(url)
+}
+
 func SHARE_URL(_ url: String, from vc: UIViewController) {
     let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
     

@@ -182,6 +182,7 @@ class SimpleTopic {
 class PublicFigure {
 
     var name: String = ""
+    var slug: String = ""
     var image: String = ""
     var description: String = ""
     
@@ -202,6 +203,7 @@ class PublicFigure {
 
     init(jsonObj: [String: Any]) {
         self.name = CHECK(jsonObj["title"])
+        self.slug = CHECK(jsonObj["slug"])
         self.image = CHECK(jsonObj["image"])
         self.description = CHECK(jsonObj["description"])
         

@@ -17,7 +17,7 @@ class FigureDetailsViewController: BaseViewController {
     let M: CGFloat = CSS.shared.iPhoneSide_padding
     let items_DIM: CGFloat = 92
     let imgs_DIM: CGFloat = 66
-    let iPad_W: CGFloat = 950
+    var iPad_W: CGFloat = -1
 
     var slug: String = ""
     var topics = [SimpleTopic]()
@@ -35,6 +35,13 @@ class FigureDetailsViewController: BaseViewController {
     var claimsContainerViewHeightConstraint: NSLayoutConstraint?
     var claimShowMoreViewHeightConstraint: NSLayoutConstraint?
     var claimsPage = 1
+
+    var shareText = ""
+    var shareUrl = ""
+
+    var twitterText = ""
+    var facebookText = ""
+    var facebookUrl = ""
 
 
     // MARK: - Init
@@ -135,6 +142,7 @@ extension FigureDetailsViewController {
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading Public Figure,\nplease try again later.", onCompletion: {
+                    self.hideLoading()
                     CustomNavController.shared.popViewController(animated: true)
                 })
             } else {
@@ -154,24 +162,31 @@ extension FigureDetailsViewController {
         self.addDescr(figure.description)
         self.addSource(name: figure.sourceText, url: figure.sourceUrl)
         self.addCredit(name: figure.sourceText, url: figure.sourceUrl)
-        self.addStoriesTitle(name: figure.name)
-        self.addTopics(figure.topics)
         
-        self.addStories_structure()
-            self.stories = []
-            self.storiesBuffer = []
-            self.fillStories(figure.stories)
-            self.storiesCount = figure.storiesCount //
-            self.addStories(self.stories, count: figure.storiesCount)
+        self.addShare(name: figure.name, slug: figure.slug)
         
-        self.addClaims_structure(name: figure.name)
-            self.claims = []
-            self.fillClaims(figure.claims)
-            self.addClaims(self.claims, count: figure.claimsCount)
-        
-        DELAY(0.5) {
-            self.scrollToBottom()
+        if(figure.stories.count>0) {
+            self.addStoriesTitle(name: figure.name)
+            self.addTopics(figure.topics)
+            self.addStories_structure()
+                self.stories = []
+                self.storiesBuffer = []
+                self.fillStories(figure.stories)
+                self.storiesCount = figure.storiesCount //
+                self.addStories(self.stories, count: figure.storiesCount)
         }
+        
+        if(figure.claims.count>0) {
+            self.addClaims_structure(name: figure.name)
+                self.claims = []
+                self.fillClaims(figure.claims)
+                self.addClaims(self.claims, count: figure.claimsCount)
+        }
+        
+        
+//        DELAY(0.5) {
+//            self.scrollToBottom()
+//        }
     }
     
 }
@@ -200,6 +215,78 @@ extension FigureDetailsViewController {
         ])
     }
     
+    func addShare(name: String, slug: String) {
+        let containerView = self.createContainerView(height: 32 + (M*2))
+        
+        self.shareText = "Check out the recent claims by \(name) on @verityNews"
+        self.shareUrl = "www.improvethenews.org/public-figures/" + slug
+        
+        let buttonsContainer = UIView()
+        //buttonsContainer.backgroundColor = .orange
+        containerView.addSubview(buttonsContainer)
+        buttonsContainer.activateConstraints([
+            buttonsContainer.heightAnchor.constraint(equalToConstant: 32),
+            buttonsContainer.widthAnchor.constraint(equalToConstant: 170),
+            buttonsContainer.topAnchor.constraint(equalTo: containerView.topAnchor),
+            buttonsContainer.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+        ])
+        
+        let shareLabel = UILabel()
+        shareLabel.font = AILERON(16)
+        shareLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        shareLabel.text = "Share"
+        buttonsContainer.addSubview(shareLabel)
+        shareLabel.activateConstraints([
+            shareLabel.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor),
+            shareLabel.centerYAnchor.constraint(equalTo: buttonsContainer.centerYAnchor)
+        ])
+        
+        let twitterButton = UIButton(type: .system)
+        twitterButton.setImage(UIImage(named: "twitter")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        buttonsContainer.addSubview(twitterButton)
+        twitterButton.activateConstraints([
+            twitterButton.leadingAnchor.constraint(equalTo: shareLabel.trailingAnchor, constant: 10),
+            twitterButton.topAnchor.constraint(equalTo: buttonsContainer.topAnchor),
+            twitterButton.widthAnchor.constraint(equalToConstant: 32),
+            twitterButton.heightAnchor.constraint(equalToConstant: 32)
+        ])
+        twitterButton.addTarget(self, action: #selector(twitterButtonOnTap(_:)), for: .touchUpInside)
+        self.twitterText = "Check out the recent claims by \(name) on @verityNews www.improvethenews.org/public-figures/" + slug
+        
+        let facebookButton = UIButton(type: .system)
+        facebookButton.setImage(UIImage(named: "facebook")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        buttonsContainer.addSubview(facebookButton)
+        facebookButton.activateConstraints([
+            facebookButton.leadingAnchor.constraint(equalTo: twitterButton.trailingAnchor, constant: 10),
+            facebookButton.topAnchor.constraint(equalTo: buttonsContainer.topAnchor),
+            facebookButton.widthAnchor.constraint(equalToConstant: 32),
+            facebookButton.heightAnchor.constraint(equalToConstant: 32)
+        ])
+        facebookButton.addTarget(self, action: #selector(facebookButtonOnTap(_:)), for: .touchUpInside)
+        self.facebookText = "Check out the recent claims by \(name) on @verityNews"
+        self.facebookUrl = "www.improvethenews.org/public-figures/" + slug
+        
+        let linkedInButton = UIButton(type: .system)
+        linkedInButton.setImage(UIImage(named: "linkedin")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        buttonsContainer.addSubview(linkedInButton)
+        linkedInButton.activateConstraints([
+            linkedInButton.leadingAnchor.constraint(equalTo: facebookButton.trailingAnchor, constant: 10),
+            linkedInButton.topAnchor.constraint(equalTo: buttonsContainer.topAnchor),
+            linkedInButton.widthAnchor.constraint(equalToConstant: 32),
+            linkedInButton.heightAnchor.constraint(equalToConstant: 32)
+        ])
+        linkedInButton.addTarget(self, action: #selector(linkedInButtonOnTap(_:)), for: .touchUpInside)
+    }
+    @objc func twitterButtonOnTap(_ sender: UIButton?) {
+        SHARE_ON_TWITTER(text: self.shareText + " " + self.shareText)
+    }
+    @objc func facebookButtonOnTap(_ sender: UIButton?) {
+        SHARE_ON_FACEBOOK(url: self.shareUrl, text: self.shareText)
+    }
+    @objc func linkedInButtonOnTap(_ sender: UIButton?) {
+        SHARE_ON_LINKEDIN(url: self.shareUrl, text: self.shareText)
+    }
+    
     func addCredit(name creditName: String, url creditUrl: String) {
         let containerView = self.createContainerView()
         
@@ -214,7 +301,7 @@ extension FigureDetailsViewController {
         ])
         
         containerView.activateConstraints([
-            containerView.heightAnchor.constraint(equalToConstant: 19.33 + 30)
+            containerView.heightAnchor.constraint(equalToConstant: 19.33 + M)
         ])
     }
     

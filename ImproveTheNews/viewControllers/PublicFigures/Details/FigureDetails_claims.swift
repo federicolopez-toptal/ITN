@@ -11,7 +11,7 @@ extension FigureDetailsViewController {
     
     func addClaims_structure(name: String) {
         let mainView = self.createContainerView()
-        mainView.backgroundColor = .red
+        //mainView.backgroundColor = .red
         
         let label = UILabel()
         label.font = DM_SERIF_DISPLAY(20)
@@ -26,7 +26,7 @@ extension FigureDetailsViewController {
         
         let containerView = UIView()
         mainView.addSubview(containerView)
-        containerView.backgroundColor = .orange
+        //containerView.backgroundColor = .orange
         mainView.addSubview(containerView)
         containerView.activateConstraints([
             containerView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: M),
@@ -40,7 +40,7 @@ extension FigureDetailsViewController {
         // More
         let moreView = UIView()
         mainView.addSubview(moreView)
-        moreView.backgroundColor = .green
+        moreView.backgroundColor = CSS.shared.displayMode().main_bgColor
         moreView.activateConstraints([
             moreView.topAnchor.constraint(equalTo: containerView.bottomAnchor),
             moreView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
@@ -49,6 +49,19 @@ extension FigureDetailsViewController {
         moreView.tag = 556
         self.claimShowMoreViewHeightConstraint = moreView.heightAnchor.constraint(equalToConstant: 88)
         self.claimShowMoreViewHeightConstraint?.isActive = true
+        
+        if(IPHONE()) {
+            let line = UIView()
+            line.backgroundColor = .green
+            moreView.addSubview(line)
+            line.activateConstraints([
+                line.leadingAnchor.constraint(equalTo: moreView.leadingAnchor),
+                line.trailingAnchor.constraint(equalTo: moreView.trailingAnchor),
+                line.topAnchor.constraint(equalTo: moreView.topAnchor),
+                line.heightAnchor.constraint(equalToConstant: 1)
+            ])
+            ADD_HDASHES(to: line)
+        }
         
         let button = UIButton(type: .custom)
         moreView.addSubview(button)
@@ -63,7 +76,7 @@ extension FigureDetailsViewController {
         button.titleLabel?.font = AILERON(15)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 9
-        button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE8E9EA)
+        button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xBBBDC0)
         button.addTarget(self, action: #selector(loadMoreClaimsOnTap(_:)), for: .touchUpInside)
 
         // Finally
