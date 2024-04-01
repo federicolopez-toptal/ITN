@@ -110,11 +110,13 @@ class PublicFiguresViewController: BaseViewController {
             value = w
             if(h<w){ value = h }
             
-            value -= (30 * 2)
-            W = value
-            value -= (self.items_COLS * self.items_DIM)
-            
-            self.items_H_SEP = value / (self.items_COLS-1)
+            if(value-W<30) {
+                value -= (30 * 2)
+                W = value
+                value -= (self.items_COLS * self.items_DIM)
+                
+                self.items_H_SEP = value / (self.items_COLS-1)
+            }
         }
         
         self.contentView.addSubview(self.itemsContainer)
