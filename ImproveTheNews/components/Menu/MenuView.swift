@@ -22,6 +22,7 @@ class MenuView: UIView {
     let dp_mainItems: [MenuItem] = [ // Items order
         .headlines,
         .publicFigures,
+        .controversies,
         //.profile,
         
         .theme,
@@ -531,6 +532,15 @@ extension MenuView {
         CustomNavController.shared.hidePanelAndButtonWithAnimation()
         
         let vc = PublicFiguresViewController()
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    // ---------
+    func showControversies() {
+        self.dismissMe()
+        CustomNavController.shared.hidePanelAndButtonWithAnimation()
+        
+        let vc = ControversiesViewController()
         CustomNavController.shared.pushViewController(vc, animated: true)
     }
     

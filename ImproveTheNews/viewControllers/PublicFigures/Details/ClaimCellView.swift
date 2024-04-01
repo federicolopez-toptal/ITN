@@ -501,37 +501,4 @@ extension ClaimCellView {
         return result
     }
     
-    
-    
-    
-    
-    
-    
-    
-    func animateDescriptionCharacter_25423() {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .left
-        
-        let secAttrStr = NSMutableAttributedString(string: self._fullDescription, attributes: [
-            .font: AILERON(16),
-            .foregroundColor: UIColor.red,
-            .paragraphStyle: paragraphStyle
-        ])
-                
-        let remarkAttributes: [NSAttributedString.Key: Any] = [
-            .font: AILERON(16),
-            .foregroundColor: DARK_MODE() ? UIColor(hex: 0x60C4D6) : UIColor(hex: 0x19191C),
-            .backgroundColor: DARK_MODE() ? UIColor(hex: 0x2E4C54) : UIColor(hex: 0xA8DAE2)
-        ]
-        
-        let range = (secAttrStr.string as NSString).range(of: self._textToRemark)
-        let remarkAttrStr = NSAttributedString(string: self._textToRemark, attributes: remarkAttributes)
-        secAttrStr.replaceCharacters(in: range, with: remarkAttrStr)
-        
-        self.parrafoLabelOver.attributedText = secAttrStr
-        self.parrafoLabelOver.show()
-    }
-    
-    
-    
 }

@@ -46,3 +46,11 @@ func CHECK_NUM(_ value: Any?) -> Int {
         return -1
     }
 }
+
+func CHECK_BOOL(_ value: Any?) -> Bool {
+    if let _value = value as? Bool {
+        return _value
+    } else {
+        return false
+    }
+}

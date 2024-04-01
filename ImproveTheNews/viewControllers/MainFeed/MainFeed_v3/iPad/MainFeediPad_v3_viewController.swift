@@ -71,11 +71,10 @@ class MainFeediPad_v3_viewController: BaseViewController {
             self.didAppear = true
             self.loadData()
             
-//            DELAY(0.25) {
-//                let vc = FigureDetailsViewController()
-//                vc.slug = "elon-musk"
-//                CustomNavController.shared.pushViewController(vc, animated: true)
-//            }
+            DELAY(0.25) {
+                let vc = ControversiesViewController()
+                CustomNavController.shared.pushViewController(vc, animated: true)
+            }
             //CustomNavController.shared.menu.presentPreferences() //!!!
         }
         

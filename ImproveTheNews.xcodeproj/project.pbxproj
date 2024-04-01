@@ -23,6 +23,9 @@
 		1F0B000328F61D14007280FF /* FontUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B000228F61D14007280FF /* FontUtils.swift */; };
 		1F0BFFFF28F5F2C7007280FF /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */; };
 		1F0CAD7E295CB10600E234C4 /* MainFeedv3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0CAD7D295CB10600E234C4 /* MainFeedv3.swift */; };
+		1F1033D92BBB0B130038EDDF /* ControversiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1033D82BBB0B130038EDDF /* ControversiesViewController.swift */; };
+		1F1033DB2BBB0F0C0038EDDF /* ControversiesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1033DA2BBB0F0C0038EDDF /* ControversiesData.swift */; };
+		1F1033DD2BBB3C860038EDDF /* ControversyCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1033DC2BBB3C860038EDDF /* ControversyCellView.swift */; };
 		1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F106AEA2907186E004B9943 /* MainFeed_dataProvider.swift */; };
 		1F106AED29071E30004B9943 /* MainFeed_cellTaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F106AEC29071E30004B9943 /* MainFeed_cellTaps.swift */; };
 		1F1493F32AF95DBF001BF4B7 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1493F22AF95DBF001BF4B7 /* UIDeviceExtension.swift */; };
@@ -526,6 +529,9 @@
 		1F0B000228F61D14007280FF /* FontUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontUtils.swift; sourceTree = "<group>"; };
 		1F0BFFFE28F5F2C7007280FF /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		1F0CAD7D295CB10600E234C4 /* MainFeedv3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedv3.swift; sourceTree = "<group>"; };
+		1F1033D82BBB0B130038EDDF /* ControversiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControversiesViewController.swift; sourceTree = "<group>"; };
+		1F1033DA2BBB0F0C0038EDDF /* ControversiesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControversiesData.swift; sourceTree = "<group>"; };
+		1F1033DC2BBB3C860038EDDF /* ControversyCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControversyCellView.swift; sourceTree = "<group>"; };
 		1F106AEA2907186E004B9943 /* MainFeed_dataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_dataProvider.swift; sourceTree = "<group>"; };
 		1F106AEC29071E30004B9943 /* MainFeed_cellTaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_cellTaps.swift; sourceTree = "<group>"; };
 		1F1493F22AF95DBF001BF4B7 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
@@ -1062,6 +1068,16 @@
 			path = Details;
 			sourceTree = "<group>";
 		};
+		1F1033D72BBB09640038EDDF /* Controversies */ = {
+			isa = PBXGroup;
+			children = (
+				1F1033DA2BBB0F0C0038EDDF /* ControversiesData.swift */,
+				1F1033D82BBB0B130038EDDF /* ControversiesViewController.swift */,
+				1F1033DC2BBB3C860038EDDF /* ControversyCellView.swift */,
+			);
+			path = Controversies;
+			sourceTree = "<group>";
+		};
 		1F18C88B28F8CC0400197F38 /* MainFeed_v1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1280,6 +1296,7 @@
 				1FC7390E298A149C003EB38D /* SignInUp */,
 				1F9D2A892B9F7EA800B1908D /* NewsletterArchive */,
 				1F0700A42BA99E08007CE44C /* PublicFigures */,
+				1F1033D72BBB09640038EDDF /* Controversies */,
 				1F2FB1012A02D5BE00B4E99B /* AccountViewController.swift */,
 				1FE541C52A03FA9A000A2CF3 /* ResetPassViewController.swift */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
@@ -2463,6 +2480,7 @@
 				1F5261C929E844FE000CE599 /* BannernewsLetterCell.swift in Sources */,
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */,
+				1F1033DB2BBB0F0C0038EDDF /* ControversiesData.swift in Sources */,
 				1FA8AA3628D0E3F500B6C956 /* ArticleWI_cell.swift in Sources */,
 				1F96C0E32B8D89A2000C8BC2 /* iPadStory_2colsImg_cell_v3.swift in Sources */,
 				1FD5BDF528DC1313003E650F /* DarkView.swift.txt in Sources */,
@@ -2604,6 +2622,7 @@
 				1FA4CE6828C286F40068DE4A /* MainFeed.swift in Sources */,
 				1FC73904298961C8003EB38D /* Animations.swift in Sources */,
 				1F66798429DF026000CFB714 /* iPadSpacerCell.swift in Sources */,
+				1F1033D92BBB0B130038EDDF /* ControversiesViewController.swift in Sources */,
 				1FA4CE6A28C2874E0068DE4A /* BaseViewController.swift in Sources */,
 				1FE916A129A7A32A007F8AAF /* ArticleVImageView.swift in Sources */,
 				1F9B4ADD2967745A00BE8850 /* RatingView.swift in Sources */,
@@ -2628,6 +2647,7 @@
 				1FE916A529A7AFAD007F8AAF /* iPadGroupItem_rowCell.swift in Sources */,
 				1F5EE1482A0E93A900168FB0 /* URLExtension.swift in Sources */,
 				1F0700A32BA88943007CE44C /* NewsLetterContentViewController.swift in Sources */,
+				1F1033DD2BBB3C860038EDDF /* ControversyCellView.swift in Sources */,
 				1F9C711E2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift in Sources */,
 				1F1BBA4329E87D6000D8C697 /* iPadBannerNewsletterCell.swift in Sources */,
 				1F95136328BFC69200A77AB6 /* MainFeedViewController.swift in Sources */,

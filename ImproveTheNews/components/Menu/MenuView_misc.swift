@@ -30,6 +30,7 @@ enum MenuItem {
     case spacer
     
     case publicFigures
+    case controversies
 }
 
 // ------------
@@ -92,6 +93,9 @@ extension MenuView {
                 
             case .publicFigures:
                 result = "Public Figures"
+                
+            case .controversies:
+                result = "Controversies"
                 
             default:
                 result = ""
@@ -159,6 +163,9 @@ extension MenuView {
             case .newsletter:
                 icon = "newsletter"
             
+            case .controversies:
+                icon = "feedback"
+            
             default:
                 return nil
         }
@@ -209,6 +216,9 @@ extension MenuView {
             
             case .publicFigures:
                 self.showPublicFigures()
+            
+            case .controversies:
+                self.showControversies()
             
             default:
                 NOTHING()
