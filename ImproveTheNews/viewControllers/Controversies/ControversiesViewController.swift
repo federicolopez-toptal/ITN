@@ -19,8 +19,9 @@ class ControversiesViewController: BaseViewController {
     let contentView = UIView()
     var vStack: UIStackView!
     
+    var items: [ControversyListItem] = []
     var containerViewHeightConstraint: NSLayoutConstraint?
-    
+    var showMoreViewHeightConstraint: NSLayoutConstraint?
     
     
 
@@ -82,7 +83,7 @@ class ControversiesViewController: BaseViewController {
         ])
             
         // --------------------------------------
-        // ADD STRUCTURE
+        // Container / Structure
         let mainView = self.createContainerView()
         
         let containerView = UIView()
@@ -98,7 +99,50 @@ class ControversiesViewController: BaseViewController {
         self.containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 200)
         self.containerViewHeightConstraint!.isActive = true
         
-        mainView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: M).isActive = true
+        // More
+        let moreView = UIView()
+        mainView.addSubview(moreView)
+        moreView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        moreView.activateConstraints([
+            moreView.topAnchor.constraint(equalTo: containerView.bottomAnchor),
+            moreView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
+            moreView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor)
+        ])
+        moreView.tag = 556
+        self.showMoreViewHeightConstraint = moreView.heightAnchor.constraint(equalToConstant: 88)
+        self.showMoreViewHeightConstraint?.isActive = true
+        
+        if(IPHONE()) {
+            let line = UIView()
+            line.backgroundColor = .green
+            moreView.addSubview(line)
+            line.activateConstraints([
+                line.leadingAnchor.constraint(equalTo: moreView.leadingAnchor),
+                line.trailingAnchor.constraint(equalTo: moreView.trailingAnchor),
+                line.topAnchor.constraint(equalTo: moreView.topAnchor),
+                line.heightAnchor.constraint(equalToConstant: 1)
+            ])
+            ADD_HDASHES(to: line)
+        }
+        
+        let button = UIButton(type: .custom)
+        moreView.addSubview(button)
+        button.activateConstraints([
+            button.heightAnchor.constraint(equalToConstant: 42),
+            button.widthAnchor.constraint(equalToConstant: 150),
+            button.centerXAnchor.constraint(equalTo: moreView.centerXAnchor),
+            button.centerYAnchor.constraint(equalTo: moreView.centerYAnchor)
+        ])
+        button.setTitle("Show more", for: .normal)
+        button.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
+        button.titleLabel?.font = AILERON(15)
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 9
+        button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xBBBDC0)
+        button.addTarget(self, action: #selector(loadMoreOnTap(_:)), for: .touchUpInside)
+        
+        self.showMoreButton(false)
+        mainView.bottomAnchor.constraint(equalTo: moreView.bottomAnchor, constant: M).isActive = true
         
         // --------------------------------------
         self.refreshDisplayMode()
@@ -111,6 +155,7 @@ class ControversiesViewController: BaseViewController {
             self.didAppear = true
             
             self.page = 1
+            self.items = []
             self.loadContent(page: self.page)
         }
     }
@@ -123,6 +168,12 @@ class ControversiesViewController: BaseViewController {
         self.contentView.backgroundColor = self.view.backgroundColor
         self.vStack.backgroundColor = self.view.backgroundColor
     }
+    
+    @objc func loadMoreOnTap(_ sender: UIButton) {
+        self.page += 1
+        self.loadContent(page: self.page)
+    }
+    
 }
 
 // MARK: misc
@@ -149,7 +200,6 @@ extension ControversiesViewController {
                     CustomNavController.shared.popViewController(animated: true)
                 })
             } else {
-                self.page += 1
                 MAIN_THREAD {
                     self.hideLoading()
                     if let _ = keyword, let _T = total, let _L = list {
@@ -164,16 +214,26 @@ extension ControversiesViewController {
     func fillContent(items: [ControversyListItem], total: Int) {
         let containerView = self.view.viewWithTag(555)!
         
+        for CO in items {
+            self.items.append(CO)
+        }
+        
         var col: CGFloat = 0
         var item_W: CGFloat = SCREEN_SIZE().width
         if(IPAD()){ item_W = (W()-M)/2 }
         var val_y: CGFloat = 0
         
+        if(containerView.subviews.count > 0) {
+            for V in containerView.subviews {
+                if let _subView = V as? ControversyCellView {
+                    val_y += _subView.calculateHeight()
+                }
+            }
+        }
+        
         for (i, CO) in items.enumerated() {
             let controView = ControversyCellView(width: item_W)
-            
-//            let claimView = ClaimCellView(width: item_W)
-//            claimView.delegate = self
+            if(containerView.subviews.count==0 && i==0){ controView.hideTopLine() }
             
             var val_x: CGFloat = col * item_W
             if(IPAD() && col==1) {
@@ -227,12 +287,12 @@ extension ControversiesViewController {
             }
         }
         
-//        // Show more --------------
-//        if(self.claims.count < count) {
-//            self.showMoreClaimsButton(true)
-//        } else {
-//            self.showMoreClaimsButton(false)
-//        }
+        // Show more --------------
+        if(self.items.count < total) {
+            self.showMoreButton(true)
+        } else {
+            self.showMoreButton(false)
+        }
 
         // Finally
         self.containerViewHeightConstraint?.constant = val_y
@@ -272,6 +332,18 @@ extension ControversiesViewController {
             }
         
             return self.iPad_W
+        }
+    }
+    
+    func showMoreButton(_ visible: Bool) {
+        let moreView = self.view.viewWithTag(556)!
+        
+        if(visible) {
+            self.showMoreViewHeightConstraint?.constant = 88
+            moreView.show()
+        } else {
+            self.showMoreViewHeightConstraint?.constant = 0
+            moreView.hide()
         }
     }
     

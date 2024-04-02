@@ -13,9 +13,12 @@ class ControversyCellView: UIView {
     private var WIDTH: CGFloat = 1
     var mainHeightConstraint: NSLayoutConstraint?
     
+    let figuresContainerView = UIView()
     let gradientView = UIView()
+    let startLabel = UILabel()
+    let endLabel = UILabel()
     let titleLabel = UILabel()
-    
+    let timeLabel = UILabel()
     
 
     // MARK: - Init(s)
@@ -38,6 +41,7 @@ class ControversyCellView: UIView {
         
         if(IPHONE()) {
             let line = UIView()
+            line.tag = 444
             line.backgroundColor = .green
             self.addSubview(line)
             line.activateConstraints([
@@ -49,23 +53,76 @@ class ControversyCellView: UIView {
             ADD_HDASHES(to: line)
         }
         
+        self.addSubview(self.figuresContainerView)
+        //self.figuresContainerView.backgroundColor = .orange
+        self.figuresContainerView.activateConstraints([
+            self.figuresContainerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
+            self.figuresContainerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
+            self.figuresContainerView.topAnchor.constraint(equalTo: self.topAnchor, constant: M),
+            self.figuresContainerView.heightAnchor.constraint(equalToConstant: 84)
+        ])
+        
         self.addSubview(self.gradientView)
         self.gradientView.backgroundColor = .black
         self.gradientView.activateConstraints([
             self.gradientView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
             self.gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
             self.gradientView.heightAnchor.constraint(equalToConstant: 4),
-            self.gradientView.topAnchor.constraint(equalTo: self.topAnchor, constant: M)
+            self.gradientView.topAnchor.constraint(equalTo: self.figuresContainerView.bottomAnchor, constant: 8)
         ])
         
+        self.addSubview(self.startLabel)
+        self.startLabel.font = AILERON(12)
+        self.startLabel.textAlignment = .left
+        self.startLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.startLabel.activateConstraints([
+            self.startLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
+            self.startLabel.topAnchor.constraint(equalTo: self.gradientView.bottomAnchor, constant: 8)
+        ])
+        self.startLabel.text = "LOW"
+        
+        self.addSubview(self.endLabel)
+        self.endLabel.font = AILERON(12)
+        self.endLabel.textAlignment = .right
+        self.endLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.endLabel.activateConstraints([
+            self.endLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
+            self.endLabel.topAnchor.constraint(equalTo: self.gradientView.bottomAnchor, constant: 8)
+        ])
+        self.endLabel.text = "HIGH"
+        
         self.titleLabel.numberOfLines = 0
-        self.titleLabel.font = DM_SERIF_DISPLAY(18)
+        self.titleLabel.font = DM_SERIF_DISPLAY(20)
         self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
             self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
-            self.titleLabel.topAnchor.constraint(equalTo: self.gradientView.bottomAnchor, constant: M)
+            self.titleLabel.topAnchor.constraint(equalTo: self.startLabel.bottomAnchor, constant: M)
+        ])
+        
+        let pill = UILabel()
+        pill.text = "CONTROVERSY"
+        pill.font = AILERON(12)
+        pill.textAlignment = .center
+        pill.textColor = CSS.shared.displayMode().main_bgColor
+        pill.backgroundColor = UIColor(hex: 0x60C4D6)
+        self.addSubview(pill)
+        pill.activateConstraints([
+            pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
+            pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: M),
+            pill.widthAnchor.constraint(equalToConstant: 120),
+            pill.heightAnchor.constraint(equalToConstant: 24)
+        ])
+        pill.layer.cornerRadius = 12
+        pill.clipsToBounds = true
+        
+        self.timeLabel.font = AILERON(12)
+        self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
+        self.addSubview(self.timeLabel)
+        self.timeLabel.activateConstraints([
+            self.timeLabel.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: 12),
+            self.timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor)
         ])
         
         if(IPAD()) {
@@ -93,7 +150,13 @@ class ControversyCellView: UIView {
     }
     
     func populate(with controversy: ControversyListItem) {
+        self.addFigures(controversy.figures)
         self.titleLabel.text = controversy.title
+        
+        var time = controversy.time
+        if(time == "1 second ago"){ time = "JUST NOW" }
+        self.timeLabel.text = time
+        
         self.mainHeightConstraint?.constant = self.calculateHeight()
         
         DELAY(0.1/4) { // It needs to update the layout
@@ -104,8 +167,10 @@ class ControversyCellView: UIView {
 
     func calculateHeight() -> CGFloat {
         let W = self.WIDTH - M - M
-        let H: CGFloat = M + 4 +
+        let H: CGFloat = M + 84 + 8 +
+            4 + 8 + self.startLabel.calculateHeightFor(width: W) +
             M + self.titleLabel.calculateHeightFor(width: W) + M +
+            24 + M + M +
             (IPAD() ? 20 : 0)
         
         return H
@@ -120,5 +185,66 @@ class ControversyCellView: UIView {
 
         self.gradientView.layer.addSublayer(newLayer)
     }
+    
+    func hideTopLine() {
+        if let _lineView = self.viewWithTag(444) {
+            _lineView.hide()
+        }
+    }
 
+}
+
+extension ControversyCellView {
+
+    func addFigures(_ figures: [FigureForScale]) {
+        //var val_x: CGFloat = 0
+        var nameDown = true
+        
+        for F in figures {
+            let limInf: CGFloat = 1.0
+            let limSup: CGFloat = self.WIDTH-M-M-44
+            
+            let val_x = limInf + (limSup - limInf) * (CGFloat(F.scale) - 1.0) / (99.0 - 1.0) // interpolate
+        
+            let figureImageView = UIImageView()
+            figureImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.05) : .black.withAlphaComponent(0.1)
+            self.figuresContainerView.addSubview(figureImageView)
+            figureImageView.activateConstraints([
+                figureImageView.widthAnchor.constraint(equalToConstant: 44),
+                figureImageView.heightAnchor.constraint(equalToConstant: 44),
+                figureImageView.leadingAnchor.constraint(equalTo: self.figuresContainerView.leadingAnchor, constant: val_x),
+                figureImageView.topAnchor.constraint(equalTo: self.figuresContainerView.topAnchor, constant: 20)
+            ])
+            figureImageView.layer.cornerRadius = 22
+            figureImageView.clipsToBounds = true
+            figureImageView.layer.borderColor = CSS.shared.displayMode().main_bgColor.cgColor
+            figureImageView.layer.borderWidth = 2.0
+            figureImageView.sd_setImage(with: URL(string: F.image))
+            
+            var name = F.name.uppercased()
+            if let lastName = name.components(separatedBy: " ").last {
+                name = lastName
+            }
+            
+            let nameLabel = UILabel()
+            nameLabel.font = AILERON(11)
+            nameLabel.textColor = CSS.shared.displayMode().sec_textColor
+            nameLabel.text = "  " + name + "  "
+            nameLabel.textAlignment = .center
+            nameLabel.backgroundColor = CSS.shared.displayMode().main_bgColor
+            self.figuresContainerView.addSubview(nameLabel)
+            nameLabel.activateConstraints([
+                nameLabel.centerXAnchor.constraint(equalTo: figureImageView.centerXAnchor)
+            ])
+            
+            if(nameDown) {
+                nameLabel.topAnchor.constraint(equalTo: figureImageView.bottomAnchor, constant: 4).isActive = true
+            } else {
+                nameLabel.topAnchor.constraint(equalTo: self.figuresContainerView.topAnchor, constant: 4).isActive = true
+            }
+            
+            nameDown = !nameDown
+        }
+    }
+    
 }

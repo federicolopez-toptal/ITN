@@ -93,9 +93,10 @@ class FigureDetailsViewController: BaseViewController {
             self.vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.vStack.topAnchor.constraint(equalTo: self.contentView.topAnchor),
             self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-            
 //            ,self.vStack.heightAnchor.constraint(equalToConstant: 500)
         ])
+        
+        
         
         self.refreshDisplayMode()
     }
