@@ -12,6 +12,14 @@ class ControversiesData {
     
     static let shared = ControversiesData()
     
+    func loadControversy(slug: String) {
+        let url = ITN_URL() + "/claims-api/claim/\(slug)"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        
+        //print("CONTROVERSIES LIST -  URL", url)
+    }
+    
     func loadList(term: String = "", page: Int, callback: @escaping (Error?, String?, Int?, [ControversyListItem]?) -> () ) {
         let url = ITN_URL() + "/claims-api/claim/search?keyword=\(term)&page=\(page)&per_page=10"
         var request = URLRequest(url: URL(string: url)!)

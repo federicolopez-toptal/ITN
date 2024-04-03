@@ -36,14 +36,17 @@ func OPEN_URL(_ url: String) {
 }
 
 func SHARE_ON_TWITTER(text: String) { // LSApplicationQueriesSchemes must include "twitter"
-    var url = "twitter://post?message=" + text
-        
-    if(UIApplication.shared.canOpenURL(URL(string: url)!)) {
-        OPEN_URL(url)
-    } else {
-        url = "https://twitter.com/intent/post?text=" + text.urlEncodedString()
-        OPEN_URL(url)
-    }
+//    var url = "twitter://post?message=" + text
+//        
+//    if(UIApplication.shared.canOpenURL(URL(string: url)!)) {
+//        OPEN_URL(url)
+//    } else {
+//        url = "https://twitter.com/intent/post?text=" + text.urlEncodedString()
+//        OPEN_URL(url)
+//    }
+    
+    let url = "https://twitter.com/intent/post?text=" + text.urlEncodedString()
+    OPEN_URL(url)
 }
 
 func SHARE_ON_FACEBOOK(url: String, text: String) {

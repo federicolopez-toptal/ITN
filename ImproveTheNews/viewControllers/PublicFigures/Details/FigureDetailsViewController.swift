@@ -324,7 +324,11 @@ extension FigureDetailsViewController {
         ])
     }
     func onLinkTap(_ url: URL) {
-        OPEN_URL(url.absoluteString)
+        //OPEN_URL(url.absoluteString)
+        let vc = ArticleViewController()
+        vc.article = MainFeedArticle(url: url.absoluteString)
+        
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
     func addDescr(_ descr: String) {
@@ -332,6 +336,7 @@ extension FigureDetailsViewController {
         
         let label = UILabel()
         label.font = AILERON(16)
+        label.textAlignment = .justified
         label.numberOfLines = 0
         label.textColor = CSS.shared.displayMode().sec_textColor
         label.text = descr

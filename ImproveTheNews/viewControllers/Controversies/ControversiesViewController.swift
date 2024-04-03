@@ -226,16 +226,19 @@ extension ControversiesViewController {
         if(IPAD()){ item_W = (W()-M)/2 }
         var val_y: CGFloat = 0
         
+        var index: Int = 0
         if(containerView.subviews.count > 0) {
             for V in containerView.subviews {
                 if let _subView = V as? ControversyCellView {
                     val_y += _subView.calculateHeight()
+                    index += 1
                 }
             }
         }
         
         for (i, CO) in items.enumerated() {
             let controView = ControversyCellView(width: item_W)
+            controView.tag = 600 + index
             if(containerView.subviews.count==0 && i==0){ controView.hideTopLine() }
             
             var val_x: CGFloat = col * item_W
@@ -293,6 +296,10 @@ extension ControversiesViewController {
                 val_y += controView.calculateHeight()
             }
             
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(controversyOnTap(_:)))
+            controView.addGestureRecognizer(tapGesture)
+            
+            index += 1
         }
         
         // Show more --------------
@@ -304,6 +311,15 @@ extension ControversiesViewController {
 
         // Finally
         self.containerViewHeightConstraint?.constant = val_y
+    }
+    @objc func controversyOnTap(_ gesture: UITapGestureRecognizer) {
+        if let _view = gesture.view as? ControversyCellView {
+            let index = _view.tag - 600
+            
+            let vc = ControDetailViewController()
+            vc.slug = self.items[index].slug
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
     }
     
     

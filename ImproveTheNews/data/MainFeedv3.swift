@@ -90,6 +90,10 @@ class MainFeedv3 {
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
         
         var S_value = self.skipForTopic(T)
+        if(T == "news" && S_value==9) {
+            S_value += 1
+        }
+        
         //if(MUST_SPLIT()==0){ S_value += 1 }
         
         var totalItems = NEWS_REQ_MORE_ITEMS_TOTAL
@@ -99,7 +103,7 @@ class MainFeedv3 {
             storiesCount = NEWS_REQ_SPLIT_MORE_STORIES_COUNT
         }
             
-        let strUrl = self.buildUrl(topic: topic, A: totalItems,
+        let strUrl = self.buildUrl(topic: T, A: totalItems,
                                                 B: 0,
                                                 C: storiesCount,
                                                 S: S_value)
