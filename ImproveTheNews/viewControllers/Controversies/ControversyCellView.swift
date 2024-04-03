@@ -157,10 +157,14 @@ class ControversyCellView: UIView {
         if(time == "1 second ago"){ time = "JUST NOW" }
         self.timeLabel.text = time
         
+        self.startLabel.text = controversy.textMin
+        self.endLabel.text = controversy.textMax
+        
         self.mainHeightConstraint?.constant = self.calculateHeight()
         
-        DELAY(0.1/4) { // It needs to update the layout
+        DELAY(0.1) { // It needs to update the layout
             self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
+            self.gradientView.show()
         }
 
     }
@@ -204,6 +208,7 @@ extension ControversyCellView {
             let limInf: CGFloat = 1.0
             let limSup: CGFloat = self.WIDTH-M-M-44
             
+            // https://stackoverflow.com/questions/42817020/how-to-interpolate-from-number-in-one-range-to-a-corresponding-value-in-another
             let val_x = limInf + (limSup - limInf) * (CGFloat(F.scale) - 1.0) / (99.0 - 1.0) // interpolate
         
             let figureImageView = UIImageView()

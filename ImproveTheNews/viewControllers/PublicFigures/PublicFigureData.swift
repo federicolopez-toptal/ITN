@@ -15,11 +15,13 @@ class PublicFigureData {
     
     func loadList(term: String = "", page: Int, callback: @escaping (Error?, Int?, [PublicFigureListItem]?) -> () ) {
         
+        //https://www.improvethenews.org/claims-api/public-figure/list
+        
         var url = ITN_URL()
         if(term.isEmpty) {
-            url += "/api/public-figures?page=\(page)"
+            url += "/claims-api/public-figure/list?page=\(page)"
         } else {
-            url += "/api/public-figures?page=\(page)&filter=\(term.urlEncodedString())"
+            url += "/claims-api/public-figure/list?page=\(page)&filter=\(term.urlEncodedString())"
         }
         
         var request = URLRequest(url: URL(string: url)!)

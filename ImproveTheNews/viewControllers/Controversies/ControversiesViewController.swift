@@ -73,12 +73,15 @@ class ControversiesViewController: BaseViewController {
             H
         ])
         
+        var extraOffset: CGFloat = 0
+        if(IPAD()) { extraOffset = 30 }
+        
         self.vStack = VSTACK(into: self.contentView)
         //self.vStack.backgroundColor = .yellow
         self.vStack.activateConstraints([
             self.vStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            self.vStack.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.vStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: extraOffset),
             self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
             
@@ -285,6 +288,11 @@ extension ControversiesViewController {
             } else {
                 val_y += controView.calculateHeight()
             }
+            
+            if(i==self.items.count-1 && IPAD()) {
+                val_y += controView.calculateHeight()
+            }
+            
         }
         
         // Show more --------------

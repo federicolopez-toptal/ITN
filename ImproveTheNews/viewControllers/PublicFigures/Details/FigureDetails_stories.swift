@@ -242,7 +242,7 @@ extension FigureDetailsViewController {
                 if let _ = error {
                     ALERT(vc: self, title: "Server error",
                     message: "Trouble loading topic stories,\nplease try again later.", onCompletion: {
-                        CustomNavController.shared.popViewController(animated: true)
+                        //CustomNavController.shared.popViewController(animated: true)
                     })
                 } else {
                     MAIN_THREAD {

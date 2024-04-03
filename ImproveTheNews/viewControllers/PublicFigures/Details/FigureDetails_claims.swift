@@ -161,7 +161,7 @@ extension FigureDetailsViewController {
         }
         
         // Finally
-        self.claimsContainerViewHeightConstraint?.constant = val_y
+        self.claimsContainerViewHeightConstraint?.constant = self.calculateContainerViewHeight()
     }
     
     func addMoreClaims(_ claims: [Claim], newCount: Int, count: Int) {
@@ -219,6 +219,10 @@ extension FigureDetailsViewController {
         
         // Finally
         self.claimsContainerViewHeightConstraint?.constant = self.calculateContainerViewHeight()
+        
+//        DELAY(0.25) {
+//            self.claimCellViewOnHeightChanged(sender: nil)
+//        }
     }
     
     func showMoreClaimsButton(_ visible: Bool) {
@@ -235,14 +239,19 @@ extension FigureDetailsViewController {
     
     @objc func loadMoreClaimsOnTap(_ sender: UIButton) {
         self.claimsPage += 1
-        let T = self.topics[0]
+        
+        // default topic
+        let T = SimpleTopic(jsonObj: [
+            "title": "All",
+            "slug": "all"
+        ])
         
         self.showLoading()
         PublicFigureData.shared.loadMore(slug: self.slug, topic: T.slug, page: self.claimsPage) { (error, figure) in
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading figure claims,\nplease try again later.", onCompletion: {
-                    CustomNavController.shared.popViewController(animated: true)
+                    //CustomNavController.shared.popViewController(animated: true)
                 })
             } else {
                 MAIN_THREAD {
@@ -300,7 +309,7 @@ extension FigureDetailsViewController: ClaimCellViewDelegate {
         return H
     }
     
-    func claimCellViewOnHeightChanged(sender: ClaimCellView) {
+    func claimCellViewOnHeightChanged(sender: ClaimCellView?) {
         let H = self.calculateContainerViewHeight()
         self.claimsContainerViewHeightConstraint?.constant = H
     }

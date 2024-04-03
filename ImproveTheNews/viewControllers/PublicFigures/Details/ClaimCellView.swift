@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ClaimCellViewDelegate: AnyObject {
-    func claimCellViewOnHeightChanged(sender: ClaimCellView)
+    func claimCellViewOnHeightChanged(sender: ClaimCellView?)
 }
 
 
@@ -205,7 +205,9 @@ class ClaimCellView: UIView {
         self.sourceImageView.layer.cornerRadius = 16
         self.sourceImageView.clipsToBounds = true
         
-        self.sourceNameLabel.font = AILERON(14)
+        self.sourceNameLabel.font = AILERON(12)
+        self.sourceNameLabel.numberOfLines = 0
+        self.sourceNameLabel.lineBreakMode = .byTruncatingTail
         self.sourceNameLabel.textColor = CSS.shared.displayMode().main_textColor
         buttonsContainer.addSubview(self.sourceNameLabel)
         self.sourceNameLabel.activateConstraints([
@@ -217,8 +219,10 @@ class ClaimCellView: UIView {
         openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         buttonsContainer.addSubview(openIcon)
         openIcon.activateConstraints([
+            openIcon.widthAnchor.constraint(equalToConstant: 12),
+            openIcon.heightAnchor.constraint(equalToConstant: 12),
             openIcon.leadingAnchor.constraint(equalTo: self.sourceNameLabel.trailingAnchor, constant: 4),
-            openIcon.centerYAnchor.constraint(equalTo: buttonsContainer.centerYAnchor)
+            openIcon.topAnchor.constraint(equalTo: self.sourceNameLabel.topAnchor, constant: 1)
         ])
         
         let sourceButton = UIButton(type: .custom)
