@@ -41,7 +41,7 @@ extension FigureDetailsViewController {
         innerContentView.tag = 333
     
         let SEP: CGFloat = 8.0
-        var val_x: CGFloat = 0
+        var val_x: CGFloat = IPHONE() ? M : 0
         for (i, T) in topics.enumerated() {
             let label = UILabel()
             label.font = AILERON(15)
@@ -77,6 +77,10 @@ extension FigureDetailsViewController {
             button.addTarget(self, action: #selector(topicButton_iPhoneOnTap(_:)), for: .touchUpInside)
             
             val_x += SEP + _W
+        }
+
+        if(IPHONE()) {
+            val_x += M
         }
 
         innerContentView.widthAnchor.constraint(equalToConstant: val_x).isActive = true
