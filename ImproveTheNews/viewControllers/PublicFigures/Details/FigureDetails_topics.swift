@@ -14,12 +14,17 @@ extension FigureDetailsViewController {
         self.topics = topics
         let mainView = self.createContainerView(bgColor: .clear, height: H)
         
+        var _m: CGFloat = 0
+        if(IPAD()) {
+            _m = (SCREEN_SIZE().width - W())/2
+        }
+        
         let innerScrollView = UIScrollView()
         innerScrollView.backgroundColor = CSS.shared.displayMode().main_bgColor
         mainView.addSubview(innerScrollView)
         innerScrollView.activateConstraints([
-            innerScrollView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-            innerScrollView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            innerScrollView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: _m),
+            innerScrollView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -_m),
             innerScrollView.topAnchor.constraint(equalTo: mainView.topAnchor),
             innerScrollView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor)
         ])
@@ -36,7 +41,7 @@ extension FigureDetailsViewController {
         innerContentView.tag = 333
     
         let SEP: CGFloat = 8.0
-        var val_x: CGFloat = M
+        var val_x: CGFloat = 0
         for (i, T) in topics.enumerated() {
             let label = UILabel()
             label.font = AILERON(15)

@@ -65,11 +65,11 @@ class MainFeed_v3_viewController: BaseViewController {
             self.didAppear = true
             self.loadData()
             
-            DELAY(2.0) {
-                let vc = FigureDetailsViewController()
-                vc.slug = "elon-musk"
-                CustomNavController.shared.pushViewController(vc, animated: true)
-            }
+//            DELAY(2.0) {
+//                let vc = FigureDetailsViewController()
+//                vc.slug = "elon-musk"
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
             
             //CustomNavController.shared.menu.presentPreferences() //!!!
         }
