@@ -168,7 +168,10 @@ extension FigureDetailsViewController {
         
         if(figure.stories.count>0) {
             self.addStoriesTitle(name: figure.name)
-            self.addTopics(figure.topics)
+            
+            //self.addTopics(figure.topics)
+            self.addTopics_iPhone(figure.topics)
+            
             self.addStories_structure()
                 self.stories = []
                 self.storiesBuffer = []

@@ -9,6 +9,79 @@ import UIKit
 
 extension FigureDetailsViewController {
 
+    func addTopics_iPhone(_ topics: [SimpleTopic]) {
+        let H: CGFloat = 40.0
+        self.topics = topics
+        let mainView = self.createContainerView(bgColor: .clear, height: H)
+        
+        let innerScrollView = UIScrollView()
+        innerScrollView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        mainView.addSubview(innerScrollView)
+        innerScrollView.activateConstraints([
+            innerScrollView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            innerScrollView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            innerScrollView.topAnchor.constraint(equalTo: mainView.topAnchor),
+            innerScrollView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor)
+        ])
+        
+        let innerContentView = UIView()
+        innerContentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        innerScrollView.addSubview(innerContentView)
+        innerContentView.activateConstraints([
+            innerContentView.leadingAnchor.constraint(equalTo: innerScrollView.leadingAnchor),
+            innerContentView.topAnchor.constraint(equalTo: innerScrollView.topAnchor),
+            innerContentView.heightAnchor.constraint(equalToConstant: H)
+            //,innerContentView.widthAnchor.constraint(equalToConstant: 500)
+        ])
+        innerContentView.tag = 333
+    
+        let SEP: CGFloat = 8.0
+        var val_x: CGFloat = M
+        for (i, T) in topics.enumerated() {
+            let label = UILabel()
+            label.font = AILERON(15)
+            label.textColor = CSS.shared.displayMode().sec_textColor
+            label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF0F0F0)
+            label.textAlignment = .center
+            label.text = T.name
+            label.layer.cornerRadius = 20
+            label.layer.borderWidth = 1.0
+            label.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x4C4E50).cgColor : UIColor(hex: 0xBBBDC0).cgColor
+            label.clipsToBounds = true
+            
+            let _W = label.calculateWidthFor(height: H) + 42
+            
+            innerContentView.addSubview(label)
+            label.activateConstraints([
+                label.leadingAnchor.constraint(equalTo: innerContentView.leadingAnchor, constant: val_x),
+                label.topAnchor.constraint(equalTo: innerContentView.topAnchor),
+                label.widthAnchor.constraint(equalToConstant: _W),
+                label.heightAnchor.constraint(equalToConstant: H)
+            ])
+            
+            let button = UIButton(type: .custom)
+            button.tag = 400 + i
+            //button.backgroundColor = .red.withAlphaComponent(0.5)
+            innerContentView.addSubview(button)
+            button.activateConstraints([
+                button.leadingAnchor.constraint(equalTo: label.leadingAnchor),
+                button.trailingAnchor.constraint(equalTo: label.trailingAnchor),
+                button.topAnchor.constraint(equalTo: label.topAnchor),
+                button.bottomAnchor.constraint(equalTo: label.bottomAnchor)
+            ])
+            button.addTarget(self, action: #selector(topicButton_iPhoneOnTap(_:)), for: .touchUpInside)
+            
+            val_x += SEP + _W
+        }
+
+        innerContentView.widthAnchor.constraint(equalToConstant: val_x).isActive = true
+        innerScrollView.contentSize = CGSize(width: val_x, height: H)
+        
+        ADD_SPACER(to: self.vStack, height: M*2)
+        self.selectTopic_iPhone(index: 0, mustLoad: false)
+    }
+
+
     func addTopics(_ topics: [SimpleTopic]) {
         self.topics = topics
         
@@ -82,6 +155,38 @@ extension FigureDetailsViewController {
         self.selectTopic(index: i)
     }
     
+    @objc func topicButton_iPhoneOnTap(_ sender: UIButton) {
+        let i = sender.tag - 400
+        self.selectTopic_iPhone(index: i)
+    }
+    func selectTopic_iPhone(index: Int, mustLoad: Bool = true) {
+        if let containerView = self.view.viewWithTag(333) {
+            var i = -1
+            for V in containerView.subviews {
+                if let label = V as? UILabel {
+                    i += 1
+                    if(i == index) {
+                        label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xE3E3E3)
+                        label.layer.borderColor = UIColor.clear.cgColor
+                    } else {
+                        label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF0F0F0)
+                        label.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x4C4E50).cgColor : UIColor(hex: 0xBBBDC0).cgColor 
+                    }
+                }
+            }
+        }
+        
+        if(mustLoad) {
+            self.currentTopic = index
+            self.storiesPage = 1
+            self.stories = []
+            self.storiesBuffer = []
+            
+            let T = self.topics[index]
+            self.loadTopicData(T.slug, page: self.storiesPage)
+        }
+    }
+    
     func selectTopic(index: Int, mustLoad: Bool = true) {
         if let containerView = self.view.viewWithTag(333) {
             var i = -1
@@ -117,7 +222,8 @@ extension FigureDetailsViewController {
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading topic stories,\nplease try again later.", onCompletion: {
-                    CustomNavController.shared.popViewController(animated: true)
+                    //CustomNavController.shared.popViewController(animated: true)
+                    self.hideLoading()
                 })
             } else {
                 MAIN_THREAD {
