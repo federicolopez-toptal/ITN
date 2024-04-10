@@ -65,13 +65,11 @@ class MainFeed_v3_viewController: BaseViewController {
             self.didAppear = true
             self.loadData()
             
-//            DELAY(2.0) {
-//                let vc = FigureDetailsViewController()
-//                vc.slug = "elon-musk"
-//                CustomNavController.shared.pushViewController(vc, animated: true)
-//            }
-            
-            //CustomNavController.shared.menu.presentPreferences() //!!!
+            DELAY(2.0) {
+                let vc = ControDetailViewController()
+                vc.slug = "climate-change-end-life"
+                CustomNavController.shared.pushViewController(vc, animated: true)
+            }            
         }
         
         if(self.mustReloadOnShow) {

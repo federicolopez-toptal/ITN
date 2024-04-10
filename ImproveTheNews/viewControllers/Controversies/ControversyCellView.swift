@@ -11,6 +11,7 @@ class ControversyCellView: UIView {
 
     let M: CGFloat = 16
     private var WIDTH: CGFloat = 1
+    private var showBottom: Bool = true
     var mainHeightConstraint: NSLayoutConstraint?
     
     let figuresContainerView = UIView()
@@ -29,15 +30,17 @@ class ControversyCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat) {
+    init(width: CGFloat, showBottom: Bool = true) {
         super.init(frame: .zero)
         self.WIDTH = width
+        self.showBottom = showBottom
         
         self.buildContent()
     }
 
     private func buildContent() {
         self.backgroundColor = CSS.shared.displayMode().main_bgColor
+        //self.backgroundColor = .red
         
         if(IPHONE()) {
             let line = UIView()
@@ -91,42 +94,45 @@ class ControversyCellView: UIView {
         ])
         self.endLabel.text = "HIGH"
         
-        self.titleLabel.numberOfLines = 0
-        self.titleLabel.font = DM_SERIF_DISPLAY(20)
-        self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
-        self.addSubview(self.titleLabel)
-        self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
-            self.titleLabel.topAnchor.constraint(equalTo: self.startLabel.bottomAnchor, constant: M)
-        ])
+        if(showBottom) {
+            self.titleLabel.numberOfLines = 0
+            self.titleLabel.font = DM_SERIF_DISPLAY(20)
+            self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
+            self.addSubview(self.titleLabel)
+            self.titleLabel.activateConstraints([
+                self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
+                self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
+                self.titleLabel.topAnchor.constraint(equalTo: self.startLabel.bottomAnchor, constant: M)
+            ])
         
-        let pill = UILabel()
-        pill.text = "CONTROVERSY"
-        pill.font = AILERON(12)
-        pill.textAlignment = .center
-        pill.textColor = CSS.shared.displayMode().main_bgColor
-        pill.backgroundColor = UIColor(hex: 0x60C4D6)
-        self.addSubview(pill)
-        pill.activateConstraints([
-            pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
-            pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: M),
-            pill.widthAnchor.constraint(equalToConstant: 120),
-            pill.heightAnchor.constraint(equalToConstant: 24)
-        ])
-        pill.layer.cornerRadius = 12
-        pill.clipsToBounds = true
-        
-        self.timeLabel.font = AILERON(12)
-        self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
-        self.addSubview(self.timeLabel)
-        self.timeLabel.activateConstraints([
-            self.timeLabel.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: 12),
-            self.timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor)
-        ])
+            let pill = UILabel()
+            pill.text = "CONTROVERSY"
+            pill.font = AILERON(12)
+            pill.textAlignment = .center
+            pill.textColor = CSS.shared.displayMode().main_bgColor
+            pill.backgroundColor = UIColor(hex: 0x60C4D6)
+            self.addSubview(pill)
+            pill.activateConstraints([
+                pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
+                pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: M),
+                pill.widthAnchor.constraint(equalToConstant: 120),
+                pill.heightAnchor.constraint(equalToConstant: 24)
+            ])
+            pill.layer.cornerRadius = 12
+            pill.clipsToBounds = true
+            
+            self.timeLabel.font = AILERON(12)
+            self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
+            self.addSubview(self.timeLabel)
+            self.timeLabel.activateConstraints([
+                self.timeLabel.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: 12),
+                self.timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor)
+            ])
+        }
         
         if(IPAD()) {
             let borderBG = RectangularDashedView()
+            borderBG.tag = 444
             
             borderBG.cornerRadius = 10
             borderBG.dashWidth = 1
@@ -171,11 +177,16 @@ class ControversyCellView: UIView {
 
     func calculateHeight() -> CGFloat {
         let W = self.WIDTH - M - M
+        
+        var bottom: CGFloat = M
+        if(self.showBottom) {
+            bottom = M + self.titleLabel.calculateHeightFor(width: W) + M + 24 + M
+        }
+        
         let H: CGFloat = M + 84 + 8 +
             4 + 8 + self.startLabel.calculateHeightFor(width: W) +
-            M + self.titleLabel.calculateHeightFor(width: W) + M +
-            24 + M + M +
-            (IPAD() ? 20 : 0)
+            bottom
+            //(IPAD() ? 20 : 0)
         
         return H
     }

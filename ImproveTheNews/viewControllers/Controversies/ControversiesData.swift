@@ -12,12 +12,51 @@ class ControversiesData {
     
     static let shared = ControversiesData()
     
-    func loadControversy(slug: String) {
-        let url = ITN_URL() + "/claims-api/claim/\(slug)"
+    func loadControversyData(slug: String, page: Int, callback: @escaping (Error?, ControversyListItem?, [Claim]?, Int?) -> () ) {
+        let url = ITN_URL() + "/claims-api/claim/\(slug)?page=\(page)"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
-        //print("CONTROVERSIES LIST -  URL", url)
+        print("CONTROVERSY DATA -  URL", url)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+                callback(error, nil, nil, nil)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil, nil, nil)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    if let _ = _json["error"] {
+                        callback(CustomError.jsonParseError, nil, nil, nil)
+                    } else {
+                        let listItem = ControversyListItem(jsonObj: _json)
+                        
+                        var claims = [Claim]()
+                        var claimsTotal = 0
+                        if let claimsObj = _json["claims"] as? [String: Any],
+                            let data = claimsObj["data"] as? [[String: Any]],
+                            let total = claimsObj["total"] as? Int  {
+                            
+                            for jsonObj in data {
+                                let CL = Claim(jsonObj: jsonObj)
+                                claims.append(CL)
+                            }
+                            
+                            claimsTotal = total
+                        }
+                        
+                        callback(nil, listItem, claims, claimsTotal)
+                    }
+                } else {
+                    callback(CustomError.jsonParseError, nil, nil, nil)
+                }
+            }
+        }
+
+        task.resume()
     }
     
     func loadList(term: String = "", page: Int, callback: @escaping (Error?, String?, Int?, [ControversyListItem]?) -> () ) {
