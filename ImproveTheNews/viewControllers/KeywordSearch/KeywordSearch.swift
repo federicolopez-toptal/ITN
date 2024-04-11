@@ -308,10 +308,7 @@ struct StorySearchResult {
             self.slug = _slug
         } else {
             if let _url = data["url"] as? String {
-                let components = _url.components(separatedBy: "/")
-                if let _slug = components.last {
-                    self.slug = _slug
-                }
+                self.slug = _url.replacingOccurrences(of: "/story", with: "story")
             }
         }
         
