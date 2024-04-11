@@ -12,7 +12,7 @@ class ControversiesData {
     
     static let shared = ControversiesData()
     
-    func loadControversyData(slug: String, page: Int, callback: @escaping (Error?, ControversyListItem?, [Claim]?, Int?) -> () ) {
+    func loadControversyData(slug: String, page: Int, callback: @escaping (Error?, Controversy?) -> () ) {
         let url = ITN_URL() + "/claims-api/claim/\(slug)?page=\(page)"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
@@ -21,37 +21,22 @@ class ControversiesData {
         let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
-                callback(error, nil, nil, nil)
+                callback(error, nil)
             }
             
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(_error, nil, nil, nil)
+                callback(_error, nil)
             } else {
                 if let _json = JSON(fromData: data) {
                     if let _ = _json["error"] {
-                        callback(CustomError.jsonParseError, nil, nil, nil)
+                        callback(CustomError.jsonParseError, nil)
                     } else {
-                        let listItem = ControversyListItem(jsonObj: _json)
-                        
-                        var claims = [Claim]()
-                        var claimsTotal = 0
-                        if let claimsObj = _json["claims"] as? [String: Any],
-                            let data = claimsObj["data"] as? [[String: Any]],
-                            let total = claimsObj["total"] as? Int  {
-                            
-                            for jsonObj in data {
-                                let CL = Claim(jsonObj: jsonObj)
-                                claims.append(CL)
-                            }
-                            
-                            claimsTotal = total
-                        }
-                        
-                        callback(nil, listItem, claims, claimsTotal)
+                        let C = Controversy(jsonObj: _json)
+                        callback(nil, C)
                     }
                 } else {
-                    callback(CustomError.jsonParseError, nil, nil, nil)
+                    callback(CustomError.jsonParseError, nil)
                 }
             }
         }
@@ -175,4 +160,45 @@ class ControversyListItem {
         print("--------------------------")
     }
     
+}
+
+// --------------------------------------------------
+class Controversy {
+
+    var info: ControversyListItem
+    
+    var claims = [Claim]()
+    var claimsTotal = 0
+    
+    var goDeepers = [StorySearchResult]()
+    var goDeeperTotal = 0
+    
+    init(jsonObj: [String: Any]) {
+        self.info = ControversyListItem(jsonObj: jsonObj)
+        
+        if let claimsObj = jsonObj["claims"] as? [String: Any],
+            let data = claimsObj["data"] as? [[String: Any]],
+            let total = claimsObj["total"] as? Int  {
+            
+            for jsonObj in data {
+                let CL = Claim(jsonObj: jsonObj)
+                self.claims.append(CL)
+            }
+            
+            self.claimsTotal = total
+        }
+        
+        if let goDeeperObj = jsonObj["goDeeper"] as? [String: Any],
+            let data = goDeeperObj["data"] as? [[String: Any]],
+            let total = goDeeperObj["total"] as? Int  {
+            
+            for jsonObj in data {
+                let GD = StorySearchResult(jsonObj)
+                self.goDeepers.append(GD)
+            }
+            
+            self.goDeeperTotal = total
+        }
+    }
+
 }

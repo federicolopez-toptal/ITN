@@ -24,6 +24,9 @@ class ControDetailViewController: BaseViewController {
     var claimShowMoreViewHeightConstraint: NSLayoutConstraint?
     var claimsPage = 1
 
+    var goDeepers = [StorySearchResult]()
+    var goDeeperContainerViewHeightConstraint: NSLayoutConstraint?
+
 
 
     // MARK: - Init
@@ -118,7 +121,7 @@ extension ControDetailViewController {
     func loadData() {
 
         self.showLoading()
-        ControversiesData.shared.loadControversyData(slug: self.slug, page: self.claimsPage) { (error, listItem, claims, claimsTotal) in
+        ControversiesData.shared.loadControversyData(slug: self.slug, page: self.claimsPage) { (error, controversy) in
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading Controversy,\nplease try again later.", onCompletion: {
@@ -128,13 +131,12 @@ extension ControDetailViewController {
             } else {
                 MAIN_THREAD {
                     self.hideLoading()
-                    
-                    if let _listItem = listItem, let _claims = claims, let _claimsTotal = claimsTotal {
-                        self.fillContent(_listItem,
-                            claims: _claims, claimsTotal: _claimsTotal)
+                    if let _C = controversy {
+                        self.fillContent(_C)
                     }
                 }
             }
+            
         }
         
     }
@@ -143,19 +145,316 @@ extension ControDetailViewController {
 
 extension ControDetailViewController {
     
-    func fillContent(_ listItem: ControversyListItem, claims: [Claim], claimsTotal: Int) {
-        self.twitterText = "Where do you stand on this: " + listItem.title + " www.improvethenews.org/controversy/" + listItem.slug
-        self.addHeaders(listItem)
+    func fillContent(_ controversy: Controversy) {
+        self.twitterText = "Where do you stand on this: " + controversy.info.title +
+            " www.improvethenews.org/controversy/" + controversy.info.slug
+        
+        self.addTabs(claimsCount: controversy.claimsTotal,
+            goDeeperCount: controversy.goDeeperTotal)
+            
+        self.addHeaders(controversy.info)
         
         self.addClaims_structure()
         self.claims = []
-        self.fillClaims(claims)
-        self.addClaims(self.claims, count: claimsTotal)
+        self.fillClaims(controversy.claims)
+        self.addClaims(self.claims, count: controversy.claimsTotal)
+        
+        if(controversy.goDeeperTotal > 0) {
+            self.addGoDeeper_structure()
+            self.goDeepers = []
+            self.fillGoDeepers(controversy.goDeepers)
+            self.addGoDeepers(self.goDeepers, count: controversy.goDeeperTotal)
+        }
+        
+    }
+    
+    func addGoDeepers(_ goDeepers: [StorySearchResult], count: Int) {
+        let containerView = self.view.viewWithTag(666)!
+        
+        var col: CGFloat = 0
+        var item_W: CGFloat = SCREEN_SIZE().width
+        if(IPAD()){ item_W = (W()-M)/2 }
+        var val_y: CGFloat = 0
+        for (i, GD) in goDeepers.enumerated() {
+            let stView = iPhoneStory_vImg_v3(width: item_W)
+            //let stView = iPhoneAllNews_vImgCol_v3(width: item_W)
+            
+            stView.tag = 200 + i
+            var val_x: CGFloat = col * item_W
+            if(IPAD() && col==1) {
+                val_x += M
+            }
+            
+            containerView.addSubview(stView)
+            stView.activateConstraints([
+                stView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: val_y),
+                stView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: val_x),
+                stView.widthAnchor.constraint(equalToConstant: item_W)
+            ])
+            
+            let ART = MainFeedArticle(story: GD)
+            stView.populate(ART)
+            
+//            stView.populate(story: GD)
+            if(GD.type == 2) {
+                stView.pill.setAsContext()
+            }
+            
+            let buttonArea = UIButton(type: .custom)
+            //buttonArea.backgroundColor = .red.withAlphaComponent(0.5)
+            containerView.addSubview(buttonArea)
+            buttonArea.activateConstraints([
+                buttonArea.leadingAnchor.constraint(equalTo: stView.leadingAnchor),
+                buttonArea.trailingAnchor.constraint(equalTo: stView.trailingAnchor),
+                buttonArea.topAnchor.constraint(equalTo: stView.topAnchor),
+                buttonArea.heightAnchor.constraint(equalToConstant: stView.calculateHeight())
+            ])
+            buttonArea.addTarget(self, action: #selector(storyOnTap(_:)), for: .touchUpInside)
+            buttonArea.tag = 700 + i
+            
+            if(IPAD()) {
+                col += 1
+                if(col==2) {
+                    col = 0
+                    val_y += stView.calculateHeight()
+                }
+                
+                if(goDeepers.count==1) {
+                    val_y += stView.calculateHeight()
+                }
+            } else {
+                val_y += stView.calculateHeight()
+            }
+        }
+        
+        self.goDeeperContainerViewHeightConstraint!.constant = val_y
+    }
+    @objc func storyOnTap(_ sender: UIButton) {
+        let index = sender.tag - 700
+        
+        let GD = self.goDeepers[index]
+        let ART = MainFeedArticle(story: GD)
+        
+        let vc = StoryViewController()
+        vc.story = ART
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    func addGoDeeper_structure() {
+        let mainView = self.createContainerView()
+        //mainView.backgroundColor = .orange
+        mainView.tag = 160
+        
+        let line = UIView()
+        line.backgroundColor = .green
+        mainView.addSubview(line)
+        line.activateConstraints([
+            line.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            line.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            line.topAnchor.constraint(equalTo: mainView.topAnchor),
+            line.heightAnchor.constraint(equalToConstant: 1)
+        ])
+        ADD_HDASHES(to: line)
+        
+        let label = UILabel()
+        label.font = DM_SERIF_DISPLAY(20)
+        label.textColor = CSS.shared.displayMode().main_textColor
+        label.text = "Go deeper"
+        mainView.addSubview(label)
+        label.activateConstraints([
+            label.widthAnchor.constraint(equalToConstant: self.W()),
+            label.centerXAnchor.constraint(equalTo: mainView.centerXAnchor),
+            label.topAnchor.constraint(equalTo: mainView.topAnchor, constant: M*2)
+        ])
+        
+        let containerView = UIView()
+        mainView.addSubview(containerView)
+        //containerView.backgroundColor = .orange
+        mainView.addSubview(containerView)
+        containerView.activateConstraints([
+            containerView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: M),
+            containerView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
+            containerView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor)            
+        ])
+        containerView.tag = 666
+        self.goDeeperContainerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 0)
+        self.goDeeperContainerViewHeightConstraint!.isActive = true
+
+//        // More
+//        let moreView = UIView()
+//        mainView.addSubview(moreView)
+//        moreView.backgroundColor = CSS.shared.displayMode().main_bgColor
+//        moreView.activateConstraints([
+//            moreView.topAnchor.constraint(equalTo: containerView.bottomAnchor),
+//            moreView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
+//            moreView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor)
+//        ])
+//        moreView.tag = 556
+//        self.claimShowMoreViewHeightConstraint = moreView.heightAnchor.constraint(equalToConstant: 88)
+//        self.claimShowMoreViewHeightConstraint?.isActive = true
+//        
+//        if(IPHONE()) {
+//            let line = UIView()
+//            line.backgroundColor = .green
+//            moreView.addSubview(line)
+//            line.activateConstraints([
+//                line.leadingAnchor.constraint(equalTo: moreView.leadingAnchor),
+//                line.trailingAnchor.constraint(equalTo: moreView.trailingAnchor),
+//                line.topAnchor.constraint(equalTo: moreView.topAnchor),
+//                line.heightAnchor.constraint(equalToConstant: 1)
+//            ])
+//            ADD_HDASHES(to: line)
+//        }
+//        
+//        let button = UIButton(type: .custom)
+//        moreView.addSubview(button)
+//        button.activateConstraints([
+//            button.heightAnchor.constraint(equalToConstant: 42),
+//            button.widthAnchor.constraint(equalToConstant: 150),
+//            button.centerXAnchor.constraint(equalTo: moreView.centerXAnchor),
+//            button.centerYAnchor.constraint(equalTo: moreView.centerYAnchor)
+//        ])
+//        button.setTitle("Show more", for: .normal)
+//        button.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
+//        button.titleLabel?.font = AILERON(15)
+//        button.layer.masksToBounds = true
+//        button.layer.cornerRadius = 9
+//        button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xBBBDC0)
+//        button.addTarget(self, action: #selector(loadMoreClaimsOnTap(_:)), for: .touchUpInside)
+
+        // Finally
+        mainView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: M).isActive = true
+    }
+    
+    func addTabs(claimsCount: Int, goDeeperCount: Int) {
+        ADD_SPACER(to: self.vStack, height: M)
+        let containerView = self.createContainerView(bgColor: .clear, height: 40)
+        
+        let mainView = UIView()
+        //mainView.backgroundColor = .orange
+        containerView.addSubview(mainView)
+        mainView.activateConstraints([
+            mainView.heightAnchor.constraint(equalToConstant: 40),
+            mainView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            mainView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+        ])
+        if(IPHONE()) {
+            mainView.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width).isActive = true
+        } else {
+            mainView.widthAnchor.constraint(equalToConstant: self.W()).isActive = true
+        }
+        
+        
+        var W: CGFloat = 0
+        if(IPHONE()) {
+            W = (SCREEN_SIZE().width - (M*4))/3
+        } else {
+            W = 125
+        }
+        
+        var val_X: CGFloat = M
+        for i in 1...3 {
+            let tab = UIView()
+            tab.backgroundColor = CSS.shared.displayMode().main_bgColor
+            tab.layer.cornerRadius = 20
+            tab.layer.borderWidth = 1.0
+            tab.layer.borderColor = CSS.shared.displayMode().line_color.cgColor
+            
+            mainView.addSubview(tab)
+            tab.activateConstraints([
+                tab.heightAnchor.constraint(equalToConstant: 40),
+                tab.widthAnchor.constraint(equalToConstant: W),
+                tab.topAnchor.constraint(equalTo: mainView.topAnchor),
+                tab.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: val_X)
+            ])
+            
+            let label = UILabel()
+            label.text = "oOoOoOoOo"
+            label.font = CSS.shared.topicSelector_font
+            label.textColor = CSS.shared.displayMode().sec_textColor
+            tab.addSubview(label)
+            label.activateConstraints([
+                label.centerXAnchor.constraint(equalTo: tab.centerXAnchor),
+                label.centerYAnchor.constraint(equalTo: tab.centerYAnchor)
+            ])
+            
+            switch(i) {
+                case 1:
+                    label.text = "Claims"
+                case 2:
+                    label.text = "Go Deeper"
+                case 3:
+                    label.text = "item 3"
+                
+                default:
+                    NOTHING()
+            }
+            
+            let button = UIButton(type: .system)
+            tab.addSubview(button)
+            button.activateConstraints([
+                button.leadingAnchor.constraint(equalTo: tab.leadingAnchor, constant: -5),
+                button.trailingAnchor.constraint(equalTo: tab.trailingAnchor, constant: 5),
+                button.topAnchor.constraint(equalTo: tab.topAnchor, constant: -5),
+                button.bottomAnchor.constraint(equalTo: tab.bottomAnchor, constant: 5)
+            ])
+            button.tag = 300 + i
+            button.addTarget(self, action: #selector(onTabButtonTap(_:)), for: .touchUpInside)
+            
+            //------------------
+            if(i==2 && goDeeperCount==0) {
+                tab.hide()
+            }
+            if(i==3) {
+                tab.hide()
+            }
+            
+            //------------------
+            val_X += W + M
+        }
+    }
+    
+    @objc func onTabButtonTap(_ sender: UIButton) {
+        let tag = sender.tag - 300
+        var val_Y: CGFloat = 0
+        
+        switch(tag) {
+            case 1:
+                let targetView = self.contentView.viewWithTag(140)!
+                val_Y = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
+                val_Y += M
+                
+            case 2:
+                let targetView = self.contentView.viewWithTag(160)!
+                val_Y = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
+                val_Y += M
+                
+                let limit = self.scrollView.contentSize.height-self.scrollView.bounds.height
+                if(val_Y > limit) {
+                    val_Y = limit
+                }
+
+//            case 3:
+//                view = self.view.viewWithTag(170)!
+//                val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+        
+            default:
+                NOTHING()
+        }
+        
+        //val_Y = 200
+        self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y), animated: true)
     }
     
     func fillClaims(_ claims: [Claim]) {
         for C in claims {
             self.claims.append(C)
+        }
+    }
+    
+    func fillGoDeepers(_ goDeppers: [StorySearchResult]) {
+        for GD in goDeppers {
+            self.goDeepers.append(GD)
         }
     }
     
@@ -248,6 +547,7 @@ extension ControDetailViewController {
     
     func addClaims_structure() {
         let mainView = self.createContainerView()
+        mainView.tag = 140
         //mainView.backgroundColor = .red
         
         let label = UILabel()
@@ -327,7 +627,7 @@ extension ControDetailViewController {
         var item_W: CGFloat = SCREEN_SIZE().width
         if(IPAD()){ item_W = (W()-M)/2 }
         
-        for (i, CL) in claims.enumerated() {
+        for (_, CL) in claims.enumerated() {
             let claimView = ClaimCellView(width: item_W)
             claimView.delegate = self
             
@@ -375,17 +675,13 @@ extension ControDetailViewController {
         
         // Finally
         self.claimsContainerViewHeightConstraint?.constant = self.calculateContainerViewHeight()
-        
-//        DELAY(0.25) {
-//            self.claimCellViewOnHeightChanged(sender: nil)
-//        }
     }
     
     @objc func loadMoreClaimsOnTap(_ sender: UIButton) {
         self.claimsPage += 1
                 
         self.showLoading()
-        ControversiesData.shared.loadControversyData(slug: self.slug, page: self.claimsPage) { (error, listItem, claims, claimsTotal) in
+        ControversiesData.shared.loadControversyData(slug: self.slug, page: self.claimsPage) { (error, controversy) in
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading controversy claims,\nplease try again later.", onCompletion: {
@@ -394,22 +690,13 @@ extension ControDetailViewController {
             } else {
                 MAIN_THREAD {
                     self.hideLoading()
-
-                    if let _ = listItem, let _claims = claims, let _claimsTotal = claimsTotal {
-                        self.fillClaims(_claims)
-                        self.addMoreClaims(_claims, newCount: self.claims.count, count: _claimsTotal)
+                    if let _controversy = controversy {
+                        self.fillClaims(_controversy.claims)
+                        self.addMoreClaims(_controversy.claims, newCount: self.claims.count, count: _controversy.claimsTotal)
                     }
-
-//                    if let _figure = figure {
-//                        self.addMoreClaims(_figure.claims,
-//                            newCount: self.claims.count + _figure.claims.count,
-//                            count: _figure.claimsCount)
-//                            
-//                        self.fillClaims(_figure.claims)
-//                    }
-                    
                 }
             }
+            
         }
     }
     

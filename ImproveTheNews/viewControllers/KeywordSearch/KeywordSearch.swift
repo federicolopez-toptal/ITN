@@ -297,8 +297,23 @@ struct StorySearchResult {
     var videoFile: String?
     
     init(_ data: [String: Any]) {
-        self.image_url = data["image_url"] as! String
-        self.slug = data["slug"] as! String
+        if let _imageUrl = data["image_url"] as? String {
+            self.image_url = _imageUrl
+        } else if let _imageUrl = data["image"] as? String {
+            self.image_url = _imageUrl
+        }
+        
+        self.slug = ""
+        if let _slug = data["slug"] as? String {
+            self.slug = _slug
+        } else {
+            if let _url = data["url"] as? String {
+                let components = _url.components(separatedBy: "/")
+                if let _slug = components.last {
+                    self.slug = _slug
+                }
+            }
+        }
         
         //print("TIME RELATIVE:", data["timeRelative"])
         if let _timeAgo = data["timeago"] as? String {
@@ -308,6 +323,8 @@ struct StorySearchResult {
         } else if let _timeAgo = data["updated"] as? String {
             //self.timeago = self.formattedUpdatedTime(input: _timeAgo)
             self.timeago = DATE_TO_TIMEAGO(_timeAgo)
+        } else if let _timeAgo = data["time"] as? String {
+            self.timeago = FIX_TIME(_timeAgo)
         }
         
         self.title = data["title"] as! String
@@ -316,6 +333,8 @@ struct StorySearchResult {
         if let _mediaNames = data["medianames"] as? String {
             self.medianames = _mediaNames
         } else if let _mediaNames = data["media"] as? [String] {
+            self.medianames = _mediaNames.joined(separator: ",")
+        } else if let _mediaNames = data["mediaList"] as? [String] {
             self.medianames = _mediaNames.joined(separator: ",")
         }
         

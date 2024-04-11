@@ -73,7 +73,7 @@ class MainFeediPad_v3_viewController: BaseViewController {
             
             DELAY(2.0) {
                 let vc = ControDetailViewController()
-                vc.slug = "climate-change-end-life"
+                vc.slug = "ai-existential-threat"
                 CustomNavController.shared.pushViewController(vc, animated: true)
             }
         }
