@@ -347,6 +347,20 @@ class SourceIconsView: UIView {
         ])
     }
     
+    func loadFigure(_ url: String) {
+        for I in self.imgs {
+            I.hide()
+        }
+        self.widthConstraint?.constant = self.size()
+        
+        let img = self.imgs[0]
+        img.show()
+        
+        if let subImage = img.subviews.first as? UIImageView {
+            subImage.sd_setImage(with: URL(string: url))
+        }
+    }
+    
     func load(_ sources: [String]) {
         for I in self.imgs {
             I.hide()

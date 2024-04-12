@@ -293,6 +293,9 @@ struct StorySearchResult {
     var medianames: String = ""
     var used: Bool = false
     
+    var figureName: String = ""
+    var figureImageUrl: String = ""
+    
     var type: Int = 1
     var videoFile: String?
     
@@ -344,6 +347,13 @@ struct StorySearchResult {
         
         if let _videoFile = data["videofile"] as? String {
             self.videoFile = _videoFile
+        }
+        
+        if let _figuresArray = data["figures"] as? [[String: Any]], _figuresArray.count>0 {
+            if let F = _figuresArray.first {
+                self.figureName = CHECK(F["name"])
+                self.figureImageUrl = CHECK(F["image"])
+            }
         }
     }
     

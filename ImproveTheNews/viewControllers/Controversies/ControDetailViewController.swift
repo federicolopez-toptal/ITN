@@ -194,6 +194,7 @@ extension ControDetailViewController {
             
             let ART = MainFeedArticle(story: GD)
             stView.populate(ART)
+            stView.showFigureImage(GD.figureImageUrl)
             
 //            stView.populate(story: GD)
             if(GD.type == 2) {

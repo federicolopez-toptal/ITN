@@ -111,6 +111,14 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         }
     }
     
+    func showFigureImage(_ url: String) {
+        if(url.isEmpty){ return }
+        
+        self.sources.loadFigure(url)
+        self.sources.show()
+        self.time_leading?.constant = 8
+    }
+    
     override func refreshDisplayMode() {
         self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
         self.pill.refreshDisplayMode()

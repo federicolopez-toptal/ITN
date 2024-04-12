@@ -45,7 +45,7 @@ func SHARE_ON_TWITTER(text: String) { // LSApplicationQueriesSchemes must includ
 //        OPEN_URL(url)
 //    }
     
-    let url = "https://twitter.com/intent/post?text=" + text.urlEncodedString()
+    let url = "https://twitter.com/intent/post?text=" + text //.urlEncodedString()
     OPEN_URL(url)
 }
 

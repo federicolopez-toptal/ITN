@@ -71,11 +71,11 @@ class MainFeediPad_v3_viewController: BaseViewController {
             self.didAppear = true
             self.loadData()
             
-            DELAY(2.0) {
-                let vc = ControDetailViewController()
-                vc.slug = "ai-existential-threat"
-                CustomNavController.shared.pushViewController(vc, animated: true)
-            }
+//            DELAY(2.0) {
+//                let vc = ControDetailViewController()
+//                vc.slug = "ai-existential-threat"
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
         }
         
         if(self.mustReloadOnShow) {
