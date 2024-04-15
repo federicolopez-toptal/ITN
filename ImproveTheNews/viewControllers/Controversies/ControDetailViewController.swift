@@ -17,7 +17,9 @@ class ControDetailViewController: BaseViewController {
     var slug: String = ""
     let M: CGFloat = CSS.shared.iPhoneSide_padding
     var iPad_W: CGFloat = -1
+    
     var twitterText: String = ""
+    var twitterUrl: String = ""
 
     var claims = [Claim]()
     var claimsContainerViewHeightConstraint: NSLayoutConstraint?
@@ -146,8 +148,12 @@ extension ControDetailViewController {
 extension ControDetailViewController {
     
     func fillContent(_ controversy: Controversy) {
-        self.twitterText = "Where do you stand on this: " + controversy.info.title +
-            " www.improvethenews.org/controversy/" + controversy.info.slug
+//        let text = "Where do you stand on this: " + controversy.info.title
+//        self.twitterText = text + " www.improvethenews.org/controversy/" + controversy.info.slug
+//        self.twitterText = self.twitterText.urlEncodedString()
+        
+        self.twitterText = "Where do you stand on this: " + controversy.info.title
+        self.twitterUrl = "www.improvethenews.org/controversy/" + controversy.info.slug
         
         self.addTabs(claimsCount: controversy.claimsTotal,
             goDeeperCount: controversy.goDeeperTotal)
@@ -802,7 +808,8 @@ extension ControDetailViewController {
         return button
     }
     @objc func twitterButtonOnTap(_ sender: UIButton?) {
-        SHARE_ON_TWITTER(text: self.twitterText)
+        //SHARE_ON_TWITTER(text: self.twitterText)
+        SHARE_ON_TWITTER(url: self.twitterUrl, text: self.twitterText)
     }
     
     // ------------------------------------------------------------

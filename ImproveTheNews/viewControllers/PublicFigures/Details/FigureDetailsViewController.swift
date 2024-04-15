@@ -282,7 +282,7 @@ extension FigureDetailsViewController {
         linkedInButton.addTarget(self, action: #selector(linkedInButtonOnTap(_:)), for: .touchUpInside)
     }
     @objc func twitterButtonOnTap(_ sender: UIButton?) {
-        SHARE_ON_TWITTER(text: self.shareText + " " + self.shareText)
+        SHARE_ON_TWITTER(url: self.shareUrl, text: self.shareText)
     }
     @objc func facebookButtonOnTap(_ sender: UIButton?) {
         SHARE_ON_FACEBOOK(url: self.shareUrl, text: self.shareText)

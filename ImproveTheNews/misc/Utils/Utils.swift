@@ -49,13 +49,18 @@ func SHARE_ON_TWITTER(text: String) { // LSApplicationQueriesSchemes must includ
     OPEN_URL(url)
 }
 
+func SHARE_ON_TWITTER(url: String, text: String) {
+    let url = "https://twitter.com/intent/post?text=" + text.urlEncodedString() + "%20" + url
+    OPEN_URL(url)
+}
+
 func SHARE_ON_FACEBOOK(url: String, text: String) {
-    var url = "https://www.facebook.com/sharer/sharer.php?u=\(url)&quote=\(text.urlEncodedString())"
+    let url = "https://www.facebook.com/sharer/sharer.php?u=\(url)&quote=\(text.urlEncodedString())"
     OPEN_URL(url)
 }
 
 func SHARE_ON_LINKEDIN(url: String, text: String) {
-    var url = "https://www.linkedin.com/shareArticle?url=\(url)&title=\(text.urlEncodedString())"    
+    let url = "https://www.linkedin.com/shareArticle?url=\(url)&title=\(text.urlEncodedString())"    
     OPEN_URL(url)
 }
 

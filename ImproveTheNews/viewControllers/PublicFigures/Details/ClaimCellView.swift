@@ -20,7 +20,9 @@ class ClaimCellView: UIView {
     var isOpen = false
     var mainHeightConstraint: NSLayoutConstraint?
     var sourceUrl: String = ""
+    
     var twitterText: String = ""
+    var twitterUrl: String = ""
     
     let photoImageView = UIImageView()
     let nameLabel = UILabel()
@@ -289,7 +291,8 @@ class ClaimCellView: UIView {
     }
     
     @objc func twitterButtonOnTap(_ sender: UIButton?) {
-        SHARE_ON_TWITTER(text: self.twitterText)
+        //SHARE_ON_TWITTER(text: self.twitterText)
+        SHARE_ON_TWITTER(url: self.twitterUrl, text: self.twitterText)
     }
     
     @objc func sourceButtonOnTap(_ sender: UIButton?) {
@@ -380,8 +383,9 @@ class ClaimCellView: UIView {
             self.moreSourcesLabel.attributedText = attributedString
         }
         
-        self.twitterText = claim.figureName + ": " + claim.claim + " — according to @improvethenews. www.improvethenews.org/controversy/" + claim.controversySlug
-
+        self.twitterText = claim.figureName + ": " + claim.claim + " — according to @improvethenews."
+        self.twitterUrl = "www.improvethenews.org/controversy/" + claim.controversySlug
+        
         self.applyDescriptionFormatTo(self.parrafoLabel, text: claim.description, remark: claim.title)
         self.parrafoLabelOver.hide()
 

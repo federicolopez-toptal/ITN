@@ -1034,6 +1034,8 @@ extension NewsLetterArchiveViewController {
         let i = sender.tag
         let ST = self.stories[i]
         
+        print(ST)
+        
         let vc = NewsLetterContentViewController()
         vc.refData = ST
         CustomNavController.shared.pushViewController(vc, animated: true)
