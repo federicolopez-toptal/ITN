@@ -288,7 +288,7 @@ extension PublicFiguresViewController {
             borderView.heightAnchor.constraint(equalToConstant: self.items_DIM)
         ])
         borderView.layer.cornerRadius = self.items_DIM/2
-        
+                        
         let imageView = UIImageView()
         imageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.05) : .black.withAlphaComponent(0.1)
         borderView.addSubview(imageView)
@@ -300,7 +300,10 @@ extension PublicFiguresViewController {
         ])
         imageView.layer.cornerRadius = self.imgs_DIM/2
         imageView.clipsToBounds = true
-        imageView.sd_setImage(with: URL(string: data.image))
+        let imageUrl = data.image.replacingOccurrences(of: " ", with: "%20")
+        imageView.sd_setImage(with: URL(string: imageUrl))
+        
+        print("IMAGE", imageUrl)
         
         let nameLabel = UILabel()
         //nameLabel.backgroundColor = .orange
