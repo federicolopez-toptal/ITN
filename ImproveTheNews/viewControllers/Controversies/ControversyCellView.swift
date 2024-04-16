@@ -172,7 +172,6 @@ class ControversyCellView: UIView {
             self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
             self.gradientView.show()
         }
-
     }
 
     func calculateHeight() -> CGFloat {
@@ -188,6 +187,8 @@ class ControversyCellView: UIView {
     }
 
     func applyGradient(A: UIColor, B: UIColor) {
+        self.gradientView.layer.sublayers = nil
+        
         let newLayer = CAGradientLayer()
         newLayer.colors = [A.cgColor, B.cgColor]
         newLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
@@ -208,6 +209,8 @@ class ControversyCellView: UIView {
 extension ControversyCellView {
 
     func addFigures(_ figures: [FigureForScale]) {
+        REMOVE_ALL_SUBVIEWS(from: self.figuresContainerView)
+        
         //var val_x: CGFloat = 0
         var nameDown = true
         

@@ -69,6 +69,9 @@ extension MainFeediPad_v3_viewController {
         self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
         self.list.register(iPhoneFooterCell_v3.self, forCellReuseIdentifier: iPhoneFooterCell_v3.identifier)
         
+        self.list.register(iPhoneHeaderLineCell_v3.self, forCellReuseIdentifier: iPhoneHeaderLineCell_v3.identifier)
+        self.list.register(iPadControversyCell_v3.self, forCellReuseIdentifier: iPadControversyCell_v3.identifier)
+        
         self.list.delegate = self
         self.list.dataSource = self
         
@@ -250,6 +253,9 @@ extension MainFeediPad_v3_viewController {
             } else if item is DP3_footer {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneFooterCell_v3.identifier)!
                 (cell as! iPhoneFooterCell_v3).refreshDisplayMode()
+            } else if let _item = item as? DP3_controversies_x2 {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadControversyCell_v3.identifier)!
+                (cell as! iPadControversyCell_v3).populate(item1: _item.controversy1, item2: _item.controversy2)
             }
         }
         
@@ -325,6 +331,8 @@ extension MainFeediPad_v3_viewController {
             }
         } else if(item is DP3_footer) { // footer
             return iPhoneFooterCell_v3.getHeight()
+        } else if(item is DP3_controversies_x2) {
+            result = (self.getCell(indexPath) as! iPadControversyCell_v3).calculateHeight()
         }
                 
         return result.rounded()
@@ -336,6 +344,14 @@ extension MainFeediPad_v3_viewController: iPhoneMoreCell_v3_delegate {
     
     func onShowMoreButtonTap(sender: iPhoneMoreCell_v3) {
         self.showLoading()
+
+        if(sender.topic == "CONTRO") {
+            self.removeControversiesFfromMainFeed()
+        
+            self.controversiesPage += 1
+            self.loadControversies()
+            return
+        }
 
         let topic = sender.topic
         self.data.loadMoreData(topic: topic, bannerClosed: self.bannerClosed) { (error, articlesAdded) in
@@ -350,7 +366,8 @@ extension MainFeediPad_v3_viewController: iPhoneMoreCell_v3_delegate {
                 if(A || B) { self.topicsCompleted[topic] = true }
                 
                 self.populateDataProvider()
-                self.refreshList()
+                self.addControversiesToMainFeed(mustRefresh: false)
+//                self.refreshList()
             }
 
             MAIN_THREAD {

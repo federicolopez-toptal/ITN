@@ -28,6 +28,11 @@ class MainFeed_v3_viewController: BaseViewController {
     var lastScrollViewPosY: CGFloat = 0
     var topBarsTransitioning = false
     
+    var controversies = [ControversyListItem]()
+    var controversiesTotal = 0
+    var controversiesPage = 1
+    let latestControversies = "Latest controversies"
+    
     // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,12 +169,109 @@ extension MainFeed_v3_viewController {
 //                            self.list.scrollToBottom()
 //                        }
                         
-                        
+                        self.controversies = []
+                        self.controversiesPage = 1
+                        self.controversiesTotal = 0
+                        self.loadControversies()
                     }
                 }
             }
         }
     }
+    
+    func loadControversies() {
+        ControversiesData.shared.loadListForFeed(topic: self.topic, page: self.controversiesPage) { (error, list, total) in
+            if let _ = error {
+                NOTHING()
+            } else {
+                MAIN_THREAD {
+                    self.hideLoading()
+                    if let _T = total, let _L = list {
+                        for LI in _L {
+                            self.controversies.append(LI)
+                        }
+                        self.controversiesTotal = _T
+                        self.addControversiesToMainFeed()
+                    }
+                }
+            }
+        }
+    }
+    
+    func removeControversiesFfromMainFeed() {
+        var topicIndex = -1
+        
+        for (i, DP) in self.dataProvider.enumerated() {
+            if(DP is DP3_headerItem) {
+                topicIndex += 1
+            }
+            
+            if(topicIndex==0 && DP is DP3_more) {
+                for j in 1...100 {
+                    if let _header = self.dataProvider[i+1] as? DP3_headerItem {
+                        if(_header.title != "-----" && _header.title != self.latestControversies) {
+                            break
+                        }
+                    }
+                    
+                    self.dataProvider.remove(at: i+1)
+                }
+                
+                break
+            }
+        }
+    }
+    
+    func addControversiesToMainFeed(mustRefresh: Bool = true) {
+        var topicIndex = -1
+        
+        for (i, DP) in self.dataProvider.enumerated() {
+            if(DP is DP3_headerItem) {
+                topicIndex += 1
+            }
+            
+            if(topicIndex==0 && DP is DP3_more) {
+                let line = DP3_headerItem(title: "-----")
+                self.dataProvider.insert(line, at: i+1)
+            
+                let header = DP3_headerItem(title: self.latestControversies)
+                self.dataProvider.insert(header, at: i+2)
+                
+                var offset = 3
+                for LI in self.controversies {
+                    let CO = DP3_controversy(controversy: LI)
+                    self.dataProvider.insert(CO, at: i+offset)
+                    
+                    offset += 1
+                }
+                
+                let spacer1 = DP3_spacer(size: 20)
+                self.dataProvider.insert(spacer1, at: i+offset)
+                
+                if(self.controversies.count < self.controversiesTotal) {
+                    offset += 1
+                    let more = DP3_more(topic: "CONTRO", completed: false)
+                    self.dataProvider.insert(more, at: i+offset)
+                    
+                    offset += 1
+                    let spacer2 = DP3_spacer(size: 35)
+                    self.dataProvider.insert(spacer2, at: i+offset)
+                }
+                
+                break
+            }
+        }
+        
+        MAIN_THREAD {
+            self.hideLoading()
+        }
+        
+        if(mustRefresh) {
+            self.refreshList()
+        }
+    }
+    
+    
     
     func showErrorAlert() {
         MAIN_THREAD {

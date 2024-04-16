@@ -44,6 +44,51 @@ class ControversiesData {
         task.resume()
     }
     
+    func loadListForFeed(topic: String, page: Int, callback: @escaping (Error?, [ControversyListItem]?, Int?) -> ()) {
+        //https://www.improvethenews.org/claims-api/claim/search/d?page=1&per_page=2&topic=world
+        var url = ITN_URL() + "/claims-api/claim/search/d?page=\(page)&per_page=2"
+        if(topic != "news") {
+            url += "&topic=\(topic)"
+        }
+        
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        
+        print("CONTROVERSIES LIST -  URL", url)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+                callback(error, nil, nil)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil, nil)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    if let _ = _json["error"] {
+                        callback(CustomError.jsonParseError, nil, nil)
+                    } else {
+                        if let _total = _json["total"] as? Int,
+                            let _data = _json["data"] as? [[String: Any]] {
+                         
+                            var list = [ControversyListItem]()
+                            for I in _data {
+                                let newItem = ControversyListItem(jsonObj: I)
+                                list.append(newItem)
+                            }
+                            callback(nil, list, _total)
+                        } else {
+                            callback(CustomError.jsonParseError, nil, nil)
+                        }
+                    }
+                }
+            }
+        }
+
+        task.resume()
+    }
+    
     func loadList(term: String = "", page: Int, callback: @escaping (Error?, String?, Int?, [ControversyListItem]?) -> () ) {
         let url = ITN_URL() + "/claims-api/claim/search?keyword=\(term)&page=\(page)&per_page=10"
         var request = URLRequest(url: URL(string: url)!)

@@ -510,6 +510,9 @@
 		1FFAA58C2BBDA38300ABB272 /* ControDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFAA58B2BBDA38300ABB272 /* ControDetailViewController.swift */; };
 		1FFBD3082B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFBD3072B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift */; };
 		1FFF6F8C2B2294E30008DC07 /* TourIntroPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */; };
+		BD4DC7D92BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7D82BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift */; };
+		BD4DC7DF2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7DE2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift */; };
+		BD4DC7E12BCEACED0097BFD1 /* iPadControversyCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */; };
 		D4438EFBB252B6903AB56553 /* Pods_ImproveTheNews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A395E0433D69EEF51DC03966 /* Pods_ImproveTheNews.framework */; };
 /* End PBXBuildFile section */
 
@@ -1024,6 +1027,9 @@
 		8D5B46307AEDFAA8CAB0BA84 /* Pods-ImproveTheNews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.debug.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.debug.xcconfig"; sourceTree = "<group>"; };
 		A395E0433D69EEF51DC03966 /* Pods_ImproveTheNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImproveTheNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B038FC5F8D4A9F9F2CF291F0 /* Pods-ImproveTheNews.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.app store.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.app store.xcconfig"; sourceTree = "<group>"; };
+		BD4DC7D82BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneHeaderLineCell_v3.swift; sourceTree = "<group>"; };
+		BD4DC7DE2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneControversyCell_v3.swift; sourceTree = "<group>"; };
+		BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyCell_v3.swift; sourceTree = "<group>"; };
 		C5FE7FE8A9666767DA91A834 /* Pods-ImproveTheNews.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.beta.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.beta.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1769,6 +1775,9 @@
 			children = (
 				1FE89CFB2AF1AD3A00A6C99C /* SpacerCell_v3.swift */,
 				1FE89CFC2AF1AD3A00A6C99C /* iPhoneHeaderCell_v3.swift */,
+				BD4DC7DE2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift */,
+				BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */,
+				BD4DC7D82BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift */,
 				1F58C85C2B05BBBA00E0A151 /* iPhoneSplitHeaderCell_v3.swift */,
 				1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */,
 				1FFBD3072B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift */,
@@ -2110,6 +2119,7 @@
 				TargetAttributes = {
 					1F95133C28BFB92E00A77AB6 = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1530;
 					};
 				};
 			};
@@ -2478,6 +2488,7 @@
 				1FD23406291565F100B85AE9 /* MenuView_misc.swift in Sources */,
 				1F41AE272A13DFDA00C0A0D2 /* Twitter_SDK.swift in Sources */,
 				1F9E28BE2954976F00041303 /* FeedbackFormViewController.swift in Sources */,
+				BD4DC7D92BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift in Sources */,
 				1F2A2354294A5B4D00CA16D7 /* HeaderUnderItemCell.swift in Sources */,
 				1FC73912298A1515003EB38D /* SignUpView.swift in Sources */,
 				1F5261C929E844FE000CE599 /* BannernewsLetterCell.swift in Sources */,
@@ -2578,6 +2589,7 @@
 				1F081BF72BB1B2CB00B66326 /* FigureDetails_stories.swift in Sources */,
 				1FE89CD92AF18F6600A6C99C /* DeviceUtils.swift in Sources */,
 				1FD699212B6B26C000C4B0F9 /* iPhoneArticle_4colsTxt_cell_v3.swift in Sources */,
+				BD4DC7DF2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift in Sources */,
 				1F9EDD5529AEA64D007A97A6 /* iPadGroupItem_splitCellText.swift in Sources */,
 				1FD1BD582AF4B4B500BEF887 /* iPhoneFooterCell_v3.swift in Sources */,
 				1FC5571A2AF2EEE400C0117A /* NavBarView.swift in Sources */,
@@ -2607,6 +2619,7 @@
 				1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */,
 				1FA4CE7128C2D5460068DE4A /* UUID.swift in Sources */,
 				1FD2340C2915A17500B85AE9 /* PrefCheckboxes_cell.swift in Sources */,
+				BD4DC7E12BCEACED0097BFD1 /* iPadControversyCell_v3.swift in Sources */,
 				1FBD42712A40EDF200BFE68B /* KeywordSearchViewController.swift in Sources */,
 				1FC73906298961EA003EB38D /* Animator.swift in Sources */,
 				1F9EDD5329AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift in Sources */,
@@ -2837,6 +2850,7 @@
 				API_BASE_URL = "https://www.improvemynews.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 83;
@@ -2862,6 +2876,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2874,6 +2889,7 @@
 				API_BASE_URL = "https://www.improvethenews.org";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 83;
@@ -2965,6 +2981,7 @@
 				API_BASE_URL = "https://www.improvemynews.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 83;

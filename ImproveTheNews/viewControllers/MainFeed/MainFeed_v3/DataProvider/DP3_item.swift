@@ -78,3 +78,22 @@ class DP3_footer: DP3_item {
 // --------------------------
 class DP3_banner: DP3_item {
 }
+
+// --------------------------
+class DP3_controversy: DP3_item {
+    var controversy: ControversyListItem
+    
+    init(controversy: ControversyListItem) {
+        self.controversy = controversy
+    }
+}
+
+class DP3_controversies_x2: DP3_item {
+    var controversy1: ControversyListItem
+    var controversy2: ControversyListItem?
+    
+    init(controversy1: ControversyListItem, controversy2: ControversyListItem?) {
+        self.controversy1 = controversy1
+        self.controversy2 = controversy2
+    }
+}
