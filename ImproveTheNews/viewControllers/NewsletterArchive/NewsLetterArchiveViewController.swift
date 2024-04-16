@@ -1034,11 +1034,24 @@ extension NewsLetterArchiveViewController {
         let i = sender.tag
         let ST = self.stories[i]
         
-        print(ST)
+        var url = ""
+        if(ST.type==1) {
+            url = "https://www.improvethenews.org/daily-newsletter?date=" + ST.date
+        } else {
+            url = "https://www.improvethenews.org/weekly-newsletters?date=" + ST.date
+        }
         
-        let vc = NewsLetterContentViewController()
-        vc.refData = ST
-        CustomNavController.shared.pushViewController(vc, animated: true)
+        if(!url.isEmpty) {
+            OPEN_URL(url)
+        }
+        
+        
+        
+//        print(ST)
+//        
+//        let vc = NewsLetterContentViewController()
+//        vc.refData = ST
+//        CustomNavController.shared.pushViewController(vc, animated: true)
         
         //NewsLetterData.shared.loadNewsletter(ST)
         
