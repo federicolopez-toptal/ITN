@@ -239,7 +239,7 @@ extension ControversiesViewController {
         for (i, CO) in items.enumerated() {
             let controView = ControversyCellView(width: item_W)
             controView.tag = 600 + index
-            if(containerView.subviews.count==0 && i==0){ controView.hideTopLine() }
+            if(containerView.subviews.count==0 && i==0 && IPHONE()){ controView.hideTopLine() }
             
             var val_x: CGFloat = col * item_W
             if(IPAD() && col==1) {

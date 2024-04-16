@@ -182,11 +182,7 @@ class ControversyCellView: UIView {
         if(self.showBottom) {
             bottom = M + self.titleLabel.calculateHeightFor(width: W) + M + 24 + M
         }
-        
-        let H: CGFloat = M + 84 + 8 +
-            4 + 8 + self.startLabel.calculateHeightFor(width: W) +
-            bottom
-            //(IPAD() ? 20 : 0)
+        let H: CGFloat = M + 84 + 8 + 4 + 8 + self.startLabel.calculateHeightFor(width: W) + bottom + (IPAD() ? 20 : 0)
         
         return H
     }
