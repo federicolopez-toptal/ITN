@@ -10,6 +10,7 @@ import UIKit
 protocol ClaimCellViewDelegate: AnyObject {
     func claimCellViewOnHeightChanged(sender: ClaimCellView?)
     func claimCellViewOnFigureTap(sender: ClaimCellView?)
+    func claimCellViewOnControversyTap(sender: ClaimCellView?)
 }
 
 
@@ -49,6 +50,9 @@ class ClaimCellView: UIView {
     let openButton = UIButton(type: .system)
     
     var figureSlug: String = ""
+    var controversySlug: String = ""
+    
+    //let clickView = UIView()
     
     // MARK: - Init(s)
     init() {
@@ -104,7 +108,7 @@ class ClaimCellView: UIView {
         imgButton.addTarget(self, action: #selector(imgButtonOnTap(_:)), for: .touchUpInside)
         
         let column = UIView()
-        //column.backgroundColor = .orange.withAlphaComponent(0.1)
+        //column.backgroundColor = .orange
         self.addSubview(column)
         column.activateConstraints([
             column.leadingAnchor.constraint(equalTo: self.photoImageView.trailingAnchor, constant: 7),
@@ -178,6 +182,19 @@ class ClaimCellView: UIView {
             self.controversyLabel.trailingAnchor.constraint(equalTo: column.trailingAnchor),
             self.controversyLabel.topAnchor.constraint(equalTo: self.parrafoView.bottomAnchor, constant: 16)
         ])
+        
+        // -----
+        let parrafoButton = UIButton(type: .custom)
+        //parrafoButton.backgroundColor = .red.withAlphaComponent(0.5)
+        column.addSubview(parrafoButton)
+        parrafoButton.activateConstraints([
+            parrafoButton.leadingAnchor.constraint(equalTo: column.leadingAnchor),
+            parrafoButton.topAnchor.constraint(equalTo: self.nameLabel.topAnchor),
+            parrafoButton.trailingAnchor.constraint(equalTo: column.trailingAnchor),
+            parrafoButton.bottomAnchor.constraint(equalTo: self.controversyLabel.bottomAnchor)
+        ])
+        parrafoButton.addTarget(self, action: #selector(parrafoButtonOnTap(_:)), for: .touchUpInside)
+        // -----
         
         let buttonsContainer = UIView()
         //buttonsContainer.backgroundColor = .green.withAlphaComponent(0.1)
@@ -299,9 +316,17 @@ class ClaimCellView: UIView {
             self.sendSubviewToBack(borderBG)
         }
         
+//        let alpha: CGFloat = 0.5
+//        self.clickView.backgroundColor = DARK_MODE() ? .white : .black
+//        self.clickView.hide()
+        //.white.withAlphaComponent(alpha) : .black.withAlphaComponent(alpha)
         
         self.mainHeightConstraint = self.heightAnchor.constraint(equalToConstant: 100)
         self.mainHeightConstraint?.isActive = true
+    }
+    
+    @objc func parrafoButtonOnTap(_ sender: UIButton?) {
+        self.delegate?.claimCellViewOnControversyTap(sender: self)
     }
     
     @objc func imgButtonOnTap(_ sender: UIButton?) {
@@ -371,9 +396,10 @@ class ClaimCellView: UIView {
     }
     
     func populate(with claim: Claim) {
-        self.photoImageView.sd_setImage(with: URL(string: claim.figureImage))
         self.figureSlug = claim.figureSlug
-        
+        self.controversySlug = claim.controversySlug
+    
+        self.photoImageView.sd_setImage(with: URL(string: claim.figureImage))
         self.nameLabel.text = claim.figureName.uppercased()
         self.timeLabel.text = claim.time.uppercased()
         self.titleLabel.text = claim.claim

@@ -324,4 +324,12 @@ extension FigureDetailsViewController: ClaimCellViewDelegate {
         }
     }
     
+    func claimCellViewOnControversyTap(sender: ClaimCellView?) {
+        if let _slug = sender?.controversySlug {
+            let vc = ControDetailViewController()
+            vc.slug = _slug
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
+    }
+    
 }
