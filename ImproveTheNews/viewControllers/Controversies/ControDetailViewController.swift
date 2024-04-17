@@ -148,6 +148,7 @@ extension ControDetailViewController {
 extension ControDetailViewController {
     
     func fillContent(_ controversy: Controversy) {
+        
 //        let text = "Where do you stand on this: " + controversy.info.title
 //        self.twitterText = text + " www.improvethenews.org/controversy/" + controversy.info.slug
 //        self.twitterText = self.twitterText.urlEncodedString()
@@ -715,7 +716,7 @@ extension ControDetailViewController {
             ADD_SPACER(to: self.vStack, height: M*2)
         
             let container1View = self.createContainerView()
-            self.addTextHeader(containerView: container1View, width: self.W(), title: T, figures: F)
+            self.addTextHeader(containerView: container1View, width: self.W(), title: T, status: listItem.resolved, figures: F)
             
             let container2View = self.createContainerView()
             self.addGraph(containerView: container2View, width: SCREEN_SIZE().width, listItem: listItem)
@@ -749,7 +750,7 @@ extension ControDetailViewController {
                 col1View.topAnchor.constraint(equalTo: centeredView.topAnchor),
                 col1View.widthAnchor.constraint(equalToConstant: _W)
             ])
-            self.addTextHeader(containerView: col1View, width: _W, title: T, figures: F)
+            self.addTextHeader(containerView: col1View, width: _W, title: T, status: listItem.resolved, figures: F)
             
             let col1b_view = UIView()
             //col1b_view.backgroundColor = .green
@@ -764,7 +765,7 @@ extension ControDetailViewController {
             col1b_view.addSubview(button)
             button.activateConstraints([
                 button.leadingAnchor.constraint(equalTo: col1b_view.leadingAnchor, constant: M),
-                button.topAnchor.constraint(equalTo: col1b_view.topAnchor)
+                button.topAnchor.constraint(equalTo: col1b_view.topAnchor, constant: M)
             ])
             
             let col2View = UIView()
@@ -830,12 +831,12 @@ extension ControDetailViewController {
         ])
     }
     
-    func addTextHeader(containerView: UIView, width: CGFloat, title: String, figures: [FigureForScale]) {
+    func addTextHeader(containerView: UIView, width: CGFloat, title: String, status: String, figures: [FigureForScale]) {
         let pill = UILabel()
         pill.text = "CONTROVERSY"
         pill.font = AILERON(12)
         pill.textAlignment = .center
-        pill.textColor = CSS.shared.displayMode().main_bgColor
+        pill.textColor = UIColor(hex: 0x19191C)
         pill.backgroundColor = UIColor(hex: 0x60C4D6)
         containerView.addSubview(pill)
         pill.activateConstraints([
@@ -905,6 +906,29 @@ extension ControDetailViewController {
         }
         
         // -------------------------------------------
+        let statusLabel = UILabel()
+        statusLabel.font = DM_SERIF_DISPLAY(20)
+        statusLabel.textColor = CSS.shared.displayMode().sec_textColor
+        statusLabel.text = "Status:"
+        containerView.addSubview(statusLabel)
+        statusLabel.activateConstraints([
+            statusLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: M),
+            statusLabel.topAnchor.constraint(equalTo: pill.bottomAnchor, constant: M)
+        ])
+        
+        let status2Label = UILabel()
+        //status2Label.backgroundColor = .yellow.withAlphaComponent(0.25)
+        status2Label.font = statusLabel.font
+        status2Label.textColor = CSS.shared.displayMode().main_textColor
+        if(status.lowercased() == "resolved"){ status2Label.textColor = CSS.shared.cyan }
+        status2Label.text = status
+        containerView.addSubview(status2Label)
+        status2Label.activateConstraints([
+            status2Label.leadingAnchor.constraint(equalTo: statusLabel.trailingAnchor, constant: M/2),
+            status2Label.topAnchor.constraint(equalTo: statusLabel.topAnchor)
+        ])
+        
+        // -------------------------------------------
         let titleLabel = UILabel()
         titleLabel.font = IPHONE() ? DM_SERIF_DISPLAY(20) : DM_SERIF_DISPLAY(32)
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
@@ -914,11 +938,11 @@ extension ControDetailViewController {
         titleLabel.activateConstraints([
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: M),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -M),
-            titleLabel.topAnchor.constraint(equalTo: pill.bottomAnchor, constant: M)
+            titleLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: M)
         ])
         
         // -------------------------------------------
-        let H: CGFloat = 24 + M + titleLabel.calculateHeightFor(width: width)
+        let H: CGFloat = 24 + M + statusLabel.calculateHeightFor(width: width) + M + titleLabel.calculateHeightFor(width: width)
         containerView.activateConstraints([
             containerView.heightAnchor.constraint(equalToConstant: H)
         ])

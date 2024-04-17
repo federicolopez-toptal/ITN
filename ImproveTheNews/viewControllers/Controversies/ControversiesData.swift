@@ -216,6 +216,8 @@ class ControversyListItem {
     var figures = [FigureForScale]()
     var used = false
     
+    var resolved: String = ""
+    
     init(jsonObj: [String: Any]) {
         self.title = CHECK(jsonObj["title"])
         self.slug = CHECK(jsonObj["slug"])
@@ -239,6 +241,8 @@ class ControversyListItem {
         }
         
         self.used = false
+        
+        self.resolved = CHECK(jsonObj["resolved"])
     }
     
     func trace() {

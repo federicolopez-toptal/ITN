@@ -25,6 +25,7 @@ class ControversyCellView: UIView {
     let gradientView = UIView()
     let startLabel = UILabel()
     let endLabel = UILabel()
+    let statusLabel = UILabel()
     let titleLabel = UILabel()
     let timeLabel = UILabel()
     
@@ -104,6 +105,27 @@ class ControversyCellView: UIView {
         self.endLabel.text = "HIGH"
         
         if(showBottom) {
+            let preStatusLabel = UILabel()
+            preStatusLabel.font = DM_SERIF_DISPLAY(20) //IPHONE() ? DM_SERIF_DISPLAY(20) : DM_SERIF_DISPLAY(32)
+            preStatusLabel.textColor = CSS.shared.displayMode().sec_textColor
+            preStatusLabel.text = "Status:"
+            self.addSubview(preStatusLabel)
+            preStatusLabel.activateConstraints([
+                preStatusLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
+                preStatusLabel.topAnchor.constraint(equalTo: self.startLabel.bottomAnchor, constant: M)
+            ])
+            
+            //status2Label.backgroundColor = .yellow.withAlphaComponent(0.25)
+            self.statusLabel.font = preStatusLabel.font
+            self.statusLabel.textColor = CSS.shared.displayMode().main_textColor
+            //if(status.lowercased() == "resolved"){ status2Label.textColor = CSS.shared.cyan }
+            //status2Label.text = status
+            self.addSubview(self.statusLabel)
+            self.statusLabel.activateConstraints([
+                self.statusLabel.leadingAnchor.constraint(equalTo: preStatusLabel.trailingAnchor, constant: M/2),
+                self.statusLabel.topAnchor.constraint(equalTo: preStatusLabel.topAnchor)
+            ])
+            
             self.titleLabel.numberOfLines = 0
             self.titleLabel.font = DM_SERIF_DISPLAY(20)
             self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
@@ -111,14 +133,14 @@ class ControversyCellView: UIView {
             self.titleLabel.activateConstraints([
                 self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
                 self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
-                self.titleLabel.topAnchor.constraint(equalTo: self.startLabel.bottomAnchor, constant: M)
+                self.titleLabel.topAnchor.constraint(equalTo: self.statusLabel.bottomAnchor, constant: M)
             ])
         
             let pill = UILabel()
             pill.text = "CONTROVERSY"
             pill.font = AILERON(12)
             pill.textAlignment = .center
-            pill.textColor = CSS.shared.displayMode().main_bgColor
+            pill.textColor = UIColor(hex: 0x19191C)
             pill.backgroundColor = UIColor(hex: 0x60C4D6)
             self.addSubview(pill)
             pill.activateConstraints([
@@ -179,6 +201,10 @@ class ControversyCellView: UIView {
         self.startLabel.text = controversy.textMin
         self.endLabel.text = controversy.textMax
         
+        self.statusLabel.text = controversy.resolved
+        self.statusLabel.textColor = CSS.shared.displayMode().main_textColor
+        if(controversy.resolved.lowercased() == "resolved"){ self.statusLabel.textColor = CSS.shared.cyan }
+        
         self.mainHeightConstraint?.constant = self.calculateHeight()
         
         DELAY(0.1) { // It needs to update the layout
@@ -192,7 +218,8 @@ class ControversyCellView: UIView {
         
         var bottom: CGFloat = M
         if(self.showBottom) {
-            bottom = M + self.titleLabel.calculateHeightFor(width: W) + M + 24 + M
+            bottom = M + self.statusLabel.calculateHeightFor(width: W) + M +
+                self.titleLabel.calculateHeightFor(width: W) + M + 24 + M
         }
         let H: CGFloat = M + 84 + 8 + 4 + 8 + self.startLabel.calculateHeightFor(width: W) + bottom + (IPAD() ? 20 : 0)
         
