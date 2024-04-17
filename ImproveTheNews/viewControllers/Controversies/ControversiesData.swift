@@ -44,6 +44,49 @@ class ControversiesData {
         task.resume()
     }
     
+    func loadListForSearch(term: String, callback: @escaping (Error?, [ControversyListItem]?, Int?) -> ()) {
+        var T = term
+        if(T.isEmpty){ T = "d" }
+        var url = ITN_URL() + "/claims-api/claim/search/\(T)?page=1&per_page=200"
+        
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        
+        print("CONTROVERSIES LIST -  URL", url)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+                callback(error, nil, nil)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil, nil)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    if let _ = _json["error"] {
+                        callback(CustomError.jsonParseError, nil, nil)
+                    } else {
+                        if let _total = _json["total"] as? Int,
+                            let _data = _json["data"] as? [[String: Any]] {
+                         
+                            var list = [ControversyListItem]()
+                            for I in _data {
+                                let newItem = ControversyListItem(jsonObj: I)
+                                list.append(newItem)
+                            }
+                            callback(nil, list, _total)
+                        } else {
+                            callback(CustomError.jsonParseError, nil, nil)
+                        }
+                    }
+                }
+            }
+        }
+
+        task.resume()
+    }
+    
     func loadListForFeed(topic: String, page: Int, callback: @escaping (Error?, [ControversyListItem]?, Int?) -> ()) {
         //https://www.improvethenews.org/claims-api/claim/search/d?page=1&per_page=2&topic=world
         var url = ITN_URL() + "/claims-api/claim/search/d?page=\(page)&per_page=2"
@@ -170,7 +213,7 @@ class ControversyListItem {
     var colorMax: String = ""
     
     var figures = [FigureForScale]()
-    
+    var used = false
     
     init(jsonObj: [String: Any]) {
         self.title = CHECK(jsonObj["title"])
@@ -193,6 +236,8 @@ class ControversyListItem {
                 self.figures.append(F)
             }
         }
+        
+        self.used = false
     }
     
     func trace() {

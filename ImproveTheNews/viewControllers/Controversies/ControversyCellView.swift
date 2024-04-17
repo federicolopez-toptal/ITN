@@ -155,9 +155,13 @@ class ControversyCellView: UIView {
         self.mainHeightConstraint?.isActive = true
     }
     
-    func populate(with controversy: ControversyListItem) {
+    func populate(with controversy: ControversyListItem, remark: String? = nil) {
         self.addFigures(controversy.figures)
+        
         self.titleLabel.text = controversy.title
+        if let _remark = remark {
+            self.titleLabel.remarkSearchTerm(_remark, color: CSS.shared.displayMode().main_textColor)
+        }
         
         var time = controversy.time
         if(time == "1 second ago"){ time = "JUST NOW" }

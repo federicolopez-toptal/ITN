@@ -99,8 +99,7 @@ extension KeywordSearchViewController {
             titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: 21)
         ])
-                
-                
+                   
         self.searchTextfield.delegate = self
         self.searchTextfield.buildInto(viewController: self)
         self.searchTextfield.activateConstraints([
@@ -111,7 +110,7 @@ extension KeywordSearchViewController {
         ])
         
         self.searchSelector.buildInto(self.view, yOffset: topValue+32+47+48+25)
-        self.searchSelector.setTopics(["ALL", "TOPICS", "STORIES", "ARTICLES"])
+        self.searchSelector.setTopics(["All", "Topics", "Stories", "Controversies", "Articles"])
         self.searchSelector.delegate = self
         
         self.listInit()
@@ -270,6 +269,7 @@ extension KeywordSearchViewController {
     
         self.addTopics()
         let _ = self.addStories(tapOnTab: true)
+        let _ = self.addControversies()
         let _ = self.addArticles()
     
 //        switch(self.resultType) {
@@ -421,6 +421,110 @@ extension KeywordSearchViewController {
         var result = false
         for AR in KeywordSearch.shared.articles {
             if(AR.used == false) {
+                result = true
+                break
+            }
+        }
+        
+        return result
+    }
+    
+    func addControversies(index: Int = -1) -> Int {
+        var count = 0
+        var iPadIndex = index
+        if(index == -1){ self.addHeaderWith(text: "CONTROVERSIES") }
+        
+        if(KeywordSearch.shared.controversies.count == 0) {
+            let empty = DP3_text(text: "No controversies found")
+            self.dataProvider.append(empty)
+            return 0
+        }
+        
+        if(IPHONE()) {
+            for (i, CO) in KeywordSearch.shared.controversies.enumerated() {
+                if(CO.used==false) {
+                    let newItem = DP3_controversy(controversy: CO)
+                    
+                    if(index == -1) {
+                        self.dataProvider.append(newItem)
+                    } else {
+                        self.dataProvider.insert(newItem, at: index+count)
+                    }
+                    
+                    KeywordSearch.shared.controversies[i].used = true
+                    count += 1
+                }
+                
+                if(count == self.PAGE_SIZE) {
+                    break
+                }
+            }
+        } else { // IPAD
+            var CO1: ControversyListItem? = nil
+            var CO2: ControversyListItem? = nil
+            
+            for (i, CO) in KeywordSearch.shared.controversies.enumerated() {
+                if(CO.used==false) {
+                    
+                    if(CO1 == nil) {
+                        CO1 = CO
+                    } else {
+                        CO2 = CO
+                    }
+                    KeywordSearch.shared.controversies[i].used = true
+                    count += 1
+                    
+                    var newItem: DP3_item? = nil
+                    if(CO1 != nil) && (CO2 != nil) {
+                        newItem = DP3_controversies_x2(controversy1: CO1!, controversy2: CO2)
+                    } else if(CO1 != nil && CO2 == nil && i == KeywordSearch.shared.controversies.count-1 ) {
+                        newItem = DP3_controversies_x2(controversy1: CO1!, controversy2: nil)
+                        if(IPAD()) {
+                            iPadIndex -= 1
+                        }
+                    }
+                
+                    if let _newItem = newItem {
+                        if(index == -1) {
+                            self.dataProvider.append(_newItem)
+                            CO1 = nil
+                            CO2 = nil
+                        } else {
+                            iPadIndex += 1
+                        
+                            self.dataProvider.insert(_newItem, at: iPadIndex)
+                            CO1 = nil
+                            CO2 = nil
+                        }
+                    }
+                    
+                    if(count == self.PAGE_SIZE) {
+                        break
+                    }
+                }
+            }
+        }
+        
+        if(self.thereAreControversiesToShow()) {
+            let moreItem = DP3_more(topic: "CO", completed: false)
+            if(index == -1) {
+                self.dataProvider.append(moreItem)
+            } else {
+                if(IPHONE()) {
+                    self.dataProvider.insert(moreItem, at: index+count)
+                } else {
+                    self.dataProvider.insert(moreItem, at: iPadIndex+1)
+                }
+            }
+        }
+        
+        return count
+    }
+    
+    func thereAreControversiesToShow() -> Bool {
+        var result = false
+        for CO in KeywordSearch.shared.controversies {
+            if(CO.used == false) {
                 result = true
                 break
             }

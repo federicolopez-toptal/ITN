@@ -40,9 +40,9 @@ class iPhoneControversyCell_v3: UITableViewCell {
         self.refreshDisplayMode()
     }
     
-    func populate(item: ControversyListItem) {
+    func populate(item: ControversyListItem, remark: String? = nil) {
         let view1 = self.subViews[0]
-        view1.populate(with: item)
+        view1.populate(with: item, remark: remark)
         view1_heightConstraint.constant = view1.calculateHeight()
             
         self.refreshDisplayMode()

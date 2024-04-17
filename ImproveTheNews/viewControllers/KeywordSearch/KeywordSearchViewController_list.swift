@@ -70,6 +70,9 @@ extension KeywordSearchViewController {
         self.list.register(TopicsCell.self, forCellReuseIdentifier: TopicsCell.identifier)
         self.list.register(CenteredTextCell.self, forCellReuseIdentifier: CenteredTextCell.identifier)
         self.list.register(iPadStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPadStory_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneControversyCell_v3.self, forCellReuseIdentifier: iPhoneControversyCell_v3.identifier)
+        self.list.register(iPadControversyCell_v3.self, forCellReuseIdentifier: iPadControversyCell_v3.identifier)
+        self.list.register(iPadControversyNarrowCell_v3.self, forCellReuseIdentifier: iPadControversyNarrowCell_v3.identifier)
     }
     
     // MARK: - Cell component
@@ -121,6 +124,13 @@ extension KeywordSearchViewController {
         } else if let _item = dpItem as? DP3_text {
             cell = self.list.dequeueReusableCell(withIdentifier: CenteredTextCell.identifier) as! CenteredTextCell
             (cell as! CenteredTextCell).populate(with: _item.text, offsetY: -15)
+        } else if let _item = dpItem as? DP3_controversy {
+            cell = self.list.dequeueReusableCell(withIdentifier: iPhoneControversyCell_v3.identifier) as! iPhoneControversyCell_v3
+            (cell as! iPhoneControversyCell_v3).populate(item: _item.controversy, remark: KeywordSearch.searchTerm)
+        } else if let _item = dpItem as? DP3_controversies_x2 {
+            cell = self.list.dequeueReusableCell(withIdentifier: iPadControversyNarrowCell_v3.identifier) as! iPadControversyNarrowCell_v3
+            (cell as! iPadControversyNarrowCell_v3).populate(item1: _item.controversy1,
+                item2: _item.controversy2, remark: KeywordSearch.searchTerm)
         }
         
         return cell
@@ -159,6 +169,12 @@ extension KeywordSearchViewController {
             return _item.size
         } else if let _ = dpItem as? DP3_text {
             return CenteredTextCell.height + 10
+        } else if dpItem is DP3_controversy {
+            let cell = self.getCell(indexPath)
+            result = (cell as! iPhoneControversyCell_v3).calculateHeight()
+        } else if dpItem is DP3_controversies_x2 {
+            let cell = self.getCell(indexPath)
+            result = (cell as! iPadControversyNarrowCell_v3).calculateHeight()
         }
     
         return round(result)
@@ -172,8 +188,20 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
     func onShowMoreButtonTap(sender: iPhoneMoreCell_v3) {
         if(sender.topic == "ST") {
             self.loadMoreStories()
+        } else if(sender.topic == "CO") {
+            self.loadMoreControversies()
         } else {
             self.loadMoreArticles()
+        }
+    }
+    
+    func loadMoreControversies() {
+        if(self.thereAreControversiesToShow()) {
+            let i = self.removeAddMoreControversy()
+            let _ = self.addControversies(index: i)
+            
+            self.updateFilteredDataProvider()
+            self.refreshList()
         }
     }
     
@@ -246,6 +274,30 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
                 self.hideLoading()
             }
         }
+    }
+    
+    func removeAddMoreControversy() -> Int {
+        var found = false
+        var result = -1
+        for (i, item) in self.dataProvider.enumerated() {
+            if(IPHONE()) {
+                if(!found && item is DP3_controversy) {
+                    found = true
+                }
+            } else { // IPAD
+                if(!found && item is DP3_controversies_x2) {
+                    found = true
+                }
+            }
+            
+            if(found && item is DP3_more) {
+                self.dataProvider.remove(at: i)
+                result = i
+                break
+            }
+        }
+    
+        return result
     }
     
     func removeAddMoreItem(isStory: Bool) -> Int {
@@ -353,7 +405,7 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
     func updateFilteredDataProvider() {
         self.filteredDataProvider = [DP3_item]()
         
-        if(self.resultType == 0) {
+        if(self.resultType == 0) { // ALL
             for _item in self.dataProvider {
                 self.filteredDataProvider.append(_item)
             }

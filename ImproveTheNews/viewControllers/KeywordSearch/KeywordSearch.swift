@@ -21,6 +21,7 @@ class KeywordSearch {
     var topics: [TopicSearchResult] = []
     var stories: [StorySearchResult] = []
     var articles: [ArticleSearchResult] = []
+    var controversies: [ControversyListItem] = []
     
     var task: URLSessionDataTask? = nil
     
@@ -41,6 +42,7 @@ class KeywordSearch {
             self.topics = []
             self.stories = []
             self.articles = []
+            self.controversies = []
         }
         
         var _text = text
@@ -63,8 +65,22 @@ class KeywordSearch {
         
         self.makeSearch(withUrl: url, addMainNode: addNode) { (success, serverMsg, json) in
             if let _json = json, success {
-                let count = self.parseResult(_json)
-                callback(true, count)
+            
+                var count = self.parseResult(_json)
+            
+                if(pageNumber==1) {
+                    ControversiesData.shared.loadListForSearch(term: text) { (_, list, total) in
+                        if let _list = list, let _total = total {
+                            self.controversies = _list
+                            count += _total
+                        }
+                        
+                        callback(true, count)
+                    }
+                } else {
+                    callback(true, count)
+                }
+            
             } else {
                 print("ERROR", serverMsg)
                 callback(false, -1)
@@ -156,6 +172,9 @@ class KeywordSearch {
                     }
                 }
             }
+            
+            // CONTROVERSIES
+            
         }
         
         if(self.searchType == .stories) { // ONLY ADDING STORIES
