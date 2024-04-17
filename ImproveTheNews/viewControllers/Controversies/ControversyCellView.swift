@@ -30,7 +30,9 @@ class ControversyCellView: UIView {
     let timeLabel = UILabel()
     
     var figureSlugs = [String]()
-    
+    let buttonArea = UIButton(type: .custom)
+    var controversySlug: String = ""
+
 
     // MARK: - Init(s)
     init() {
@@ -159,6 +161,17 @@ class ControversyCellView: UIView {
                 self.timeLabel.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: 12),
                 self.timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor)
             ])
+            
+            //self.buttonArea.backgroundColor = .red.withAlphaComponent(0.25)
+            self.addSubview(self.buttonArea)
+            self.buttonArea.activateConstraints([
+                self.buttonArea.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+                self.buttonArea.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+                self.buttonArea.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+                self.buttonArea.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
+            ])
+            self.buttonArea.addTarget(self, action: #selector(buttonAreaOnTap(_:)), for: .touchUpInside)
+            self.sendSubviewToBack(self.buttonArea)
         }
         
         if(IPAD()) {
@@ -186,7 +199,14 @@ class ControversyCellView: UIView {
         self.mainHeightConstraint?.isActive = true
     }
     
+    @objc func buttonAreaOnTap(_ sender: UIButton?) {
+        let vc = ControDetailViewController()
+        vc.slug = self.controversySlug
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
     func populate(with controversy: ControversyListItem, remark: String? = nil) {
+        self.controversySlug = controversy.slug
         self.addFigures(controversy.figures)
         
         self.titleLabel.text = controversy.title
@@ -300,6 +320,7 @@ extension ControversyCellView {
             nameLabel.textColor = CSS.shared.displayMode().sec_textColor
             nameLabel.text = "  " + name + "  "
             nameLabel.textAlignment = .center
+            nameLabel.isUserInteractionEnabled = false
             nameLabel.backgroundColor = CSS.shared.displayMode().main_bgColor
             self.figuresContainerView.addSubview(nameLabel)
             nameLabel.activateConstraints([

@@ -238,6 +238,7 @@ extension ControversiesViewController {
         
         for (i, CO) in items.enumerated() {
             let controView = ControversyCellView(width: item_W)
+            controView.buttonArea.hide()
             controView.tag = 600 + index
             if(containerView.subviews.count==0 && i==0 && IPHONE()){ controView.hideTopLine() }
             
