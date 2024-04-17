@@ -185,7 +185,7 @@ class FigureForScale {
     var image: String = ""
     var scale: Int = 0
     var verified: Bool = false
-    
+    var slug: String = ""
 
     init(jsonObj: [String: Any]) {
         self.id = CHECK_NUM(jsonObj["id"])
@@ -193,6 +193,7 @@ class FigureForScale {
         self.image = CHECK(jsonObj["image"])
         self.scale = CHECK_NUM(jsonObj["scale"])
         self.verified = CHECK_BOOL(jsonObj["verified"])
+        self.slug = CHECK(jsonObj["slug"])
     }
     
     func trace() {

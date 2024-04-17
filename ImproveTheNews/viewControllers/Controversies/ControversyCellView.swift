@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol ControversyCellViewDelegate: AnyObject {
+    func controversyCellViewOnFigureTap(sender: ControversyCellView?)
+}
+
+
 class ControversyCellView: UIView {
+
+    weak var delegate: ControversyCellViewDelegate?
 
     let M: CGFloat = 16
     private var WIDTH: CGFloat = 1
@@ -20,6 +27,8 @@ class ControversyCellView: UIView {
     let endLabel = UILabel()
     let titleLabel = UILabel()
     let timeLabel = UILabel()
+    
+    var figureSlugs = [String]()
     
 
     // MARK: - Init(s)
@@ -218,7 +227,8 @@ extension ControversyCellView {
         //var val_x: CGFloat = 0
         var nameDown = true
         
-        for F in figures {
+        self.figureSlugs = [String]()
+        for (i, F) in figures.enumerated() {
             let limInf: CGFloat = 1.0
             let limSup: CGFloat = self.WIDTH-M-M-44
             
@@ -239,6 +249,19 @@ extension ControversyCellView {
             figureImageView.layer.borderColor = CSS.shared.displayMode().main_bgColor.cgColor
             figureImageView.layer.borderWidth = 2.0
             figureImageView.sd_setImage(with: URL(string: F.image))
+            
+            let imgButton = UIButton(type: .custom)
+            //imgButton.backgroundColor = .red.withAlphaComponent(0.5)
+            self.figuresContainerView.addSubview(imgButton)
+            imgButton.activateConstraints([
+                imgButton.leadingAnchor.constraint(equalTo: figureImageView.leadingAnchor),
+                imgButton.topAnchor.constraint(equalTo: figureImageView.topAnchor),
+                imgButton.trailingAnchor.constraint(equalTo: figureImageView.trailingAnchor),
+                imgButton.bottomAnchor.constraint(equalTo: figureImageView.bottomAnchor)
+            ])
+            imgButton.tag = i
+            self.figureSlugs.append(F.slug)
+            imgButton.addTarget(self, action: #selector(imgButtonOnTap(_:)), for: .touchUpInside)
             
             var name = F.name.uppercased()
             if let lastName = name.components(separatedBy: " ").last {
@@ -263,6 +286,14 @@ extension ControversyCellView {
             }
             
             nameDown = !nameDown
+        }
+    }
+    
+    @objc func imgButtonOnTap(_ sender: UIButton?) {
+        if let _index = sender?.tag {
+            let vc = FigureDetailsViewController()
+            vc.slug = self.figureSlugs[_index]
+            CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
     
