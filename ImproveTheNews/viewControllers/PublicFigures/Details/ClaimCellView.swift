@@ -9,6 +9,7 @@ import UIKit
 
 protocol ClaimCellViewDelegate: AnyObject {
     func claimCellViewOnHeightChanged(sender: ClaimCellView?)
+    func claimCellViewOnFigureTap(sender: ClaimCellView?)
 }
 
 
@@ -46,6 +47,8 @@ class ClaimCellView: UIView {
     var _remarkLimit = -1
     
     let openButton = UIButton(type: .system)
+    
+    var figureSlug: String = ""
     
     // MARK: - Init(s)
     init() {
@@ -88,6 +91,17 @@ class ClaimCellView: UIView {
         ])
         self.photoImageView.layer.cornerRadius = 20
         self.photoImageView.clipsToBounds = true
+        
+        let imgButton = UIButton(type: .custom)
+        //imgButton.backgroundColor = .red.withAlphaComponent(0.5)
+        self.addSubview(imgButton)
+        imgButton.activateConstraints([
+            imgButton.leadingAnchor.constraint(equalTo: self.photoImageView.leadingAnchor),
+            imgButton.topAnchor.constraint(equalTo: self.photoImageView.topAnchor),
+            imgButton.trailingAnchor.constraint(equalTo: self.photoImageView.trailingAnchor),
+            imgButton.bottomAnchor.constraint(equalTo: self.photoImageView.bottomAnchor)
+        ])
+        imgButton.addTarget(self, action: #selector(imgButtonOnTap(_:)), for: .touchUpInside)
         
         let column = UIView()
         //column.backgroundColor = .orange.withAlphaComponent(0.1)
@@ -290,6 +304,10 @@ class ClaimCellView: UIView {
         self.mainHeightConstraint?.isActive = true
     }
     
+    @objc func imgButtonOnTap(_ sender: UIButton?) {
+        self.delegate?.claimCellViewOnFigureTap(sender: self)
+    }
+    
     @objc func twitterButtonOnTap(_ sender: UIButton?) {
         //SHARE_ON_TWITTER(text: self.twitterText)
         SHARE_ON_TWITTER(url: self.twitterUrl, text: self.twitterText)
@@ -354,6 +372,8 @@ class ClaimCellView: UIView {
     
     func populate(with claim: Claim) {
         self.photoImageView.sd_setImage(with: URL(string: claim.figureImage))
+        self.figureSlug = claim.figureSlug
+        
         self.nameLabel.text = claim.figureName.uppercased()
         self.timeLabel.text = claim.time.uppercased()
         self.titleLabel.text = claim.claim

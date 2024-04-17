@@ -1001,4 +1001,12 @@ extension ControDetailViewController: ClaimCellViewDelegate {
         self.claimsContainerViewHeightConstraint?.constant = H
     }
     
+    func claimCellViewOnFigureTap(sender: ClaimCellView?) {
+        if let _slug = sender?.figureSlug {
+            let vc = FigureDetailsViewController()
+            vc.slug = _slug
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
+    }
+    
 }

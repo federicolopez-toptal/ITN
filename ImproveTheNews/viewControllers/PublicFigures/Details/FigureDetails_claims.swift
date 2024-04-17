@@ -314,4 +314,14 @@ extension FigureDetailsViewController: ClaimCellViewDelegate {
         self.claimsContainerViewHeightConstraint?.constant = H
     }
     
+    func claimCellViewOnFigureTap(sender: ClaimCellView?) {
+        if let _slug = sender?.figureSlug {
+            if(_slug != self.slug) {
+                let vc = FigureDetailsViewController()
+                vc.slug = _slug
+                CustomNavController.shared.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
 }

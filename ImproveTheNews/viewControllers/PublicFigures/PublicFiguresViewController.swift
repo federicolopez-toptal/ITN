@@ -303,8 +303,6 @@ extension PublicFiguresViewController {
         let imageUrl = data.image.replacingOccurrences(of: " ", with: "%20")
         imageView.sd_setImage(with: URL(string: imageUrl))
         
-        print("IMAGE", imageUrl)
-        
         let nameLabel = UILabel()
         //nameLabel.backgroundColor = .orange
         nameLabel.textAlignment = .center
