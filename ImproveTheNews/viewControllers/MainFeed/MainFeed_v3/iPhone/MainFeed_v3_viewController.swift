@@ -24,7 +24,9 @@ class MainFeed_v3_viewController: BaseViewController {
     var mustReloadOnShow = false
     var bannerClosed = false
     
-    var listTopConstraint: NSLayoutConstraint? = nil
+    var topValue: CGFloat = 0
+    
+    
     var lastScrollViewPosY: CGFloat = 0
     var topBarsTransitioning = false
     
@@ -58,6 +60,9 @@ class MainFeed_v3_viewController: BaseViewController {
             
             self.topicSelector.buildInto(self.view)
             self.topicSelector.delegate = self
+            
+            self.topValue = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
+            print("TOP", self.topValue)
             
             self.setupList()
         }
@@ -298,7 +303,7 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
         
         if(diff < 0) {
             // up
-            if(currentPosY >= 150) {
+            if(currentPosY >= 70) {
                 if(!self.navBar.isHidden) {
                     self.hideTopBars()
                     saveLastPos = false
@@ -320,7 +325,7 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
         if(!self.topBarsTransitioning) {
             self.topBarsTransitioning = true
             
-            self.listTopConstraint?.constant = 0
+            //self.listTopConstraint?.constant = 0
             UIView.animate(withDuration: 0.5) {
                 self.navBar.alpha = 0
                 self.topicSelector.alpha = 0
@@ -339,8 +344,8 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
             self.topBarsTransitioning = true
             
             self.navBar.show()
-                self.topicSelector.show()
-            self.listTopConstraint?.constant = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
+            self.topicSelector.show()
+            //self.listTopConstraint?.constant = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
             UIView.animate(withDuration: 0.5) {
                 self.navBar.alpha = 1
                 self.topicSelector.alpha = 1

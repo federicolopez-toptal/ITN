@@ -29,7 +29,6 @@ class MainFeediPad_v3_viewController: BaseViewController {
     var listAdded = false
     var middleIndexPath: IndexPath?
 
-    var listTopConstraint: NSLayoutConstraint? = nil
     var lastScrollViewPosY: CGFloat = 0
     var topBarsTransitioning = false
 
@@ -339,7 +338,7 @@ extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
         
         if(diff < 0) {
             // up
-            if(currentPosY >= 150) {
+            if(currentPosY >= 70) {
                 if(!self.navBar.isHidden) {
                     self.hideTopBars()
                     saveLastPos = false
@@ -361,7 +360,7 @@ extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
         if(!self.topBarsTransitioning) {
             self.topBarsTransitioning = true
             
-            self.listTopConstraint?.constant = 0
+            //self.listTopConstraint?.constant = 0
             UIView.animate(withDuration: 0.5) {
                 self.navBar.alpha = 0
                 self.topicSelector.alpha = 0
@@ -380,8 +379,8 @@ extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
             self.topBarsTransitioning = true
             
             self.navBar.show()
-                self.topicSelector.show()
-            self.listTopConstraint?.constant = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
+            self.topicSelector.show()
+            //self.listTopConstraint?.constant = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
             UIView.animate(withDuration: 0.5) {
                 self.navBar.alpha = 1
                 self.topicSelector.alpha = 1

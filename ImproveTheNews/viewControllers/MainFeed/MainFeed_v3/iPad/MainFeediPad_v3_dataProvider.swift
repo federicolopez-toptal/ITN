@@ -25,6 +25,9 @@ extension MainFeediPad_v3_viewController {
                 self.populateDataProvider_iPhone_textOnly_split()
             }
         }
+        
+        let initSpacer = DP3_spacer(size: self.topValue)
+        self.dataProvider.insert(initSpacer, at: 0)
     }
     
     // Split + Text only

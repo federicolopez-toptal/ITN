@@ -16,6 +16,11 @@ extension MainFeediPad_v3_viewController {
         }        
         self.list = CustomFeedList()
         
+        var topOffset: CGFloat = 0
+        if let _safeAreaTop = SAFE_AREA()?.top {
+            topOffset -= _safeAreaTop
+        }
+        
         self.list.backgroundColor = self.view.backgroundColor
         self.list.separatorStyle = .none
         self.list.customDelegate = self
@@ -33,11 +38,11 @@ extension MainFeediPad_v3_viewController {
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topOffset)
         ])
-        self.listTopConstraint = self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.topValue)
-        self.listTopConstraint?.isActive = true
-        
+        self.navBar.superview?.bringSubviewToFront(self.navBar)
+        self.topicSelector.superview?.bringSubviewToFront(self.topicSelector)
         
         self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
         self.list.register(iPhoneHeaderCell_v3.self, forCellReuseIdentifier: iPhoneHeaderCell_v3.identifier)
