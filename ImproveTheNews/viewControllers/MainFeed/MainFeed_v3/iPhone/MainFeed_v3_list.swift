@@ -262,7 +262,7 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
         self.showLoading()
         
         if(sender.topic == "CONTRO") {
-            self.removeControversiesFfromMainFeed()
+            self.removeControversiesFromMainFeed()
         
             self.controversiesPage += 1
             self.loadControversies()

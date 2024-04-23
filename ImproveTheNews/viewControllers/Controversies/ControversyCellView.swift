@@ -217,7 +217,7 @@ class ControversyCellView: UIView {
         
         var time = controversy.time
         if(time == "1 second ago"){ time = "JUST NOW" }
-        self.timeLabel.text = time
+        self.timeLabel.text = time.uppercased()
         
         self.startLabel.text = controversy.textMin
         self.endLabel.text = controversy.textMax

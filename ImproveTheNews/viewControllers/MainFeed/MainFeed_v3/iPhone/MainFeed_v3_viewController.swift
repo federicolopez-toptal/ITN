@@ -203,16 +203,16 @@ extension MainFeed_v3_viewController {
         }
     }
     
-    func removeControversiesFfromMainFeed() {
+    func removeControversiesFromMainFeed() {
         var topicIndex = -1
         
         for (i, DP) in self.dataProvider.enumerated() {
-            if(DP is DP3_headerItem) {
+            if let _DP = DP as? DP3_headerItem, _DP.title.lowercased() != "split" {
                 topicIndex += 1
             }
             
             if(topicIndex==0 && DP is DP3_more) {
-                for j in 1...100 {
+                for _ in 1...100 {
                     if let _header = self.dataProvider[i+1] as? DP3_headerItem {
                         if(_header.title != "-----" && _header.title != self.latestControversies) {
                             break
@@ -231,7 +231,7 @@ extension MainFeed_v3_viewController {
         var topicIndex = -1
         
         for (i, DP) in self.dataProvider.enumerated() {
-            if(DP is DP3_headerItem) {
+            if let _DP = DP as? DP3_headerItem, _DP.title.lowercased() != "split" {
                 topicIndex += 1
             }
             

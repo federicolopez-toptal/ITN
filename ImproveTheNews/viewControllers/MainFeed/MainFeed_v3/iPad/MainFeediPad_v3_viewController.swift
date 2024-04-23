@@ -200,11 +200,11 @@ extension MainFeediPad_v3_viewController {
         }
     }
     
-    func removeControversiesFfromMainFeed() {
+    func removeControversiesFromMainFeed() {
         var topicIndex = -1
         
         for (i, DP) in self.dataProvider.enumerated() {
-            if(DP is DP3_headerItem) {
+            if let _DP = DP as? DP3_headerItem, _DP.title.lowercased() != "split" {
                 topicIndex += 1
             }
             
@@ -228,7 +228,7 @@ extension MainFeediPad_v3_viewController {
         var topicIndex = -1
         
         for (i, DP) in self.dataProvider.enumerated() {
-            if(DP is DP3_headerItem) {
+            if let _DP = DP as? DP3_headerItem, _DP.title.lowercased() != "split" {
                 topicIndex += 1
             }
             
