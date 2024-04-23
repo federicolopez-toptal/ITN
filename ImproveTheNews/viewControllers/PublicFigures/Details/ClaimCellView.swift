@@ -19,6 +19,8 @@ class ClaimCellView: UIView {
     weak var delegate: ClaimCellViewDelegate?
 
     private var WIDTH: CGFloat = 1
+    private var showControversyLink: Bool = true
+    
     var isOpen = false
     var mainHeightConstraint: NSLayoutConstraint?
     var sourceUrl: String = ""
@@ -30,7 +32,11 @@ class ClaimCellView: UIView {
     let nameLabel = UILabel()
     let timeLabel = UILabel()
     let titleLabel = UILabel()
-    var controversyLabel = UILabel()
+    
+    let controversyView = UIView()
+    var controversyViewHeightConstraint: NSLayoutConstraint?
+    let controversyLabel = UILabel()
+    
     let sourceImageView = UIImageView()
     let sourceNameLabel = UILabel()
     let moreSourcesView = UIView()
@@ -62,9 +68,10 @@ class ClaimCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat) {
+    init(width: CGFloat, showControversyLink: Bool = true) {
         super.init(frame: .zero)
         self.WIDTH = width
+        self.showControversyLink = showControversyLink
         
         self.buildContent()
     }
@@ -136,6 +143,7 @@ class ClaimCellView: UIView {
         
         self.titleLabel.font = DM_SERIF_DISPLAY(18)
         self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
+        //self.titleLabel.backgroundColor = .red.withAlphaComponent(0.5)
         self.titleLabel.numberOfLines = 0
         column.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
@@ -173,19 +181,36 @@ class ClaimCellView: UIView {
             self.parrafoLabelOver.topAnchor.constraint(equalTo: self.parrafoView.topAnchor, constant: 16)
         ])
         
+        // --- CONTROVERSY LABEL
+        column.addSubview(self.controversyView)
+        //self.controversyView.backgroundColor = .orange
+        //self.parrafoView.backgroundColor = .red.withAlphaComponent(0.5)
+        self.controversyView.activateConstraints([
+            self.controversyView.leadingAnchor.constraint(equalTo: column.leadingAnchor),
+            self.controversyView.trailingAnchor.constraint(equalTo: column.trailingAnchor),
+            self.controversyView.topAnchor.constraint(equalTo: self.parrafoView.bottomAnchor, constant: 0)
+        ])
+        self.controversyViewHeightConstraint = self.controversyView.heightAnchor.constraint(equalToConstant: 0)
+        self.controversyViewHeightConstraint?.isActive = true
+        if(!self.showControversyLink) {
+            self.controversyView.hide()
+        }
+
         self.controversyLabel.font = AILERON(16)
         self.controversyLabel.textColor = CSS.shared.displayMode().main_textColor
         self.controversyLabel.numberOfLines = 0
-        column.addSubview(self.controversyLabel)
+        self.controversyView.addSubview(self.controversyLabel)
         self.controversyLabel.activateConstraints([
-            self.controversyLabel.leadingAnchor.constraint(equalTo: column.leadingAnchor),
-            self.controversyLabel.trailingAnchor.constraint(equalTo: column.trailingAnchor),
-            self.controversyLabel.topAnchor.constraint(equalTo: self.parrafoView.bottomAnchor, constant: 16)
+            self.controversyLabel.leadingAnchor.constraint(equalTo: self.controversyView.leadingAnchor),
+            self.controversyLabel.trailingAnchor.constraint(equalTo: self.controversyView.trailingAnchor),
+            self.controversyLabel.topAnchor.constraint(equalTo: self.controversyView.topAnchor, constant: 16)
         ])
         
-        // -----
+        
+
+        // ----- PARRAFO BUTTON
         let parrafoButton = UIButton(type: .custom)
-        //parrafoButton.backgroundColor = .red.withAlphaComponent(0.5)
+        //parrafoButton.backgroundColor = .green.withAlphaComponent(0.25)
         column.addSubview(parrafoButton)
         parrafoButton.activateConstraints([
             parrafoButton.leadingAnchor.constraint(equalTo: column.leadingAnchor),
@@ -200,7 +225,7 @@ class ClaimCellView: UIView {
         //buttonsContainer.backgroundColor = .green.withAlphaComponent(0.1)
         column.addSubview(buttonsContainer)
         buttonsContainer.activateConstraints([
-            buttonsContainer.topAnchor.constraint(equalTo: self.controversyLabel.bottomAnchor, constant: 20),
+            buttonsContainer.topAnchor.constraint(equalTo: self.controversyView.bottomAnchor, constant: 20),
             buttonsContainer.leadingAnchor.constraint(equalTo: column.leadingAnchor),
             buttonsContainer.trailingAnchor.constraint(equalTo: column.trailingAnchor),
             buttonsContainer.heightAnchor.constraint(equalToConstant: 32)
@@ -381,9 +406,14 @@ class ClaimCellView: UIView {
     
     func calculateHeight() -> CGFloat {
         let W: CGFloat = self.WIDTH - 16 - 40 - 7 - 16
+        
+        var controversyLabelHeight: CGFloat = 0
+        if(self.showControversyLink){
+            controversyLabelHeight = 16 + self.controversyLabel.calculateHeightFor(width: W)
+        }
+        
         let H: CGFloat = 16 + self.nameLabel.calculateHeightFor(width: W) +
-            6 + self.titleLabel.calculateHeightFor(width: W) +
-            16 + self.controversyLabel.calculateHeightFor(width: W) +
+            6 + self.titleLabel.calculateHeightFor(width: W) + controversyLabelHeight +
             20 + 32 +
             20 + (IPAD() ? 20 : 0)
         
@@ -396,6 +426,7 @@ class ClaimCellView: UIView {
     }
     
     func populate(with claim: Claim) {
+        let W: CGFloat = self.WIDTH - 16 - 40 - 7 - 16
         self.figureSlug = claim.figureSlug
         self.controversySlug = claim.controversySlug
     
@@ -403,7 +434,13 @@ class ClaimCellView: UIView {
         self.nameLabel.text = claim.figureName.uppercased()
         self.timeLabel.text = claim.time.uppercased()
         self.titleLabel.text = claim.claim
+        
         self.applyControversyFormatTo(self.controversyLabel, text: claim.controversyTitle)
+        if(self.showControversyLink) {
+            self.controversyViewHeightConstraint?.constant = 16 + self.controversyLabel.calculateHeightFor(width: W)
+        } else {
+            self.controversyViewHeightConstraint?.constant = 0
+        }
         
         if let _firstSource = claim.sources.first {
             self.sourceNameLabel.text = _firstSource.name.uppercased()

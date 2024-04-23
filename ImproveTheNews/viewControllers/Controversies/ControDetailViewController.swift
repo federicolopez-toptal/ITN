@@ -475,7 +475,7 @@ extension ControDetailViewController {
         var val_y: CGFloat = 0
         
         for (i, CL) in claims.enumerated() {
-            let claimView = ClaimCellView(width: item_W)
+            let claimView = ClaimCellView(width: item_W, showControversyLink: false)
             claimView.delegate = self
             
             var val_x: CGFloat = col * item_W
@@ -637,7 +637,7 @@ extension ControDetailViewController {
         if(IPAD()){ item_W = (W()-M)/2 }
         
         for (_, CL) in claims.enumerated() {
-            let claimView = ClaimCellView(width: item_W)
+            let claimView = ClaimCellView(width: item_W, showControversyLink: false)
             claimView.delegate = self
             
             var val_x: CGFloat = col * item_W
