@@ -562,6 +562,7 @@ extension ControDetailViewController {
         label.font = DM_SERIF_DISPLAY(20)
         label.textColor = CSS.shared.displayMode().main_textColor
         label.text = "Claims"
+        //label.backgroundColor = .red.withAlphaComponent(0.5)
         mainView.addSubview(label)
         label.activateConstraints([
             label.widthAnchor.constraint(equalToConstant: self.W()),
@@ -816,6 +817,7 @@ extension ControDetailViewController {
     // ------------------------------------------------------------
     func addGraph(containerView: UIView, width: CGFloat, listItem: ControversyListItem) {
         let cell = ControversyCellView(width: width, showBottom: false)
+        cell.delegate = self
         cell.populate(with: listItem)
         cell.hideTopLine()
         containerView.addSubview(cell)
@@ -1040,6 +1042,44 @@ extension ControDetailViewController: ClaimCellViewDelegate {
                 vc.slug = _slug
                 CustomNavController.shared.pushViewController(vc, animated: true)
             }
+        }
+    }
+    
+}
+
+extension ControDetailViewController: ControversyCellViewDelegate {
+    
+    func controversyCellViewOnFigureTap(sender: ControversyCellView?) {
+        if let _CO = sender {
+            let searchFor = _CO.figureSlug
+            
+            let targetView = self.contentView.viewWithTag(140)!
+            var val_Y: CGFloat = 0
+            
+            if( IPHONE() ){
+                val_Y = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y + (M*2) + 28 + M
+            } else { // IPAD
+                val_Y = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y + (M*2) + 28
+            }
+            
+            var extraY: CGFloat = 0
+            let containerView = self.view.viewWithTag(555)!
+            for (i, view) in containerView.subviews.enumerated() {
+                if view is ClaimCellView {
+                    let claimView = view as! ClaimCellView
+                    
+                    if(claimView.figureSlug == searchFor) {
+                        if(!claimView.isOpen) {
+                            claimView.openButtonOnTap(nil)
+                        }
+                    
+                        extraY = claimView.frame.origin.y
+                        break
+                    }
+                }
+            }
+            
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y + extraY), animated: true)
         }
     }
     

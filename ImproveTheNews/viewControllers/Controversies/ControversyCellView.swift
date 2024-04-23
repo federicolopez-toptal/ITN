@@ -32,6 +32,7 @@ class ControversyCellView: UIView {
     var figureSlugs = [String]()
     let buttonArea = UIButton(type: .custom)
     var controversySlug: String = ""
+    var figureSlug: String = ""
 
 
     // MARK: - Init(s)
@@ -338,9 +339,16 @@ extension ControversyCellView {
     }
     
     @objc func imgButtonOnTap(_ sender: UIButton?) {
+        self.figureSlug = ""
         if let _index = sender?.tag {
+            self.figureSlug = self.figureSlugs[_index]
+        }
+        
+        if self.delegate != nil {
+            self.delegate?.controversyCellViewOnFigureTap(sender: self)
+        } else {
             let vc = FigureDetailsViewController()
-            vc.slug = self.figureSlugs[_index]
+            vc.slug = self.figureSlug
             CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
