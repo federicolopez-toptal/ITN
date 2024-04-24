@@ -164,7 +164,7 @@ class ClaimCellView: UIView {
         self.parrafoView.hide()
         
         self.parrafoLabel.numberOfLines = 0
-        self.parrafoLabel.font = AILERON(16)
+        self.parrafoLabel.font = AILERON(14)
         self.parrafoView.addSubview(self.parrafoLabel)
         self.parrafoLabel.activateConstraints([
             self.parrafoLabel.leadingAnchor.constraint(equalTo: self.parrafoView.leadingAnchor),
@@ -173,7 +173,7 @@ class ClaimCellView: UIView {
         ])
         
         self.parrafoLabelOver.numberOfLines = 0
-        self.parrafoLabelOver.font = AILERON(16)
+        self.parrafoLabelOver.font = AILERON(14)
         self.parrafoView.addSubview(self.parrafoLabelOver)
         self.parrafoLabelOver.activateConstraints([
             self.parrafoLabelOver.leadingAnchor.constraint(equalTo: self.parrafoView.leadingAnchor),
@@ -225,7 +225,7 @@ class ClaimCellView: UIView {
         //buttonsContainer.backgroundColor = .green.withAlphaComponent(0.1)
         column.addSubview(buttonsContainer)
         buttonsContainer.activateConstraints([
-            buttonsContainer.topAnchor.constraint(equalTo: self.controversyView.bottomAnchor, constant: 20),
+            buttonsContainer.topAnchor.constraint(equalTo: self.controversyView.bottomAnchor, constant: 24),
             buttonsContainer.leadingAnchor.constraint(equalTo: column.leadingAnchor),
             buttonsContainer.trailingAnchor.constraint(equalTo: column.trailingAnchor),
             buttonsContainer.heightAnchor.constraint(equalToConstant: 32)
@@ -239,7 +239,7 @@ class ClaimCellView: UIView {
             self.openButton.widthAnchor.constraint(equalToConstant: 32),
             self.openButton.heightAnchor.constraint(equalToConstant: 32)
         ])
-        self.openButton.addTarget(self, action: #selector(openButtonOnTap(_:)), for: .touchUpInside)
+        self.openButton.addTarget(self, action: #selector(openButtonOnTap0(_:)), for: .touchUpInside)
         
         let twitterButton = UIButton(type: .system)
         twitterButton.setImage(UIImage(named: "twitterCircle")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -369,7 +369,11 @@ class ClaimCellView: UIView {
         CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
-    @objc func openButtonOnTap(_ sender: UIButton?) {
+    @objc func openButtonOnTap0(_ sender: UIButton?) {
+        self.openButtonOnTap(sender, callDelegate: true)
+    }
+    
+    func openButtonOnTap(_ sender: UIButton?, callDelegate: Bool) {
         if(!self.isOpen) {
             // Abro
             self.isOpen = true
@@ -384,7 +388,9 @@ class ClaimCellView: UIView {
             self.mainHeightConstraint?.constant = self.calculateHeight()
             self.layoutIfNeeded() // visual update
             
-            self.delegate?.claimCellViewOnHeightChanged(sender: self)
+            if(callDelegate) {
+                self.delegate?.claimCellViewOnHeightChanged(sender: self)
+            }
             
             self.startDescriptionAnimation()
         } else {
@@ -399,8 +405,9 @@ class ClaimCellView: UIView {
             self.mainHeightConstraint?.constant = self.calculateHeight()
             self.layoutIfNeeded() // visual update
             
-            self.delegate?.claimCellViewOnHeightChanged(sender: self)
-            
+            if(callDelegate) {
+                self.delegate?.claimCellViewOnHeightChanged(sender: self)
+            }
         }
     }
     
@@ -414,7 +421,7 @@ class ClaimCellView: UIView {
         
         let H: CGFloat = 16 + self.nameLabel.calculateHeightFor(width: W) +
             6 + self.titleLabel.calculateHeightFor(width: W) + controversyLabelHeight +
-            20 + 32 +
+            24 + 32 +
             20 + (IPAD() ? 20 : 0)
         
         var extraH: CGFloat = 0
@@ -470,6 +477,7 @@ class ClaimCellView: UIView {
         self.twitterUrl = "www.improvethenews.org/controversy/" + claim.controversySlug
         
         self.applyDescriptionFormatTo(self.parrafoLabel, text: claim.description, remark: claim.title)
+        self.parrafoLabel.setLineSpacing(lineSpacing: 8)
         self.parrafoLabelOver.hide()
 
         self.mainHeightConstraint?.constant = self.calculateHeight()
@@ -526,7 +534,7 @@ extension ClaimCellView {
         
         // main label
         let mainAttrStr = NSMutableAttributedString(string: fullText, attributes: [
-            .font: AILERON(16),
+            .font: AILERON(14),
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C),
             .paragraphStyle :paragraphStyle
         ])
@@ -551,13 +559,13 @@ extension ClaimCellView {
         paragraphStyle.alignment = .left
         
         let secAttrStr = NSMutableAttributedString(string: self._fullDescription, attributes: [
-            .font: AILERON(16),
+            .font: AILERON(14),
             .foregroundColor: UIColor.clear,
             .paragraphStyle: paragraphStyle
         ])
                 
         let remarkAttributes: [NSAttributedString.Key: Any] = [
-            .font: AILERON(16),
+            .font: AILERON(14),
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0x60C4D6) : UIColor(hex: 0x19191C),
             .backgroundColor: DARK_MODE() ? UIColor(hex: 0x2E4C54) : UIColor(hex: 0xA8DAE2)
         ]
@@ -570,6 +578,7 @@ extension ClaimCellView {
         secAttrStr.replaceCharacters(in: range, with: remarkAttrStr)
         
         self.parrafoLabelOver.attributedText = secAttrStr
+        self.parrafoLabelOver.setLineSpacing(lineSpacing: 8)
         self.parrafoLabelOver.show()
         
         if( (self._remarkLength<self._remarkLimit) && self.isOpen) {

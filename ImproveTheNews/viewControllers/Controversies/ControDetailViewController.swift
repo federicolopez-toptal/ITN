@@ -335,7 +335,7 @@ extension ControDetailViewController {
     }
     
     func addTabs(claimsCount: Int, goDeeperCount: Int) {
-        ADD_SPACER(to: self.vStack, height: M)
+        ADD_SPACER(to: self.vStack, height: 24)
         let containerView = self.createContainerView(bgColor: .clear, height: 40)
         
         let mainView = UIView()
@@ -351,7 +351,6 @@ extension ControDetailViewController {
         } else {
             mainView.widthAnchor.constraint(equalToConstant: self.W()).isActive = true
         }
-        
         
         var W: CGFloat = 0
         if(IPHONE()) {
@@ -714,7 +713,7 @@ extension ControDetailViewController {
         let F = listItem.figures
         
         if(IPHONE()) {
-            ADD_SPACER(to: self.vStack, height: M*2)
+            ADD_SPACER(to: self.vStack, height: 24)
         
             let container1View = self.createContainerView()
             self.addTextHeader(containerView: container1View, width: self.W(), title: T, status: listItem.resolved, figures: F)
@@ -909,13 +908,13 @@ extension ControDetailViewController {
         
         // -------------------------------------------
         let statusLabel = UILabel()
-        statusLabel.font = DM_SERIF_DISPLAY(20)
+        statusLabel.font = DM_SERIF_DISPLAY(18)
         statusLabel.textColor = CSS.shared.displayMode().sec_textColor
         statusLabel.text = "Status:"
         containerView.addSubview(statusLabel)
         statusLabel.activateConstraints([
             statusLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: M),
-            statusLabel.topAnchor.constraint(equalTo: pill.bottomAnchor, constant: M)
+            statusLabel.topAnchor.constraint(equalTo: pill.bottomAnchor, constant: 24)
         ])
         
         let status2Label = UILabel()
@@ -932,7 +931,7 @@ extension ControDetailViewController {
         
         // -------------------------------------------
         let titleLabel = UILabel()
-        titleLabel.font = IPHONE() ? DM_SERIF_DISPLAY(20) : DM_SERIF_DISPLAY(32)
+        titleLabel.font = IPHONE() ? DM_SERIF_DISPLAY(22) : DM_SERIF_DISPLAY(32)
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
         titleLabel.numberOfLines = 0
         titleLabel.text = title
@@ -940,11 +939,11 @@ extension ControDetailViewController {
         titleLabel.activateConstraints([
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: M),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -M),
-            titleLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: M)
+            titleLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10)
         ])
         
         // -------------------------------------------
-        let H: CGFloat = 24 + M + statusLabel.calculateHeightFor(width: width) + M + titleLabel.calculateHeightFor(width: width)
+        let H: CGFloat = 24 + 24 + statusLabel.calculateHeightFor(width: width) + 10 + titleLabel.calculateHeightFor(width: width)
         containerView.activateConstraints([
             containerView.heightAnchor.constraint(equalToConstant: H)
         ])
@@ -1070,7 +1069,7 @@ extension ControDetailViewController: ControversyCellViewDelegate {
                     
                     if(claimView.figureSlug == searchFor) {
                         if(!claimView.isOpen) {
-                            claimView.openButtonOnTap(nil)
+                            claimView.openButtonOnTap(nil, callDelegate: true)
                         }
                     
                         extraY = claimView.frame.origin.y
