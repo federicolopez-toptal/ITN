@@ -1024,6 +1024,15 @@ extension ControDetailViewController: ClaimCellViewDelegate {
     }
     
     func claimCellViewOnHeightChanged(sender: ClaimCellView?) {
+        let containerView = self.view.viewWithTag(555)!
+        for V in containerView.subviews {
+            if let _claim = V as? ClaimCellView {
+                if(_claim != sender && _claim.isOpen) {
+                    _claim.openButtonOnTap(nil, callDelegate: false)
+                }
+            }
+        } 
+        
         let H = self.calculateContainerViewHeight()
         self.claimsContainerViewHeightConstraint?.constant = H
     }

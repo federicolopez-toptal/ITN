@@ -317,9 +317,7 @@ extension FigureDetailsViewController: ClaimCellViewDelegate {
                     _claim.openButtonOnTap(nil, callDelegate: false)
                 }
             }
-        }
-        
-        //sender!.openButtonOnTap(nil)
+        }        
         
         let H = self.calculateContainerViewHeight()
         self.claimsContainerViewHeightConstraint?.constant = H
