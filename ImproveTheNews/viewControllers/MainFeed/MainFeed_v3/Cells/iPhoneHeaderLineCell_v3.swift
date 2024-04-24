@@ -38,7 +38,7 @@ class iPhoneHeaderLineCell_v3: UITableViewCell {
         self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
     }
     
-    func getHeight() -> CGFloat {
+    static func getHeight() -> CGFloat {
         return 20
     }
 

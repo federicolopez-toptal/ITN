@@ -64,6 +64,10 @@ extension MainFeed_v3_viewController {
         MAIN_THREAD {
             self.list.reloadData()
         }
+        
+        DELAY(0.5) {
+            self.ignoreScroll = false
+        }
     }
 
 }
@@ -109,7 +113,14 @@ extension MainFeed_v3_viewController {
     // Cell(s)
     func getCell(_ indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-        let item = self.dataProvider[indexPath.row]
+        
+        var item: DP3_item? = nil
+        if(indexPath.row <= self.dataProvider.count-1) {
+            item = self.dataProvider[indexPath.row]
+        }
+        if(item == nil) {
+            return cell
+        }
         
         if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
             if(_groupItem is DP3_iPhoneStory_1Wide) {
@@ -190,15 +201,22 @@ extension MainFeed_v3_viewController {
     
     ///////////////////////////////////////////////////////////
     func getHeight(_ indexPath: IndexPath) -> CGFloat {
-        let item = self.dataProvider[indexPath.row]
         var result: CGFloat = 0
-        
+        var item: DP3_item? = nil
+        if(indexPath.row <= self.dataProvider.count-1) {
+            item = self.dataProvider[indexPath.row]
+        }
+        if(item == nil) {
+            return 0
+        }
+
         if let _item = item as? DP3_spacer {
             result = _item.size
         //} else if(item is DP3_headerItem) { // header
         } else if let _item = item as? DP3_headerItem { // header
             if(_item.title == "-----") {
-                result = (self.getCell(indexPath) as! iPhoneHeaderLineCell_v3).getHeight()
+                result = iPhoneHeaderLineCell_v3.getHeight()
+                //result = (self.getCell(indexPath) as! iPhoneHeaderLineCell_v3).getHeight()
             } else {
                 result = (self.getCell(indexPath) as! iPhoneHeaderCell_v3).calculateHeight()
             }
@@ -281,6 +299,7 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
                 
                 if(A || B) { self.topicsCompleted[topic] = true }
                 
+                self.ignoreScroll = true
                 self.populateDataProvider()
                 self.addControversiesToMainFeed(mustRefresh: false)
                 

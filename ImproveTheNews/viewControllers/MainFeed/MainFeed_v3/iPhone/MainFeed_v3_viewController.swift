@@ -35,6 +35,8 @@ class MainFeed_v3_viewController: BaseViewController {
     var controversiesPage = 1
     let latestControversies = "Latest controversies"
     
+    var ignoreScroll = false
+    
     // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,8 +64,6 @@ class MainFeed_v3_viewController: BaseViewController {
             self.topicSelector.delegate = self
             
             self.topValue = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
-            print("TOP", self.topValue)
-            
             self.setupList()
         }
     }
@@ -192,6 +192,8 @@ extension MainFeed_v3_viewController {
                 MAIN_THREAD {
                     self.hideLoading()
                     if let _T = total, let _L = list {
+                        self.ignoreScroll = true
+                        
                         for LI in _L {
                             self.controversies.append(LI)
                         }
@@ -229,7 +231,7 @@ extension MainFeed_v3_viewController {
     
     func addControversiesToMainFeed(mustRefresh: Bool = true) {
         var topicIndex = -1
-        
+                
         for (i, DP) in self.dataProvider.enumerated() {
             if let _DP = DP as? DP3_headerItem, _DP.title.lowercased() != "split" {
                 topicIndex += 1
@@ -238,6 +240,8 @@ extension MainFeed_v3_viewController {
             if(topicIndex==0 && DP is DP3_more) {
                 let line = DP3_headerItem(title: "-----")
                 self.dataProvider.insert(line, at: i+1)
+//                let spacer0 = DP3_spacer(size: 20)
+//                DPCopy.insert(spacer0, at: i+1)
             
                 let header = DP3_headerItem(title: self.latestControversies)
                 self.dataProvider.insert(header, at: i+2)
@@ -270,7 +274,7 @@ extension MainFeed_v3_viewController {
         MAIN_THREAD {
             self.hideLoading()
         }
-        
+    
         if(mustRefresh) {
             self.refreshList()
         }
@@ -301,17 +305,28 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
         let currentPosY = scrollView.contentOffset.y
         let diff = self.lastScrollViewPosY - currentPosY
         
+        if(self.ignoreScroll) {
+            self.lastScrollViewPosY = currentPosY
+            return
+        }
+        
+        //print("ScrollViewDidScroll", "currentPosY: \(currentPosY)", "diff: \(diff)")
+        //print("DIFF", diff)
+        
         if(diff < 0) {
+            //print("UP")
+            
             // up
             if(currentPosY >= 70) {
-                if(!self.navBar.isHidden) {
+                if(!self.navBar.isHidden && !self.topBarsTransitioning) {
                     self.hideTopBars()
-                    saveLastPos = false
+                    //saveLastPos = false
                 }
             }
         } else {
+            //print("DOWN")
             // down
-            if(self.navBar.isHidden) {
+            if(self.navBar.isHidden && !self.topBarsTransitioning) {
                 self.showTopBars()
             }
         }
@@ -326,7 +341,7 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
             self.topBarsTransitioning = true
             
             //self.listTopConstraint?.constant = 0
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.4) {
                 self.navBar.alpha = 0
                 self.topicSelector.alpha = 0
                 self.view.layoutIfNeeded()
@@ -346,7 +361,7 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
             self.navBar.show()
             self.topicSelector.show()
             //self.listTopConstraint?.constant = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.4) {
                 self.navBar.alpha = 1
                 self.topicSelector.alpha = 1
                 self.view.layoutIfNeeded()

@@ -361,7 +361,7 @@ extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
             self.topBarsTransitioning = true
             
             //self.listTopConstraint?.constant = 0
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.4) {
                 self.navBar.alpha = 0
                 self.topicSelector.alpha = 0
                 self.view.layoutIfNeeded()
@@ -381,7 +381,7 @@ extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
             self.navBar.show()
             self.topicSelector.show()
             //self.listTopConstraint?.constant = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.4) {
                 self.navBar.alpha = 1
                 self.topicSelector.alpha = 1
                 self.view.layoutIfNeeded()
