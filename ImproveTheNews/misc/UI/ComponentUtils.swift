@@ -16,6 +16,14 @@ func REMOVE_ALL_SUBVIEWS(from view: UIView) {
     view.subviews.forEach({ $0.removeFromSuperview() })
 }
 
+func REMOVE_ALL_CONSTRAINTS(from view: UIView) {
+//    for C in view.constraints {
+//        view.removeConstraint(C)
+//    }
+//    
+    view.constraints.forEach({ view.removeConstraint($0) })
+}
+
 func ADD_SHADOW(to view: UIView, offset: CGSize = CGSize(width: 5, height: 5)) {
     view.layer.masksToBounds = false
     view.layer.shadowColor = UIColor.black.cgColor

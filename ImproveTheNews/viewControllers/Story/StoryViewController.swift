@@ -44,6 +44,10 @@ class StoryViewController: BaseViewController {
     var loadedImage: UIImage? = nil
     var loadedStory: MainFeedStory!
     
+    var webBrowser: WKWebView? = nil
+    var goDeeperStories = [StorySearchResult]()
+    var sectionViewHeightConstraint: NSLayoutConstraint? = nil
+    
     
     deinit {
         self.audioPlayer.close()
@@ -197,6 +201,11 @@ extension StoryViewController {
 extension StoryViewController {
 
     func addContent(_ story: MainFeedStory) {
+        if(self.webBrowser != nil) {
+            REMOVE_ALL_CONSTRAINTS(from: self.webBrowser!)
+            self.VStack.removeArrangedSubview(self.webBrowser!)
+        }
+        
         REMOVE_ALL_SUBVIEWS(from: self.VStack)
 //        let line2 = UIView()
 //        self.VStack.addArrangedSubview(line2)
@@ -377,12 +386,11 @@ extension StoryViewController {
     }
     
     private func addGoDeeper(stories: [StorySearchResult]) {
+        self.goDeeperStories = stories
         if(stories.count==0){ return }
         
         let sectionView = UIView()
         sectionView.tag = 170
-        //sectionView.backgroundColor = .yellow.withAlphaComponent(0.3)
-        //ADD_SPACER(to: self.VStack, height: 10)
         self.VStack.addArrangedSubview(sectionView)
         
         let title = UILabel()
@@ -401,8 +409,8 @@ extension StoryViewController {
         var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20
         W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
         
-        var storiesCopy = stories
-        while(storiesCopy.count>0) {
+        var count = 0
+        while(self.goDeeperStories.count>0) {
 
             let colsHStack = HSTACK(into: sectionView, spacing: CSS.shared.iPhoneSide_padding)
             //colsHStack.backgroundColor = .green
@@ -420,7 +428,7 @@ extension StoryViewController {
             let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
             
             // item 1
-            if let _A = storiesCopy.first {
+            if let _A = self.goDeeperStories.first {
                 VIEW1.refreshDisplayMode()
                 VIEW1.populate(story: _A)
                 H1 = VIEW1.calculateHeight()
@@ -429,14 +437,15 @@ extension StoryViewController {
                     VIEW1.widthAnchor.constraint(equalToConstant: W)
                 ])
                 
-                storiesCopy.removeFirst()
+                self.goDeeperStories.removeFirst()
+                count += 1
             } else {
                 H1 = 0
                 ADD_SPACER(to: colsHStack, width: W)
             }
             
             // item 2
-            if let _A = storiesCopy.first {
+            if let _A = self.goDeeperStories.first {
                 VIEW2.refreshDisplayMode()
                 VIEW2.populate(story: _A)
                 H2 = VIEW2.calculateHeight()
@@ -445,7 +454,8 @@ extension StoryViewController {
                     VIEW2.widthAnchor.constraint(equalToConstant: W)
                 ])
                 
-                storiesCopy.removeFirst()
+                self.goDeeperStories.removeFirst()
+                count += 1
             } else {
                 H2 = 0
                 ADD_SPACER(to: colsHStack, width: W)
@@ -456,48 +466,15 @@ extension StoryViewController {
             VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
 
             posY += maxH
+            
+            if(count >= 20) {
+                break
+            }
         }
         
-        
-//        var col = 1
-//        var prevH: CGFloat = 0
-//        for (i, ST) in stories.enumerated() {
-//            let storyView = FAQ_normalStoryView()
-//            sectionView.addSubview(storyView)
-//            storyView.activateConstraints([
-//                storyView.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: (col == 1) ? 15 : (15+columnW+15)),
-//                storyView.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY),
-//                storyView.widthAnchor.constraint(equalToConstant: columnW)
-//            ])
-//            
-//            storyView.populate(MainFeedArticle(story: ST))
-//            storyView.refreshDisplayMode()
-//            
-//            let H = storyView.getHeight(forColumnWidth: columnW)
-//            storyView.heightAnchor.constraint(equalToConstant: H).isActive = true
-//            
-//            if(col==1) {
-//                prevH = H
-//            }
-//            
-//            col += 1
-//            if(col == 3) {
-//                col = 1
-//                var max = H
-//                if(prevH > max){ max = prevH }
-//                posY += max + 15
-//            } else if(i == stories.count-1) {
-////                var max = H
-////                if(prevH > max){ max = prevH }
-////                posY += max + 15
-//
-//                posY += H + 15
-//            }
-//        }
-        
-        sectionView.activateConstraints([
-            sectionView.heightAnchor.constraint(equalToConstant: posY)
-        ])
+        self.sectionViewHeightConstraint = nil
+        self.sectionViewHeightConstraint = sectionView.heightAnchor.constraint(equalToConstant: posY)
+        self.sectionViewHeightConstraint?.isActive = true
     }
 
     // ------------------------------------------
@@ -1693,17 +1670,19 @@ extension StoryViewController {
     }
     
     private func addVideo() {
-        let webBrowser = WKWebView()
-        
+        if(self.webBrowser == nil) {
+            self.webBrowser = WKWebView()
+            
+            let videoURL = URL(string: "https://www.youtube.com/embed/" + self.story!.videoFile!)!
+            let request = URLRequest(url: videoURL)
+            self.webBrowser!.load(request)
+        }
+            
         let H = (SCREEN_SIZE().width * 9)/16
-        self.VStack.addArrangedSubview(webBrowser)
-        webBrowser.activateConstraints([
-            webBrowser.heightAnchor.constraint(equalToConstant: H)
+        self.VStack.addArrangedSubview(self.webBrowser!)
+        self.webBrowser!.activateConstraints([
+            self.webBrowser!.heightAnchor.constraint(equalToConstant: H)
         ])
-        
-        let videoURL = URL(string: "https://www.youtube.com/embed/" + self.story!.videoFile!)!
-        let request = URLRequest(url: videoURL)
-        webBrowser.load(request)
         
         ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
     }
@@ -2177,9 +2156,9 @@ extension StoryViewController {
         
         if let _content = self.view.viewWithTag(170) {
             _content.removeFromSuperview()
-            
             self.addContent(self.loadedStory)
         }
+        
 
     }
     

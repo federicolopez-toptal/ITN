@@ -84,7 +84,6 @@ extension MainFeediPad_v3_viewController {
             if let _middleIndexPath = self.middleIndexPath {
                 self.list.scrollToRow(at: _middleIndexPath, at: .middle, animated: false)
             }
-
         }
         
     }

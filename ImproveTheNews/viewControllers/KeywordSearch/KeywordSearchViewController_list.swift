@@ -42,7 +42,12 @@ extension KeywordSearchViewController {
         
         DELAY(0.2) {
             if let _middleIndexPath = self.middleIndexPath {
-                self.list.scrollToRow(at: _middleIndexPath, at: .middle, animated: false)
+                let _section = 0
+                let rows = self.list.numberOfRows(inSection: _section)
+                
+                if(_middleIndexPath.row <= rows) {
+                    self.list.scrollToRow(at: _middleIndexPath, at: .middle, animated: false)
+                }
             }
         }
     }
