@@ -14,6 +14,8 @@ import WebKit
 class StoryViewController: BaseViewController {
     
     var story: MainFeedArticle?
+    var storyID: String = ""
+    
     var storyData = StoryContent()
     var groupedSources = [(String, String)]()
     
@@ -65,7 +67,9 @@ class StoryViewController: BaseViewController {
             
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.customBack, .headlines, .share])
-            self.navBar.setShareUrl(self.story!.url, vc: self)
+            if(self.story != nil) {
+                self.navBar.setShareUrl(self.story!.url, vc: self)
+            }
             
             self.buildContent()
         }
@@ -148,31 +152,60 @@ extension StoryViewController {
     
     private func loadContent() {
         self.showLoading()
-        self.storyData.load(url: self.story!.url) { (story) in
-            if(story == nil) {
-                // Empty story content
-                ALERT(vc: self, title: "Server error",
-                message: "Trouble loading your story,\nplease try again later.", onCompletion: {
-                    CustomNavController.shared.popViewController(animated: true)
-//                    DELAY(1.0) {
-//                        self.loadContent()
-//                    }
-                })
-            } else {
-                MAIN_THREAD {
-                    self.hideLoading()
-                    self.scrollView.show()
-                    
-                    if let _story = story {
-                        self.loadedStory = _story
-                        self.addContent(_story)
+
+        if(!self.storyID.isEmpty) {
+            self.storyData.getStoryData(storyID: self.storyID) { story in
+                if(story == nil) {
+                    // Empty story content
+                    ALERT(vc: self, title: "Server error",
+                    message: "Trouble loading your story,\nplease try again later.", onCompletion: {
+                        CustomNavController.shared.popViewController(animated: true)
+                    })
+                } else {
+                    MAIN_THREAD {
+                        self.hideLoading()
+                        self.scrollView.show()
                         
-                        DELAY(1.0) {
-                            self.calculateSectionsY()
+                        if let _story = story {
+                            self.story = MainFeedArticle(story: _story)
+                        
+                            self.loadedStory = _story
+                            self.addContent(_story)
+                            
+                            DELAY(1.0) {
+                                self.calculateSectionsY()
+                            }
                         }
                     }
                 }
             }
+            
+        } else {
+            ///
+            self.storyData.load(url: self.story!.url) { (story) in
+                if(story == nil) {
+                    // Empty story content
+                    ALERT(vc: self, title: "Server error",
+                    message: "Trouble loading your story,\nplease try again later.", onCompletion: {
+                        CustomNavController.shared.popViewController(animated: true)
+                    })
+                } else {
+                    MAIN_THREAD {
+                        self.hideLoading()
+                        self.scrollView.show()
+                        
+                        if let _story = story {
+                            self.loadedStory = _story
+                            self.addContent(_story)
+                            
+                            DELAY(1.0) {
+                                self.calculateSectionsY()
+                            }
+                        }
+                    }
+                }
+            }
+            ///
         }
     }
     

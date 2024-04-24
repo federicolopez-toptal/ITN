@@ -241,10 +241,12 @@ extension ControDetailViewController {
         let index = sender.tag - 700
         
         let GD = self.goDeepers[index]
-        let ART = MainFeedArticle(story: GD)
+        //let ART = MainFeedArticle(story: GD)
         
         let vc = StoryViewController()
-        vc.story = ART
+        vc.storyID = GD.id
+        vc.isContext = true
+        //vc.story = ART
         CustomNavController.shared.pushViewController(vc, animated: true)
     }
     

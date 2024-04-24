@@ -108,6 +108,24 @@ struct MainFeedArticle {
         self.used = false
     }
     
+    init(story: MainFeedStory) {
+        self.time = story.time
+        self.title = story.title
+        self.imgUrl = story.image_src
+        self.videoFile = story.video
+        
+        self.source = ""
+        self.url = ""
+        self.LR = 1
+        self.PE = 1
+        self.country = ""
+        self.markups = [Markup]()
+        self.isStory = false
+        self.storySources = [String]()
+        self.used = false
+        self.isContext = true
+    }
+    
     static let EMPTY_ARTICLE_TITLE = "*** EMPTY ARTICLE ***"
     static func createEmpty(defaultValue: Int) -> MainFeedArticle {
         var art = MainFeedArticle(url: "")

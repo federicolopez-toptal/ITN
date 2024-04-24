@@ -72,7 +72,7 @@ extension StoryContent {
         task.resume()
     }
     
-    private func getStoryData(storyID: String,
+    func getStoryData(storyID: String,
         callback: @escaping (MainFeedStory?) -> () ) {
         //callback: @escaping (StoryData?, [StoryFact]?, [StorySpin]?, [StoryArticle]?, String?) ->() ) {
         

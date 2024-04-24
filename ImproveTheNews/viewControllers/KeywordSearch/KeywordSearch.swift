@@ -305,6 +305,8 @@ struct ArticleSearchResult {
 }
 
 struct StorySearchResult {
+    var id: String = ""
+
     var image_url: String = ""
     var slug: String = ""
     var timeago: String = ""
@@ -319,6 +321,11 @@ struct StorySearchResult {
     var videoFile: String?
     
     init(_ data: [String: Any]) {
+        let num = CHECK_NUM(data["id"])
+        if(num != -1) {
+            self.id = String(num)
+        }
+    
         if let _imageUrl = data["image_url"] as? String {
             self.image_url = _imageUrl
         } else if let _imageUrl = data["image"] as? String {
