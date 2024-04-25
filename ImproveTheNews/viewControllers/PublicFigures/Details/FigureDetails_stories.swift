@@ -33,6 +33,7 @@ extension FigureDetailsViewController {
         let containerView = self.view.viewWithTag(222)!
         let mainView = containerView.superview!
         
+        //containerView.backgroundColor = .orange
         if(self.storiesPage==1) {
             REMOVE_ALL_SUBVIEWS(from: containerView)
         }
@@ -74,6 +75,10 @@ extension FigureDetailsViewController {
                 if(col==2) {
                     col = 0
                     val_y += stView.calculateHeight()
+                } else { // COL1
+                    if(count==1) {
+                        val_y += stView.calculateHeight()
+                    }
                 }
             } else {
                 val_y += stView.calculateHeight()

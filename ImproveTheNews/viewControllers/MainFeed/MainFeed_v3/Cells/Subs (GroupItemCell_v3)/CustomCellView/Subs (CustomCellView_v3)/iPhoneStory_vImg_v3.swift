@@ -109,6 +109,7 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
             self.sources.customHide()
             self.time_leading?.constant = 0
         }
+
     }
     
     func showFigureImage(_ url: String) {
