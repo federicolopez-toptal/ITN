@@ -118,6 +118,13 @@ extension KeywordSearchViewController {
     
     @objc func onCloseButtonTap(_ sender: UIButton) {
         //CustomNavController.shared.popViewController(animated: true)
+        KeywordSearch.searchTerm = nil
+        KeywordSearch.shared.cancelSearch()
+        
+        MAIN_THREAD {
+            self.hideLoading()
+        }
+                
         CustomNavController.shared.customPopToBottomViewController()
     }
 
@@ -170,13 +177,27 @@ extension KeywordSearchViewController {
         
         self.storySearchPage = 1
         self.articleSearchPage = 1
-            
-        
+                    
         self.dataProvider = [DP3_item]()
         self.showLoading()
-        //print("SEARCHING...")
-        
+
         KeywordSearch.searchTerm = nil
+        if(self.textHasSpecialCharacters(text)) {
+            DELAY(2.5) {
+                KeywordSearch.shared.toZero()
+                self.fillDataProvider()
+                self.updateFilteredDataProvider()
+                self.refreshList()
+                
+                MAIN_THREAD {
+                    self.hideLoading()
+                }
+            }
+            
+            return
+        }
+        
+        // -----------------------------------
         KeywordSearch.shared.search(text, type: sType) { (success, _) in
             self.searchCount += 1
             
@@ -191,21 +212,28 @@ extension KeywordSearchViewController {
                 }
                 self.refreshList()
             } else {
-                if(self.searchCount==1) {
-                    MAIN_THREAD {
-                        HIDE_KEYBOARD(view: self.view)
-                        SERVER_ERROR_POPUP(text: "Oops: we're having a temprary\ndatabase problem - this one is on\nus!")
-                    }
-                    
-                
-//                    ALERT(vc: self, title: "Server error",
-//                            message: "There was an error while retrieving the information. Please try again later", onCompletion: {
-//                            DELAY(0.5) {
-//                                self.search(self.searchTextfield.text(), type: .all)
-//                            }
-//                    })
-                } else {
-                    self.showErrorOnLoadMore()
+//                if(self.searchCount==1) {
+//                    MAIN_THREAD {
+//                        HIDE_KEYBOARD(view: self.view)
+//                        SERVER_ERROR_POPUP(text: "Oops: we're having a temprary\ndatabase problem - this one is on\nus!")
+//                    }
+//                    
+//                
+////                    ALERT(vc: self, title: "Server error",
+////                            message: "There was an error while retrieving the information. Please try again later", onCompletion: {
+////                            DELAY(0.5) {
+////                                self.search(self.searchTextfield.text(), type: .all)
+////                            }
+////                    })
+//                } else {
+//                    //self.showErrorOnLoadMore()
+//                    DELAY(1.0) {
+//                        self.search(text, type: sType)
+//                    }
+//                }
+
+                DELAY(1.0) {
+                    self.search(text, type: sType)
                 }
             }
         
@@ -560,4 +588,23 @@ extension KeywordSearchViewController {
         
         self.listInit()
     }
+}
+
+extension KeywordSearchViewController {
+    
+    func textHasSpecialCharacters(_ text: String) -> Bool {
+        let chars = "ñÑ-/:;()$&@\".,?!'[]{}#%^*+=_\\|~<>€£¥•"   
+        var result = false
+        
+        
+        for _CH in text {
+            if(chars.contains(_CH)) {
+                result = true
+                break
+            }
+        }
+        
+        return result
+    }
+    
 }

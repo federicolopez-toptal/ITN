@@ -28,9 +28,18 @@ class KeywordSearch {
     var lastSearch: String = ""
     
     
-    
-    
     init() {
+    }
+    
+    func toZero() {
+        self.topics = []
+        self.stories = []
+        self.articles = []
+        self.controversies = []
+    }
+    
+    func cancelSearch() {
+        self.task?.cancel()
     }
     
     func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool, Int) -> () ) {
@@ -45,12 +54,12 @@ class KeywordSearch {
             self.controversies = []
         }
         
-        var _text = text
+//        var _text = text
 //        _text = _text.replacingOccurrences(of: "'", with: "")
 //        _text = _text.replacingOccurrences(of: "\"", with: "")
         
         var url = self.searchUrl + "?searchtype=" + self.searchType.rawValue
-        url += "&searchstring=" + _text.urlEncodedString() + "&limit=" + String(self.searchPageSize)
+        url += "&searchstring=" + text.urlEncodedString() + "&limit=" + String(self.searchPageSize)
         url += "&offset=" + String(offset)
         url += "&slidercookies=" + MainFeedv3.sliderValues()
         url += "&userId=" + UUID.shared.getValue()
@@ -69,7 +78,7 @@ class KeywordSearch {
                 var count = self.parseResult(_json)
             
                 if(pageNumber==1) {
-                    ControversiesData.shared.loadListForSearch(term: text) { (_, list, total) in
+                    ControversiesData.shared.loadListForSearch(term: text.urlEncodedString()) { (_, list, total) in
                         if let _list = list, let _total = total {
                             self.controversies = _list
                             count += _total
@@ -98,7 +107,8 @@ class KeywordSearch {
 //        }
         self.task?.cancel()
         
-        self.task = URLSession.shared.dataTask(with: request) { data, resp, error in
+//        self.task = URLSession.shared.dataTask(with: request) { data, resp, error in
+        self.task = URL_SESSION().dataTask(with: request) { data, resp, error in
             if let _error = error {
                 if(_error.localizedDescription != "cancelled") {
                     callback(false, _error.localizedDescription, nil)
