@@ -64,7 +64,9 @@ extension FAQViewController {
             """,
             "It's oft-argued that we should silence those we are convinced are wrong, to avoid giving them a platform. We strongly disagree. Even more important than their freedom to speak, is your freedom to hear. We believe that you're good at calling \"bs\" when you see it, and reject the patronizing premise that your mind is too frail to read poor arguments without falling for them. Moreover, to truly understand a political or military battle, we need to understand both sides' arguments. The better we understand poor arguments, the more successfully we can defeat them. Also, when someone blocks information, how can you be sure they’re trying to protect you rather than themselves?",
             "Because figuring out the truth can be hard! If it were simple enough to be delegated to a corporate or governmental fact-checking committee, we would no longer need science, and MIT should fire me (Max). Top physicists spent centuries believing in the wrong theory of gravity, and truth-finding gets no easier when politics and vested interests enter; the Ministry of Truth in Orwell’s novel 1984 reminds us that one of the oldest propaganda tricks is to accuse the other side of spreading disinformation.",
-            "When we used Machine Learning to objectively classify a million news articles by their bias [0], the algorithm uncovered two main bias axes: the well-known left-right bias as well as establishment bias. The establishment view is what all big parties and powers agree on, which varies between countries and over time. For example, the old establishment view that women shouldn’t be allowed to vote was successfully challenged. Verity makes it easy for you to compare the perspectives of the pro-establishment mainstream media with those of smaller establishment-critical news outlets that you won’t find in most other news aggregators.",
+//            "When we used Machine Learning to objectively classify a million news articles by their bias [0], the algorithm uncovered two main bias axes: the well-known left-right bias as well as establishment bias. The establishment view is what all big parties and powers agree on, which varies between countries and over time. For example, the old establishment view that women shouldn’t be allowed to vote was successfully challenged. Verity makes it easy for you to compare the perspectives of the pro-establishment mainstream media with those of smaller establishment-critical news outlets that you won’t find in most other news aggregators.",
+            "When we used Machine Learning to objectively classify a million news articles by their bias [0], the algorithm uncovered two main bias axes: the well-known left-right bias as well as establishment bias. The establishment view is what all big parties and powers agree on, which varies between countries and over time. For example, the old establishment view that women shouldn’t be allowed to vote was successfully challenged. Verity makes it easy for you to compare the perspectives of the pro-establishment mainstream media with those of smaller establishment-critical news outlets that you won’t find in most other news aggregators.\n\nTwo bias sliders correspond to these two bias axes, letting you choose the political stance of your news sources. The left-right slider uses a classification of media outlets based on political leaning, mainly from [1]. The establishment slider classifies media outlets based on how close they are to power (see, e.g., Wikipedia’s lists of [2], libertarian and [3] alternative media and [4] classification): does the news source normally accept or challenge claims by powerful entities such as the government and large corporations? Rather than leaving them alone, you’ll probably enjoy spicing things up by occasionally sliding them to see what those you disagree with cover various topics.",
+            
             "The free information sources on our site are powered by machine-learning (ML) and crowdsourcing. We use ML to classify all articles by topics for the news aggregator topics; we’ve shared our code on GitHub; please let us know if you’d like to help us improve it! We also use ML to group together articles about the same story, so that you can compare and contrast their perspectives using our sliders. To produce a story page (example [0]), our editorial team then extracts both the key facts (that all articles agree on) and the key narratives (where the articles differ). We also do academic research on media bias – [1] is a paper on how media bias can be objectively measured from raw data without human input.",
             "Yes: We have free apps for iOS [0] and Android [1].",
             "There's a rich scientific literature on how click-optimizing algorithms at Facebook, Google,etc. have polarized and divided society into groups that each get exposed only to ideas they already agree with. So won't giving people choices such as the left-right slider on this site exacerbate the problem? [0] from David Rand's MIT group suggests the opposite: that people become less susceptible to fake news and bias when given easy access to a range of information, enabling what Kahneman calls \"system 2\" deliberation instead of \"system 1\" impulsive clicking and reacting. Their work also suggests that many people are interested in opinions disagreeing with their own, if expressed in a nuanced and respectful way, but are rarely exposed to this. So let’s not rush to blame consumers rather than providers of news.",
@@ -84,13 +86,7 @@ extension FAQViewController {
             
 
             """
-            • If you’d like to support us with a donation, we hope to launch a donation page soon.
-            
-            • If you’d like to work for us, please email [0]. We’re currently looking for web developers, machine learning researchers and journalists.
-            
-            • If you have ideas or suggestions for improving our site or apps, please fill out this [1].
-            
-            Thanks in advance!
+            If you’d like to support us with a donation, we hope to launch a donation page soon.\nIf you’d like to work for us, please email [0]. We hire for a wide variety of roles including those in software engineering, quality assurance, data curation, editorial, multimedia, social media and operations. If you have ideas or suggestions for improving our site or apps, please fill out this [1]. Thanks in advance!
             """,
             
             "This is work in progress, and as you can easily tell, there's lots of room for improvement! Please help us make it better by providing your feedback [0]."
@@ -104,18 +100,20 @@ extension FAQViewController {
 //            return (UIImage(named: "galileo")!, CGSize(width: 468, height: 175))
 //        } else
 
-        if(index==5) {
-            return (UIImage(named: "einstein")!, CGSize(width: 1280, height: 216))
-        } else {
-            return nil
-        }
+//        if(index==5) {
+//            return (UIImage(named: "einstein")!, CGSize(width: 1280, height: 216))
+//        } else {
+//            return nil
+//        }
+
+        return nil
     }
     
     func linkedTexts(_ index: Int) -> [String] {
         if(index == 2) {
             return ["this video"]
         } else if(index == 5) {
-            return ["here"]
+            return ["here", "here", "left", "right", "this"]
         } else if(index == 6) {
             return ["here", "here"]
         } else if(index == 7) {
@@ -139,7 +137,10 @@ extension FAQViewController {
         if(index == 2) {
             return ["https://www.youtube.com/watch?v=PRLF17Pb6vo"]
         } else if(index == 5) {
-            return ["https://arxiv.org/abs/2109.00024"]
+            return ["https://arxiv.org/abs/2109.00024", "https://www.allsides.com/media-bias",
+                    "https://en.wikipedia.org/wiki/Alternative_media_(U.S._political_left)",
+                    "https://en.wikipedia.org/wiki/Alternative_media_(U.S._political_right)",
+                    "https://swprs.org/media-navigator/"]
         } else if(index == 6) {
             return ["https://www.improvethenews.org/story/2022/scotus-blocks-revised-state-map-for-wisconsin",
                     "https://arxiv.org/abs/2109.00024"]
