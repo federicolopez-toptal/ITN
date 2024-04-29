@@ -198,7 +198,9 @@ extension MainFeed_v3_viewController {
                             self.controversies.append(LI)
                         }
                         self.controversiesTotal = _T
-                        self.addControversiesToMainFeed()
+                        if(self.controversiesTotal > 0) {
+                            self.addControversiesToMainFeed()
+                        }
                     }
                 }
             }

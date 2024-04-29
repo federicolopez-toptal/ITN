@@ -100,9 +100,11 @@ extension FAQViewController {
     }
     
     func images(_ index: Int) -> (UIImage, CGSize)? {
-        if(index==4) {
-            return (UIImage(named: "galileo")!, CGSize(width: 468, height: 175))
-        } else if(index==5) {
+//        if(index==4) {
+//            return (UIImage(named: "galileo")!, CGSize(width: 468, height: 175))
+//        } else
+
+        if(index==5) {
             return (UIImage(named: "einstein")!, CGSize(width: 1280, height: 216))
         } else {
             return nil
