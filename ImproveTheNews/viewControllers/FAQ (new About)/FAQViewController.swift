@@ -475,7 +475,7 @@ class FAQViewController: BaseViewController {
         
         self.updateSectionHeight(index: self.VStack.arrangedSubviews.count, open: false)
     }
-    func updateSectionHeight(index: Int, open: Bool, animate: Bool = false) {
+    func updateSectionHeight(index: Int, open: Bool, animate: Bool = false, extraHeight: CGFloat = 0) {
         var W: CGFloat = SCREEN_SIZE().width - 15 - 15
         
         //13 - 13 - 15 - 15 - 50
@@ -536,7 +536,7 @@ class FAQViewController: BaseViewController {
             imageView?.hide()
         }
         
-        self.heightConstraints[index-1].constant = height
+        self.heightConstraints[index-1].constant = height + extraHeight
     }
     
     
@@ -544,9 +544,21 @@ class FAQViewController: BaseViewController {
         let tag = sender!.tag
         let sectionView = sender!.superview!
         
+        print("TAG", tag)
         if(sectionView.tag == 0) { // Open section!
-            self.updateSectionHeight(index: tag, open: true, animate: true)
+            var extraHeight: CGFloat = 0
+            if(IPAD()) {
+                extraHeight = 30
+                if(tag == 5) {
+                    extraHeight += 30
+                } else if(tag==7) {
+                    extraHeight = 0
+                } else if(tag==6) {
+                    extraHeight -= 20
+                }
+            }
             
+            self.updateSectionHeight(index: tag, open: true, animate: true, extraHeight: extraHeight)
         } else { // Close section!
             self.updateSectionHeight(index: tag, open: false, animate: true)
         }
