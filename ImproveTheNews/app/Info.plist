@@ -25,6 +25,11 @@
 		<string>fb-messenger-share-api</string>
 		<string>twitter</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Regular.ttf</string>
@@ -58,10 +63,5 @@
 	</dict>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 </dict>
 </plist>
