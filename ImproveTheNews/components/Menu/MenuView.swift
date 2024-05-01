@@ -270,7 +270,7 @@ extension MenuView {
                     }
                 }
             } else {
-                let vc = MainFeed_v2ViewController()
+                let vc = MainFeediPad_v3_viewController()
                 CustomNavController.shared.viewControllers = [vc]
                 
                 DELAY(0.2) {
