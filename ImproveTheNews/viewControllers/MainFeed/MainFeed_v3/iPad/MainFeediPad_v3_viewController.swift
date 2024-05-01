@@ -228,7 +228,7 @@ extension MainFeediPad_v3_viewController {
     
     func addControversiesToMainFeed(mustRefresh: Bool = true) {
         let upperBound = self.controversies.count-1
-        if(upperBound > 0) {
+        if(upperBound <= 0) {
             return
         }
         
