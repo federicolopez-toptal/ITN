@@ -221,6 +221,8 @@ class AudioPlayerView: UIView {
             }
         }
         
+        firstPart = firstPart.replacingOccurrences(of: ",,", with: ",")
+        
         let textStart = firstPart + ": "
         let text = textStart + file.title
         //titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
