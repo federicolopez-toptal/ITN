@@ -36,6 +36,7 @@ class MainFeed_v3_viewController: BaseViewController {
     let latestControversies = "Latest controversies"
     
     var ignoreScroll = false
+    var loadedMore = false
     
     // MARK: - Start
     override func viewDidLoad() {
@@ -303,17 +304,42 @@ extension MainFeed_v3_viewController {
 extension MainFeed_v3_viewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var saveLastPos = true
-        let currentPosY = scrollView.contentOffset.y
-        let diff = self.lastScrollViewPosY - currentPosY
-        
-        if(self.ignoreScroll) {
-            self.lastScrollViewPosY = currentPosY
+        if(scrollView != self.list) {
             return
         }
         
-        //print("ScrollViewDidScroll", "currentPosY: \(currentPosY)", "diff: \(diff)")
+        let _posY = scrollView.contentOffset.y
+        let diff = self.lastScrollViewPosY - _posY
+        
+        if(self.ignoreScroll) {
+//            self.lastScrollViewPosY = currentPosY
+//            //print("ignore")
+            return
+        }
+            
+        if(self.loadedMore) {
+            print(abs(_posY), diff)
+        }
+    
+        
+
+//        print( abs(diff) )
+//        if(abs(diff)>100) {
+//            print("***", diff)
+//            return
+//        }
+            
+        //var saveLastPos = true
+        let currentPosY = _posY
+        
+        //print( Int(currentPosY), "diff \(diff)" )
+        
+       
+        
+        //print(self.lastScrollViewPosY, "-", currentPosY, "DIFF", diff)
+        //print("currentPosY: \(currentPosY)", "diff: \(diff)")
         //print("DIFF", diff)
+        //print(diff)
         
         if(diff < 0) {
             //print("UP")
@@ -333,9 +359,9 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
             }
         }
         
-        if(saveLastPos) {
+        //if(saveLastPos) {
             self.lastScrollViewPosY = currentPosY
-        }
+        //}
     }
     
     func hideTopBars() {
@@ -343,15 +369,15 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
             self.topBarsTransitioning = true
             
             //self.listTopConstraint?.constant = 0
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.2) {
                 self.navBar.alpha = 0
                 self.topicSelector.alpha = 0
-                self.view.layoutIfNeeded()
+                //self.view.layoutIfNeeded()
             } completion: { _ in
-                self.topBarsTransitioning = false
-                
                 self.navBar.hide()
                 self.topicSelector.hide()
+                
+                self.topBarsTransitioning = false
             }
         }
     }
@@ -363,10 +389,10 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
             self.navBar.show()
             self.topicSelector.show()
             //self.listTopConstraint?.constant = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.2) {
                 self.navBar.alpha = 1
                 self.topicSelector.alpha = 1
-                self.view.layoutIfNeeded()
+                //self.view.layoutIfNeeded()
             } completion: { _ in
                 self.topBarsTransitioning = false
             }

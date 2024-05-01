@@ -227,6 +227,11 @@ extension MainFeediPad_v3_viewController {
     }
     
     func addControversiesToMainFeed(mustRefresh: Bool = true) {
+        let upperBound = self.controversies.count-1
+        if(upperBound > 0) {
+            return
+        }
+        
         var topicIndex = -1
         
         for (i, DP) in self.dataProvider.enumerated() {
@@ -244,7 +249,8 @@ extension MainFeediPad_v3_viewController {
                 
                 var count = 1
                 var offset = 3
-                for j in 0...self.controversies.count-1 {
+                
+                for j in 0...upperBound {
                     //let CO = DP3_controversy(controversy: LI)
                     
 //                    let CO = DP3_controversies_x2(controversy1: LI, controversy2: LI)

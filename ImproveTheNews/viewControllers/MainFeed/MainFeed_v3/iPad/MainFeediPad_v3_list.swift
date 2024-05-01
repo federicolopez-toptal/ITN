@@ -370,7 +370,10 @@ extension MainFeediPad_v3_viewController: iPhoneMoreCell_v3_delegate {
                 if(A || B) { self.topicsCompleted[topic] = true }
                 
                 self.populateDataProvider()
-                self.addControversiesToMainFeed(mustRefresh: false)
+                
+                if(self.controversiesTotal > 0) {
+                    self.addControversiesToMainFeed(mustRefresh: false)
+                }
 //                self.refreshList()
             }
 

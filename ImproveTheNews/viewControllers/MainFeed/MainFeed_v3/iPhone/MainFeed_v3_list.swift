@@ -65,9 +65,12 @@ extension MainFeed_v3_viewController {
             self.list.reloadData()
         }
         
-        DELAY(0.5) {
+        //DELAY(0.5) {
+//            let currentPosY = self.list.contentOffset.y
+//            self.lastScrollViewPosY = currentPosY
+            
             self.ignoreScroll = false
-        }
+        //}
     }
 
 }
@@ -289,29 +292,32 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
         
         let topic = sender.topic
         self.data.loadMoreData(topic: topic, bannerClosed: self.bannerClosed) { (error, articlesAdded) in
-            if let _error = error {
+            if let _ = error {
                 // Mostrar algun error?
             } else if let _articlesAdded = articlesAdded {
+                self.loadedMore = true
+            
                 let count = self.data.topicsCount[topic]! + _articlesAdded
-                
                 let A = (count >= MAX_ARTICLES_PER_TOPIC)
                 let B = (_articlesAdded == 0)
-                
                 if(A || B) { self.topicsCompleted[topic] = true }
                 
                 self.ignoreScroll = true
                 self.populateDataProvider()
-                self.addControversiesToMainFeed(mustRefresh: false)
                 
-//                self.refreshList()
-            }
-
-            MAIN_THREAD {
-                self.hideLoading()
-                self.list.hideRefresher()
+                if(self.controversiesTotal > 0) {
+                    self.addControversiesToMainFeed(mustRefresh: false)
+                }
+                
                 self.refreshList()
+                
+                DELAY(0.2) {
+                    let currentPosY = self.list.contentOffset.y
+                    self.lastScrollViewPosY = currentPosY
+                }
             }
             
+            self.hideLoading()
         }
         
     }
