@@ -98,6 +98,15 @@ class MainFeed_v3_viewController: BaseViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navBar.alpha = 1.0
+        self.navBar.show()
+        self.topicSelector.alpha = 1.0
+        self.topicSelector.show()
+    }
+    
     override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
         self.topicSelector.refreshDisplayMode()
