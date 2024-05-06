@@ -326,9 +326,9 @@ extension MainFeed_v3_viewController: UIScrollViewDelegate {
             return
         }
             
-        if(self.loadedMore) {
-            print(abs(_posY), diff)
-        }
+//        if(self.loadedMore) {
+//            print(abs(_posY), diff)
+//        }
     
         
 

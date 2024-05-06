@@ -90,7 +90,8 @@ class MainFeedv3 {
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
         
         var S_value = self.skipForTopic(T)
-        if(T == "news" && S_value==9) {
+        //if(T == "news" && S_value==9) {
+        if(S_value==9) {
             S_value += 1
         }
         
