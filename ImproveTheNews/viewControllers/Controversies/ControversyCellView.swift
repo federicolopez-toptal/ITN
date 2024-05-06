@@ -243,6 +243,10 @@ class ControversyCellView: UIView {
                 REMOVE_ALL_SUBVIEWS(from: _line)
                 ADD_HDASHES(to: _line)
             }
+        } else {
+            if let _borders = self.viewWithTag(444) as? RectangularDashedView {
+                _borders.dashColor = CSS.shared.displayMode().line_color
+            }
         }
         
         self.backgroundColor = CSS.shared.displayMode().main_bgColor
