@@ -167,6 +167,7 @@ extension MainFeed_v3_viewController {
             } else if let _item = item as? DP3_headerItem {
                 if(_item.title == "-----") {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderLineCell_v3.identifier)!
+                    (cell as! iPhoneHeaderLineCell_v3).refreshDisplayMode()
                     //(cell as! iPhoneHeaderLineCell_v3).populate(with: _item)
                 } else {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderCell_v3.identifier)!

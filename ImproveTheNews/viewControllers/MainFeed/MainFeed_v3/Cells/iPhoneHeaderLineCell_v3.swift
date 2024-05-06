@@ -21,6 +21,13 @@ class iPhoneHeaderLineCell_v3: UITableViewCell {
     }
 
     private func buildContent() {
+        self.addLine()
+        self.refreshDisplayMode(addLine: false)
+    }
+    
+    func addLine() {
+        REMOVE_ALL_SUBVIEWS(from: self.contentView)
+    
         let lineView = UIView()
         self.contentView.addSubview(lineView)
         lineView.activateConstraints([
@@ -30,12 +37,11 @@ class iPhoneHeaderLineCell_v3: UITableViewCell {
             lineView.heightAnchor.constraint(equalToConstant: 2)
         ])
         ADD_HDASHES(to: lineView)
-        
-        self.refreshDisplayMode()
     }
     
-    func refreshDisplayMode() {
+    func refreshDisplayMode(addLine: Bool = true) {
         self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        if(addLine){ self.addLine() }
     }
     
     static func getHeight() -> CGFloat {
