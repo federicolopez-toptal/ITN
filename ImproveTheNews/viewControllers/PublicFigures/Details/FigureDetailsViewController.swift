@@ -344,7 +344,7 @@ extension FigureDetailsViewController {
         
         let label = UILabel()
         label.font = AILERON(16)
-        label.textAlignment = .justified
+        label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = CSS.shared.displayMode().sec_textColor
         label.text = descr
