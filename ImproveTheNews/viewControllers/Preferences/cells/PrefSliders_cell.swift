@@ -16,7 +16,7 @@ class PrefSliders_cell: UITableViewCell {
     let titleLabel = UILabel()
     let sliderRowsHeight: CGFloat = 190 + 10
     let buttonsHeight: CGFloat = 35
-    var saveButton = UIButton()
+    var saveButton = CustomButton()
     
     var allSliders = [UISlider]()
 
@@ -102,7 +102,7 @@ class PrefSliders_cell: UITableViewCell {
             self.place(view: self.saveButton, below: sliders3, extraMargin: 40)
         }
         self.setText("Save slider preferences", toButton: self.saveButton)
-        self.saveButton.isEnabled = false
+        self.saveButton.setEnabled(false)
         //self.saveButton.alpha = 0.5
         
         let resetButton = self.longButton(color: UIColor(hex: 0xBBBDC0), tag: 200)
@@ -203,9 +203,10 @@ extension PrefSliders_cell {
         ])
     }
     
-    func longButton(color: UIColor, tag: Int) -> UIButton {
-        let button = UIButton(type: .system)
-        button.backgroundColor = color
+    func longButton(color: UIColor, tag: Int) -> CustomButton {
+        let button = CustomButton(type: .system)
+        button.setColor(normal: color)
+        
         button.layer.cornerRadius = 4
         button.activateConstraints([
             button.heightAnchor.constraint(equalToConstant: 40)
@@ -406,13 +407,13 @@ extension PrefSliders_cell {
         if(sender?.tag == 100) {
             // Save
             self.saveSliderValues()
-            self.saveButton.isEnabled = false
+            self.saveButton.setEnabled(false)
             //self.saveButton.alpha = 0.5
             
             if let label = self.mainContainer.viewWithTag(sender!.tag+1) as? UILabel {
-                label.text = "SAVED!"
+                label.text = "Saved!"
                 DELAY(1.5) {
-                    label.text = "SAVE SLIDER PREFERENCES"
+                    label.text = "Save slider preferences"
                 }
             }
             
@@ -423,13 +424,13 @@ extension PrefSliders_cell {
             }
             self.saveSliderValues()
             
-            self.saveButton.isEnabled = false
+            self.saveButton.setEnabled(false)
             //self.saveButton.alpha = 0.5
         }
     }
     
     @objc func sliderOnValueChange(_ sender: UISlider) {
-        self.saveButton.isEnabled = true
+        self.saveButton.setEnabled(true)
         //self.saveButton.alpha = 1.0
     }
     
