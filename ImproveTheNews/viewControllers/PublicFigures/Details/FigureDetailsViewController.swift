@@ -20,6 +20,7 @@ class FigureDetailsViewController: BaseViewController {
     var iPad_W: CGFloat = -1
 
     var slug: String = ""
+    var name: String = ""
     var topics = [SimpleTopic]()
     
 
@@ -158,6 +159,8 @@ extension FigureDetailsViewController {
     }
     
     func fillContent(_ figure: PublicFigure) {
+        //self.name = figure.name
+        
         self.navBar.setTitle(figure.name)
         self.addImage(figure.image)
         self.addDescr(figure.description)
@@ -311,6 +314,7 @@ extension FigureDetailsViewController {
     
     func addSource(name sourceName: String, url sourceUrl: String) {
         let containerView = self.createContainerView()
+        self.name = sourceName
         
         let label = HyperlinkLabel.parrafo(text: "Source: [0]",
             linkTexts: [sourceName], urls: [sourceUrl], onTap: self.onLinkTap(_:))
@@ -330,6 +334,7 @@ extension FigureDetailsViewController {
         //OPEN_URL(url.absoluteString)
         let vc = ArticleViewController()
         vc.article = MainFeedArticle(url: url.absoluteString)
+        vc.altTitle = self.name
         
         CustomNavController.shared.pushViewController(vc, animated: true)
     }

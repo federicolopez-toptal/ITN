@@ -227,10 +227,13 @@ extension RatingView {
         self.close()
     }
     
-    func close() {
+    func close(animate: Bool = true) {
         self.bottomConstraint?.constant = self.HEIGHT
-        UIView.animate(withDuration: 0.3) {
-            self.superview?.layoutIfNeeded()
+        
+        if(animate) {
+            UIView.animate(withDuration: 0.3) {
+                self.superview?.layoutIfNeeded()
+            }
         }
     }
     

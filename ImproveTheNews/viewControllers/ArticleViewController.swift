@@ -11,6 +11,8 @@ import WebKit
 
 class ArticleViewController: BaseViewController {
 
+    var altTitle: String? = nil
+
     let navBar = NavBarView()
     let line = UIView()
     let webView = WKWebView()
@@ -18,7 +20,6 @@ class ArticleViewController: BaseViewController {
     let rating = RatingView()
 
     var showComponentsOnClose = true
-
 
     deinit {
         if let lastVC = CustomNavController.shared.viewControllers.last {
@@ -29,7 +30,6 @@ class ArticleViewController: BaseViewController {
             }
         }
     
-        
         self.hideLoading()
     }
 
@@ -53,6 +53,9 @@ class ArticleViewController: BaseViewController {
         ])
         
         self.rating.buildInto(viewController: self, url: article!.url)
+        if(self.altTitle != nil) {
+            self.rating.close(animate: false)
+        }
         
         self.view.addSubview(self.webView)
         self.webView.activateConstraints([
@@ -73,7 +76,14 @@ class ArticleViewController: BaseViewController {
             self.didLayout = true
             
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.backToFeed, .share])
+            
+            if let _altTitle = self.altTitle {
+                self.navBar.addComponents([.back, .title, .share])
+                self.navBar.setTitle(_altTitle)
+            } else {
+                self.navBar.addComponents([.backToFeed, .share])
+            }
+            
             self.navBar.setShareUrl(self.article!.url, vc: self)
         }
     }
