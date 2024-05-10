@@ -182,24 +182,25 @@ extension KeywordSearchViewController {
         self.showLoading()
 
         KeywordSearch.searchTerm = nil
-        if(self.textHasSpecialCharacters(text)) {
-            DELAY(2.5) {
-                KeywordSearch.shared.toZero()
-                self.fillDataProvider()
-                self.updateFilteredDataProvider()
-                self.refreshList()
-                
-                MAIN_THREAD {
-                    self.hideLoading()
-                }
-            }
-            
-            return
-        }
+//        if(self.textHasSpecialCharacters(text)) {
+//            DELAY(2.5) {
+//                KeywordSearch.shared.toZero()
+//                self.fillDataProvider()
+//                self.updateFilteredDataProvider()
+//                self.refreshList()
+//                
+//                MAIN_THREAD {
+//                    self.hideLoading()
+//                }
+//            }
+//            
+//            return
+//        }
         
         // -----------------------------------
         KeywordSearch.shared.search(text, type: sType) { (success, _) in
             self.searchCount += 1
+            //print("SEARCH DONE!")
             
             if(success) {
                 KeywordSearch.searchTerm = text

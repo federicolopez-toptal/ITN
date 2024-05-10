@@ -44,7 +44,8 @@ class SourceFilterViewController: BaseViewController {
     // MARK: - misc
     func buildContent() {
         let topSpace: CGFloat = Y_TOP_NOTCH_FIX(54)
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
+        //DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     
         let closeImage = UIImage(named: "menu.close")?.withRenderingMode(.alwaysTemplate)
         let closeIcon = UIImageView(image: closeImage)
@@ -137,7 +138,9 @@ class SourceFilterViewController: BaseViewController {
     }
     
     override func refreshDisplayMode() {
-        self.view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
+        
+        //DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.sTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : self.titleLabel.textColor
     }

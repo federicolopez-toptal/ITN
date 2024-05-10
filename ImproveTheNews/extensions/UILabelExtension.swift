@@ -98,17 +98,32 @@ extension UILabel {
             .foregroundColor: color
         ])
         
-        let range = (attributedString.string.lowercased() as NSString).range(of: term.lowercased())
-        let newTerm = ogText.subString2(from: range.location, count: range.length-1)
-
-        if let _newTerm = newTerm {
-            let orangeAttributedString = NSMutableAttributedString(string: _newTerm, attributes: [
-                .font: ogFont,
-                .foregroundColor: CSS.shared.orange
-            ])
-            
-            attributedString.replaceCharacters(in: range, with: orangeAttributedString)
+        for i in 0...ogText.count-1 {
+            if(i <= ogText.count-term.count) {
+                if let _subStr = ogText.subString2(from: i, count: term.count-1) {
+                if(_subStr.lowercased() == term.lowercased()) {
+                    let orangeAttributedString = NSMutableAttributedString(string: _subStr, attributes: [
+                        .font: ogFont,
+                        .foregroundColor: CSS.shared.orange
+                    ])
+                    
+                    let range = NSRange(location: i, length: term.count)
+                    attributedString.replaceCharacters(in: range, with: orangeAttributedString)
+                }}
+            }
         }
+    
+//        let range = (attributedString.string.lowercased() as NSString).range(of: term.lowercased())
+//        let newTerm = ogText.subString2(from: range.location, count: range.length-1)
+//
+//        if let _newTerm = newTerm {
+//            let orangeAttributedString = NSMutableAttributedString(string: _newTerm, attributes: [
+//                .font: ogFont,
+//                .foregroundColor: CSS.shared.orange
+//            ])
+//            
+//            attributedString.replaceCharacters(in: range, with: orangeAttributedString)
+//        }
         
         self.attributedText = attributedString
     }

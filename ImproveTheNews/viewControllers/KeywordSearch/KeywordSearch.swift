@@ -43,6 +43,7 @@ class KeywordSearch {
     }
     
     func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool, Int) -> () ) {
+        
         self.searchType = type
         self.lastSearch = text
         let offset = self.searchPageSize * (pageNumber-1)
@@ -72,6 +73,7 @@ class KeywordSearch {
             addNode = true
         }
         
+        //print("SEARCHING...")
         self.makeSearch(withUrl: url, addMainNode: addNode) { (success, serverMsg, json) in
             if let _json = json, success {
             
@@ -83,12 +85,14 @@ class KeywordSearch {
                             self.controversies = _list
                             count += _total
                         }
-                        
+
                         callback(true, count)
                     }
                 } else {
                     callback(true, count)
                 }
+            
+                //callback(true, count)
             
             } else {
                 print("ERROR", serverMsg)
@@ -177,9 +181,9 @@ class KeywordSearch {
                     self.articles.append(newArticle)
                     myCount += 1
                     
-                    if(myCount==2) {
-                        break
-                    }
+//                    if(myCount==2) {
+//                        break
+//                    }
                 }
             }
             

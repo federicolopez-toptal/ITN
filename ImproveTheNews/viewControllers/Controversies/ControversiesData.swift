@@ -80,6 +80,14 @@ class ControversiesData {
                             callback(CustomError.jsonParseError, nil, nil)
                         }
                     }
+                } else {
+                    if let _data = data, let _text = String(data: _data, encoding: .utf8) {
+                        if(_text.lowercased().contains("html") && _text.lowercased().contains("404") ) {
+                            callback(nil, [], 0)
+                        }
+                    } else {
+                        callback(CustomError.jsonParseError, nil, nil)
+                    }
                 }
             }
         }
