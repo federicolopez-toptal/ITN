@@ -20,6 +20,7 @@ extension FigureDetailsViewController {
         }
         
         let innerScrollView = UIScrollView()
+        innerScrollView.showsHorizontalScrollIndicator = false
         innerScrollView.backgroundColor = CSS.shared.displayMode().main_bgColor
         mainView.addSubview(innerScrollView)
         innerScrollView.activateConstraints([
