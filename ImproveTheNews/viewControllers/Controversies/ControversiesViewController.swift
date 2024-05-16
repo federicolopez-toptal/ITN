@@ -217,7 +217,12 @@ extension ControversiesViewController {
     func fillContent(items: [ControversyListItem], total: Int) {
         let containerView = self.view.viewWithTag(555)!
         
-        for CO in items {
+        var _items = items
+//        for _ in 1...1 {
+//            _items.remove(at: _items.count-1)
+//        }
+        
+        for CO in _items {
             self.items.append(CO)
         }
         
@@ -226,21 +231,43 @@ extension ControversiesViewController {
         if(IPAD()){ item_W = (W()-M)/2 }
         var val_y: CGFloat = 0
         
+        var col1: CGFloat = 0
+        var col2: CGFloat = 0
+        
         var index: Int = 0
         if(containerView.subviews.count > 0) {
             for V in containerView.subviews {
                 if let _subView = V as? ControversyCellView {
-                    val_y += _subView.calculateHeight()
-                    index += 1
+                    if(IPHONE()) {
+                        val_y += _subView.calculateHeight()
+                        index += 1
+                    } else {
+                        if(col == 0) {
+                            col1 += _subView.calculateHeight()
+                        } else {
+                            col2 += _subView.calculateHeight()
+                        }
+                        index += 1
+                    
+                        col += 1
+                        if(col == 2) {
+                            col = 0
+                        }
+                    }
                 }
+            }
+            
+            if(IPAD()) {
+                val_y = (col1 > col2) ? col1 : col2
             }
         }
         
-        for (i, CO) in items.enumerated() {
+        
+        for (_, CO) in _items.enumerated() {
             let controView = ControversyCellView(width: item_W)
             controView.buttonArea.hide()
             controView.tag = 600 + index
-            if(containerView.subviews.count==0 && i==0 && IPHONE()){ controView.hideTopLine() }
+            if(containerView.subviews.count==0 && index==0 && IPHONE()){ controView.hideTopLine() }
             
             var val_x: CGFloat = col * item_W
             if(IPAD() && col==1) {
@@ -248,14 +275,14 @@ extension ControversiesViewController {
             }
             
             var prev: ControversyCellView? = nil
-            if(i>0) {
+            if(index>0) {
                 if(IPHONE()) {
                     prev = (containerView.subviews.last as! ControversyCellView)
                 } else { // IPAD
-                    if(i==1) {
+                    if(index==1) {
                         prev = (containerView.subviews.first as! ControversyCellView)
                     } else {
-                        prev = (containerView.subviews[i-2] as! ControversyCellView)
+                        prev = (containerView.subviews[index-2] as! ControversyCellView)
                     }
                 }
             }
@@ -266,14 +293,14 @@ extension ControversiesViewController {
                 controView.widthAnchor.constraint(equalToConstant: item_W)
             ])
             
-            if(i==0) {
+            if(index==0) {
                 controView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: val_y).isActive = true
             } else {
             
                 if(IPHONE()) {
                     controView.topAnchor.constraint(equalTo: prev!.bottomAnchor).isActive = true
                 } else { // IPAD
-                    if(i==1) { // col2
+                    if(index==1) { // col2
                         let first = containerView.subviews.first as! ControversyCellView
                         controView.topAnchor.constraint(equalTo: first.topAnchor, constant: 0).isActive = true
                     } else {
@@ -282,6 +309,12 @@ extension ControversiesViewController {
                 }
             }
             controView.populate(with: CO)
+            
+            if(col==0) {
+                col1 += controView.calculateHeight()
+            } else {
+                col2 += controView.calculateHeight()
+            }
             
             if(IPAD()) {
                 col += 1
@@ -293,7 +326,7 @@ extension ControversiesViewController {
                 val_y += controView.calculateHeight()
             }
             
-            if(i==self.items.count-1 && IPAD()) {
+            if(index==self.items.count-1 && IPAD() && col==1) {
                 val_y += controView.calculateHeight()
             }
             
@@ -302,6 +335,11 @@ extension ControversiesViewController {
             
             index += 1
         }
+        
+        if(IPAD()) {
+            val_y = (col1 > col2) ? col1 : col2
+        }
+        
         
         // Show more --------------
         if(self.items.count < total) {
