@@ -91,9 +91,9 @@ class MainFeedv3 {
         
         var S_value = self.skipForTopic(T)
         //if(T == "news" && S_value==9) {
-        if(S_value==9) {
-            S_value += 1
-        }
+//        if(S_value==9) {
+//            S_value += 1
+//        }
         
         //if(MUST_SPLIT()==0){ S_value += 1 }
         
@@ -102,6 +102,13 @@ class MainFeedv3 {
         if(MUST_SPLIT() > 0) {
             totalItems = NEWS_REQ_SPLIT_MORE_ITEMS_TOTAL
             storiesCount = NEWS_REQ_SPLIT_MORE_STORIES_COUNT
+        }
+            
+        if(S_value>0) {
+            S_value += 1
+        
+//            totalItems += 1
+//            storiesCount += 1
         }
             
         let strUrl = self.buildUrl(topic: T, A: totalItems,
@@ -126,7 +133,12 @@ class MainFeedv3 {
                 } else {
                     let mData = ADD_MAIN_NODE(to: data)
                     if let _json = JSON(fromData: mData) {
-                        let articlesAdded = self.addArticlesTo(topic: T, json: _json, bannerClosed: bannerClosed)
+                        var ignoreFirst = false
+//                        if(S_value == 9) {
+//                            ignoreFirst = true
+//                        }
+//                    
+                        let articlesAdded = self.addArticlesTo(topic: T, json: _json, bannerClosed: bannerClosed, ignoreFirst: ignoreFirst)
                         
                         /*
                         print("articlesAdded:", articlesAdded)
@@ -192,8 +204,9 @@ extension MainFeedv3 {
         }
     }
     
-    private func addArticlesTo(topic T: String, json: [String: Any], bannerClosed: Bool = false) -> Int {
+    private func addArticlesTo(topic T: String, json: [String: Any], bannerClosed: Bool = false, ignoreFirst: Bool) -> Int {
         
+        var count = 0
         var articlesAdded = 0
         let mainNode = json["data"] as! [Any]
         
@@ -214,22 +227,39 @@ extension MainFeedv3 {
                     
                     for A in articles {
                         // non-repeated articles
-//                        if let _title = (A as! [Any])[2] as? String {
-//                            let found = self.topics[topicIndex].articles.first { $0.title == _title }
-//                            print("Found", found)
-//
-//                            if(found == nil) { // not found
+                        if let _title = (A as! [Any])[2] as? String {
+                            let found = self.topics[topicIndex].articles.first { $0.title == _title }
+                            
+                            if(found == nil) { // not found
 //                                let newArticle = MainFeedArticle(A as! [Any])
 //                                self.topics[topicIndex].articles.append(newArticle)
 //                                articlesAdded += 1
-//                            }
-//                        }
+                            } else {
+                                print("Found repeated!", _title)
+                            }
+                        }
 
-                        let newArticle = MainFeedArticle(A as! [Any])
-                        self.topics[topicIndex].articles.append(newArticle)
-                        articlesAdded += 1
+                        count += 1
+                        var add = true
+                        if(ignoreFirst && count==1) {
+                            add = false
+                        }
+                        
+                        if(add) {
+                            let newArticle = MainFeedArticle(A as! [Any])
+                            self.topics[topicIndex].articles.append(newArticle)
+                            articlesAdded += 1
+                        }
+
+//                        let newArticle = MainFeedArticle(A as! [Any])
+//                        if(!self.articleIsRepeated(newArticle, into: topicIndex)) {
+//                            self.topics[topicIndex].articles.append(newArticle)
+//                            articlesAdded += 1
+//                        }
+                        
                     }
                     
+                    print("-----------------------------")
                     self.topics[topicIndex].splitReorderArticles_justInCase()
 
                     break
@@ -245,6 +275,22 @@ extension MainFeedv3 {
         }
         
         return articlesAdded
+    }
+    
+    private func articleIsRepeated(_ article: MainFeedArticle, into topicIndex: Int) -> Bool {
+        var result = false
+        
+        let T = self.topics[topicIndex]
+        let title = article.title
+        
+        for A in T.articles {
+            if(A.title == title) {
+                result = true
+                break
+            }
+        }
+    
+        return result
     }
     
     private func indexForTopic(_ topic: String) -> Int {

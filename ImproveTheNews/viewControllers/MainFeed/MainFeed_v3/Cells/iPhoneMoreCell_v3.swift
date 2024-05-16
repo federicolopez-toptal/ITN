@@ -56,6 +56,7 @@ class iPhoneMoreCell_v3: UITableViewCell {
     
     @objc func viewOnTap(_ gesture: UITapGestureRecognizer) {
         if(self.loadMore) {
+            self.loadMore = false
             self.delegate?.onShowMoreButtonTap(sender: self)
         }
     }
