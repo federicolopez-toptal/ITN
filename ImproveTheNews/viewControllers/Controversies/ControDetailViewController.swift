@@ -937,6 +937,7 @@ extension ControDetailViewController {
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
         titleLabel.numberOfLines = 0
         titleLabel.text = title
+        //titleLabel.backgroundColor = .green
         containerView.addSubview(titleLabel)
         titleLabel.activateConstraints([
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: M),
@@ -945,7 +946,14 @@ extension ControDetailViewController {
         ])
         
         // -------------------------------------------
-        let H: CGFloat = 24 + 24 + statusLabel.calculateHeightFor(width: width) + 10 + titleLabel.calculateHeightFor(width: width)
+        var _w = width
+        if(IPAD()) {
+            _w -= (M*2)
+        }
+        
+        let H: CGFloat = 24 + 24 + statusLabel.calculateHeightFor(width: width) + 10 +
+            titleLabel.calculateHeightFor(width: _w)
+
         containerView.activateConstraints([
             containerView.heightAnchor.constraint(equalToConstant: H)
         ])
