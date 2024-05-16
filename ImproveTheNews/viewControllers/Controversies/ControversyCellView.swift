@@ -39,7 +39,7 @@ class ControversyCellView: UIView {
     var figureSlug: String = ""
 
     var mustShowChartFlag = true
-
+    var statusLabelTextColor = UIColor.black
 
     // MARK: - Init(s)
     init() {
@@ -246,7 +246,10 @@ class ControversyCellView: UIView {
         
         self.statusLabel.text = controversy.resolved
         self.statusLabel.textColor = CSS.shared.displayMode().main_textColor
-        if(controversy.resolved.lowercased() == "resolved"){ self.statusLabel.textColor = CSS.shared.cyan }
+        if(controversy.resolved.lowercased() == "resolved") {
+            self.statusLabel.textColor = CSS.shared.cyan
+        }
+        self.statusLabelTextColor = self.statusLabel.textColor
         
         self.mainHeightConstraint?.constant = self.calculateHeight()
         self.refreshDisplayMode()
@@ -260,7 +263,10 @@ class ControversyCellView: UIView {
             }
         } else {
             self.gradientView.hide()
-            self.statusTopConstraint!.constant = M
+            
+            if let _statusTopConstraint = self.statusTopConstraint {
+                _statusTopConstraint.constant = M
+            }
         }
     }
 
@@ -280,7 +286,7 @@ class ControversyCellView: UIView {
         self.startLabel.textColor = CSS.shared.displayMode().main_textColor
         self.endLabel.textColor = CSS.shared.displayMode().main_textColor
         self.preStatusLabel.textColor = CSS.shared.displayMode().sec_textColor
-        self.statusLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.statusLabel.textColor = self.statusLabelTextColor
         self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
         self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
     }
