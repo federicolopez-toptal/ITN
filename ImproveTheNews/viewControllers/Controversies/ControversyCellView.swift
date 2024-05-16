@@ -20,6 +20,7 @@ class ControversyCellView: UIView {
     private var WIDTH: CGFloat = 1
     private var showBottom: Bool = true
     var mainHeightConstraint: NSLayoutConstraint?
+    var statusTopConstraint: NSLayoutConstraint?
     
     let figuresContainerView = UIView()
     let gradientView = UIView()
@@ -36,6 +37,8 @@ class ControversyCellView: UIView {
     let buttonArea = UIButton(type: .custom)
     var controversySlug: String = ""
     var figureSlug: String = ""
+
+    var mustShowChartFlag = true
 
 
     // MARK: - Init(s)
@@ -116,9 +119,14 @@ class ControversyCellView: UIView {
             self.preStatusLabel.text = "Status:"
             self.addSubview(self.preStatusLabel)
             self.preStatusLabel.activateConstraints([
-                self.preStatusLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
-                self.preStatusLabel.topAnchor.constraint(equalTo: self.startLabel.bottomAnchor, constant: 24)
+                self.preStatusLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M)
+                //,self.preStatusLabel.topAnchor.constraint(equalTo: self.startLabel.bottomAnchor, constant: 24)
             ])
+            
+            self.statusTopConstraint = self.preStatusLabel.topAnchor.constraint(equalTo: self.topAnchor,
+            constant: M + 84 + 8 + 4  + 18 + 24)
+            self.statusTopConstraint?.isActive = true
+            
             
             //status2Label.backgroundColor = .yellow.withAlphaComponent(0.25)
             self.statusLabel.font = self.preStatusLabel.font
@@ -208,7 +216,19 @@ class ControversyCellView: UIView {
         CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
+    func mustShowChart(controversy: ControversyListItem) -> Bool {
+        var result = true
+        
+        if(controversy.figures.count==0) {
+            result = false
+        }
+        
+        return result
+    }
+    
     func populate(with controversy: ControversyListItem, remark: String? = nil) {
+        self.mustShowChartFlag = self.mustShowChart(controversy: controversy)
+        
         self.controversySlug = controversy.slug
         self.addFigures(controversy.figures)
         
@@ -231,9 +251,16 @@ class ControversyCellView: UIView {
         self.mainHeightConstraint?.constant = self.calculateHeight()
         self.refreshDisplayMode()
         
-        DELAY(0.1) { // It needs to update the layout
-            self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
-            self.gradientView.show()
+        if(self.mustShowChartFlag) {
+            self.statusTopConstraint!.constant = M + 84 + 8 + 4  + 18 + 24
+        
+            DELAY(0.1) { // It needs to update the layout
+                self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
+                self.gradientView.show()
+            }
+        } else {
+            self.gradientView.hide()
+            self.statusTopConstraint!.constant = M
         }
     }
 
@@ -266,7 +293,13 @@ class ControversyCellView: UIView {
             bottom = 24 + self.statusLabel.calculateHeightFor(width: W) + 10 +
                 self.titleLabel.calculateHeightFor(width: W) + M + 24 + M
         }
-        let H: CGFloat = M + 84 + 8 + 4 + 8 + self.startLabel.calculateHeightFor(width: W) + bottom + (IPAD() ? 20 : 10)
+        var H: CGFloat = M + 84 + 8 + 4 + 8 + self.startLabel.calculateHeightFor(width: W) + bottom + (IPAD() ? 20 : 10)
+        
+        if(!self.mustShowChartFlag) {
+            H = M + self.statusLabel.calculateHeightFor(width: W) + 10 +
+                self.titleLabel.calculateHeightFor(width: W) + M + 24 + M +
+                (IPAD() ? 20 : 10)
+        }
         
         return H
     }
@@ -294,7 +327,12 @@ class ControversyCellView: UIView {
 extension ControversyCellView {
 
     func addFigures(_ figures: [FigureForScale]) {
+        //self.figuresContainerView.backgroundColor = .orange
         REMOVE_ALL_SUBVIEWS(from: self.figuresContainerView)
+        if(figures.count == 0) {
+            self.figuresContainerView.hide()
+            return
+        }
         
         //var val_x: CGFloat = 0
         var nameDown = true
