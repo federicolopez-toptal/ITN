@@ -515,6 +515,8 @@
 		BD4DC7E12BCEACED0097BFD1 /* iPadControversyCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */; };
 		BD50541E2BEDCAF500AD1030 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD50541D2BEDCAF500AD1030 /* CustomButton.swift */; };
 		BDB3CB0A2BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */; };
+		BDE838A02BF7D61800C4C8D2 /* SVGLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */; };
+		BDE838A22BF7D76B00C4C8D2 /* NATO_OTAN.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */; };
 		D4438EFBB252B6903AB56553 /* Pods_ImproveTheNews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A395E0433D69EEF51DC03966 /* Pods_ImproveTheNews.framework */; };
 /* End PBXBuildFile section */
 
@@ -1034,6 +1036,8 @@
 		BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyCell_v3.swift; sourceTree = "<group>"; };
 		BD50541D2BEDCAF500AD1030 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyNarrowCell_v3.swift; sourceTree = "<group>"; };
+		BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLoader.swift; sourceTree = "<group>"; };
+		BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NATO_OTAN.jpg; sourceTree = "<group>"; };
 		C5FE7FE8A9666767DA91A834 /* Pods-ImproveTheNews.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.beta.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.beta.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1286,6 +1290,7 @@
 			children = (
 				1FFDA1982975D9AB00E9FC3F /* flags */,
 				1F90105028C5979F00A5BDC9 /* fonts */,
+				BDE838A32BF7D77500C4C8D2 /* svg(s) */,
 				1F897CE928CC4C4300438FC5 /* sources_svg */,
 				1FBDA3922AABA6950013FD6A /* verityLogo.png */,
 				1F95134628BFB92E00A77AB6 /* Main.storyboard */,
@@ -1346,6 +1351,7 @@
 				1FC1A2BA2A3224CD001998B0 /* AudioPlayerViewController.swift */,
 				1FE92BBA2B56F9DF003C2F86 /* FormCheckView.swift */,
 				1F19386C2BB5ED010039D7BA /* RectangularDashedView.swift */,
+				BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -2083,6 +2089,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BDE838A32BF7D77500C4C8D2 /* svg(s) */ = {
+			isa = PBXGroup;
+			children = (
+				BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */,
+			);
+			path = "svg(s)";
+			sourceTree = "<group>";
+		};
 		E3EB5852C67121180FCE5CFB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2215,6 +2229,7 @@
 				1F715ED529DC7EBE0063AC83 /* LAO64.png in Resources */,
 				1F715F4C29DC7EBE0063AC83 /* ZMB64.png in Resources */,
 				1F715F4B29DC7EBE0063AC83 /* LUX64.png in Resources */,
+				BDE838A22BF7D76B00C4C8D2 /* NATO_OTAN.jpg in Resources */,
 				1F715EE629DC7EBE0063AC83 /* ARE64.png in Resources */,
 				1FCD55AD2AAF57B200CCAE3B /* Aileron-SemiBold.otf in Resources */,
 				1F715EDC29DC7EBE0063AC83 /* ISR64.png in Resources */,
@@ -2572,6 +2587,7 @@
 				1FC1A2BB2A3224CD001998B0 /* AudioPlayerViewController.swift in Sources */,
 				1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */,
 				1FC557162AF2EE4800C0117A /* CustomNavController.swift in Sources */,
+				BDE838A02BF7D61800C4C8D2 /* SVGLoader.swift in Sources */,
 				1FD2340429155F1700B85AE9 /* MenuView.swift in Sources */,
 				1FF088CD29F824ED00F31523 /* NSAttributedStringExtension.swift in Sources */,
 				1FC8352C2A1549E5007BCE56 /* DataExtension.swift in Sources */,

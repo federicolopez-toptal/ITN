@@ -265,7 +265,7 @@ extension StoryViewController {
         
         if(self.isContext) {
             self.story?.videoFile = story.video
-            self.addVideo()
+            self .addVideo()
         } else {
             self.addImage(imageUrl: story.image_src)
         }

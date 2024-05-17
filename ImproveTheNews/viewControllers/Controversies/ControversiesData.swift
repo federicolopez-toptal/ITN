@@ -226,6 +226,11 @@ class ControversyListItem {
     
     var resolved: String = ""
     
+    var image_url: String = ""
+    var image_title: String = ""
+    var image_credit: String = ""
+    
+    
     init(jsonObj: [String: Any]) {
         self.title = CHECK(jsonObj["title"])
         self.slug = CHECK(jsonObj["slug"])
@@ -249,8 +254,15 @@ class ControversyListItem {
         }
         
         self.used = false
-        
         self.resolved = CHECK(jsonObj["resolved"])
+        
+        if let _imageData = jsonObj["imageData"] as? [String: Any] {
+            self.image_url = CHECK(_imageData["image"])
+            if let _credit = _imageData["credit"] as? [String: String] {
+                self.image_title = CHECK(_credit["title"])
+                self.image_credit = CHECK(_credit["url"])
+            }
+        }
     }
     
     func trace() {

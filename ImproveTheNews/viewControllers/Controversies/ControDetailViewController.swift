@@ -29,6 +29,10 @@ class ControDetailViewController: BaseViewController {
     var goDeepers = [StorySearchResult]()
     var goDeeperContainerViewHeightConstraint: NSLayoutConstraint?
 
+    var mainImageView: UIImageView!
+    var mainImageViewHeightConstraint: NSLayoutConstraint?
+    var creditUrl: String = ""
+
 
 
     // MARK: - Init
@@ -718,19 +722,22 @@ extension ControDetailViewController {
             ADD_SPACER(to: self.vStack, height: 24)
         
             let container1View = self.createContainerView()
-            self.addTextHeader(containerView: container1View, width: self.W(), title: T, status: listItem.resolved, figures: F)
+            self.addTextHeader(containerView: container1View, width: self.W(), title: T,
+                status: listItem.resolved, figures: F,
+                image: (listItem.image_url, listItem.image_title, listItem.image_credit))
             
-            let container2View = self.createContainerView()
-            self.addGraph(containerView: container2View, width: SCREEN_SIZE().width, listItem: listItem)
+            if(listItem.figures.count > 0) {
+                let container2View = self.createContainerView()
+                self.addGraph(containerView: container2View, width: SCREEN_SIZE().width, listItem: listItem)
             
-            let container3View = self.createContainerView(bgColor: .clear, height: 40)
-            let button = self.twitterButton()
-            container3View.addSubview(button)
-            button.activateConstraints([
-                button.leadingAnchor.constraint(equalTo: container3View.leadingAnchor, constant: M),
-                button.topAnchor.constraint(equalTo: container3View.topAnchor)
-            ])
-            
+                let container3View = self.createContainerView(bgColor: .clear, height: 40)
+                let button = self.twitterButton()
+                container3View.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: container3View.leadingAnchor, constant: M),
+                    button.topAnchor.constraint(equalTo: container3View.topAnchor)
+                ])
+            }
         } else { // IPAD
             let containerView = self.createContainerView()
             let _W = (self.W()-M)/2
@@ -749,38 +756,50 @@ extension ControDetailViewController {
             centeredView.addSubview(col1View)
             col1View.activateConstraints([
                 col1View.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor),
-                col1View.topAnchor.constraint(equalTo: centeredView.topAnchor),
-                col1View.widthAnchor.constraint(equalToConstant: _W)
+                col1View.topAnchor.constraint(equalTo: centeredView.topAnchor)
             ])
-            self.addTextHeader(containerView: col1View, width: _W, title: T, status: listItem.resolved, figures: F)
+            if(listItem.figures.count>0) {
+                col1View.widthAnchor.constraint(equalToConstant: _W).isActive = true
+            } else {
+                col1View.widthAnchor.constraint(equalToConstant: self.W()).isActive = true
+            }
+            self.addTextHeader(containerView: col1View, width: _W, title: T,
+                status: listItem.resolved, figures: F,
+                image: (listItem.image_url, listItem.image_title, listItem.image_credit))
             
-            let col1b_view = UIView()
-            //col1b_view.backgroundColor = .green
-            centeredView.addSubview(col1b_view)
-            col1b_view.activateConstraints([
-                col1b_view.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor),
-                col1b_view.topAnchor.constraint(equalTo: col1View.bottomAnchor),
-                col1b_view.widthAnchor.constraint(equalToConstant: _W),
-                col1b_view.heightAnchor.constraint(equalToConstant: 40+M)
-            ])
-            let button = self.twitterButton()
-            col1b_view.addSubview(button)
-            button.activateConstraints([
-                button.leadingAnchor.constraint(equalTo: col1b_view.leadingAnchor, constant: M),
-                button.topAnchor.constraint(equalTo: col1b_view.topAnchor, constant: M)
-            ])
+            if(listItem.figures.count>0) {
+                let col1b_view = UIView()
+                //col1b_view.backgroundColor = .green
+                centeredView.addSubview(col1b_view)
+                col1b_view.activateConstraints([
+                    col1b_view.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor),
+                    col1b_view.topAnchor.constraint(equalTo: col1View.bottomAnchor),
+                    col1b_view.widthAnchor.constraint(equalToConstant: _W),
+                    col1b_view.heightAnchor.constraint(equalToConstant: 40+M)
+                ])
+                let button = self.twitterButton()
+                col1b_view.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: col1b_view.leadingAnchor, constant: M),
+                    button.topAnchor.constraint(equalTo: col1b_view.topAnchor, constant: M)
+                ])
+                
+                let col2View = UIView()
+                col2View.backgroundColor = CSS.shared.displayMode().main_bgColor
+                centeredView.addSubview(col2View)
+                col2View.activateConstraints([
+                    col2View.trailingAnchor.constraint(equalTo: centeredView.trailingAnchor),
+                    col2View.topAnchor.constraint(equalTo: centeredView.topAnchor),
+                    col2View.widthAnchor.constraint(equalToConstant: _W)
+                ])
+                self.addGraph(containerView: col2View, width: _W, listItem: listItem)
+                
+                centeredView.bottomAnchor.constraint(equalTo: col1b_view.bottomAnchor, constant: 0).isActive = true
+            }
             
-            let col2View = UIView()
-            col2View.backgroundColor = CSS.shared.displayMode().main_bgColor
-            centeredView.addSubview(col2View)
-            col2View.activateConstraints([
-                col2View.trailingAnchor.constraint(equalTo: centeredView.trailingAnchor),
-                col2View.topAnchor.constraint(equalTo: centeredView.topAnchor),
-                col2View.widthAnchor.constraint(equalToConstant: _W)
-            ])
-            self.addGraph(containerView: col2View, width: _W, listItem: listItem)
-            
-            centeredView.bottomAnchor.constraint(equalTo: col1b_view.bottomAnchor, constant: 0).isActive = true
+            if(listItem.figures.count == 0) {
+                centeredView.bottomAnchor.constraint(equalTo: col1View.bottomAnchor, constant: 0).isActive = true
+            }
             containerView.bottomAnchor.constraint(equalTo: centeredView.bottomAnchor).isActive = true
         }
     }
@@ -834,7 +853,16 @@ extension ControDetailViewController {
         ])
     }
     
-    func addTextHeader(containerView: UIView, width: CGFloat, title: String, status: String, figures: [FigureForScale]) {
+    func addTextHeader(containerView: UIView, width: CGFloat, title: String,
+        status: String, figures: [FigureForScale],
+        image: (String, String, String)) {
+        
+        self.creditUrl = image.2
+        var mustShowImage = false
+        if(figures.count == 0) {
+            mustShowImage = true
+        }
+    
         let pill = UILabel()
         pill.text = "CONTROVERSY"
         pill.font = AILERON(12)
@@ -946,17 +974,102 @@ extension ControDetailViewController {
         ])
         
         // -------------------------------------------
+        if(mustShowImage && self.mainImageView==nil) {
+            self.mainImageView = UIImageView()
+            self.mainImageView.backgroundColor = CSS.shared.displayMode().imageView_bgColor
+            containerView.addSubview(self.mainImageView)
+            self.mainImageView.activateConstraints([
+                self.mainImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                self.mainImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                self.mainImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10)
+            ])
+            
+            self.mainImageViewHeightConstraint = self.mainImageView.heightAnchor.constraint(equalToConstant: 75)
+            self.mainImageViewHeightConstraint?.isActive = true
+            
+            if(image.0.lowercased().contains("nato_otan") && image.0.lowercased().contains("logo")) {
+                let _image = UIImage(named: "NATO_OTAN.jpg")!
+                self.mainImageView.image = _image
+                self.resizeMainImageViewHeight(image: _image, width: width)
+            } else {
+                //Example: let _image = "https://ams3.digitaloceanspaces.com/graffica/2023/02/cocacola-logo.jpeg"
+                self.mainImageView.sd_setImage(with: URL(string: image.0)) { (img, error, cacheType, url) in
+                    if let _img = img {
+                        self.resizeMainImageViewHeight(image: _img, width: width)
+                    }
+                }
+            }
+            
+            let imageCreditLabel = UILabel()
+            imageCreditLabel.text = image.1
+            imageCreditLabel.font = ROBOTO(14)
+            imageCreditLabel.textColor = CSS.shared.orange
+            containerView.addSubview(imageCreditLabel)
+            imageCreditLabel.activateConstraints([
+                imageCreditLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5)
+            ])
+            
+            if(IPHONE()) {
+                imageCreditLabel.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor,
+                    constant: -5).isActive = true
+            } else {
+                imageCreditLabel.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor,
+                    constant: 0).isActive = true
+            }
+            
+            let photolabel = UILabel()
+            photolabel.text = "Photo:"
+            photolabel.font = ROBOTO(14)
+            photolabel.textColor = CSS.shared.displayMode().sec_textColor
+            containerView.addSubview(photolabel)
+            photolabel.activateConstraints([
+                photolabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5),
+                photolabel.trailingAnchor.constraint(equalTo: imageCreditLabel.leadingAnchor, constant: -5)
+            ])
+            
+            let creditButton = UIButton(type: .custom)
+            creditButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+            containerView.addSubview(creditButton)
+            creditButton.activateConstraints([
+                creditButton.leadingAnchor.constraint(equalTo: photolabel.leadingAnchor, constant: -5),
+                creditButton.trailingAnchor.constraint(equalTo: mainImageView.trailingAnchor),
+                creditButton.topAnchor.constraint(equalTo: mainImageView.bottomAnchor),
+                creditButton.heightAnchor.constraint(equalToConstant: 25)
+            ])
+            creditButton.addTarget(self, action: #selector(creditButtonOnTap(_:)), for: .touchUpInside)
+        }
+        
+        // -------------------------------------------
         var _w = width
         if(IPAD()) {
             _w -= (M*2)
         }
         
-        let H: CGFloat = 24 + 24 + statusLabel.calculateHeightFor(width: width) + 10 +
+        var H: CGFloat = 24 + 24 + statusLabel.calculateHeightFor(width: width) + 10 +
             titleLabel.calculateHeightFor(width: _w)
 
-        containerView.activateConstraints([
-            containerView.heightAnchor.constraint(equalToConstant: H)
-        ])
+        if(mustShowImage) {
+            H += 10 + 75 + M
+            
+            containerView.activateConstraints([
+                containerView.bottomAnchor.constraint(equalTo: mainImageView.bottomAnchor, constant: M)
+            ])
+        } else {
+            containerView.activateConstraints([
+                containerView.heightAnchor.constraint(equalToConstant: H)
+            ])
+        }
+    }
+    
+    @objc func creditButtonOnTap(_ sender: UIButton?) {
+        if(!self.creditUrl.isEmpty){
+            OPEN_URL(self.creditUrl)
+        }
+    }
+    
+    func resizeMainImageViewHeight(image: UIImage, width: CGFloat) {
+        let H = (width * image.size.height)/image.size.width
+        self.mainImageViewHeightConstraint?.constant = H
     }
     
     // ------------------------------------------------------------

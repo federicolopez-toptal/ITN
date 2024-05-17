@@ -255,7 +255,9 @@ class ControversyCellView: UIView {
         self.refreshDisplayMode()
         
         if(self.mustShowChartFlag) {
-            self.statusTopConstraint!.constant = M + 84 + 8 + 4  + 18 + 24
+            if let _statusTopConstraint = self.statusTopConstraint {
+                _statusTopConstraint.constant = M + 84 + 8 + 4  + 18 + 24
+            }
         
             DELAY(0.1) { // It needs to update the layout
                 self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
