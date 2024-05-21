@@ -259,10 +259,8 @@ class ControversyCellView: UIView {
                 _statusTopConstraint.constant = M + 84 + 8 + 4  + 18 + 24
             }
         
-            DELAY(0.1) { // It needs to update the layout
-                self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
-                self.gradientView.show()
-            }
+            self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
+            self.gradientView.show()
         } else {
             self.gradientView.hide()
             
@@ -319,7 +317,7 @@ class ControversyCellView: UIView {
         newLayer.colors = [A.cgColor, B.cgColor]
         newLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         newLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        newLayer.frame = self.gradientView.bounds
+        newLayer.frame = CGRect(x: 0, y: 0, width: self.WIDTH-M-M, height: 4)
 
         self.gradientView.layer.addSublayer(newLayer)
     }
