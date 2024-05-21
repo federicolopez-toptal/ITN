@@ -73,8 +73,44 @@ class Sources {
     }
     
     func search(identifier: String) -> SourceIcon? {
-        let found = self.all?.first(where: { $0.identifier == identifier.lowercased() })
+        let _identifier = self.fixIdentifier(identifier)
+    
+        let found = self.all?.first(where: { $0.identifier == _identifier.lowercased() })
         return found
+    }
+    func fixIdentifier(_ id: String) -> String {
+        var result = ""
+        print("SOURCE identifier:", id.lowercased())
+        
+        switch(id.lowercased()) {
+            case "bbcnews":
+                result = "bbc"
+            case "washingtonpost":
+                result = "wapo"
+            case "jerusalempost":
+                result = "jpost"
+            case "npronlinenews":
+                result = "npr"
+            case "associatedpress":
+                result = "ap"
+            case "foxnews":
+                result = "fox"
+            case "wallstreetjournal":
+                result = "wsj"
+            case "newyorktimes":
+                result = "nytimes"
+            case "newyorkpost":
+                result = "nypost"
+            case "spectator(uk)":
+                result = "spectator"
+            case "pbsnewshour":
+                result = "pbs"
+                
+            default:
+                result = id
+        }
+        
+        return result
     }
     
     func search(name: String) -> String? {

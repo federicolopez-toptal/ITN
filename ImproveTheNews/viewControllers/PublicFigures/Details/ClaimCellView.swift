@@ -484,7 +484,9 @@ class ClaimCellView: UIView {
     }
     
     func loadSource(_ source: String) {
-        if let _icon = Sources.shared.search(identifier: source), _icon.url != nil {
+        var _source = source.lowercased()
+        
+        if let _icon = Sources.shared.search(identifier: _source), _icon.url != nil {
             if(!_icon.url!.contains(".svg")) {
                 sourceImageView.sd_setImage(with: URL(string: _icon.url!))
             } else {
