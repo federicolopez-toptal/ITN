@@ -763,7 +763,7 @@ extension ControDetailViewController {
             } else {
                 col1View.widthAnchor.constraint(equalToConstant: self.W()).isActive = true
             }
-            self.addTextHeader(containerView: col1View, width: _W, title: T,
+            self.addTextHeader(containerView: col1View, width: self.W(), title: T,
                 status: listItem.resolved, figures: F,
                 image: (listItem.image_url, listItem.image_title, listItem.image_credit))
             
@@ -1068,7 +1068,7 @@ extension ControDetailViewController {
     }
     
     func resizeMainImageViewHeight(image: UIImage, width: CGFloat) {
-        let H = (width * image.size.height)/image.size.width
+        let H = (image.size.height * width)/image.size.width
         self.mainImageViewHeightConstraint?.constant = H
     }
     
