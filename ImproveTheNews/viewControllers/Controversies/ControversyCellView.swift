@@ -389,13 +389,20 @@ extension ControversyCellView {
             let nameLabel = UILabel()
             nameLabel.font = AILERON(9)
             nameLabel.textColor = CSS.shared.displayMode().sec_textColor
-            nameLabel.text = "  " + name + "  "
+            //nameLabel.text = "  " + name + "  "
+            nameLabel.text = name
             nameLabel.textAlignment = .center
             nameLabel.isUserInteractionEnabled = false
             nameLabel.backgroundColor = CSS.shared.displayMode().main_bgColor
             self.figuresContainerView.addSubview(nameLabel)
+//            nameLabel.activateConstraints([
+//                nameLabel.centerXAnchor.constraint(equalTo: figureImageView.centerXAnchor)
+//            ])
+
+            nameLabel.lineBreakMode = .byTruncatingTail
             nameLabel.activateConstraints([
-                nameLabel.centerXAnchor.constraint(equalTo: figureImageView.centerXAnchor)
+                nameLabel.leadingAnchor.constraint(equalTo: figureImageView.leadingAnchor),
+                nameLabel.trailingAnchor.constraint(equalTo: figureImageView.trailingAnchor)
             ])
             
             if(nameDown) {
