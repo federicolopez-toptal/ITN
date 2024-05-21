@@ -292,6 +292,16 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
         }
         
         let topic = sender.topic
+        if(topic != self.topic) {
+            let vc = MainFeed_v3_viewController()
+            vc.topic = topic
+            
+            CustomNavController.shared.tour?.cancel()
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        
+            return
+        }
+        
         self.data.loadMoreData(topic: topic, bannerClosed: self.bannerClosed) { (error, articlesAdded) in
             if let _ = error {
                 // Mostrar algun error?

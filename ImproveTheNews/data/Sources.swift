@@ -80,7 +80,6 @@ class Sources {
     }
     func fixIdentifier(_ id: String) -> String {
         var result = ""
-        print("SOURCE identifier:", id.lowercased())
         
         switch(id.lowercased()) {
             case "bbcnews":
