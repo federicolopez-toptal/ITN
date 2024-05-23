@@ -514,6 +514,7 @@
 		BD4DC7DF2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7DE2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift */; };
 		BD4DC7E12BCEACED0097BFD1 /* iPadControversyCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */; };
 		BD50541E2BEDCAF500AD1030 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD50541D2BEDCAF500AD1030 /* CustomButton.swift */; };
+		BD5975872BFEE49600BDBEBB /* StoryInfoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */; };
 		BDB3CB0A2BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */; };
 		BDE838A02BF7D61800C4C8D2 /* SVGLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */; };
 		BDE838A22BF7D76B00C4C8D2 /* NATO_OTAN.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */; };
@@ -1035,6 +1036,7 @@
 		BD4DC7DE2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneControversyCell_v3.swift; sourceTree = "<group>"; };
 		BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyCell_v3.swift; sourceTree = "<group>"; };
 		BD50541D2BEDCAF500AD1030 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoPopupView.swift; sourceTree = "<group>"; };
 		BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyNarrowCell_v3.swift; sourceTree = "<group>"; };
 		BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLoader.swift; sourceTree = "<group>"; };
 		BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NATO_OTAN.jpg; sourceTree = "<group>"; };
@@ -1676,6 +1678,7 @@
 				1F964CC02AE1C28B00A6B545 /* serverErrorPopupView.swift */,
 				1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */,
 				1F16FD692B4716AA0082DACF /* EmailNotVerifiedPopupView.swift */,
+				BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */,
 			);
 			path = popups;
 			sourceTree = "<group>";
@@ -2549,6 +2552,7 @@
 				1FE89CE82AF19ABD00A6C99C /* MenuView.swift.txt in Sources */,
 				1FE98DE62A43F22600FE0260 /* TopicsCell.swift in Sources */,
 				1F984B1D2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift in Sources */,
+				BD5975872BFEE49600BDBEBB /* StoryInfoPopupView.swift in Sources */,
 				1F95D96F29A80DA800A43E9F /* iPadMoreCell.swift in Sources */,
 				1F0741B32A43FFB6005F90E5 /* CenteredTextCell.swift in Sources */,
 				1F38DDC12A433E81007B0E18 /* iPhoneGroupItem_1AR_Cell.swift in Sources */,

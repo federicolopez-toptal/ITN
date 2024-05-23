@@ -15,6 +15,7 @@ struct MainFeedStory {
     var image_credit_title: String = ""
     var image_credit_url: String = ""
     var time: String = ""
+    var created: String = ""
     var splitType: String = ""
     
     var facts = [Fact]()
@@ -56,6 +57,8 @@ struct MainFeedStory {
         let _duration = getSTRING(mainNode["duration"])
         let _created = getSTRING(mainNode["created"])
         let _title = getSTRING(mainNode["title"], defaultValue: "Title not available")
+    
+        self.created = _created
     
         if(!_file.isEmpty && !_duration.isEmpty && !_created.isEmpty && !_title.isEmpty) {
             self.audio = AudioFile(file: _file, duration: Int(_duration)!, created: _created, title: _title)

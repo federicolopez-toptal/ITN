@@ -281,7 +281,7 @@ extension StoryViewController {
 //        }
 //        
         
-        self.addStoryMetaData(time: story.time)
+        self.addStoryMetaData(time: story.time, created: story.created)
 
         if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
             self.addImageCredit(story.image_credit_title, story.image_credit_url)
@@ -1091,9 +1091,10 @@ extension StoryViewController {
                 SpinsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
                 if(IPAD()){ SpinsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
                 }
-                SpinsLabel.text = "Spin"
+                SpinsLabel.text = "The Spin"
                 SpinsLabel.textColor = CSS.shared.displayMode().main_textColor
                 titleHStack.addArrangedSubview(SpinsLabel)
+                self.addInfoButtonNextTo(label: SpinsLabel, index: 2)
                 
             ADD_SPACER(to: titleHStack, width: CSS.shared.iPhoneSide_padding)
                 
@@ -1362,6 +1363,7 @@ extension StoryViewController {
             FactsLabel.textColor = CSS.shared.displayMode().main_textColor
             //DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(FactsLabel)
+            self.addInfoButtonNextTo(label: FactsLabel, index: 1)
             
             ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
             let lineColor: UIColor = CSS.shared.displayMode().factLines_color
@@ -1496,6 +1498,7 @@ extension StoryViewController {
         SourcesLabel.text = "Sources"
         SourcesLabel.textColor = CSS.shared.displayMode().sec_textColor
         VStack.addArrangedSubview(SourcesLabel)
+        self.addInfoButtonNextTo(label: SourcesLabel, index: 3)
         ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
         
         let HStack_sources = HSTACK(into: VStack)
@@ -1661,7 +1664,7 @@ extension StoryViewController {
     
     
     private func addImageCredit(_ title: String, _ url: String) {
-        let prefix = "Photo: "
+        let prefix = "Image copyright: "
         let creditLabel = UILabel()
         creditLabel.numberOfLines = 0
         creditLabel.font = ROBOTO(14)
@@ -1794,7 +1797,7 @@ extension StoryViewController {
         }
     }
 
-    private func addStoryMetaData(time: String) {
+    private func addStoryMetaData(time: String, created: String = "") {
         let rowView = UIView()
         rowView.activateConstraints([
             rowView.heightAnchor.constraint(equalToConstant: 24)
@@ -1835,8 +1838,15 @@ extension StoryViewController {
 
         let timeLabel = UILabel()
         timeLabel.font = CSS.shared.iPhoneStory_textFont
-        timeLabel.textAlignment = .right
-        timeLabel.text = FIX_TIME(time).uppercased()
+        timeLabel.textAlignment = .left
+        
+        timeLabel.numberOfLines = 0
+        if(!created.isEmpty) {
+            timeLabel.text = "PUBLISHED " + created.uppercased() + "\n" + "UPDATED " + FIX_TIME(time).uppercased()
+        } else {
+            timeLabel.text = "UPDATED " + FIX_TIME(time).uppercased()
+        }
+        
         timeLabel.textColor = CSS.shared.displayMode().sec_textColor
         rowView.addSubview(timeLabel)
         timeLabel.activateConstraints([
@@ -2197,3 +2207,127 @@ extension StoryViewController {
     
 }
 
+extension StoryViewController {
+
+    func addInfoButtonNextTo(label: UILabel, index: Int) {
+        //label.text! += "(i)"
+        
+        if let _superview = label.superview {
+            let label2 = UILabel()
+            label2.text = label.text
+            label2.font = label.font
+            label2.textColor = .clear
+            _superview.addSubview(label2)
+            label2.activateConstraints([
+                label2.leadingAnchor.constraint(equalTo: label.leadingAnchor),
+                label2.topAnchor.constraint(equalTo: label.topAnchor)
+            ])
+        
+            let iconImageView = UIImageView()
+            iconImageView.image = UIImage(named: DisplayMode.imageName("storyInfo"))
+            _superview.addSubview(iconImageView)
+            iconImageView.activateConstraints([
+                iconImageView.leadingAnchor.constraint(equalTo: label2.trailingAnchor, constant: 5),
+                iconImageView.centerYAnchor.constraint(equalTo: label2.centerYAnchor),
+                iconImageView.widthAnchor.constraint(equalToConstant: 72/3),
+                iconImageView.heightAnchor.constraint(equalToConstant: 72/3)
+            ])
+            
+            let button = UIButton(type: .custom)
+            button.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+            _superview.addSubview(button)
+            button.activateConstraints([
+                button.leadingAnchor.constraint(equalTo: iconImageView.leadingAnchor, constant: -5),
+                button.topAnchor.constraint(equalTo: iconImageView.topAnchor, constant: -5),
+                button.trailingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 5),
+                button.bottomAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 5)
+            ])
+            button.tag = index
+            button.addTarget(self, action: #selector(infoButtonOnTap(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc func infoButtonOnTap(_ sender: UIButton?) {
+        if let _sender = sender {
+            let index = _sender.tag
+            
+            let popup = StoryInfoPopupView(title: self.getTitleFrom(index: index),
+                    description: self.getDescriptionFrom(index: index),
+                    linkedTexts: self.getLinkedTextsFrom(index: index),
+                    links: self.getLinksFrom(index: index), height: self.getHeightFor(index: index))
+                
+            popup.pushFromBottom()
+        }
+    }
+    
+    func getHeightFor(index: Int) -> CGFloat {
+        var result: CGFloat = 0
+        
+        switch(index) {
+            case 1:
+                return 280
+                
+            case 2:
+                return 340
+                
+            case 3:
+                return 310
+                
+            default:
+                NOTHING()
+        }
+        
+        return result
+    }
+    
+    func getLinksFrom(index: Int) -> [String] {
+        if(index==3) { return ["https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271947"] }
+        return []
+    }
+    
+    func getLinkedTextsFrom(index: Int) -> [String] {
+        if(index==3) { return ["study"] }
+        return []
+    }
+    
+    func getDescriptionFrom(index: Int) -> String {
+        var descr = ""
+        
+        switch(index) {
+            case 1:
+                descr = """
+        We select the key facts for each story as agreed upon by a wide variety of outlets. Our sources include mainstream and establishment-critical media, public figure posts, and academic publications, among others. Our facts are carefully curated to provide the most important context, stripped of narrative and bias. These are thoroughly fact-checked against the sources by a dedicated team to ensure accuracy.
+        """
+        
+            case 2:
+                descr = """
+        We neutrally provide the main arguments — or “narratives” — from different sides of the controversy, so you can make up your own mind on an issue and keep tabs on varying points of view. Depending on the topic, the narrative splits can be left v. right, Democratic v. Republican, pro-establishment (i.e. what all big US/Western parties and powers agree on) v. establishment critical, etc. Finally, for our readers interested in probability, we also strive to include a “nerd narrative” with a related prediction from the Metaculus community where possible."
+        """
+            case 3:
+                descr = """
+        We source our facts from a wide range of news outlets across the political and establishment spectrum, as well as supplementary primary sources (e.g. academic publications, social media posts by public figures, think tanks, NGOs, databases, etc.) where possible. We classify sources as left/right or pro-establishment/establishment-critical based on an MIT [0] on media bias conducted by Max Tegmark and Samantha D’Alonzo."
+        """
+        
+            default:
+                NOTHING()
+        }
+        
+        
+        return descr
+    }
+    
+    func getTitleFrom(index: Int) -> String {
+        switch(index) {
+            case 1:
+                return "The Facts"
+            case 2:
+                return "The Spin"
+            case 3:
+                return "Sources"
+                
+            default:
+                return ""
+        }
+    }
+
+}
