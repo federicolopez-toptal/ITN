@@ -18,7 +18,7 @@ extension MainFeediPad_v3_viewController {
         
         var topOffset: CGFloat = 0
         if let _safeAreaTop = SAFE_AREA()?.top {
-            topOffset -= _safeAreaTop
+            topOffset += _safeAreaTop
         }
         
         self.list.backgroundColor = self.view.backgroundColor

@@ -25,8 +25,14 @@ extension MainFeed_v3_viewController {
                 self.populateDataProvider_iPhone_textOnly_split()
             }
         }
-        
-        let initSpacer = DP3_spacer(size: self.topValue)
+
+        // -------------------------------------------------
+        var topSpacerHeight = self.topValue
+        if let _safeAreaTop = SAFE_AREA()?.top {
+            topSpacerHeight -= _safeAreaTop
+        }
+
+        let initSpacer = DP3_spacer(size: topSpacerHeight)
         self.dataProvider.insert(initSpacer, at: 0)
     }
     
