@@ -126,6 +126,14 @@ class iPadStory_vImg_v3: CustomCellView_v3 {
         self.sources.refreshDisplayMode()
         self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.mainImageView.refreshDisplayMode()
+        
+        if let _A = self.article {
+            if(_A.isContext) {
+                self.pill.setAsContext()
+            } else {
+                self.pill.setAsStory()
+            }
+        }
     }
     
     // MARK: misc

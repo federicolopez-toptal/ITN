@@ -216,6 +216,13 @@ class StoryPillView: UIView {
         self.widthConstraint?.constant = 69
     }
     
+    func setAsStory() {
+        self.label.text = "STORY"
+        self.label.textColor = .white
+        self.backgroundColor = CSS.shared.orange
+        self.widthConstraint?.constant = 59
+    }
+    
 }
 
 // ------------------------------------

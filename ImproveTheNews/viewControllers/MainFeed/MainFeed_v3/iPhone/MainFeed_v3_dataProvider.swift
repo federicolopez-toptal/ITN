@@ -44,7 +44,9 @@ extension MainFeed_v3_viewController {
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
-            
+            if(_T.name == "ai" && self.topic != "ai") {
+                continue
+            }
         // main Header
             self.addHeader(text: _T.capitalizedName)
             
@@ -162,6 +164,9 @@ extension MainFeed_v3_viewController {
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
+            if(_T.name == "ai" && self.topic != "ai") {
+                continue
+            }
             
         // main Header
             self.addHeader(text: _T.capitalizedName)
@@ -280,6 +285,9 @@ extension MainFeed_v3_viewController {
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
+            if(_T.name == "ai" && self.topic != "ai") {
+                continue
+            }
             
             var itemInTopic = 0
             while(_T.hasNewsAvailable()) {
@@ -372,6 +380,9 @@ extension MainFeed_v3_viewController {
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             var _T = self.data.topics[i]
+            if(_T.name == "ai" && self.topic != "ai") {
+                continue
+            }
             
             var itemInTopic = 0
             while(_T.hasNewsAvailable()) {

@@ -64,6 +64,13 @@ class MainFeedv3 {
                     } else {
                         if let _json = JSON(fromData: mData) {
                             self.parse(_json)
+                            if(self.topic == "news") {
+                                self.addIA()
+                            }
+                            if(self.topic == "ai") {
+                                self.replaceFirstStoryIA()
+                            }
+                            
                             callback(nil)
                         } else {
                             let _error = CustomError.jsonParseError
@@ -79,6 +86,38 @@ class MainFeedv3 {
         }
 
         task.resume()
+    }
+    
+    private func addIA() {
+        let data: [Any] = [
+            "ai", "ai", "AI", 0, "ai",
+            0, 0, 0, []
+        ]
+        let iaTopic = MainFeedTopic(data, [])
+        
+        self.topics.insert(iaTopic, at: 1)
+    }
+    
+    private func replaceFirstStoryIA() {
+        if(self.topics.first?.name == "ai") {
+
+//            let data = [
+//                "title": "What is Artificial Intelligence?",
+//                "slug": "story/2023/artificial-intelligence",
+//                "image_url": "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/65b7a1da0d52e_image.png",
+//                "timeago": "14 months ago",
+//                "storytype": "context",
+//                "medianames": nil
+//            ]
+
+            self.topics[0].articles[0].title = "What is Artificial Intelligence?"
+            self.topics[0].articles[0].imgUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/65b7a1da0d52e_image.png"
+            self.topics[0].articles[0].isContext = true
+            self.topics[0].articles[0].isStory = true
+            self.topics[0].articles[0].storySources = []
+            self.topics[0].articles[0].time = "" //DATE_TO_TIMEAGO("2023-03-19 00:01:00")
+            self.topics[0].articles[0].url = ITN_URL() + "/story/2023/artificial-intelligence"
+        }
     }
     
     private func checkFor(strings: [String]) -> Bool {
@@ -312,6 +351,10 @@ extension MainFeedv3 {
         for T in self.topics {
             result.append(T.capitalizedName)
         }
+        
+//        if(self.topic == "news") {
+//            result.insert("IA", at: 1)
+//        }
         
         return result
     }

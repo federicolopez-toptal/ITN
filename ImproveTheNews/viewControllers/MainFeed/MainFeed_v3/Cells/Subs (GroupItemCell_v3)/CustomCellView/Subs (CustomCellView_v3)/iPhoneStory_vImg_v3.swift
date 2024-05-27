@@ -24,7 +24,6 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
     
     var article: MainFeedArticle!
     
-    
     // MARK: - Start
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -94,7 +93,7 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
     // MARK: Overrides
     override func populate(_ article: MainFeedArticle) {
         self.article = article
-        
+
         self.mainImageView.load(url: article.imgUrl)
         self.mainImageView.showCorners(true)
         
@@ -109,7 +108,6 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
             self.sources.customHide()
             self.time_leading?.constant = 0
         }
-
     }
     
     func showFigureImage(_ url: String) {
@@ -126,6 +124,14 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         self.sources.refreshDisplayMode()
         self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.mainImageView.refreshDisplayMode()
+        
+        if let _A = self.article {
+            if(_A.isContext) {
+                self.pill.setAsContext()
+            } else {
+                self.pill.setAsStory()
+            }
+        }
     }
     
     // MARK: misc

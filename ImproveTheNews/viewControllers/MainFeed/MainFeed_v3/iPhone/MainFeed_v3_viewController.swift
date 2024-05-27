@@ -227,13 +227,16 @@ extension MainFeed_v3_viewController {
             
             if(topicIndex==0 && DP is DP3_more) {
                 for _ in 1...100 {
-                    if let _header = self.dataProvider[i+1] as? DP3_headerItem {
-                        if(_header.title != "-----" && _header.title != self.latestControversies) {
-                            break
+                    let _i = i+1
+                    if(_i < self.dataProvider.count) {
+                        if let _header = self.dataProvider[_i] as? DP3_headerItem {
+                            if(_header.title != "-----" && _header.title != self.latestControversies) {
+                                break
+                            }
                         }
+                        
+                        self.dataProvider.remove(at: _i)
                     }
-                    
-                    self.dataProvider.remove(at: i+1)
                 }
                 
                 break
