@@ -17,12 +17,14 @@ extension MainFeed_v3_viewController {
                 self.populateDataProvider_iPhone_textImages()
             } else {
                 self.populateDataProvider_iPhone_textImages_split()
+                self.splitFix()
             }
         } else {
             if(MUST_SPLIT() == 0) {
                 self.populateDataProvider_iPhone_textOnly()
             } else {
                 self.populateDataProvider_iPhone_textOnly_split()
+                self.splitFix()
             }
         }
 
@@ -34,6 +36,25 @@ extension MainFeed_v3_viewController {
 
         let initSpacer = DP3_spacer(size: topSpacerHeight)
         self.dataProvider.insert(initSpacer, at: 0)
+    }
+    
+    private func splitFix() {
+        for (i, item) in self.dataProvider.enumerated() {
+            if let _item = item as? DP3_headerItem, _item.title.lowercased() == "split" {
+                let prevIndex = i-1
+                if(prevIndex<self.dataProvider.count) {
+                    let prevItem = self.dataProvider[prevIndex]
+                    if(prevItem is DP3_iPhoneArticle_2cols) {
+                        self.dataProvider.remove(at: i)
+                        if(i<self.dataProvider.count) {
+                            self.dataProvider.remove(at: i)
+                        }
+                    }
+                }
+            }
+        }
+        
+        //print(self.dataProvider)
     }
     
     // Split + Text only
@@ -89,6 +110,11 @@ extension MainFeed_v3_viewController {
 
                     while(_T.stillHasStories()) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
+                            if let _last = self.dataProvider.last, _last is DP3_iPhoneArticle_2cols {
+                                let spacer = DP3_spacer(size: 20)
+                                self.dataProvider.append(spacer)
+                            }
+                            
                             let newGroupItem = DP3_iPhoneStory_1Wide()
                             newGroupItem.articles.append(_ST)
                             self.data.addCountTo(topic: _T.name)
@@ -210,6 +236,11 @@ extension MainFeed_v3_viewController {
 
                     while(_T.stillHasStories()) {
                         if let _ST = _T.nextAvailableArticle(isStory: true) {
+                            if let _last = self.dataProvider.last, _last is DP3_iPhoneArticle_2cols {
+                                let spacer = DP3_spacer(size: 20)
+                                self.dataProvider.append(spacer)
+                            }
+                            
                             let newGroupItem = DP3_iPhoneStory_1Wide()
                             newGroupItem.articles.append(_ST)
                             self.data.addCountTo(topic: _T.name)
