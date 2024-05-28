@@ -1062,7 +1062,226 @@ extension StoryViewController {
         return vStack
     }
     
+// -----------------------------
     private func addSpins(_ spins: [Spin]) {
+        self.spins = spins
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding*2)
+    
+        let HStack = HSTACK(into: self.VStack)
+        HStack.tag = 160
+        
+        let innerHStack = VSTACK(into: HStack)
+        
+       if(spins.count == 0) {
+            let noSpinsLabel = UILabel()
+            noSpinsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            if(IPAD()){ noSpinsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+            }
+            noSpinsLabel.text = "No spin available"
+            noSpinsLabel.textColor = CSS.shared.displayMode().main_textColor
+            innerHStack.addArrangedSubview(noSpinsLabel)
+            
+            ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+        } else {
+            let titleHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: titleHStack, width: CSS.shared.iPhoneSide_padding)
+            
+                let SpinsLabel = UILabel()
+                SpinsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                if(IPAD()){ SpinsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+                }
+                SpinsLabel.text = "The Spin"
+                SpinsLabel.textColor = CSS.shared.displayMode().main_textColor
+                titleHStack.addArrangedSubview(SpinsLabel)
+                self.addInfoButtonNextTo(label: SpinsLabel, index: 2)
+                
+            ADD_SPACER(to: titleHStack, width: CSS.shared.iPhoneSide_padding)
+            ADD_SPACER(to: innerHStack, height: 12)
+            
+            if(IPHONE()) {
+                self.addSpins_iPhone(spins, innerHStack: innerHStack)
+            } else {
+                self.addSpins_iPad(spins, innerHStack: innerHStack)
+            }
+        }
+        
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+    }
+    
+    func addSpins_iPad(_ spins: [Spin], innerHStack: UIStackView) {
+        let M = CSS.shared.iPhoneSide_padding
+        let W = (SCREEN_SIZE().width - (M * 3))/2
+        
+        var col = 1
+        //for i in 1...3 {
+        for (i, S) in spins.enumerated() {
+            //let S = spins.first! ///
+        
+            var rowView: UIView!
+            if(col==1) {
+                rowView = UIView()
+                ADD_SPACER(to: innerHStack, width: M)
+                    innerHStack.addArrangedSubview(rowView)
+                ADD_SPACER(to: innerHStack, width: M)
+            } else {
+                let _i = innerHStack.arrangedSubviews.count-1-1
+                if(_i>=0) {
+                    rowView = innerHStack.arrangedSubviews[_i]
+                }
+            }
+            
+            var offsetX: CGFloat = M
+            if(col==2){ offsetX += W+M }
+            
+            let colVStack = VSTACK(into: rowView)
+            colVStack.activateConstraints([
+                colVStack.widthAnchor.constraint(equalToConstant: W),
+                colVStack.topAnchor.constraint(equalTo: rowView.topAnchor),
+                colVStack.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: offsetX),
+                colVStack.bottomAnchor.constraint(equalTo: rowView.bottomAnchor)
+            ])
+            
+            var _title = S.title
+            if(_title.isEmpty) {
+                let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                _title = "Narrative " + letters.getCharAt(index: i)!
+            }
+            
+            let titleLabel = UILabel()
+            titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            titleLabel.text = _title
+            titleLabel.numberOfLines = 0
+            titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+            colVStack.addArrangedSubview(titleLabel)
+            
+            ADD_SPACER(to: colVStack, height: 10)
+            let descriptionLabel = UILabel()
+            descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
+            descriptionLabel.numberOfLines = 0
+            descriptionLabel.text = S.description
+            descriptionLabel.setLineSpacing(lineSpacing: 7.0)
+            descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
+            colVStack.addArrangedSubview(descriptionLabel)
+            
+            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
+            let ART = iPhoneArticle_vImg_v3(width: W)
+            ART.refreshDisplayMode()
+            ART.populate(spin: S)
+            colVStack.addArrangedSubview(ART)
+            ART.activateConstraints([
+                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+            ])
+            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
+            
+            
+            //***
+            col += 1
+            if(col==3){ col=1 }
+        }
+        
+        return
+        
+        ////////////////////////////////////////////////
+        
+
+        for (i, S) in spins.enumerated() {
+            var _title = S.title
+            if(_title.isEmpty) {
+                let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                _title = "Narrative " + letters.getCharAt(index: i)!
+            }
+            
+            let natitleHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                let titleLabel = UILabel()
+                titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                titleLabel.text = _title
+                titleLabel.numberOfLines = 0
+                titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                natitleHStack.addArrangedSubview(titleLabel)
+            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+            
+            ADD_SPACER(to: innerHStack, height: 10)
+            let descrHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
+                let descriptionLabel = UILabel()
+                descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
+                descriptionLabel.numberOfLines = 0
+                //descriptionLabel.backgroundColor = .green.withAlphaComponent(0.2)
+                descriptionLabel.text = S.description
+                descriptionLabel.setLineSpacing(lineSpacing: 7.0)
+                descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
+                descrHStack.addArrangedSubview(descriptionLabel)
+            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
+            
+        ///
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+            let ART_HStack = HSTACK(into: innerHStack)
+            
+            let W = SCREEN_SIZE().width //- (CSS.shared.iPhoneSide_padding * 2)
+            let ART = iPhoneArticle_vImg_v3(width: W)
+            ART.refreshDisplayMode()
+            ART.populate(spin: S)
+            ART_HStack.addArrangedSubview(ART)
+            ART.activateConstraints([
+                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+            ])
+            
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+        }
+    }
+    
+    func addSpins_iPhone(_ spins: [Spin], innerHStack: UIStackView) {
+        for (i, S) in spins.enumerated() {
+            var _title = S.title
+            if(_title.isEmpty) {
+                let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                _title = "Narrative " + letters.getCharAt(index: i)!
+            }
+            
+            let natitleHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                let titleLabel = UILabel()
+                titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                titleLabel.text = _title
+                titleLabel.numberOfLines = 0
+                titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                natitleHStack.addArrangedSubview(titleLabel)
+            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+            
+            ADD_SPACER(to: innerHStack, height: 10)
+            let descrHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
+                let descriptionLabel = UILabel()
+                descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
+                descriptionLabel.numberOfLines = 0
+                //descriptionLabel.backgroundColor = .green.withAlphaComponent(0.2)
+                descriptionLabel.text = S.description
+                descriptionLabel.setLineSpacing(lineSpacing: 7.0)
+                descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
+                descrHStack.addArrangedSubview(descriptionLabel)
+            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
+            
+        ///
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+            let ART_HStack = HSTACK(into: innerHStack)
+            
+            let W = SCREEN_SIZE().width //- (CSS.shared.iPhoneSide_padding * 2)
+            let ART = iPhoneArticle_vImg_v3(width: W)
+            ART.refreshDisplayMode()
+            ART.populate(spin: S)
+            ART_HStack.addArrangedSubview(ART)
+            ART.activateConstraints([
+                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+            ])
+            
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+        }
+    }
+    
+// -----------------------------
+    
+    private func addSpins_old(_ spins: [Spin]) {
         self.spins = spins
         ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding*2)
     
@@ -1146,181 +1365,7 @@ extension StoryViewController {
                 
                 //ADD_SPACER(to: ART_HStack, width: W/2)
                 //ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
-            ///
-                
-                
-                continue
-                
-                //if(!S.image.isEmpty && !S.subTitle.isEmpty && !S.media_title.isEmpty) {
-                if(!S.image.isEmpty && !S.media_title.isEmpty) {
-                    ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding * 2)
-                    let HStack_image = HSTACK(into: innerHStack)
-                    //HStack_image.backgroundColor = .orange
 
-                    let VStack_image = VSTACK(into: HStack_image)
-                    //VStack_image.backgroundColor = .yellow
-                    let imageView = UIImageView()
-                    imageView.contentMode = .scaleAspectFill
-                    imageView.clipsToBounds = true
-                    imageView.backgroundColor = .darkGray
-                    VStack_image.addArrangedSubview(imageView)
-                    imageView.activateConstraints([
-                        imageView.widthAnchor.constraint(equalToConstant: 146 * 0.8),
-                        imageView.heightAnchor.constraint(equalToConstant: 98 * 0.8)
-                    ])
-                    
-                    imageView.sd_setImage(with: URL(string: S.image), placeholderImage: nil, options: .retryFailed) { (img, error, cacheType, url) in
-                        if(error != nil) {
-                            print("IMG ERROR", error?.localizedDescription)
-                            imageView.image = nil
-                            
-                            let imgIcon = UIImageView(image: UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate))
-                            imgIcon.tintColor = .white.withAlphaComponent(0.5)
-                            
-                            imageView.addSubview(imgIcon)
-                            imgIcon.activateConstraints([
-                                imgIcon.widthAnchor.constraint(equalToConstant: 40),
-                                imgIcon.heightAnchor.constraint(equalToConstant: 30),
-                                imgIcon.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-                                imgIcon.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
-                            ])
-                        }
-                    }
-                    //imageView.sd_setImage(with: URL(string: S.image))
-                    ADD_SPACER(to: VStack_image) // V fill
-
-                    ADD_SPACER(to: HStack_image, width: 12)
-
-                    let VStack_data = VSTACK(into: HStack_image)
-                    //VStack_data.backgroundColor = .green
-                    let subTitleLabel = UILabel()
-                    subTitleLabel.font = DM_SERIF_DISPLAY_fixed(13) //MERRIWEATHER_BOLD(13)
-                    subTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
-                    subTitleLabel.numberOfLines = 0
-                    subTitleLabel.text = S.subTitle
-                    VStack_data.addArrangedSubview(subTitleLabel)
-                    ADD_SPACER(to: VStack_data, height: CSS.shared.iPhoneSide_padding)
-                    
-                    let HStack_source = HSTACK(into: VStack_data)
-                    HStack_source.activateConstraints([
-                        HStack_source.heightAnchor.constraint(equalToConstant: 28)
-                    ])
-                    //HStack_source.backgroundColor = .systemPink
-
-                    if(!S.media_country_code.isEmpty) {
-                        let VStack_flag = VSTACK(into: HStack_source)
-                        //VStack_flag.backgroundColor = .green
-                        let flagImageView = UIImageView()
-                        
-                        if let _image = UIImage(named: S.media_country_code.uppercased() + "64.png") {
-                            flagImageView.image = _image
-                        } else {
-                            flagImageView.image = UIImage(named: "noFlag.png")
-                        }
-                        
-                        ADD_SPACER(to: VStack_flag, height: 5)
-                        VStack_flag.addArrangedSubview(flagImageView)
-                        flagImageView.activateConstraints([
-                            flagImageView.widthAnchor.constraint(equalToConstant: 18),
-                            flagImageView.heightAnchor.constraint(equalToConstant: 18)
-                        ])
-                        ADD_SPACER(to: VStack_flag, height: 5)
-                        
-                        ADD_SPACER(to: HStack_source, width: 6)
-                    }
-                    
-                    if(!S.media_label.isEmpty) {
-                        let sourcesContainer = UIStackView()
-                        HStack_source.addArrangedSubview(sourcesContainer)
-                        ADD_SOURCE_ICONS(data: [S.media_label], to: sourcesContainer, containerHeight: 28)
-                    }
-
-                    let sourceLabel = UILabel()
-                    sourceLabel.text = S.media_name
-                    sourceLabel.font = ROBOTO(12)
-                    sourceLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
-                    HStack_source.addArrangedSubview(sourceLabel)
-                    ADD_SPACER(to: HStack_source, width: 8)
-                    
-                    let stanceIcon = StanceIconView()
-                    HStack_source.addArrangedSubview(stanceIcon)
-                    stanceIcon.setValues(S.LR, S.CP)
-                    
-                    stanceIcon.alpha = 1
-                    if(S.LR==0 || S.CP==0) {
-                        stanceIcon.alpha = 0
-                    }
-                    
-                    ADD_SPACER(to: HStack_source) // H fill
-                    
-                    if(!S.timeRelative.isEmpty) {
-                        let timeLabel = UILabel()
-                        timeLabel.text = "updated " + S.timeRelative
-                        timeLabel.font = ROBOTO(12)
-                        timeLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
-                        VStack_data.addArrangedSubview(timeLabel)
-                    }
-                    ADD_SPACER(to: VStack_data) // V fill
-                    
-                    let mainButton = UIButton(type: .custom)
-                    //mainButton.backgroundColor = .red.withAlphaComponent(0.25)
-                    HStack_image.addSubview(mainButton)
-                    mainButton.activateConstraints([
-                        mainButton.leadingAnchor.constraint(equalTo: HStack_image.leadingAnchor),
-                        mainButton.trailingAnchor.constraint(equalTo: HStack_image.trailingAnchor),
-                        mainButton.topAnchor.constraint(equalTo: HStack_image.topAnchor),
-                        mainButton.bottomAnchor.constraint(equalTo: HStack_image.bottomAnchor)
-                    ])
-                    mainButton.tag = 300+i
-                    mainButton.addTarget(self, action: #selector(spinOnTap(_:)), for: .touchUpInside)
-                    
-                    let miniButton = UIButton(type: .custom)
-                    //miniButton.backgroundColor = .red.withAlphaComponent(0.25)
-                    HStack_image.addSubview(miniButton)
-                    miniButton.activateConstraints([
-                        miniButton.leadingAnchor.constraint(equalTo: stanceIcon.leadingAnchor),
-                        miniButton.trailingAnchor.constraint(equalTo: stanceIcon.trailingAnchor),
-                        miniButton.topAnchor.constraint(equalTo: stanceIcon.topAnchor),
-                        miniButton.bottomAnchor.constraint(equalTo: stanceIcon.bottomAnchor)
-                    ])
-                    miniButton.tag = 400+i
-                    miniButton.addTarget(self, action: #selector(spinStanceIconOnTap(_:)), for: .touchUpInside)
-                    
-                    ADD_SPACER(to: innerHStack, height: 20) // Space to next item
-                    let line = UIView()
-                    line.backgroundColor = .clear //.systemPink
-                    innerHStack.addArrangedSubview(line)
-                    line.activateConstraints([
-                        line.heightAnchor.constraint(equalToConstant: 2.0)
-                    ])
-                    
-//                    if(i < spins.count-1) {
-//                        // Dashes
-//                        line.clipsToBounds = true
-//                        let dash_long: CGFloat = 5
-//                        let dash_sep: CGFloat = 2
-//                        var val_x: CGFloat = 0
-//                        let dash_color = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0x1D242F).withAlphaComponent(0.2)
-//                        
-//                        var maxDim = SCREEN_SIZE().width
-//                        if(SCREEN_SIZE().height > maxDim){ maxDim = SCREEN_SIZE().height }
-//                        
-//                        while(val_x < maxDim) {
-//                            let dash = UIView()
-//                            dash.backgroundColor = dash_color
-//                            line.addSubview(dash)
-//                            dash.frame = CGRect(x: val_x, y: 0, width: dash_long, height: 2.0)
-//                            
-//                            val_x += dash_long + dash_sep
-//                        }
-//                        
-//                        ADD_SPACER(to: innerHStack, height: 20) // Space to next item
-//                    } else {
-//                        ADD_SPACER(to: innerHStack, height: 1) // Space to next item
-//                    }
-                    
-                    
-                }
                 
             }
         }
