@@ -13,15 +13,15 @@ class PublicFigureData {
     
     static let shared = PublicFigureData()
     
-    func loadList(term: String = "", page: Int, callback: @escaping (Error?, Int?, [PublicFigureListItem]?) -> () ) {
-        
+    func loadList(term: String = "",
+        page: Int, type: Int, callback: @escaping (Error?, Int?, [PublicFigureListItem]?) -> () ) {
         //https://www.improvethenews.org/claims-api/public-figure/list
         
         var url = ITN_URL()
         if(term.isEmpty) {
-            url += "/claims-api/public-figure/list?page=\(page)"
+            url += "/claims-api/public-figure/list?page=\(page)&type=" + String(type)
         } else {
-            url += "/claims-api/public-figure/list?page=\(page)&filter=\(term.urlEncodedString())"
+            url += "/claims-api/public-figure/list?page=\(page)&filter=\(term.urlEncodedString())&type=" + String(type)
         }
         
         var request = URLRequest(url: URL(string: url)!)
@@ -149,10 +149,14 @@ class PublicFigureListItem {
     var slug: String = ""
     var title: String = ""
     var image: String = ""
+    var type: Int = 0
     
     init(jsonObj: [String: Any]) {
         if let _id = jsonObj["id"] as? Int {
             self.id = _id
+        }
+        if let _type = jsonObj["figure_type_id"] as? Int {
+            self.type = _type
         }
     
         self.slug = CHECK(jsonObj["slug"])

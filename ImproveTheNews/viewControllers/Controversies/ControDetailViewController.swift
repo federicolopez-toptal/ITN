@@ -752,7 +752,8 @@ extension ControDetailViewController {
             ])
 
             let col1View = UIView()
-            col1View.backgroundColor = CSS.shared.displayMode().main_bgColor
+            //col1View.backgroundColor = CSS.shared.displayMode().main_bgColor
+            //col1View.backgroundColor = .orange
             centeredView.addSubview(col1View)
             col1View.activateConstraints([
                 col1View.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor),
@@ -760,12 +761,17 @@ extension ControDetailViewController {
             ])
             if(listItem.figures.count>0) {
                 col1View.widthAnchor.constraint(equalToConstant: _W).isActive = true
+                
+                self.addTextHeader(containerView: col1View, width: _W, title: T,
+                    status: listItem.resolved, figures: F,
+                    image: (listItem.image_url, listItem.image_title, listItem.image_credit))
             } else {
                 col1View.widthAnchor.constraint(equalToConstant: self.W()).isActive = true
+                
+                self.addTextHeader(containerView: col1View, width: self.W(), title: T,
+                    status: listItem.resolved, figures: F,
+                    image: (listItem.image_url, listItem.image_title, listItem.image_credit))
             }
-            self.addTextHeader(containerView: col1View, width: self.W(), title: T,
-                status: listItem.resolved, figures: F,
-                image: (listItem.image_url, listItem.image_title, listItem.image_credit))
             
             if(listItem.figures.count>0) {
                 let col1b_view = UIView()
@@ -1045,7 +1051,7 @@ extension ControDetailViewController {
             _w -= (M*2)
         }
         
-        var H: CGFloat = 24 + 24 + statusLabel.calculateHeightFor(width: width) + 10 +
+        var H: CGFloat = 24 + 24 + statusLabel.calculateHeightFor(width: _w) + 10 +
             titleLabel.calculateHeightFor(width: _w)
 
         if(mustShowImage) {

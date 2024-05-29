@@ -23,6 +23,14 @@ class PublicFiguresViewController: BaseViewController {
 
     let noItemsLabel = UILabel()
 
+        var typeSelector = UIView()
+        let darkView = DarkView()
+        var typePicker = UIPickerView()
+        var typePickerTopConstraint: NSLayoutConstraint!
+        var typeOptions = ["All", "Organization", "Public Figure"]
+        let typePickerButton = UIButton()
+        var currentType: Int = 0
+        
         var filterTextfield = FigureFilterTextView()
         let itemsContainer = UIView()
         var itemsContainerHeightConstraint: NSLayoutConstraint!
@@ -87,11 +95,58 @@ class PublicFiguresViewController: BaseViewController {
             H
         ])
         
+        // ****
+        self.typeSelector.backgroundColor = .orange
+        self.contentView.addSubview(self.typeSelector)
+        self.typeSelector.activateConstraints([
+            self.typeSelector.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16*2),
+            self.typeSelector.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        if(IPHONE()) {
+            self.typeSelector.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
+            self.typeSelector.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16).isActive = true
+        } else {
+            self.typeSelector.widthAnchor.constraint(equalToConstant: 500).isActive = true
+            self.typeSelector.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
+        }
+        self.createSelectorView(with: self.typeSelector, index: 99)
+        
+        self.darkView.buildInto(self.view)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(darkViewOnTap(sender:)))
+        self.darkView.addGestureRecognizer(tapGesture)
+        
+        self.view.addSubview(self.typePicker)
+        self.typePicker.activateConstraints([
+            self.typePicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.typePicker.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
+        self.typePickerTopConstraint = self.typePicker.topAnchor.constraint(equalTo: self.view.bottomAnchor)
+        self.typePickerTopConstraint.isActive = true
+        self.typePicker.backgroundColor = self.view.backgroundColor //.white
+        self.typePicker.delegate = self
+        
+        self.typePickerButton.layer.cornerRadius = 8
+        self.typePickerButton.setTitle("Select", for: .normal)
+        self.typePickerButton.titleLabel?.font = AILERON(15)
+        self.typePickerButton.setTitleColor(.white, for: .normal)
+        self.typePickerButton.backgroundColor = CSS.shared.orange
+        self.view.addSubview(self.typePickerButton)
+        self.typePickerButton.activateConstraints([
+            self.typePickerButton.widthAnchor.constraint(equalToConstant: 70),
+            self.typePickerButton.heightAnchor.constraint(equalToConstant: 30),
+            self.typePickerButton.topAnchor.constraint(equalTo: self.view.bottomAnchor,
+                constant: -self.typePicker.frame.size.height+10),
+            self.typePickerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
+        ])
+        self.typePickerButton.hide()
+        self.typePickerButton.addTarget(self, action: #selector(typeSelectorOnSelect(_:)), for: .touchUpInside)
+        // ****
+    
         self.filterTextfield.delegate = self
         self.filterTextfield.buildInto(view: self.contentView)
         self.filterTextfield.activateConstraints([
-            self.filterTextfield.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16*2),
-            self.filterTextfield.heightAnchor.constraint(equalToConstant: 48),
+            self.filterTextfield.topAnchor.constraint(equalTo: self.typeSelector.bottomAnchor, constant: 16),
+            self.filterTextfield.heightAnchor.constraint(equalToConstant: 40),
         ])
         if(IPHONE()) {
             self.filterTextfield.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
@@ -170,7 +225,112 @@ class PublicFiguresViewController: BaseViewController {
         
         self.scrollView.hide()
         self.refreshDisplayMode()
+        
+        
+        self.view.bringSubviewToFront(self.typePicker)
+        self.view.bringSubviewToFront(self.typePickerButton)
+        self.refreshContent(index: 1)
+        
     }
+    @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {
+        self.typePickerTopConstraint.constant = 0
+        self.typePickerButton.hide()
+        
+        UIView.animate(withDuration: 0.3) {
+            self.darkView.alpha = 0
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.darkView.hide()
+        }
+    }
+    
+    func createSelectorView(with theView: UIView, index: Int) {
+        
+        theView.backgroundColor = self.view.backgroundColor
+        theView.layer.cornerRadius = 6
+        theView.layer.borderWidth = 0.5
+        theView.layer.borderColor = CSS.shared.displayMode().sec_textColor.cgColor
+        
+        let arrowDownImage = UIImage(named: "arrow.down.old")?.withRenderingMode(.alwaysTemplate)
+        let arrowImageView = UIImageView(image: arrowDownImage)
+        arrowImageView.tintColor = CSS.shared.displayMode().main_textColor
+        theView.addSubview(arrowImageView)
+        arrowImageView.activateConstraints([
+            arrowImageView.widthAnchor.constraint(equalToConstant: 28),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 28),
+            arrowImageView.centerYAnchor.constraint(equalTo: theView.centerYAnchor),
+            arrowImageView.trailingAnchor.constraint(equalTo: theView.trailingAnchor, constant: -8),
+        ])
+        
+        let button = UIButton(type: .custom)
+        button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        theView.addSubview(button)
+        button.activateConstraints([
+            button.leadingAnchor.constraint(equalTo: theView.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: theView.trailingAnchor),
+            button.topAnchor.constraint(equalTo: theView.topAnchor),
+            button.bottomAnchor.constraint(equalTo: theView.bottomAnchor)
+        ])
+        button.tag = index
+        button.addTarget(self, action: #selector(selectorOnTap(_:)), for: .touchUpInside)
+        
+        let contentView = UIView()
+        contentView.backgroundColor = .clear
+        theView.addSubview(contentView)
+        contentView.activateConstraints([
+            contentView.leadingAnchor.constraint(equalTo: theView.leadingAnchor, constant: 16),
+            contentView.trailingAnchor.constraint(equalTo: theView.trailingAnchor, constant: -50),
+            contentView.centerYAnchor.constraint(equalTo: theView.centerYAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        contentView.isUserInteractionEnabled = false
+        contentView.tag = 999
+    }
+     @objc func selectorOnTap(_ sender: UIButton) {
+        let index = sender.tag
+        
+        self.darkView.alpha = 0
+        self.darkView.show()
+        
+        if(index == 99) {
+            self.typePicker.selectRow(self.currentType, inComponent: 0, animated: false)
+        
+            self.typePickerTopConstraint.constant = -self.typePicker.frame.size.height
+            UIView.animate(withDuration: 0.3) {
+                self.darkView.alpha = 1
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.typePickerButton.show()
+            }
+        }
+    }
+    @objc func typeSelectorOnSelect(_ sender: UIButton) {
+        self.darkViewOnTap(sender: nil)
+        self.currentType = self.typePicker.selectedRow(inComponent: 0)
+        self.refreshContent(index: 1)
+        
+        self.resetListParams()
+        self.loadContent(page: self.page)
+    }
+    func refreshContent(index: Int) {
+        if(index==1) {
+            let contentView = self.typeSelector.viewWithTag(999)!
+            REMOVE_ALL_SUBVIEWS(from: contentView)
+
+            let text = UILabel()
+            text.textColor = CSS.shared.displayMode().sec_textColor
+            text.font = UIFont.systemFont(ofSize: 16)
+            text.text = self.typeOptions[self.currentType]
+            contentView.addSubview(text)
+            text.activateConstraints([
+                text.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                text.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            ])
+        }
+    }
+    
+    
+    
     
     @objc func loadMoreOnTap(_ sender: UIButton) {
         self.loadContent(page: self.page)
@@ -211,7 +371,9 @@ extension PublicFiguresViewController {
     
     private func loadContent(page P: Int) {
         self.showLoading()
-        PublicFigureData.shared.loadList(term: self.filterTextfield.text(), page: P) { (error, total, items) in
+        PublicFigureData.shared.loadList(term: self.filterTextfield.text(),
+            page: P, type: self.currentType) { (error, total, items) in
+            
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading the Public Figures,\nplease try again later.", onCompletion: {
@@ -234,6 +396,11 @@ extension PublicFiguresViewController {
     
     func fillList(total: Int, items: [PublicFigureListItem]) {
         for LI in items {
+            
+            if(LI.type==1) {
+                print("ITEM", LI.title)
+            }
+            
             let newItem = self.createItemView(data: LI)
             let posX: CGFloat = self.COL * (self.items_DIM + self.items_H_SEP)
             let posY: CGFloat = self.ROW * ((self.items_DIM+40) + self.items_V_SEP)
@@ -375,4 +542,44 @@ extension PublicFiguresViewController: FigureFilterTextViewDelegate {
         NOTHING()
     }
     
+}
+
+extension PublicFiguresViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if(pickerView == self.typePicker) {
+            return self.typeOptions.count
+        }
+        return 0
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        if(pickerView == self.typePicker) {
+            return self.createOptionForType(index: row)
+        }
+        
+        return UIView()
+    }
+    
+    func createOptionForType(index: Int) -> UIView {
+        let optionView = UIView()
+        optionView.backgroundColor = self.view.backgroundColor //.white
+        
+        let text = UILabel()
+        text.textColor = CSS.shared.displayMode().main_textColor // UIColor(hex: 0x19191C)
+        text.font = UIFont.systemFont(ofSize: 16)
+        text.text = self.typeOptions[index]
+        optionView.addSubview(text)
+        text.activateConstraints([
+            text.leadingAnchor.constraint(equalTo: optionView.leadingAnchor, constant: 16),
+            text.centerYAnchor.constraint(equalTo: optionView.centerYAnchor)
+        ])
+        
+        return optionView
+    }
+
 }
