@@ -55,22 +55,24 @@ extension MainFeed_v3_viewController {
         }
         
         for (i, item) in self.dataProvider.enumerated() {
-            if let _item = item as? DP3_headerItem {
+            if let _item = item as? DP3_headerItem, _item.title.lowercased() == "split" {
                 let nextIndex1 = i+1
                 let nextIndex2 = i+2
                 let nextIndex3 = i+3
-                if(nextIndex3<self.dataProvider.count) {
+                if(nextIndex1<self.dataProvider.count) {
                     let nextItem1 = self.dataProvider[nextIndex1]
                     let nextItem2 = self.dataProvider[nextIndex2]
                     let nextItem3 = self.dataProvider[nextIndex3]
                     if(nextItem1 is DP3_splitHeaderItem && nextItem2 is DP3_spacer && nextItem3 is DP3_more) {
-                        for _ in 1...4 {
+                        for _ in 1...3 {
                             self.dataProvider.remove(at: i)
                         }
                     }
                 }
             }
         }
+        
+//        print( self.dataProvider )
 
     }
     
