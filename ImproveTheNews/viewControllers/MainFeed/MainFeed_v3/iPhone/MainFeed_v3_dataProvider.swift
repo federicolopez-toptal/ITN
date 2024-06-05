@@ -29,11 +29,7 @@ extension MainFeed_v3_viewController {
         }
 
         // -------------------------------------------------
-        var topSpacerHeight = self.topValue
-        if let _safeAreaTop = SAFE_AREA()?.top {
-            topSpacerHeight -= _safeAreaTop
-        }
-
+        let topSpacerHeight = self.topValue - self.safeAreaTop
         let initSpacer = DP3_spacer(size: topSpacerHeight)
         self.dataProvider.insert(initSpacer, at: 0)
     }
@@ -59,7 +55,7 @@ extension MainFeed_v3_viewController {
                 let nextIndex1 = i+1
                 let nextIndex2 = i+2
                 let nextIndex3 = i+3
-                if(nextIndex1<self.dataProvider.count) {
+                if(nextIndex3<self.dataProvider.count) {
                     let nextItem1 = self.dataProvider[nextIndex1]
                     let nextItem2 = self.dataProvider[nextIndex2]
                     let nextItem3 = self.dataProvider[nextIndex3]
@@ -72,8 +68,6 @@ extension MainFeed_v3_viewController {
             }
         }
         
-//        print( self.dataProvider )
-
     }
     
     // Split + Text only
@@ -83,7 +77,14 @@ extension MainFeed_v3_viewController {
         
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
-            var _T = self.data.topics[i]
+            //var _T = self.data.topics[i]
+            var _T: MainFeedTopic!
+            if(i<self.data.topics.count) {
+                _T = self.data.topics[i]
+            } else {
+                continue
+            }
+            
             if(_T.name == "ai" && self.topic != "ai") {
                 continue
             }
@@ -208,7 +209,14 @@ extension MainFeed_v3_viewController {
         
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
-            var _T = self.data.topics[i]
+            //var _T = self.data.topics[i]
+            var _T: MainFeedTopic!
+            if(i<self.data.topics.count) {
+                _T = self.data.topics[i]
+            } else {
+                continue
+            }
+            
             if(_T.name == "ai" && self.topic != "ai") {
                 continue
             }
@@ -216,7 +224,7 @@ extension MainFeed_v3_viewController {
         // main Header
             self.addHeader(text: _T.capitalizedName)
 
-        // Articles sorting  ----------------------------------
+        // Articles sorting/filtering  ---------------------------
             var articlesLeft = [MainFeedArticle]()
             var articlesRight = [MainFeedArticle]()
             
@@ -241,6 +249,8 @@ extension MainFeed_v3_viewController {
                     break
                 }
             }
+            
+            
         // ------------------------------------------------------
             let total = _T.articles.count
             var artCount = 0
@@ -320,7 +330,7 @@ extension MainFeed_v3_viewController {
             // "Load more" item
             let spacer = DP3_spacer(size: 20)
             self.dataProvider.append(spacer)
-            self.addLoadMore(topicName: _T.name)
+            self.addLoadMore(topicName: _T.name) // if apply
         } // for
         
         //Footer at the end of all
@@ -334,7 +344,14 @@ extension MainFeed_v3_viewController {
         
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
-            var _T = self.data.topics[i]
+            //var _T = self.data.topics[i]
+            var _T: MainFeedTopic!
+            if(i<self.data.topics.count) {
+                _T = self.data.topics[i]
+            } else {
+                continue
+            }
+            
             if(_T.name == "ai" && self.topic != "ai") {
                 continue
             }
@@ -429,7 +446,14 @@ extension MainFeed_v3_viewController {
         
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
-            var _T = self.data.topics[i]
+            //var _T = self.data.topics[i]
+            var _T: MainFeedTopic!
+            if(i<self.data.topics.count) {
+                _T = self.data.topics[i]
+            } else {
+                continue
+            }
+            
             if(_T.name == "ai" && self.topic != "ai") {
                 continue
             }

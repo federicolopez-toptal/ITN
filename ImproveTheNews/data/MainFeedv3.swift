@@ -100,23 +100,23 @@ class MainFeedv3 {
     
     private func replaceFirstStoryIA() {
         if(self.topics.first?.name == "ai") {
-
-//            let data = [
-//                "title": "What is Artificial Intelligence?",
-//                "slug": "story/2023/artificial-intelligence",
-//                "image_url": "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/65b7a1da0d52e_image.png",
-//                "timeago": "14 months ago",
-//                "storytype": "context",
-//                "medianames": nil
-//            ]
-
-            self.topics[0].articles[0].title = "What is Artificial Intelligence?"
-            self.topics[0].articles[0].imgUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/65b7a1da0d52e_image.png"
-            self.topics[0].articles[0].isContext = true
-            self.topics[0].articles[0].isStory = true
-            self.topics[0].articles[0].storySources = []
-            self.topics[0].articles[0].time = "" //DATE_TO_TIMEAGO("2023-03-19 00:01:00")
-            self.topics[0].articles[0].url = ITN_URL() + "/story/2023/artificial-intelligence"
+                
+            var i = -1
+            for (_i, AR) in self.topics[0].articles.enumerated() {
+                if(AR.isStory) {
+                    i = _i
+                    break
+                }
+            }
+            if(i == -1) { return }
+            
+            self.topics[0].articles[i].title = "What is Artificial Intelligence?"
+            self.topics[0].articles[i].imgUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/65b7a1da0d52e_image.png"
+            self.topics[0].articles[i].isContext = true
+            self.topics[0].articles[i].isStory = true
+            self.topics[0].articles[i].storySources = []
+            self.topics[0].articles[i].time = "" //DATE_TO_TIMEAGO("2023-03-19 00:01:00")
+            self.topics[0].articles[i].url = ITN_URL() + "/story/2023/artificial-intelligence"
         }
     }
     
@@ -141,13 +141,12 @@ class MainFeedv3 {
         if(MUST_SPLIT() > 0) {
             totalItems = NEWS_REQ_SPLIT_MORE_ITEMS_TOTAL
             storiesCount = NEWS_REQ_SPLIT_MORE_STORIES_COUNT
-        }
-            
-        if(S_value>0) {
-            S_value += 1
-        
-//            totalItems += 1
-//            storiesCount += 1
+        } else {
+            if(S_value>0) {
+                S_value += 1
+    //            totalItems += 1
+    //            storiesCount += 1
+            }
         }
             
         let strUrl = self.buildUrl(topic: T, A: totalItems,
@@ -233,7 +232,7 @@ extension MainFeedv3 {
                 if(!isBanner) {
                     let articles = _obj[1] as! [Any]
                     var newTopic = MainFeedTopic(topicInfo, articles)
-                    newTopic.splitReorderArticles_justInCase()
+                    //newTopic.splitReorderArticles_justInCase()
                     
                     self.topics.append(newTopic)
                 } else {

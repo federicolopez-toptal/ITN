@@ -37,7 +37,7 @@ class MainFeediPad_v3_viewController: BaseViewController {
     var controversiesPage = 1
     let latestControversies = "Latest controversies"
 
-
+    var safeAreaTop: CGFloat = 0
 
 
     
@@ -66,8 +66,11 @@ class MainFeediPad_v3_viewController: BaseViewController {
             
             self.topicSelector.buildInto(self.view)
             self.topicSelector.delegate = self
-            
             self.setupList()
+            
+            if let _safeAreaTop = SAFE_AREA()?.top {
+                self.safeAreaTop = _safeAreaTop
+            }
         }
     }
     

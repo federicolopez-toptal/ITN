@@ -28,12 +28,8 @@ extension MainFeediPad_v3_viewController {
             }
         }
         
-        // -------------------------------------------------
-        var topSpacerHeight = self.topValue
-        if let _safeAreaTop = SAFE_AREA()?.top {
-            topSpacerHeight -= _safeAreaTop
-        }
-        
+        // -------------------------------------------------        
+        let topSpacerHeight = self.topValue - self.safeAreaTop
         let initSpacer = DP3_spacer(size: topSpacerHeight)
         self.dataProvider.insert(initSpacer, at: 0)
     }
@@ -59,7 +55,7 @@ extension MainFeediPad_v3_viewController {
                 let nextIndex1 = i+1
                 let nextIndex2 = i+2
                 let nextIndex3 = i+3
-                if(nextIndex1<self.dataProvider.count) {
+                if(nextIndex3<self.dataProvider.count) {
                     let nextItem1 = self.dataProvider[nextIndex1]
                     let nextItem2 = self.dataProvider[nextIndex2]
                     let nextItem3 = self.dataProvider[nextIndex3]

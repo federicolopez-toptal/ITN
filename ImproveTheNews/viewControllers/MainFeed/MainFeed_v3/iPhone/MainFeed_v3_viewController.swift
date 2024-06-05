@@ -38,6 +38,8 @@ class MainFeed_v3_viewController: BaseViewController {
     var ignoreScroll = false
     var loadedMore = false
     
+    var safeAreaTop: CGFloat = 0
+    
     // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +68,10 @@ class MainFeed_v3_viewController: BaseViewController {
             
             self.topValue = NavBarView.HEIGHT() + CSS.shared.topicSelector_height
             self.setupList()
+            
+            if let _safeAreaTop = SAFE_AREA()?.top {
+                self.safeAreaTop = _safeAreaTop
+            }
         }
     }
     
