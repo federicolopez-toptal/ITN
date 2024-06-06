@@ -17,6 +17,7 @@ enum NavBarViewComponents {
     case menuIcon
     case searchIcon
     case title
+    case longTitle
     case share
     case user
     case headlines
@@ -35,6 +36,10 @@ class NavBarView: UIView {
     private var shareUrl: String? = nil
     private weak var vc: UIViewController? = nil
     
+    var longTitleHSpace: CGFloat = 0
+    var longTitleTrailingConstraint: NSLayoutConstraint?
+    var longTitleTrailingValue_long: CGFloat = 0
+    var longTitleTrailingValue_short: CGFloat = 0
 
     // MARK: - Init(s)
     init() {
@@ -280,32 +285,6 @@ class NavBarView: UIView {
                 self.left_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
             }
             
-            if(C == .title) {
-                let label = UILabel()
-                label.text = " "
-                label.textColor = .black
-                label.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-                label.font = CSS.shared.iPhoneTitleBar_font
-                self.addSubview(label)
-                label.activateConstraints([
-                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-                    label.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                ])
-                label.tag = 7
-                self.displayModeComponents.append(label)
-                
-                let button = UIButton(type: .system)
-                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
-                self.addSubview(button)
-                button.activateConstraints([
-                    button.leadingAnchor.constraint(equalTo: label.leadingAnchor, constant: -20),
-                    button.topAnchor.constraint(equalTo: label.topAnchor, constant: -self.buttonsMargin),
-                    button.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: 20),
-                    button.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: self.buttonsMargin)
-                ])
-                button.addTarget(self, action: #selector(onTitleButtonTap(_:)), for: .touchUpInside)
-            }
-            
             if(C == .share) {
                 // Search
                 let shareIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.share")))
@@ -359,6 +338,82 @@ class NavBarView: UIView {
                 
                 self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
             }
+            
+            if(C == .title) {
+                self.left_x += 5
+                var offset: CGFloat = self.left_x
+                if(self.right_x > offset){ offset = self.right_x }
+            
+                let label = UILabel()
+                label.text = " "
+                label.textColor = .black
+                label.textAlignment = .center
+                //label.backgroundColor = .red.withAlphaComponent(0.25)
+                label.font = CSS.shared.iPhoneTitleBar_font
+                self.addSubview(label)
+                label.activateConstraints([
+                    label.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+//                    label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset),
+//                    label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset),
+                ])
+                label.tag = 7
+                self.displayModeComponents.append(label)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: label.leadingAnchor, constant: -20),
+                    button.topAnchor.constraint(equalTo: label.topAnchor, constant: -self.buttonsMargin),
+                    button.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: 20),
+                    button.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: self.buttonsMargin)
+                ])
+                button.addTarget(self, action: #selector(onTitleButtonTap(_:)), for: .touchUpInside)
+            }
+            
+            if(C == .longTitle) {
+                self.left_x += 10
+                
+                let label = UILabel()
+                label.text = " "
+                label.textColor = .black
+                label.textAlignment = .center
+                //label.backgroundColor = .green.withAlphaComponent(0.25)
+                label.font = CSS.shared.iPhoneTitleBar_font
+                self.addSubview(label)
+                label.activateConstraints([
+                    label.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    label.heightAnchor.constraint(equalToConstant: 32),
+                    label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.left_x)
+                ])
+                
+                self.longTitleTrailingValue_long = -self.right_x
+                self.longTitleTrailingValue_short = -self.left_x
+                
+                self.longTitleTrailingConstraint = label.trailingAnchor.constraint(equalTo: self.trailingAnchor,
+                    constant: -self.right_x)
+                self.longTitleTrailingConstraint?.isActive = true
+                
+                label.tag = 11
+                self.displayModeComponents.append(label)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: label.leadingAnchor, constant: -20),
+                    button.topAnchor.constraint(equalTo: label.topAnchor, constant: -self.buttonsMargin),
+                    button.trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: 20),
+                    button.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: self.buttonsMargin)
+                ])
+                button.addTarget(self, action: #selector(onTitleButtonTap(_:)), for: .touchUpInside)
+                
+                self.longTitleHSpace = SCREEN_SIZE().width - self.left_x - self.right_x
+                
+                self.sendSubviewToBack(button)
+                self.sendSubviewToBack(label)
+            }
         }
         
         self.refreshDisplayMode()
@@ -408,7 +463,7 @@ class NavBarView: UIView {
             if(C is UILabel) {
                 let label = C as! UILabel
                 switch(label.tag) {
-                    case 5, 7: // BACK TO FEED
+                    case 5, 7, 11: // BACK TO FEED
                         label.textColor = CSS.shared.displayMode().main_textColor
                         
                     default:
@@ -421,6 +476,15 @@ class NavBarView: UIView {
     func setTitle(_ text: String) {
         if let _label = self.viewWithTag(7) as? UILabel {
             _label.text = text
+        } else if let _label = self.viewWithTag(11) as? UILabel {
+            _label.text = text
+            
+            let _w = _label.calculateWidthFor(height: 32)
+            if(_w > self.longTitleHSpace) {
+                self.longTitleTrailingConstraint?.constant = self.longTitleTrailingValue_long
+            } else {
+                self.longTitleTrailingConstraint?.constant = self.longTitleTrailingValue_short
+            }
         }
     }
     

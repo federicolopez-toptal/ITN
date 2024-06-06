@@ -53,7 +53,7 @@ class FigureDetailsViewController: BaseViewController {
             self.didLayout = true
 
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.back, .title])
+            self.navBar.addComponents([.back, .longTitle])
             self.navBar.addBottomLine()
 
             self.buildContent()
@@ -164,9 +164,10 @@ extension FigureDetailsViewController {
         self.navBar.setTitle(figure.name)
         self.addImage(figure.image)
         self.addDescr(figure.description)
-        self.addSource(name: figure.sourceText, url: figure.sourceUrl)
-        self.addCredit(name: figure.sourceText, url: figure.sourceUrl)
-        
+        if(figure.name.lowercased() != "ohchr") {
+            self.addSource(name: figure.sourceText, url: figure.sourceUrl)
+            self.addCredit(name: figure.sourceText, url: figure.sourceUrl)
+        }
         self.addShare(name: figure.name, slug: figure.slug)
         
         if(figure.stories.count>0) {
@@ -207,6 +208,7 @@ extension FigureDetailsViewController {
         let containerView = self.createContainerView()
     
         let label = UILabel()
+        label.numberOfLines = 0
         label.font = DM_SERIF_DISPLAY(20)
         label.textColor = CSS.shared.displayMode().main_textColor
         label.text = "Stories about \(name)"
@@ -299,17 +301,23 @@ extension FigureDetailsViewController {
         
         let label = HyperlinkLabel.parrafo(text: "Image credit: [0]",
             linkTexts: [creditName], urls: [creditUrl], onTap: self.onLinkTap(_:))
+//        label.numberOfLines = 0
+//        label.textAlignment = .center
         label.font = AILERON(16)
+        //label.backgroundColor = .yellow.withAlphaComponent(0.1)
         
         containerView.addSubview(label)
         label.activateConstraints([
             label.topAnchor.constraint(equalTo: containerView.topAnchor),
-            label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+            label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            //label.widthAnchor.constraint(equalToConstant: self.W())
         ])
         
         containerView.activateConstraints([
-            containerView.heightAnchor.constraint(equalToConstant: 19.33 + M)
+            containerView.heightAnchor.constraint(equalToConstant: label.calculateHeightFor(width: self.W()) + M)
         ])
+        
+        //containerView.backgroundColor = .green.withAlphaComponent(0.25)
     }
     
     func addSource(name sourceName: String, url sourceUrl: String) {

@@ -397,9 +397,9 @@ extension PublicFiguresViewController {
     func fillList(total: Int, items: [PublicFigureListItem]) {
         for LI in items {
             
-            if(LI.type==1) {
-                print("ITEM", LI.title)
-            }
+//            if(LI.type==1) {
+//                print("ITEM", LI.title)
+//            }
             
             let newItem = self.createItemView(data: LI)
             let posX: CGFloat = self.COL * (self.items_DIM + self.items_H_SEP)

@@ -124,14 +124,6 @@ class ClaimCellView: UIView {
             column.heightAnchor.constraint(equalToConstant: 2000)
         ])
         
-        self.nameLabel.font = AILERON(14)
-        self.nameLabel.textColor = CSS.shared.displayMode().main_textColor
-        column.addSubview(self.nameLabel)
-        self.nameLabel.activateConstraints([
-            self.nameLabel.leadingAnchor.constraint(equalTo: column.leadingAnchor),
-            self.nameLabel.topAnchor.constraint(equalTo: column.topAnchor)
-        ])
-        
         self.timeLabel.font = AILERON(14)
         self.timeLabel.textAlignment = .left
         self.timeLabel.textColor = CSS.shared.displayMode().main_textColor
@@ -139,6 +131,17 @@ class ClaimCellView: UIView {
         self.timeLabel.activateConstraints([
             self.timeLabel.trailingAnchor.constraint(equalTo: column.trailingAnchor),
             self.timeLabel.topAnchor.constraint(equalTo: column.topAnchor)
+        ])
+        
+        self.nameLabel.font = AILERON(14)
+        self.nameLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.nameLabel.numberOfLines = 0
+        //self.nameLabel.backgroundColor = .red.withAlphaComponent(0.25)
+        column.addSubview(self.nameLabel)
+        self.nameLabel.activateConstraints([
+            self.nameLabel.topAnchor.constraint(equalTo: column.topAnchor),
+            self.nameLabel.trailingAnchor.constraint(equalTo: self.timeLabel.leadingAnchor, constant: -5),
+            self.nameLabel.leadingAnchor.constraint(equalTo: column.leadingAnchor)
         ])
         
         self.titleLabel.font = DM_SERIF_DISPLAY(18)

@@ -14,6 +14,7 @@ extension FigureDetailsViewController {
         //mainView.backgroundColor = .red
         
         let label = UILabel()
+        label.numberOfLines = 0
         label.font = DM_SERIF_DISPLAY(20)
         label.textColor = CSS.shared.displayMode().main_textColor
         label.text = "Claims from \(name)"
