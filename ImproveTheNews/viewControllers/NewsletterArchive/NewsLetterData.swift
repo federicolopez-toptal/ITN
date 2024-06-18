@@ -69,7 +69,41 @@ class NewsLetterData {
         task.resume()
     }
     
-    // load daily/weely newsletter
+    // load weekly newsletter
+    func loadWeeklyNewsletter(_ ST: NewsLetterStory,
+        callback: @escaping (Error?, WeeklyNewsletter?) -> () ) {
+        
+        let url = ITN_URL() + "/php/stories/weekly-newsletters.php?date=" + ST.date
+        
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        
+        print("Loading weekly NEWSLETTER", url)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+                callback(error, nil)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    let data = WeeklyNewsletter(jsonObj: _json)
+                    
+                    callback(nil, data)
+                } else {
+                    let _error = CustomError.jsonParseError
+                    callback(_error, nil)
+                }
+            }
+        }
+
+        task.resume()
+    }
+    
+    // load individual daily/weely newsletter(s)
     func loadNewsletter(_ ST: NewsLetterStory,
         callback: @escaping (Error?) -> () ) {
         
@@ -112,50 +146,189 @@ class NewsLetterData {
     
 }
 
+class otherNewsLetter {
+    var date: String = ""
+    var title: String = ""
+    
+    init(date: String, title: String) {
+        self.date = date
+        self.title = title
+    }
+}
+
 class WeeklyNewsletter {
     
-    var enconding: String = ""
+    var date: String = ""
+    var image: String = ""
+    var prev: otherNewsLetter! = nil
+    var next: otherNewsLetter! = nil
+    var stories: [WeeklyStory] = []
     
     init(jsonObj: [String: Any]) {
+        self.date = CHECK(jsonObj["newsletter-date"])
+        self.image = CHECK(jsonObj["image_url"])
+        
+//        prev_newsletter
+//        next_newsletter
+        
+        // prev
+        if let _prev = jsonObj["prev_newsletter"] as? [String: String] {
+            self.prev = otherNewsLetter(date: CHECK(_prev["pubdate"]), title: CHECK(_prev["title"]))
+        }
+        
+        // next
+        if let _next = jsonObj["next_newsletter"] as? [String: String] {
+            self.next = otherNewsLetter(date: CHECK(_next["pubdate"]), title: CHECK(_next["title"]))
+        }
+        
         if let _stories = jsonObj["stories"] as? [[String: String]],
             let _first = _stories.first,
             let _encoding = _first["encoding"] {
             
-            self.enconding = _encoding
-            
-            let sections = self.enconding.components(separatedBy: "#")
-            for S in sections {
-                if(!S.isEmpty) {
-                    parseSection(S)
+            let rawStories = _encoding.components(separatedBy: "#")
+            for rawST in rawStories {
+                if(!rawST.isEmpty) {
+                    let ST = WeeklyStory(fromText: rawST)
+                    self.stories.append(ST)
+                }
+            }
+        }
+    }
+    
+    func trace() {
+        print("Weekly newsletter stories ----------------")
+        for ST in self.stories {
+            ST.trace()
+            print("-------")
+        }
+    }
+}
+
+class WeeklyStory {
+    
+    var title: String = ""
+    var topic: String = ""
+    var parsedContent: String = ""
+    var urls: [String] = []
+    var linkedTexts: [String] = []
+    
+    init(fromText text: String) {
+        var topicStart = -1
+        
+        for i in 0...text.count-1 {
+            if(title.isEmpty) { // 1: Title
+                if(text[i]==":") {
+                    self.title = text.subString(from: 0, count: i-1)!
+                    topicStart = i+1
+                }
+            } else { // 2: Topic + Content
+                let char = text[i]
+                
+                if(char.isUppercase) {
+                    let C = i-1
+                    if(C>topicStart) {
+                        self.topic = text.subString(from: topicStart, count: C)!
+                        self.topic = self.topic.replacingOccurrences(of: "-", with: "_")
+                    } else {
+                        // No topic
+                        NOTHING()
+                    }
+                    
+                    let content = text.replacingOccurrences(of: title + ":" + topic, with: "")
+                    self.parseContent(content)
+                    
+                    break
+                }
+            }
+        }
+    }
+    
+    private func parseContent(_ T: String) {
+        var text = T
+        var count = 0
+        
+        while(text.lowercased().contains("<a")) {
+            var found = false
+            for i in 0...text.count-1 {
+                var upperLimit = i+2
+                if(upperLimit < text.count) {
+                    if(text.subString2(from: i, count: 2)!.lowercased() == "<a ") { // link found
+                        for j in i...text.count-1 {
+                            upperLimit = j+3
+                            if(upperLimit < text.count) {
+                                if(text.subString2(from: j, count: 3)!.lowercased() == "</a>") { // link ending
+                                    let htmlLink = text.subString2(from: i, count: j-i+3)!
+                                    
+                                    let data = self.parseHtmlLink(htmlLink)
+                                    self.urls.append(data.0)
+                                    self.linkedTexts.append(data.1)
+                                    
+                                    text = text.replacingOccurrences(of: htmlLink, with: "[\(count)]")
+                                    count += 1
+                                    
+                                    found = true
+                                    break
+                                }
+                            }
+                        }
+                        if(found) { break }
+                    }
                 }
             }
         }
         
+        text = text.replacingOccurrences(of: "  ", with: " ")
+        self.parsedContent = text
     }
     
-    private func parseSection(_ S: String) {
-        var found = false
-        var title = ""
-        var content = ""
-        
-        for i in 0...S.count-1 {
-            if(S[i]==":") {
-                title = S.subString(from: 0, count: i)!
-                content = S.replacingOccurrences(of: title, with: "")
-                break
+    func parseHtmlLink(_ htmlLink: String) -> (String, String) {
+/*
+<a class ='hyplink' href= http://www.verity.news/story/2024/hamas-considers-latest-ceasefire-proposal > considered</a>
+ */
+ 
+        var link = htmlLink.lowercased()
+        link = link.replacingOccurrences(of: "href=\"", with: "href='")
+        link = link.replacingOccurrences(of: "href= ", with: "href='")
+        link = link.replacingOccurrences(of: "\">", with: "'>")
+        link = link.replacingOccurrences(of: " >", with: "'>")
+ 
+        var url = ""
+        var text = ""
+ 
+        for i in 0...link.count-1 {
+            var upperLimit = i+5
+            if(upperLimit < link.count) {
+                if(link.subString2(from: i, count: 5)!.lowercased() == "href='") { // link found
+                    for j in i...link.count-1 {
+                        upperLimit = j
+                        if(upperLimit < link.count) {
+                            if(link.subString2(from: j, count: 1)!.lowercased() == "'>") { // link ending
+                                url = link.subString2(from: i+5, count: j-i-5)!
+                                url = url.replacingOccurrences(of: "'", with: "")
+                                
+                                text = htmlLink.subString2(from: j+2, count: link.count-j-2-1)!
+                                text = text.replacingOccurrences(of: "</a>", with: "")
+                                text = text.trimmingCharacters(in: .whitespaces)
+                                
+                                break
+                            }
+                        }
+                    }
+                }
             }
         }
-        
-        //clean title
-        title = title.replacingOccurrences(of: ":", with: "")
-        
-        // clean content
-        let topics = ["news", "world", "politics", "health", "crime_justice", "sci_tech", "social_issues", "sports", "money", "entertainment", "environment_energy", "military", "culture", "weather", "media"]
-        
-        print(">\(title)<")
-        print("CONTENT start")
-        print(content)
-        print("CONTENT end")
+ 
+        return (url, text)
+    }
+    
+    
+    func trace() {
+        print(self.title)
+        print(self.topic)
+        print(self.parsedContent)
+        print(self.urls)
+        print(self.linkedTexts)
     }
     
 }
+

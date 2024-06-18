@@ -7,29 +7,60 @@
 
 import UIKit
 
+
+// MARK: Data
+extension NewsLetterContentViewController {
+    
+    private func loadContent() {
+        self.showLoading()
+        
+        if(self.refData.type == 2) { // Weekly
+            NewsLetterData.shared.loadWeeklyNewsletter(self.refData) { (error, data) in
+                if let _ = error {
+                    ALERT(vc: self, title: "Server error",
+                    message: "Trouble loading the newsletter,\nplease try again later.", onCompletion: {
+                        CustomNavController.shared.popViewController(animated: true)
+                    })
+                } else {
+                    if let _data = data {
+                        MAIN_THREAD {
+                            self.hideLoading()
+                            self.scrollView.show()
+                            
+                            self.data = _data
+                            self.addWeeklyContent()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+// ------------------------
 class NewsLetterContentViewController: BaseViewController {
-
+    
     var refData: NewsLetterStory! = nil
-
+    var data: AnyObject! = nil
+    
     let navBar = NavBarView()
     let scrollView = UIScrollView()
     let contentView = UIView()
-    var VStack: UIStackView!
+    var vStack: UIStackView!
     
-    let M: CGFloat = CSS.shared.iPhoneSide_padding
     
-
-    // MARK: - Init/Start
+    // MARK: - Init
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         if(!self.didLayout) {
             self.didLayout = true
-            
+
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.customBack, .title, .headlines])
+            self.navBar.addComponents([.back, .title, .headlines])
             self.navBar.setTitle("Newsletter")
-            
+
             self.buildContent()
         }
     }
@@ -48,15 +79,12 @@ class NewsLetterContentViewController: BaseViewController {
         CustomNavController.shared.hidePanelAndButtonWithAnimation()
     }
     
-    // -------------------------------------------------
     func buildContent() {
-        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
+    
+        // -------------------------------------------------
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         
-        NotificationCenter.default.addObserver(self,
-            selector: #selector(self.onCustomBackButtonTap),
-            name: Notification_customBackButtonTap, object: nil)
-            
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
         //self.scrollView.delegate = self
@@ -67,7 +95,7 @@ class NewsLetterContentViewController: BaseViewController {
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
-            let H = self.contentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
+        let H = self.contentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
             H.priority = .defaultLow
             
         self.scrollView.addSubview(self.contentView)
@@ -81,20 +109,18 @@ class NewsLetterContentViewController: BaseViewController {
             H
         ])
         
-        self.VStack = VSTACK(into: self.contentView)
-        self.VStack.backgroundColor = .green
-        self.VStack.spacing = 0
-        self.VStack.activateConstraints([
-            self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
-            self.VStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
-            self.VStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
-            self.VStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -13),
-            //VStack.heightAnchor.constraint(equalToConstant: 1200) //!!!
+        self.vStack = VSTACK(into: self.contentView)
+//        self.vStack.backgroundColor = .orange
+        self.vStack.activateConstraints([
+            self.vStack.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.vStack.widthAnchor.constraint(equalToConstant: self.W()),
+            self.vStack.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+            
+            //,self.vStack.heightAnchor.constraint(equalToConstant: 300)
         ])
         
-        self.addTopData()
-        
-        //self.scrollView.hide()
+        self.scrollView.hide()
         self.refreshDisplayMode()
     }
     
@@ -104,24 +130,12 @@ class NewsLetterContentViewController: BaseViewController {
         self.scrollView.backgroundColor = self.view.backgroundColor
         self.contentView.backgroundColor = self.view.backgroundColor
         
-        self.VStack.backgroundColor = self.view.backgroundColor
+        self.vStack.backgroundColor = self.view.backgroundColor //.orange.withAlphaComponent(0.25)
     }
     
-    // -------------------------------------------------
-    @objc func onCustomBackButtonTap(_ notification: Notification) {
-        CustomNavController.shared.popViewController(animated: true)
-    
-//        let currentOffsetY = self.scrollView.contentOffset.y
-//        if(currentOffsetY <= 30) {
-//            CustomNavController.shared.popViewController(animated: true)
-//        } else {
-//            self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-//        }
-    }
-
 }
 
-// MARK: - misc + Utils
+// MARK: misc
 extension NewsLetterContentViewController: UIGestureRecognizerDelegate {
     
     // to swipe BACK
@@ -132,118 +146,8 @@ extension NewsLetterContentViewController: UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: Data
-extension NewsLetterContentViewController {
-    
-    private func loadContent() {
-        self.showLoading()
-        NewsLetterData.shared.loadNewsletter(self.refData) { (error) in
-            if let _error = error {
-                ALERT(vc: self, title: "Server error",
-                message: "Trouble loading the newsletter,\nplease try again later.", onCompletion: {
-                    CustomNavController.shared.popViewController(animated: true)
-                })
-            } else {
-                MAIN_THREAD {
-                    self.hideLoading()
-                    self.scrollView.show()
-                    
-                    self.addContent()
-                }
-            }
-        }
-    }
-    
-}
 
-// MARK: UI
-extension NewsLetterContentViewController {
-    
-    func addTopData() {
-        let sectionHStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: sectionHStack, width: M)
-        //sectionHStack.backgroundColor = .orange
-        
-            let sectionVStack = VSTACK(into: sectionHStack)
-            //sectionVStack.backgroundColor = .red
-                
-                ADD_SPACER(to: sectionVStack, height: M/2)
-        
-                // Date
-                let dateLabel = UILabel()
-                dateLabel.text = self.refData.date
-                dateLabel.font = AILERON(15)
-                dateLabel.textColor = CSS.shared.displayMode().sec_textColor
-                sectionVStack.addArrangedSubview(dateLabel)
-                //ADD_SPACER(to: sectionVStack, height: 5)
-                
-                // NL Title
-                let NLTitleLabel = UILabel()
-                NLTitleLabel.font = DM_SERIF_DISPLAY(20)
-                if(self.refData.type==1) {
-                    NLTitleLabel.text = "Daily Newsletter"
-                } else {
-                    NLTitleLabel.text = "Weekly Newsletter"
-                }
-                NLTitleLabel.textColor = CSS.shared.displayMode().main_textColor
-                sectionVStack.addArrangedSubview(NLTitleLabel)
-                ADD_SPACER(to: sectionVStack, height: M)
-        
-                if(self.refData.type == 1) {
-                    // main Title
-                    let mainTitleLabel = UILabel()
-                    mainTitleLabel.font = DM_SERIF_DISPLAY(22)
-                    mainTitleLabel.numberOfLines = 0
-                    mainTitleLabel.text = self.refData.title
-                    mainTitleLabel.setLineSpacing(lineSpacing: -5)
-                    mainTitleLabel.textColor = CSS.shared.displayMode().main_textColor
-                    sectionVStack.addArrangedSubview(mainTitleLabel)
-                    ADD_SPACER(to: sectionVStack, height: M)
-                }
-        
-        ADD_SPACER(to: sectionHStack, width: M)
-        
-        let imageHStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: sectionHStack, width: 0)
-            // Image
-            let imageView = CustomImageView()
-            let H: CGFloat = (213 * SCREEN_SIZE().width)/370
-            
-            imageHStack.addArrangedSubview(imageView)
-            imageView.activateConstraints([
-                imageView.heightAnchor.constraint(equalToConstant: H)
-            ])
-            imageView.showCorners(true)
-            imageView.load(url: self.refData.image_url)
-        
-        ADD_SPACER(to: sectionHStack, width: 0)
-    }
-    
-    func addContent() {
-    }
-    
-    
-    
-    
-    
-    
-    func addVSep(to ST: UIStackView, height H: CGFloat) {
-        ADD_SPACER(to: ST, height: H)
-    }
-    
-    func addlateralMargins(to V: UIView) {
-        let superView = V.superview!
-        V.activateConstraints([
-            V.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: M),
-            V.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -M)
-        ])
-    }
-    
-    func innerHStack(bgcolor: UIColor = .clear) -> UIStackView {
-        let vstack = HSTACK(into: self.VStack)
-        vstack.backgroundColor = bgcolor
-        
-        return vstack
-    }
-    
-}
+
+
+
+

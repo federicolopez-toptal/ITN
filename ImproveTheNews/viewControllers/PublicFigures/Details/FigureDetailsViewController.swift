@@ -97,8 +97,6 @@ class FigureDetailsViewController: BaseViewController {
 //            ,self.vStack.heightAnchor.constraint(equalToConstant: 500)
         ])
         
-        
-        
         self.refreshDisplayMode()
     }
     

@@ -1030,32 +1030,33 @@ extension NewsLetterArchiveViewController {
         return formatter.string(from: date)
     }
 
+//    @objc func storyOnTap(_ sender: UIButton) { // Open content in web browser
+//        let i = sender.tag
+//        let ST = self.stories[i]
+//        
+//        var url = ""
+//        if(ST.type==1) {
+//            url = "https://www.improvethenews.org/daily-newsletter?date=" + ST.date
+//        } else {
+//            url = "https://www.improvethenews.org/weekly-newsletters?date=" + ST.date
+//        }
+//        
+//        if(!url.isEmpty) {
+//            OPEN_URL(url)
+//        }
+//    }
+
     @objc func storyOnTap(_ sender: UIButton) {
         let i = sender.tag
         let ST = self.stories[i]
         
-        var url = ""
-        if(ST.type==1) {
-            url = "https://www.improvethenews.org/daily-newsletter?date=" + ST.date
-        } else {
-            url = "https://www.improvethenews.org/weekly-newsletters?date=" + ST.date
-        }
-        
-        if(!url.isEmpty) {
-            OPEN_URL(url)
-        }
-        
-        
-        
 //        print(ST)
-//        
-//        let vc = NewsLetterContentViewController()
-//        vc.refData = ST
-//        CustomNavController.shared.pushViewController(vc, animated: true)
+        let vc = NewsLetterContentViewController()
+        vc.refData = ST
+        CustomNavController.shared.pushViewController(vc, animated: true)
         
         //NewsLetterData.shared.loadNewsletter(ST)
         
-//
 //        print( ST.date )
 //        print( ST.type )
 //

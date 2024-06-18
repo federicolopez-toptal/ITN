@@ -82,11 +82,11 @@ class MainFeed_v3_viewController: BaseViewController {
             self.didAppear = true
             self.loadData()
             
-//            DELAY(2.0) {
-//                let vc = ControDetailViewController()
-//                vc.slug = "ai-existential-threat"
-//                CustomNavController.shared.pushViewController(vc, animated: true)
-//            }            
+            DELAY(0.5) {
+                let vc = NewsLetterContentViewController()
+                vc.refData = NewsLetterStory(type: 2)
+                CustomNavController.shared.pushViewController(vc, animated: true)
+            }
         }
         
         if(self.mustReloadOnShow) {
@@ -102,6 +102,11 @@ class MainFeed_v3_viewController: BaseViewController {
             CustomNavController.shared.slidersPanel.show(rows: 0, animated: false)
             CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
+        
+        
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
