@@ -87,11 +87,11 @@ class MainFeediPad_v3_viewController: BaseViewController {
 //                CustomNavController.shared.pushViewController(vc, animated: true)
 //            }
 
-            DELAY(0.5) {
-                let vc = NewsLetterContentViewController()
-                vc.refData = NewsLetterStory(type: 2)
-                CustomNavController.shared.pushViewController(vc, animated: true)
-            }
+//            DELAY(0.5) {
+//                let vc = NewsLetterContentViewController()
+//                vc.refData = NewsLetterStory(type: 2)
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
         }
         
         if(self.mustReloadOnShow) {

@@ -82,11 +82,11 @@ class MainFeed_v3_viewController: BaseViewController {
             self.didAppear = true
             self.loadData()
             
-            DELAY(0.5) {
-                let vc = NewsLetterContentViewController()
-                vc.refData = NewsLetterStory(type: 2)
-                CustomNavController.shared.pushViewController(vc, animated: true)
-            }
+//            DELAY(0.5) {
+//                let vc = NewsLetterContentViewController()
+//                vc.refData = NewsLetterStory(type: 2)
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
         }
         
         if(self.mustReloadOnShow) {

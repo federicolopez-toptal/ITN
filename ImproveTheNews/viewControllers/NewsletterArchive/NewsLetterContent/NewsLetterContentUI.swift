@@ -233,18 +233,22 @@ extension NewsLetterContentViewController {
     @objc func weeklyStoryButtonOnTap(_ sender: UIButton?) {
         let index = sender!.tag
         let data = self.data as! WeeklyNewsletter
-        let topic = data.stories[index].topic
+        let T = data.stories[index].topic
         
-        if let _vc = CustomNavController.shared.viewControllers.first {
-            if(_vc is MainFeed_v3_viewController) {
-                (_vc as! MainFeed_v3_viewController).topic = topic
-            } else if(_vc is MainFeediPad_v3_viewController) {
-                (_vc as! MainFeediPad_v3_viewController).topic = topic
-            }
-        }
+        let vc = NAV_MAINFEED_VC(topic: T)
+        CustomNavController.shared.pushViewController(vc, animated: true)
         
-        NOTIFY(Notification_reloadMainFeedOnShow)
-        CustomNavController.shared.popToRootViewController(animated: true)
+        
+//        if let _vc = CustomNavController.shared.viewControllers.first {
+//            if(_vc is MainFeed_v3_viewController) {
+//                (_vc as! MainFeed_v3_viewController).topic = topic
+//            } else if(_vc is MainFeediPad_v3_viewController) {
+//                (_vc as! MainFeediPad_v3_viewController).topic = topic
+//            }
+//        }
+//        
+//        NOTIFY(Notification_reloadMainFeedOnShow)
+//        CustomNavController.shared.popToRootViewController(animated: true)
     }
     
     func onLinkTap(_ url: URL) {

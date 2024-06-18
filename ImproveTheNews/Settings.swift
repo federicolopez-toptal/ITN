@@ -32,14 +32,17 @@ func BIASPEDIA_URL() -> String {
     return "https://biaspedia.org/api/"
 }
 //////////////////////////////////////////////////
-func NAV_MAINFEED_VC() -> UIViewController {
+func NAV_MAINFEED_VC(topic: String? = nil) -> UIViewController {
     var vc: UIViewController!
+    
         
     if(IPHONE()) {
         //vc = MainFeedViewController()
         vc = MainFeed_v3_viewController()
+        if(topic != nil){ (vc as! MainFeed_v3_viewController).topic = topic! }
     } else {
         vc = MainFeediPad_v3_viewController()
+        if(topic != nil){ (vc as! MainFeediPad_v3_viewController).topic = topic! }
     }
     
     return vc

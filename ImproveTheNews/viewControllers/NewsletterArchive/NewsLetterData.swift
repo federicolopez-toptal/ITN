@@ -229,6 +229,11 @@ class WeeklyStory {
                     if(C>topicStart) {
                         self.topic = text.subString(from: topicStart, count: C)!
                         self.topic = self.topic.replacingOccurrences(of: "-", with: "_")
+                        self.topic = self.topic.replacingOccurrences(of: "_and_", with: "_")
+                        
+                        if(self.topic == "science_technology"){ self.topic = "sci_tech" }
+                        if(self.topic.contains("<a")){ self.topic = "" }
+
                     } else {
                         // No topic
                         NOTHING()
