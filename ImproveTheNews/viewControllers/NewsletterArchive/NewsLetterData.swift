@@ -103,40 +103,33 @@ class NewsLetterData {
         task.resume()
     }
     
-    // load individual daily/weely newsletter(s)
-    func loadNewsletter(_ ST: NewsLetterStory,
-        callback: @escaping (Error?) -> () ) {
+    // load daily newsletter
+    func loadDailyNewsletter(_ ST: NewsLetterStory,
+        callback: @escaping (Error?, DailyNewsletter?) -> () ) {
         
-        var url = ""
-        if(ST.type == 1) {
-            url = ITN_URL() + "/php/stories/daily-newsletters.php?date=" + ST.date
-        } else {
-            url = ITN_URL() + "/php/stories/weekly-newsletters.php?date=" + ST.date
-        }
+        let url = ITN_URL() + "/php/stories/daily-newsletters.php?date=" + ST.date
         
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
-        print("Loading NEWSLETTER", url)
+        print("Loading daily NEWSLETTER", url)
         let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
-                callback(error)
+                callback(error, nil)
             }
             
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(_error)
+                callback(_error, nil)
             } else {
                 if let _json = JSON(fromData: data) {
-                    if(ST.type==2) {
-                        let info = WeeklyNewsletter(jsonObj: _json)
-                    }
+                    let data = DailyNewsletter(jsonObj: _json)
                     
-                    callback(nil)
+                    callback(nil, data)
                 } else {
                     let _error = CustomError.jsonParseError
-                    callback(_error)
+                    callback(_error, nil)
                 }
             }
         }
@@ -146,6 +139,8 @@ class NewsLetterData {
     
 }
 
+
+// ---------------------------------------
 class otherNewsLetter {
     var date: String = ""
     var title: String = ""
@@ -156,6 +151,65 @@ class otherNewsLetter {
     }
 }
 
+// ---------------------------------------
+class DailyNewsletter {
+
+    var date: String = ""
+    var prev: otherNewsLetter! = nil
+    var next: otherNewsLetter! = nil
+    var stories: [DailyStory] = []
+
+    init(jsonObj: [String: Any]) {
+        self.date = CHECK(jsonObj["newsletter-date"])
+        
+        if let _prevObj = jsonObj["prevnewsletter"] as? [[String: Any]], let _prev = _prevObj.first { // prev
+            self.prev = otherNewsLetter(date: CHECK(_prev["pubdate"]), title: CHECK(_prev["title"]))
+        }
+        
+        if let _nextObj = jsonObj["nextnewsletter"] as? [[String: Any]], let _next = _nextObj.first { // next
+            self.next = otherNewsLetter(date: CHECK(_next["pubdate"]), title: CHECK(_next["title"]))
+        }
+        
+        if let _stories = jsonObj["stories"] as? [[String: Any]] {
+            for _st in _stories {
+                let ST = DailyStory(jsonObj: _st)
+                self.stories.append(ST)
+            }
+        }
+    }
+
+}
+
+class DailyStory {
+
+    var title: String = ""
+    var slug: String = ""
+    var imageUrl: String = ""
+    var imageCreditText: String = ""
+    var imageCreditUrl: String = ""
+    var facts: [String] = []
+    var narratives: [String] = []
+
+    init(jsonObj: [String: Any]) {
+        self.title = CHECK(jsonObj["title"])
+        self.slug = CHECK(jsonObj["slug"])
+        self.imageUrl = CHECK(jsonObj["image_url"])
+        self.imageCreditText = CHECK(jsonObj["image_credit_title"])
+        self.imageCreditUrl = CHECK(jsonObj["image_credit_url"])
+        
+        if let _facts = jsonObj["facts"] as? [String] {
+            self.facts = _facts
+        }
+        
+        if let _narratives = jsonObj["narratives"] as? [String] {
+            self.narratives = _narratives
+        }
+    }
+
+}
+// ---------------------------------------
+// ---------------------------------------
+// ---------------------------------------
 class WeeklyNewsletter {
     
     var date: String = ""
@@ -168,16 +222,11 @@ class WeeklyNewsletter {
         self.date = CHECK(jsonObj["newsletter-date"])
         self.image = CHECK(jsonObj["image_url"])
         
-//        prev_newsletter
-//        next_newsletter
-        
-        // prev
-        if let _prev = jsonObj["prev_newsletter"] as? [String: String] {
+        if let _prev = jsonObj["prev_newsletter"] as? [String: String] { // prev
             self.prev = otherNewsLetter(date: CHECK(_prev["pubdate"]), title: CHECK(_prev["title"]))
         }
         
-        // next
-        if let _next = jsonObj["next_newsletter"] as? [String: String] {
+        if let _next = jsonObj["next_newsletter"] as? [String: String] { // next
             self.next = otherNewsLetter(date: CHECK(_next["pubdate"]), title: CHECK(_next["title"]))
         }
         

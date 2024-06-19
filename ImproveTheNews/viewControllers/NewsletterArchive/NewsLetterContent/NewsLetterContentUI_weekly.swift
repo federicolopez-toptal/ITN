@@ -1,5 +1,5 @@
 //
-//  NewsLetterContentUI.swift
+//  NewsLetterContentUI_weekly.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 18/06/2024.
@@ -11,7 +11,6 @@ import UIKit
 
 extension NewsLetterContentViewController {
     
-    // WEEKLY
     func addWeeklyContent() {
         self.addWeeklyTopData()
         self.addWeeklyStories()
@@ -19,10 +18,20 @@ extension NewsLetterContentViewController {
     }
     
     func addBottomLinks() {
-        let data = self.data as! WeeklyNewsletter
-        if(data.prev == nil && data.next == nil) {
-            return
+        var prev: otherNewsLetter! = nil
+        var next: otherNewsLetter! = nil
+    
+        if(refData.type == 1) {
+            let data = self.data as! DailyNewsletter
+            prev = data.prev
+            next = data.next
+        } else {
+            let data = self.data as! WeeklyNewsletter
+            prev = data.prev
+            next = data.next
         }
+    
+        if(prev == nil && next == nil) { return }
     
         var H: CGFloat = 64
         if(IPAD()){ H += 40 }
@@ -51,7 +60,7 @@ extension NewsLetterContentViewController {
         var _W = self.W() / 2.5
         if(IPHONE()){ _W = self.W()/3.25 }
         
-        if(data.prev != nil) {
+        if(prev != nil) {
         
             let icon = UIImageView(image: UIImage(named: "newsLetterLeft"))
             subView.addSubview(icon)
@@ -71,7 +80,7 @@ extension NewsLetterContentViewController {
             ])
             
             let dateLabel = UILabel()
-            dateLabel.text = self.formatDate(data.prev.date)
+            dateLabel.text = self.formatDate(prev.date)
             dateLabel.font = AILERON(15)
             dateLabel.textColor = CSS.shared.displayMode().sec_textColor
             vStack.addArrangedSubview(dateLabel)
@@ -80,7 +89,7 @@ extension NewsLetterContentViewController {
                 let titleLabel = UILabel()
                 titleLabel.numberOfLines = 2
                 titleLabel.font = DM_SERIF_DISPLAY(20)
-                titleLabel.text = data.prev.title
+                titleLabel.text = prev.title
                 titleLabel.textColor = CSS.shared.displayMode().main_textColor
                 vStack.addArrangedSubview(titleLabel)
             }
@@ -98,7 +107,7 @@ extension NewsLetterContentViewController {
             button.addTarget(self, action: #selector(goToOtherNewsletterButtonOnTap(_:)), for: .touchUpInside)
         }
         
-        if(data.next != nil) {
+        if(next != nil) {
         
             let icon = UIImageView(image: UIImage(named: "newsLetterRight"))
             subView.addSubview(icon)
@@ -119,7 +128,7 @@ extension NewsLetterContentViewController {
             
             let dateLabel = UILabel()
             dateLabel.textAlignment = .right
-            dateLabel.text = self.formatDate(data.next.date)
+            dateLabel.text = self.formatDate(next.date)
             dateLabel.font = AILERON(15)
             dateLabel.textColor = CSS.shared.displayMode().sec_textColor
             vStack.addArrangedSubview(dateLabel)
@@ -129,7 +138,7 @@ extension NewsLetterContentViewController {
                 titleLabel.textAlignment = .right
                 titleLabel.numberOfLines = 2
                 titleLabel.font = DM_SERIF_DISPLAY(20)
-                titleLabel.text = data.next.title
+                titleLabel.text = next.title
                 titleLabel.textColor = CSS.shared.displayMode().main_textColor
                 vStack.addArrangedSubview(titleLabel)
             }
@@ -152,13 +161,24 @@ extension NewsLetterContentViewController {
     
     @objc func goToOtherNewsletterButtonOnTap(_ sender: UIButton?) {
         let tag = sender!.tag
-        let data = self.data as! WeeklyNewsletter
+        let type = refData.type
+        var date: String = ""
         
-        if(tag == 1) { // Prev
-            self.gotoNewsLetterWithDate(data.prev.date, type: 2)
+        if(refData.type == 1) {
+            if(tag == 1) { // Prev
+                date = (self.data as! DailyNewsletter).prev.date
+            } else {
+                date = (self.data as! DailyNewsletter).next.date
+            }
         } else {
-            self.gotoNewsLetterWithDate(data.next.date, type: 2)
+            if(tag == 1) { // Prev
+                date = (self.data as! WeeklyNewsletter).prev.date
+            } else {
+                date = (self.data as! WeeklyNewsletter).next.date
+            }
         }
+        
+        self.gotoNewsLetterWithDate(date, type: refData.type)
     }
     
     func gotoNewsLetterWithDate(_ date: String, type: Int) {
@@ -296,55 +316,4 @@ extension NewsLetterContentViewController {
     
 }
 
-// MARK: UI misc
-extension NewsLetterContentViewController {
 
-    func addHStackViewWith(subview: UIView, addExtraHSpacer: Bool = false) {
-        let hstack = HSTACK(into: self.vStack)
-        ADD_SPACER(to: hstack, width: self.M())
-        hstack.addArrangedSubview(subview)
-        if(addExtraHSpacer) {
-            ADD_SPACER(to: hstack)
-        }
-        ADD_SPACER(to: hstack, width: self.M())
-    }
-
-    func addLine() {
-        let line = UIView()
-        line.backgroundColor = .clear
-        self.vStack.addArrangedSubview(line)
-        line.activateConstraints([
-            line.heightAnchor.constraint(equalToConstant: 4)
-        ])
-        ADD_HDASHES(to: line)
-    }
-
-    func W() -> CGFloat {
-        if(IPHONE()){
-            return SCREEN_SIZE().width
-        } else {
-            var value: CGFloat = 0
-            let w = SCREEN_SIZE().width
-            let h = SCREEN_SIZE().height
-            
-            value = w
-            if(h<w){ value = h }
-            
-            return value
-        }
-    }
-    
-    func M() -> CGFloat {
-        return CSS.shared.iPhoneSide_padding
-    }
-    
-    func formatDate(_ strDate: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let date = formatter.date(from: strDate)!
-        
-        formatter.dateFormat = "dd MMMM yyyy"
-        return formatter.string(from: date)
-    }
-
-}

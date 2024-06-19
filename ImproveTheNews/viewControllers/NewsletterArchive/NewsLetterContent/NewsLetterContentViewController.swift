@@ -14,7 +14,26 @@ extension NewsLetterContentViewController {
     private func loadContent() {
         self.showLoading()
         
-        if(self.refData.type == 2) { // Weekly
+        if(self.refData.type == 1) { // Daily
+            NewsLetterData.shared.loadDailyNewsletter(self.refData) { (error, data) in
+                if let _ = error {
+                    ALERT(vc: self, title: "Server error",
+                    message: "Trouble loading the newsletter,\nplease try again later.", onCompletion: {
+                        CustomNavController.shared.popViewController(animated: true)
+                    })
+                } else {
+                    if let _data = data {
+                        MAIN_THREAD {
+                            self.hideLoading()
+                            self.scrollView.show()
+                            
+                            self.data = _data
+                            self.addDailyContent()
+                        }
+                    }
+                }
+            }
+        } else if(self.refData.type == 2) { // Weekly
             NewsLetterData.shared.loadWeeklyNewsletter(self.refData) { (error, data) in
                 if let _ = error {
                     ALERT(vc: self, title: "Server error",
@@ -48,6 +67,10 @@ class NewsLetterContentViewController: BaseViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
     var vStack: UIStackView!
+    
+    var factsOpened: [Bool] = []
+    var narrativesTag: Int = 0
+    
     
     
     // MARK: - Init
@@ -146,8 +169,55 @@ extension NewsLetterContentViewController: UIGestureRecognizerDelegate {
     }
 }
 
+// MARK: UI misc
+extension NewsLetterContentViewController {
 
+    func addHStackViewWith(subview: UIView, addExtraHSpacer: Bool = false) {
+        let hstack = HSTACK(into: self.vStack)
+        ADD_SPACER(to: hstack, width: self.M())
+        hstack.addArrangedSubview(subview)
+        if(addExtraHSpacer) {
+            ADD_SPACER(to: hstack)
+        }
+        ADD_SPACER(to: hstack, width: self.M())
+    }
 
+    func addLine() {
+        let line = UIView()
+        line.backgroundColor = .clear
+        self.vStack.addArrangedSubview(line)
+        line.activateConstraints([
+            line.heightAnchor.constraint(equalToConstant: 4)
+        ])
+        ADD_HDASHES(to: line)
+    }
 
+    func W() -> CGFloat {
+        if(IPHONE()){
+            return SCREEN_SIZE().width
+        } else {
+            var value: CGFloat = 0
+            let w = SCREEN_SIZE().width
+            let h = SCREEN_SIZE().height
+            
+            value = w
+            if(h<w){ value = h }
+            
+            return value
+        }
+    }
+    
+    func M() -> CGFloat {
+        return CSS.shared.iPhoneSide_padding
+    }
+    
+    func formatDate(_ strDate: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let date = formatter.date(from: strDate)!
+        
+        formatter.dateFormat = "dd MMMM yyyy"
+        return formatter.string(from: date)
+    }
 
-
+}

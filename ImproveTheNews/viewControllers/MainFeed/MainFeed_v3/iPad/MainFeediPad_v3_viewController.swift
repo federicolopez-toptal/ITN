@@ -80,16 +80,10 @@ class MainFeediPad_v3_viewController: BaseViewController {
         if(!self.didAppear) {
             self.didAppear = true
             self.loadData()
-            
-//            DELAY(2.0) {
-//                let vc = ControDetailViewController()
-//                vc.slug = "ai-existential-threat"
-//                CustomNavController.shared.pushViewController(vc, animated: true)
-//            }
 
 //            DELAY(0.5) {
 //                let vc = NewsLetterContentViewController()
-//                vc.refData = NewsLetterStory(type: 2)
+//                vc.refData = NewsLetterStory(type: 1)
 //                CustomNavController.shared.pushViewController(vc, animated: true)
 //            }
         }

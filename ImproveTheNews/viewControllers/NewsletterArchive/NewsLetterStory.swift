@@ -24,9 +24,9 @@ class NewsLetterStory {
     // Fixed data for dev purposes...
     init(type: Int) {
         if(type==1) { // Daily
-            self.date = "2024-02-21"
-            self.title = "Deepfake regulation letter, Alabama embryo ruling and global cybergang disrupted"
-            self.image_url = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/65d63d37cf01c_image.png"
+            self.date = "2024-05-06"
+            self.title = ""
+            self.image_url = ""
             self.type = 1
         } else { // Weekly
             self.date = "2024-03-10"

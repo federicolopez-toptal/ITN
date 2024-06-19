@@ -84,7 +84,7 @@ class MainFeed_v3_viewController: BaseViewController {
             
 //            DELAY(0.5) {
 //                let vc = NewsLetterContentViewController()
-//                vc.refData = NewsLetterStory(type: 2)
+//                vc.refData = NewsLetterStory(type: 1)
 //                CustomNavController.shared.pushViewController(vc, animated: true)
 //            }
         }
