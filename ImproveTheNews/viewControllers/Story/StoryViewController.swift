@@ -50,6 +50,7 @@ class StoryViewController: BaseViewController {
     var goDeeperStories = [StorySearchResult]()
     var sectionViewHeightConstraint: NSLayoutConstraint? = nil
     
+    var upButton = UIButton(type: .custom)
     
     deinit {
         self.audioPlayer.close()
@@ -325,6 +326,8 @@ extension StoryViewController {
 //        DELAY(1.0) {
 //            self.scrollToBottom()
 //        }
+        self.addUpButton()
+
     }
 
     //----
@@ -1962,6 +1965,32 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: 0)
     }
 
+    func addUpButton() {
+        self.upButton.setImage(UIImage(named: DisplayMode.imageName("storyBackToTop")), for: .normal)
+        self.view.addSubview(self.upButton)
+        self.upButton.activateConstraints([
+            self.upButton.widthAnchor.constraint(equalToConstant: 120),
+            self.upButton.heightAnchor.constraint(equalToConstant: 120),
+            self.upButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.upButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -16)
+        ])
+        
+        self.upButton.addTarget(self, action: #selector(upButtonOnTap(_:)), for: .touchUpInside)
+        self.upButton.hide()
+    }
+    
+    @objc func upButtonOnTap(_ sender: UIButton?) {
+        self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.upButton.alpha = 0
+        } completion: { _ in
+            self.upButton.hide()
+        }
+
+    }
+
+
 }
 
 // MARK: - misc + Utils
@@ -2132,6 +2161,22 @@ extension StoryViewController: UIScrollViewDelegate {
 //        } else {
 //            self.secondaryAudioPlayer.customHide()
 //        }
+
+
+        if(self.loadedStory.audio != nil && IPHONE()) {
+            self.upButton.hide()
+            return
+        }
+
+
+        let posY = scrollView.contentOffset.y
+        
+        if(posY >= 100) {
+            self.upButton.alpha = 1
+            self.upButton.show()
+        } else {
+            self.upButton.hide()
+        }
     }
      
     func calculateSectionsY() {
