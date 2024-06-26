@@ -26,7 +26,7 @@ extension KeywordSearchViewController {
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: listMargins+IPAD_sideOffset()),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -listMargins),
             self.list.topAnchor.constraint(equalTo: self.searchSelector.bottomAnchor, constant: 0),
-            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset())
         ])
     
         self.list.separatorStyle = .none

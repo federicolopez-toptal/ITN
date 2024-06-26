@@ -24,7 +24,7 @@ extension MainFeed_v3_viewController {
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset()),
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topOffset) //, constant: topValue)
         ])
         self.navBar.superview?.bringSubviewToFront(self.navBar)

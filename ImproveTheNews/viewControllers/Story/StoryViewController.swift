@@ -51,6 +51,7 @@ class StoryViewController: BaseViewController {
     var sectionViewHeightConstraint: NSLayoutConstraint? = nil
     
     var upButton = UIButton(type: .custom)
+    var upButtonBottomConstraint: NSLayoutConstraint?
     
     deinit {
         self.audioPlayer.close()
@@ -90,7 +91,7 @@ class StoryViewController: BaseViewController {
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset())
         ])
         
             let H = self.contentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
@@ -326,7 +327,7 @@ extension StoryViewController {
 //        DELAY(1.0) {
 //            self.scrollToBottom()
 //        }
-        self.addUpButton()
+        self.addUpButton(audioFile: story.audio)
 
     }
 
@@ -419,6 +420,8 @@ extension StoryViewController {
                 NOTHING()
         }
         
+        let limit = self.contentView.frame.size.height - self.scrollView.frame.size.height
+        if(val_Y > limit){ val_Y = limit }
         self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y), animated: true)
     }
     
@@ -1843,7 +1846,10 @@ extension StoryViewController {
     private func addAudioPlayer(_ audioFile: AudioFile?) {
         if let _audioFile = audioFile {
             self.audioPlayer.buildInto(self.VStack, file: _audioFile)
+            
             self.secondaryAudioPlayer.buildInto(self.view, file: _audioFile)
+            self.secondaryAudioPlayer.delegate = self
+            
             //self.secondaryAudioPlayer.customHide()
             self.secondaryAudioPlayer.customShow()
         }
@@ -1968,16 +1974,30 @@ extension StoryViewController {
         ADD_SPACER(to: self.VStack, height: 0)
     }
 
-    func addUpButton() {
+    func addUpButton(audioFile: AudioFile?) {
         self.upButton.setImage(UIImage(named: DisplayMode.imageName("storyBackToTop")), for: .normal)
+        //self.upButton.backgroundColor = .yellow.withAlphaComponent(0.5)
         self.view.addSubview(self.upButton)
         self.upButton.activateConstraints([
-            self.upButton.widthAnchor.constraint(equalToConstant: 120),
-            self.upButton.heightAnchor.constraint(equalToConstant: 120),
-            self.upButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: IPAD_sideOffset(multiplier: 0.5)),
-            self.upButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -16)
+            self.upButton.widthAnchor.constraint(equalToConstant: 60),
+            self.upButton.heightAnchor.constraint(equalToConstant: 60),
+            self.upButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: IPAD_sideOffset(multiplier: 0.5))
         ])
         
+        if(IPHONE()) {
+            if(audioFile == nil) {
+                self.upButton.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -10).isActive = true
+            } else {
+                self.upButtonBottomConstraint = self.upButton.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor,
+                constant: -10-75)
+                
+                self.upButtonBottomConstraint?.isActive = true
+            }
+        } else {
+            // IPAD
+            self.upButton.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -16).isActive = true
+        }
+                
         self.upButton.addTarget(self, action: #selector(upButtonOnTap(_:)), for: .touchUpInside)
         self.upButton.hide()
     }
@@ -2166,10 +2186,10 @@ extension StoryViewController: UIScrollViewDelegate {
 //        }
 
 
-        if(self.loadedStory.audio != nil && IPHONE()) {
-            self.upButton.hide()
-            return
-        }
+//        if(self.loadedStory.audio != nil && IPHONE()) {
+//            self.upButton.hide()
+//            return
+//        }
 
 
         let posY = scrollView.contentOffset.y
@@ -2424,4 +2444,12 @@ extension StoryViewController {
         }
     }
 
+}
+
+extension StoryViewController: AudioPlayerViewDelegate {
+    
+    func AudioPlayerViewOnHeightChanged(sender: AudioPlayerView, height: CGFloat) {
+        self.upButtonBottomConstraint?.constant = -10-height
+    }
+    
 }

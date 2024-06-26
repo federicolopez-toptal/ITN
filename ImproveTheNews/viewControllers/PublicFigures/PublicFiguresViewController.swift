@@ -78,7 +78,7 @@ class PublicFiguresViewController: BaseViewController {
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset())
         ])
         
         let H = self.contentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
@@ -295,7 +295,7 @@ class PublicFiguresViewController: BaseViewController {
         if(index == 99) {
             self.typePicker.selectRow(self.currentType, inComponent: 0, animated: false)
         
-            self.typePickerTopConstraint.constant = -self.typePicker.frame.size.height
+            self.typePickerTopConstraint.constant = -self.typePicker.frame.size.height+IPHONE_bottomOffset()
             UIView.animate(withDuration: 0.3) {
                 self.darkView.alpha = 1
                 self.view.layoutIfNeeded()

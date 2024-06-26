@@ -72,7 +72,7 @@ class NewsLetterArchiveViewController: BaseViewController {
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.navBar.bottomAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset())
         ])
 
             let H = self.mainContentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)

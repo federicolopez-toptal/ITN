@@ -27,3 +27,17 @@ class TabsBar_iPad: TabsBar {
     }
     
 }
+
+// ----------------------------------------------------------
+func SCREEN_SIZE_iPadSideTab() -> CGSize {
+    var result = UIScreen.main.bounds.size
+    if(IPAD()){ result.width -= TabsBar_iPad.WIDTH }
+    
+    return result
+}
+
+func IPAD_sideOffset(multiplier: CGFloat = 1) -> CGFloat {
+    var offset: CGFloat = 0
+    if(IPAD()){ offset = TabsBar_iPad.WIDTH * multiplier }
+    return offset
+}

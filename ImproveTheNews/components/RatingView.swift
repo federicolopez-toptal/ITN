@@ -43,7 +43,8 @@ class RatingView: UIView {
         }
     
         viewController.view.addSubview(self)
-        self.bottomConstraint = self.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
+        self.bottomConstraint = self.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor,
+            constant: IPHONE_bottomOffset())
         self.activateConstraints([
             self.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor),

@@ -13,7 +13,13 @@ let AudioPlayerViewNotification_timeUpdated = Notification.Name("AudioPlayerView
 let AudioPlayerViewNotification_timeCompleted = Notification.Name("AudioPlayerView_timeCompleted")
 let AudioPlayerViewNotification_statusUpdated = Notification.Name("AudioPlayerView_statusUpdated")
 
+protocol AudioPlayerViewDelegate: AnyObject {
+    func AudioPlayerViewOnHeightChanged(sender: AudioPlayerView, height: CGFloat)
+}
+
 class AudioPlayerView: UIView {
+    
+    weak var delegate: AudioPlayerViewDelegate?
     
     private var primary: Bool = true
     private var secondary: Bool = false
@@ -72,7 +78,8 @@ class AudioPlayerView: UIView {
                 self.mainHStack.activateConstraints([
                     self.mainHStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                     self.mainHStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-                    self.mainHStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+                    self.mainHStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,
+                        constant: IPHONE_bottomOffset())
                 ])
             } else {
                 self.mainHStack.activateConstraints([
@@ -86,11 +93,11 @@ class AudioPlayerView: UIView {
         }
         
         var bottomMargin: CGFloat = 0
-        if(self.secondary) {
-            if let _margin = SAFE_AREA()?.bottom, _margin>0 {
-                bottomMargin = 22
-            }
-        }
+//        if(self.secondary) {
+//            if let _margin = SAFE_AREA()?.bottom, _margin>0 {
+//                bottomMargin = 22
+//            }
+//        }
         self.heightClosed += bottomMargin
         self.heightOpened += bottomMargin
         
@@ -381,6 +388,8 @@ class AudioPlayerView: UIView {
         
         if(self.isOpen) {
             self.heightConstraint.constant = self.heightOpened
+            self.delegate?.AudioPlayerViewOnHeightChanged(sender: self, height: self.heightOpened)
+            
             self.upDownArrowImageView.image = UIImage(named: self.primary ? DisplayMode.imageName("arrow.up") : DisplayMode.imageName("arrow.down"))
             self.playImageView1.hide()
             
@@ -391,6 +400,8 @@ class AudioPlayerView: UIView {
             }
         } else {
             self.heightConstraint.constant = self.heightClosed
+            self.delegate?.AudioPlayerViewOnHeightChanged(sender: self, height: self.heightClosed)
+            
             self.upDownArrowImageView.image = UIImage(named: self.primary ? DisplayMode.imageName("arrow.down") : DisplayMode.imageName("arrow.up"))
             if(self.playTimes>0){
                 self.playButton1.show()

@@ -43,7 +43,7 @@ extension NewsLetterContentViewController {
         mainView.activateConstraints([
             mainView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             mainView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            mainView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            mainView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset()+extraH),
             mainView.heightAnchor.constraint(equalToConstant: H+extraH)
         ])
         

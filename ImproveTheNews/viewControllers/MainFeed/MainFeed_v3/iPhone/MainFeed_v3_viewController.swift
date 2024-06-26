@@ -87,6 +87,11 @@ class MainFeed_v3_viewController: BaseViewController {
 //                vc.refData = NewsLetterStory(type: 1)
 //                CustomNavController.shared.pushViewController(vc, animated: true)
 //            }
+
+//            DELAY(0.5) {
+//                let vc = AccountViewController()
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
         }
         
         if(self.mustReloadOnShow) {
