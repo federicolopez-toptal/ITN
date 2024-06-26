@@ -16,7 +16,7 @@ extension FigureDetailsViewController {
         
         var _m: CGFloat = 0
         if(IPAD()) {
-            _m = (SCREEN_SIZE().width - W())/2
+            _m = (SCREEN_SIZE_iPadSideTab().width - W())/2
         }
         
         let innerScrollView = UIScrollView()

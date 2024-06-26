@@ -26,7 +26,7 @@ class iPadStory_vTxt_cell_v3: GroupItemCell_v3 {
         self.subViews = [CustomCellView_v3]()
         
         ///
-        let view1 = iPadStory_vTxt_v3(width: SCREEN_SIZE().width)
+        let view1 = iPadStory_vTxt_v3(width: SCREEN_SIZE().width - IPAD_sideOffset())
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),

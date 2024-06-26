@@ -59,7 +59,7 @@ class NavBarView: UIView {
         container.addSubview(self)
         self.activateConstraints([
             self.topAnchor.constraint(equalTo: container.topAnchor),
-            self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            self.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: IPAD_sideOffset()),
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             self.heightAnchor.constraint(equalToConstant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_height)),
         ])
@@ -353,7 +353,7 @@ class NavBarView: UIView {
                 self.addSubview(label)
                 label.activateConstraints([
                     label.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: IPAD_sideOffset(multiplier: -0.5))
 //                    label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset),
 //                    label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset),
                 ])

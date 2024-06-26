@@ -21,6 +21,7 @@ class CustomNavController: UINavigationController {
     let slidersPanel = SlidersPanel()
     let floatingButton = FloatingButton()
     let darkView = DarkView()
+    let tabsBar = TabsBar.customInit()
     
     var tour: Tour?
 
@@ -30,6 +31,7 @@ class CustomNavController: UINavigationController {
         if(CustomNavController.shared == nil){ CustomNavController.shared = self }
         self.isNavigationBarHidden = true
         
+        self.tabsBar.buildInto(self.view)
         self.slidersPanel.buildInto(self.view)
         self.floatingButton.buildInto(self.view, panel: self.slidersPanel)
         self.slidersPanel.floatingButton = self.floatingButton

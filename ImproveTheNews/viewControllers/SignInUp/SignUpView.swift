@@ -46,7 +46,7 @@ class SignUpView: UIView {
         self.scrollView.backgroundColor = .systemPink
         self.scrollViewBottomConstraint = self.scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         self.scrollView.activateConstraints([
-            self.scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.topAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.scrollViewBottomConstraint

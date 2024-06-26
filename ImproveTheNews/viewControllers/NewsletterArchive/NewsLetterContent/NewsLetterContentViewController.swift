@@ -112,7 +112,7 @@ class NewsLetterContentViewController: BaseViewController {
         self.scrollView.backgroundColor = .systemPink
         //self.scrollView.delegate = self
         self.scrollView.activateConstraints([
-            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -137,9 +137,9 @@ class NewsLetterContentViewController: BaseViewController {
         self.vStack.activateConstraints([
             self.vStack.topAnchor.constraint(equalTo: self.contentView.topAnchor),
             self.vStack.widthAnchor.constraint(equalToConstant: self.W()),
-            self.vStack.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.vStack.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor, constant: 0),
             self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-            
+
             //,self.vStack.heightAnchor.constraint(equalToConstant: 300)
         ])
         
@@ -202,6 +202,8 @@ extension NewsLetterContentViewController {
             
             value = w
             if(h<w){ value = h }
+            
+            value -= IPAD_sideOffset()
             
             return value
         }

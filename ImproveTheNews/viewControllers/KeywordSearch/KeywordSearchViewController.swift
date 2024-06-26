@@ -99,11 +99,11 @@ extension KeywordSearchViewController {
             titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: closeIcon.topAnchor, constant: 21)
         ])
-                   
+                                
         self.searchTextfield.delegate = self
         self.searchTextfield.buildInto(viewController: self)
         self.searchTextfield.activateConstraints([
-            self.searchTextfield.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.searchTextfield.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16+IPAD_sideOffset()),
             self.searchTextfield.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             self.searchTextfield.heightAnchor.constraint(equalToConstant: 48),
             self.searchTextfield.topAnchor.constraint(equalTo: closeIcon.bottomAnchor, constant: 47)

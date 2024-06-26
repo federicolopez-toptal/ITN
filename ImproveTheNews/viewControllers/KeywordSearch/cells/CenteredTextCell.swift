@@ -30,7 +30,8 @@ class CenteredTextCell: UITableViewCell {
     
         self.contentView.addSubview(self.customTextLabel)
         self.customTextLabel.activateConstraints([
-            self.customTextLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.customTextLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,
+                constant: IPAD_sideOffset(multiplier: -0.5)),
             self.customTextLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
         ])
         

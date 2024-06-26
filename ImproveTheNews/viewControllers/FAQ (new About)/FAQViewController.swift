@@ -65,7 +65,7 @@ class FAQViewController: BaseViewController {
         self.scrollView.backgroundColor = .systemPink
         
         self.scrollView.activateConstraints([
-            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -218,7 +218,7 @@ class FAQViewController: BaseViewController {
         
         var sideMargin: CGFloat = 15
         if(IPAD()){ sideMargin = 60 }
-        let W: CGFloat = SCREEN_SIZE().width - (13*2) - (sideMargin*2)
+        let W: CGFloat = SCREEN_SIZE_iPadSideTab().width - (13*2) - (sideMargin*2)
         var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20 + descr.calculateHeightFor(width: W) + 20 + 15
         
         var hSep: CGFloat = CSS.shared.iPhoneSide_padding

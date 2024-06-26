@@ -75,7 +75,7 @@ class PublicFiguresViewController: BaseViewController {
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
         self.scrollView.activateConstraints([
-            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -117,7 +117,7 @@ class PublicFiguresViewController: BaseViewController {
         
         self.view.addSubview(self.typePicker)
         self.typePicker.activateConstraints([
-            self.typePicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.typePicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.typePicker.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
         self.typePickerTopConstraint = self.typePicker.topAnchor.constraint(equalTo: self.view.bottomAnchor)

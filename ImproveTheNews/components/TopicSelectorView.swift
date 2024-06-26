@@ -33,13 +33,13 @@ class TopicSelectorView: UIView {
     }
     
     // MARK: - Build component
-    func buildInto(_ container: UIView, yOffset: CGFloat = NavBarView.HEIGHT()) {
+    func buildInto(_ container: UIView, yOffset: CGFloat = NavBarView.HEIGHT()) {        
         self.backgroundColor = .white
         container.addSubview(self)
         self.viewHeightConstraint = self.heightAnchor.constraint(equalToConstant: CSS.shared.topicSelector_height)
         self.activateConstraints([
             self.topAnchor.constraint(equalTo: container.topAnchor, constant: yOffset),
-            self.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            self.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: IPAD_sideOffset()),
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             self.viewHeightConstraint!
         ])

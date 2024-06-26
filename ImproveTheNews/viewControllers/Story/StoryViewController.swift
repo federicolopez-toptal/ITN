@@ -82,12 +82,12 @@ class StoryViewController: BaseViewController {
         
         //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
-        
+                
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
         self.scrollView.delegate = self
         self.scrollView.activateConstraints([
-            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -339,7 +339,7 @@ extension StoryViewController {
             containerView.heightAnchor.constraint(equalToConstant: 40)
         ])
         
-        let W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding*4))/3
+        let W = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding*4))/3
         var val_X: CGFloat = CSS.shared.iPhoneSide_padding
         
         for i in 1...3 {
@@ -444,7 +444,7 @@ extension StoryViewController {
         
         var W: CGFloat = SCREEN_SIZE().width - (15*2)
         var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20
-        W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
+        W = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
         
         var count = 0
         while(self.goDeeperStories.count>0) {
@@ -546,7 +546,7 @@ extension StoryViewController {
             
             //for (i, A) in articles.enumerated() {
             
-            let W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
+            let W = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
             var artNum = 0
             var completed = false
             while(!completed) {
@@ -688,7 +688,8 @@ extension StoryViewController {
                 headerLabel.textColor = CSS.shared.displayMode().header_textColor
                 headerLabel.textAlignment = .center
                 
-                let W = SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding*3)
+                let W = SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding*3)
+                
                 headers.addSubview(headerLabel)
                 headerLabel.activateConstraints([
                     headerLabel.widthAnchor.constraint(equalToConstant: W/2),
@@ -729,7 +730,8 @@ extension StoryViewController {
             
             // Show columns --------------------------------
             var colsHStack = UIStackView()
-            let W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
+            let W = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
+            
             while(articlesLeft.count>0 || articlesRight.count>0) {
                 let aLeft = articlesLeft.first
                 let aRight = articlesRight.first
@@ -860,7 +862,8 @@ extension StoryViewController {
         
         var articlesCopy = articles
         // Show columns --------------------------------
-        let W = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
+        let W = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
+        
         while(articlesCopy.count>0) {
             let aLeft = articlesCopy.first
             var aRight: StoryArticle? = nil
@@ -1113,7 +1116,7 @@ extension StoryViewController {
     
     func addSpins_iPad(_ spins: [Spin], innerHStack: UIStackView) {
         let M = CSS.shared.iPhoneSide_padding
-        let W = (SCREEN_SIZE().width - (M * 3))/2
+        let W = ((SCREEN_SIZE_iPadSideTab().width) - (M * 3))/2
         
         var col = 1
         //for i in 1...3 {
@@ -1971,7 +1974,7 @@ extension StoryViewController {
         self.upButton.activateConstraints([
             self.upButton.widthAnchor.constraint(equalToConstant: 120),
             self.upButton.heightAnchor.constraint(equalToConstant: 120),
-            self.upButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.upButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: IPAD_sideOffset(multiplier: 0.5)),
             self.upButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -16)
         ])
         

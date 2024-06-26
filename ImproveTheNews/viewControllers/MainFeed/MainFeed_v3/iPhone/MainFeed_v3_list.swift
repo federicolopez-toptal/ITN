@@ -283,13 +283,13 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
     func onShowMoreButtonTap(sender: iPhoneMoreCell_v3) {
         self.showLoading()
         
-        if(sender.topic == "CONTRO") {
-            self.removeControversiesFromMainFeed()
-        
-            self.controversiesPage += 1
-            self.loadControversies()
-            return
-        }
+//        if(sender.topic == "CONTRO") {
+//            self.removeControversiesFromMainFeed()
+//        
+//            self.controversiesPage += 1
+//            self.loadControversies()
+//            return
+//        }
         
         let topic = sender.topic
         if(topic != self.topic) {

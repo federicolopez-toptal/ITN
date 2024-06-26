@@ -54,9 +54,10 @@ class PreferencesViewController: BaseViewController {
     
     // MARK: - misc
     func buildContent() {
+
         self.view.addSubview(self.list)
         self.list.activateConstraints([
-            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)

@@ -195,10 +195,10 @@ extension MainFeed_v3_viewController {
 //                            self.list.scrollToBottom()
 //                        }
                         
-                        self.controversies = []
-                        self.controversiesPage = 1
-                        self.controversiesTotal = 0
-                        self.loadControversies()
+//                        self.controversies = []
+//                        self.controversiesPage = 1
+//                        self.controversiesTotal = 0
+//                        self.loadControversies()
                     }
                 }
             }

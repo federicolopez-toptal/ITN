@@ -11,6 +11,8 @@ import UIKit
 
 class MainFeediPad_v3_viewController: BaseViewController {
     
+    //let tabsBar = TabsBar.customInit()
+    
     let navBar = NavBarView()
     let topicSelector = TopicSelectorView()
     var list = CustomFeedList()
@@ -56,7 +58,7 @@ class MainFeediPad_v3_viewController: BaseViewController {
         
         if(!self.didLayout) {
             self.didLayout = true
-            
+
             self.navBar.buildInto(viewController: self)
             if(self.imFirstViewController()) {
                 self.navBar.addComponents([.logo, .menuIcon, .searchIcon, .user])
@@ -66,7 +68,9 @@ class MainFeediPad_v3_viewController: BaseViewController {
             
             self.topicSelector.buildInto(self.view)
             self.topicSelector.delegate = self
+            
             self.setupList()
+            //self.tabsBar.buildInto(viewController: self)
             
             if let _safeAreaTop = SAFE_AREA()?.top {
                 self.safeAreaTop = _safeAreaTop
@@ -84,6 +88,17 @@ class MainFeediPad_v3_viewController: BaseViewController {
 //            DELAY(0.5) {
 //                let vc = NewsLetterContentViewController()
 //                vc.refData = NewsLetterStory(type: 1)
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
+    
+//            DELAY(0.5) {
+//                let vc = FigureDetailsViewController()
+//                vc.slug = "elon-musk"
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//            }
+
+//            DELAY(0.5) {
+//                let vc = AccountViewController()
 //                CustomNavController.shared.pushViewController(vc, animated: true)
 //            }
         }
@@ -182,10 +197,10 @@ extension MainFeediPad_v3_viewController {
 //                            self.list.scrollToBottom()
 //                        }
                         
-                        self.controversies = []
-                        self.controversiesPage = 1
-                        self.controversiesTotal = 0
-                        self.loadControversies()
+//                        self.controversies = []
+//                        self.controversiesPage = 1
+//                        self.controversiesTotal = 0
+//                        self.loadControversies()
                         
                     }
                 }
@@ -348,6 +363,7 @@ extension MainFeediPad_v3_viewController {
         }
 
         self.setupList()
+//        self.tabsBar.buildInto(viewController: self)
         
         // Header
         DELAY(0.2) {

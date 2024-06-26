@@ -23,7 +23,7 @@ extension KeywordSearchViewController {
         self.list.backgroundColor = self.view.backgroundColor
         
         self.list.activateConstraints([
-            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: listMargins),
+            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: listMargins+IPAD_sideOffset()),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -listMargins),
             self.list.topAnchor.constraint(equalTo: self.searchSelector.bottomAnchor, constant: 0),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -67,15 +67,17 @@ extension KeywordSearchViewController {
     // MARK: - Cell registration
     func listRegisterCells() {
         self.list.register(iPhoneHeaderCell_v3.self, forCellReuseIdentifier: iPhoneHeaderCell_v3.identifier)
-        self.list.register(iPhoneStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)
-        self.list.register(iPhoneArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)
-        self.list.register(iPadArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPadArticle_2colsImg_cell_v3.identifier)
-        self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
         self.list.register(SpacerCell_v3.self, forCellReuseIdentifier: SpacerCell_v3.identifier)
         self.list.register(TopicsCell.self, forCellReuseIdentifier: TopicsCell.identifier)
         self.list.register(CenteredTextCell.self, forCellReuseIdentifier: CenteredTextCell.identifier)
-        self.list.register(iPadStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPadStory_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
+        
+        self.list.register(iPhoneStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)
         self.list.register(iPhoneControversyCell_v3.self, forCellReuseIdentifier: iPhoneControversyCell_v3.identifier)
+        
+        self.list.register(iPadArticle_2colsImg_cell_v3.self, forCellReuseIdentifier: iPadArticle_2colsImg_cell_v3.identifier)
+        self.list.register(iPadStory_2colsImg_cell_v3.self, forCellReuseIdentifier: iPadStory_2colsImg_cell_v3.identifier)
         self.list.register(iPadControversyCell_v3.self, forCellReuseIdentifier: iPadControversyCell_v3.identifier)
         self.list.register(iPadControversyNarrowCell_v3.self, forCellReuseIdentifier: iPadControversyNarrowCell_v3.identifier)
     }

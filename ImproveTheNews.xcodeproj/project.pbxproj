@@ -517,6 +517,9 @@
 		BD50541E2BEDCAF500AD1030 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD50541D2BEDCAF500AD1030 /* CustomButton.swift */; };
 		BD5975872BFEE49600BDBEBB /* StoryInfoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */; };
 		BDB3CB0A2BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */; };
+		BDBC3CE92C29C11100648945 /* TabsBar_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC3CE82C29C11100648945 /* TabsBar_iPad.swift */; };
+		BDBC3CEC2C29C2BC00648945 /* TabsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC3CEB2C29C2BC00648945 /* TabsBar.swift */; };
+		BDD3DACB2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */; };
 		BDD4EA842C225C6B0002906A /* NewsLetterContentUI_daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */; };
 		BDE838A02BF7D61800C4C8D2 /* SVGLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */; };
 		BDE838A22BF7D76B00C4C8D2 /* NATO_OTAN.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */; };
@@ -1041,6 +1044,9 @@
 		BD50541D2BEDCAF500AD1030 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoPopupView.swift; sourceTree = "<group>"; };
 		BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyNarrowCell_v3.swift; sourceTree = "<group>"; };
+		BDBC3CE82C29C11100648945 /* TabsBar_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPad.swift; sourceTree = "<group>"; };
+		BDBC3CEB2C29C2BC00648945 /* TabsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar.swift; sourceTree = "<group>"; };
+		BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPhone.swift; sourceTree = "<group>"; };
 		BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterContentUI_daily.swift; sourceTree = "<group>"; };
 		BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLoader.swift; sourceTree = "<group>"; };
 		BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NATO_OTAN.jpg; sourceTree = "<group>"; };
@@ -1171,13 +1177,13 @@
 			path = "Third Party";
 			sourceTree = "<group>";
 		};
-		1F70BE72291457960061E3FA /* Search */ = {
+		1F70BE72291457960061E3FA /* Search (old) */ = {
 			isa = PBXGroup;
 			children = (
 				1F70BE6E2913FBD50061E3FA /* SearchViewController.swift */,
 				1F70BE73291457B70061E3FA /* Search_topics.swift */,
 			);
-			path = Search;
+			path = "Search (old)";
 			sourceTree = "<group>";
 		};
 		1F7B9EBC296DEF5800D99C5D /* Story */ = {
@@ -1314,7 +1320,7 @@
 				1FA4CE6928C2874E0068DE4A /* BaseViewController.swift */,
 				1FE89CDC2AF199F100A6C99C /* MainFeed */,
 				1FD2340829159EFD00B85AE9 /* Preferences */,
-				1F70BE72291457960061E3FA /* Search */,
+				1F70BE72291457960061E3FA /* Search (old) */,
 				1FBD426F2A40EDB500BFE68B /* KeywordSearch */,
 				1F9E28C12954B1FD00041303 /* PrivacyPolicy */,
 				1FBD090529B24A5A00AC20F5 /* FAQ (new About) */,
@@ -1334,6 +1340,7 @@
 		1F95135F28BFC61A00A77AB6 /* components */ = {
 			isa = PBXGroup;
 			children = (
+				BDBC3CEA2C29C23500648945 /* SideTabs */,
 				1FBCA44D294122B700FBF997 /* CustomNavController */,
 				1FD5BDEF28DC0F7A003E650F /* popups */,
 				1F7E777128E362160024D792 /* CustomCollectionView */,
@@ -2098,6 +2105,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BDBC3CEA2C29C23500648945 /* SideTabs */ = {
+			isa = PBXGroup;
+			children = (
+				BDBC3CEB2C29C2BC00648945 /* TabsBar.swift */,
+				BDBC3CE82C29C11100648945 /* TabsBar_iPad.swift */,
+				BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */,
+			);
+			path = SideTabs;
+			sourceTree = "<group>";
+		};
 		BDE838A32BF7D77500C4C8D2 /* svg(s) */ = {
 			isa = PBXGroup;
 			children = (
@@ -2535,6 +2552,7 @@
 				1FC557182AF2EE4800C0117A /* LoadingView.swift in Sources */,
 				1F90104728C583D600A5BDC9 /* LocalKeys.swift in Sources */,
 				1F9538DC28FF337A00251598 /* StancePopupView.swift in Sources */,
+				BDD3DACB2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift in Sources */,
 				1FE89CF72AF1A91F00A6C99C /* DP3_item.swift in Sources */,
 				1FE89D002AF1ADF300A6C99C /* iPhoneStory_vImg_cell_v3.swift in Sources */,
 				1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */,
@@ -2591,6 +2609,7 @@
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
 				1FE89CD72AF1552400A6C99C /* ComponentUtils.swift in Sources */,
 				1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */,
+				BDBC3CE92C29C11100648945 /* TabsBar_iPad.swift in Sources */,
 				1FC9C4582B8852CC00E77FD5 /* iPadStory_vImg_v3.swift in Sources */,
 				1F68CD032BACC7C7007AC92C /* FigureDetails_extras.swift in Sources */,
 				1FEE16EB28C833BF0079BE54 /* NavBarView.swift.txt in Sources */,
@@ -2603,6 +2622,7 @@
 				1FF088CD29F824ED00F31523 /* NSAttributedStringExtension.swift in Sources */,
 				1FC8352C2A1549E5007BCE56 /* DataExtension.swift in Sources */,
 				1FC287E129A652F40017433B /* DataProviderItem.swift in Sources */,
+				BDBC3CEC2C29C2BC00648945 /* TabsBar.swift in Sources */,
 				1F7B9EC0296E032D00D99C5D /* MainFeedStory.swift in Sources */,
 				1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */,
 				1FE89CF22AF19E9700A6C99C /* MainFeed_v3_list.swift in Sources */,
@@ -2889,7 +2909,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 106;
+				CURRENT_PROJECT_VERSION = 107;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -2928,7 +2948,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 106;
+				CURRENT_PROJECT_VERSION = 107;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3020,7 +3040,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 106;
+				CURRENT_PROJECT_VERSION = 107;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

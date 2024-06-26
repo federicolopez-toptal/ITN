@@ -28,8 +28,8 @@ class iPadControversyNarrowCell_v3: UITableViewCell {
     private func buildContent() {
         self.subViews = [ControversyCellView]()
 
-        let W = (SCREEN_SIZE().width - (M*3))/2
-
+        let W = (SCREEN_SIZE_iPadSideTab().width - (M*3))/2
+        
         let view1 = ControversyCellView(width: W)
         self.contentView.addSubview(view1)
         view1.activateConstraints([

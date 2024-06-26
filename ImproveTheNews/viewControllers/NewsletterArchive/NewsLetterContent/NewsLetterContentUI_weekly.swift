@@ -51,7 +51,7 @@ extension NewsLetterContentViewController {
         subView.backgroundColor = mainView.backgroundColor
         mainView.addSubview(subView)
         subView.activateConstraints([
-            subView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            subView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: IPAD_sideOffset()),
             subView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
             subView.topAnchor.constraint(equalTo: mainView.topAnchor),
             subView.heightAnchor.constraint(equalToConstant: H)

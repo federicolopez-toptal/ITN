@@ -34,7 +34,7 @@ class FeedbackFormViewController: BaseViewController {
         
         self.view.addSubview(self.webView)
         self.webView.activateConstraints([
-            self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.webView.topAnchor.constraint(equalTo: self.line.bottomAnchor),
             self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)

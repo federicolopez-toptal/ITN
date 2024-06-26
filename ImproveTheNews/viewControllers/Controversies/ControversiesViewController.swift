@@ -53,7 +53,7 @@ class ControversiesViewController: BaseViewController {
         self.view.addSubview(self.scrollView)
         //self.scrollView.backgroundColor = .systemPink
         self.scrollView.activateConstraints([
-            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -392,6 +392,7 @@ extension ControversiesViewController {
                 if(w<h){ value = w }
                 else{ value = h }
                 self.iPad_W = value - 74
+                self.iPad_W -= IPAD_sideOffset()
             }
         
             return self.iPad_W

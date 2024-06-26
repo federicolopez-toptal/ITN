@@ -39,15 +39,20 @@ extension PreferencesViewController {
         if(item == .checkboxes) {
             result = PrefCheckboxes_cell.heigth
         } else if (item == .sliders) {
-            if(self.wasInitialOrientationLandscape) {
-                if(ORIENTATION_PORTRAIT()) {
-                    result = PrefSliders_cell.calculateHeight() + 120
-                } else {
-                    result = PrefSliders_cell.calculateHeight()
-                }
-            } else {
-                result = PrefSliders_cell.calculateHeight()
-            }            
+//            if(self.wasInitialOrientationLandscape) {
+//                if(ORIENTATION_PORTRAIT()) {
+//                    result = PrefSliders_cell.calculateHeight() + 120
+//                } else {
+//                    result = PrefSliders_cell.calculateHeight()
+//                }
+//            } else {
+//                result = PrefSliders_cell.calculateHeight()
+//            }
+
+            result = PrefSliders_cell.calculateHeight()
+            if(IPAD()) {
+                result += 100
+            }
         }
         
         return result

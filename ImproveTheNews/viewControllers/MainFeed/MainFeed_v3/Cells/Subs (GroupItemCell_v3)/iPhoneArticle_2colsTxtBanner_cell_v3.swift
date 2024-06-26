@@ -29,7 +29,7 @@ class iPhoneArticle_2colsTxtBanner_cell_v3: GroupItemCell_v3 {
 
     private func buildContent() {
         self.subViews = [CustomCellView_v3]()
-        let col_WIDTH: CGFloat = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 3))/2
+        let col_WIDTH: CGFloat = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
         
         ///
         let view1 = iPhoneBannerPodCast_v3(width: col_WIDTH)

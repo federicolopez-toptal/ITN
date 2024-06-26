@@ -36,7 +36,7 @@ extension MainFeediPad_v3_viewController {
         self.view.addSubview(self.list)
         self.listAdded = true
         self.list.activateConstraints([
-            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topOffset)
@@ -349,13 +349,13 @@ extension MainFeediPad_v3_viewController: iPhoneMoreCell_v3_delegate {
     func onShowMoreButtonTap(sender: iPhoneMoreCell_v3) {
         self.showLoading()
 
-        if(sender.topic == "CONTRO") {
-            self.removeControversiesFromMainFeed()
-        
-            self.controversiesPage += 1
-            self.loadControversies()
-            return
-        }
+//        if(sender.topic == "CONTRO") {
+//            self.removeControversiesFromMainFeed()
+//        
+//            self.controversiesPage += 1
+//            self.loadControversies()
+//            return
+//        }
 
         let topic = sender.topic
         if(topic != self.topic) {

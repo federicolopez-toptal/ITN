@@ -69,7 +69,7 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = self.view.backgroundColor //.systemPink
         self.scrollView.activateConstraints([
-            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.navBar.bottomAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -125,7 +125,7 @@ class NewsLetterArchiveViewController: BaseViewController {
         
         self.view.addSubview(self.viewPicker)
         self.viewPicker.activateConstraints([
-            self.viewPicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.viewPicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.viewPicker.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
         self.viewPickerTopConstraint = self.viewPicker.topAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -168,7 +168,7 @@ class NewsLetterArchiveViewController: BaseViewController {
         
         self.view.addSubview(self.datePicker)
         self.datePicker.activateConstraints([
-            self.datePicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.datePicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.datePicker.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
         self.datePickerTopConstraint = self.datePicker.topAnchor.constraint(equalTo: self.view.bottomAnchor)

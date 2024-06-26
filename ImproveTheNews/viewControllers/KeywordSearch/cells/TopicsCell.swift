@@ -27,6 +27,7 @@ class TopicsCell: UITableViewCell {
     }
     
     private func buildContent() {
+    
         //self.tagsContainer.backgroundColor = .green
         self.contentView.addSubview(self.tagsContainer)
         self.tagsContainer.activateConstraints([
@@ -51,7 +52,10 @@ class TopicsCell: UITableViewCell {
         
         let H: CGFloat = 32
         let SEP: CGFloat = 8.0
-        let LIMIT = IPHONE() ? (SCREEN_SIZE().width - 24) : (SCREEN_SIZE().width - 40)
+        
+        var LIMIT = IPHONE() ? (SCREEN_SIZE().width - 24) : (SCREEN_SIZE().width - 40)
+        if(IPAD()){ LIMIT -= IPAD_sideOffset() }
+        
         var val_x: CGFloat = 0
         var val_y: CGFloat = 0
         

@@ -325,6 +325,11 @@ class WeeklyStory {
                                 }
                             }
                         }
+                        
+                        if(!found && i == text.count-1) {
+                            print("Link incompleto!")
+                        }
+                        
                         if(found) { break }
                     }
                 }

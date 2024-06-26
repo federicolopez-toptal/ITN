@@ -21,6 +21,8 @@ extension FigureDetailsViewController {
                 if(w<h){ value = w }
                 else{ value = h }
                 self.iPad_W = value - 74
+                
+                self.iPad_W -= IPAD_sideOffset()
             }
         
             return self.iPad_W

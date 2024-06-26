@@ -33,7 +33,7 @@ class iPhoneArticle_4colsImg_cell_v3: GroupItemCell_v3 {
         self.subViews = [CustomCellView_v3]()
         
         let sep = CSS.shared.iPhoneSide_padding
-        let col_WIDTH = (SCREEN_SIZE().width - (CSS.shared.iPhoneSide_padding * 5))/4
+        let col_WIDTH = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 5))/4
         
         ///
         let view1 = iPhoneAllNews_vImgCol_v3(width: col_WIDTH)

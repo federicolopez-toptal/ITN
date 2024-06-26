@@ -53,7 +53,12 @@ class FigureDetailsViewController: BaseViewController {
             self.didLayout = true
 
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.back, .longTitle])
+            if(IPHONE()) {
+                self.navBar.addComponents([.back, .longTitle])
+            } else {
+                self.navBar.addComponents([.back, .title])
+            }
+            
             self.navBar.addBottomLine()
 
             self.buildContent()
@@ -67,7 +72,7 @@ class FigureDetailsViewController: BaseViewController {
         self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = .systemPink
         self.scrollView.activateConstraints([
-            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
@@ -235,7 +240,7 @@ extension FigureDetailsViewController {
             buttonsContainer.heightAnchor.constraint(equalToConstant: 32),
             buttonsContainer.widthAnchor.constraint(equalToConstant: 170),
             buttonsContainer.topAnchor.constraint(equalTo: containerView.topAnchor),
-            buttonsContainer.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+            buttonsContainer.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: IPAD_sideOffset(multiplier: -0.5))
         ])
         
         let shareLabel = UILabel()
@@ -307,7 +312,7 @@ extension FigureDetailsViewController {
         containerView.addSubview(label)
         label.activateConstraints([
             label.topAnchor.constraint(equalTo: containerView.topAnchor),
-            label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: IPAD_sideOffset(multiplier: -0.5)),
             //label.widthAnchor.constraint(equalToConstant: self.W())
         ])
         
@@ -329,7 +334,7 @@ extension FigureDetailsViewController {
         containerView.addSubview(label)
         label.activateConstraints([
             label.topAnchor.constraint(equalTo: containerView.topAnchor),
-            label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+            label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: IPAD_sideOffset(multiplier: -0.5))
         ])
         
         containerView.activateConstraints([
@@ -375,7 +380,7 @@ extension FigureDetailsViewController {
         containerView.addSubview(borderView)
         borderView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x232326) : UIColor(hex: 0xE3E3E3)
         borderView.activateConstraints([
-            borderView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            borderView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: IPAD_sideOffset(multiplier: -0.5)),
             borderView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -M),
             borderView.widthAnchor.constraint(equalToConstant: self.items_DIM),
             borderView.heightAnchor.constraint(equalToConstant: self.items_DIM)
