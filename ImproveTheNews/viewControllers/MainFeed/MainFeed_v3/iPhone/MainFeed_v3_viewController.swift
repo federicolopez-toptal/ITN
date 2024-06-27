@@ -35,9 +35,6 @@ class MainFeed_v3_viewController: BaseViewController {
     var controversiesPage = 1
     let latestControversies = "Latest controversies"
     
-    var ignoreScroll = false
-    var loadedMore = false
-    
     var safeAreaTop: CGFloat = 0
     
     // MARK: - Start
@@ -220,7 +217,6 @@ extension MainFeed_v3_viewController {
                 MAIN_THREAD {
                     self.hideLoading()
                     if let _T = total, let _L = list {
-                        self.ignoreScroll = true
                         
                         for LI in _L {
                             self.controversies.append(LI)
@@ -332,67 +328,49 @@ extension MainFeed_v3_viewController {
 }
 
 extension MainFeed_v3_viewController: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if(scrollView != self.list) {
-            return
-        }
-        
-        let _posY = scrollView.contentOffset.y
-        let diff = self.lastScrollViewPosY - _posY
-        
-        if(self.ignoreScroll) {
-//            self.lastScrollViewPosY = currentPosY
-//            //print("ignore")
-            return
-        }
-            
-//        if(self.loadedMore) {
-//            print(abs(_posY), diff)
-//        }
-    
-        
-
-//        print( abs(diff) )
-//        if(abs(diff)>100) {
-//            print("***", diff)
-//            return
-//        }
-            
-        //var saveLastPos = true
-        let currentPosY = _posY
-        
-        //print( Int(currentPosY), "diff \(diff)" )
-        
        
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let _posY = scrollView.contentOffset.y
         
-        //print(self.lastScrollViewPosY, "-", currentPosY, "DIFF", diff)
-        //print("currentPosY: \(currentPosY)", "diff: \(diff)")
-        //print("DIFF", diff)
-        //print(diff)
-        
-        if(diff < 0) {
-            //print("UP")
-            
-            // up
-            if(currentPosY >= 70) {
-                if(!self.navBar.isHidden && !self.topBarsTransitioning) {
-                    self.hideTopBars()
-                    //saveLastPos = false
-                }
-            }
-        } else {
-            //print("DOWN")
-            // down
+        if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0) { // UP
             if(self.navBar.isHidden && !self.topBarsTransitioning) {
                 self.showTopBars()
             }
+        } else { // DOWN
+            if(_posY >= 70) {
+                if(!self.navBar.isHidden && !self.topBarsTransitioning) {
+                    self.hideTopBars()
+                }
+            }
         }
-        
-        //if(saveLastPos) {
-            self.lastScrollViewPosY = currentPosY
-        //}
     }
+    
+//    func scrollViewDidScroll_2(_ scrollView: UIScrollView) {
+//        if(scrollView != self.list) {
+//            return
+//        }
+//        
+//        let _posY = scrollView.contentOffset.y
+//        let diff = self.lastScrollViewPosY - _posY
+//        let currentPosY = _posY
+//        
+//        if(diff < 0) {
+//            // up
+//            if(currentPosY >= 70) {
+//                if(!self.navBar.isHidden && !self.topBarsTransitioning) {
+//                    self.hideTopBars()
+//                    //saveLastPos = false
+//                }
+//            }
+//        } else {
+//            // down
+//            if(self.navBar.isHidden && !self.topBarsTransitioning) {
+//                self.showTopBars()
+//            }
+//        }
+//        
+//        self.lastScrollViewPosY = currentPosY
+//    }
     
     func hideTopBars() {
         if(!self.topBarsTransitioning) {

@@ -32,7 +32,16 @@ class CustomFeedList: UITableView {
         self.alwaysBounceVertical = true
         self.refresher.tintColor = .lightGray
         self.refresher.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-        self.addSubview(refresher)
+        self.refreshControl = self.refresher
+    }
+    
+    func fixRefresher_yOffset(_ offset: CGFloat) {
+//        var mBounds = self.refresher.bounds
+//        mBounds.origin.x = offset
+//        self.refresher.frame = mBounds
+  
+//        self.refresher.bounds = CGRect(x: self.refresher.bounds.minX, y: 100,
+//            width: self.refresher.bounds.width, height: self.refresher.bounds.height)
     }
     
     func hideRefresher() {

@@ -43,6 +43,12 @@ class TopicSelectorView: UIView {
             self.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             self.viewHeightConstraint!
         ])
+//        self.activateConstraints([
+//            self.topAnchor.constraint(equalTo: container.topAnchor, constant: yOffset),
+//            self.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: SCREEN_SIZE().width-20),
+//            self.widthAnchor.constraint(equalToConstant: SCREEN_SIZE().width),
+//            self.viewHeightConstraint!
+//        ])
         
         //top line
         let line1 = UIView()

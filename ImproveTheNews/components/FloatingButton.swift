@@ -35,7 +35,11 @@ class FloatingButton: UIView {
             self.widthAnchor.constraint(equalToConstant: size)
         ])
         
-        self.bottomConstraint = self.bottomAnchor.constraint(equalTo: panel.topAnchor, constant: -21)
+        
+        
+        self.bottomConstraint = self.bottomAnchor.constraint(equalTo: panel.topAnchor,
+            constant: -21+IPHONE_bottomOffset())
+        
         self.bottomConstraint?.isActive = true
         
         let image = UIImageView(image: UIImage(named: "floatingButton"))

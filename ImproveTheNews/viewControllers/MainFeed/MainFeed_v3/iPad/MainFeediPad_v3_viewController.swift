@@ -379,30 +379,47 @@ extension MainFeediPad_v3_viewController {
 
 extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
     
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var saveLastPos = true
-        let currentPosY = scrollView.contentOffset.y
-        let diff = self.lastScrollViewPosY - currentPosY
+        let _posY = scrollView.contentOffset.y
         
-        if(diff < 0) {
-            // up
-            if(currentPosY >= 70) {
-                if(!self.navBar.isHidden) {
-                    self.hideTopBars()
-                    saveLastPos = false
-                }
-            }
-        } else {
-            // down
-            if(self.navBar.isHidden) {
+        if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0) { // UP
+            if(self.navBar.isHidden && !self.topBarsTransitioning) {
                 self.showTopBars()
             }
-        }
-        
-        if(saveLastPos) {
-            self.lastScrollViewPosY = currentPosY
+        } else { // DOWN
+            if(_posY >= 70) {
+                if(!self.navBar.isHidden && !self.topBarsTransitioning) {
+                    self.hideTopBars()
+                }
+            }
         }
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        var saveLastPos = true
+//        let currentPosY = scrollView.contentOffset.y
+//        let diff = self.lastScrollViewPosY - currentPosY
+//        
+//        if(diff < 0) {
+//            // up
+//            if(currentPosY >= 70) {
+//                if(!self.navBar.isHidden) {
+//                    self.hideTopBars()
+//                    saveLastPos = false
+//                }
+//            }
+//        } else {
+//            // down
+//            if(self.navBar.isHidden) {
+//                self.showTopBars()
+//            }
+//        }
+//        
+//        if(saveLastPos) {
+//            self.lastScrollViewPosY = currentPosY
+//        }
+//    }
     
     func hideTopBars() {
         if(!self.topBarsTransitioning) {

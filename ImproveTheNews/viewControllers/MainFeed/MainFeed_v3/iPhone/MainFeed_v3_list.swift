@@ -20,6 +20,8 @@ extension MainFeed_v3_viewController {
             topOffset += _safeAreaTop
         }
         
+        self.list.fixRefresher_yOffset(topOffset)
+        
         self.view.addSubview(self.list)
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -64,13 +66,6 @@ extension MainFeed_v3_viewController {
         MAIN_THREAD {
             self.list.reloadData()
         }
-        
-        //DELAY(0.5) {
-//            let currentPosY = self.list.contentOffset.y
-//            self.lastScrollViewPosY = currentPosY
-            
-            self.ignoreScroll = false
-        //}
     }
 
 }
@@ -306,14 +301,11 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
             if let _ = error {
                 // Mostrar algun error?
             } else if let _articlesAdded = articlesAdded {
-                self.loadedMore = true
-            
                 let count = self.data.topicsCount[topic]! + _articlesAdded
                 let A = (count >= MAX_ARTICLES_PER_TOPIC)
                 let B = (_articlesAdded == 0)
                 if(A || B) { self.topicsCompleted[topic] = true }
                 
-                self.ignoreScroll = true
                 self.populateDataProvider()
                 
                 if(self.controversiesTotal > 0) {
@@ -321,11 +313,6 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
                 }
                 
                 self.refreshList()
-                
-                DELAY(0.2) {
-                    let currentPosY = self.list.contentOffset.y
-                    self.lastScrollViewPosY = currentPosY
-                }
             }
             
             self.hideLoading()

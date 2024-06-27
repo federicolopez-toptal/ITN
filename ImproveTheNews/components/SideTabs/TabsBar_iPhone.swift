@@ -167,14 +167,9 @@ class TabsBar_iPhone: TabsBar {
 
 // ----------------------------------------------------------
 func IPHONE_bottomOffset(multiplier: CGFloat = -1) -> CGFloat {
-//    return -80
-    
     var offset: CGFloat = 0
     if(IPHONE()) {
         offset = TabsBar_iPhone.HEIGHT
-//        if let _bottom = SAFE_AREA()?.bottom {
-//            offset += _bottom
-//        }
         offset *= multiplier
     }
     return offset
