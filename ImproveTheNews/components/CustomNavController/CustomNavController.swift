@@ -31,7 +31,7 @@ class CustomNavController: UINavigationController {
         if(CustomNavController.shared == nil){ CustomNavController.shared = self }
         self.isNavigationBarHidden = true
         
-        self.tabsBar.buildInto(self.view)
+        self.tabsBar.buildInto(self.view)        
         self.slidersPanel.buildInto(self.view)
         self.floatingButton.buildInto(self.view, panel: self.slidersPanel)
         self.slidersPanel.floatingButton = self.floatingButton
@@ -80,6 +80,7 @@ class CustomNavController: UINavigationController {
         self.loading.refreshDisplayMode()
         self.darkView.refreshDisplayMode()
         self.menu.refreshDisplayMode()
+        self.tabsBar.refreshDisplayMode()
 
         for vc in self.viewControllers {
             if let _vc = vc as? BaseViewController {

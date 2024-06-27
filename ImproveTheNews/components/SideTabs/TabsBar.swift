@@ -26,8 +26,10 @@ class TabsBar: UIView {
         }
     }
     
-    func buildInto(_ containerView: UIView) {
-        NOTHING()
+    func buildInto(_ containerView: UIView) { // to override
+    }
+    
+    func refreshDisplayMode() { // to override
     }
     
 }

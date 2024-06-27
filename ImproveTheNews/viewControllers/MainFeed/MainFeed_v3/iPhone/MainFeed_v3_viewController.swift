@@ -72,6 +72,8 @@ class MainFeed_v3_viewController: BaseViewController {
             if let _safeAreaTop = SAFE_AREA()?.top {
                 self.safeAreaTop = _safeAreaTop
             }
+            
+            (CustomNavController.shared.tabsBar as! TabsBar_iPhone).iPhone_yOffset_fix()
         }
     }
     
