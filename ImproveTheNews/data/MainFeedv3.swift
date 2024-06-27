@@ -21,7 +21,7 @@ class MainFeedv3 {
     var titles = [String]()
     
     
-    func loadData(_ topic: String, callback: @escaping (Error?) -> ()) {
+    func loadData(_ topic: String, defaultValues: Bool = false, callback: @escaping (Error?) -> ()) {
         self.banner = nil
         self.topic = topic
         
@@ -35,7 +35,8 @@ class MainFeedv3 {
         let strUrl = self.buildUrl(topic: topic, A: totalItems,
                                                 B: totalItems,
                                                 C: storiesCount,
-                                                S: 0)
+                                                S: 0,
+                                                defaultValues: defaultValues)
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
         
@@ -405,7 +406,7 @@ extension MainFeedv3 {
 // MARK: - Utilities
 extension MainFeedv3 {
 
-    private func buildUrl(topic: String, A: Int, B: Int, C: Int, S: Int) -> String {
+    private func buildUrl(topic: String, A: Int, B: Int, C: Int, S: Int, defaultValues: Bool = false) -> String {
         /*
             DOCUMENTATION
                 https://docs.google.com/document/d/1UTdmnjjLTR5UjkQ7UmP-xGlpFN7MkEImYK1Vq3w7RwE/edit
@@ -429,7 +430,14 @@ extension MainFeedv3 {
         result += ".C" + String(C)
         //if(PREFS_SHOW_STORIES() && MUST_SPLIT()==0){ result += ".C" + String(C) }
         result += ".S" + String(S)
-        result += "&sliders=" + MainFeedv3.sliderValues()  //self.sliderValues()
+        
+        if(defaultValues) {
+            result += "&sliders=" + MainFeedv3.sliderDefaultValues()
+        } else {
+            result += "&sliders=" + MainFeedv3.sliderValues()
+        }
+//        result += "&sliders=" + MainFeedv3.sliderValues()
+         
         result += "&uid=" + UUID.shared.getValue()
         result += "&v=I" + Bundle.main.releaseVersionNumber!
         result += "&dev=" + UIDevice.modelName.replacingOccurrences(of: " ", with: "_")
@@ -528,6 +536,98 @@ extension MainFeedv3 {
         >> LR50PE50NU70DE70SL70RE70SS00LA00ST01VB01VC01VA01VM00VE35oB21lO03
     */
     
+    static func sliderDefaultValues() -> String {
+        // Sliders panel values (6 in total)
+        var result = "LR50PE50NU70DE70SL70RE70"
+        
+        // Split + Sliders panel state
+        result += "SS00"
+        
+        // Layout
+        result += "LA"
+        if let _layout = READ(LocalKeys.preferences.layout) {
+            result += _layout
+        } else {
+            result += "0" // default value: Dense & Intense
+        }
+        // Display mode
+        if let _displayMode = READ(LocalKeys.preferences.displayMode) {
+            result += _displayMode
+        } else {
+            result += "0" // default value: Dark mode
+        }
+        
+        // More Preferences: Show stories
+        result += "ST01"
+
+        // More Preferences: Show source icons
+        result += "VD"
+        if let _showSourceIcons = READ(LocalKeys.preferences.showSourceIcons) {
+            result += _showSourceIcons
+        } else {
+            result += "01" // default value: True
+        }
+        // More Preferences: Show stance icons
+        result += "VB"
+        if let _showStanceIcons = READ(LocalKeys.preferences.showStanceIcons) {
+            result += _showStanceIcons
+        } else {
+            result += "01" // default value: True
+        }
+        // More Preferences: Show stance info popup
+        result += "VC"
+        if let _showStancePopups = READ(LocalKeys.preferences.showStancePopups) {
+            result += _showStancePopups
+        } else {
+            result += "01" // default value: True
+        }
+        // More Preferences: Show newspaper flags
+        result += "VA"
+        if let _showFlags = READ(LocalKeys.preferences.showSourceFlags) {
+            result += _showFlags
+        } else {
+            result += "01" // default value: True
+        }
+        //result += "VA00"
+
+        // Source Filters
+        if let _sourceFilters = READ(LocalKeys.preferences.sourceFilters) {
+            if(_sourceFilters.count > 1) {
+                if(_sourceFilters.getCharAt(index: 0)==",") {
+                    if let filters = _sourceFilters.subString(from: 1, count: _sourceFilters.count-1) {
+                        result += filters.replacingOccurrences(of: ",", with: "00") + "00"
+                    }
+                } else {
+                    result += _sourceFilters.replacingOccurrences(of: ",", with: "00") + "00"
+                }
+            }
+        }
+        result += "VM00VE35"
+        
+        // Onboarding
+        result += "oB" //oB11"
+        if let _onboarding = READ(LocalKeys.preferences.onBoardingState) {
+            result += _onboarding
+        } else {
+            result += "10" // default value: Hidden + Step 0
+        }
+        
+        // Banner(s)
+        if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {
+            let allBannerCodes = _allBannerCodesString.components(separatedBy: ",")
+            
+            for bCode in allBannerCodes {
+                if let _bannerStatus = READ(LocalKeys.misc.bannerPrefix + bCode) {
+                    result += bCode + _bannerStatus
+                }
+            }
+        }
+        if(!result.contains("lO03")) {
+            result += "lO03"
+        }
+        
+        return result
+    }
     
     static func sliderValues() -> String {
         var result = ""

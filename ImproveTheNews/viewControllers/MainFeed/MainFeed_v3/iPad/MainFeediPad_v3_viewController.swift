@@ -165,7 +165,7 @@ extension MainFeediPad_v3_viewController {
                     return
                 }
 
-                self.data.loadData(self.topic) { (error) in
+                self.data.loadData(self.topic, defaultValues: true) { (error) in
                     MAIN_THREAD {/* --- */
                         if(error != nil || self.data.topics.count == 0) {
                             self.showErrorAlert()
