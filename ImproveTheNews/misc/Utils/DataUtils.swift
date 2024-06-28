@@ -11,11 +11,13 @@ import UIKit
 
 // MARK: - misc
 func MUST_SPLIT() -> Int {
-    if let _value = READ(LocalKeys.sliders.split) {
-        return Int(_value)!
-    } else {
-        return 0
-    }
+//    if let _value = READ(LocalKeys.sliders.split) {
+//        return Int(_value)!
+//    } else {
+//        return 0
+//    }
+
+    return 0
 }
 
 func USER_AUTHENTICATED() -> Bool {

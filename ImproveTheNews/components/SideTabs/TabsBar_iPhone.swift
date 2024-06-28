@@ -45,7 +45,7 @@ class TabsBar_iPhone: TabsBar {
     
     func addtabs() {
         let itemDim: CGFloat = 32
-        let _W = SCREEN_SIZE().width - 26 - 26
+        let _W = SCREEN_SIZE().width - (26 * 2.5)
         let itemSep: CGFloat = (_W - (itemDim * self.itemsCount)) / 3
         
         

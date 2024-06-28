@@ -438,21 +438,26 @@ extension MenuView {
     
     // ---------
     func startTour() {
-        CustomNavController.shared.showTour = true
-        CustomNavController.shared.slidersPanel.makeSureIsClosed()
-        CustomNavController.shared.slidersPanel.forceSplitOff()
-        
-        if(IPHONE()) {
-            let vc = NAV_MAINFEED_VC()
-            CustomNavController.shared.viewControllers = [vc]
-        } else {
-            let vc = MainFeediPad_v3_viewController()
-            CustomNavController.shared.viewControllers = [vc]
-        }
-        
-        DELAY(0.3) {
-            self.dismissMe()
-        }
+//        CustomNavController.shared.showTour = true
+//        CustomNavController.shared.slidersPanel.makeSureIsClosed()
+//        CustomNavController.shared.slidersPanel.forceSplitOff()
+//        
+//        if(IPHONE()) {
+//            let vc = NAV_MAINFEED_VC()
+//            CustomNavController.shared.viewControllers = [vc]
+//        } else {
+//            let vc = MainFeediPad_v3_viewController()
+//            CustomNavController.shared.viewControllers = [vc]
+//        }
+//        
+
+        //        DELAY(0.3) {
+//            self.dismissMe()
+//        }
+
+        CustomNavController.shared.info(message: "Tour temporarily disabled for this Beta")
+        self.dismissMe()
+
     }
     
     // ---------

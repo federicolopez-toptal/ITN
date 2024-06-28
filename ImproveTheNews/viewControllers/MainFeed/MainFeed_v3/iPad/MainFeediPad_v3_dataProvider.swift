@@ -13,19 +13,19 @@ extension MainFeediPad_v3_viewController {
     // main POPULATE
     func populateDataProvider() {
         if(Layout.current() == .textImages) {
-            if(MUST_SPLIT() == 0) {
+//            if(MUST_SPLIT() == 0) {
                 self.populateDataProvider_iPhone_textImages()
-            } else {
-                self.populateDataProvider_iPhone_textImages_split()
-                self.splitFix()
-            }
+//            } else {
+//                self.populateDataProvider_iPhone_textImages_split()
+//                self.splitFix()
+//            }
         } else {
-            if(MUST_SPLIT() == 0) {
+//            if(MUST_SPLIT() == 0) {
                 self.populateDataProvider_iPhone_textOnly()
-            } else {
-                self.populateDataProvider_iPhone_textOnly_split()
-                self.splitFix()
-            }
+//            } else {
+//                self.populateDataProvider_iPhone_textOnly_split()
+//                self.splitFix()
+//            }
         }
         
         // -------------------------------------------------        

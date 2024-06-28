@@ -289,6 +289,7 @@ class PublicFiguresViewController: BaseViewController {
      @objc func selectorOnTap(_ sender: UIButton) {
         let index = sender.tag
         
+        self.view.endEditing(true)
         self.darkView.alpha = 0
         self.darkView.show()
         
