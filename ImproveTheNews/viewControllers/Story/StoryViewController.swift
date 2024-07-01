@@ -1242,6 +1242,36 @@ extension StoryViewController {
     
     func addSpins_iPhone(_ spins: [Spin], innerHStack: UIStackView) {
         for (i, S) in spins.enumerated() {
+            // Metaculus ----------------------------------------
+            if(self.metaculus(S)) {
+                if let _mUrl = self.getMetaculusUrl(from: S.url) {
+                    let natitleHStack = HSTACK(into: innerHStack)
+                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                        let titleLabel = UILabel()
+                        titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                        titleLabel.text = "Metaculus Prediction"
+                        titleLabel.numberOfLines = 0
+                        titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                        natitleHStack.addArrangedSubview(titleLabel)
+                        self.addInfoButtonNextTo(label: titleLabel, index: 4)
+                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                    ADD_SPACER(to: innerHStack, height: 10)
+                    
+                    let embedUrl = self.getMetaculusUrl(from: S.url)!
+                    let naWebHStack = HSTACK(into: innerHStack)
+                    let webView = WKWebView()
+                    webView.load(URLRequest(url: URL(string: embedUrl)!))
+                    webView.activateConstraints([
+                        webView.heightAnchor.constraint(equalToConstant: 350)
+                    ])
+                    naWebHStack.addArrangedSubview(webView)
+                
+                
+                    continue
+                }
+            }
+            // Metaculus ----------------------------------------
+            
             var _title = S.title
             if(_title.isEmpty) {
                 let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -1286,6 +1316,38 @@ extension StoryViewController {
             
             ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
         }
+    }
+    
+    func metaculus(_ spin: Spin) -> Bool {
+        var result = false
+        if(spin.url.lowercased().contains("metaculus")) {
+            result = true
+        }
+        
+        return result
+    }
+    
+    func getMetaculusUrl(from url: String) -> String? {
+        var result: String? = nil
+    
+        var parsed = url.replacingOccurrences(of: "https://www.metaculus.com/questions/", with: "")
+        if(!parsed.isEmpty) {
+            for (i, CHR) in parsed.enumerated() {
+                if(CHR=="/") {
+                    if let _id = parsed.subString2(from: 0, count: i-1) {
+                        result = "https://www.metaculus.com/questions/question_embed/" + _id + "/"
+                    }
+                    break
+                }
+            }
+        }
+        
+        if(result != nil) {
+            result! += "?theme="
+            result! += DARK_MODE() ? "dark" : "light"
+        }
+        
+        return result
     }
     
 // -----------------------------
@@ -2387,6 +2449,9 @@ extension StoryViewController {
             case 3:
                 return 310
                 
+            case 4:
+                return 300
+                
             default:
                 NOTHING()
         }
@@ -2395,13 +2460,27 @@ extension StoryViewController {
     }
     
     func getLinksFrom(index: Int) -> [String] {
-        if(index==3) { return ["https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271947"] }
-        return []
+        switch(index) {
+            case 3:
+                return ["https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271947"]
+            case 4:
+                return ["Metaculus"]
+                
+            default:
+                return []
+        }
     }
     
     func getLinkedTextsFrom(index: Int) -> [String] {
-        if(index==3) { return ["study"] }
-        return []
+        switch(index) {
+            case 3:
+                return ["study"]
+            case 4:
+                return ["Metaculus"]
+                
+            default:
+                return []
+        }
     }
     
     func getDescriptionFrom(index: Int) -> String {
@@ -2421,6 +2500,10 @@ extension StoryViewController {
                 descr = """
         We source our facts from a wide range of news outlets across the political and establishment spectrum, as well as supplementary primary sources (e.g. academic publications, social media posts by public figures, think tanks, NGOs, databases, etc.) where possible. We classify sources as left/right or pro-establishment/establishment-critical based on an MIT [0] on media bias conducted by Max Tegmark and Samantha D’Alonzo.
         """
+            case 4:
+                descr = """
+        For those readers more interested in probability, we strive to include “Metaculus predictions” where possible. These provide forecasts of the most likely outcome of an event, according to the [0] prediction platform and aggregation engine. Framed as an interactive chart, you can further see how these predictions have changed over time by hovering over various points of the graph.
+        """
         
             default:
                 NOTHING()
@@ -2438,6 +2521,8 @@ extension StoryViewController {
                 return "The Spin"
             case 3:
                 return "Sources"
+            case 4:
+                return "Metaculus Prediction"
                 
             default:
                 return ""
