@@ -1124,7 +1124,36 @@ extension StoryViewController {
         var col = 1
         //for i in 1...3 {
         for (i, S) in spins.enumerated() {
-            //let S = spins.first! ///
+            // Metaculus ----------------------------------------
+            if(self.metaculus(S)) {
+                if let _mUrl = self.getMetaculusUrl(from: S.url) {
+                    let natitleHStack = HSTACK(into: innerHStack)
+                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                        let titleLabel = UILabel()
+                        titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                        titleLabel.text = "Metaculus Prediction"
+                        titleLabel.numberOfLines = 0
+                        titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                        natitleHStack.addArrangedSubview(titleLabel)
+                        self.addInfoButtonNextTo(label: titleLabel, index: 4)
+                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                    ADD_SPACER(to: innerHStack, height: 10)
+                    
+                    let embedUrl = self.getMetaculusUrl(from: S.url)!
+                    let naWebHStack = HSTACK(into: innerHStack)
+                    ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
+                    let webView = WKWebView()
+                    webView.load(URLRequest(url: URL(string: embedUrl)!))
+                    webView.activateConstraints([
+                        webView.heightAnchor.constraint(equalToConstant: 400)
+                    ])
+                    naWebHStack.addArrangedSubview(webView)
+                    ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
+                
+                    continue
+                }
+            }
+            // Metaculus ----------------------------------------
         
             var rowView: UIView!
             if(col==1) {
@@ -1262,7 +1291,7 @@ extension StoryViewController {
                     let webView = WKWebView()
                     webView.load(URLRequest(url: URL(string: embedUrl)!))
                     webView.activateConstraints([
-                        webView.heightAnchor.constraint(equalToConstant: 350)
+                        webView.heightAnchor.constraint(equalToConstant: 400)
                     ])
                     naWebHStack.addArrangedSubview(webView)
                 
