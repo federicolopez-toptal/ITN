@@ -170,4 +170,10 @@ extension MainFeediPad_v3_viewController: CustomFeedListDelegate {
         self.loadData(showLoading: false)
     }
     
+    func feedListOnScrollToTop(sender: CustomFeedList) {
+        DELAY(1.0) {
+            self.showTopBars()
+        }
+    }
+    
 }

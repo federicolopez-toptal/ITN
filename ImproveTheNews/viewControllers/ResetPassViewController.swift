@@ -44,7 +44,6 @@ class ResetPassViewController: BaseViewController {
             self.navBar.addBottomLine()
             
             self.buildContent()
-            CustomNavController.shared.hidePanelAndButtonWithAnimation()
         }
     }
     

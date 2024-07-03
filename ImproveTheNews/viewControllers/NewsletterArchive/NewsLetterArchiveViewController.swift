@@ -56,7 +56,6 @@ class NewsLetterArchiveViewController: BaseViewController {
             self.navBar.setTitle("Newsletter archive")
             self.navBar.addBottomLine()
 
-            CustomNavController.shared.hidePanelAndButtonWithAnimation()
             self.buildContent()
         }
     }

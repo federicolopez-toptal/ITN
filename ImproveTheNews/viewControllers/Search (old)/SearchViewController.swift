@@ -143,9 +143,6 @@ class SearchViewController: BaseViewController {
 
             DELAY(0.1) {
                 CustomNavController.shared.dismiss(animated: true)
-                
-                CustomNavController.shared.slidersPanel.show()
-                CustomNavController.shared.floatingButton.show()
             }
         } else {
             let vc = MainFeed_v2ViewController()
@@ -154,9 +151,6 @@ class SearchViewController: BaseViewController {
 
             DELAY(0.1) {
                 CustomNavController.shared.dismiss(animated: true)
-                
-                CustomNavController.shared.slidersPanel.show()
-                CustomNavController.shared.floatingButton.show()
             }
         }
     }

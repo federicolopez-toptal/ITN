@@ -13,13 +13,10 @@ class CustomNavController: UINavigationController {
     
     // flags
     var didLayout = false
-    var showTour = false
     
     // UI components
     let menu = MenuView()
     let loading = LoadingView()
-    let slidersPanel = SlidersPanel()
-    let floatingButton = FloatingButton()
     let darkView = DarkView()
     let tabsBar = TabsBar.customInit()
     
@@ -31,11 +28,7 @@ class CustomNavController: UINavigationController {
         if(CustomNavController.shared == nil){ CustomNavController.shared = self }
         self.isNavigationBarHidden = true
         
-        self.tabsBar.buildInto(self.view)        
-        self.slidersPanel.buildInto(self.view)
-        self.floatingButton.buildInto(self.view, panel: self.slidersPanel)
-        self.slidersPanel.floatingButton = self.floatingButton
-        
+        self.tabsBar.buildInto(self.view)
         self.loading.buildInto(self.view)
         self.darkView.buildInto(self.view)
 
@@ -43,14 +36,6 @@ class CustomNavController: UINavigationController {
         self.darkView.addGestureRecognizer(tapGesture)
 
         self.addInitialViewController() // Start!
-        
-//        DELAY(1.0) {
-//            let vc = NewsLetterArchiveViewController()
-//            self.pushViewController(vc, animated: true)
-//        }
-
-        self.slidersPanel.hide()
-        self.floatingButton.hide()
     }
     
     @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {
@@ -79,7 +64,6 @@ class CustomNavController: UINavigationController {
     }
 
     func refreshDisplayMode() {
-        self.slidersPanel.refreshDisplayMode()
         self.loading.refreshDisplayMode()
         self.darkView.refreshDisplayMode()
         self.menu.refreshDisplayMode()
@@ -108,47 +92,8 @@ class CustomNavController: UINavigationController {
 extension CustomNavController {
     
     func startTour() {
-        self.showTour = false
-    
-        self.slidersPanel.makeSureIsClosed()
-        self.slidersPanel.forceSplitOff()
-        
         self.tour = Tour(buildInto: self.view)
         self.tour?.start()
-    }
-    
-}
-
-// MARK: - Sliders panel + Floating button
-extension CustomNavController {
-
-    func hidePanelAndButtonWithAnimation() {
-//        UIView.animate(withDuration: 0.5) {
-//            self.slidersPanel.alpha = 0
-//            self.floatingButton.alpha = 0
-//        } completion: { _ in
-//            self.slidersPanel.hide()
-//            self.floatingButton.hide()
-//        }
-
-        self.slidersPanel.hide()
-        self.floatingButton.hide()
-    }
-    
-    func showPanelAndButtonWithAnimation() {
-        self.slidersPanel.alpha = 0
-//        self.slidersPanel.show()
-//        self.floatingButton.alpha = 0
-//        self.floatingButton.show()
-//    
-//        UIView.animate(withDuration: 0.5) {
-//            self.slidersPanel.alpha = 1
-//            self.floatingButton.alpha = 1
-//        } completion: { _ in
-//        }
-
-        self.slidersPanel.hide()
-        self.floatingButton.hide()
     }
     
 }
@@ -166,8 +111,6 @@ extension CustomNavController {
         }
 
         self.tour?.cancel(dissapearDarkBackground: false)
-        self.slidersPanel.hide()
-        self.floatingButton.hide()
     }
     
     func dismissMenu(showDarkBackground: Bool = false) {
@@ -192,11 +135,6 @@ extension CustomNavController {
         if let _ = self.viewControllers.first as? MainFeediPad_v3_viewController {
             showComponents = true
         }
-        
-        if(showComponents) {
-            self.slidersPanel.show()
-            self.floatingButton.show()
-        }
     }
 
 }
@@ -217,6 +155,81 @@ extension CustomNavController {
     func ask(question msg: String, onCompletion: @escaping (Bool)->()) {
         ALERT_YESNO(vc: self, title: "⚠️ Question", message: msg) { (result) in
             onCompletion(result)
+        }
+    }
+    
+}
+
+// MARK: - Content & stuff
+extension CustomNavController {
+    
+    func loadControversies() {
+        if let _vc = CustomNavController.shared.viewControllers.first as? ControversiesViewController {
+            if(CustomNavController.shared.viewControllers.count==1) {
+                _vc.scrollView.scrollToZero()
+            } else {
+                CustomNavController.shared.popToRootViewController(animated: true)
+            }
+        } else {
+            let vc = ControversiesViewController()
+            CustomNavController.shared.viewControllers = [vc]
+        }
+    }
+    
+    func loadHeadlines() {
+         if(IPHONE()) {
+            var firstIsMainFeed = false
+            if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeed_v3_viewController {
+                if(firstVC.topic == "news"){ firstIsMainFeed = true }
+            }
+            
+            if(firstIsMainFeed) {
+                let count = CustomNavController.shared.viewControllers.count
+            
+                if(count==1) {
+                    self.gotoHeadlines_B()
+                } else {
+                    CustomNavController.shared.popToRootViewController(animated: true)
+                    DELAY(0.1) {
+                        self.gotoHeadlines_B()
+                    }
+                }
+            } else {
+                let vc = NAV_MAINFEED_VC()
+                CustomNavController.shared.viewControllers = [vc]
+            }
+        } else {
+            var firstIsMainFeed = false
+            if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeediPad_v3_viewController {
+                if(firstVC.topic == "news"){ firstIsMainFeed = true }
+            }
+            
+            if(firstIsMainFeed) {
+                let count = CustomNavController.shared.viewControllers.count
+            
+                if(count==1) {
+                    self.gotoHeadlines_B()
+                } else {
+                    CustomNavController.shared.popToRootViewController(animated: true)
+                    DELAY(0.3) {
+                        self.gotoHeadlines_B()
+                    }
+                }
+            } else {
+                let vc = NAV_MAINFEED_VC()
+                CustomNavController.shared.viewControllers = [vc]
+            }
+        }
+    }
+    private func gotoHeadlines_B() {
+        if(IPHONE()) {
+            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeed_v3_viewController {
+                _vc.list.scrollToTop()
+            }
+        } else {
+            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeediPad_v3_viewController {
+                _vc.list.scrollToTop()
+            }
         }
     }
     

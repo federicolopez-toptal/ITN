@@ -258,8 +258,6 @@ extension iPhoneFooterCell_v3 {
 extension iPhoneFooterCell_v3 {
 
     func slidersButtonTap() {
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
-        
         DELAY(0.5) {
             let vc = PreferencesViewController()
             CustomNavController.shared.pushViewController(vc, animated: true)
@@ -270,7 +268,6 @@ extension iPhoneFooterCell_v3 {
     }
     
     func feedbackButtonTap() {
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         DELAY(0.5) {
             let vc = FeedbackFormViewController()
             CustomNavController.shared.pushViewController(vc, animated: true)
@@ -278,7 +275,6 @@ extension iPhoneFooterCell_v3 {
     }
     
     func privacyPolicyButtonTap() {
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         DELAY(0.5) {
             let vc = PrivacyPolicyViewController()
             CustomNavController.shared.pushViewController(vc, animated: true)
@@ -286,7 +282,6 @@ extension iPhoneFooterCell_v3 {
     }
     
     func aboutButtonTap() {
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         DELAY(0.5) {
             let vc = FAQViewController()
             CustomNavController.shared.pushViewController(vc, animated: true)

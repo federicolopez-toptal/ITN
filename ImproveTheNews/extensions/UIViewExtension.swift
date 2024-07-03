@@ -15,11 +15,6 @@ extension UIView {
     }
 
     func show() {
-        if(self is SlidersPanel || self is FloatingButton) {
-            self.hide()
-            return
-        }
-    
         self.isHidden = false
     }
     

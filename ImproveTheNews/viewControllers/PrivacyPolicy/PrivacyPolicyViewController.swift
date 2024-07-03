@@ -133,7 +133,6 @@ class PrivacyPolicyViewController: BaseViewController {
         self.navBar.refreshDisplayMode()
 
         self.addContent()
-        CustomNavController.shared.floatingButton.hide()
     }
     
     func onLinkTap(_ url: URL) {

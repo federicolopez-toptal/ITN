@@ -220,9 +220,6 @@ extension MenuView {
         
         if(IPHONE()) {
             var firstIsMainFeed = false
-            if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
-                if(firstVC.topic == "news"){ firstIsMainFeed = true }
-            }
             if let firstVC = CustomNavController.shared.viewControllers.first as? MainFeed_v3_viewController {
                 if(firstVC.topic == "news"){ firstIsMainFeed = true }
             }
@@ -246,8 +243,6 @@ extension MenuView {
                 
                 DELAY(0.2) {
                     self.dismissMe()
-                    CustomNavController.shared.slidersPanel.show()
-                    CustomNavController.shared.floatingButton.show()
                 }
             }
         } else {
@@ -275,17 +270,14 @@ extension MenuView {
                 
                 DELAY(0.2) {
                     self.dismissMe()
-                    CustomNavController.shared.slidersPanel.show()
-                    CustomNavController.shared.floatingButton.show()
                 }
             }
         }
+        
+        CustomNavController.shared.tabsBar.selectTab(1)
     }
     private func gotoHeadlines_B() {
         if(IPHONE()) {
-            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeedViewController {
-                _vc.scrollToZero()
-            }
             if let _vc = CustomNavController.shared.viewControllers.first as? MainFeed_v3_viewController {
                 _vc.list.scrollToTop()
             }
@@ -293,17 +285,12 @@ extension MenuView {
             if let _vc = CustomNavController.shared.viewControllers.first as? MainFeediPad_v3_viewController {
                 _vc.list.scrollToTop()
             }
-        
-//            if let _vc = CustomNavController.shared.viewControllers.first as? MainFeed_v2ViewController {
-//                _vc.scrollToZero()
-//            }
         }
     }
     
     // ---------
     func presentPreferences() {
         self.dismissMe()
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
 
         DELAY(0.5) {
             let vc = PreferencesViewController()
@@ -415,8 +402,6 @@ extension MenuView {
                 
                 DELAY(0.2) {
                     self.dismissMe()
-                    CustomNavController.shared.slidersPanel.show()
-                    CustomNavController.shared.floatingButton.show()
                 }
             }
         } else {
@@ -429,8 +414,6 @@ extension MenuView {
                 
                 DELAY(0.2) {
                     self.dismissMe()
-                    CustomNavController.shared.slidersPanel.show()
-                    CustomNavController.shared.floatingButton.show()
                 }
             }
         }
@@ -519,8 +502,7 @@ extension MenuView {
     // ---------
     func showProfile() {
         self.dismissMe()
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
-    
+        
         var vc: UIViewController?
         if(USER_AUTHENTICATED()) {
             vc = AccountViewController()
@@ -534,7 +516,6 @@ extension MenuView {
     // ---------
     func showPublicFigures() {
         self.dismissMe()
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         
         let vc = PublicFiguresViewController()
         CustomNavController.shared.pushViewController(vc, animated: true)
@@ -543,10 +524,10 @@ extension MenuView {
     // ---------
     func showControversies() {
         self.dismissMe()
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         
         let vc = ControversiesViewController()
-        CustomNavController.shared.pushViewController(vc, animated: true)
+        CustomNavController.shared.viewControllers = [vc]
+        CustomNavController.shared.tabsBar.selectTab(2)
     }
     
     // ---------
@@ -560,8 +541,6 @@ extension MenuView {
 
                 self.resetAllSettings()
                 NOTIFY(Notification_reloadMainFeed)
-                CustomNavController.shared.slidersPanel.reloadSliderValues()
-                CustomNavController.shared.slidersPanel.forceSplitOff()
                 
                 if(Layout.current() == .textOnly) {
                     self.changeLayout()

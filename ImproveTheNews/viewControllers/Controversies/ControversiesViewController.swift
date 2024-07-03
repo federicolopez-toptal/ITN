@@ -24,7 +24,6 @@ class ControversiesViewController: BaseViewController {
     var showMoreViewHeightConstraint: NSLayoutConstraint?
     
     
-
     // MARK: - Init
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -33,19 +32,15 @@ class ControversiesViewController: BaseViewController {
             self.didLayout = true
 
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.back, .title])
+            //self.navBar.addComponents([.back, .title])
+            self.navBar.addComponents([.menuIcon, .title])
             self.navBar.setTitle("Latest controversies")
             self.navBar.addBottomLine()
 
             self.buildContent()
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
-    }
-    
+        
     func buildContent() {
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
@@ -117,6 +112,7 @@ class ControversiesViewController: BaseViewController {
         
         if(IPHONE()) {
             let line = UIView()
+            line.tag = 444
             line.backgroundColor = .green
             moreView.addSubview(line)
             line.activateConstraints([
@@ -148,7 +144,7 @@ class ControversiesViewController: BaseViewController {
         mainView.bottomAnchor.constraint(equalTo: moreView.bottomAnchor, constant: M).isActive = true
         
         // --------------------------------------
-        self.refreshDisplayMode()
+        self.refreshDisplayMode_local()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -163,13 +159,42 @@ class ControversiesViewController: BaseViewController {
         }
     }
     
-    override func refreshDisplayMode() {
+    func refreshDisplayMode_local() {
         self.navBar.refreshDisplayMode()
-        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         
-        self.scrollView.backgroundColor = self.view.backgroundColor
-        self.contentView.backgroundColor = self.view.backgroundColor
-        self.vStack.backgroundColor = self.view.backgroundColor
+        let C = CSS.shared.displayMode().main_bgColor
+        
+        self.view.backgroundColor = C
+        self.scrollView.backgroundColor = C
+        self.contentView.backgroundColor = C
+        self.vStack.backgroundColor = C
+    }
+    
+    override func refreshDisplayMode() {
+        self.refreshDisplayMode_local()
+        
+        let containerView = self.view.viewWithTag(555)!
+        REMOVE_ALL_SUBVIEWS(from: containerView)
+        
+        let moreView = self.view.viewWithTag(556)!
+        moreView.backgroundColor = self.view.backgroundColor
+        moreView.hide()
+        
+        for sView in moreView.subviews {
+            if(sView.tag == 444) {
+                ADD_HDASHES(to: sView)
+            } else {
+                if let _button = sView as? UIButton {
+                    _button.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
+                    _button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xBBBDC0)
+                }
+            }
+        }
+        
+        
+        self.page = 1
+        self.items = []
+        self.loadContent(page: self.page)
     }
     
     @objc func loadMoreOnTap(_ sender: UIButton) {

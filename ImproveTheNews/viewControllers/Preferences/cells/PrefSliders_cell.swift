@@ -349,7 +349,6 @@ extension PrefSliders_cell {
             let strValue = String(format: "%02d", newValue)
             
             WRITE(key, value: strValue)
-            CustomNavController.shared.slidersPanel.reloadSliderValues()
         }
         
         API.shared.savesSliderValues( MainFeedv3.sliderValues() )

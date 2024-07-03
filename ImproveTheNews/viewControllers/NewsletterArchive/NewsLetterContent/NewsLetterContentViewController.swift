@@ -97,11 +97,6 @@ class NewsLetterContentViewController: BaseViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
-    }
-    
     func buildContent() {
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
     

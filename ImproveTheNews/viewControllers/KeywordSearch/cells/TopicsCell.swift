@@ -124,11 +124,6 @@ class TopicsCell: UITableViewCell {
             vc.topic = topic
             CustomNavController.shared.viewControllers = [vc]
         
-            DELAY(0.1) {
-                CustomNavController.shared.slidersPanel.show()
-                CustomNavController.shared.floatingButton.show()
-            }
-        
 //            let vc = MainFeedViewController()
 //            vc.topic = topic
 //            CustomNavController.shared.viewControllers = [vc]
@@ -141,11 +136,8 @@ class TopicsCell: UITableViewCell {
             let vc = MainFeediPad_v3_viewController()
             vc.topic = topic
             CustomNavController.shared.viewControllers = [vc]
-
-            DELAY(0.1) {
-                CustomNavController.shared.slidersPanel.show()
-                CustomNavController.shared.floatingButton.show()
-            }
         }
+        
+        CustomNavController.shared.tabsBar.selectTab(1   )
     }
 }

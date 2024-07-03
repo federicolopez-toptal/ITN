@@ -135,9 +135,6 @@ extension MainFeed_v2ViewController {
     
     func startTour() {
         MAIN_THREAD {
-            CustomNavController.shared.slidersPanel.makeSureIsClosed()
-            CustomNavController.shared.slidersPanel.forceSplitOff()
-        
             let tour = TourView(buildInto: CustomNavController.shared.view)
             tour.start()
         }
@@ -176,8 +173,13 @@ extension MainFeed_v2ViewController: TopicSelectorViewDelegate {
 
 // MARK: - List/Pull to Refresh
 extension MainFeed_v2ViewController: CustomFeedListDelegate {
+
     func feedListOnRefreshPulled(sender: CustomFeedList) {
         self.loadData(showLoading: false)
+    }
+    
+    func feedListOnScrollToTop(sender: CustomFeedList) {
+        
     }
 }
 

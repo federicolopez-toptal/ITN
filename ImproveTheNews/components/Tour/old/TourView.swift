@@ -362,7 +362,6 @@ extension TourView {
     
     @objc func onSlidersButtonTap(_ sender: UIButton) {
         self.hideAllSteps()
-        CustomNavController.shared.floatingButton.floatingButtonOnTap(nil)
         
         DELAY(0.5) {
             self.showStep(5)
@@ -375,7 +374,6 @@ extension TourView {
         
         let tmpButton = UIButton(type: .system)
         tmpButton.tag = 31
-        CustomNavController.shared.slidersPanel.onSplitButtonTap(tmpButton)
     }
 
 }

@@ -55,10 +55,6 @@ class KeywordSearchViewController: BaseViewController {
             self.search("", type: .all)
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
-    }
     
 }
     

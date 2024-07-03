@@ -22,14 +22,6 @@ class ArticleViewController: BaseViewController {
     var showComponentsOnClose = true
 
     deinit {
-        if let lastVC = CustomNavController.shared.viewControllers.last {
-            if(!(lastVC is StoryViewController)) {
-                if(self.showComponentsOnClose){
-                    CustomNavController.shared.showPanelAndButtonWithAnimation()
-                }
-            }
-        }
-    
         self.hideLoading()
     }
 
@@ -95,11 +87,6 @@ class ArticleViewController: BaseViewController {
             self.didAppear = true
             self.loadContent()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
     }
     
     override func refreshDisplayMode() {

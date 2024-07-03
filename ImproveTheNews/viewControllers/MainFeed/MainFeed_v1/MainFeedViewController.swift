@@ -96,17 +96,9 @@ class MainFeedViewController: BaseViewController {
         if(self.mustReloadOnShow) {
             self.mustReloadOnShow = false
             self.loadData(showLoading: true)
-            CustomNavController.shared.slidersPanel.reloadSliderValues()
-            CustomNavController.shared.slidersPanel.forceSplitToStoredValue()
             CustomNavController.shared.menu.changeLayoutFromStoredValue()
             CustomNavController.shared.menu.changeDisplayModeFromStoredValue()
         }
-        
-        if(CustomNavController.shared.slidersPanel.isHidden && CustomNavController.shared.floatingButton.isHidden) {
-            CustomNavController.shared.slidersPanel.show(rows: 0, animated: false)
-            CustomNavController.shared.showPanelAndButtonWithAnimation()
-        }
-        
     }
     
     @objc func onStanceIconTapFromNotification(_ notification: Notification) {
@@ -183,7 +175,7 @@ class MainFeedViewController: BaseViewController {
 //                        self.prevMustSplit = MUST_SPLIT()
                         
                         // TOUR
-                        if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
+                        if(READ(LocalKeys.preferences.onBoardingShow)==nil) {
                             if(CustomNavController.shared.viewControllers.first! == self) {
                                 WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
                                 CustomNavController.shared.startTour()
@@ -378,11 +370,6 @@ extension MainFeedViewController {
     func showFAQ() {
         let vc = FAQViewController()
         CustomNavController.shared.viewControllers = [vc]
-        
-        DELAY(0.2) {
-            CustomNavController.shared.slidersPanel.hide()
-            CustomNavController.shared.floatingButton.hide()
-        }
     }
     
 }

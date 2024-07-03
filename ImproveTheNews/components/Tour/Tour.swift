@@ -210,7 +210,6 @@ class Tour {
     // Event(s)
     @objc func onStep4ButtonTap(_ sender: UIButton?) {
         self.hideAllSteps()
-        CustomNavController.shared.floatingButton.floatingButtonOnTap(nil)
         
         DELAY(0.5) {
             self.showStep(5)
@@ -222,7 +221,6 @@ class Tour {
         
         let tmpButton = UIButton(type: .system)
         tmpButton.tag = 31
-        CustomNavController.shared.slidersPanel.onSplitButtonTap(tmpButton)
         
         DELAY(0.5) {
             self.showStep(6)
@@ -243,13 +241,6 @@ extension Tour: TourRectViewDelegate {
     }
     
     func TourRectView_onBackButtonTap(sender: TourRectView) {
-        if(sender.index==5) {
-            CustomNavController.shared.slidersPanel.show(rows: 0)
-        } else if(sender.index==6) {
-            CustomNavController.shared.slidersPanel.forceSplitOff()
-            NOTIFY(Notification_reloadMainFeed)
-        }
-        
         self.showStep(sender.index-1)
     }
     
@@ -385,7 +376,6 @@ extension Tour {
             self.prefNotes = nil
             self.cancel()
         
-            CustomNavController.shared.hidePanelAndButtonWithAnimation()
             DELAY(0.5) {
                 let vc = PreferencesViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)

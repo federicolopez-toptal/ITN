@@ -63,11 +63,6 @@ class PublicFiguresViewController: BaseViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
-    }
-    
     func buildContent() {
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back

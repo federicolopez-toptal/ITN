@@ -41,6 +41,9 @@ class NavBarView: UIView {
     var longTitleTrailingValue_long: CGFloat = 0
     var longTitleTrailingValue_short: CGFloat = 0
 
+    var bottomLine: UIView?
+
+
     // MARK: - Init(s)
     init() {
         super.init(frame: CGRect.zero)
@@ -67,17 +70,17 @@ class NavBarView: UIView {
     }
     
     func addBottomLine() {
-        let line2 = UIView()
-        line2.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.bottomLine = UIView()
+        self.bottomLine!.backgroundColor = CSS.shared.displayMode().main_bgColor
         
-        self.addSubview(line2)
-        line2.activateConstraints([
-            line2.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            line2.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            line2.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            line2.heightAnchor.constraint(equalToConstant: 1)
+        self.addSubview(self.bottomLine!)
+        self.bottomLine!.activateConstraints([
+            self.bottomLine!.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.bottomLine!.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.bottomLine!.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.bottomLine!.heightAnchor.constraint(equalToConstant: 1)
         ])
-        ADD_HDASHES(to: line2)
+        ADD_HDASHES(to: self.bottomLine!)
     }
     
     func addComponents(_ components: [NavBarViewComponents]) {
@@ -471,6 +474,11 @@ class NavBarView: UIView {
                 }
             }
         }
+        
+        if let _bottomLine = self.bottomLine {
+            _bottomLine.backgroundColor = CSS.shared.displayMode().main_bgColor
+            ADD_HDASHES(to: _bottomLine)
+        }
     }
     
     func setTitle(_ text: String) {
@@ -579,9 +587,6 @@ extension NavBarView {
     
     @objc func onHeadlinesButtonTap(_ sender: UIButton) {
         CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
-        
-        CustomNavController.shared.slidersPanel.show(rows: 0, animated: false)
-        CustomNavController.shared.showPanelAndButtonWithAnimation()
     }
     
     

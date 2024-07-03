@@ -120,10 +120,10 @@ class TabsBar_iPhone: TabsBar {
     
     @objc func tabButtonOnTap(_ sender: UIButton?) {
         let index = sender!.tag
-        self.selectTab(index)
+        self.selectTab(index, loadContent: true)
     }
      
-    func selectTab(_ index: Int) {
+    override func selectTab(_ index: Int, loadContent: Bool = false) {
         for i in 1...Int(self.itemsCount) {
             let iconImageView = self.viewWithTag(20 + i) as! UIImageView
             if(i==index) {
@@ -134,6 +134,18 @@ class TabsBar_iPhone: TabsBar {
         }
         
         self.currentTab = index
+        
+        if(loadContent) {
+            switch(index) {
+                case 1:
+                    CustomNavController.shared.loadHeadlines()
+                case 2:
+                    CustomNavController.shared.loadControversies()
+            
+                default:
+                    NOTHING()
+            }
+        }
     }
     
     func iconName(_ index: Int, _ state: Bool) -> String {

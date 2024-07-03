@@ -32,4 +32,7 @@ class TabsBar: UIView {
     func refreshDisplayMode() { // to override
     }
     
+    func selectTab(_ index: Int, loadContent: Bool = false) { // to override
+    }
+    
 }

@@ -135,12 +135,7 @@ class StoryViewController: BaseViewController {
             self.loadContent()
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
-    }
-    
+        
     override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor

@@ -311,8 +311,6 @@ extension iPadFooterCell {
     }
     
     @objc func onHowWorksButtonTap(_ sender: UIButton) {
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
-        
         DELAY(0.5) {
             let vc = PreferencesViewController()
             CustomNavController.shared.pushViewController(vc, animated: true)
@@ -323,7 +321,6 @@ extension iPadFooterCell {
     }
     
     @objc func onFeedbackButtonTap(_ sender: UIButton) {
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         DELAY(0.5) {
             let vc = FeedbackFormViewController()
             CustomNavController.shared.pushViewController(vc, animated: true)
@@ -331,7 +328,6 @@ extension iPadFooterCell {
     }
     
     @objc func onPrivacyPolicyButtonTap(_ sender: UIButton) {
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         DELAY(0.5) {
             let vc = PrivacyPolicyViewController()
             CustomNavController.shared.pushViewController(vc, animated: true)
@@ -339,7 +335,6 @@ extension iPadFooterCell {
     }
     
     @objc func onFAQButtonTap(_ sender: UIButton) {
-        CustomNavController.shared.hidePanelAndButtonWithAnimation()
         DELAY(0.5) {
             let vc = FAQViewController()
             CustomNavController.shared.pushViewController(vc, animated: true)

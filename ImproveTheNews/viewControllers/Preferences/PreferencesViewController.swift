@@ -43,8 +43,6 @@ class PreferencesViewController: BaseViewController {
             if(ORIENTATION_LANDSCAPE()) {
                 self.wasInitialOrientationLandscape = true
             }
-            
-            CustomNavController.shared.slidersPanel.show(rows: 0)
         }
     }
     
@@ -91,7 +89,6 @@ class PreferencesViewController: BaseViewController {
         }
         
         self.list.reloadData()
-        CustomNavController.shared.floatingButton.hide()
     }
     
     func scrollToSliders() {

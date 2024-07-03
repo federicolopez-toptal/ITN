@@ -106,15 +106,8 @@ class MainFeediPad_v3_viewController: BaseViewController {
         if(self.mustReloadOnShow) {
             self.mustReloadOnShow = false
             self.loadData(showLoading: true)
-            CustomNavController.shared.slidersPanel.reloadSliderValues()
-            CustomNavController.shared.slidersPanel.forceSplitToStoredValue()
             CustomNavController.shared.menu.changeLayoutFromStoredValue()
             CustomNavController.shared.menu.changeDisplayModeFromStoredValue()
-        }
-        
-        if(CustomNavController.shared.slidersPanel.isHidden && CustomNavController.shared.floatingButton.isHidden) {
-            CustomNavController.shared.slidersPanel.show(rows: 0, animated: false)
-            CustomNavController.shared.showPanelAndButtonWithAnimation()
         }
         
 //        DELAY(1.0) {
@@ -180,13 +173,13 @@ extension MainFeediPad_v3_viewController {
                         self.hideLoading()
                         self.list.hideRefresher()
                         
-//                        // TOUR
-                        if(CustomNavController.shared.showTour || READ(LocalKeys.preferences.onBoardingShow)==nil) {
-                            if(CustomNavController.shared.viewControllers.first! == self) {
-                                WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
-                                CustomNavController.shared.startTour()
-                            }
-                        }
+////                        // TOUR
+//                        if( READ(LocalKeys.preferences.onBoardingShow)==nil) {
+//                            if(CustomNavController.shared.viewControllers.first! == self) {
+//                                WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
+//                                CustomNavController.shared.startTour()
+//                            }
+//                        }
                         
 //                        DELAY(0.25) {   
 //                            let vc = FigureDetailsViewController()
@@ -384,10 +377,12 @@ extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
         let _posY = scrollView.contentOffset.y
         
         if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0) { // UP
+            print("UP")
             if(self.navBar.isHidden && !self.topBarsTransitioning) {
                 self.showTopBars()
             }
         } else { // DOWN
+            print("DOWN")
             if(_posY >= 70) {
                 if(!self.navBar.isHidden && !self.topBarsTransitioning) {
                     self.hideTopBars()
