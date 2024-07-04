@@ -23,6 +23,10 @@ class ControversiesViewController: BaseViewController {
     var containerViewHeightConstraint: NSLayoutConstraint?
     var showMoreViewHeightConstraint: NSLayoutConstraint?
     
+    var currentTopic = -1
+    var topics = [SimpleTopic]()
+    let topicsContainer = UIView()
+    
     
     // MARK: - Init
     override func viewDidLayoutSubviews() {
@@ -33,9 +37,18 @@ class ControversiesViewController: BaseViewController {
 
             self.navBar.buildInto(viewController: self)
             //self.navBar.addComponents([.back, .title])
-            self.navBar.addComponents([.menuIcon, .title])
-            self.navBar.setTitle("Latest controversies")
+            self.navBar.addComponents([.menuIcon, .title, .share, .question])
+//            self.navBar.setTitle("Latest controversies")
+            self.navBar.setTitle("Controversies")
             self.navBar.addBottomLine()
+            
+            self.navBar.onQuestionButtonTap {
+                print("tap on QUESTION")
+            }
+            self.navBar.onShareButtonTap {
+                print("tap on SHARE")
+            }
+            
 
             self.buildContent()
         }
@@ -82,8 +95,15 @@ class ControversiesViewController: BaseViewController {
             
         // --------------------------------------
         // Container / Structure
-        let mainView = self.createContainerView()
+        ADD_SPACER(to: self.vStack, height: 16)
         
+        self.topicsContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.vStack.addArrangedSubview(self.topicsContainer)
+        self.topicsContainer.activateConstraints([
+            self.topicsContainer.heightAnchor.constraint(equalToConstant: 40+16)
+        ])
+        
+        let mainView = self.createContainerView()
         let containerView = UIView()
         mainView.addSubview(containerView)
         //containerView.backgroundColor = .orange
@@ -220,8 +240,14 @@ extension ControversiesViewController {
     
     private func loadContent(page P: Int) {
         
+        var T = ""
+        if(self.topics.count>0 && self.currentTopic != -1) {
+            T = self.topics[self.currentTopic].slug
+            if(T == "all"){ T = "" }
+        }
+        
         self.showLoading()
-        ControversiesData.shared.loadList(page: P) { (error, keyword, total, list) in
+        ControversiesData.shared.loadList(topic: T, page: P) { (error, total, list, topics) in
             if let _ = error {
                 ALERT(vc: self, title: "Server error",
                 message: "Trouble loading the Latest controversies,\nplease try again later.", onCompletion: {
@@ -230,8 +256,8 @@ extension ControversiesViewController {
             } else {
                 MAIN_THREAD {
                     self.hideLoading()
-                    if let _ = keyword, let _T = total, let _L = list {
-                        self.fillContent(items: _L, total: _T)
+                    if let _n = total, let _L = list, let _T = topics {
+                        self.fillContent(total: _n, items: _L, topics: _T)
                     }
                 }
             }
@@ -239,8 +265,12 @@ extension ControversiesViewController {
                 
     }
     
-    func fillContent(items: [ControversyListItem], total: Int) {
+    func fillContent(total: Int, items: [ControversyListItem], topics: [SimpleTopic]) {
         let containerView = self.view.viewWithTag(555)!
+        
+        if(self.topics.count==0) {
+            self.addTopics(topics)
+        }
         
         var _items = items
 //        for _ in 1...1 {
@@ -433,6 +463,129 @@ extension ControversiesViewController {
         } else {
             self.showMoreViewHeightConstraint?.constant = 0
             moreView.hide()
+        }
+    }
+    
+}
+
+
+extension ControversiesViewController {
+    
+    func addTopics(_ topics: [SimpleTopic]) {
+        self.topics = topics
+        
+        let H: CGFloat = 40.0
+        REMOVE_ALL_SUBVIEWS(from: self.topicsContainer)
+
+        var _m: CGFloat = 0
+        if(IPAD()) {
+            _m = (SCREEN_SIZE_iPadSideTab().width - W())/2
+        }
+        
+        let innerScrollView = UIScrollView()
+        innerScrollView.showsHorizontalScrollIndicator = false
+        innerScrollView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.topicsContainer.addSubview(innerScrollView)
+        innerScrollView.activateConstraints([
+            innerScrollView.leadingAnchor.constraint(equalTo: self.topicsContainer.leadingAnchor, constant: _m),
+            innerScrollView.trailingAnchor.constraint(equalTo: self.topicsContainer.trailingAnchor, constant: -_m),
+            innerScrollView.topAnchor.constraint(equalTo: self.topicsContainer.topAnchor),
+            innerScrollView.bottomAnchor.constraint(equalTo: self.topicsContainer.bottomAnchor)
+        ])
+        
+        let innerContentView = UIView()
+        innerContentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        innerScrollView.addSubview(innerContentView)
+        innerContentView.activateConstraints([
+            innerContentView.leadingAnchor.constraint(equalTo: innerScrollView.leadingAnchor),
+            innerContentView.topAnchor.constraint(equalTo: innerScrollView.topAnchor),
+            innerContentView.heightAnchor.constraint(equalToConstant: H)
+            //,innerContentView.widthAnchor.constraint(equalToConstant: 500)
+        ])
+        innerContentView.tag = 333
+    
+        let SEP: CGFloat = 8.0
+        var val_x: CGFloat = IPHONE() ? M : 0
+        for (i, T) in topics.enumerated() {
+            let label = UILabel()
+            label.font = AILERON(15)
+            label.textColor = CSS.shared.displayMode().sec_textColor
+            label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF0F0F0)
+            label.textAlignment = .center
+            label.text = T.name
+            label.layer.cornerRadius = 20
+            label.layer.borderWidth = 1.0
+            label.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x4C4E50).cgColor : UIColor(hex: 0xBBBDC0).cgColor
+            label.clipsToBounds = true
+            
+            let _W = label.calculateWidthFor(height: H) + 42
+            
+            innerContentView.addSubview(label)
+            label.activateConstraints([
+                label.leadingAnchor.constraint(equalTo: innerContentView.leadingAnchor, constant: val_x),
+                label.topAnchor.constraint(equalTo: innerContentView.topAnchor),
+                label.widthAnchor.constraint(equalToConstant: _W),
+                label.heightAnchor.constraint(equalToConstant: H)
+            ])
+            
+            let button = UIButton(type: .custom)
+            button.tag = 400 + i
+            //button.backgroundColor = .red.withAlphaComponent(0.5)
+            innerContentView.addSubview(button)
+            button.activateConstraints([
+                button.leadingAnchor.constraint(equalTo: label.leadingAnchor),
+                button.trailingAnchor.constraint(equalTo: label.trailingAnchor),
+                button.topAnchor.constraint(equalTo: label.topAnchor),
+                button.bottomAnchor.constraint(equalTo: label.bottomAnchor)
+            ])
+            button.addTarget(self, action: #selector(topicButton_iPhoneOnTap(_:)), for: .touchUpInside)
+            
+            val_x += SEP + _W
+        }
+
+        if(IPHONE()) {
+            val_x += M
+        }
+
+        innerContentView.widthAnchor.constraint(equalToConstant: val_x).isActive = true
+        innerScrollView.contentSize = CGSize(width: val_x, height: H)
+        
+        ADD_SPACER(to: self.vStack, height: M*2)
+        self.selectTopic_iPhone(index: 0, mustLoad: false)
+    }
+    @objc func topicButton_iPhoneOnTap(_ sender: UIButton) {
+        let i = sender.tag - 400
+        self.selectTopic_iPhone(index: i)
+    }
+    
+    func selectTopic_iPhone(index: Int, mustLoad: Bool = true) {
+        self.currentTopic = index
+        
+        if let containerView = self.view.viewWithTag(333) {
+            var i = -1
+            for V in containerView.subviews {
+                if let label = V as? UILabel {
+                    i += 1
+                    if(i == index) {
+                        label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xE3E3E3)
+                        label.layer.borderColor = UIColor.clear.cgColor
+                    } else {
+                        label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF0F0F0)
+                        label.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x4C4E50).cgColor : UIColor(hex: 0xBBBDC0).cgColor 
+                    }
+                }
+            }
+        }
+        
+        if(mustLoad) {
+            //self.topics = []
+            
+            let containerView = self.view.viewWithTag(555)!
+            REMOVE_ALL_SUBVIEWS(from: containerView)
+            
+            self.page = 1
+            self.items = []
+            self.loadContent(page: self.page)
         }
     }
     

@@ -243,6 +243,8 @@ class ControversyCellView: UIView {
         
         self.startLabel.text = controversy.textMin
         self.endLabel.text = controversy.textMax
+        self.startLabel.show()
+        self.endLabel.show()
         
         self.statusLabel.text = controversy.resolved
         self.statusLabel.textColor = CSS.shared.displayMode().main_textColor
@@ -263,6 +265,8 @@ class ControversyCellView: UIView {
             self.gradientView.show()
         } else {
             self.gradientView.hide()
+            self.startLabel.hide()
+            self.endLabel.hide()
             
             if let _statusTopConstraint = self.statusTopConstraint {
                 _statusTopConstraint.constant = M

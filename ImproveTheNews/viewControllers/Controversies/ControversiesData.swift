@@ -140,7 +140,7 @@ class ControversiesData {
         task.resume()
     }
     
-    func loadList(term: String = "", page: Int, callback: @escaping (Error?, String?, Int?, [ControversyListItem]?) -> () ) {
+    func loadList(term: String, page: Int, callback: @escaping (Error?, String?, Int?, [ControversyListItem]?) -> () ) {
         let url = ITN_URL() + "/claims-api/claim/search?keyword=\(term)&page=\(page)&per_page=10"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
@@ -171,6 +171,64 @@ class ControversiesData {
                                 list.append(newItem)
                             }
                             callback(nil, _keyword, _total, list)
+                        } else {
+                            callback(CustomError.jsonParseError, nil, nil, nil)
+                        }
+                    }
+                }
+            }
+        }
+
+        task.resume()
+    }
+    
+    func loadList(topic: String, page: Int,
+        callback: @escaping (Error?, Int?, [ControversyListItem]?, [SimpleTopic]?) -> () ) {
+        // error, total, itemList, topics
+        
+        let url = ITN_URL() + "/claims-api/claim/search?topic=\(topic)&page=\(page)&per_page=8"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        
+        print("CONTROVERSIES LIST -  URL", url)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+                callback(error, nil, nil, nil)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil, nil, nil)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    if let _ = _json["error"] {
+                        callback(CustomError.jsonParseError, nil, nil, nil)
+                    } else {
+//                        if let _keyword = _json["keyword"] as? String,
+                        if let _total = _json["total"] as? Int,
+                            let _data = _json["data"] as? [[String: Any]],
+                            let _topics = _json["topics"] as? [[String: Any]] {
+                         
+                            var cItems = [ControversyListItem]()
+                            for I in _data {
+                                let newItem = ControversyListItem(jsonObj: I)
+                                cItems.append(newItem)
+                            }
+                            
+                            var topics = [SimpleTopic]()
+                            topics.append(SimpleTopic(jsonObj: [
+                                "title": "All",
+                                "slug": "all"
+                            ]))
+                            
+                            for T in _topics {
+                                let newItem = SimpleTopic(jsonObj: T)
+                                topics.append(newItem)
+                            }
+                            
+                            
+                            callback(nil, _total, cItems, topics)
                         } else {
                             callback(CustomError.jsonParseError, nil, nil, nil)
                         }

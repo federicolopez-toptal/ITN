@@ -21,6 +21,7 @@ enum NavBarViewComponents {
     case share
     case user
     case headlines
+    case question
 }
 
 
@@ -42,6 +43,9 @@ class NavBarView: UIView {
     var longTitleTrailingValue_short: CGFloat = 0
 
     var bottomLine: UIView?
+
+    var questionAction: ( () -> Void )? = nil
+    var shareAction: ( () -> Void )? = nil
 
 
     // MARK: - Init(s)
@@ -99,16 +103,16 @@ class NavBarView: UIView {
                 logo.tag = 1
                 self.displayModeComponents.append(logo)
 
-                let button = UIButton(type: .system)
-                button.backgroundColor = .clear
-                self.addSubview(button)
-                button.activateConstraints([
-                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
-                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
-                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
-                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
-                ])
-                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
+//                let button = UIButton(type: .system)
+//                button.backgroundColor = .clear
+//                self.addSubview(button)
+//                button.activateConstraints([
+//                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
+//                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
+//                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
+//                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
+//                ])
+//                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
             }
             
             if(C == .menuIcon) {
@@ -315,6 +319,33 @@ class NavBarView: UIView {
                 self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
             }
             
+            if(C == .question) {
+                // Search
+                let questionIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("question")))
+                self.addSubview(questionIcon)
+                questionIcon.activateConstraints([
+                    questionIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    questionIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    questionIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
+                    questionIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                ])
+                questionIcon.tag = 12
+                self.displayModeComponents.append(questionIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: questionIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: questionIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: questionIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: questionIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onQuestionButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
+            }
+            
             if(C == .headlines) {
                 // Back to headlines
                 let ITNicon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.home")))
@@ -451,6 +482,8 @@ class NavBarView: UIView {
                         img = UIImage(named: DisplayMode.imageName("newNavBar.user"))
                     case 10: // headlines
                         img = UIImage(named: DisplayMode.imageName("circle.home"))
+                    case 12: // question
+                        img = UIImage(named: DisplayMode.imageName("question"))
                     
                     default:
                         NOTHING()
@@ -500,7 +533,7 @@ class NavBarView: UIView {
         self.shareUrl = url
         self.vc = vc
     }
-
+    
 }
 
 // MARK: - UI Fixes
@@ -554,10 +587,28 @@ extension NavBarView {
     }
     
     @objc func onShareButtonTap(_ sender: UIButton) {
-        if let _url = self.shareUrl, let _vc = self.vc {
-            SHARE_URL(_url, from: _vc)
+        if let _action = self.shareAction {
+            _action()
+        } else {
+            if let _url = self.shareUrl, let _vc = self.vc {
+                SHARE_URL(_url, from: _vc)
+            }
         }
     }
+    func onShareButtonTap(callback: @escaping () -> () ) {
+        self.shareAction = callback
+    }
+    
+    @objc func onQuestionButtonTap(_ sender: UIButton) {
+        if let _action = self.questionAction {
+            _action()
+        }
+    }
+    func onQuestionButtonTap(callback: @escaping () -> () ) {
+        self.questionAction = callback
+    }
+    
+    
     
     @objc func onTitleButtonTap(_ sender: UIButton) {
         if let _vc = CustomNavController.shared.viewControllers.last as? MainFeedViewController {
