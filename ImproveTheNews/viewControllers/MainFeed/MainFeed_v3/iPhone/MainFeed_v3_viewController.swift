@@ -88,7 +88,7 @@ class MainFeed_v3_viewController: BaseViewController {
 //            }
 
 //            DELAY(0.5) {
-//                let vc = AccountViewController()
+//                let vc = FAQViewController()
 //                CustomNavController.shared.pushViewController(vc, animated: true)
 //            }
         }

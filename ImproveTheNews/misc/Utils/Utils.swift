@@ -50,7 +50,9 @@ func SHARE_ON_TWITTER(text: String) { // LSApplicationQueriesSchemes must includ
 }
 
 func SHARE_ON_TWITTER(url: String, text: String) {
-    let url = "https://twitter.com/intent/post?text=" + text.urlEncodedString() + "%20" + url
+    //let url = "https://twitter.com/intent/post?text=" + text.urlEncodedString() + "%20" + url
+    
+    let url = "https://x.com/intent/post?url=" + url.urlEncodedString() + "&text=" + text
     OPEN_URL(url)
 }
 
@@ -61,6 +63,11 @@ func SHARE_ON_FACEBOOK(url: String, text: String) {
 
 func SHARE_ON_LINKEDIN(url: String, text: String) {
     let url = "https://www.linkedin.com/shareArticle?url=\(url)&title=\(text.urlEncodedString())"    
+    OPEN_URL(url)
+}
+
+func SHARE_ON_REDDIT(url: String, text: String) {
+    let url = "https://www.reddit.com/submit?url=" + url.urlEncodedString() + "&title=" + text + "&type=TEXT"
     OPEN_URL(url)
 }
 

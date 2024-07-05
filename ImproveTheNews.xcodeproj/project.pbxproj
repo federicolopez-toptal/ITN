@@ -507,6 +507,7 @@
 		1FFAA58C2BBDA38300ABB272 /* ControDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFAA58B2BBDA38300ABB272 /* ControDetailViewController.swift */; };
 		1FFBD3082B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFBD3072B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift */; };
 		1FFF6F8C2B2294E30008DC07 /* TourIntroPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */; };
+		BD2F70962C3870D5000C9960 /* SharePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F70952C3870D4000C9960 /* SharePopupView.swift */; };
 		BD438B8F2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD438B8E2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift */; };
 		BD4A868D2C3598190007E3A7 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A868C2C3598190007E3A7 /* UIScrollViewExtension.swift */; };
 		BD4DC7D92BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7D82BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift */; };
@@ -1032,6 +1033,7 @@
 		8D5B46307AEDFAA8CAB0BA84 /* Pods-ImproveTheNews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.debug.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.debug.xcconfig"; sourceTree = "<group>"; };
 		A395E0433D69EEF51DC03966 /* Pods_ImproveTheNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImproveTheNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B038FC5F8D4A9F9F2CF291F0 /* Pods-ImproveTheNews.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.app store.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.app store.xcconfig"; sourceTree = "<group>"; };
+		BD2F70952C3870D4000C9960 /* SharePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopupView.swift; sourceTree = "<group>"; };
 		BD438B8E2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterContentUI_weekly.swift; sourceTree = "<group>"; };
 		BD4A868C2C3598190007E3A7 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
 		BD4DC7D82BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneHeaderLineCell_v3.swift; sourceTree = "<group>"; };
@@ -1686,6 +1688,7 @@
 				1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */,
 				1F16FD692B4716AA0082DACF /* EmailNotVerifiedPopupView.swift */,
 				BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */,
+				BD2F70952C3870D4000C9960 /* SharePopupView.swift */,
 			);
 			path = popups;
 			sourceTree = "<group>";
@@ -2658,6 +2661,7 @@
 				1FE89CFD2AF1AD3A00A6C99C /* SpacerCell_v3.swift in Sources */,
 				1FF32A282A2FAEF100948FA4 /* KeywordSearch.swift in Sources */,
 				1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */,
+				BD2F70962C3870D5000C9960 /* SharePopupView.swift in Sources */,
 				1FE92BBB2B56F9DF003C2F86 /* FormCheckView.swift in Sources */,
 				1FD699272B6B2D0400C4B0F9 /* iPhoneArticle_4colsTxtBanner_cell_v3.swift in Sources */,
 				1FC9C45C2B88607700E77FD5 /* iPadStory_vTxt_v3.swift in Sources */,

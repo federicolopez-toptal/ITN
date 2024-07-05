@@ -24,6 +24,8 @@ class FAQViewController: BaseViewController {
     var normalStories = [StorySearchResult]()
     var contextStories = [StorySearchResult]()
     
+    var controversiesButton: UIButton? = nil
+    
     
     // MARK: - Init
     override func viewDidLoad() {
@@ -136,8 +138,10 @@ class FAQViewController: BaseViewController {
         
         if(self.initialTextOpened) {
             self.setParrafo2to(label: self.descrLabel, text: self.mainContent_A(),
-                linkTexts: ["Max Tegmark", "Show Less"],
-                urls: ["https://physics.mit.edu/faculty/max-tegmark/", "local://shortText"],
+                linkTexts: ["Metaculus", "Max Tegmark", "Show Less"],
+                urls: ["https://www.metaculus.com/about/",
+                    "https://physics.mit.edu/faculty/max-tegmark/",
+                    "local://shortText"],
                 onTap: self.onLinkTap(_:))
         } else {
             self.setParrafo2to(label: self.descrLabel, text: self.mainContent_B(),
@@ -154,9 +158,8 @@ class FAQViewController: BaseViewController {
         REMOVE_ALL_SUBVIEWS(from: self.VStack)
         self.heightConstraints = [NSLayoutConstraint]()
         
-        for i in 1...(15-1) {
-            print("I", i)
-            
+        let limit = 17
+        for i in 1...(limit-1) {
             self.addSection(title: self.titles(i), content: self.contents(i),
                 linkTexts: self.linkedTexts(i), urls: self.urls(i), index: i)
         }
@@ -404,6 +407,10 @@ class FAQViewController: BaseViewController {
         buttonArea.tag = self.VStack.arrangedSubviews.count
         buttonArea.addTarget(self, action: #selector(self.onSectionTap(_:)), for: .touchUpInside)
         
+        if(index == 15) {
+            self.controversiesButton = buttonArea
+        }
+        
         let contentLabel = HyperlinkLabel.parrafo2(text: content, linkTexts: linkTexts,
             urls: urls, onTap: self.onLinkTap(_:))
         contentLabel.setLineSpacing(lineSpacing: 6)
@@ -460,7 +467,7 @@ class FAQViewController: BaseViewController {
         ])
         ADD_HDASHES(to: hTopLine)
         
-        if(index==14) {
+        if(index==16) {
             let hBottomLine = UIView()
             hBottomLine.backgroundColor = self.view.backgroundColor
             sectionView.addSubview(hBottomLine)
@@ -643,6 +650,22 @@ extension FAQViewController {
     func scrollTo(valY: CGFloat) {
         let bottomOffset = CGPoint(x: 0, y: valY)
         self.scrollView.setContentOffset(bottomOffset, animated: true)
+    }
+    
+    func scrollToControversies() {
+        if let _button = self.controversiesButton {
+            self.onSectionTap(_button)
+            
+            let sectionView = _button.superview!
+            let valY: CGFloat = sectionView.frame.origin.y
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: valY), animated: true)
+            
+            sectionView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.2) : CSS.shared.cyan
+            UIView.animate(withDuration: 0.5, delay: 0.5) {
+                sectionView.backgroundColor = CSS.shared.displayMode().main_bgColor
+            }
+
+        }
     }
 
 }

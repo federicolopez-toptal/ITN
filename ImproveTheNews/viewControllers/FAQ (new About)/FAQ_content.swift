@@ -25,7 +25,9 @@ extension FAQViewController {
             "What are the values of the Improve the News Foundation?",
             "What’s your privacy policy?",
             "How can I help?",
-            "How can I contact you with feedback?"
+            "How can I provide feedback?",
+            "What are controveries?",
+            "What do the new sliders do?"
         ]
         
         return data[index-1]
@@ -33,9 +35,9 @@ extension FAQViewController {
     
     func mainContent_A() -> String {
         return """
-        Verity is a free news site created by the Improve the News Foundation (ITN), an apolitical American non-profit. It aims to counter misuses of artificial intelligence that have resulted in a distorted online news environment, where alternative facts often overshadow scientific truths, and fractured narratives contribute to social discord. Verity’s aim is to empower people to discover the complete and nuanced truth behind every major news story. It does this by separating facts from narratives. This even includes “nerd narratives” from the Metaculus forecasting community. Verity is also a powerful news aggregator facilitating viewing news from multiple perspectives.
+        Verity is a free news site created by the Improve the News Foundation (ITN), an apolitical American non-profit. It aims to counter misuses of artificial intelligence that have resulted in a distorted online news environment, where alternative facts often overshadow scientific truths, and fractured narratives contribute to social discord. Verity’s aim is to empower people to discover the complete and nuanced truth behind every major news story. It does this by separating facts from narratives. For those readers more interested in probability, we strive to include “Metaculus predictions” where possible. These provide forecasts of the most likely outcome of an event, according to the [0] prediction platform and aggregation engine. Framed as an interactive chart, you can further see how these predictions have changed over time by hovering over various points of the graph.
 
-        The Improve the News Foundation was founded in October 2020 as a 501c(3) non-profit organization in the United States by MIT Prof. [0]. Its team initially consisted of MIT researchers, but has since grown to include a broad group of international collaborators. The Foundation’s mission is to empower people to rise above controversies and understand the world in a nuanced way. Its vision is a world with less hate and more understanding, where society has reasoned compassion, constructive discourse, and well-informed decision-making. [1]
+        The Improve the News Foundation was founded in October 2020 as a 501c(3) non-profit organization in the United States by MIT Prof. [1]. Its team initially consisted of MIT researchers, but has since grown to include a broad group of international collaborators. The Foundation’s mission is to empower people to rise above controversies and understand the world in a nuanced way. Its vision is a world with less hate and more understanding, where society has reasoned compassion, constructive discourse, and well-informed decision-making. [2]
         """
     }
     
@@ -84,12 +86,19 @@ extension FAQViewController {
             "Our informal privacy policy is “don’t be creepy”. We’re not trying to profit from you, and we'll never share or sell your data. You’ll find our full privacy policy [0].",
             // --------
             
-
             """
             If you’d like to support us with a donation, we hope to launch a donation page soon.\nIf you’d like to work for us, please email [0]. We hire for a wide variety of roles including those in software engineering, quality assurance, data curation, editorial, multimedia, social media and operations. If you have ideas or suggestions for improving our site or apps, please fill out this [1]. Thanks in advance!
             """,
             
-            "This is work in progress, and as you can easily tell, there's lots of room for improvement! Please help us make it better by providing your feedback [0]."
+            "This is work in progress, and as you can easily tell, there's lots of room for improvement! Please help us make it better by providing your feedback [0].",
+            
+            """
+            Controversies provide a collection of predictions on a specific topic of debate, made by various public figures, journalists, political pundits, media personalities and academics. These cover a range of topics, including conflicts, politics, climate, and tech. Once a controversy is resolved, you can determine who was right and who was wrong and, over time, who is reliable and who is not.
+            """,
+            
+            """
+            The news sliders enable you to choose what news to consume deliberately, rather than impulsively. We provide two different sliders; a left/right one so that you can see what different sides of the political spectrum are reporting, and an establishment slider so you can see what all major parties agree on, as well as what the establishment-critical are saying. This way, you can make up your mind.
+            """
         ]
         
         return data[index-1]

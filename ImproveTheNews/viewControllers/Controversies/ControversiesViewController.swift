@@ -42,11 +42,29 @@ class ControversiesViewController: BaseViewController {
             self.navBar.setTitle("Controversies")
             self.navBar.addBottomLine()
             
+            // ------------------------------
             self.navBar.onQuestionButtonTap {
-                print("tap on QUESTION")
+                let vc = FAQViewController()
+                CustomNavController.shared.pushViewController(vc, animated: true)
+                
+                DELAY(0.4) {
+                    vc.scrollToControversies()
+                }
             }
+            
+            // -----------------------------
             self.navBar.onShareButtonTap {
-                print("tap on SHARE")
+//                let popup = StoryInfoPopupView(title: "Title",
+//                    description: "description lalalalalal",
+//                    linkedTexts: [], links: [], height: 350)
+//                
+//                popup.pushFromBottom()
+
+                let popup = SharePopupView(text: "Share Controversies",
+                    height: 200,
+                    url: ITN_URL() + "/controversies",
+                    shareText: "Controversies")
+                popup.pushFromBottom()
             }
             
 
@@ -211,6 +229,7 @@ class ControversiesViewController: BaseViewController {
             }
         }
         
+        self.refreshDisplayModeForTopics()
         
         self.page = 1
         self.items = []
@@ -586,6 +605,32 @@ extension ControversiesViewController {
             self.page = 1
             self.items = []
             self.loadContent(page: self.page)
+        }
+    }
+    
+    func refreshDisplayModeForTopics() {
+        let C = CSS.shared.displayMode().main_bgColor
+        
+        self.topicsContainer.backgroundColor = C
+        let scrollview = self.topicsContainer.subviews.first!
+        scrollview.backgroundColor = C
+        let contentView = scrollview.subviews.first!
+        contentView.backgroundColor = C
+        
+        var count = 0
+        for _v in contentView.subviews {
+            if let _label = _v as? UILabel {
+                _label.textColor = CSS.shared.displayMode().sec_textColor
+                if(count == self.currentTopic) {
+                    _label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xE3E3E3)
+                    _label.layer.borderColor = UIColor.clear.cgColor
+                } else {
+                    _label.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : UIColor(hex: 0xF0F0F0)
+                    _label.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x4C4E50).cgColor : UIColor(hex: 0xBBBDC0).cgColor
+                }
+                
+                count += 1
+            }
         }
     }
     
