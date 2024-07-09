@@ -1285,8 +1285,10 @@ extension StoryViewController {
                     let naWebHStack = HSTACK(into: innerHStack)
                     let webView = WKWebView()
                     webView.load(URLRequest(url: URL(string: embedUrl)!))
+                    
+                    let H: CGFloat = (9 * SCREEN_SIZE().width)/16
                     webView.activateConstraints([
-                        webView.heightAnchor.constraint(equalToConstant: 400)
+                        webView.heightAnchor.constraint(equalToConstant: floor(H))
                     ])
                     naWebHStack.addArrangedSubview(webView)
                 
@@ -1359,21 +1361,21 @@ extension StoryViewController {
             for (i, CHR) in parsed.enumerated() {
                 if(CHR=="/") {
                     if let _id = parsed.subString2(from: 0, count: i-1) {
-                        result = "https://www.metaculus.com/questions/question_embed/" + _id + "/"
-
-//                        var mode = "dark"
-//                        if(!DARK_MODE()){ mode = "light" }
-//                        result = "https://www.improvemynews.com/php/metaculus.php?mode=" + mode + "&id=" + _id
+//                        result = "https://www.metaculus.com/questions/question_embed/" + _id + "/"
+                        result = "https://www.improvemynews.com/php/metaculus.php?id=" + _id
                     }
                     break
                 }
             }
         }
 
-//        if(result != nil) {
+        if(result != nil) {
 //            result! += "?theme="
 //            result! += DARK_MODE() ? "dark" : "light"
-//        }
+
+            result! += "&mode="
+            result! += DARK_MODE() ? "dark" : "light"
+        }
         
         return result
     }
