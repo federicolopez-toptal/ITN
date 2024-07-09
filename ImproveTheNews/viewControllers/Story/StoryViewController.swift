@@ -1139,9 +1139,15 @@ extension StoryViewController {
                     ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
                     let webView = WKWebView()
                     webView.load(URLRequest(url: URL(string: embedUrl)!))
+                    
+                    let _W = SCREEN_SIZE_iPadSideTab().width - (M*2)
+                    let H: CGFloat = (9 * _W)/16
+                    print("H", H)
+                    
                     webView.activateConstraints([
-                        webView.heightAnchor.constraint(equalToConstant: 400)
+                        webView.heightAnchor.constraint(equalToConstant: floor(H))
                     ])
+                    
                     naWebHStack.addArrangedSubview(webView)
                     ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
                 
