@@ -88,11 +88,10 @@ class SharePopupView: PopupView {
         ])
         
         // ------------------
-        //let icons = [3]
         var offsetX: CGFloat = 0
         for i in 1...4 {
-            let iconImageView = UIImageView()
-            iconImageView.backgroundColor = .black
+            let iconImageView = UIImageView(image: UIImage(named: "social_\(i)"))
+            //iconImageView.backgroundColor = .black
             self.addSubview(iconImageView)
             iconImageView.activateConstraints([
                 iconImageView.topAnchor.constraint(equalTo: self.subTextLabel.bottomAnchor, constant: 16),
@@ -104,7 +103,7 @@ class SharePopupView: PopupView {
             
             let button = UIButton(type: .custom)
             button.tag = i
-            button.backgroundColor = .red.withAlphaComponent(0.25)
+            button.backgroundColor = .clear //.red.withAlphaComponent(0.25)
             self.addSubview(button)
             button.activateConstraints([
                 button.leadingAnchor.constraint(equalTo: iconImageView.leadingAnchor),

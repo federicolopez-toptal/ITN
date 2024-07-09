@@ -1360,6 +1360,33 @@ extension StoryViewController {
                 if(CHR=="/") {
                     if let _id = parsed.subString2(from: 0, count: i-1) {
                         result = "https://www.metaculus.com/questions/question_embed/" + _id + "/"
+
+//                        var mode = "dark"
+//                        if(!DARK_MODE()){ mode = "light" }
+//                        result = "https://www.improvemynews.com/php/metaculus.php?mode=" + mode + "&id=" + _id
+                    }
+                    break
+                }
+            }
+        }
+
+//        if(result != nil) {
+//            result! += "?theme="
+//            result! += DARK_MODE() ? "dark" : "light"
+//        }
+        
+        return result
+    }
+    
+    func getMetaculusUrl_2(from url: String) -> String? {
+        var result: String? = nil
+    
+        var parsed = url.replacingOccurrences(of: "https://www.metaculus.com/questions/", with: "")
+        if(!parsed.isEmpty) {
+            for (i, CHR) in parsed.enumerated() {
+                if(CHR=="/") {
+                    if let _id = parsed.subString2(from: 0, count: i-1) {
+                        result = "https://www.metaculus.com/questions/question_embed/" + _id + "/"
                     }
                     break
                 }

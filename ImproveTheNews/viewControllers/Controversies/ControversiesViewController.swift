@@ -54,17 +54,13 @@ class ControversiesViewController: BaseViewController {
             
             // -----------------------------
             self.navBar.onShareButtonTap {
-//                let popup = StoryInfoPopupView(title: "Title",
-//                    description: "description lalalalalal",
-//                    linkedTexts: [], links: [], height: 350)
-//                
-//                popup.pushFromBottom()
-
                 let popup = SharePopupView(text: "Share Controversies",
                     height: 200,
                     url: ITN_URL() + "/controversies",
                     shareText: "Controversies")
                 popup.pushFromBottom()
+
+//                CustomNavController.shared.info(message: "Coming soon!")
             }
             
 
