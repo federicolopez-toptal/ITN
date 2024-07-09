@@ -54,13 +54,11 @@ class FigureDetailsViewController: BaseViewController {
 
             self.navBar.buildInto(viewController: self)
             if(IPHONE()) {
-                self.navBar.addComponents([.back, .longTitle])
+                self.navBar.addComponents([.back, .longTitle, .share, .info])
             } else {
-                self.navBar.addComponents([.back, .title])
+                self.navBar.addComponents([.back, .title, .share, .info])
             }
-            
             self.navBar.addBottomLine()
-
             self.buildContent()
         }
     }
@@ -167,11 +165,26 @@ extension FigureDetailsViewController {
         self.navBar.setTitle(figure.name)
         self.addImage(figure.image)
         self.addDescr(figure.description)
-        if(figure.name.lowercased() != "ohchr") {
-            self.addSource(name: figure.sourceText, url: figure.sourceUrl)
-            self.addCredit(name: figure.sourceText, url: figure.sourceUrl)
-        }
-        self.addShare(name: figure.name, slug: figure.slug)
+//        if(figure.name.lowercased() != "ohchr") {
+//            self.addSource(name: figure.sourceText, url: figure.sourceUrl)
+//            self.addCredit(name: figure.sourceText, url: figure.sourceUrl)
+//        }
+        //self.addShare(name: figure.name, slug: figure.slug)
+        self.navBar.setShareUrl(ITN_URL() + "/public-figures/" + figure.slug, vc: self)
+        
+        self.navBar.onInfoButtonTap {
+                let popup = StoryInfoPopupView(title: "Source & credit",
+                    description: """
+                    Public figure about text source: [0]
+                    
+                    Image credit: [1]
+                    """,
+                    linkedTexts: [figure.sourceText, figure.imageCredit],
+                    links: [figure.sourceUrl, figure.imageUrl],
+                    height: 190)
+                    
+                popup.pushFromBottom()
+            }
         
         if(figure.stories.count>0) {
             self.addStoriesTitle(name: figure.name)

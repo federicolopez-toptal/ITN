@@ -22,6 +22,7 @@ enum NavBarViewComponents {
     case user
     case headlines
     case question
+    case info
 }
 
 
@@ -45,6 +46,7 @@ class NavBarView: UIView {
     var bottomLine: UIView?
 
     var questionAction: ( () -> Void )? = nil
+    var infoAction: ( () -> Void )? = nil
     var shareAction: ( () -> Void )? = nil
 
 
@@ -346,6 +348,33 @@ class NavBarView: UIView {
                 self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
             }
             
+            if(C == .info) {
+                // Search
+                let infoIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("info")))
+                self.addSubview(infoIcon)
+                infoIcon.activateConstraints([
+                    infoIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    infoIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    infoIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
+                    infoIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                ])
+                infoIcon.tag = 13
+                self.displayModeComponents.append(infoIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: infoIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: infoIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: infoIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: infoIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onInfoButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
+            }
+            
             if(C == .headlines) {
                 // Back to headlines
                 let ITNicon = UIImageView(image: UIImage(named: DisplayMode.imageName("circle.home")))
@@ -484,6 +513,8 @@ class NavBarView: UIView {
                         img = UIImage(named: DisplayMode.imageName("circle.home"))
                     case 12: // question
                         img = UIImage(named: DisplayMode.imageName("question"))
+                    case 13: // info
+                        img = UIImage(named: DisplayMode.imageName("info"))
                     
                     default:
                         NOTHING()
@@ -568,7 +599,7 @@ extension NavBarView {
         CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
     }
     
-    @objc func onInfoButtonTap(_ sender: UIButton) {
+    @objc func onInfoButtonTap_2(_ sender: UIButton) {
         let vc = FAQViewController()
         vc.firstItemOpened = true
         CustomNavController.shared.pushViewController(vc, animated: true)
@@ -607,6 +638,16 @@ extension NavBarView {
     func onQuestionButtonTap(callback: @escaping () -> () ) {
         self.questionAction = callback
     }
+    
+    @objc func onInfoButtonTap(_ sender: UIButton) {
+        if let _action = self.infoAction {
+            _action()
+        }
+    }
+    func onInfoButtonTap(callback: @escaping () -> () ) {
+        self.infoAction = callback
+    }
+    
     
     
     
