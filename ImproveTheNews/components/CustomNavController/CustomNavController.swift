@@ -163,6 +163,19 @@ extension CustomNavController {
 // MARK: - Content & stuff
 extension CustomNavController {
     
+    func loadPublicFigures() {
+        if let _vc = CustomNavController.shared.viewControllers.first as? PublicFiguresViewController {
+            if(CustomNavController.shared.viewControllers.count==1) {
+                _vc.scrollView.scrollToZero()
+            } else {
+                CustomNavController.shared.popToRootViewController(animated: true)
+            }
+        } else {
+            let vc = PublicFiguresViewController()
+            CustomNavController.shared.viewControllers = [vc]
+        }
+    }
+    
     func loadControversies() {
         if let _vc = CustomNavController.shared.viewControllers.first as? ControversiesViewController {
             if(CustomNavController.shared.viewControllers.count==1) {

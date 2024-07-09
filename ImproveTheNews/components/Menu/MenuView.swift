@@ -21,18 +21,22 @@ class MenuView: UIView {
     
     let dp_mainItems: [MenuItem] = [ // Items order
         .headlines,
-        .publicFigures,
-        .controversies,
-        //.profile,
+        .tour,
         
         .theme,
         
-        .tour,
         .newsletter,
         .preferences,
         .layout,
         .about,
         
+        .contactUs
+        
+        
+//        .publicFigures,
+//        .controversies,
+        
+        //.profile,
         //.more
     ]
     
@@ -481,7 +485,8 @@ extension MenuView {
                 let vc = FAQViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)
             
-            case .feedback:
+            //case .feedback:
+            case .contactUs:
                 let vc = FeedbackFormViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)
             

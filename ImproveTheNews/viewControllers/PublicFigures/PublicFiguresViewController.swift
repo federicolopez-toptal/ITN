@@ -15,12 +15,14 @@ class PublicFiguresViewController: BaseViewController {
     var lastKeyTapTime: Date?
     
     var page: Int = 0
+    var tmpTotal: Int = 0
     var allItems = [PublicFigureListItem]()
     
     let scrollView = UIScrollView()
     let contentView = UIView()
     let showMoreView = UIView()
 
+    var showMoreButton = UIButton(type: .custom)
     let noItemsLabel = UILabel()
 
         var typeSelector = UIView()
@@ -55,7 +57,8 @@ class PublicFiguresViewController: BaseViewController {
             self.didLayout = true
 
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.back, .title])
+//            self.navBar.addComponents([.back, .title])
+            self.navBar.addComponents([.menuIcon, .title])
             self.navBar.setTitle("Public Figures")
             self.navBar.addBottomLine()
 
@@ -190,21 +193,21 @@ class PublicFiguresViewController: BaseViewController {
             self.showMoreView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -22)
         ])
         
-        let showMoreButton = UIButton(type: .custom)
-        self.showMoreView.addSubview(showMoreButton)
-        showMoreButton.activateConstraints([
-            showMoreButton.heightAnchor.constraint(equalToConstant: 42),
-            showMoreButton.widthAnchor.constraint(equalToConstant: 150),
-            showMoreButton.leadingAnchor.constraint(equalTo: self.showMoreView.leadingAnchor),
-            showMoreButton.topAnchor.constraint(equalTo: self.showMoreView.topAnchor, constant: 16)
+        self.showMoreButton = UIButton(type: .custom)
+        self.showMoreView.addSubview(self.showMoreButton)
+        self.showMoreButton.activateConstraints([
+            self.showMoreButton.heightAnchor.constraint(equalToConstant: 42),
+            self.showMoreButton.widthAnchor.constraint(equalToConstant: 150),
+            self.showMoreButton.leadingAnchor.constraint(equalTo: self.showMoreView.leadingAnchor),
+            self.showMoreButton.topAnchor.constraint(equalTo: self.showMoreView.topAnchor, constant: 16)
         ])
-        showMoreButton.setTitle("Show more", for: .normal)
-        showMoreButton.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
-        showMoreButton.titleLabel?.font = AILERON(15)
-        showMoreButton.layer.masksToBounds = true
-        showMoreButton.layer.cornerRadius = 9
-        showMoreButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE8E9EA)
-        showMoreButton.addTarget(self, action: #selector(loadMoreOnTap(_:)), for: .touchUpInside)
+        self.showMoreButton.setTitle("Show more", for: .normal)
+        self.showMoreButton.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
+        self.showMoreButton.titleLabel?.font = AILERON(15)
+        self.showMoreButton.layer.masksToBounds = true
+        self.showMoreButton.layer.cornerRadius = 9
+        self.showMoreButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE8E9EA)
+        self.showMoreButton.addTarget(self, action: #selector(loadMoreOnTap(_:)), for: .touchUpInside)
         
         self.noItemsLabel.font = AILERON(16)
         self.noItemsLabel.textAlignment = .center
@@ -219,13 +222,14 @@ class PublicFiguresViewController: BaseViewController {
         self.noItemsLabel.hide()
         
         self.scrollView.hide()
-        self.refreshDisplayMode()
-        
+        //self.refreshDisplayMode()
+        self.navBar.refreshDisplayMode()
+        self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.scrollView.backgroundColor = self.view.backgroundColor
         
         self.view.bringSubviewToFront(self.typePicker)
         self.view.bringSubviewToFront(self.typePickerButton)
         self.refreshContent(index: 1)
-        
     }
     @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {
         self.typePickerTopConstraint.constant = 0
@@ -240,7 +244,6 @@ class PublicFiguresViewController: BaseViewController {
     }
     
     func createSelectorView(with theView: UIView, index: Int) {
-        
         theView.backgroundColor = self.view.backgroundColor
         theView.layer.cornerRadius = 6
         theView.layer.borderWidth = 0.5
@@ -291,7 +294,7 @@ class PublicFiguresViewController: BaseViewController {
         if(index == 99) {
             self.typePicker.selectRow(self.currentType, inComponent: 0, animated: false)
         
-            self.typePickerTopConstraint.constant = -self.typePicker.frame.size.height+IPHONE_bottomOffset()
+            self.typePickerTopConstraint.constant = -self.typePicker.frame.size.height //+IPHONE_bottomOffset()
             UIView.animate(withDuration: 0.3) {
                 self.darkView.alpha = 1
                 self.view.layoutIfNeeded()
@@ -325,9 +328,6 @@ class PublicFiguresViewController: BaseViewController {
         }
     }
     
-    
-    
-    
     @objc func loadMoreOnTap(_ sender: UIButton) {
         self.loadContent(page: self.page)
     }
@@ -356,8 +356,23 @@ class PublicFiguresViewController: BaseViewController {
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.scrollView.backgroundColor = self.view.backgroundColor
         
-        //self.contentView.backgroundColor = self.view.backgroundColor
-        //self.VStack.backgroundColor = self.view.backgroundColor
+        REMOVE_ALL_SUBVIEWS(from: self.typeSelector)
+        self.createSelectorView(with: self.typeSelector, index: 99)
+        self.refreshContent(index: 1)
+        
+        self.filterTextfield.refreshDisplayMode()
+        self.noItemsLabel.textColor = CSS.shared.displayMode().sec_textColor
+        
+        let tmpItems = self.allItems
+        self.resetListParams()
+        self.fillList(total: self.tmpTotal, items: tmpItems)
+        
+        self.showMoreButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE8E9EA)
+        self.showMoreButton.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
+        
+        self.darkView.refreshDisplayMode()
+        self.typePicker.backgroundColor = self.view.backgroundColor
+        self.typePicker.reloadAllComponents()
     }
 
 }
@@ -391,6 +406,7 @@ extension PublicFiguresViewController {
     }
     
     func fillList(total: Int, items: [PublicFigureListItem]) {
+        self.tmpTotal = total
         for LI in items {
             
 //            if(LI.type==1) {

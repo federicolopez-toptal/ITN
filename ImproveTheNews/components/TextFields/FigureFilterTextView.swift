@@ -77,6 +77,17 @@ class FigureFilterTextView: UIView {
     func text() -> String {
         return self.searchTextField.text!
     }
+    
+    func refreshDisplayMode() {
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.layer.cornerRadius = 6
+        self.layer.borderWidth = 0.5
+        self.layer.borderColor = CSS.shared.displayMode().sec_textColor.cgColor
+        
+        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        self.searchTextField.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        self.searchTextField.tintColor = self.searchTextField.textColor
+    }
 }
 
 // MARK: - Event(s)

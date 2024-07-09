@@ -28,6 +28,7 @@ enum MenuItem {
     case feedback
     case privacy
     case spacer
+    case contactUs
     
     case publicFigures
     case controversies
@@ -96,6 +97,9 @@ extension MenuView {
                 
             case .controversies:
                 result = "Controversies"
+                
+            case .contactUs:
+                result = "Contact Us"
                 
             default:
                 result = ""
@@ -166,6 +170,9 @@ extension MenuView {
             case .controversies:
                 icon = "feedback"
             
+            case .contactUs:
+                icon = "faq"
+            
             default:
                 return nil
         }
@@ -196,7 +203,7 @@ extension MenuView {
             case .more:
                 self.showMore()
                 
-            case .sliders, .about, .feedback, .privacy, .newsletter:
+            case .sliders, .about, .feedback, .privacy, .newsletter, .contactUs:
                 self.showContent(item)
                 
             case .profile:
