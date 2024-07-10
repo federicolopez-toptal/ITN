@@ -143,6 +143,8 @@ class TabsBar_iPhone: TabsBar {
                     CustomNavController.shared.loadControversies()
                 case 3:
                     CustomNavController.shared.loadPublicFigures()
+                case 4:
+                    CustomNavController.shared.loadNewsSliders()
             
                 default:
                     NOTHING()

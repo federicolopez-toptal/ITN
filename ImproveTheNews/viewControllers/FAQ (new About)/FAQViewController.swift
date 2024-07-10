@@ -25,7 +25,7 @@ class FAQViewController: BaseViewController {
     var contextStories = [StorySearchResult]()
     
     var controversiesButton: UIButton? = nil
-    
+    var newsSlidersButton: UIButton? = nil
     
     // MARK: - Init
     override func viewDidLoad() {
@@ -409,6 +409,8 @@ class FAQViewController: BaseViewController {
         
         if(index == 15) {
             self.controversiesButton = buttonArea
+        } else if(index == 16) {
+            self.newsSlidersButton = buttonArea
         }
         
         let contentLabel = HyperlinkLabel.parrafo2(text: content, linkTexts: linkTexts,
@@ -654,6 +656,22 @@ extension FAQViewController {
     
     func scrollToControversies() {
         if let _button = self.controversiesButton {
+            self.onSectionTap(_button)
+            
+            let sectionView = _button.superview!
+            let valY: CGFloat = sectionView.frame.origin.y
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: valY), animated: true)
+            
+            sectionView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.2) : CSS.shared.cyan
+            UIView.animate(withDuration: 0.5, delay: 0.5) {
+                sectionView.backgroundColor = CSS.shared.displayMode().main_bgColor
+            }
+
+        }
+    }
+    
+    func scrollToNewsSliders() {
+        if let _button = self.newsSlidersButton {
             self.onSectionTap(_button)
             
             let sectionView = _button.superview!

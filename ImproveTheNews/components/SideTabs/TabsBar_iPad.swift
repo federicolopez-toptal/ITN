@@ -109,6 +109,10 @@ class TabsBar_iPad: TabsBar {
                     CustomNavController.shared.loadHeadlines()
                 case 2:
                     CustomNavController.shared.loadControversies()
+                case 3:
+                    CustomNavController.shared.loadPublicFigures()
+                case 4:
+                    CustomNavController.shared.loadNewsSliders()
                 
                 default:
                     NOTHING()
