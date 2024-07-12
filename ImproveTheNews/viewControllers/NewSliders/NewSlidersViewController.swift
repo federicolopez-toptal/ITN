@@ -14,11 +14,12 @@ class NewSlidersViewController: BaseViewController {
     
     let navBar = NavBarView()
     var list = CustomFeedList()
-    var dataProvider = [DP3_item]()
     
     let data = MainFeedv3()
-    let subTitleLabel = UILabel()
+    var dataProvider = [DP3_item]()
+    var topicsCompleted = [String: Bool]()
     
+    let subTitleLabel = UILabel()
     
     
     // MARK: - Init
@@ -45,7 +46,6 @@ class NewSlidersViewController: BaseViewController {
                         
             self.navBar.setShareUrl(ITN_URL() + "/news-slider", vc: self)
             // -----------------------------
-            
             self.buildContent()
         }
     }
@@ -90,19 +90,22 @@ extension NewSlidersViewController: UIGestureRecognizerDelegate {
 extension NewSlidersViewController {
 
     func loadContent() {
-        
         self.showLoading()
-        self.data.loadData(self.topic) { (error) in
+        self.topicsCompleted = [String: Bool]()
+        
+        self.data.loadArticlesData(self.topic) { error in
             MAIN_THREAD {/* --- */
                 if(error != nil || self.data.topics.count == 0) {
                     self.showErrorAlert()
                     return
                 }
                 
+//                self.topicSelector.setTopics(self.data.topicNames())
+                self.populateDataProvider()
+                self.refreshList()
                 self.hideLoading()
             }
         }
-        
     }
     
     func showErrorAlert() {

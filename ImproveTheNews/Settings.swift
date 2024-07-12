@@ -25,8 +25,8 @@ let MAX_ARTICLES_PER_TOPIC: Int = (NEWS_REQ_MORE_ITEMS_TOTAL * 15) + NEWS_REQ_IT
 let SPACER_COLOR: UIColor? = nil //.systemPink
 //////////////////////////////////////////////////
 func ITN_URL() -> String {
-    return "https://www.improvethenews.org"
-//    return "https://verity.news"
+//    return "https://www.improvethenews.org"
+    return "https://verity.news"
 }
 
 func BIASPEDIA_URL() -> String {

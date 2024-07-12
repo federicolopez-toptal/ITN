@@ -20,6 +20,89 @@ class MainFeedv3 {
     var prevS: Int = 0
     var titles = [String]()
     
+    func loadMoreArticlesData(topic T: String, callback: @escaping (Error?, Int?) -> ()) {
+        let S_value = self.skipForTopic(T)
+        let strUrl = self.buildUrl(topic: T, A: 16, B: 0, C: 0, S: S_value)
+            
+        var request = URLRequest(url: URL(string: strUrl)!)
+        request.httpMethod = "GET"
+            
+        print("LOAD MORE \(T) from", request.url!.absoluteString)
+        let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil)
+            } else {
+                let mData = ADD_MAIN_NODE(to: data)
+                if let _json = JSON(fromData: mData) {
+                    let articlesAdded = self.addArticlesTo(topic: T, json: _json,
+                        bannerClosed: true,
+                        ignoreFirst: false)
+                        
+                    if(articlesAdded < 5) {
+                        callback(nil, 0)
+                    } else {
+                        self.prevS = S_value
+                        callback(nil, articlesAdded)
+                    }
+                } else {
+                    let _error = CustomError.jsonParseError
+                    callback(_error, nil)
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func loadArticlesData(_ topic: String, callback: @escaping (Error?) -> ()) {
+        self.topic = topic
+        let strUrl = self.buildUrl(topic: topic, A: 16, B: 0, C: 0, S: 0, defaultValues: false)
+        
+        var request = URLRequest(url: URL(string: strUrl)!)
+        request.httpMethod = "GET"
+        
+        self.prevS = 0
+        print("MAIN FEED from", request.url!.absoluteString)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("TIME OUT!!!")
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error)
+            } else {
+                let mData = ADD_MAIN_NODE(to: data)
+                if let jsonString = String(data: mData, encoding: .utf8) {
+                    if(jsonString.containsItemInArray(["Invalid topic requested"])) {
+                        print("SERVER ERROR", "Invalid topic requested", "Oops")
+                        
+                        let _error = CustomError.jsonParseError
+                        callback(_error)
+                    } else {
+                        if let _json = JSON(fromData: mData) {
+                            self.parse(_json)
+                            callback(nil)
+                        } else {
+                            let _error = CustomError.jsonParseError
+                            callback(_error)
+                        }
+                    }
+                } else {
+                    let _error = CustomError.jsonParseError
+                    callback(_error)
+                }
+            }
+        }
+
+        task.resume()
+    }
+    
     
     func loadData(_ topic: String, defaultValues: Bool = false, callback: @escaping (Error?) -> ()) {
         self.banner = nil
@@ -622,6 +705,8 @@ extension MainFeedv3 {
                 }
             }
         }
+
+        //result += "yT02pC02"
         if(!result.contains("lO03")) {
             result += "lO03"
         }
@@ -738,15 +823,17 @@ extension MainFeedv3 {
         }
         
         // Banner(s)
-        if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {
-            let allBannerCodes = _allBannerCodesString.components(separatedBy: ",")
-            
-            for bCode in allBannerCodes {
-                if let _bannerStatus = READ(LocalKeys.misc.bannerPrefix + bCode) {
-                    result += bCode + _bannerStatus
-                }
-            }
-        }
+//        if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {
+//            let allBannerCodes = _allBannerCodesString.components(separatedBy: ",")
+//            
+//            for bCode in allBannerCodes {
+//                if let _bannerStatus = READ(LocalKeys.misc.bannerPrefix + bCode) {
+//                    result += bCode + _bannerStatus
+//                }
+//            }
+//        }
+        
+        result += "yT02pC02nL02"
         if(!result.contains("lO03")) {
             result += "lO03"
         }
