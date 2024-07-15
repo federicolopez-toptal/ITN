@@ -19,7 +19,7 @@ extension NewSlidersViewController {
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset()),
-            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT() + 16)
+            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT())
         ])
         self.navBar.superview?.bringSubviewToFront(self.navBar)
         //self.topicSelector.superview?.bringSubviewToFront(self.topicSelector)
@@ -149,7 +149,7 @@ extension NewSlidersViewController: iPhoneMoreCell_v3_delegate {
         self.showLoading()
         let topic = sender.topic
         
-        self.data.loadMoreArticlesData(topic: topic) { (error, addedCount) in
+        self.data.loadMoreArticlesData(topic: topic, amount: self.articlesPerLoad) { (error, addedCount) in
             if let _ = error {
                 // Mostrar algun error?
             } else if let _addedCount = addedCount {

@@ -392,34 +392,49 @@ extension MenuView {
         API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         NOTIFY(Notification_reloadMainFeed)
 
+        let currentTab = CustomNavController.shared.tabsBar.currentTab()
+        if(currentTab == 1) {
+            // Headlines
+            let vc = NAV_MAINFEED_VC()
+            CustomNavController.shared.viewControllers = [vc]
+        } else if(currentTab == 4) {
+            // New Sliders
+            let vc = NewSlidersViewController()
+            CustomNavController.shared.viewControllers = [vc]
+        }
         
-        if(IPHONE()) {
-            var firstIsMainFeed = false
-            firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeedViewController
-            if(!firstIsMainFeed){ firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeed_v3_viewController }
-            
-            if(firstIsMainFeed) {
-                self.dismissMe()
-            } else {
-                let vc = NAV_MAINFEED_VC()
-                CustomNavController.shared.viewControllers = [vc]
-                
-                DELAY(0.2) {
-                    self.dismissMe()
-                }
-            }
-        } else {
-            let firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeediPad_v3_viewController
-            if(firstIsMainFeed) {
-                self.dismissMe()
-            } else {
-                let vc = MainFeed_v2ViewController()
-                CustomNavController.shared.viewControllers = [vc]
-                
-                DELAY(0.2) {
-                    self.dismissMe()
-                }
-            }
+        
+//        if(IPHONE()) {
+//            var firstIsMainFeed = false
+//            firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeedViewController
+//            if(!firstIsMainFeed){ firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeed_v3_viewController }
+//            
+//            if(firstIsMainFeed) {
+//                self.dismissMe()
+//            } else {
+//                let vc = NAV_MAINFEED_VC()
+//                CustomNavController.shared.viewControllers = [vc]
+//                
+//                DELAY(0.2) {
+//                    self.dismissMe()
+//                }
+//            }
+//        } else {
+//            let firstIsMainFeed = CustomNavController.shared.viewControllers.first! is MainFeediPad_v3_viewController
+//            if(firstIsMainFeed) {
+//                self.dismissMe()
+//            } else {
+//                let vc = MainFeed_v2ViewController()
+//                CustomNavController.shared.viewControllers = [vc]
+//                
+//                DELAY(0.2) {
+//                    self.dismissMe()
+//                }
+//            }
+//        }
+
+        DELAY(0.2) {
+            self.dismissMe()
         }
     }
     

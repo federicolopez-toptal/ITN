@@ -13,7 +13,11 @@ class TabsBar_iPad: TabsBar {
     
     static let WIDTH: CGFloat = 92
     private let itemsCount: CGFloat = 4
-    private var currentTab: Int = 1
+    private var _currentTab: Int = 1
+    
+    override func currentTab() -> Int {
+        return self._currentTab
+    }
     
     override func buildInto(_ containerView: UIView) {
 //        self.backgroundColor = .systemPink //.withAlphaComponent(0.25)
@@ -33,7 +37,7 @@ class TabsBar_iPad: TabsBar {
     override func refreshDisplayMode() {
         self.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.subviews.first!.backgroundColor = self.backgroundColor
-        self.selectTab(self.currentTab)
+        self.selectTab(self._currentTab)
     }
     
     func addtabs() {
@@ -101,7 +105,7 @@ class TabsBar_iPad: TabsBar {
             }
         }
         
-        self.currentTab = index
+        self._currentTab = index
         
         if(loadContent) {
             switch(index) {

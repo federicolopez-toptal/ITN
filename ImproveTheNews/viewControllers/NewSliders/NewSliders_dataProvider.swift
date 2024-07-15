@@ -10,6 +10,7 @@ import UIKit
 extension NewSlidersViewController {
 
     func populateDataProvider() {
+        
         self.populateDataProvider_iPhone_images()
     
     

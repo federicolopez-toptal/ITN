@@ -20,9 +20,9 @@ class MainFeedv3 {
     var prevS: Int = 0
     var titles = [String]()
     
-    func loadMoreArticlesData(topic T: String, callback: @escaping (Error?, Int?) -> ()) {
+    func loadMoreArticlesData(topic T: String, amount: Int, callback: @escaping (Error?, Int?) -> ()) {
         let S_value = self.skipForTopic(T)
-        let strUrl = self.buildUrl(topic: T, A: 16, B: 0, C: 0, S: S_value)
+        let strUrl = self.buildUrl(topic: T, A: amount, B: 0, C: 0, S: S_value)
             
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
@@ -59,9 +59,9 @@ class MainFeedv3 {
         task.resume()
     }
     
-    func loadArticlesData(_ topic: String, callback: @escaping (Error?) -> ()) {
+    func loadArticlesData(_ topic: String, amount: Int, callback: @escaping (Error?) -> ()) {
         self.topic = topic
-        let strUrl = self.buildUrl(topic: topic, A: 16, B: 0, C: 0, S: 0, defaultValues: false)
+        let strUrl = self.buildUrl(topic: topic, A: amount, B: 0, C: 0, S: 0, defaultValues: false)
         
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"

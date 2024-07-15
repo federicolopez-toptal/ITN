@@ -13,8 +13,12 @@ class TabsBar_iPhone: TabsBar {
     
     static let HEIGHT: CGFloat = 80
     private let itemsCount: CGFloat = 4
-    private var currentTab: Int = 1
+    private var _currentTab: Int = 1
     var tabsTopConstraint: NSLayoutConstraint?
+    
+    override func currentTab() -> Int {
+        return self._currentTab
+    }
     
     override func buildInto(_ containerView: UIView) {
 //        self.backgroundColor = .systemPink //.withAlphaComponent(0.25)
@@ -40,7 +44,7 @@ class TabsBar_iPhone: TabsBar {
             iconLabel.textColor = CSS.shared.displayMode().main_textColor
         }
         
-        self.selectTab(self.currentTab)
+        self.selectTab(self._currentTab)
     }
     
     func addtabs() {
@@ -133,7 +137,7 @@ class TabsBar_iPhone: TabsBar {
             }
         }
         
-        self.currentTab = index
+        self._currentTab = index
         
         if(loadContent) {
             switch(index) {

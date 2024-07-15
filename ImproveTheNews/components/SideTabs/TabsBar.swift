@@ -35,4 +35,8 @@ class TabsBar: UIView {
     func selectTab(_ index: Int, loadContent: Bool = false) { // to override
     }
     
+    func currentTab() -> Int { // to override
+        return -1
+    }
+    
 }

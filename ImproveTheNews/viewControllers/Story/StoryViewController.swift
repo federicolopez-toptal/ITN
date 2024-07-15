@@ -2523,7 +2523,7 @@ extension StoryViewController {
             case 3:
                 return ["https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271947"]
             case 4:
-                return ["Metaculus"]
+                return ["https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271947"]
                 
             default:
                 return []
@@ -2553,11 +2553,11 @@ extension StoryViewController {
         
             case 2:
                 descr = """
-        We neutrally provide the main arguments — or “narratives” — from different sides of the controversy, so you can make up your own mind on an issue and keep tabs on varying points of view. Depending on the topic, the narrative splits can be left v. right, Democratic v. Republican, pro-establishment (i.e. what all big US/Western parties and powers agree on) v. establishment critical, etc. Finally, for our readers interested in probability, we also strive to include a “nerd narrative” with a related prediction from the Metaculus community where possible.
+        We neutrally provide the main arguments — or “narratives” — from different sides of the controversy, so you can make up your own mind on an issue and keep tabs on varying points of view. Depending on the topic, the narrative splits can be left v. right, Democratic v. Republican, pro-establishment (i.e. what all big US/Western parties and powers agree on) v. establishment critical, etc. Finally, for our readers interested in probability, we also strive to include a “Metaculus predictions” with a related prediction from the Metaculus community where possible.
         """
             case 3:
                 descr = """
-        We source our facts from a wide range of news outlets across the political and establishment spectrum, as well as supplementary primary sources (e.g. academic publications, social media posts by public figures, think tanks, NGOs, databases, etc.) where possible. We classify sources as left/right or pro-establishment/establishment-critical based on an MIT [0] on media bias conducted by Max Tegmark and Samantha D’Alonzo.
+        We source our facts from a wide range of news outlets across the political and establishment spectrum, as well as supplementary primary sources (e.g. academic publications, social media posts by public figures, think tanks, NGOs, databases, etc.) where possible. We classify sources as left/right and pro-establishment/establishment-critical based on an MIT [0] on media bias conducted by Max Tegmark and Samantha D’Alonzo.
         """
             case 4:
                 descr = """

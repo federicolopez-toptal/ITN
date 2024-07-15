@@ -11,6 +11,7 @@ import UIKit
 class NewSlidersViewController: BaseViewController {
     
     var topic = "news"
+    let articlesPerLoad: Int = 10
     
     let navBar = NavBarView()
     var list = CustomFeedList()
@@ -93,7 +94,7 @@ extension NewSlidersViewController {
         self.showLoading()
         self.topicsCompleted = [String: Bool]()
         
-        self.data.loadArticlesData(self.topic) { error in
+        self.data.loadArticlesData(self.topic, amount: self.articlesPerLoad) { error in
             MAIN_THREAD {/* --- */
                 if(error != nil || self.data.topics.count == 0) {
                     self.showErrorAlert()
