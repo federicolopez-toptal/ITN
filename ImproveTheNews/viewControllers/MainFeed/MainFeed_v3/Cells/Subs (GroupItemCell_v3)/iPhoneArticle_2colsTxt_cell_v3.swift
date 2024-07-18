@@ -13,6 +13,7 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
 
     static let identifier = "iPhoneArticle_2colsTxt_cell_v3"
     var isBanner = false
+    var checkSplit = false
     
     var view1_heightConstraint: NSLayoutConstraint!
     var view2_heightConstraint: NSLayoutConstraint!
@@ -71,15 +72,21 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
         view1_heightConstraint.constant = (self.subViews[0] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
         view2_heightConstraint.constant = (self.subViews[1] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
         
-        if(MUST_SPLIT() == 0) {
-            self.vLine.hide()
+        if(self.checkSplit) {
+            if(MUST_SPLIT_B() == 0) {
+                self.vLine.hide()
+            } else {
+                self.vLine.show()
+            }
         } else {
-            self.vLine.show()
+            self.vLine.hide()
         }
         
         self.refreshDisplayMode()
-        if(MUST_SPLIT() > 0) {
-            ADD_VDASHES(to: self.vLine, height: self.calculateGroupHeight())
+        if(self.checkSplit) {
+            if(MUST_SPLIT_B() > 0) {
+                ADD_VDASHES(to: self.vLine, height: self.calculateGroupHeight())
+            }
         }
     }
     

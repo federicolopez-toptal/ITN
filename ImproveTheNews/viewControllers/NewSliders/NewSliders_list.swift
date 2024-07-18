@@ -10,13 +10,23 @@ import UIKit
 extension NewSlidersViewController {
     
     func setupList() {
+        if(self.list.superview != nil) {
+            self.list.removeFromSuperview()
+        }
+        self.list = CustomFeedList()
+    
+        var leadingValue: CGFloat = 0
+        if(IPAD()) {
+            leadingValue = IPAD_sideOffset()
+        }
+    
         self.list.backgroundColor = self.view.backgroundColor
         self.list.separatorStyle = .none
         self.list.customDelegate = self
         
         self.view.addSubview(self.list)
         self.list.activateConstraints([
-            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: leadingValue),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset()),
             self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT())
@@ -26,7 +36,12 @@ extension NewSlidersViewController {
         
         self.registerCells()
         self.list.delegate = self
-        self.list.dataSource = self 
+        self.list.dataSource = self
+        
+        if let _parentView = self.slidersPanel.superview {
+            _parentView.bringSubviewToFront(self.slidersPanel)
+            _parentView.bringSubviewToFront(self.slidersPanel.floatingButton)
+        }
     }
     
     func registerCells() {
@@ -35,7 +50,14 @@ extension NewSlidersViewController {
         self.list.register(iPhoneArticle_2colsTxt_cell_v3.self,
             forCellReuseIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)
         
+        self.list.register(iPhoneArticle_4colsImg_cell_v3.self,
+            forCellReuseIdentifier: iPhoneArticle_4colsImg_cell_v3.identifier)
+        self.list.register(iPhoneArticle_4colsTxt_cell_v3.self,
+            forCellReuseIdentifier: iPhoneArticle_4colsTxt_cell_v3.identifier)
+        
+        self.list.register(TopicShownTextCell.self, forCellReuseIdentifier: TopicShownTextCell.identifier)
         self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
+        self.list.register(iPhoneSplitHeaderCell_v3.self, forCellReuseIdentifier: iPhoneSplitHeaderCell_v3.identifier)
     }
     
     @objc func refreshList() {
@@ -95,11 +117,19 @@ extension NewSlidersViewController: UITableViewDelegate, UITableViewDataSource {
         
         // --------------------------------------------------------
         if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
-            if(_groupItem is DP3_iPhoneArticle_2cols) {
+            if(_groupItem is DP3_iPhoneArticle_2cols) { // iPhone, 2 columns
                 if(Layout.current() == .textImages) {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImg_cell_v3.identifier)!
+                    (cell as! iPhoneArticle_2colsImg_cell_v3).checkSplit = true
                 } else {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
+                    (cell as! iPhoneArticle_2colsTxt_cell_v3).checkSplit = true
+                }
+            } else if(_groupItem is DP3_iPhoneArticle_4cols) { // iPhone, 4 columns
+                if(Layout.current() == .textImages) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_4colsImg_cell_v3.identifier)!
+                } else {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_4colsTxt_cell_v3.identifier)!
                 }
             }
             
@@ -109,6 +139,12 @@ extension NewSlidersViewController: UITableViewDelegate, UITableViewDataSource {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneMoreCell_v3.identifier)!
                 (cell as! iPhoneMoreCell_v3).populate(with: _item)
                 (cell as! iPhoneMoreCell_v3).delegate = self
+            } else if let _item = item as? DP3_text {
+                cell = self.list.dequeueReusableCell(withIdentifier: TopicShownTextCell.identifier)!
+                (cell as! TopicShownTextCell).populate(with: _item.text)
+            } else if let _item = item as? DP3_splitHeaderItem {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneSplitHeaderCell_v3.identifier)!
+                (cell as! iPhoneSplitHeaderCell_v3).populate(with: _item)
             }
         }
         // --------------------------------------------------------
@@ -127,15 +163,26 @@ extension NewSlidersViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         // --------------------------------------------------------
-        if(item is DP3_iPhoneArticle_2cols) { // row: 2 articles
+        if(item is DP3_iPhoneArticle_2cols) { // iPhone - 2 rows articles
             if(Layout.current() == .textImages) {
                 result = (self.getCell(indexPath) as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
             } else {
                 result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxt_cell_v3).calculateGroupHeight()
             }
+        } else if(item is DP3_iPhoneArticle_4cols) { // iPhone - 4 rows articles
+            if(Layout.current() == .textImages) {
+                result = (self.getCell(indexPath) as! iPhoneArticle_4colsImg_cell_v3).calculateGroupHeight()
+            } else {
+                result = (self.getCell(indexPath) as! iPhoneArticle_4colsTxt_cell_v3).calculateGroupHeight()
+            }
         } else if(item is DP3_more) { // more
             result = (self.getCell(indexPath) as! iPhoneMoreCell_v3).calculateHeight()
+        } else if(item is DP3_text) { // Topic shown
+            result = TopicShownTextCell.height
+        } else if(item is DP3_splitHeaderItem) { // split header
+            result = (self.getCell(indexPath) as! iPhoneSplitHeaderCell_v3).calculateHeight()
         }
+        
         // --------------------------------------------------------
                 
         return result.rounded()

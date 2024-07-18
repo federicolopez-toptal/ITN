@@ -521,6 +521,10 @@
 		BDB3CB0A2BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */; };
 		BDBC3CE92C29C11100648945 /* TabsBar_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC3CE82C29C11100648945 /* TabsBar_iPad.swift */; };
 		BDBC3CEC2C29C2BC00648945 /* TabsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC3CEB2C29C2BC00648945 /* TabsBar.swift */; };
+		BDCD3FC72C45A03C00BAA2E2 /* TopicShownTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCD3FC62C45A03C00BAA2E2 /* TopicShownTextCell.swift */; };
+		BDCD3FC92C45ABC800BAA2E2 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCD3FC82C45ABC800BAA2E2 /* FloatingButton.swift */; };
+		BDCD3FCB2C45B45300BAA2E2 /* SlidersPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCD3FCA2C45B45300BAA2E2 /* SlidersPanel.swift */; };
+		BDCD3FCD2C46C03900BAA2E2 /* SlidersPanel_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCD3FCC2C46C03900BAA2E2 /* SlidersPanel_misc.swift */; };
 		BDD3DACB2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */; };
 		BDD4EA842C225C6B0002906A /* NewsLetterContentUI_daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */; };
 		BDE838A02BF7D61800C4C8D2 /* SVGLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */; };
@@ -1050,6 +1054,10 @@
 		BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyNarrowCell_v3.swift; sourceTree = "<group>"; };
 		BDBC3CE82C29C11100648945 /* TabsBar_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPad.swift; sourceTree = "<group>"; };
 		BDBC3CEB2C29C2BC00648945 /* TabsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar.swift; sourceTree = "<group>"; };
+		BDCD3FC62C45A03C00BAA2E2 /* TopicShownTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicShownTextCell.swift; sourceTree = "<group>"; };
+		BDCD3FC82C45ABC800BAA2E2 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
+		BDCD3FCA2C45B45300BAA2E2 /* SlidersPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidersPanel.swift; sourceTree = "<group>"; };
+		BDCD3FCC2C46C03900BAA2E2 /* SlidersPanel_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidersPanel_misc.swift; sourceTree = "<group>"; };
 		BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPhone.swift; sourceTree = "<group>"; };
 		BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterContentUI_daily.swift; sourceTree = "<group>"; };
 		BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLoader.swift; sourceTree = "<group>"; };
@@ -2112,6 +2120,7 @@
 		BD7B65052C3ECF6900EA20B7 /* NewSliders */ = {
 			isa = PBXGroup;
 			children = (
+				BDCD3FC52C45A02000BAA2E2 /* components */,
 				BD7B65062C3ECF9100EA20B7 /* NewSlidersViewController.swift */,
 				BD7B65082C3EE78D00EA20B7 /* NewSliders_list.swift */,
 				BD7B650A2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift */,
@@ -2127,6 +2136,17 @@
 				BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */,
 			);
 			path = SideTabs;
+			sourceTree = "<group>";
+		};
+		BDCD3FC52C45A02000BAA2E2 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				BDCD3FC62C45A03C00BAA2E2 /* TopicShownTextCell.swift */,
+				BDCD3FC82C45ABC800BAA2E2 /* FloatingButton.swift */,
+				BDCD3FCA2C45B45300BAA2E2 /* SlidersPanel.swift */,
+				BDCD3FCC2C46C03900BAA2E2 /* SlidersPanel_misc.swift */,
+			);
+			path = components;
 			sourceTree = "<group>";
 		};
 		BDE838A32BF7D77500C4C8D2 /* svg(s) */ = {
@@ -2639,6 +2659,7 @@
 				1FF088CD29F824ED00F31523 /* NSAttributedStringExtension.swift in Sources */,
 				1FC8352C2A1549E5007BCE56 /* DataExtension.swift in Sources */,
 				1FC287E129A652F40017433B /* DataProviderItem.swift in Sources */,
+				BDCD3FC72C45A03C00BAA2E2 /* TopicShownTextCell.swift in Sources */,
 				BDBC3CEC2C29C2BC00648945 /* TabsBar.swift in Sources */,
 				1F7B9EC0296E032D00D99C5D /* MainFeedStory.swift in Sources */,
 				1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */,
@@ -2686,6 +2707,7 @@
 				1FD699272B6B2D0400C4B0F9 /* iPhoneArticle_4colsTxtBanner_cell_v3.swift in Sources */,
 				1FC9C45C2B88607700E77FD5 /* iPadStory_vTxt_v3.swift in Sources */,
 				1FA4CE7728C3DAEE0068DE4A /* LoadingView.swift.txt in Sources */,
+				BDCD3FCB2C45B45300BAA2E2 /* SlidersPanel.swift in Sources */,
 				1F19386B2BB443640039D7BA /* ClaimCellView.swift in Sources */,
 				1F94AC5428EDF420003BB1EF /* CustomFlowLayout.swift in Sources */,
 				1F9B89E829DF0FDC004697DD /* Tour.swift in Sources */,
@@ -2753,6 +2775,7 @@
 				1FD2340A2915A07800B85AE9 /* Preferences_misc.swift in Sources */,
 				1F9C711C2B6AD7030060BB66 /* MainFeediPad_v3_list.swift in Sources */,
 				1FDEB1C828CB7E150029831E /* Layout.swift in Sources */,
+				BDCD3FCD2C46C03900BAA2E2 /* SlidersPanel_misc.swift in Sources */,
 				1F0CAD7E295CB10600E234C4 /* MainFeedv3.swift in Sources */,
 				1F2306BC291987D600755D71 /* OnOffView.swift in Sources */,
 				1FC287DD29A64EF90017433B /* MainFeed_v2_dataProvider.swift in Sources */,
@@ -2776,6 +2799,7 @@
 				1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */,
 				1F081BF32BB1AB1900B66326 /* FigureDetails_topics.swift in Sources */,
 				1F6DA4092B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift in Sources */,
+				BDCD3FC92C45ABC800BAA2E2 /* FloatingButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

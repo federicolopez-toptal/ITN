@@ -36,8 +36,10 @@ class TopicShownTextCell: UITableViewCell {
     }
     
     func populate(with text: String) {
-        let _text = "Showing \(text) articles."
-    
+        var _text = "Showing \(text) articles"
+        if(MUST_SPLIT_B() != 0){ _text += " split" } 
+        _text += "."
+     
         let attributedString = NSMutableAttributedString(string: _text, attributes: [
             .font: AILERON(16),
             .foregroundColor: CSS.shared.displayMode().sec_textColor

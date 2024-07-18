@@ -377,12 +377,10 @@ extension MainFeediPad_v3_viewController: UIScrollViewDelegate {
         let _posY = scrollView.contentOffset.y
         
         if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0) { // UP
-            print("UP")
             if(self.navBar.isHidden && !self.topBarsTransitioning) {
                 self.showTopBars()
             }
         } else { // DOWN
-            print("DOWN")
             if(_posY >= 70) {
                 if(!self.navBar.isHidden && !self.topBarsTransitioning) {
                     self.hideTopBars()

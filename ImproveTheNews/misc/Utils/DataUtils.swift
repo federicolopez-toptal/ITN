@@ -20,6 +20,14 @@ func MUST_SPLIT() -> Int {
     return 0
 }
 
+func MUST_SPLIT_B() -> Int {
+    if let _value = READ(LocalKeys.sliders.split) {
+        return Int(_value)!
+    } else {
+        return 0
+    }
+}
+
 func USER_AUTHENTICATED() -> Bool {
     if(READ(LocalKeys.user.AUTHENTICATED)=="YES") {
         return true
