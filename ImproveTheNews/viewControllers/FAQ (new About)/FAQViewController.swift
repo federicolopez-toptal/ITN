@@ -415,6 +415,24 @@ class FAQViewController: BaseViewController {
         
         let contentLabel = HyperlinkLabel.parrafo2(text: content, linkTexts: linkTexts,
             urls: urls, onTap: self.onLinkTap(_:))
+            
+        if(index == 11) {
+            let mText = NSMutableAttributedString(attributedString: contentLabel.attributedText!)
+            
+            for T in self.ITN_values_boldTexts() {
+                let boldAttributes: [NSAttributedString.Key: Any] = [
+                    .font: AILERON_BOLD(16),
+                    .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+                ]
+                
+                let subTitleAttrStr = NSAttributedString(string: T, attributes: boldAttributes)
+                let range = (mText.string as NSString).range(of: T)
+                mText.replaceCharacters(in: range, with: subTitleAttrStr)
+            }
+            
+            contentLabel.attributedText = mText
+        }
+        
         contentLabel.setLineSpacing(lineSpacing: 6)
         sectionView.addSubview(contentLabel)
         contentLabel.activateConstraints([

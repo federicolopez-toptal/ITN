@@ -104,6 +104,17 @@ extension FAQViewController {
         return data[index-1]
     }
     
+    func ITN_values_boldTexts() -> [String] {
+        let result = [
+            "• Scientific truth seeking:",
+            "• Political impartiality:",
+            "• Privacy and security:",
+            "• Empowerment:"
+        ]
+        
+        return result
+    }
+    
     func images(_ index: Int) -> (UIImage, CGSize)? {
 //        if(index==4) {
 //            return (UIImage(named: "galileo")!, CGSize(width: 468, height: 175))
