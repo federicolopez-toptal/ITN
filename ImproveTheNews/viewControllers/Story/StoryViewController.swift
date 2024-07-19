@@ -1290,6 +1290,7 @@ extension StoryViewController {
                     let embedUrl = self.getMetaculusUrl(from: S.url)!
                     let naWebHStack = HSTACK(into: innerHStack)
                     let webView = WKWebView()
+                    webView.navigationDelegate = self
                     webView.load(URLRequest(url: URL(string: embedUrl)!))
                     
                     let H: CGFloat = (9 * SCREEN_SIZE().width)/16
@@ -1367,8 +1368,8 @@ extension StoryViewController {
             for (i, CHR) in parsed.enumerated() {
                 if(CHR=="/") {
                     if let _id = parsed.subString2(from: 0, count: i-1) {
-//                        result = "https://www.metaculus.com/questions/question_embed/" + _id + "/"
-                        result = "https://www.improvemynews.com/php/metaculus.php?id=" + _id
+//                        result = "https://www.improvemynews.com/php/metaculus.php?id=" + _id
+                        result = ITN_URL() + "/php/metaculus.php?id=" + _id
                     }
                     break
                 }
@@ -2596,4 +2597,19 @@ extension StoryViewController: AudioPlayerViewDelegate {
         self.upButtonBottomConstraint?.constant = -10-height
     }
     
+}
+
+extension StoryViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        if let url = navigationAction.request.url?.absoluteString {
+            if(url.contains("metaculus.php") || url.contains("question_embed")) {
+                decisionHandler(.allow)
+            } else {
+                OPEN_URL(url)
+                decisionHandler(.cancel)
+            }
+        }
+    }
 }
