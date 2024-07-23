@@ -244,14 +244,14 @@ class PublicFiguresViewController: BaseViewController {
     }
     
     func createSelectorView(with theView: UIView, index: Int) {
-        theView.backgroundColor = self.view.backgroundColor
-        theView.layer.cornerRadius = 6
-        theView.layer.borderWidth = 0.5
-        theView.layer.borderColor = CSS.shared.displayMode().sec_textColor.cgColor
+        theView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191c) : .white
+        theView.layer.cornerRadius = 5
+        theView.layer.borderWidth = 1.0
+        theView.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x37383a).cgColor : UIColor(hex: 0xc6c8ca).cgColor
         
         let arrowDownImage = UIImage(named: "arrow.down.old")?.withRenderingMode(.alwaysTemplate)
         let arrowImageView = UIImageView(image: arrowDownImage)
-        arrowImageView.tintColor = CSS.shared.displayMode().main_textColor
+        arrowImageView.tintColor = DARK_MODE() ? UIColor(hex: 0xf6f6f7) : UIColor(hex: 0x838383)
         theView.addSubview(arrowImageView)
         arrowImageView.activateConstraints([
             arrowImageView.widthAnchor.constraint(equalToConstant: 28),
@@ -325,6 +325,26 @@ class PublicFiguresViewController: BaseViewController {
                 text.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                 text.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ])
+            
+            if(self.currentType == 0) {
+                let newLabel = UILabel()
+                newLabel.layer.cornerRadius = 4.0
+                newLabel.clipsToBounds = true
+                newLabel.backgroundColor = UIColor(hex: 0xefd80b)
+                newLabel.textColor = UIColor(hex: 0x19191C)
+                newLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+
+                newLabel.text = "NEW"
+                newLabel.textAlignment = .center
+                contentView.addSubview(newLabel)
+                newLabel.activateConstraints([
+                    newLabel.widthAnchor.constraint(equalToConstant: 44),
+                    newLabel.heightAnchor.constraint(equalToConstant: 23),
+                    newLabel.leadingAnchor.constraint(equalTo: text.trailingAnchor, constant: 15),
+                    newLabel.centerYAnchor.constraint(equalTo: text.centerYAnchor)
+                ])
+
+            }
         }
     }
     
@@ -590,6 +610,25 @@ extension PublicFiguresViewController: UIPickerViewDataSource, UIPickerViewDeleg
             text.leadingAnchor.constraint(equalTo: optionView.leadingAnchor, constant: 16),
             text.centerYAnchor.constraint(equalTo: optionView.centerYAnchor)
         ])
+        
+        if(index == 0) {
+            let newLabel = UILabel()
+            newLabel.layer.cornerRadius = 4.0
+            newLabel.clipsToBounds = true
+            newLabel.backgroundColor = UIColor(hex: 0xefd80b)
+            newLabel.textColor = UIColor(hex: 0x19191C)
+            newLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+
+            newLabel.text = "NEW"
+            newLabel.textAlignment = .center
+            optionView.addSubview(newLabel)
+            newLabel.activateConstraints([
+                newLabel.widthAnchor.constraint(equalToConstant: 44),
+                newLabel.heightAnchor.constraint(equalToConstant: 23),
+                newLabel.leadingAnchor.constraint(equalTo: text.trailingAnchor, constant: 15),
+                newLabel.centerYAnchor.constraint(equalTo: text.centerYAnchor)
+            ])
+        }
         
         return optionView
     }

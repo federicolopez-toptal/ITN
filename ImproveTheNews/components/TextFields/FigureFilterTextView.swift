@@ -35,14 +35,14 @@ class FigureFilterTextView: UIView {
     func buildInto(view: UIView) {
         view.addSubview(self)
         
-        self.backgroundColor = view.backgroundColor
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191c) : .white
         self.layer.cornerRadius = 6
-        self.layer.borderWidth = 0.5
-        self.layer.borderColor = CSS.shared.displayMode().sec_textColor.cgColor
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x37383a).cgColor : UIColor(hex: 0xc6c8ca).cgColor
                 
         self.placeHolderLabel.text = "Search Public Figures" // "Headlines, stories & article splits"
         self.placeHolderLabel.font = AILERON(16)
-        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0x656668) : UIColor(hex: 0x19191C)
         self.placeHolderLabel.alpha = 0.5
         
         self.addSubview(self.placeHolderLabel)
@@ -52,7 +52,7 @@ class FigureFilterTextView: UIView {
         ])
         
         self.searchTextField.font = self.placeHolderLabel.font
-        self.searchTextField.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        self.searchTextField.textColor = CSS.shared.displayMode().sec_textColor
         self.searchTextField.tintColor = self.searchTextField.textColor
         self.searchTextField.returnKeyType = .search
         self.searchTextField.autocapitalizationType = .none

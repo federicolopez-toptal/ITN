@@ -38,9 +38,10 @@ func NAV_MAINFEED_VC(topic: String? = nil) -> UIViewController {
     
         
     if(IPHONE()) {
-        //vc = MainFeedViewController()
-        vc = MainFeed_v3_viewController()
-        if(topic != nil){ (vc as! MainFeed_v3_viewController).topic = topic! }
+        vc = PublicFiguresViewController()
+    
+//        vc = MainFeed_v3_viewController()
+//        if(topic != nil){ (vc as! MainFeed_v3_viewController).topic = topic! }
     } else {
         vc = MainFeediPad_v3_viewController()
         if(topic != nil){ (vc as! MainFeediPad_v3_viewController).topic = topic! }
