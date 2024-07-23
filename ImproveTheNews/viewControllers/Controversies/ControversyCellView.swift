@@ -277,8 +277,10 @@ class ControversyCellView: UIView {
         self.refreshDisplayMode()
         
         if(self.mustShowChartFlag) {
-            self.mainImageView.hide()
-        
+            if(self.mainImageView != nil) {
+                self.mainImageView.hide()
+            }
+            
             if let _statusTopConstraint = self.statusTopConstraint {
                 _statusTopConstraint.constant = M + 84 + 8 + 4  + 18 + 24
             }

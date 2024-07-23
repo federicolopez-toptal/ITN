@@ -127,12 +127,14 @@ class ClaimCellView: UIView {
         self.timeLabel.font = AILERON(14)
         self.timeLabel.textAlignment = .left
         self.timeLabel.textColor = CSS.shared.displayMode().main_textColor
+        //self.timeLabel.backgroundColor = .red.withAlphaComponent(0.5)
         column.addSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
             self.timeLabel.trailingAnchor.constraint(equalTo: column.trailingAnchor),
-            self.timeLabel.topAnchor.constraint(equalTo: column.topAnchor)
+            self.timeLabel.topAnchor.constraint(equalTo: column.topAnchor),
+            self.timeLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
-        
+
         self.nameLabel.font = AILERON(14)
         self.nameLabel.textColor = CSS.shared.displayMode().main_textColor
         self.nameLabel.numberOfLines = 0
@@ -267,9 +269,11 @@ class ClaimCellView: UIView {
         self.sourceImageView.clipsToBounds = true
         
         self.sourceNameLabel.font = AILERON(12)
-        self.sourceNameLabel.numberOfLines = 0
+        self.sourceNameLabel.numberOfLines = 2
         self.sourceNameLabel.lineBreakMode = .byTruncatingTail
         self.sourceNameLabel.textColor = CSS.shared.displayMode().main_textColor
+        //self.sourceNameLabel.backgroundColor = .red.withAlphaComponent(0.5)
+        
         buttonsContainer.addSubview(self.sourceNameLabel)
         self.sourceNameLabel.activateConstraints([
             self.sourceNameLabel.leadingAnchor.constraint(equalTo: self.sourceImageView.trailingAnchor, constant: 8),
@@ -422,7 +426,8 @@ class ClaimCellView: UIView {
             controversyLabelHeight = 16 + self.controversyLabel.calculateHeightFor(width: W)
         }
         
-        let H: CGFloat = 16 + self.nameLabel.calculateHeightFor(width: W) +
+        let timeW = self.timeLabel.calculateWidthFor(height: 18)
+        let H: CGFloat = 16 + self.nameLabel.calculateHeightFor(width: W-5-timeW) +
             6 + self.titleLabel.calculateHeightFor(width: W) + controversyLabelHeight +
             24 + 32 +
             20 + (IPAD() ? 20 : 0)
