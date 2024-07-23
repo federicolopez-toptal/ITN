@@ -321,6 +321,10 @@ class ControversyListItem {
                 self.image_credit = CHECK(_credit["url"])
             }
         }
+        
+        if let _image = jsonObj["image"] as? String {
+            self.image_url = _image
+        }
     }
     
     func trace() {

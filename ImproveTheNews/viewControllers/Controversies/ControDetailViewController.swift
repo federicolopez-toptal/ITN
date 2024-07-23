@@ -990,7 +990,7 @@ extension ControDetailViewController {
                 self.mainImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10)
             ])
             
-            self.mainImageViewHeightConstraint = self.mainImageView.heightAnchor.constraint(equalToConstant: 75)
+            self.mainImageViewHeightConstraint = self.mainImageView.heightAnchor.constraint(equalToConstant: 215)
             self.mainImageViewHeightConstraint?.isActive = true
             
             if(image.0.lowercased().contains("nato_otan") && image.0.lowercased().contains("logo")) {

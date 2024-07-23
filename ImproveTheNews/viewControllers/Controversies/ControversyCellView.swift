@@ -41,6 +41,9 @@ class ControversyCellView: UIView {
     var mustShowChartFlag = true
     var statusLabelTextColor = UIColor.black
 
+    var mainImageView: UIImageView!
+    var mainImageViewHeightConstraint: NSLayoutConstraint?
+
     // MARK: - Init(s)
     init() {
         super.init(frame: CGRect.zero)
@@ -114,6 +117,23 @@ class ControversyCellView: UIView {
         self.endLabel.text = "HIGH"
         
         if(showBottom) {
+            self.mainImageView = UIImageView()
+            self.mainImageView.contentMode = .scaleAspectFill
+            self.mainImageView.clipsToBounds = true
+            self.mainImageView.backgroundColor = CSS.shared.displayMode().imageView_bgColor
+            self.addSubview(self.mainImageView)
+            self.mainImageView.activateConstraints([
+                self.mainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
+                self.mainImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
+                self.mainImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: M),
+            ])
+            
+            var imgHeight: CGFloat = (self.WIDTH * 9)/16
+            imgHeight /= 2.5
+            
+            self.mainImageViewHeightConstraint = self.mainImageView.heightAnchor.constraint(equalToConstant: imgHeight)
+            self.mainImageViewHeightConstraint?.isActive = true
+        
             self.preStatusLabel.font = DM_SERIF_DISPLAY(18) //IPHONE() ? DM_SERIF_DISPLAY(20) : DM_SERIF_DISPLAY(32)
             self.preStatusLabel.textColor = CSS.shared.displayMode().sec_textColor
             self.preStatusLabel.text = "Status:"
@@ -124,7 +144,7 @@ class ControversyCellView: UIView {
             ])
             
             self.statusTopConstraint = self.preStatusLabel.topAnchor.constraint(equalTo: self.topAnchor,
-            constant: M + 84 + 8 + 4  + 18 + 24)
+                constant: M + 84 + 8 + 4  + 18 + 24)
             self.statusTopConstraint?.isActive = true
             
             
@@ -257,6 +277,8 @@ class ControversyCellView: UIView {
         self.refreshDisplayMode()
         
         if(self.mustShowChartFlag) {
+            self.mainImageView.hide()
+        
             if let _statusTopConstraint = self.statusTopConstraint {
                 _statusTopConstraint.constant = M + 84 + 8 + 4  + 18 + 24
             }
@@ -264,12 +286,22 @@ class ControversyCellView: UIView {
             self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
             self.gradientView.show()
         } else {
+            self.mainImageView.show()
             self.gradientView.hide()
             self.startLabel.hide()
             self.endLabel.hide()
             
             if let _statusTopConstraint = self.statusTopConstraint {
-                _statusTopConstraint.constant = M
+                var val = M
+                if(!controversy.image_url.isEmpty) {
+                    self.mainImageView.sd_setImage(with: URL(string: controversy.image_url))
+                
+                    if let _h = self.mainImageViewHeightConstraint {
+                        val += _h.constant
+                    }
+                }
+                
+                _statusTopConstraint.constant = val
             }
         }
     }
@@ -309,6 +341,10 @@ class ControversyCellView: UIView {
             H = M + self.statusLabel.calculateHeightFor(width: W) + 10 +
                 self.titleLabel.calculateHeightFor(width: W) + M + 24 + M +
                 (IPAD() ? 20 : 10)
+                
+            if let _h = self.mainImageViewHeightConstraint {
+                    H += _h.constant
+            }
         }
         
         return H
