@@ -561,7 +561,10 @@ class NavBarView: UIView {
     }
     
     func setShareUrl(_ url: String, vc: UIViewController) {
-        self.shareUrl = url
+        let _url = url.replacingOccurrences(of: "https://www.improvethenews.org",
+            with: ITN_URL())
+        
+        self.shareUrl = _url
         self.vc = vc
     }
     

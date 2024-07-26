@@ -258,7 +258,7 @@ extension iPadFooterCell {
     // MARK: - Event(s)
     @objc func onShareButtonTap(_ sender: UIButton) {
         if let _vc = self.viewController {
-            SHARE_URL("http://www.improvethenews.org", from: _vc)
+            SHARE_URL(ITN_URL(), from: _vc)
         }
     }
     
