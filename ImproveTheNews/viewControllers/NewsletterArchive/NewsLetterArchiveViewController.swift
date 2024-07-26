@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import EventsCalendar
+
 
 class NewsLetterArchiveViewController: BaseViewController {
 
@@ -32,6 +34,8 @@ class NewsLetterArchiveViewController: BaseViewController {
         let dateFromLabel = UILabel()
         let dateToLabel = UILabel()
         
+        let calendarsContainerView = UIView()
+        
     let scrollView = UIScrollView()
     let mainContentView = UIView()
     var storiesVStack: UIStackView!
@@ -40,9 +44,21 @@ class NewsLetterArchiveViewController: BaseViewController {
     var offset: Int = 1
         
     // MARK: - Init
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        
+//        self.showCalendar(date: Date())
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
+        
+        if(DARK_MODE()) {
+            overrideUserInterfaceStyle = .dark
+        } else {
+            overrideUserInterfaceStyle = .light
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -191,12 +207,12 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.datePickerButton.hide()
         self.datePickerButton.addTarget(self, action: #selector(dateSelectorOnSelect(_:)), for: .touchUpInside)
         
-        // DATE(s)-------------------------------------
+        // DATE(s) VIEW(s) -------------------------------------
         self.datesView.backgroundColor = self.view.backgroundColor
         self.datesView.layer.cornerRadius = 8
         self.view.addSubview(self.datesView)
         self.datesView.activateConstraints([
-            self.datesView.widthAnchor.constraint(equalToConstant: 350),
+            self.datesView.widthAnchor.constraint(equalToConstant: 330),
             self.datesView.heightAnchor.constraint(equalToConstant: 116 + 20 + 30),
             self.datesView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.datesView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
@@ -215,32 +231,32 @@ class NewsLetterArchiveViewController: BaseViewController {
             startLabel.leadingAnchor.constraint(equalTo: self.datesView.leadingAnchor, constant: 16)
         ])
 
-        self.dateFromPicker.date = Date()
-        self.datesView.addSubview(self.dateFromPicker)
-        self.dateFromPicker.datePickerMode = .date
-        self.dateFromPicker.addTarget(self, action: #selector(dateFromOnChange(_:)), for: .valueChanged)
-        self.dateFromPicker.backgroundColor = self.view.backgroundColor
-        self.dateFromPicker.tintColor = CSS.shared.orange
-        self.dateFromPicker.activateConstraints([
-            self.dateFromPicker.topAnchor.constraint(equalTo: self.datesView.topAnchor, constant: 16),
-            self.dateFromPicker.trailingAnchor.constraint(equalTo: self.datesView.trailingAnchor, constant: -16)
-        ])
-        
         self.dateFromLabel.font = UIFont.systemFont(ofSize: 17)
         self.datesView.addSubview(self.dateFromLabel)
-        self.dateFromLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0x2D2D31)
+        self.dateFromLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xe3e3e3)
         self.dateFromLabel.textColor = CSS.shared.displayMode().main_textColor
         self.dateFromLabel.activateConstraints([
-            self.dateFromLabel.leadingAnchor.constraint(equalTo: self.dateFromPicker.leadingAnchor),
-            self.dateFromLabel.topAnchor.constraint(equalTo: self.dateFromPicker.topAnchor, constant: 0),
-            self.dateFromLabel.trailingAnchor.constraint(equalTo: self.dateFromPicker.trailingAnchor, constant: 0),
-            self.dateFromLabel.bottomAnchor.constraint(equalTo: self.dateFromPicker.bottomAnchor)
+            self.dateFromLabel.centerYAnchor.constraint(equalTo: startLabel.centerYAnchor),
+            self.dateFromLabel.trailingAnchor.constraint(equalTo: self.datesView.trailingAnchor, constant: -16),
+            self.dateFromLabel.widthAnchor.constraint(equalToConstant: 150),
+            self.dateFromLabel.heightAnchor.constraint(equalToConstant: 26)
         ])
         self.dateFromLabel.textAlignment = .center
         self.dateFromLabel.text = "ABC DEF"
         self.dateFromLabel.layer.cornerRadius = 8
         self.dateFromLabel.clipsToBounds = true
         self.dateFromLabel.isUserInteractionEnabled = false
+        
+        let dateFromButton = UIButton(type: .custom)
+        dateFromButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.datesView.addSubview(dateFromButton)
+        dateFromButton.activateConstraints([
+            dateFromButton.leadingAnchor.constraint(equalTo: self.dateFromLabel.leadingAnchor),
+            dateFromButton.trailingAnchor.constraint(equalTo: self.dateFromLabel.trailingAnchor),
+            dateFromButton.topAnchor.constraint(equalTo: self.dateFromLabel.topAnchor),
+            dateFromButton.bottomAnchor.constraint(equalTo: self.dateFromLabel.bottomAnchor)
+        ])
+        dateFromButton.addTarget(self, action: #selector(dateFromButtonOnTap(_:)), for: .touchUpInside)
         
         // to
         let endLabel = UILabel()
@@ -255,27 +271,15 @@ class NewsLetterArchiveViewController: BaseViewController {
             endLabel.leadingAnchor.constraint(equalTo: self.datesView.leadingAnchor, constant: 16)
         ])
         
-        let DAY: TimeInterval = 60 * 60 * 24
-        self.dateToPicker.date = Date() + DAY
-        self.datesView.addSubview(self.dateToPicker)
-        self.dateToPicker.datePickerMode = .date
-        self.dateToPicker.addTarget(self, action: #selector(dateToOnChange(_:)), for: .valueChanged)
-        self.dateToPicker.backgroundColor = self.view.backgroundColor
-        self.dateToPicker.tintColor = CSS.shared.orange
-        self.dateToPicker.activateConstraints([
-            self.dateToPicker.topAnchor.constraint(equalTo: self.dateFromPicker.bottomAnchor, constant: 16),
-            self.dateToPicker.trailingAnchor.constraint(equalTo: self.datesView.trailingAnchor, constant: -16)
-        ])
-        
         self.dateToLabel.font = UIFont.systemFont(ofSize: 17)
         self.datesView.addSubview(self.dateToLabel)
-        self.dateToLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0x2D2D31)
+        self.dateToLabel.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xe3e3e3)
         self.dateToLabel.textColor = CSS.shared.displayMode().main_textColor
         self.dateToLabel.activateConstraints([
-            self.dateToLabel.leadingAnchor.constraint(equalTo: self.dateToPicker.leadingAnchor),
-            self.dateToLabel.topAnchor.constraint(equalTo: self.dateToPicker.topAnchor, constant: 0),
-            self.dateToLabel.trailingAnchor.constraint(equalTo: self.dateToPicker.trailingAnchor, constant: 0),
-            self.dateToLabel.bottomAnchor.constraint(equalTo: self.dateToPicker.bottomAnchor)
+            self.dateToLabel.centerYAnchor.constraint(equalTo: endLabel.centerYAnchor),
+            self.dateToLabel.trailingAnchor.constraint(equalTo: self.datesView.trailingAnchor, constant: -16),
+            self.dateToLabel.widthAnchor.constraint(equalToConstant: 150),
+            self.dateToLabel.heightAnchor.constraint(equalToConstant: 26)
         ])
         self.dateToLabel.textAlignment = .center
         self.dateToLabel.text = "ABC DEF"
@@ -283,12 +287,23 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.dateToLabel.clipsToBounds = true
         self.dateToLabel.isUserInteractionEnabled = false
         
+        let dateToButton = UIButton(type: .custom)
+        dateToButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.datesView.addSubview(dateToButton)
+        dateToButton.activateConstraints([
+            dateToButton.leadingAnchor.constraint(equalTo: self.dateToLabel.leadingAnchor),
+            dateToButton.trailingAnchor.constraint(equalTo: self.dateToLabel.trailingAnchor),
+            dateToButton.topAnchor.constraint(equalTo: self.dateToLabel.topAnchor),
+            dateToButton.bottomAnchor.constraint(equalTo: self.dateToLabel.bottomAnchor)
+        ])
+        dateToButton.addTarget(self, action: #selector(dateToButtonOnTap(_:)), for: .touchUpInside)
+        
         let buttonsContainer = UIView()
         buttonsContainer.backgroundColor = .clear
         self.datesView.addSubview(buttonsContainer)
         buttonsContainer.activateConstraints([
             buttonsContainer.heightAnchor.constraint(equalToConstant: 30),
-            buttonsContainer.topAnchor.constraint(equalTo: self.dateToPicker.bottomAnchor, constant: 20),
+            buttonsContainer.topAnchor.constraint(equalTo: self.dateToLabel.bottomAnchor, constant: 20),
             buttonsContainer.centerXAnchor.constraint(equalTo: self.datesView.centerXAnchor),
             buttonsContainer.widthAnchor.constraint(equalToConstant: 70 + 10 + 70)
         ])
@@ -326,6 +341,44 @@ class NewsLetterArchiveViewController: BaseViewController {
         
         self.datesView.hide()
         
+        // CALENDAR COMPONENTS ---------------------------------------
+        self.view.addSubview(self.calendarsContainerView)
+        self.calendarsContainerView.layer.cornerRadius = 10
+        self.calendarsContainerView.backgroundColor = self.view.backgroundColor
+        self.calendarsContainerView.activateConstraints([
+            self.calendarsContainerView.widthAnchor.constraint(equalToConstant: 330),
+            self.calendarsContainerView.heightAnchor.constraint(equalToConstant: 336),
+            self.calendarsContainerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.calendarsContainerView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
+        
+        self.dateFromPicker.date = Date()
+        self.calendarsContainerView.addSubview(self.dateFromPicker)
+        self.dateFromPicker.datePickerMode = .date
+        self.dateFromPicker.preferredDatePickerStyle = .inline
+        self.dateFromPicker.addTarget(self, action: #selector(dateFromOnChange(_:)), for: .valueChanged)
+        self.dateFromPicker.backgroundColor = self.view.backgroundColor
+        self.dateFromPicker.tintColor = CSS.shared.orange
+        self.dateFromPicker.activateConstraints([
+            self.dateFromPicker.centerXAnchor.constraint(equalTo: self.calendarsContainerView.centerXAnchor),
+            self.dateFromPicker.centerYAnchor.constraint(equalTo: self.calendarsContainerView.centerYAnchor)
+        ])
+        
+        let DAY: TimeInterval = 60 * 60 * 24
+        self.dateToPicker.date = Date() + DAY
+        self.calendarsContainerView.addSubview(self.dateToPicker)
+        self.dateToPicker.datePickerMode = .date
+        self.dateToPicker.preferredDatePickerStyle = .inline
+        self.dateToPicker.addTarget(self, action: #selector(dateToOnChange(_:)), for: .valueChanged)
+        self.dateToPicker.backgroundColor = self.view.backgroundColor
+        self.dateToPicker.tintColor = CSS.shared.orange
+        self.dateToPicker.activateConstraints([
+            self.dateToPicker.centerXAnchor.constraint(equalTo: self.calendarsContainerView.centerXAnchor),
+            self.dateToPicker.centerYAnchor.constraint(equalTo: self.calendarsContainerView.centerYAnchor)
+        ])
+        
+        self.calendarsContainerView.hide()
+        
         // LINE ---------------------------------------
         let sepLine = UIView()
         sepLine.backgroundColor = .red
@@ -355,10 +408,22 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.refreshContent(index: 2)
         
         self.view.bringSubviewToFront(self.datesView)
+        self.view.bringSubviewToFront(self.calendarsContainerView)
         
         DELAY(0.5) {
             self.loadData()
         }
+    }
+    
+    @objc func dateFromButtonOnTap(_ sender: UIButton?) {
+        self.dateFromPicker.show()
+        self.dateToPicker.hide()
+            self.calendarsContainerView.show()
+    }
+    @objc func dateToButtonOnTap(_ sender: UIButton?) {
+        self.dateFromPicker.hide()
+        self.dateToPicker.show()
+            self.calendarsContainerView.show()
     }
     
     @objc func dateFromOnChange(_ sender: UIDatePicker) {
@@ -450,6 +515,16 @@ class NewsLetterArchiveViewController: BaseViewController {
                 self.view.layoutIfNeeded()
             } completion: { _ in
                 self.darkView.hide()
+            }
+        } else {
+            if(!self.calendarsContainerView.isHidden) {
+                UIView.animate(withDuration: 0.3) {
+                    self.calendarsContainerView.alpha = 0
+                    self.view.layoutIfNeeded()
+                } completion: { _ in
+                    self.calendarsContainerView.hide()
+                    self.calendarsContainerView.alpha = 1
+                }
             }
         }
     }
@@ -1066,4 +1141,77 @@ extension NewsLetterArchiveViewController {
 //        }
     }
     
+}
+
+extension NewsLetterArchiveViewController: CalendarViewDelegate {
+
+    func showCalendar(date: Date) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        
+        let startDate = formatter.date(from: "2000/01/01")!
+        let endDate = formatter.date(from: "2030/12/01")!
+        
+        let calendarView = MonthCalendarView(startDate: startDate, endDate: endDate)
+        calendarView.allowsDateSelection = true
+        calendarView.isPagingEnabled = true
+        calendarView.scrollDirection = .horizontal
+        calendarView.selectedDate = date // Today!
+        calendarView.viewConfiguration = self.calendarConfigObj()
+        calendarView.delegate = self
+        
+        self.view.addSubview(calendarView)
+        calendarView.activateConstraints([
+            calendarView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            calendarView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            calendarView.heightAnchor.constraint(equalToConstant: 400),
+            calendarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            calendarView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
+        
+        DELAY(0.1) {
+            calendarView.scroll(to: date, animated: false)
+        }
+    }
+    
+    func calendarConfigObj() -> CalendarConfig {
+        var result = CalendarConfig()
+        
+//        result.backgroundColor = .yellow
+//        result.weekdayTitlesBackgroundColor = .yellow
+//        result.monthTitleBackgroundColor = .yellow
+//        
+//        result.dotColor = CSS.shared.orange
+
+        result.backgroundColor = .black
+        result.selectionColor = .red
+        result.dotColor = .red
+        result.selectedDotColor = .white
+        result.weekendLabelColor = .gray
+        result.validLabelColor = .white
+        result.invalidLabelColor = .lightGray
+        result.todayLabelColor = .red
+        result.otherMonthLabelColor = .lightGray
+        result.dateLabelFont = UIFont.systemFont(ofSize: 11, weight: .medium)
+        result.invalidatePastDates = false
+        result.monthTitleFont = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        result.monthTitleHeight = 18
+        result.monthTitleTextColor = .white
+        result.monthTitleAlignment = .left
+        result.monthTitleBackgroundColor = .black
+        result.monthTitleStyle = .short
+        result.monthTitleIncludesYear = false
+        result.weekdayTitleFont = UIFont.systemFont(ofSize: 11, weight: .bold)
+        result.weekdayTitleColor = .red
+        result.weekdayTitleHeight = 13
+        result.weekdayTitlesBackgroundColor = .black
+        
+        return result
+    }
+    
+    // ------------------------
+    func calendarView(_ calendarView: any CalendarProtocol, didChangeSelectionDateTo date: Date, at indexPath: IndexPath) {
+        print("NEW DATE", date)
+    }
+
 }

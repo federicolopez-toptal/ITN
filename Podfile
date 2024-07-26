@@ -8,5 +8,6 @@ target 'ImproveTheNews' do
   # Pods for ImproveTheNews
   pod 'SDWebImage'
   pod 'FBSDKLoginKit'
+  pod 'EventsCalendar'
 
 end
