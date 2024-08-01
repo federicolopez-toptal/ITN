@@ -138,6 +138,6 @@ class TopicsCell: UITableViewCell {
             CustomNavController.shared.viewControllers = [vc]
         }
         
-        CustomNavController.shared.tabsBar.selectTab(1   )
+        CustomNavController.shared.tabsBar.selectTab(1)
     }
 }

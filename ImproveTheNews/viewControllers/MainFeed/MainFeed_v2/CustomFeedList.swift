@@ -54,8 +54,11 @@ class CustomFeedList: UITableView {
     
     // MARK: Action(s)
     func scrollToTop() {
-        self.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        self.customDelegate?.feedListOnScrollToTop(sender: self)
+        let rows = self.numberOfRows(inSection: 0)
+        if(rows>0) {
+            self.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            self.customDelegate?.feedListOnScrollToTop(sender: self)
+        }
     }
     
     func scrollToBottom() {

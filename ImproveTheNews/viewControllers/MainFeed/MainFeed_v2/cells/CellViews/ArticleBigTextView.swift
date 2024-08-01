@@ -150,7 +150,7 @@ class ArticleBigTextView: CustomCellView {
     }
     
     @objc func viewOnTap(_ gesture: UITapGestureRecognizer) {
-        CustomNavController.shared.tour?.cancel()
+        CustomNavController.shared.tour_old?.cancel()
         if(article.isEmpty()){ return }
         
         if(article.isStory) {

@@ -287,7 +287,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
     
     // MARK: Actions
     @objc func viewOnTap(_ gesture: UITapGestureRecognizer) {
-        CustomNavController.shared.tour?.cancel()
+        CustomNavController.shared.tour_old?.cancel()
         
         if(self.article.isEmpty()) { return }
         

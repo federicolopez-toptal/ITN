@@ -149,7 +149,7 @@ extension MainFeed_v3_viewController: TopicSelectorViewDelegate {
             let topic = self.data.topics[index].name
             vc.topic = topic
             
-            CustomNavController.shared.tour?.cancel()
+            CustomNavController.shared.tour_old?.cancel()
             CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }

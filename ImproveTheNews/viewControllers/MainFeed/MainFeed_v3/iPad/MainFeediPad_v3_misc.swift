@@ -156,7 +156,7 @@ extension MainFeediPad_v3_viewController: TopicSelectorViewDelegate {
                 (vc as! MainFeediPad_v3_viewController).topic = topic
             }
         
-            CustomNavController.shared.tour?.cancel()
+            CustomNavController.shared.tour_old?.cancel()
             CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }

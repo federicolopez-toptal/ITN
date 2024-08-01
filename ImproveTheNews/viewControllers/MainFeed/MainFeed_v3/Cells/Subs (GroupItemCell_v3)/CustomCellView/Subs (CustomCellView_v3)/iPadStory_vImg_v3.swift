@@ -145,7 +145,7 @@ class iPadStory_vImg_v3: CustomCellView_v3 {
     
     // MARK: Actions
     @objc func viewOnTap(_ gesture: UITapGestureRecognizer) {
-        CustomNavController.shared.tour?.cancel()
+        CustomNavController.shared.tour_old?.cancel()
         
         if let _article = self.article {
             if(_article.isEmpty()) { return }

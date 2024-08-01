@@ -123,7 +123,7 @@ class FAQ_contextStoryView: CustomCellView {
     }
     
     @objc func viewOnTap(_ gesture: UITapGestureRecognizer) {
-        CustomNavController.shared.tour?.cancel()
+        CustomNavController.shared.tour_old?.cancel()
         if(article.isEmpty()){ return }
 
         let vc = StoryViewController()

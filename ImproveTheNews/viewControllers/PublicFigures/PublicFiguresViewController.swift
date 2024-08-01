@@ -67,6 +67,17 @@ class PublicFiguresViewController: BaseViewController {
     }
     
     func buildContent() {
+        if(IPAD()) {
+            let _h = SCREEN_SIZE().height
+            let _w = SCREEN_SIZE().width
+            let minDim = (_h < _w) ? _h : _w
+            let calcW = (self.items_COLS * self.items_DIM) + ((self.items_COLS-1) * self.items_H_SEP)
+            
+            if(calcW > minDim) {
+                self.items_COLS = 4
+            }
+        }
+        
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
         
@@ -633,4 +644,14 @@ extension PublicFiguresViewController: UIPickerViewDataSource, UIPickerViewDeleg
         return optionView
     }
 
+}
+
+extension PublicFiguresViewController {
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        CustomNavController.shared.tour.rotate()
+    }
+    
 }

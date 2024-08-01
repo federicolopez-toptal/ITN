@@ -186,16 +186,18 @@ class TourIntroPopupView: PopupView {
     }
     
     @objc func onGoButtonTap(_ sender: UIButton) {
-        CustomNavController.shared.tour?.showStep(2)
+        //CustomNavController.shared.tour_old?.showStep(2)
         
         self.bottomConstraint?.constant = self.height
         UIView.animate(withDuration: 0.4) {
             self.superview!.layoutIfNeeded()
+        } completion: { _ in
+            CustomNavController.shared.tour.gotoStep(1)
         }
     }
     
     @objc func onTipsButtonTap(_ sender: UIButton) {
-        CustomNavController.shared.tour?.showPreferencesNotes()
+        CustomNavController.shared.tour_old?.showPreferencesNotes()
     }
 
 }

@@ -208,6 +208,11 @@ class MenuView: UIView {
         self.refreshDisplayMode()
         CustomNavController.shared.dismissMenu()
     }
+    
+    private func customDismiss() {
+        self.refreshDisplayMode()
+        CustomNavController.shared.dismissMenu(showDarkBackground: true)
+    }
 
 }
 
@@ -457,8 +462,11 @@ extension MenuView {
 //            self.dismissMe()
 //        }
 
-        CustomNavController.shared.info(message: "Tour temporarily disabled for this Beta")
-        self.dismissMe()
+//        CustomNavController.shared.info(message: "Tour temporarily disabled for this Beta")
+//        self.dismissMe()
+
+        self.customDismiss()
+        CustomNavController.shared.tour.start()
 
     }
     

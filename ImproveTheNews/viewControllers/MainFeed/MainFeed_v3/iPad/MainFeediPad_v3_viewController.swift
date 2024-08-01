@@ -82,6 +82,8 @@ class MainFeediPad_v3_viewController: BaseViewController {
         super.viewDidAppear(animated)
         
         if(!self.didAppear) {
+//            CustomNavController.shared.tour.start()
+        
             self.didAppear = true
             self.loadData()
 
@@ -173,13 +175,11 @@ extension MainFeediPad_v3_viewController {
                         self.hideLoading()
                         self.list.hideRefresher()
                         
-////                        // TOUR
-//                        if( READ(LocalKeys.preferences.onBoardingShow)==nil) {
-//                            if(CustomNavController.shared.viewControllers.first! == self) {
-//                                WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
-//                                CustomNavController.shared.startTour()
-//                            }
-//                        }
+                        // TOUR
+                        if(READ(LocalKeys.preferences.onBoardingShow)==nil) {
+                            WRITE(LocalKeys.preferences.onBoardingShow, value: "YES")
+                            CustomNavController.shared.tour.start()
+                        }
                         
 //                        DELAY(0.25) {   
 //                            let vc = FigureDetailsViewController()
@@ -357,6 +357,7 @@ extension MainFeediPad_v3_viewController {
 
         self.setupList()
 //        self.tabsBar.buildInto(viewController: self)
+        CustomNavController.shared.tour.rotate()
         
         // Header
         DELAY(0.2) {

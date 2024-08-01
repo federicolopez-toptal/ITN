@@ -39,4 +39,16 @@ class TabsBar: UIView {
         return -1
     }
     
+    func getDim() -> CGFloat {
+        var dim: CGFloat = 0
+        
+        if(IPHONE()) {
+            dim = TabsBar_iPhone.HEIGHT
+        } else {
+            dim = TabsBar_iPad.WIDTH
+        }
+        
+        return dim
+    }
+    
 }

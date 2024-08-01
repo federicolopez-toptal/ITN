@@ -20,7 +20,8 @@ class CustomNavController: UINavigationController {
     let darkView = DarkView()
     let tabsBar = TabsBar.customInit()
     
-    var tour: Tour?
+    var tour = Tour_v2()
+    var tour_old: Tour?
 
 
     override func viewDidLoad() {
@@ -40,13 +41,15 @@ class CustomNavController: UINavigationController {
     
     @objc func darkViewOnTap(sender: UITapGestureRecognizer?) {
         self.dismissMenu()
-        self.tour?.cancel()
-        
+
         for V in self.view.subviews {
             if let popup = V as? PopupView {
                 popup.dismissMe()
             }
         }
+        
+        //self.tour_old?.cancel()
+        self.tour.cancel()
     }
     
     override func viewDidLayoutSubviews() {
@@ -54,7 +57,9 @@ class CustomNavController: UINavigationController {
         if(!self.didLayout) {
             self.didLayout = true
             self.menu.buildInto(self.view)
-            self.tour = Tour(buildInto: self.view)
+            
+            self.tour.buildInto(container: self.view)
+            self.tour_old = Tour(buildInto: self.view)
         }
     }
     
@@ -92,8 +97,8 @@ class CustomNavController: UINavigationController {
 extension CustomNavController {
     
     func startTour() {
-        self.tour = Tour(buildInto: self.view)
-        self.tour?.start()
+        self.tour_old = Tour(buildInto: self.view)
+        self.tour_old?.start()
     }
     
 }
@@ -110,7 +115,7 @@ extension CustomNavController {
             self.view.layoutIfNeeded()
         }
 
-        self.tour?.cancel(dissapearDarkBackground: false)
+        self.tour_old?.cancel(dissapearDarkBackground: false)
     }
     
     func dismissMenu(showDarkBackground: Bool = false) {

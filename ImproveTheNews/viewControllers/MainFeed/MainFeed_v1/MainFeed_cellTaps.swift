@@ -22,7 +22,7 @@ extension MainFeedViewController {
             let article = self.getArticle(from: (item as! DP_itemPointingData))
             if(article.isEmpty()){ return }
 
-            CustomNavController.shared.tour?.cancel()
+            CustomNavController.shared.tour_old?.cancel()
             if(article.isStory) {
                 let vc = StoryViewController()
                 vc.story = article

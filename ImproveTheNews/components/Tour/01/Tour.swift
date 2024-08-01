@@ -388,6 +388,10 @@ extension Tour {
             self.createPreferencesNotes()
         }
         
+        if let sView = self.prefNotes?.superview {
+            sView.bringSubviewToFront(self.prefNotes!)
+        }
+        
         self.prefNotes?.show()
     }
     

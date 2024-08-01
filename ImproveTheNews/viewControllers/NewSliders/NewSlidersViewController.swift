@@ -180,6 +180,7 @@ extension NewSlidersViewController {
         }
 
         self.setupList()
+        CustomNavController.shared.tour.rotate()
 ////        self.tabsBar.buildInto(viewController: self)
 //        
 //        // Header

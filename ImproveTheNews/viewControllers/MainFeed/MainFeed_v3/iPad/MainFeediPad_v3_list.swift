@@ -362,7 +362,7 @@ extension MainFeediPad_v3_viewController: iPhoneMoreCell_v3_delegate {
             let vc = MainFeediPad_v3_viewController()
             vc.topic = topic
             
-            CustomNavController.shared.tour?.cancel()
+            CustomNavController.shared.tour_old?.cancel()
             CustomNavController.shared.pushViewController(vc, animated: true)
         
             return
