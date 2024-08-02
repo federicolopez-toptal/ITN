@@ -10,7 +10,7 @@ import UIKit
 class RatingView: UIView {
 
     var url: String = ""
-    var HEIGHT: CGFloat = 64
+    var HEIGHT: CGFloat = 0
     var currentRating: Int = 0
     
     let label = UILabel()
@@ -37,7 +37,7 @@ class RatingView: UIView {
         self.url = url
     
         if(SAFE_AREA()!.bottom > 0) {
-            self.HEIGHT = 79
+            self.HEIGHT = 70 //79
         } else {
             self.HEIGHT = 64
         }
@@ -171,7 +171,8 @@ class RatingView: UIView {
         self.setValue(0)
         
         if(self.articleWasRated()) {
-            self.bottomConstraint?.constant = self.HEIGHT
+            //self.bottomConstraint?.constant = self.HEIGHT
+            self.bottomConstraint?.constant = IPHONE_bottomOffset() + self.HEIGHT
         }
     }
 
@@ -183,6 +184,8 @@ class RatingView: UIView {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.closeIcon.image = UIImage(named: DisplayMode.imageName("popup.close"))
+        
+        //self.backgroundColor = .systemPink
     }
 
 }
@@ -229,7 +232,11 @@ extension RatingView {
     }
     
     func close(animate: Bool = true) {
-        self.bottomConstraint?.constant = self.HEIGHT
+        //print(self.HEIGHT)
+    
+        self.bottomConstraint?.constant = IPHONE_bottomOffset() + self.HEIGHT
+        
+        //self.HEIGHT - 100 //IPHONE_bottomOffset() - 10
         
         if(animate) {
             UIView.animate(withDuration: 0.3) {
