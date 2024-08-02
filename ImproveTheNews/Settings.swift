@@ -43,6 +43,8 @@ func NAV_MAINFEED_VC(topic: String? = nil) -> UIViewController {
         vc = MainFeed_v3_viewController()
         if(topic != nil){ (vc as! MainFeed_v3_viewController).topic = topic! }
     } else {
+        //vc = PreferencesViewController()
+    
         vc = MainFeediPad_v3_viewController()
         if(topic != nil){ (vc as! MainFeediPad_v3_viewController).topic = topic! }
     }

@@ -18,7 +18,8 @@ class FilterTextView: UIView {
     weak var delegate: FilterTextViewDelegate?
     private weak var viewController: UIViewController?
     
-    let lupa = UIImageView(image: UIImage(named: "navBar.search.dark")?.withRenderingMode(.alwaysTemplate))
+    //let lupa = UIImageView(image: UIImage(named: "navBar.search.dark")?.withRenderingMode(.alwaysTemplate))
+    let lupa = UIImageView(image: UIImage(named: DisplayMode.imageName("lupa")))
     let placeHolderLabel = UILabel()
     let mainTextField = UITextField()
     let closeIcon = UIImageView(image: UIImage(named: "menu.close")?.withRenderingMode(.alwaysTemplate))
@@ -44,25 +45,25 @@ class FilterTextView: UIView {
         let roboto = ROBOTO(14)
         
         self.viewController = viewController
-        self.backgroundColor = .clear
+        self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x1e1e21) : UIColor(hex: 0xe9e9e9)
+        self.layer.cornerRadius = 64/2
         viewController.view.addSubview(self)
         
-        self.layer.borderWidth = 1.0
-        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xB4BDCA).cgColor
+//        self.layer.borderWidth = 1.0
+//        self.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xB4BDCA).cgColor
         
-        self.placeHolderLabel.text = "Example text"
-        self.placeHolderLabel.textColor = .yellow
-        self.placeHolderLabel.font = roboto
-        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5) : UIColor(hex: 0x1D242F).withAlphaComponent(0.5)
+        self.placeHolderLabel.text = "Search All"
+        self.placeHolderLabel.font = AILERON(16)
+        self.placeHolderLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5) : UIColor(hex: 0x0a0a0d).withAlphaComponent(0.5)
         self.addSubview(self.placeHolderLabel)
         self.placeHolderLabel.activateConstraints([
-            self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            self.placeHolderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 27),
             self.placeHolderLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
         ])
 
-        self.mainTextField.font = roboto
-        self.mainTextField.textColor = UIColor(hex: 0xDA4933)
-        self.mainTextField.tintColor = UIColor(hex: 0xDA4933)
+        self.mainTextField.font = AILERON(16)
+        self.mainTextField.textColor = DARK_MODE() ? UIColor(hex: 0xb8babd) : UIColor(hex: 0x0a0a0d)
+        self.mainTextField.tintColor = self.mainTextField.textColor
         self.mainTextField.returnKeyType = .done
         self.mainTextField.autocapitalizationType = .none
         self.mainTextField.autocorrectionType = .no
@@ -73,9 +74,9 @@ class FilterTextView: UIView {
         self.mainTextField.keyboardType = .asciiCapable
         self.addSubview(self.mainTextField)
         self.mainTextField.activateConstraints([
-            self.mainTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            self.mainTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 27),
             self.mainTextField.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.mainTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12)
+            self.mainTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27)
         ])
         self.mainTextField.addTarget(self, action: #selector(onFilterTextChange(_:)), for: .editingChanged)
         self.mainTextField.delegate = self
@@ -84,8 +85,8 @@ class FilterTextView: UIView {
         self.lupa.activateConstraints([
             self.lupa.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -13),
             self.lupa.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.lupa.widthAnchor.constraint(equalToConstant: 24),
-            self.lupa.heightAnchor.constraint(equalToConstant: 24)
+            self.lupa.widthAnchor.constraint(equalToConstant: 40),
+            self.lupa.heightAnchor.constraint(equalToConstant: 40)
         ])
         self.lupa.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0).withAlphaComponent(0.5) : UIColor(hex: 0xBBBDC0)
         
@@ -93,7 +94,7 @@ class FilterTextView: UIView {
         self.closeIcon.activateConstraints([
             self.closeIcon.widthAnchor.constraint(equalToConstant: 32),
             self.closeIcon.heightAnchor.constraint(equalToConstant: 32),
-            self.closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -11),
+            self.closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27-40),
             self.closeIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         self.closeIcon.hide()
@@ -109,8 +110,6 @@ class FilterTextView: UIView {
         ])
         self.closeButton.hide()
         closeButton.addTarget(self, action: #selector(onCloseButtonTap(_:)), for: .touchUpInside)
-
-
     }
     
     // MARK: - Event(s)
@@ -131,12 +130,12 @@ extension FilterTextView: UITextFieldDelegate {
         
         if(sender.text!.isEmpty) {
             self.placeHolderLabel.show()
-            self.lupa.show()
+            //self.lupa.show()
             self.closeIcon.hide()
             self.closeButton.hide()
         } else {
             self.placeHolderLabel.hide()
-            self.lupa.hide()
+            //self.lupa.hide()
             self.closeIcon.show()
             self.closeButton.show()
         }

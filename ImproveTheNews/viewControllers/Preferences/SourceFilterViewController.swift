@@ -15,7 +15,7 @@ class SourceFilterViewController: BaseViewController {
     var sourcesLoaded = false
     
     let titleLabel = UILabel()
-    let sTitleLabel = UILabel()
+//    let sTitleLabel = UILabel()
     let filterText = FilterTextView()
     let scrollView = UIScrollView()
     let contentView = UIView()
@@ -47,16 +47,16 @@ class SourceFilterViewController: BaseViewController {
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         //DARK_MODE() ? UIColor(hex: 0x19191C) : .white
     
-        let closeImage = UIImage(named: "menu.close")?.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(named: DisplayMode.imageName("SourcesClose"))
         let closeIcon = UIImageView(image: closeImage)
         self.view.addSubview(closeIcon)
         closeIcon.activateConstraints([
-            closeIcon.widthAnchor.constraint(equalToConstant: 32),
-            closeIcon.heightAnchor.constraint(equalToConstant: 32),
+            closeIcon.widthAnchor.constraint(equalToConstant: 48),
+            closeIcon.heightAnchor.constraint(equalToConstant: 48),
             closeIcon.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -18),
             closeIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topSpace)
         ])
-        closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
+        //closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
         
         let closeButton = UIButton(type: .system)
@@ -78,31 +78,40 @@ class SourceFilterViewController: BaseViewController {
             self.titleLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor)
         ])
         
-        self.view.addSubview(self.sTitleLabel)
-        self.sTitleLabel.font = ROBOTO(14)
-        self.sTitleLabel.text = "Search media"
-        self.sTitleLabel.activateConstraints([
-            self.sTitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.sTitleLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 15)
-        ])
+//        self.view.addSubview(self.sTitleLabel)
+//        self.sTitleLabel.font = ROBOTO(14)
+//        self.sTitleLabel.text = "Search media"
+//        self.sTitleLabel.activateConstraints([
+//            self.sTitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+//            self.sTitleLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 15)
+//        ])
     
         self.filterText.delegate = self
         self.filterText.buildInto(viewController: self)
         self.filterText.activateConstraints([
             self.filterText.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 17),
             self.filterText.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -17),
-            self.filterText.heightAnchor.constraint(equalToConstant: 44),
-            self.filterText.topAnchor.constraint(equalTo: self.sTitleLabel.bottomAnchor, constant: 16)
+            self.filterText.heightAnchor.constraint(equalToConstant: 64),
+            self.filterText.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 16)
+        ])
+    
+        let moneyIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("money")))
+        self.view.addSubview(moneyIcon)
+        moneyIcon.activateConstraints([
+            moneyIcon.widthAnchor.constraint(equalToConstant: 24),
+            moneyIcon.heightAnchor.constraint(equalToConstant: 24),
+            moneyIcon.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            moneyIcon.topAnchor.constraint(equalTo: self.filterText.bottomAnchor, constant: 27)
         ])
     
         let paywallLabel = UILabel()
-        paywallLabel.text = "* indicates pay wall"
-        paywallLabel.textColor = UIColor(hex: 0xDA4933)
-        paywallLabel.font = ROBOTO_BOLD(14)
+        paywallLabel.text = "Indicates a paywall."
+        paywallLabel.textColor = DARK_MODE() ? UIColor(hex: 0xbbbdc0) : UIColor(hex: 0x19191c)
+        paywallLabel.font = AILERON(16)
         self.view.addSubview(paywallLabel)
         paywallLabel.activateConstraints([
-            paywallLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 17),
-            paywallLabel.topAnchor.constraint(equalTo: self.filterText.bottomAnchor, constant: 10)
+            paywallLabel.leadingAnchor.constraint(equalTo: moneyIcon.trailingAnchor, constant: 17),
+            paywallLabel.centerYAnchor.constraint(equalTo: moneyIcon.centerYAnchor)
         ])
         
         var bottomSpace: CGFloat = 0
@@ -115,7 +124,7 @@ class SourceFilterViewController: BaseViewController {
         self.scrollView.activateConstraints([
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.scrollView.topAnchor.constraint(equalTo: paywallLabel.bottomAnchor, constant: 10),
+            self.scrollView.topAnchor.constraint(equalTo: moneyIcon.bottomAnchor, constant: 27),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -bottomSpace)
         ])
         
@@ -142,7 +151,7 @@ class SourceFilterViewController: BaseViewController {
         
         //DARK_MODE() ? UIColor(hex: 0x19191C) : .white
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.sTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : self.titleLabel.textColor
+        //self.sTitleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : self.titleLabel.textColor
     }
     
     @objc func onCloseButtonTap(_ sender: UIButton) {
@@ -166,12 +175,12 @@ extension SourceFilterViewController: FilterTextViewDelegate {
             }
         }
         
-        //self.dataProvider = self.dataProvider.sorted(by: { $0.name < $1.name })
-        //print("FILTER", self.dataProvider.count)
+        // self.dataProvider = self.dataProvider.sorted(by: { $0.name < $1.name })
+        // print("FILTER", self.dataProvider.count)
         //---------------------
         REMOVE_ALL_SUBVIEWS(from: self.contentView)
         
-        let row_H: CGFloat = 56
+        let row_H: CGFloat = 40
         
         let limit = SCREEN_SIZE().width - 13 - 13
         let iconDim: CGFloat = 24
@@ -191,6 +200,7 @@ extension SourceFilterViewController: FilterTextViewDelegate {
         var val_y: CGFloat = 0
         for (i, icon) in self.dataProvider.enumerated() {
             var HStack: UIStackView!
+            var moneyIcon: UIImageView!
 
             if(i==0) {
                 HStack = HSTACK(into: VStack)
@@ -203,19 +213,25 @@ extension SourceFilterViewController: FilterTextViewDelegate {
                 HStack = VStack.arrangedSubviews.last as? UIStackView
             }
         
-        
             let nameLabel = UILabel()
-            nameLabel.font = DM_SERIF_DISPLAY_fixed(14) //MERRIWEATHER_BOLD(14)
-            nameLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-            if(icon.paywall) {
-                nameLabel.textColor = UIColor(hex: 0xDA4933)
-                nameLabel.text = icon.name + " *"
-            } else {
-                nameLabel.text = icon.name
-            }
+            //nameLabel.backgroundColor = .yellow
+            nameLabel.font = AILERON(16)
+            //DM_SERIF_DISPLAY_fixed(14) //MERRIWEATHER_BOLD(14)
+            nameLabel.textColor = CSS.shared.displayMode().sec_textColor //DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+            nameLabel.text = icon.name
+            
+//            if(icon.paywall) {
+//                nameLabel.textColor = UIColor(hex: 0xDA4933)
+//                nameLabel.text = icon.name + " *"
+//            } else {
+//                nameLabel.text = icon.name
+//            }
         
             let labelWidth: CGFloat = nameLabel.calculateWidthFor(height: iconDim)
-            let W: CGFloat = 22 + iconDim + 10 + labelWidth + 22
+            var W: CGFloat = 8 + iconDim + 8 + labelWidth + 40
+            if(icon.paywall) {
+                W += 5 + 24
+            }
         
             if(val_x + W > limit) {
                 val_x = 0
@@ -234,10 +250,11 @@ extension SourceFilterViewController: FilterTextViewDelegate {
         
             let tag = UIView()
             tag.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4).withAlphaComponent(0.2) : UIColor(hex: 0x283241).withAlphaComponent(0.1)
-            tag.layer.cornerRadius = 28
+            
+            tag.layer.cornerRadius = 20
             HStack.addArrangedSubview(tag)
             tag.activateConstraints([
-                tag.heightAnchor.constraint(equalToConstant: 56),
+                tag.heightAnchor.constraint(equalToConstant: 40),
                 tag.widthAnchor.constraint(equalToConstant: W)
             ])
             
@@ -247,7 +264,7 @@ extension SourceFilterViewController: FilterTextViewDelegate {
             iconImageView.activateConstraints([
                 iconImageView.widthAnchor.constraint(equalToConstant: iconDim),
                 iconImageView.heightAnchor.constraint(equalToConstant: iconDim),
-                iconImageView.leadingAnchor.constraint(equalTo: tag.leadingAnchor, constant: 22),
+                iconImageView.leadingAnchor.constraint(equalTo: tag.leadingAnchor, constant: 8),
                 iconImageView.centerYAnchor.constraint(equalTo: tag.centerYAnchor)
             ])
             
@@ -259,14 +276,40 @@ extension SourceFilterViewController: FilterTextViewDelegate {
                     iconImageView.image = UIImage(named: icon.identifier + ".png")
                 }
             }
-            
+            iconImageView.layer.cornerRadius = iconDim/2
+            iconImageView.clipsToBounds = true
             
             tag.addSubview(nameLabel)
             nameLabel.activateConstraints([
                 nameLabel.heightAnchor.constraint(equalToConstant: iconDim),
-                nameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 10),
+                nameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
                 nameLabel.centerYAnchor.constraint(equalTo: tag.centerYAnchor)
             ])
+            
+            if(icon.paywall) {
+                moneyIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("money2")))
+                moneyIcon.tag = 88
+                tag.addSubview(moneyIcon)
+                moneyIcon?.activateConstraints([
+                    moneyIcon.widthAnchor.constraint(equalToConstant: 24),
+                    moneyIcon.heightAnchor.constraint(equalToConstant: 24),
+                    moneyIcon.centerYAnchor.constraint(equalTo: tag.centerYAnchor),
+                    moneyIcon.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 5)
+                ])
+            }
+            
+            let actionIconImage = UIImage(named: "tag.check")?.withRenderingMode(.alwaysTemplate)
+            let actionIcon = UIImageView(image: actionIconImage)
+            actionIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xbbbdc0) : UIColor(hex: 0x2d2d31)
+            actionIcon.tag = 99
+            tag.addSubview(actionIcon)
+            actionIcon.activateConstraints([
+                actionIcon.widthAnchor.constraint(equalToConstant: 24),
+                actionIcon.heightAnchor.constraint(equalToConstant: 24),
+                actionIcon.centerYAnchor.constraint(equalTo: tag.centerYAnchor),
+                actionIcon.trailingAnchor.constraint(equalTo: tag.trailingAnchor, constant: -13)
+            ])
+            
             
             let buttonArea = UIButton(type: .custom)
             buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.25)
@@ -292,11 +335,34 @@ extension SourceFilterViewController: FilterTextViewDelegate {
     }
     
     func updateUIState(for view: UIView, _ state: Bool) {
+//        if(state) {
+//            view.alpha = 1
+//        } else {
+//            if(DARK_MODE()) { view.alpha = 0.35 }
+//            else { view.alpha = 0.5 }
+//        }
+
+        let moneyIcon = view.viewWithTag(88) as? UIImageView
+        let actionIcon = view.viewWithTag(99) as! UIImageView
+
         if(state) {
-            view.alpha = 1
+            view.backgroundColor = DARK_MODE() ? UIColor(hex: 0x93A0B4).withAlphaComponent(0.2) :
+                UIColor(hex: 0x283241).withAlphaComponent(0.1)
+            view.layer.borderColor = UIColor.clear.cgColor
+            
+            moneyIcon?.image = UIImage(named: DisplayMode.imageName("money2"))
+            actionIcon.image = UIImage(named: "tag.check")?.withRenderingMode(.alwaysTemplate)
+            actionIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xbbbdc0) : UIColor(hex: 0x2d2d31)
         } else {
-            if(DARK_MODE()) { view.alpha = 0.35 }
-            else { view.alpha = 0.5 }
+            view.backgroundColor = CSS.shared.displayMode().main_bgColor
+            view.layer.borderWidth = 1
+            view.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x93A0B4).withAlphaComponent(0.3).cgColor :
+                UIColor(hex: 0x283241).withAlphaComponent(0.3).cgColor
+                
+            moneyIcon?.image = UIImage(named: DisplayMode.imageName("money"))
+            actionIcon.image = UIImage(named: "tag.close")?.withRenderingMode(.alwaysTemplate)
+            actionIcon.tintColor = DARK_MODE() ? UIColor(hex: 0x93A0B4).withAlphaComponent(0.5) :
+                UIColor(hex: 0x283241).withAlphaComponent(0.3)
         }
     }
     

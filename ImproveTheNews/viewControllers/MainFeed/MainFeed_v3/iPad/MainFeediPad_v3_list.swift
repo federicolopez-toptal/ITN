@@ -244,15 +244,17 @@ extension MainFeediPad_v3_viewController {
                 (cell as! iPhoneMoreCell_v3).populate(with: _item)
                 (cell as! iPhoneMoreCell_v3).delegate = self
             } else if item is DP3_banner {
-                if(self.data.banner!.isNewsLetter()) {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerNLCell_v3.identifier)!
-                    (cell as! iPhoneBannerNLCell_v3).populate(with: self.data.banner!)
-                } else if(self.data.banner!.isPodcast()) {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerPCCell_v3.identifier)!
-                    (cell as! iPhoneBannerPCCell_v3).populate(with: self.data.banner!)
-                } else {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerCell_v3.identifier)!
-                    (cell as! iPhoneBannerCell_v3).populate(with: self.data.banner!)
+                if let _banner = self.data.banner {
+                    if(_banner.isNewsLetter()) {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerNLCell_v3.identifier)!
+                        (cell as! iPhoneBannerNLCell_v3).populate(with: self.data.banner!)
+                    } else if(_banner.isPodcast()) {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerPCCell_v3.identifier)!
+                        (cell as! iPhoneBannerPCCell_v3).populate(with: self.data.banner!)
+                    } else {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneBannerCell_v3.identifier)!
+                        (cell as! iPhoneBannerCell_v3).populate(with: self.data.banner!)
+                    }
                 }
             } else if item is DP3_footer {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneFooterCell_v3.identifier)!

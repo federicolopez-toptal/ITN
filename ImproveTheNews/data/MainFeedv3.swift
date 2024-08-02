@@ -674,17 +674,17 @@ extension MainFeedv3 {
         //result += "VA00"
 
         // Source Filters
-//        if let _sourceFilters = READ(LocalKeys.preferences.sourceFilters) {
-//            if(_sourceFilters.count > 1) {
-//                if(_sourceFilters.getCharAt(index: 0)==",") {
-//                    if let filters = _sourceFilters.subString(from: 1, count: _sourceFilters.count-1) {
-//                        result += filters.replacingOccurrences(of: ",", with: "00") + "00"
-//                    }
-//                } else {
-//                    result += _sourceFilters.replacingOccurrences(of: ",", with: "00") + "00"
-//                }
-//            }
-//        }
+        if let _sourceFilters = READ(LocalKeys.preferences.sourceFilters) {
+            if(_sourceFilters.count > 1) {
+                if(_sourceFilters.getCharAt(index: 0)==",") {
+                    if let filters = _sourceFilters.subString(from: 1, count: _sourceFilters.count-1) {
+                        result += filters.replacingOccurrences(of: ",", with: "00") + "00"
+                    }
+                } else {
+                    result += _sourceFilters.replacingOccurrences(of: ",", with: "00") + "00"
+                }
+            }
+        }
         result += "VM00VE35"
         
         // Onboarding
