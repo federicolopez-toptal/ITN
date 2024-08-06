@@ -62,6 +62,9 @@ class SourceCheck: UIView {
         } else {
             self.dotLeadingConstraint?.constant = 5
         }
+//        UIView.animate(withDuration: 0.3) {
+//            self.layoutIfNeeded()
+//        }
     }
     
     func updateDotColor() {

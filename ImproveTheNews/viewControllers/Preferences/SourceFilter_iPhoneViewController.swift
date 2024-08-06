@@ -197,7 +197,9 @@ extension SourceFilter_iPhoneViewController: UITableViewDelegate, UITableViewDat
         
         let cell = self.tableView(self.list, cellForRowAt: indexPath) as! SourceFilterCell
         cell.check.setState(self.dataProvider[i].state)
-        self.list.reloadData()
+        //self.list.reloadData()
+        
+        self.list.reloadRows(at: [indexPath], with: .none)
     }
     
     // ---------------------------------------
