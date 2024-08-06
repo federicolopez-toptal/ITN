@@ -79,6 +79,15 @@ class MainFeed_v3_viewController: BaseViewController {
         
         if(!self.didAppear) {
             //CustomNavController.shared.tour.start()
+            
+//            DELAY(1.0) {
+//                var vc = SourceFilter_iPhoneViewController()
+//                vc.modalPresentationStyle = .fullScreen
+//                CustomNavController.shared.present(vc, animated: true)
+//            }
+            
+        
+        
         
             self.didAppear = true
             self.loadData()

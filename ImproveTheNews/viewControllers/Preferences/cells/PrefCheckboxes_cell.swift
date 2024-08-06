@@ -171,7 +171,14 @@ class PrefCheckboxes_cell: UITableViewCell {
     
     // MARK: - Event(s)
     @objc func sourcesButtonTap(_ sender: UIButton) {
-        let vc = SourceFilterViewController()
+        var vc: UIViewController!
+        
+        if(IPHONE()) {
+            vc = SourceFilter_iPhoneViewController()
+        }else {
+            vc = SourceFilterViewController()
+        }
+        
         vc.modalPresentationStyle = .fullScreen
         CustomNavController.shared.present(vc, animated: true)
     }

@@ -94,7 +94,7 @@ class FilterTextView: UIView {
         self.closeIcon.activateConstraints([
             self.closeIcon.widthAnchor.constraint(equalToConstant: 32),
             self.closeIcon.heightAnchor.constraint(equalToConstant: 32),
-            self.closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27-40),
+            self.closeIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -55),
             self.closeIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         self.closeIcon.hide()

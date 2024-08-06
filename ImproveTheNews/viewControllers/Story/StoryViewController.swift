@@ -2611,7 +2611,14 @@ extension StoryViewController: WKNavigationDelegate {
             if(url.contains("metaculus.php") || url.contains("question_embed")) {
                 decisionHandler(.allow)
             } else {
-                OPEN_URL(url)
+                //OPEN_URL(url)
+                
+                let vc = ArticleViewController()
+                vc.article = MainFeedArticle(url: url)
+                vc.showComponentsOnClose = false
+                vc.altTitle = "Metaculus"
+                CustomNavController.shared.pushViewController(vc, animated: true)
+                
                 decisionHandler(.cancel)
             }
         }

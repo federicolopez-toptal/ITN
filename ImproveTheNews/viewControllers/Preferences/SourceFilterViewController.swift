@@ -51,10 +51,10 @@ class SourceFilterViewController: BaseViewController {
         let closeIcon = UIImageView(image: closeImage)
         self.view.addSubview(closeIcon)
         closeIcon.activateConstraints([
-            closeIcon.widthAnchor.constraint(equalToConstant: 48),
-            closeIcon.heightAnchor.constraint(equalToConstant: 48),
+            closeIcon.widthAnchor.constraint(equalToConstant: 32),
+            closeIcon.heightAnchor.constraint(equalToConstant: 32),
             closeIcon.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -18),
-            closeIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topSpace)
+            closeIcon.topAnchor.constraint(equalTo: self.view.topAnchor, constant: topSpace+4)
         ])
         //closeIcon.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         
@@ -75,7 +75,7 @@ class SourceFilterViewController: BaseViewController {
         self.titleLabel.text = "Source filter"
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.titleLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor)
+            self.titleLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: -4)
         ])
         
 //        self.view.addSubview(self.sTitleLabel)

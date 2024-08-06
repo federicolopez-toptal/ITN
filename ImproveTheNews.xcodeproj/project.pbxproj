@@ -514,6 +514,9 @@
 		BD4DC7DF2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7DE2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift */; };
 		BD4DC7E12BCEACED0097BFD1 /* iPadControversyCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */; };
 		BD50541E2BEDCAF500AD1030 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD50541D2BEDCAF500AD1030 /* CustomButton.swift */; };
+		BD5918722C6145D600AD8FC6 /* SourceFilter_iPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5918712C6145D600AD8FC6 /* SourceFilter_iPhoneViewController.swift */; };
+		BD5918742C614FA500AD8FC6 /* SourceFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5918732C614FA500AD8FC6 /* SourceFilterCell.swift */; };
+		BD5918762C61576B00AD8FC6 /* SourceCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5918752C61576B00AD8FC6 /* SourceCheck.swift */; };
 		BD5975872BFEE49600BDBEBB /* StoryInfoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */; };
 		BD5C80762C59359B00ED0A60 /* Tour_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C80752C59359B00ED0A60 /* Tour_v2.swift */; };
 		BD5C80782C59500800ED0A60 /* DialogBubbleView_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C80772C59500800ED0A60 /* DialogBubbleView_iPhone.swift */; };
@@ -1051,6 +1054,9 @@
 		BD4DC7DE2BCE37F90097BFD1 /* iPhoneControversyCell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneControversyCell_v3.swift; sourceTree = "<group>"; };
 		BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyCell_v3.swift; sourceTree = "<group>"; };
 		BD50541D2BEDCAF500AD1030 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		BD5918712C6145D600AD8FC6 /* SourceFilter_iPhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFilter_iPhoneViewController.swift; sourceTree = "<group>"; };
+		BD5918732C614FA500AD8FC6 /* SourceFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFilterCell.swift; sourceTree = "<group>"; };
+		BD5918752C61576B00AD8FC6 /* SourceCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCheck.swift; sourceTree = "<group>"; };
 		BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoPopupView.swift; sourceTree = "<group>"; };
 		BD5C80752C59359B00ED0A60 /* Tour_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tour_v2.swift; sourceTree = "<group>"; };
 		BD5C80772C59500800ED0A60 /* DialogBubbleView_iPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubbleView_iPhone.swift; sourceTree = "<group>"; };
@@ -1700,6 +1706,9 @@
 				1FD234092915A07800B85AE9 /* Preferences_misc.swift */,
 				1FFA5522294B7A9900663966 /* cells */,
 				1F3E5E3B292FC2BF00FA090B /* SourceFilterViewController.swift */,
+				BD5918712C6145D600AD8FC6 /* SourceFilter_iPhoneViewController.swift */,
+				BD5918732C614FA500AD8FC6 /* SourceFilterCell.swift */,
+				BD5918752C61576B00AD8FC6 /* SourceCheck.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -2598,6 +2607,7 @@
 				1F5261C929E844FE000CE599 /* BannernewsLetterCell.swift in Sources */,
 				BD5C80812C5A959900ED0A60 /* DialogBubbleView_iPad.swift in Sources */,
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
+				BD5918762C61576B00AD8FC6 /* SourceCheck.swift in Sources */,
 				BD50541E2BEDCAF500AD1030 /* CustomButton.swift in Sources */,
 				1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */,
 				1F1033DB2BBB0F0C0038EDDF /* ControversiesData.swift in Sources */,
@@ -2626,6 +2636,7 @@
 				1F9C71202B6AE5AF0060BB66 /* iPhoneArticle_4colsImg_cell_v3.swift in Sources */,
 				1FF61CBE28DAE50B006DF9AC /* StoryCI_cell.swift in Sources */,
 				1FE89D052AF1AE2E00A6C99C /* CustomComponents_v3.swift in Sources */,
+				BD5918742C614FA500AD8FC6 /* SourceFilterCell.swift in Sources */,
 				1F0B000328F61D14007280FF /* FontUtils.swift in Sources */,
 				1F71FA442A15471400B066E0 /* DictionaryExtension.swift in Sources */,
 				1FD1BD532AF4914D00BEF887 /* iPhoneArticle_2colsImg_cell_v3.swift in Sources */,
@@ -2683,6 +2694,7 @@
 				1FC8352C2A1549E5007BCE56 /* DataExtension.swift in Sources */,
 				1FC287E129A652F40017433B /* DataProviderItem.swift in Sources */,
 				BDCD3FC72C45A03C00BAA2E2 /* TopicShownTextCell.swift in Sources */,
+				BD5918722C6145D600AD8FC6 /* SourceFilter_iPhoneViewController.swift in Sources */,
 				BDBC3CEC2C29C2BC00648945 /* TabsBar.swift in Sources */,
 				1F7B9EC0296E032D00D99C5D /* MainFeedStory.swift in Sources */,
 				1FC7390929896216003EB38D /* UITableView+Ext.swift in Sources */,
@@ -2973,7 +2985,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 114;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3012,7 +3024,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 114;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3104,7 +3116,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 114;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
