@@ -38,10 +38,10 @@ func NAV_MAINFEED_VC(topic: String? = nil) -> UIViewController {
     
         
     if(IPHONE()) {
-//        vc = NewsLetterArchiveViewController()
+        vc = NewSlidersViewController()
     
-        vc = MainFeed_v3_viewController()
-        if(topic != nil){ (vc as! MainFeed_v3_viewController).topic = topic! }
+//        vc = MainFeed_v3_viewController()
+//        if(topic != nil){ (vc as! MainFeed_v3_viewController).topic = topic! }
     } else {
         //vc = PreferencesViewController()
     

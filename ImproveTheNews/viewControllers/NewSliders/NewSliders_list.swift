@@ -42,6 +42,37 @@ extension NewSlidersViewController {
             _parentView.bringSubviewToFront(self.slidersPanel)
             _parentView.bringSubviewToFront(self.slidersPanel.floatingButton)
         }
+        
+        let filterImageView = UIImageView(image: UIImage(named: DisplayMode.imageName("filter")))
+        self.view.addSubview(filterImageView)
+        filterImageView.activateConstraints([
+            filterImageView.widthAnchor.constraint(equalToConstant: 32),
+            filterImageView.heightAnchor.constraint(equalToConstant: 32),
+            filterImageView.topAnchor.constraint(equalTo: self.list.topAnchor, constant: 14),
+            filterImageView.trailingAnchor.constraint(equalTo: self.list.trailingAnchor, constant: -16)
+        ])
+        
+        let filterButton = UIButton(type: .custom)
+        filterButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.view.addSubview(filterButton)
+        filterButton.activateConstraints([
+            filterButton.leadingAnchor.constraint(equalTo: filterImageView.leadingAnchor),
+            filterButton.trailingAnchor.constraint(equalTo: filterImageView.trailingAnchor),
+            filterButton.topAnchor.constraint(equalTo: filterImageView.topAnchor),
+            filterButton.bottomAnchor.constraint(equalTo: filterImageView.bottomAnchor)
+        ])
+        filterButton.addTarget(self, action: #selector(filterButtonOnTap(_:)), for: .touchUpInside)
+    }
+    @objc func filterButtonOnTap(_ sender: UIButton?) {
+        var vc: UIViewController!
+        if(IPHONE()) {
+            vc = SourceFilter_iPhoneViewController()
+        }else {
+            vc = SourceFilterViewController()
+        }
+        
+        vc.modalPresentationStyle = .fullScreen
+        CustomNavController.shared.present(vc, animated: true)
     }
     
     func registerCells() {
