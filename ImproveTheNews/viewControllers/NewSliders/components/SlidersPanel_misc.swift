@@ -266,6 +266,22 @@ extension SlidersPanel {
     }
     
     @objc func refreshButtonOnTap(_ sender: UIButton?) {
+        var i = 0
+        for rowView in self.rowsVStack.arrangedSubviews {
+            for v in rowView.subviews {
+                if let slider = v as? UISlider {
+                    let value = LocalKeys.sliders.defaultValues[i]
+                    slider.setValue(Float(value), animated: true)
+                    
+                    let key = LocalKeys.sliders.allKeys[i]
+                    let strValue = String(format: "%02d", value)
+                    WRITE(key, value: strValue)
+                    
+                    i += 1
+                }
+            }
+        }
+    
         self.delegate?.slidersPanelOnRefresh(sender: self)
     }
 }
