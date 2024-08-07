@@ -51,7 +51,7 @@ class SourceFilter_iPhoneViewController: BaseViewController {
         ])
         
         let closeButton = UIButton(type: .system)
-        closeButton.backgroundColor = self.view.backgroundColor
+        closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)//self.view.backgroundColor
         self.view.addSubview(closeButton)
         closeButton.activateConstraints([
             closeButton.leadingAnchor.constraint(equalTo: closeIcon.leadingAnchor, constant: -5),

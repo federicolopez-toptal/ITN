@@ -15,7 +15,7 @@ class NewSlidersViewController: BaseViewController {
     let articlesPerLoadSplit: Int = 11
     
     let navBar = NavBarView()
-    let topicSelector = TopicSelectorView()
+    let topicSelector = TopicSelectorViewPlus()
     var list = CustomFeedList()
     
     let data = MainFeedv3()
@@ -146,7 +146,10 @@ extension NewSlidersViewController {
                 }
                 
                 self.data.fixTopicsForNewSliders()
-                self.topicSelector.setTopics(self.data.topicNames())
+                
+                var backButton = false
+                if(self.topic != "news"){ backButton = true }
+                self.topicSelector.setTopics(self.data.topicNames(), addBack: backButton)
                 
                 self.populateDataProvider()
                 self.refreshList()
@@ -208,7 +211,7 @@ extension NewSlidersViewController: SlidersPanelDelegate {
 }
 
 // MARK: - TopicSelectorViewDelegate
-extension NewSlidersViewController: TopicSelectorViewDelegate {
+extension NewSlidersViewController: TopicSelectorViewPlusDelegate {
 
     func onTopicSelected(_ index: Int) {
 //        if(index==0) {
@@ -224,6 +227,11 @@ extension NewSlidersViewController: TopicSelectorViewDelegate {
 
         let newTopic = self.data.topics[index].name
         self.topic = newTopic
+        self.loadContent()
+    }
+    
+    func onTopicBackButtonTap() {
+        self.topic = "news"
         self.loadContent()
     }
     
