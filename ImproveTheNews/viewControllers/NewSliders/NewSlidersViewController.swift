@@ -15,6 +15,7 @@ class NewSlidersViewController: BaseViewController {
     let articlesPerLoadSplit: Int = 11
     
     let navBar = NavBarView()
+    let topicSelector = TopicSelectorView()
     var list = CustomFeedList()
     
     let data = MainFeedv3()
@@ -69,6 +70,9 @@ class NewSlidersViewController: BaseViewController {
                         
             self.navBar.setShareUrl(ITN_URL() + "/news-slider", vc: self)
             // -----------------------------
+            self.topicSelector.buildInto(self.view)
+            self.topicSelector.delegate = self
+            
             self.buildContent()
         }
     }
@@ -102,7 +106,7 @@ class NewSlidersViewController: BaseViewController {
     
     override func refreshDisplayMode() {
         self.navBar.refreshDisplayMode()
-//        self.topicSelector.refreshDisplayMode()
+        self.topicSelector.refreshDisplayMode()
         self.slidersPanel.refreshDisplayMode()
         
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
@@ -141,7 +145,9 @@ extension NewSlidersViewController {
                     return
                 }
                 
-//                self.topicSelector.setTopics(self.data.topicNames())
+                self.data.fixTopicsForNewSliders()
+                self.topicSelector.setTopics(self.data.topicNames())
+                
                 self.populateDataProvider()
                 self.refreshList()
                 self.hideLoading()
@@ -199,4 +205,26 @@ extension NewSlidersViewController: SlidersPanelDelegate {
     func slidersPanelOnRefresh(sender: SlidersPanel) {
         self.loadContent()
     }
+}
+
+// MARK: - TopicSelectorViewDelegate
+extension NewSlidersViewController: TopicSelectorViewDelegate {
+
+    func onTopicSelected(_ index: Int) {
+//        if(index==0) {
+//            self.list.scrollToTop()
+//        } else {
+//            let vc = MainFeed_v3_viewController()
+//            let topic = self.data.topics[index].name
+//            vc.topic = topic
+//            
+//            CustomNavController.shared.tour_old?.cancel()
+//            CustomNavController.shared.pushViewController(vc, animated: true)
+//        }
+
+        let newTopic = self.data.topics[index].name
+        self.topic = newTopic
+        self.loadContent()
+    }
+    
 }

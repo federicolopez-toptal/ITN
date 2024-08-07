@@ -29,7 +29,8 @@ extension NewSlidersViewController {
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: leadingValue),
             self.list.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.list.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset()),
-            self.list.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT())
+            self.list.topAnchor.constraint(equalTo: self.view.topAnchor,
+                constant: NavBarView.HEIGHT() + CSS.shared.topicSelector_height)
         ])
         self.navBar.superview?.bringSubviewToFront(self.navBar)
         //self.topicSelector.superview?.bringSubviewToFront(self.topicSelector)

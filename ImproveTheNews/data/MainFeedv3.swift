@@ -61,7 +61,7 @@ class MainFeedv3 {
     
     func loadArticlesData(_ topic: String, amount: Int, callback: @escaping (Error?) -> ()) {
         self.topic = topic
-        let strUrl = self.buildUrl(topic: topic, A: amount, B: 0, C: 0, S: 0, defaultValues: false)
+        let strUrl = self.buildUrl(topic: topic, A: amount, B: 1, C: 0, S: 0, defaultValues: false)
         
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
@@ -449,6 +449,14 @@ extension MainFeedv3 {
         }
         
         return result
+    }
+    
+    func fixTopicsForNewSliders() {
+        if(self.topics.count>0) {
+            if(self.topics.first!.name == "news") {
+                self.topics[0].capitalizedName = "All"
+            }
+        }
     }
     
        

@@ -165,7 +165,18 @@ extension NewSlidersViewController {
     }
     
     private func addShownTopic() {
-        let textItem = DP3_text(text: "All")
+        var name = ""
+        for T in self.data.topics {
+            if(T.name == "news") {
+                name = "All"
+                break
+            } else if(T.name == self.topic) {
+                name = T.capitalizedName
+                break
+            }
+        }
+        
+        let textItem = DP3_text(text: name)
         self.dataProvider.append(textItem)
     }
     
