@@ -15,7 +15,12 @@ class ArticleViewController: BaseViewController {
 
     let navBar = NavBarView()
     let line = UIView()
-    let webView = WKWebView()
+    
+//    let webConfig = WKWebViewConfiguration()
+//    let webView = WKWebView(frame: .zero, configuration: webConfig)
+    
+    var webView: WKWebView!
+    
     var article: MainFeedArticle?
     let rating = RatingView()
 
@@ -48,6 +53,10 @@ class ArticleViewController: BaseViewController {
         if(self.altTitle != nil) {
             self.rating.close(animate: false)
         }
+        
+        let webCfg = WKWebViewConfiguration()
+        webCfg.allowsInlineMediaPlayback = true
+        self.webView = WKWebView(frame: .zero, configuration: webCfg)
         
         self.view.addSubview(self.webView)
         self.webView.activateConstraints([
@@ -127,3 +136,9 @@ extension ArticleViewController: UIGestureRecognizerDelegate {
         return true
     }
 }
+
+/*
+
+https://stackoverflow.com/questions/71462707/how-to-disable-ios-webview-going-full-screen-on-video-play
+
+ */
