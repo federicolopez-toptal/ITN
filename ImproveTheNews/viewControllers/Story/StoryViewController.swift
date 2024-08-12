@@ -575,6 +575,8 @@ extension StoryViewController {
                 VIEW1.refreshDisplayMode()
                 if let _V1 = VIEW1 as? iPhoneAllNews_vImgCol_v3 {
                     _V1.populate(article: A1)
+                    _V1.ignoreSearch = true
+                    _V1.refreshDisplayMode()
                 } else if let _V1 = VIEW1 as? iPhoneAllNews_vTxtCol_v3 {
                     let _A1 = MainFeedArticle(story: A1)
                     _V1.populate(_A1)
@@ -602,6 +604,8 @@ extension StoryViewController {
                     
                     if let _V2 = VIEW2 as? iPhoneAllNews_vImgCol_v3 {
                         _V2.populate(article: A2)
+                        _V2.ignoreSearch = true
+                        _V2.refreshDisplayMode()
                     } else if let _V2 = VIEW2 as? iPhoneAllNews_vTxtCol_v3 {
                         let _A2 = MainFeedArticle(story: A2)
                         _V2.populate(_A2)
@@ -628,6 +632,10 @@ extension StoryViewController {
                 var maxH = (H1 > H2) ? H1 : H2
                 VIEW1.heightAnchor.constraint(equalToConstant: maxH).isActive = true
                 VIEW2.heightAnchor.constraint(equalToConstant: maxH).isActive = true
+                
+                if(VIEW1 is iPhoneAllNews_vImgCol_v3) {
+                    
+                }
             }
             // --- //
         }

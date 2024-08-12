@@ -55,7 +55,7 @@ class ArticleViewController: BaseViewController {
         }
         
         let webCfg = WKWebViewConfiguration()
-        webCfg.allowsInlineMediaPlayback = true
+        //webCfg.allowsInlineMediaPlayback = true
         self.webView = WKWebView(frame: .zero, configuration: webCfg)
         
         self.view.addSubview(self.webView)

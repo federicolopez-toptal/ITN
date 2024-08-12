@@ -18,6 +18,8 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     
     let mainImageView = CustomImageView()
     var isContext = false
+    var ignoreSearch = false
+    
     
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
@@ -501,7 +503,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     }
     
     override func refreshDisplayMode() {
-        if(KeywordSearch.searchTerm == nil) {
+        if(KeywordSearch.searchTerm == nil || self.ignoreSearch) {
             self.storyTitleLabel.textColor = CSS.shared.displayMode().main_textColor
             self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
         }
