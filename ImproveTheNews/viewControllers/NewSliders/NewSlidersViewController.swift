@@ -149,7 +149,7 @@ extension NewSlidersViewController {
                 
                 var backButton = false
                 if(self.topic != "news"){ backButton = true }
-                self.topicSelector.setTopics(self.data.topicNames(), addBack: backButton)
+                self.topicSelector.setTopics(self.data.topicNames(), addBack: backButton)                
                 
                 self.populateDataProvider()
                 self.refreshList()

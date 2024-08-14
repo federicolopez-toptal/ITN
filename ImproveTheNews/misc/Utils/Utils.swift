@@ -56,6 +56,11 @@ func SHARE_ON_TWITTER(url: String, text: String) {
     OPEN_URL(url)
 }
 
+func SHARE_ON_TWITTER_2(url: String, text: String) {
+    let url = "https://x.com/intent/post?url=" + url + "&text=" + text
+    OPEN_URL(url)
+}
+
 func SHARE_ON_FACEBOOK(url: String, text: String) {
     let url = "https://www.facebook.com/sharer/sharer.php?u=\(url)&quote=\(text.urlEncodedString())"
     OPEN_URL(url)

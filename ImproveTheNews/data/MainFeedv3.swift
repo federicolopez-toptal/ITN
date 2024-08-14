@@ -429,6 +429,15 @@ extension MainFeedv3 {
     }
     
     // To populate components/TopicSelectorView
+    func fixedTopicNamesForNewSliders() -> [String] {
+        var result = [String]()
+        for T in self.topics {
+            result.append(T.capitalizedName)
+        }
+        
+        return result
+    }
+    
     func topicNames() -> [String] {
         var result = [String]()
         for T in self.topics {
@@ -455,6 +464,55 @@ extension MainFeedv3 {
         if(self.topics.count>0) {
             if(self.topics.first!.name == "news") {
                 self.topics[0].capitalizedName = "All"
+                
+                self.addIsraelPalestine()
+                self.addRussiaUkraine()
+                
+                self.sortMainTopicsInSpecificOrder()
+            }
+        }
+    }
+    
+    private func addRussiaUkraine() {
+        let data: [Any] = [
+            "russia_ukraine", "russia_ukraine", "Russia/Ukraine", 0, "ru",
+            0, 0, 0, []
+        ]
+        let newTopic = MainFeedTopic(data, [])
+        self.topics.insert(newTopic, at: 1)
+    }
+    
+    private func addIsraelPalestine() {
+        let data: [Any] = [
+            "israel_palestine", "israel_palestine", "Israel/Palestine", 0, "ip",
+            0, 0, 0, []
+        ]
+        let newTopic = MainFeedTopic(data, [])
+        self.topics.insert(newTopic, at: 1)
+    }
+    
+    func sortMainTopicsInSpecificOrder() {
+        let order = ["world", "crime_justice", "social_issues", "sci_tech", "health", "media", "entertainment",
+                    "sports", "weather", "money", "environment_energy", "military", "politics", "culture"]
+        
+        var j = 0
+        for (i, T) in self.topics.enumerated() {
+            if(i>2 && j<order.count) {
+                let name = order[j]
+                if(T.name == name) {
+                    j += 1
+                } else {
+                    if(i<self.topics.count-1) {
+                        for k in (i+1)...self.topics.count-1 {
+                            let name2 = self.topics[k].name
+                            if(name2 == order[j]) {
+                                self.topics.swapAt(i, k)
+                                j += 1
+                                break
+                            }
+                        }
+                    }
+                }
             }
         }
     }

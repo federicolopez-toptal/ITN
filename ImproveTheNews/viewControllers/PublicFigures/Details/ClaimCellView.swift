@@ -367,7 +367,7 @@ class ClaimCellView: UIView {
     
     @objc func twitterButtonOnTap(_ sender: UIButton?) {
         //SHARE_ON_TWITTER(text: self.twitterText)
-        SHARE_ON_TWITTER(url: self.twitterUrl, text: self.twitterText)
+        SHARE_ON_TWITTER_2(url: self.twitterUrl, text: self.twitterText)
     }
     
     @objc func sourceButtonOnTap(_ sender: UIButton?) {
@@ -482,7 +482,7 @@ class ClaimCellView: UIView {
         }
         
         self.twitterText = claim.figureName + ": " + claim.claim + " — according to @improvethenews."
-        self.twitterUrl = "www.improvethenews.org/controversy/" + claim.controversySlug
+        self.twitterUrl = ITN_URL() + "/controversy/" + claim.controversySlug
         
         self.applyDescriptionFormatTo(self.parrafoLabel, text: claim.description, remark: claim.title)
         self.parrafoLabel.setLineSpacing(lineSpacing: 8)

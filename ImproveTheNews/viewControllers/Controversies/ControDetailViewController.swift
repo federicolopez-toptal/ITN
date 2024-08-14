@@ -158,7 +158,7 @@ extension ControDetailViewController {
 //        self.twitterText = self.twitterText.urlEncodedString()
         
         self.twitterText = "Where do you stand on this: " + controversy.info.title
-        self.twitterUrl = "www.improvethenews.org/controversy/" + controversy.info.slug
+        self.twitterUrl = ITN_URL() + "/controversy/" + controversy.info.slug
         
         self.addTabs(claimsCount: controversy.claimsTotal,
             goDeeperCount: controversy.goDeeperTotal)
@@ -837,7 +837,7 @@ extension ControDetailViewController {
     }
     @objc func twitterButtonOnTap(_ sender: UIButton?) {
         //SHARE_ON_TWITTER(text: self.twitterText)
-        SHARE_ON_TWITTER(url: self.twitterUrl, text: self.twitterText)
+        SHARE_ON_TWITTER_2(url: self.twitterUrl, text: self.twitterText)
     }
     
     // ------------------------------------------------------------

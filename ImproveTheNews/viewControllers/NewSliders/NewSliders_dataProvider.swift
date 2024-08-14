@@ -186,3 +186,11 @@ extension NewSlidersViewController {
     }
 
 }
+
+extension NewSlidersViewController {
+    
+    func fixedTopics() {
+        
+    }
+    
+}
