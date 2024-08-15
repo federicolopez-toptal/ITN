@@ -353,6 +353,7 @@ extension MenuView {
         }
         
         CustomNavController.shared.refreshDisplayMode()
+        CustomNavController.shared.refreshTour()
         self.dismissMe()
     }
     

@@ -9,7 +9,7 @@ import UIKit
 
 class CustomNavController: UINavigationController {
 
-    static var shared: CustomNavController! // singleton
+    static var shared: CustomNavController! // Singleton
     
     // flags
     var didLayout = false
@@ -61,6 +61,11 @@ class CustomNavController: UINavigationController {
             self.tour.buildInto(container: self.view)
             self.tour_old = Tour(buildInto: self.view)
         }
+    }
+    
+    func refreshTour() {
+        self.tour = Tour_v2()
+        self.tour.buildInto(container: self.view)
     }
     
     private func addInitialViewController() {
