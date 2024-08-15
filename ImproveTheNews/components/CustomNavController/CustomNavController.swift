@@ -24,6 +24,7 @@ class CustomNavController: UINavigationController {
     var tour_old: Tour?
 
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if(CustomNavController.shared == nil){ CustomNavController.shared = self }

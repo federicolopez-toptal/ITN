@@ -37,6 +37,8 @@ class MainFeed_v3_viewController: BaseViewController {
     
     var safeAreaTop: CGFloat = 0
     
+    //var debugText = UITextField()
+    
     // MARK: - Start
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -197,22 +197,34 @@ extension NewSlidersViewController: UITableViewDelegate, UITableViewDataSource {
         // --------------------------------------------------------
         if(item is DP3_iPhoneArticle_2cols) { // iPhone - 2 rows articles
             if(Layout.current() == .textImages) {
-                result = (self.getCell(indexPath) as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsImg_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
             } else {
-                result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxt_cell_v3).calculateGroupHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsTxt_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
             }
         } else if(item is DP3_iPhoneArticle_4cols) { // iPhone - 4 rows articles
             if(Layout.current() == .textImages) {
-                result = (self.getCell(indexPath) as! iPhoneArticle_4colsImg_cell_v3).calculateGroupHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneArticle_4colsImg_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
             } else {
-                result = (self.getCell(indexPath) as! iPhoneArticle_4colsTxt_cell_v3).calculateGroupHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneArticle_4colsTxt_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
             }
         } else if(item is DP3_more) { // more
-            result = (self.getCell(indexPath) as! iPhoneMoreCell_v3).calculateHeight()
+            if let _cell = self.getCell(indexPath) as? iPhoneMoreCell_v3 {
+                result = _cell.calculateHeight()
+            }
         } else if(item is DP3_text) { // Topic shown
             result = TopicShownTextCell.height
         } else if(item is DP3_splitHeaderItem) { // split header
-            result = (self.getCell(indexPath) as! iPhoneSplitHeaderCell_v3).calculateHeight()
+            if let _cell = self.getCell(indexPath) as? iPhoneSplitHeaderCell_v3 {
+                result = _cell.calculateHeight()
+            }
         }
         
         // --------------------------------------------------------

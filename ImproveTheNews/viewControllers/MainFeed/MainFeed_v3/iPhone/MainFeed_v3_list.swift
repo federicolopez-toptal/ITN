@@ -59,7 +59,19 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneControversyCell_v3.self, forCellReuseIdentifier: iPhoneControversyCell_v3.identifier)
         
         self.list.delegate = self
-        self.list.dataSource = self        
+        self.list.dataSource = self
+        
+//        self.view.addSubview(self.debugText)
+//        self.debugText.activateConstraints([
+//            self.debugText.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32),
+//            self.debugText.trailingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: -32),
+//            self.debugText.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 32*2),
+//            self.debugText.heightAnchor.constraint(equalToConstant: 300)
+//        ])
+//        self.debugText.backgroundColor = .white
+//        self.debugText.text = "Lorem ipsum"
+//        
+//        self.view.bringSubviewToFront(self.debugText)
     }
     
     @objc func refreshList() {
@@ -81,6 +93,8 @@ extension MainFeed_v3_viewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //print( indexPath.row, self.dataProvider[indexPath.row] )
+        
         let cell = self.getCell(indexPath)
         return cell
     }
@@ -88,6 +102,8 @@ extension MainFeed_v3_viewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.getHeight(indexPath)
     }
+    
+    
     
 }
 
@@ -217,57 +233,88 @@ extension MainFeed_v3_viewController {
                 result = iPhoneHeaderLineCell_v3.getHeight()
                 //result = (self.getCell(indexPath) as! iPhoneHeaderLineCell_v3).getHeight()
             } else {
-                result = (self.getCell(indexPath) as! iPhoneHeaderCell_v3).calculateHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneHeaderCell_v3 {
+                    result = _cell.calculateHeight()
+                }
             }
         } else if(item is DP3_splitHeaderItem) { // split header
-            result = (self.getCell(indexPath) as! iPhoneSplitHeaderCell_v3).calculateHeight()
+            if let _cell = self.getCell(indexPath) as? iPhoneSplitHeaderCell_v3 {
+                result = _cell.calculateHeight()
+            }
         } else if(item is DP3_more) { // more
-            result = (self.getCell(indexPath) as! iPhoneMoreCell_v3).calculateHeight()
+            if let _cell = self.getCell(indexPath) as? iPhoneMoreCell_v3 {
+                result = _cell.calculateHeight()
+            }
         } else if(item is DP3_iPhoneStory_1Wide) { // 1 wide story
             if(Layout.current() == .textImages) {
-                result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneStory_vImg_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
+                
 //                if(MUST_SPLIT() == 0) {
 //                    result = (self.getCell(indexPath) as! iPhoneStory_vImg_cell_v3).calculateGroupHeight()
 //                } else {
 //                    result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
 //                }
             } else {
-                result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneStory_vTxt_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
             }
         } else if(item is DP3_banner) { // Banners
             if(self.data.banner!.isNewsLetter()) {
-                result = (self.getCell(indexPath) as! iPhoneBannerNLCell_v3).calculateHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneBannerNLCell_v3 {
+                    result = _cell.calculateHeight()
+                }
             } else if(self.data.banner!.isPodcast()) {
-                result = (self.getCell(indexPath) as! iPhoneBannerPCCell_v3).calculateHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneBannerPCCell_v3 {
+                    result = _cell.calculateHeight()
+                }
             } else {
-                result = (self.getCell(indexPath) as! iPhoneBannerCell_v3).calculateHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneBannerCell_v3 {
+                    result = _cell.calculateHeight()
+                }
             }
         } else if(item is DP3_iPhoneStory_2cols) { // row: 2 stories
             if(Layout.current() == .textImages) {
-                result = (self.getCell(indexPath) as! iPhoneStory_2colsImg_cell_v3).calculateGroupHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneStory_2colsImg_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
             } else {
-                result = (self.getCell(indexPath) as! iPhoneStory_2colsTxt_cell_v3).calculateGroupHeight()
+                if let _cell = self.getCell(indexPath) as? iPhoneStory_2colsTxt_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
             }
         } else if(item is DP3_iPhoneArticle_2cols) { // row: 2 articles
             if(self.hasColumnBanner(index: indexPath.row)) {
                 if(Layout.current() == .textImages) {
-                    result = (self.getCell(indexPath) as! iPhoneArticle_2colsImgBanner_cell_v3).calculateGroupHeight()
+                    if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsImgBanner_cell_v3 {
+                        result = _cell.calculateGroupHeight()
+                    }
                 } else {
-                    result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxtBanner_cell_v3).calculateGroupHeight()
+                    if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsTxtBanner_cell_v3 {
+                        result = _cell.calculateGroupHeight()
+                    }
                 }
             } else {
                 if(Layout.current() == .textImages) {
-                    result = (self.getCell(indexPath) as! iPhoneArticle_2colsImg_cell_v3).calculateGroupHeight()
+                    if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsImg_cell_v3 {
+                        result = _cell.calculateGroupHeight()
+                    }
                 } else {
-                    result = (self.getCell(indexPath) as! iPhoneArticle_2colsTxt_cell_v3).calculateGroupHeight()
+                    if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsTxt_cell_v3 {
+                        result = _cell.calculateGroupHeight()
+                    }
                 }
             }
         } else if(item is DP3_footer) { // footer
             result = iPhoneFooterCell_v3.getHeight()
         } else if(item is DP3_controversy) {
-            result = (self.getCell(indexPath) as! iPhoneControversyCell_v3).calculateHeight()
+            if let _cell = self.getCell(indexPath) as? iPhoneControversyCell_v3 {
+                result = _cell.calculateHeight()
+            }
         }
-                
+                  
         return result.rounded()
     }
     
