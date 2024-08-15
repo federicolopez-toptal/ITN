@@ -9,5 +9,3 @@ BETA
 com.ITNFoundation.ITN-revamp
 Verity-Beta
 AppIcon-Beta
-
-

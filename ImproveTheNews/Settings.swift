@@ -25,9 +25,9 @@ let MAX_ARTICLES_PER_TOPIC: Int = (NEWS_REQ_MORE_ITEMS_TOTAL * 15) + NEWS_REQ_IT
 let SPACER_COLOR: UIColor? = nil //.systemPink
 //////////////////////////////////////////////////
 func ITN_URL(shorten: Bool = false) -> String {
-//    return "https://www.improvethenews.org"
-    let value = "https://verity.news"
-    
+    //let value = "https://www.improvethenews.org" // stage
+    let value = "https://verity.news" // prod
+
     if(shorten){
         return value.replacingOccurrences(of: "https://", with: "")
     } else {
@@ -36,7 +36,8 @@ func ITN_URL(shorten: Bool = false) -> String {
 }
 
 func BIASPEDIA_URL() -> String {
-    return "https://biaspedia.org/api/"
+//    return "https://biaspost.org/api/" // stage
+    return "https://biaspedia.org/api/" // prod
 }
 //////////////////////////////////////////////////
 func NAV_MAINFEED_VC(topic: String? = nil) -> UIViewController {
