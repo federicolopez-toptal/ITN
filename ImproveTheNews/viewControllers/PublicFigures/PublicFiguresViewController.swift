@@ -47,6 +47,8 @@ class PublicFiguresViewController: BaseViewController {
         var COL: CGFloat = 0
         var ROW: CGFloat = 0
 
+    var loadsCount = 0
+    
     
     
     // MARK: - Init
@@ -320,6 +322,7 @@ class PublicFiguresViewController: BaseViewController {
         self.refreshContent(index: 1)
         
         self.resetListParams()
+        self.loadsCount = 0
         self.loadContent(page: self.page)
     }
     func refreshContent(index: Int) {
@@ -360,6 +363,7 @@ class PublicFiguresViewController: BaseViewController {
     }
     
     @objc func loadMoreOnTap(_ sender: UIButton) {
+        self.loadsCount = 0
         self.loadContent(page: self.page)
     }
     
@@ -370,6 +374,7 @@ class PublicFiguresViewController: BaseViewController {
             self.didAppear = true
             
             self.resetListParams()
+            self.loadsCount = 0
             self.loadContent(page: self.page)
         }
     }
@@ -412,21 +417,30 @@ class PublicFiguresViewController: BaseViewController {
 extension PublicFiguresViewController {
     
     private func loadContent(page P: Int) {
+        
         self.showLoading()
+        self.loadsCount += 1 
+        
         PublicFigureData.shared.loadList(term: self.filterTextfield.text(),
             page: P, type: self.currentType) { (error, total, items) in
             
+            self.hideLoading()
             if let _ = error {
-                ALERT(vc: self, title: "Server error",
-                message: "Trouble loading the Public Figures,\nplease try again later.", onCompletion: {
-                    CustomNavController.shared.popViewController(animated: true)
-                })
+                if(self.loadsCount >= 3) {
+                    ALERT(vc: self, title: "Server error",
+                        message: "Trouble loading Public Figures,\nplease try again later.", onCompletion: {
+                            CustomNavController.shared.popViewController(animated: true)
+                    })
+                } else {
+                    print("Loading again...")
+                    DELAY(0.5) {
+                        self.loadContent(page: self.page)
+                    }
+                }
             } else {
                 self.page += 1
             
                 MAIN_THREAD {
-                    self.hideLoading()
-                    
                     if let _T = total, let _I = items {
                         self.fillList(total: _T, items: _I)
                     }
@@ -576,6 +590,7 @@ extension PublicFiguresViewController: FigureFilterTextViewDelegate {
             if(diff >= limitDiff) {
                 //self.search(self.searchTextfield.text(), type: .all)
                 self.resetListParams()
+                self.loadsCount = 0
                 self.loadContent(page: self.page)
             }
         }

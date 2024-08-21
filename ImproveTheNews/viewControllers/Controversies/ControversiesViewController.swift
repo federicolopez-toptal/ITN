@@ -27,6 +27,8 @@ class ControversiesViewController: BaseViewController {
     var topics = [SimpleTopic]()
     let topicsContainer = UIView()
     
+    var loadsCount = 0
+    
     
     // MARK: - Init
     override func viewDidLayoutSubviews() {
@@ -189,6 +191,8 @@ class ControversiesViewController: BaseViewController {
             
             self.page = 1
             self.items = []
+            
+            self.loadsCount = 0
             self.loadContent(page: self.page)
         }
     }
@@ -234,6 +238,7 @@ class ControversiesViewController: BaseViewController {
     
     @objc func loadMoreOnTap(_ sender: UIButton) {
         self.page += 1
+        self.loadsCount = 0
         self.loadContent(page: self.page)
     }
     
@@ -262,15 +267,26 @@ extension ControversiesViewController {
         }
         
         self.showLoading()
+        self.loadsCount += 1
+        
+        print("LOAD CONTROVERSY \(self.loadsCount)")
         ControversiesData.shared.loadList(topic: T, page: P) { (error, total, list, topics) in
+
+            self.hideLoading()
             if let _ = error {
-                ALERT(vc: self, title: "Server error",
-                message: "Trouble loading the Latest controversies,\nplease try again later.", onCompletion: {
-                    CustomNavController.shared.popViewController(animated: true)
-                })
+                if(self.loadsCount >= 3) {
+                    ALERT(vc: self, title: "Server error",
+                        message: "Trouble loading Controversies,\nplease try again later.", onCompletion: {
+                            CustomNavController.shared.popViewController(animated: true)
+                    })
+                } else {
+                    print("Loading again...")
+                    DELAY(0.5) {
+                        self.loadContent(page: self.page)
+                    }
+                }
             } else {
                 MAIN_THREAD {
-                    self.hideLoading()
                     if let _n = total, let _L = list, let _T = topics {
                         self.fillContent(total: _n, items: _L, topics: _T)
                     }

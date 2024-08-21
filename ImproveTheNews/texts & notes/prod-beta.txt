@@ -2,6 +2,8 @@ PROD / LIVE
 com.ITNFoundation.ITNaggregator
 Verity
 AppIcon
+https://verity.news
+https://biaspedia.org/api/
 
 ------------------------------------------------------------
 ------------------------------------------------------------
@@ -9,3 +11,5 @@ BETA
 com.ITNFoundation.ITN-revamp
 Verity-Beta
 AppIcon-Beta
+https://www.improvethenews.org  OR  https://www.improvemynews.com
+https://biaspost.org/api/

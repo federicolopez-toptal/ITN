@@ -508,6 +508,8 @@
 		1FFBD3082B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFBD3072B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift */; };
 		1FFF6F8C2B2294E30008DC07 /* TourIntroPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */; };
 		BD2F70962C3870D5000C9960 /* SharePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F70952C3870D4000C9960 /* SharePopupView.swift */; };
+		BD339B472C762C5E000554A3 /* fakeJson_Controversies.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD339B452C762C5E000554A3 /* fakeJson_Controversies.txt */; };
+		BD339B482C762C5E000554A3 /* fakeJson_PublicFigures.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD339B462C762C5E000554A3 /* fakeJson_PublicFigures.txt */; };
 		BD438B8F2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD438B8E2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift */; };
 		BD4A868D2C3598190007E3A7 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4A868C2C3598190007E3A7 /* UIScrollViewExtension.swift */; };
 		BD4DC7D92BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4DC7D82BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift */; };
@@ -1049,6 +1051,8 @@
 		A395E0433D69EEF51DC03966 /* Pods_ImproveTheNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImproveTheNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B038FC5F8D4A9F9F2CF291F0 /* Pods-ImproveTheNews.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.app store.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.app store.xcconfig"; sourceTree = "<group>"; };
 		BD2F70952C3870D4000C9960 /* SharePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopupView.swift; sourceTree = "<group>"; };
+		BD339B452C762C5E000554A3 /* fakeJson_Controversies.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fakeJson_Controversies.txt; sourceTree = "<group>"; };
+		BD339B462C762C5E000554A3 /* fakeJson_PublicFigures.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fakeJson_PublicFigures.txt; sourceTree = "<group>"; };
 		BD438B8E2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterContentUI_weekly.swift; sourceTree = "<group>"; };
 		BD4A868C2C3598190007E3A7 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
 		BD4DC7D82BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneHeaderLineCell_v3.swift; sourceTree = "<group>"; };
@@ -1531,6 +1535,8 @@
 				1F897CE228CC322900438FC5 /* Sources.swift */,
 				1F9508912B150BB000B7F35B /* fakeJson_OK.txt */,
 				1F9508932B150F3D00B7F35B /* fakeJson_FAIL.txt */,
+				BD339B452C762C5E000554A3 /* fakeJson_Controversies.txt */,
+				BD339B462C762C5E000554A3 /* fakeJson_PublicFigures.txt */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -2321,6 +2327,7 @@
 				1F715ED529DC7EBE0063AC83 /* LAO64.png in Resources */,
 				1F715F4C29DC7EBE0063AC83 /* ZMB64.png in Resources */,
 				1F715F4B29DC7EBE0063AC83 /* LUX64.png in Resources */,
+				BD339B472C762C5E000554A3 /* fakeJson_Controversies.txt in Resources */,
 				BDE838A22BF7D76B00C4C8D2 /* NATO_OTAN.jpg in Resources */,
 				1F715EE629DC7EBE0063AC83 /* ARE64.png in Resources */,
 				1FCD55AD2AAF57B200CCAE3B /* Aileron-SemiBold.otf in Resources */,
@@ -2459,6 +2466,7 @@
 				1F715EBC29DC7EBE0063AC83 /* TUV64.png in Resources */,
 				1F715EC729DC7EBE0063AC83 /* NOR64.png in Resources */,
 				1F715F6029DC7EBE0063AC83 /* SUR64.png in Resources */,
+				BD339B482C762C5E000554A3 /* fakeJson_PublicFigures.txt in Resources */,
 				1F715EE829DC7EBE0063AC83 /* BLZ64.png in Resources */,
 				1F715F0129DC7EBE0063AC83 /* NFK64.png in Resources */,
 				1F5B59042AC4AA9600233B41 /* screens.txt in Resources */,
@@ -2984,7 +2992,7 @@
 			baseConfigurationReference = 8D5B46307AEDFAA8CAB0BA84 /* Pods-ImproveTheNews.debug.xcconfig */;
 			buildSettings = {
 				API_BASE_URL = "https://www.improvemynews.com";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
@@ -2993,7 +3001,7 @@
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Verity-Beta";
+				INFOPLIST_KEY_CFBundleDisplayName = Verity;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -3006,7 +3014,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 6.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ITNFoundation.ITN-revamp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ITNFoundation.ITNaggregator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -3023,7 +3031,7 @@
 			baseConfigurationReference = B038FC5F8D4A9F9F2CF291F0 /* Pods-ImproveTheNews.app store.xcconfig */;
 			buildSettings = {
 				API_BASE_URL = "https://www.improvethenews.org";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
@@ -3032,7 +3040,7 @@
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Verity-Beta";
+				INFOPLIST_KEY_CFBundleDisplayName = Verity;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -3045,7 +3053,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 6.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ITNFoundation.ITN-revamp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ITNFoundation.ITNaggregator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -3115,7 +3123,7 @@
 			baseConfigurationReference = C5FE7FE8A9666767DA91A834 /* Pods-ImproveTheNews.beta.xcconfig */;
 			buildSettings = {
 				API_BASE_URL = "https://www.improvemynews.com";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
@@ -3124,7 +3132,7 @@
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Verity-Beta";
+				INFOPLIST_KEY_CFBundleDisplayName = Verity;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -3137,7 +3145,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 6.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ITNFoundation.ITN-revamp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ITNFoundation.ITNaggregator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;

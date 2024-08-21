@@ -201,7 +201,23 @@ class ControversiesData {
                 print(_error.localizedDescription)
                 callback(_error, nil, nil, nil)
             } else {
-                if let _json = JSON(fromData: data) {
+            
+//                if let _data = data {
+//                    let str = String(data: _data, encoding: .utf8)
+//                    print("JSON ------- START")
+//                    print(str!)
+//                    print("JSON ------- END")
+//                }
+                
+                
+//                let textFromFile = READ_LOCAL(resFile: "fakeJson_Controversies.txt")
+//                let _data = textFromFile.data(using: .utf8)
+                
+                
+                let _data = data
+                
+                
+                if let _json = JSON(fromData: _data) {
                     if let _ = _json["error"] {
                         callback(CustomError.jsonParseError, nil, nil, nil)
                     } else {
@@ -233,6 +249,8 @@ class ControversiesData {
                             callback(CustomError.jsonParseError, nil, nil, nil)
                         }
                     }
+                } else {
+                    callback(CustomError.jsonParseError, nil, nil, nil)
                 }
             }
         }

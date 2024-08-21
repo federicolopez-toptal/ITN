@@ -29,6 +29,7 @@ class PublicFigureData {
         
         print("PUBLIC FIGURES LIST -  URL", url)
         let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+        
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
                 callback(error, nil, nil)
@@ -38,7 +39,22 @@ class PublicFigureData {
                 print(_error.localizedDescription)
                 callback(_error, nil, nil)
             } else {
-                if let _json = JSON(fromData: data) {
+            
+//                if let _data = data {
+//                    let str = String(data: _data, encoding: .utf8)
+//                    print("JSON ------- START")
+//                    print(str!)
+//                    print("JSON ------- END")
+//                }
+            
+                let textFromFile = READ_LOCAL(resFile: "fakeJson_PublicFigures.txt")
+                let _data = textFromFile.data(using: .utf8)
+            
+            
+//                let _data = data
+            
+            
+                if let _json = JSON(fromData: _data) {
                     if let _ = _json["error"] {
                         callback(CustomError.jsonParseError, nil, nil)
                     } else {
