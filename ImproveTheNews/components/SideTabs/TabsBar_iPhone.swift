@@ -83,7 +83,15 @@ class TabsBar_iPhone: TabsBar {
             let iconLabel = UILabel()
             iconLabel.textAlignment = .center
             iconLabel.text = self.titleForItem(at: i)
-            iconLabel.font = AILERON(10)
+            
+            iconLabel.font = LIMIT_FONT(AILERON(10), with: AILERON(15, resize: false))
+            
+//            iconLabel.font = AILERON(10)
+//            let limit: CGFloat = 15
+//            if(iconLabel.font.pointSize > limit) {
+//                iconLabel.font = AILERON(limit, resize: false)
+//            }
+
             iconLabel.textColor = CSS.shared.displayMode().main_textColor
             hContainer.addSubview(iconLabel)
             iconLabel.activateConstraints([

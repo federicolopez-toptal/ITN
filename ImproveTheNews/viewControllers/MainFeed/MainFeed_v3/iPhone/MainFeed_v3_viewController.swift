@@ -46,7 +46,7 @@ class MainFeed_v3_viewController: BaseViewController {
         
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.preferencesSetDefaultValues()
-        self.addNotificationObservers()        
+        self.addNotificationObservers()
     }
     
     override func viewDidLayoutSubviews() {
