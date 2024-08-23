@@ -38,7 +38,12 @@ class Tour_v2 {
     
     func start() {
         let popup = TourIntroPopupView()
-        popup.pushFromBottom()
+        
+        if(IPHONE()) {
+            popup.pushFromBottom()
+        } else {
+            popup.customPushFromBottomToCenter()
+        }
     }
     
     func rotate() {

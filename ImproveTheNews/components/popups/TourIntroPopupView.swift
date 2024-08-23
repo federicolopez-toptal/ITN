@@ -20,9 +20,10 @@ class TourIntroPopupView: PopupView {
         
         var W: CGFloat = SCREEN_SIZE().width
         if(IPAD()) {
-            W = 550
+            self.height -= 16
+            W = 345
             self.layer.cornerRadius = 20
-            self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            //self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
         
         navControllerView.addSubview(self)
@@ -198,6 +199,26 @@ class TourIntroPopupView: PopupView {
     
     @objc func onTipsButtonTap(_ sender: UIButton) {
         CustomNavController.shared.tour_old?.showPreferencesNotes()
+    }
+    
+    // --------------------------
+    func customPushFromBottomToCenter() {
+        let darkView = CustomNavController.shared.darkView
+        darkView.alpha = 0
+        darkView.show()
+        self.bottomConstraint?.constant = self.height
+        
+        //(SCREEN_SIZE().height-self.height)/2 //self.height
+
+        UIView.animate(withDuration: 0.2) {
+            darkView.alpha = 1.0
+        } completion: { _ in
+            darkView.isUserInteractionEnabled = true
+            self.bottomConstraint?.constant = -((SCREEN_SIZE().height-self.height)/2)
+            UIView.animate(withDuration: 0.4) {
+                self.superview!.layoutIfNeeded()
+            }
+        }
     }
 
 }
