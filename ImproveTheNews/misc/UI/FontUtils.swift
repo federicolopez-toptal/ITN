@@ -11,75 +11,92 @@ import UIKit
 
 
 func MERRIWEATHER_BOLD(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "Merriweather-Bold", size: size)
-    } else {
-        return UIFont(name: "Merriweather-Bold", size: size)!
-    }
+//    if(resize) {
+//        return customFont(name: "Merriweather-Bold", size: size)
+//    } else {
+//        return UIFont(name: "Merriweather-Bold", size: size)!
+//    }
+
+    return UIFont(name: "Merriweather-Bold", size: size)!
 }
 
 func MERRIWEATHER(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "Merriweather", size: size)
-    } else {
-        return UIFont(name: "Merriweather", size: size)!
-    }
+//    if(resize) {
+//        return customFont(name: "Merriweather", size: size)
+//    } else {
+//        return UIFont(name: "Merriweather", size: size)!
+//    }
+
+    return UIFont(name: "Merriweather", size: size)!
 }
 
 func ROBOTO(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "Roboto-Regular", size: size)
-    } else {
-        return UIFont(name: "Roboto-Regular", size: size)!
-    }
+//    if(resize) {
+//        return customFont(name: "Roboto-Regular", size: size)
+//    } else {
+//        return UIFont(name: "Roboto-Regular", size: size)!
+//    }
+
+    return UIFont(name: "Roboto-Regular", size: size)!
 }
 
 func ROBOTO_BOLD(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "Roboto-Bold", size: size)
-    } else {
-        return UIFont(name: "Roboto-Bold", size: size)!
-    }
+//    if(resize) {
+//        return customFont(name: "Roboto-Bold", size: size)
+//    } else {
+//        return UIFont(name: "Roboto-Bold", size: size)!
+//    }
+
+    return UIFont(name: "Roboto-Bold", size: size)!
 }
 
 func AILERON(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "Aileron-Regular", size: size)
-    } else {
-        return UIFont(name: "Aileron-Regular", size: size)!
-    }
+//    if(resize) {
+//        return customFont(name: "Aileron-Regular", size: size)
+//    } else {
+//        return UIFont(name: "Aileron-Regular", size: size)!
+//    }
+    return UIFont(name: "Aileron-Regular", size: size)!
 }
 
 func AILERON_SEMIBOLD(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "Aileron-SemiBold", size: size)
-    } else {
-        return UIFont(name: "Aileron-SemiBold", size: size)!
-    }
+//    if(resize) {
+//        return customFont(name: "Aileron-SemiBold", size: size)
+//    } else {
+//        return UIFont(name: "Aileron-SemiBold", size: size)!
+//    }
+
+    return UIFont(name: "Aileron-SemiBold", size: size)!
 }
 
 func AILERON_BOLD(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "Aileron-Bold", size: size)
-    } else {
-        return UIFont(name: "Aileron-Bold", size: size)!
-    }
+//    if(resize) {
+//        return customFont(name: "Aileron-Bold", size: size)
+//    } else {
+//        return UIFont(name: "Aileron-Bold", size: size)!
+//    }
+
+    return UIFont(name: "Aileron-Bold", size: size)!
 }
 
 func DM_SERIF_DISPLAY(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "DMSerifDisplay-Regular", size: size)
-    } else {
-        return UIFont(name: "DMSerifDisplay-Regular", size: size)!
-    }
+//    if(resize) {
+//        return customFont(name: "DMSerifDisplay-Regular", size: size)
+//    } else {
+//        return UIFont(name: "DMSerifDisplay-Regular", size: size)!
+//    }
+
+    return UIFont(name: "DMSerifDisplay-Regular", size: size)!
 }
 
 func DM_SERIF_DISPLAY_fixed(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
-    if(resize) {
-        return customFont(name: "DMSerifDisplay-Regular", size: size+3)
-    } else {
-        return UIFont(name: "DMSerifDisplay-Regular", size: size+3)!
-    }
+//    if(resize) {
+//        return customFont(name: "DMSerifDisplay-Regular", size: size+3)
+//    } else {
+//        return UIFont(name: "DMSerifDisplay-Regular", size: size+3)!
+//    }
+
+    return UIFont(name: "DMSerifDisplay-Regular", size: size+3)!
 }
 
 // ------------------------------------------------------------------------

@@ -47,7 +47,8 @@ class iPhoneFooterCell_v3: UITableViewCell {
         let sliders = self.createItemWith(text: "How our sliders work", into: self.contentView, tag: 1)
         sliders.activateConstraints([
             sliders.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 44),
-            sliders.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            sliders.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
+            sliders.widthAnchor.constraint(equalToConstant: (SCREEN_SIZE().width-32)/2)
         ])
         
         let about = self.createItemWith(text: "About", into: self.contentView, tag: 2)
@@ -108,7 +109,8 @@ class iPhoneFooterCell_v3: UITableViewCell {
         privacy.activateConstraints([
             //privacy.topAnchor.constraint(equalTo: newsletter.bottomAnchor, constant: vSep),
             privacy.topAnchor.constraint(equalTo: sliders.topAnchor),
-            privacy.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor)
+            privacy.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor),
+            privacy.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
         ])
         
         self.refreshDisplayMode()

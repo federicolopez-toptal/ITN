@@ -39,7 +39,7 @@ class iPhoneMoreCell_v3: UITableViewCell {
             self.rectView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.rectView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor)
         ])
-        self.rectView.layer.cornerRadius = 5
+        self.rectView.layer.cornerRadius = 7
     
         self.infoLabel.font = CSS.shared.iPhoneMore_font
         self.infoLabel.textAlignment = .center
