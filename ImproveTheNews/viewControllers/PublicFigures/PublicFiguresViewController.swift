@@ -425,7 +425,7 @@ extension PublicFiguresViewController {
             page: P, type: self.currentType) { (error, total, items) in
             
             self.hideLoading()
-            if let _ = error {
+            if let ERROR = error {
                 if(self.loadsCount >= 3) {
                     ALERT(vc: self, title: "Server error",
                         message: "Trouble loading Public Figures,\nplease try again later.", onCompletion: {

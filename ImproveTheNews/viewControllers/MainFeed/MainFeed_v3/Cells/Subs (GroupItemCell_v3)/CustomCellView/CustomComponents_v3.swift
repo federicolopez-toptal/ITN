@@ -193,7 +193,7 @@ class StoryPillView: UIView {
         
         self.label.text = "STORY"
         self.label.textAlignment = .center
-        self.label.font = AILERON_SEMIBOLD(F)
+        self.label.font = AILERON_SEMIBOLD(F, resize: false)
         self.addSubview(self.label)
         self.label.activateConstraints([
             self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -254,7 +254,7 @@ class StoryPillMiniView: UIView {
         
         self.label.text = "STORY"
         self.label.textAlignment = .center
-        self.label.font = AILERON_SEMIBOLD(F)
+        self.label.font = AILERON_SEMIBOLD(F, resize: false)
         self.addSubview(self.label)
         self.label.activateConstraints([
             self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor),

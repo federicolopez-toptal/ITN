@@ -47,11 +47,11 @@ class PublicFigureData {
 //                    print("JSON ------- END")
 //                }
             
-                let textFromFile = READ_LOCAL(resFile: "fakeJson_PublicFigures.txt")
-                let _data = textFromFile.data(using: .utf8)
+//                let textFromFile = READ_LOCAL(resFile: "fakeJson_PublicFigures.txt")
+//                let _data = textFromFile.data(using: .utf8)
             
             
-//                let _data = data
+                let _data = data
             
             
                 if let _json = JSON(fromData: _data) {

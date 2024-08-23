@@ -55,12 +55,13 @@ class MenuItemCell: UITableViewCell {
         
         self.titleLabel.backgroundColor = .clear //.orange
         self.titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        self.titleLabel.font = CSS.shared.menu_font
+        self.titleLabel.font = AILERON(16)
         self.titleLabel.text = "TEST TOPIC"
-        self.titleLabel.numberOfLines = 0
+        //self.titleLabel.numberOfLines = 0
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.icon.trailingAnchor, constant: 19),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
@@ -109,7 +110,7 @@ class MenuItemCell: UITableViewCell {
     
     func setText(_ text: String) {
         self.titleLabel.text = text
-        self.titleLabel.font = CSS.shared.menu_font
+        self.titleLabel.font = AILERON(16)
         self.titleLabel.addCharacterSpacing(kernValue: 1.0)
     }
 

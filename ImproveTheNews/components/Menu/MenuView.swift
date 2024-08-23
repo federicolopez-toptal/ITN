@@ -137,7 +137,7 @@ class MenuView: UIView {
         self.addSubview(self.versionLabel)
         self.versionLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         //self.versionLabel.backgroundColor = .yellow.withAlphaComponent(0.2)
-        self.versionLabel.font =  AILERON(13)
+        self.versionLabel.font = LIMIT_FONT(AILERON(13), with: AILERON(15, resize: false))
         self.versionLabel.text = vInfo
         self.versionLabel.textAlignment = .right
         self.versionLabel.activateConstraints([

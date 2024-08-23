@@ -233,6 +233,7 @@ class ControversiesViewController: BaseViewController {
         
         self.page = 1
         self.items = []
+        self.loadsCount = 0
         self.loadContent(page: self.page)
     }
     
@@ -616,6 +617,7 @@ extension ControversiesViewController {
             
             self.page = 1
             self.items = []
+            self.loadsCount = 0
             self.loadContent(page: self.page)
         }
     }

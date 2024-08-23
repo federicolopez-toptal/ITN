@@ -96,10 +96,12 @@ func maxSizeFor(fontName: String) -> CGFloat {
     var result: CGFloat = 999
     
     if(fontName.lowercased().contains("merriweather")) {
-    } else if(fontName.lowercased().contains("roboto")) {
-    } else if(fontName.lowercased().contains("aileron")) {
-    } else if(fontName.lowercased().contains("dmSerifDisplay")) {
-        // 32
+    } else if(fontName == "Roboto-Regular" || fontName == "Roboto-Bold") {
+        result = 20
+    } else if(fontName == "Aileron-Regular" || fontName == "Aileron-SemiBold" || fontName == "Aileron-Bold") {
+        result = 28
+    } else if(fontName == "DMSerifDisplay-Regular") {
+        result = 50
     }
     
     return result
@@ -107,9 +109,13 @@ func maxSizeFor(fontName: String) -> CGFloat {
 
 func customFont(name fontName: String, size fontSize: CGFloat) -> UIFont {
     let font = UIFont(name: fontName, size: fontSize)!
-    let scaledFont = UIFontMetrics.default.scaledFont(for: font)
+    let limitSize = maxSizeFor(fontName: fontName)
     
+    var scaledFont = UIFontMetrics.default.scaledFont(for: font)
     print("FONT", fontName, "size:", scaledFont.pointSize)
+    if(scaledFont.pointSize > limitSize) {
+        scaledFont = UIFont(name: fontName, size: limitSize)!
+    }
     
     return scaledFont
 }
