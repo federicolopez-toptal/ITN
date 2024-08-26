@@ -32,6 +32,10 @@ enum MenuItem {
     
     case publicFigures
     case controversies
+    
+    case newsletters2
+    case podcast
+    case videos
 }
 
 // ------------
@@ -75,7 +79,7 @@ extension MenuView {
                 result = "Privacy policy"
                 
             case .profile:
-                result = "My Profile"
+                result = "My Account"
                 
             case .logout:
                 result = "Logout"
@@ -100,7 +104,17 @@ extension MenuView {
                 
             case .contactUs:
                 result = "Contact Us"
-                
+        
+            case .newsletters2:
+                result = "Newsletters"
+         
+            case .podcast:
+                result = "Listen"
+         
+            case .videos:
+                result = "Videos"
+         
+         
             default:
                 result = ""
         }
@@ -138,7 +152,7 @@ extension MenuView {
                 icon = "sliders"
             
             case .about:
-                icon = "about"
+                icon = "about2"
                 
             case .feedback:
                 icon = "feedback"
@@ -171,7 +185,17 @@ extension MenuView {
                 icon = "feedback"
             
             case .contactUs:
-                icon = "faq"
+                //icon = "faq"
+                icon = "contact"
+            
+            case .newsletters2:
+                icon = "newsletter2"
+         
+            case .podcast:
+                icon = "podcast"
+         
+            case .videos:
+                icon = "videos"
             
             default:
                 return nil

@@ -19,11 +19,30 @@ class MenuView: UIView {
     
     var dataProvider = [MenuItem]()
     
+//    let dp_mainItems: [MenuItem] = [ // Items order
+//        .headlines,
+//        .tour,
+//        
+//        .theme,
+//        
+//        .newsletter,
+//        .preferences,
+//        .layout,
+//        .about,
+//        
+//        .contactUs
+//    ]
+    
     let dp_mainItems: [MenuItem] = [ // Items order
         .headlines,
-        .tour,
+        .profile,
+        
+//        .newsletters2,
+//        .podcast,
+//        .videos,
         
         .theme,
+        .tour,
         
         .newsletter,
         .preferences,
@@ -31,13 +50,6 @@ class MenuView: UIView {
         .about,
         
         .contactUs
-        
-        
-//        .publicFigures,
-//        .controversies,
-        
-        //.profile,
-        //.more
     ]
     
     var themeIsOpened = false
@@ -112,10 +124,10 @@ class MenuView: UIView {
         ])
         
         let topSpace: CGFloat = Y_TOP_NOTCH_FIX(54)
-        var bottomSpace: CGFloat = 30
-        if let _extraSpace = SAFE_AREA()?.bottom {
-            bottomSpace += _extraSpace * 0.6
-        }
+        var bottomSpace: CGFloat = 32
+//        if let _extraSpace = SAFE_AREA()?.bottom {
+//            bottomSpace += _extraSpace * 0.6
+//        }
         
         self.addSubview(self.list)
         self.list.backgroundColor = self.backgroundColor
@@ -123,7 +135,7 @@ class MenuView: UIView {
             self.list.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.list.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.list.topAnchor.constraint(equalTo: self.topAnchor, constant: topSpace + 45),
-            self.list.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace-25)
+            self.list.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace-25-16)
         ])
         self.list.separatorStyle = .none
         self.list.tableFooterView = UIView()
@@ -143,13 +155,15 @@ class MenuView: UIView {
         self.versionLabel.activateConstraints([
             //self.versionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.versionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            //self.versionLabel.topAnchor.constraint(equalTo: self.list.bottomAnchor, constant: 10)
             self.versionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace)
         ])
         
         self.logo = UIImageView(image: UIImage(named: DisplayMode.imageName("verity.logo")))
         self.addSubview(self.logo)
         self.logo.activateConstraints([
-            self.logo.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace),
+            //self.logo.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomSpace),
+            self.logo.topAnchor.constraint(equalTo: self.list.bottomAnchor, constant: 16),
             self.logo.widthAnchor.constraint(equalToConstant: 115),
             self.logo.heightAnchor.constraint(equalToConstant: 23.42),
             self.logo.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 41)
