@@ -42,7 +42,6 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
     }
     
     private func buildContent() {
-
         self.addSubview(self.mainImageView)
         self.mainImageView.activateConstraints([
             self.mainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -55,15 +54,15 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         self.titleLabel.font = CSS.shared.iPhoneStory_titleFont
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
-            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -CSS.shared.iPhoneSide_padding),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.titleLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: CSS.shared.iPhoneSide_padding),
         ])
         
         self.pill.buildInto(self)
         self.pill.activateConstraints([
             self.pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 12),
-            self.pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
+            self.pill.leadingAnchor.constraint(equalTo: self.leadingAnchor),
         ])
         
         self.sources.buildInto(self)

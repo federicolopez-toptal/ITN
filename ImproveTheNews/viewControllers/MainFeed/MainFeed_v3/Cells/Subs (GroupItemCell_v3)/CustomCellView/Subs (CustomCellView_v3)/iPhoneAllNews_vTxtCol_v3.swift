@@ -148,10 +148,27 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         self.openIcon.hide()
         if(article.isStory) {
             self.storyTitleLabel.text = article.title
+            
+            let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
+            let diff = MAX_NUM_LINES - Int(numLines)
+            if(diff>0) {
+                for _ in 1...diff {
+                    self.storyTitleLabel.text! += "\n"
+                }
+            }
+            
             self.storyTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title
             self.articleTitleLabel.setLineSpacing(lineSpacing: 6.0)
+            
+            let numLines = self.articleTitleLabel.calculateHeightFor(width: self.WIDTH) / self.articleTitleLabel.font.lineHeight
+            let diff = MAX_NUM_LINES - Int(numLines)
+            if(diff>0) {
+                for _ in 1...diff {
+                    self.articleTitleLabel.text! += "\n"
+                }
+            }
             
 //            var sourcesArray = [String]()
 //            if let _identifier = Sources.shared.search(name: article.source) {

@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+let MAX_NUM_LINES = 4
+
 class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
 
     var article: MainFeedArticle!
@@ -402,6 +404,14 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
                 self.storyTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().main_textColor)
             }
             
+            let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
+            let diff = MAX_NUM_LINES - Int(numLines)
+            if(diff>0) {
+                for _ in 1...diff {
+                    self.storyTitleLabel.text! += "\n"
+                }
+            }
+            
             self.storySources.load(article.storySources)
             self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
         } else {
@@ -409,8 +419,15 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             if let _searchTerm = KeywordSearch.searchTerm {
                 self.articleTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().sec_textColor)
             }
-            
             self.articleTitleLabel.setLineSpacing(lineSpacing: 6.0)
+            
+            let numLines = self.articleTitleLabel.calculateHeightFor(width: self.WIDTH) / self.articleTitleLabel.font.lineHeight
+            let diff = MAX_NUM_LINES - Int(numLines)
+            if(diff>0) {
+                for _ in 1...diff {
+                    self.articleTitleLabel.text! += "\n"
+                }
+            }
             
             var sourcesArray = [String]()
             if let _identifier = Sources.shared.search(name: article.source) {
@@ -527,11 +544,11 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     
     // MARK: misc
     private func calculateHeightForStory() -> CGFloat {
-        return self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) + 12 + 18
+        return self.storyTitleLabel.calculateHeightFor(width: self.WIDTH)
     }
     
     private func calculateHeightForArticle() -> CGFloat {
-        return self.articleTitleLabel.calculateHeightFor(width: self.WIDTH) + 12 + 18
+        return self.articleTitleLabel.calculateHeightFor(width: self.WIDTH)
     }
     
     func calculateHeight() -> CGFloat {
@@ -544,7 +561,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             result += self.calculateHeightForArticle()
         }
 
-        return result + 25
+        return result + (12 + 18) + 25
     }
     
     // MARK: Actions
