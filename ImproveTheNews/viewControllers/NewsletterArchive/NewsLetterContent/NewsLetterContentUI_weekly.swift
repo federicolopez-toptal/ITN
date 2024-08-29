@@ -207,14 +207,14 @@ extension NewsLetterContentViewController {
         
             // Title
             let titleLabel = UILabel()
-            titleLabel.font = DM_SERIF_DISPLAY(20)
+            titleLabel.font = DM_SERIF_DISPLAY_resize(20)
             titleLabel.text = ST.title
             titleLabel.textColor = CSS.shared.displayMode().main_textColor
             self.addHStackViewWith(subview: titleLabel)
             
             // Content
             ADD_SPACER(to: self.vStack, height: self.M())
-            let contentLabel = HyperlinkLabel.parrafo2(text: ST.parsedContent,
+            let contentLabel = HyperlinkLabel.parrafo2_resize(text: ST.parsedContent,
                                                         linkTexts: ST.linkedTexts,
                                                         urls: ST.urls,
                                                         onTap: self.onLinkTap(_:))
@@ -286,14 +286,14 @@ extension NewsLetterContentViewController {
         //ADD_SPACER(to: self.vStack, height: self.M())
         let dateLabel = UILabel()
         dateLabel.text = self.formatDate(data.date)
-        dateLabel.font = AILERON(15)
+        dateLabel.font = AILERON_resize(15)
         dateLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.addHStackViewWith(subview: dateLabel)
         
         // Title
         ADD_SPACER(to: self.vStack, height: 5)
         let titleLabel = UILabel()
-        titleLabel.font = DM_SERIF_DISPLAY(20)
+        titleLabel.font = DM_SERIF_DISPLAY_resize(20)
         titleLabel.text = "Weekly Newsletter"
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
         self.addHStackViewWith(subview: titleLabel)

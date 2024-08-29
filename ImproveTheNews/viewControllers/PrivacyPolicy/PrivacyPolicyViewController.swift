@@ -102,7 +102,7 @@ class PrivacyPolicyViewController: BaseViewController {
         label.text = text
         label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         label.numberOfLines = 0
-        label.font = DM_SERIF_DISPLAY(21) //MERRIWEATHER_BOLD(18)
+        label.font = DM_SERIF_DISPLAY_resize(21) //MERRIWEATHER_BOLD(18)
         self.VStack.addArrangedSubview(label)
     }
     
@@ -112,13 +112,13 @@ class PrivacyPolicyViewController: BaseViewController {
         label.textAlignment = .left
         label.tag = 11
         label.numberOfLines = 0
-        label.font = DM_SERIF_DISPLAY(21)
+        label.font = DM_SERIF_DISPLAY_resize(21)
         label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.VStack.addArrangedSubview(label)
     }
     
     func addParagraph(_ text: String, linkTexts: [String], urls: [String]) {
-        let label = HyperlinkLabel.parrafo2(text: text, linkTexts: linkTexts, urls: urls, onTap: self.onLinkTap(_:))
+        let label = HyperlinkLabel.parrafo2_resize(text: text, linkTexts: linkTexts, urls: urls, onTap: self.onLinkTap(_:))
         
         label.setLineSpacing(lineSpacing: 6)
         self.VStack.addArrangedSubview(label)

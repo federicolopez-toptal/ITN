@@ -134,7 +134,7 @@ class ControversyCellView: UIView {
             self.mainImageViewHeightConstraint = self.mainImageView.heightAnchor.constraint(equalToConstant: imgHeight)
             self.mainImageViewHeightConstraint?.isActive = true
         
-            self.preStatusLabel.font = DM_SERIF_DISPLAY(18) //IPHONE() ? DM_SERIF_DISPLAY(20) : DM_SERIF_DISPLAY(32)
+            self.preStatusLabel.font = DM_SERIF_DISPLAY_resize(18) //IPHONE() ? DM_SERIF_DISPLAY(20) : DM_SERIF_DISPLAY(32)
             self.preStatusLabel.textColor = CSS.shared.displayMode().sec_textColor
             self.preStatusLabel.text = "Status:"
             self.addSubview(self.preStatusLabel)
@@ -160,7 +160,7 @@ class ControversyCellView: UIView {
             ])
             
             self.titleLabel.numberOfLines = 0
-            self.titleLabel.font = DM_SERIF_DISPLAY(22)
+            self.titleLabel.font = DM_SERIF_DISPLAY_resize(22)
             self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
             self.addSubview(self.titleLabel)
             self.titleLabel.activateConstraints([

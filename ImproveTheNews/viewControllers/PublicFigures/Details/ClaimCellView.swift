@@ -146,7 +146,7 @@ class ClaimCellView: UIView {
             self.nameLabel.leadingAnchor.constraint(equalTo: column.leadingAnchor)
         ])
         
-        self.titleLabel.font = DM_SERIF_DISPLAY(18)
+        self.titleLabel.font = DM_SERIF_DISPLAY_resize(18)
         self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
         //self.titleLabel.backgroundColor = .red.withAlphaComponent(0.5)
         self.titleLabel.numberOfLines = 0
@@ -169,7 +169,7 @@ class ClaimCellView: UIView {
         self.parrafoView.hide()
         
         self.parrafoLabel.numberOfLines = 0
-        self.parrafoLabel.font = AILERON(14)
+        self.parrafoLabel.font = AILERON_resize(14)
         self.parrafoView.addSubview(self.parrafoLabel)
         self.parrafoLabel.activateConstraints([
             self.parrafoLabel.leadingAnchor.constraint(equalTo: self.parrafoView.leadingAnchor),
@@ -178,7 +178,7 @@ class ClaimCellView: UIView {
         ])
         
         self.parrafoLabelOver.numberOfLines = 0
-        self.parrafoLabelOver.font = AILERON(14)
+        self.parrafoLabelOver.font = AILERON_resize(14)
         self.parrafoView.addSubview(self.parrafoLabelOver)
         self.parrafoLabelOver.activateConstraints([
             self.parrafoLabelOver.leadingAnchor.constraint(equalTo: self.parrafoView.leadingAnchor),
@@ -201,7 +201,7 @@ class ClaimCellView: UIView {
             self.controversyView.hide()
         }
 
-        self.controversyLabel.font = AILERON(16)
+        self.controversyLabel.font = AILERON_resize(16)
         self.controversyLabel.textColor = CSS.shared.displayMode().main_textColor
         self.controversyLabel.numberOfLines = 0
         self.controversyView.addSubview(self.controversyLabel)
@@ -516,14 +516,14 @@ extension ClaimCellView {
         paragraphStyle.alignment = .left
         
         let attributedString = NSMutableAttributedString(string: prefix + text, attributes: [
-            .font: AILERON(16),
+            .font: AILERON_resize(16),
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0x60C4D6) : UIColor(hex: 0x19191C),
             .underlineStyle: 1,
             .paragraphStyle: paragraphStyle
         ])
         
         let prefixAttributes: [NSAttributedString.Key: Any] = [
-            .font: AILERON(16),
+            .font: AILERON_resize(16),
             .underlineStyle: 0,
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         ]
@@ -544,7 +544,7 @@ extension ClaimCellView {
         
         // main label
         let mainAttrStr = NSMutableAttributedString(string: fullText, attributes: [
-            .font: AILERON(14),
+            .font: AILERON_resize(14),
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C),
             .paragraphStyle :paragraphStyle
         ])
@@ -569,13 +569,13 @@ extension ClaimCellView {
         paragraphStyle.alignment = .left
         
         let secAttrStr = NSMutableAttributedString(string: self._fullDescription, attributes: [
-            .font: AILERON(14),
+            .font: AILERON_resize(14),
             .foregroundColor: UIColor.clear,
             .paragraphStyle: paragraphStyle
         ])
                 
         let remarkAttributes: [NSAttributedString.Key: Any] = [
-            .font: AILERON(14),
+            .font: AILERON_resize(14),
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0x60C4D6) : UIColor(hex: 0x19191C),
             .backgroundColor: DARK_MODE() ? UIColor(hex: 0x2E4C54) : UIColor(hex: 0xA8DAE2)
         ]

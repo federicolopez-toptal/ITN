@@ -48,7 +48,7 @@ class iPadStory_vImg_v3: CustomCellView_v3 {
     private func buildContent() {
 
         self.titleLabel.numberOfLines = 0
-        self.titleLabel.font = DM_SERIF_DISPLAY(32)
+        self.titleLabel.font = DM_SERIF_DISPLAY_resize(32)
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),

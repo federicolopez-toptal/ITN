@@ -10,6 +10,8 @@ import UIKit
 
 class FormCheckView: UIView {
 
+    private var heightConstraint: NSLayoutConstraint?
+
     private var _status = false
     var status: Bool {
         get {
@@ -37,10 +39,9 @@ class FormCheckView: UIView {
     // MARK: - Init(s)
     init() {
         super.init(frame: CGRect.zero)
-                
-        self.activateConstraints([
-            self.heightAnchor.constraint(equalToConstant: 24)
-        ])
+           
+        self.heightConstraint = self.heightAnchor.constraint(equalToConstant: 24)
+        self.heightConstraint?.isActive = true
 
         let square = UIView()
         square.layer.cornerRadius = 4.0
@@ -65,12 +66,14 @@ class FormCheckView: UIView {
             self.checkMark.topAnchor.constraint(equalTo: square.topAnchor, constant: -3)
         ])
         
-        self.mainLabel.font = AILERON(16)
+        self.mainLabel.font = AILERON_resize(16)
+        //self.mainLabel.numberOfLines = 2
         self.mainLabel.textColor = UIColor(hex: 0xBBBDC0)
         self.mainLabel.text = "Check component text"
         self.addSubview(self.mainLabel)
         self.mainLabel.activateConstraints([
             self.mainLabel.leadingAnchor.constraint(equalTo: square.trailingAnchor, constant: 10),
+            self.mainLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
             self.mainLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
 

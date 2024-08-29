@@ -159,6 +159,38 @@ extension HyperlinkLabel {
         
         return label
     }
+    
+    static func parrafo_resize(text: String, linkTexts: [String], urls: [String],
+        onTap: @escaping (URL) -> Void) -> HyperlinkLabel {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .right
+        
+        let attributedString = NSMutableAttributedString(string: text, attributes: [
+            .font: AILERON_resize(16),
+            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C),
+            .paragraphStyle: paragraphStyle
+        ])
+
+        for (i, url) in urls.enumerated() {
+            let attributes: [NSAttributedString.Key: Any] = [
+                .hyperlink: URL(string: url)!,
+                .font: AILERON_resize(16)
+            ]
+            let urlAttributedString = NSAttributedString(string: linkTexts[i], attributes: attributes)
+            let range = (attributedString.string as NSString).range(of: "[\(i)]")
+            attributedString.replaceCharacters(in: range, with: urlAttributedString)
+        }
+        
+        // -------------------------
+        let label = HyperlinkLabel()
+        label.attributedText = attributedString
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.didTapOnURL = onTap
+        label.setLineSpacing(lineSpacing: 6)
+        
+        return label
+    }
     //-----
     static func parrafo2(text: String, linkTexts: [String], urls: [String],
         onTap: @escaping (URL) -> Void) -> HyperlinkLabel {
@@ -172,6 +204,37 @@ extension HyperlinkLabel {
             let attributes: [NSAttributedString.Key: Any] = [
                 .hyperlink: URL(string: url)!,
                 .font: AILERON(16)
+            ]
+            let urlAttributedString = NSAttributedString(string: linkTexts[i], attributes: attributes)
+            let range = (attributedString.string as NSString).range(of: "[\(i)]")
+            attributedString.replaceCharacters(in: range, with: urlAttributedString)
+        }
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length))
+        
+        // -------------------------
+        let label = HyperlinkLabel()
+        label.attributedText = attributedString
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.didTapOnURL = onTap
+        return label
+    }
+    
+    static func parrafo2_resize(text: String, linkTexts: [String], urls: [String],
+        onTap: @escaping (URL) -> Void) -> HyperlinkLabel {
+        
+        let attributedString = NSMutableAttributedString(string: text, attributes: [
+            .font: AILERON_resize(16),
+            .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        ])
+
+        for (i, url) in urls.enumerated() {
+            let attributes: [NSAttributedString.Key: Any] = [
+                .hyperlink: URL(string: url)!,
+                .font: AILERON_resize(16)
             ]
             let urlAttributedString = NSAttributedString(string: linkTexts[i], attributes: attributes)
             let range = (attributedString.string as NSString).range(of: "[\(i)]")

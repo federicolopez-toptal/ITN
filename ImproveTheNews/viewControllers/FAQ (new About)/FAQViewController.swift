@@ -102,7 +102,8 @@ class FAQViewController: BaseViewController {
         let FAQ = UILabel()
         FAQ.tag = 951
         FAQ.text = "Frequently Asked Questions"
-        FAQ.font = DM_SERIF_DISPLAY(23)
+        FAQ.numberOfLines = 0
+        FAQ.font = DM_SERIF_DISPLAY_resize(23)
         FAQ.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         self.contentView.addSubview(FAQ)
         FAQ.activateConstraints([
@@ -196,7 +197,7 @@ class FAQViewController: BaseViewController {
         let title = UILabel()
         title.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         //title.backgroundColor = .red.withAlphaComponent(0.3)
-        title.font = DM_SERIF_DISPLAY(23)
+        title.font = DM_SERIF_DISPLAY_resize(23)
         title.text = mainText
         sectionView.addSubview(title)
         title.activateConstraints([
@@ -206,7 +207,7 @@ class FAQViewController: BaseViewController {
         ])
         
         let descr = UILabel()
-        descr.font = AILERON(16)
+        descr.font = AILERON_resize(16)
         descr.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x1D242F)
         descr.numberOfLines = 0
         descr.text = secText
@@ -375,7 +376,7 @@ class FAQViewController: BaseViewController {
         ])
         
         let titleLabel = UILabel()
-        titleLabel.font = DM_SERIF_DISPLAY(20)
+        titleLabel.font = DM_SERIF_DISPLAY_resize(20)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
         titleLabel.numberOfLines = 0
         titleLabel.text = tText
@@ -413,7 +414,7 @@ class FAQViewController: BaseViewController {
             self.newsSlidersButton = buttonArea
         }
         
-        let contentLabel = HyperlinkLabel.parrafo2(text: content, linkTexts: linkTexts,
+        let contentLabel = HyperlinkLabel.parrafo2_resize(text: content, linkTexts: linkTexts,
             urls: urls, onTap: self.onLinkTap(_:))
             
         if(index == 11) {
@@ -606,14 +607,14 @@ class FAQViewController: BaseViewController {
         onTap: @escaping (URL) -> Void) {
         
         let attributedString = NSMutableAttributedString(string: text, attributes: [
-            .font: AILERON(16),
+            .font: AILERON_resize(16),
             .foregroundColor: DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         ])
 
         for (i, url) in urls.enumerated() {
             let attributes: [NSAttributedString.Key: Any] = [
                 .hyperlink: URL(string: url)!,
-                .font: AILERON(16)
+                .font: AILERON_resize(16)
             ]
             let urlAttributedString = NSAttributedString(string: linkTexts[i], attributes: attributes)
             let range = (attributedString.string as NSString).range(of: "[\(i)]")

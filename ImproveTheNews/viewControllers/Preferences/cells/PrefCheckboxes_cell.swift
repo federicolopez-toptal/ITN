@@ -51,7 +51,7 @@ class PrefCheckboxes_cell: UITableViewCell {
             self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
         
-        self.titleLabel.font = DM_SERIF_DISPLAY(22)
+        self.titleLabel.font = DM_SERIF_DISPLAY_resize(22)
         self.titleLabel.text = "Feed preferences"
         self.mainContainer.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
@@ -88,9 +88,21 @@ class PrefCheckboxes_cell: UITableViewCell {
         for (i, data) in self.settings.enumerated() {
             let hStack = HSTACK(into: vStack)
             //hStack.backgroundColor = .green
-            
             let itemText = UILabel()
-            itemText.font = AILERON(16)
+            
+            if(IPHONE()) {
+                let limit: CGFloat = 22
+                var itemFont = AILERON_resize(16)
+                if(itemFont.pointSize > limit) {
+                    itemFont = AILERON(limit)
+                }
+                
+                itemText.font = itemFont
+            } else {
+                itemText.font = AILERON_resize(16)
+            }
+            
+            itemText.numberOfLines = 0
             itemText.text = data.0
             itemText.textColor = .white
             hStack.addArrangedSubview(itemText)

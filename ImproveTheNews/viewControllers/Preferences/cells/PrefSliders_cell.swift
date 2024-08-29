@@ -46,7 +46,7 @@ class PrefSliders_cell: UITableViewCell {
             self.mainContainer.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
         
-        self.titleLabel.font = DM_SERIF_DISPLAY(22)
+        self.titleLabel.font = DM_SERIF_DISPLAY_resize(22)
         self.titleLabel.text = "Slider preferences"
         self.mainContainer.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
@@ -56,7 +56,7 @@ class PrefSliders_cell: UITableViewCell {
         ])
         
         //-----
-        let paragraph_01 = HyperlinkLabel.parrafo(text: self.texts(1), linkTexts: self.linkTexts(1),
+        let paragraph_01 = HyperlinkLabel.parrafo_resize(text: self.texts(1), linkTexts: self.linkTexts(1),
             urls: self.urls(1), onTap: self.onLinkTap(_:))
         self.place(view: paragraph_01, below: self.titleLabel)
         paragraph_01.tag = 400+1
@@ -65,7 +65,7 @@ class PrefSliders_cell: UITableViewCell {
         let title2 = self.orangeTitle(text: "What spin do you want?")
         self.place(view: title2, below: paragraph_01)
         
-        let paragraph_02 = HyperlinkLabel.parrafo(text: self.texts(2), linkTexts: self.linkTexts(2),
+        let paragraph_02 = HyperlinkLabel.parrafo_resize(text: self.texts(2), linkTexts: self.linkTexts(2),
             urls: self.urls(2), onTap: self.onLinkTap(_:))
         self.place(view: paragraph_02, below: title2)
         
@@ -76,7 +76,7 @@ class PrefSliders_cell: UITableViewCell {
         let title3 = self.orangeTitle(text: "What writing style do you want?")
         self.place(view: title3, below: sliders1)
         
-        let paragraph_03 = HyperlinkLabel.parrafo(text: self.texts(3), linkTexts: self.linkTexts(3),
+        let paragraph_03 = HyperlinkLabel.parrafo_resize(text: self.texts(3), linkTexts: self.linkTexts(3),
             urls: self.urls(3), onTap: self.onLinkTap(_:))
         self.place(view: paragraph_03, below: title3)
         
@@ -87,7 +87,7 @@ class PrefSliders_cell: UITableViewCell {
         let title4 = self.orangeTitle(text: "Do you want evergreen or fresh?")
         self.place(view: title4, below: sliders2)
         
-        let paragraph_04 = HyperlinkLabel.parrafo(text: self.texts(4), linkTexts: self.linkTexts(4),
+        let paragraph_04 = HyperlinkLabel.parrafo_resize(text: self.texts(4), linkTexts: self.linkTexts(4),
             urls: self.urls(4), onTap: self.onLinkTap(_:))
         self.place(view: paragraph_04, below: title4)
         
@@ -160,8 +160,9 @@ extension PrefSliders_cell {
     func orangeTitle(text: String) -> UILabel {
         let label = UILabel()
         label.text = text
+        label.numberOfLines = 0
         label.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-        label.font = DM_SERIF_DISPLAY(21)
+        label.font = DM_SERIF_DISPLAY_resize(21)
         return label
     }
     

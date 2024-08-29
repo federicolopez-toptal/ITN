@@ -564,7 +564,7 @@ extension ControDetailViewController {
         //mainView.backgroundColor = .red
         
         let label = UILabel()
-        label.font = DM_SERIF_DISPLAY(20)
+        label.font = DM_SERIF_DISPLAY_resize(20)
         label.textColor = CSS.shared.displayMode().main_textColor
         label.text = "Claims"
         //label.backgroundColor = .red.withAlphaComponent(0.5)
@@ -944,7 +944,7 @@ extension ControDetailViewController {
         
         // -------------------------------------------
         let statusLabel = UILabel()
-        statusLabel.font = DM_SERIF_DISPLAY(18)
+        statusLabel.font = DM_SERIF_DISPLAY_resize(18)
         statusLabel.textColor = CSS.shared.displayMode().sec_textColor
         statusLabel.text = "Status:"
         containerView.addSubview(statusLabel)
@@ -967,7 +967,7 @@ extension ControDetailViewController {
         
         // -------------------------------------------
         let titleLabel = UILabel()
-        titleLabel.font = IPHONE() ? DM_SERIF_DISPLAY(22) : DM_SERIF_DISPLAY(32)
+        titleLabel.font = IPHONE() ? DM_SERIF_DISPLAY_resize(22) : DM_SERIF_DISPLAY_resize(32)
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
         titleLabel.numberOfLines = 0
         titleLabel.text = title

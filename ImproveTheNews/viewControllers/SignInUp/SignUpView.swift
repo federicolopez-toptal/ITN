@@ -222,7 +222,7 @@ class SignUpView: UIView {
 
         let titleLabel = UILabel()
         titleLabel.text = "Sign up"
-        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.font = DM_SERIF_DISPLAY_resize(23)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
         ADD_SPACER(to: VStack_form, height: 32)
@@ -237,7 +237,7 @@ class SignUpView: UIView {
         
         let emailLabel = UILabel()
         emailLabel.text = "Email"
-        emailLabel.font = AILERON(16)
+        emailLabel.font = AILERON_resize(16)
         emailLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(emailLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -250,7 +250,7 @@ class SignUpView: UIView {
         
         let passLabel = UILabel()
         passLabel.text = "* Choose a password"
-        passLabel.font = AILERON(16)
+        passLabel.font = AILERON_resize(16)
         passLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(passLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -264,7 +264,7 @@ class SignUpView: UIView {
         
         let pass2Label = UILabel()
         pass2Label.text = "* Confirm password"
-        pass2Label.font = AILERON(16)
+        pass2Label.font = AILERON_resize(16)
         pass2Label.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(pass2Label)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -278,7 +278,7 @@ class SignUpView: UIView {
         
         let passNoteLabel = UILabel()
         passNoteLabel.textColor = titleLabel.textColor
-        passNoteLabel.font = AILERON(16)
+        passNoteLabel.font = AILERON_resize(16)
         passNoteLabel.numberOfLines = 0
         passNoteLabel.text = "* Password must contain minimum eight characters, at least one letter and one number."
         VStack_form.addArrangedSubview(passNoteLabel)

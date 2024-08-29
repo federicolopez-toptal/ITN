@@ -158,14 +158,14 @@ class SignInView: UIView {
 
         let titleLabel = UILabel()
         titleLabel.text = "Sign in"
-        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.font = DM_SERIF_DISPLAY_resize(23)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
         ADD_SPACER(to: VStack_form, height: 32)
 
         let emailLabel = UILabel()
         emailLabel.text = "Email"
-        emailLabel.font = AILERON(16)
+        emailLabel.font = AILERON_resize(16)
         emailLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(emailLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -178,7 +178,7 @@ class SignInView: UIView {
         
         let passLabel = UILabel()
         passLabel.text = "Password"
-        passLabel.font = AILERON(16)
+        passLabel.font = AILERON_resize(16)
         passLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(passLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -192,7 +192,7 @@ class SignInView: UIView {
         
         let forgotPassLabel = UILabel()
         forgotPassLabel.textColor = UIColor(hex: 0xDA4933)
-        forgotPassLabel.font = AILERON(16)
+        forgotPassLabel.font = AILERON_resize(16)
         forgotPassLabel.text = "I've forgotten my password!"
         forgotPassLabel.addUnderline()
         VStack_form.addArrangedSubview(forgotPassLabel)
@@ -204,7 +204,10 @@ class SignInView: UIView {
         forgotPassButton.activateConstraints([
             forgotPassButton.leadingAnchor.constraint(equalTo: forgotPassLabel.leadingAnchor, constant: -5),
             forgotPassButton.topAnchor.constraint(equalTo: forgotPassLabel.topAnchor),
-            forgotPassButton.widthAnchor.constraint(equalToConstant: 130),
+            
+            forgotPassButton.trailingAnchor.constraint(equalTo: forgotPassLabel.trailingAnchor),
+            
+            //forgotPassButton.widthAnchor.constraint(equalToConstant: 130),
             forgotPassButton.bottomAnchor.constraint(equalTo: forgotPassLabel.bottomAnchor)
         ])
         forgotPassButton.addTarget(self, action: #selector(forgotPassButtonTap(_:)), for: .touchUpInside)

@@ -27,7 +27,7 @@ extension NewsLetterContentViewController {
         // Title
             let titleLabel = UILabel()
             titleLabel.numberOfLines = 0
-            titleLabel.font = DM_SERIF_DISPLAY(20)
+            titleLabel.font = DM_SERIF_DISPLAY_resize(20)
             titleLabel.text = ST.title
             titleLabel.textColor = CSS.shared.displayMode().main_textColor
             self.addHStackViewWith(subview: titleLabel)
@@ -57,7 +57,7 @@ extension NewsLetterContentViewController {
             
             let photoVStack = VSTACK(into: creditHStack)
             let photoLabel = UILabel()
-            photoLabel.font = AILERON(15)
+            photoLabel.font = AILERON_resize(15)
             photoLabel.text = "Photo:"
             photoLabel.textColor = CSS.shared.displayMode().main_textColor
             photoVStack.addArrangedSubview(photoLabel)
@@ -66,7 +66,7 @@ extension NewsLetterContentViewController {
             ADD_SPACER(to: creditHStack, width: 5)
             
             let photoCredit = UILabel()
-            photoCredit.font = AILERON(15)
+            photoCredit.font = AILERON_resize(15)
             photoCredit.numberOfLines = 0
             photoCredit.text = ST.imageCreditText
             photoCredit.textColor = CSS.shared.orange
@@ -87,7 +87,7 @@ extension NewsLetterContentViewController {
         // Facts
             ADD_SPACER(to: self.vStack, height: self.M())
             let factsTitle = UILabel()
-            factsTitle.font = DM_SERIF_DISPLAY(20)
+            factsTitle.font = DM_SERIF_DISPLAY_resize(20)
             factsTitle.text = "The Facts"
             factsTitle.textColor = CSS.shared.displayMode().main_textColor
             self.addHStackViewWith(subview: factsTitle)
@@ -109,7 +109,7 @@ extension NewsLetterContentViewController {
         // Narratives
             ADD_SPACER(to: self.vStack, height: self.M())
             let spinsTitle = UILabel()
-            spinsTitle.font = DM_SERIF_DISPLAY(20)
+            spinsTitle.font = DM_SERIF_DISPLAY_resize(20)
             spinsTitle.text = "The Spin"
             spinsTitle.textColor = CSS.shared.displayMode().main_textColor
             self.addHStackViewWith(subview: spinsTitle)
@@ -241,7 +241,7 @@ extension NewsLetterContentViewController {
             let nData = self.narrativeData(from: N)
         
             let nTitle = UILabel()
-            nTitle.font = DM_SERIF_DISPLAY(20)
+            nTitle.font = DM_SERIF_DISPLAY_resize(20)
             nTitle.numberOfLines = 0
             nTitle.text = nData.0
             nTitle.textColor = CSS.shared.displayMode().sec_textColor
@@ -250,7 +250,7 @@ extension NewsLetterContentViewController {
             ADD_SPACER(to: self.vStack, height: self.M())
             
             let nContent = UILabel()
-            nContent.font = AILERON(15)
+            nContent.font = AILERON_resize(15)
             nContent.numberOfLines = 0
             nContent.text = nData.1
             nContent.textColor = CSS.shared.displayMode().main_textColor
@@ -301,7 +301,7 @@ extension NewsLetterContentViewController {
             
             let contentLabel = UILabel()
             contentLabel.numberOfLines = 0
-            contentLabel.font = AILERON(15)
+            contentLabel.font = AILERON_resize(15)
             contentLabel.text = facts[i-1]
             contentLabel.textColor = CSS.shared.displayMode().main_textColor
             hStack.addArrangedSubview(contentLabel)
@@ -380,14 +380,14 @@ extension NewsLetterContentViewController {
         //ADD_SPACER(to: self.vStack, height: self.M())
         let dateLabel = UILabel()
         dateLabel.text = self.formatDate(data.date)
-        dateLabel.font = AILERON(15)
+        dateLabel.font = AILERON_resize(15)
         dateLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.addHStackViewWith(subview: dateLabel)
         
         // Title
         ADD_SPACER(to: self.vStack, height: 5)
         let titleLabel = UILabel()
-        titleLabel.font = DM_SERIF_DISPLAY(20)
+        titleLabel.font = DM_SERIF_DISPLAY_resize(20)
         titleLabel.text = "Daily Newsletter"
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
         self.addHStackViewWith(subview: titleLabel)

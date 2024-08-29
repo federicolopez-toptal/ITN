@@ -145,7 +145,7 @@ class AccountViewController: BaseViewController {
     
         let titleLabel = UILabel()
         titleLabel.text = "My Account"
-        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.font = DM_SERIF_DISPLAY_resize(23)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
         ADD_SPACER(to: VStack_form, height: 24)
@@ -153,7 +153,7 @@ class AccountViewController: BaseViewController {
         // -------
         let firstNameLabel = UILabel()
         firstNameLabel.text = "First name"
-        firstNameLabel.font = AILERON(16)
+        firstNameLabel.font = AILERON_resize(16)
         firstNameLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(firstNameLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -166,7 +166,7 @@ class AccountViewController: BaseViewController {
         // -------
         let lastNameLabel = UILabel()
         lastNameLabel.text = "Last name"
-        lastNameLabel.font = AILERON(16)
+        lastNameLabel.font = AILERON_resize(16)
         lastNameLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(lastNameLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -179,7 +179,7 @@ class AccountViewController: BaseViewController {
         // -------
         let userNameLabel = UILabel()
         userNameLabel.text = "Screen name"
-        userNameLabel.font = AILERON(16)
+        userNameLabel.font = AILERON_resize(16)
         userNameLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(userNameLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -192,7 +192,7 @@ class AccountViewController: BaseViewController {
         // -------
         let EmailLabel = UILabel()
         EmailLabel.text = "Email address"
-        EmailLabel.font = AILERON(16)
+        EmailLabel.font = AILERON_resize(16)
         EmailLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(EmailLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -253,7 +253,7 @@ class AccountViewController: BaseViewController {
         
         let titleLabel2 = UILabel()
         titleLabel2.text = "Verity Newsletter"
-        titleLabel2.font = DM_SERIF_DISPLAY(23)
+        titleLabel2.font = DM_SERIF_DISPLAY_resize(23)
         titleLabel2.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel2)
         ADD_SPACER(to: VStack_form, height: 24)
@@ -310,7 +310,7 @@ class AccountViewController: BaseViewController {
         self.subscriptionStateLabel.numberOfLines = 0
         self.subscriptionStateLabel.text = "Newsletter"
         self.subscriptionStateLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
-        self.subscriptionStateLabel.font = AILERON(16)
+        self.subscriptionStateLabel.font = AILERON_resize(16)
         //self.subscriptionStateLabel.backgroundColor = .red.withAlphaComponent(0.25)
         hStackSubscription.addArrangedSubview(self.subscriptionStateLabel)
         ADD_SPACER(to: hStackSubscription)
@@ -337,7 +337,7 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: VStack_form, height: 30)
         let newsletterFreqLabel = UILabel()
         newsletterFreqLabel.text = "Newsletter frequency"
-        newsletterFreqLabel.font = AILERON(16)
+        newsletterFreqLabel.font = AILERON_resize(16)
         newsletterFreqLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(newsletterFreqLabel)
         ADD_SPACER(to: VStack_form, height: 32)
@@ -355,7 +355,7 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: hStackSubscriptionStyle, width: 8)
         let dailyNewsletterLabel = UILabel()
         dailyNewsletterLabel.text = "Daily"
-        dailyNewsletterLabel.font = AILERON(16)
+        dailyNewsletterLabel.font = AILERON_resize(16)
         dailyNewsletterLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackSubscriptionStyle.addArrangedSubview(dailyNewsletterLabel)
         
@@ -383,7 +383,7 @@ class AccountViewController: BaseViewController {
         ADD_SPACER(to: hStackSubscriptionStyle, width: 8)
         let weeklyNewsletterLabel = UILabel()
         weeklyNewsletterLabel.text = "Weekly"
-        weeklyNewsletterLabel.font = AILERON(16)
+        weeklyNewsletterLabel.font = AILERON_resize(16)
         weeklyNewsletterLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackSubscriptionStyle.addArrangedSubview(weeklyNewsletterLabel)
         
@@ -573,7 +573,7 @@ class AccountViewController: BaseViewController {
 //    //---
         let titleLabel3 = UILabel()
         titleLabel3.text = "Sign Out"
-        titleLabel3.font = DM_SERIF_DISPLAY(23)
+        titleLabel3.font = DM_SERIF_DISPLAY_resize(23)
         titleLabel3.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel3)
         ADD_SPACER(to: VStack_form, height: 24)
@@ -591,8 +591,9 @@ class AccountViewController: BaseViewController {
         let hStackSignOut = HSTACK(into: VStack_form)
         
         let signOutLabel = UILabel()
+        signOutLabel.numberOfLines = 0
         signOutLabel.text = "Sign Out of your Verity Account"
-        signOutLabel.font = AILERON(16)
+        signOutLabel.font = AILERON_resize(16)
         signOutLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         hStackSignOut.addArrangedSubview(signOutLabel)
         
@@ -635,7 +636,7 @@ class AccountViewController: BaseViewController {
         ///////////////////
         let titleLabel4 = UILabel()
         titleLabel4.text = "Close My Account"
-        titleLabel4.font = DM_SERIF_DISPLAY(23)
+        titleLabel4.font = DM_SERIF_DISPLAY_resize(23)
         titleLabel4.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel4)
         ADD_SPACER(to: VStack_form, height: 24)
@@ -665,7 +666,7 @@ class AccountViewController: BaseViewController {
         let deleteLabel = UILabel()
         deleteLabel.numberOfLines = 0
         deleteLabel.text = "Close my Account and disconnect any\nsocial accounts"
-        deleteLabel.font = AILERON(16)
+        deleteLabel.font = AILERON_resize(16)
         deleteLabel.setLineSpacing(lineSpacing: 6.0)
         deleteLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(deleteLabel)

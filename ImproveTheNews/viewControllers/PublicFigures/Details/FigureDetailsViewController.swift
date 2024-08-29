@@ -225,7 +225,7 @@ extension FigureDetailsViewController {
     
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = DM_SERIF_DISPLAY(20)
+        label.font = DM_SERIF_DISPLAY_resize(20)
         label.textColor = CSS.shared.displayMode().main_textColor
         label.text = "Stories about \(name)"
         containerView.addSubview(label)
@@ -236,7 +236,8 @@ extension FigureDetailsViewController {
         ])
         
         containerView.activateConstraints([
-            containerView.heightAnchor.constraint(equalToConstant: 27.5 + 20)
+            //containerView.heightAnchor.constraint(equalToConstant: 27.5 + 20)
+            containerView.heightAnchor.constraint(equalToConstant: label.calculateHeightFor(width: self.W())+20)
         ])
     }
     
@@ -367,7 +368,7 @@ extension FigureDetailsViewController {
         let containerView = self.createContainerView()
         
         let label = UILabel()
-        label.font = AILERON(16)
+        label.font = AILERON_resize(16)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = CSS.shared.displayMode().sec_textColor

@@ -115,7 +115,7 @@ class NewsLetterArchiveViewController: BaseViewController {
         ])
         
         let searchText = UILabel()
-        searchText.font = DM_SERIF_DISPLAY(20)
+        searchText.font = DM_SERIF_DISPLAY_resize(20)
         searchText.text = "Search our newsletter"
         searchText.textColor = CSS.shared.displayMode().main_textColor
         self.vStack.addArrangedSubview(searchText)
@@ -1062,7 +1062,19 @@ extension NewsLetterArchiveViewController {
         titleLabel.numberOfLines = 0
         titleLabel.text = data.title
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
-        titleLabel.font = IPHONE() ? DM_SERIF_DISPLAY(16) : DM_SERIF_DISPLAY(26)
+        
+        if(IPHONE()) {
+            let limit: CGFloat = 25
+            var iphoneFont = DM_SERIF_DISPLAY_resize(16)
+            if(iphoneFont.pointSize > limit) {
+                iphoneFont = DM_SERIF_DISPLAY(limit)
+            }
+            
+            titleLabel.font = iphoneFont
+        } else {
+            titleLabel.font = DM_SERIF_DISPLAY_resize(26)
+        }
+        
         storyView.addSubview(titleLabel)
         titleLabel.activateConstraints([
             titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),

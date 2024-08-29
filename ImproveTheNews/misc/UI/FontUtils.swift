@@ -114,25 +114,43 @@ func maxSizeFor(fontName: String) -> CGFloat {
     
     if(fontName.lowercased().contains("merriweather")) {
     } else if(fontName == "Roboto-Regular" || fontName == "Roboto-Bold") {
-        result = 20
+        result = 25
     } else if(fontName == "Aileron-Regular" || fontName == "Aileron-SemiBold" || fontName == "Aileron-Bold") {
         result = 28
     } else if(fontName == "DMSerifDisplay-Regular") {
-        result = 50
+        result = 40
     }
     
     return result
 }
 
+// ---------------------------------------------------------
 func customFont(name fontName: String, size fontSize: CGFloat) -> UIFont {
     let font = UIFont(name: fontName, size: fontSize)!
     let limitSize = maxSizeFor(fontName: fontName)
     
     var scaledFont = UIFontMetrics.default.scaledFont(for: font)
-    print("FONT", fontName, "size:", scaledFont.pointSize)
+    //print("FONT", fontName, "size:", scaledFont.pointSize)
     if(scaledFont.pointSize > limitSize) {
         scaledFont = UIFont(name: fontName, size: limitSize)!
     }
     
     return scaledFont
+}
+
+// -------------------
+func DM_SERIF_DISPLAY_resize(_ size: CGFloat = 10.0) -> UIFont {
+    return customFont(name: "DMSerifDisplay-Regular", size: size)
+}
+
+func DM_SERIF_DISPLAY_fixed_resize(_ size: CGFloat = 10.0) -> UIFont {
+    return customFont(name: "DMSerifDisplay-Regular", size: size+3)
+}
+
+func AILERON_resize(_ size: CGFloat = 10.0) -> UIFont {
+    return customFont(name: "Aileron-Regular", size: size)
+}
+
+func ROBOTO_resize(_ size: CGFloat = 10.0) -> UIFont {
+    return customFont(name: "Roboto-Regular", size: size)
 }

@@ -61,7 +61,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         
     // Article
         self.articleTitleLabel.numberOfLines = 0
-        self.articleTitleLabel.font = CSS.shared.iPhoneArticle_bigTitleFont
+        self.articleTitleLabel.font = AILERON_resize(18) //CSS.shared.iPhoneArticle_bigTitleFont
         self.addSubview(self.articleTitleLabel)
         self.articleTitleLabel.activateConstraints([
             self.articleTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,

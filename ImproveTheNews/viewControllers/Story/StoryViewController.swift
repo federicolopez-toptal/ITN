@@ -435,7 +435,7 @@ extension StoryViewController {
         let title = UILabel()
         title.textColor = CSS.shared.displayMode().main_textColor
         //title.backgroundColor = .red.withAlphaComponent(0.3)
-        title.font = CSS.shared.iPhoneStoryContent_subTitleFont
+        title.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
         title.text = "Go Deeper"
         sectionView.addSubview(title)
         title.activateConstraints([
@@ -529,7 +529,7 @@ extension StoryViewController {
         
         if(articles.count == 0) {
             let noArticlesLabel = UILabel()
-            noArticlesLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            noArticlesLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
             if(IPAD()){ noArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
             }
             noArticlesLabel.text = "No articles available"
@@ -537,15 +537,15 @@ extension StoryViewController {
             innerHStack.addArrangedSubview(noArticlesLabel)
         } else {
             let ArticlesLabel = UILabel()
-            ArticlesLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            ArticlesLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+            ArticlesLabel.numberOfLines = 0
             ArticlesLabel.text = "Articles on this story"
-            if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+            if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
             }
             ArticlesLabel.textColor = CSS.shared.displayMode().main_textColor
             innerHStack.addArrangedSubview(ArticlesLabel)
             
             ADD_SPACER(to: innerHStack, height: 12)
-            
             //for (i, A) in articles.enumerated() {
             
             let W = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
@@ -653,7 +653,7 @@ extension StoryViewController {
         
        if(articles.count == 0) {
             let noArticlesLabel = UILabel()
-            noArticlesLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            noArticlesLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
             if(IPAD()){ noArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
             }
             noArticlesLabel.text = "No articles available"
@@ -668,9 +668,9 @@ extension StoryViewController {
             }
         
             let ArticlesLabel = UILabel()
-            ArticlesLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            ArticlesLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
             ArticlesLabel.text = title
-            if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+            if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
             }
             ArticlesLabel.textColor = CSS.shared.displayMode().main_textColor
             innerHStack.addArrangedSubview(ArticlesLabel)
@@ -694,7 +694,7 @@ extension StoryViewController {
             
             for i in 1...2 {
                 let headerLabel = UILabel()
-                headerLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                headerLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
                 headerLabel.textColor = CSS.shared.displayMode().header_textColor
                 headerLabel.textAlignment = .center
                 
@@ -862,9 +862,10 @@ extension StoryViewController {
         
             
         let ArticlesLabel = UILabel()
-        ArticlesLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+        ArticlesLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+        ArticlesLabel.numberOfLines = 0
         ArticlesLabel.text = title
-        if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+        if(IPAD()){ ArticlesLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
         }
         ArticlesLabel.textColor = CSS.shared.displayMode().main_textColor
         innerHStack.addArrangedSubview(ArticlesLabel)
@@ -1103,8 +1104,8 @@ extension StoryViewController {
             ADD_SPACER(to: titleHStack, width: CSS.shared.iPhoneSide_padding)
             
                 let SpinsLabel = UILabel()
-                SpinsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
-                if(IPAD()){ SpinsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+                SpinsLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+                if(IPAD()){ SpinsLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
                 }
                 SpinsLabel.text = "The Spin"
                 SpinsLabel.textColor = CSS.shared.displayMode().main_textColor
@@ -1137,7 +1138,7 @@ extension StoryViewController {
                     let natitleHStack = HSTACK(into: innerHStack)
                     ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                         let titleLabel = UILabel()
-                        titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                        titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
                         titleLabel.text = "Metaculus Prediction"
                         titleLabel.numberOfLines = 0
                         titleLabel.textColor = CSS.shared.displayMode().sec_textColor
@@ -1199,7 +1200,7 @@ extension StoryViewController {
             }
             
             let titleLabel = UILabel()
-            titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
             titleLabel.text = _title
             titleLabel.numberOfLines = 0
             titleLabel.textColor = CSS.shared.displayMode().sec_textColor
@@ -1207,7 +1208,7 @@ extension StoryViewController {
             
             ADD_SPACER(to: colVStack, height: 10)
             let descriptionLabel = UILabel()
-            descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
+            descriptionLabel.font = AILERON_resize(16) //CSS.shared.iPhoneStoryContent_textFont
             descriptionLabel.numberOfLines = 0
             descriptionLabel.text = S.description
             descriptionLabel.setLineSpacing(lineSpacing: 7.0)
@@ -1290,7 +1291,7 @@ extension StoryViewController {
                     let natitleHStack = HSTACK(into: innerHStack)
                     ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                         let titleLabel = UILabel()
-                        titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                        titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
                         titleLabel.text = "Metaculus Prediction"
                         titleLabel.numberOfLines = 0
                         titleLabel.textColor = CSS.shared.displayMode().sec_textColor
@@ -1326,7 +1327,7 @@ extension StoryViewController {
             let natitleHStack = HSTACK(into: innerHStack)
             ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                 let titleLabel = UILabel()
-                titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
                 titleLabel.text = _title
                 titleLabel.numberOfLines = 0
                 titleLabel.textColor = CSS.shared.displayMode().sec_textColor
@@ -1337,7 +1338,7 @@ extension StoryViewController {
             let descrHStack = HSTACK(into: innerHStack)
             ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
                 let descriptionLabel = UILabel()
-                descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
+                descriptionLabel.font = AILERON_resize(16) //CSS.shared.iPhoneStoryContent_textFont
                 descriptionLabel.numberOfLines = 0
                 //descriptionLabel.backgroundColor = .green.withAlphaComponent(0.2)
                 descriptionLabel.text = S.description
@@ -1543,10 +1544,10 @@ extension StoryViewController {
             VStack.addArrangedSubview(noFactsLabel)
         } else {
             let FactsLabel = UILabel()
-            FactsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            FactsLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
             
             //DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
-            if(IPAD()){ FactsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+            if(IPAD()){ FactsLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
             }
             FactsLabel.text = "The Facts"
             FactsLabel.textColor = CSS.shared.displayMode().main_textColor
@@ -1604,7 +1605,10 @@ extension StoryViewController {
 
                 let contentLabel = UILabel()
                 contentLabel.numberOfLines = 0
-                contentLabel.font = CSS.shared.iPhoneStoryContent_textFont
+                contentLabel.font = AILERON_resize(16)
+                
+                //CSS.shared.iPhoneStoryContent_textFont
+                //CSS.shared.iPhoneStoryContent_textFont
                 //contentLabel.text = F.title
                 contentLabel.attributedText = self.attrText(F.title, index: F.sourceIndex+1)
                 contentLabel.setLineSpacing(lineSpacing: 7.0)
@@ -1681,8 +1685,8 @@ extension StoryViewController {
         REMOVE_ALL_SUBVIEWS(from: VStack)
         
         let SourcesLabel = UILabel()
-        SourcesLabel.font = DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
-        if(IPAD()){ SourcesLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+        SourcesLabel.font = DM_SERIF_DISPLAY_fixed_resize(17) //MERRIWEATHER_BOLD(17)
+        if(IPAD()){ SourcesLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
         }
         SourcesLabel.text = "Sources"
         SourcesLabel.textColor = CSS.shared.displayMode().sec_textColor
@@ -1702,7 +1706,12 @@ extension StoryViewController {
         //------------------------------------------
         let HSep: CGFloat = 12
         let W: CGFloat = SCREEN_SIZE().width - 12 - 12 - 13 - 13 - 8 - 8 - HSep
-        let sourceHeight: CGFloat = 18
+        var sourceHeight: CGFloat = 18
+        
+        let tmpLabel = UILabel()
+        tmpLabel.font = AILERON_resize(16)
+        tmpLabel.text = "ABC"
+        sourceHeight = tmpLabel.calculateHeightFor(width: SCREEN_SIZE().width/2)
         
         var row = 1
         var val_X: CGFloat = 0
@@ -1733,7 +1742,7 @@ extension StoryViewController {
         
         for (i, S) in groupedSourcesCopy.enumerated() {
             let sourceLabel = UILabel()
-            sourceLabel.font = CSS.shared.iPhoneStoryContent_textFont //ROBOTO(15)
+            sourceLabel.font = AILERON_resize(16) //CSS.shared.iPhoneStoryContent_textFont //ROBOTO(15)
             //sourceLabel.backgroundColor = .blue
             sourceLabel.textColor = CSS.shared.orange
             sourceLabel.text = "[" + String(i+1) + "] " + S.0
@@ -1856,7 +1865,7 @@ extension StoryViewController {
         let prefix = "Image copyright: "
         let creditLabel = UILabel()
         creditLabel.numberOfLines = 0
-        creditLabel.font = ROBOTO(14)
+        creditLabel.font = ROBOTO_resize(14)
         creditLabel.text = prefix + title
         creditLabel.setAsImageCreditWith(prefix: prefix)
         //creditLabel.addUnderline()
@@ -2063,7 +2072,8 @@ extension StoryViewController {
     
     private func addTitle(text: String) {
         let titleLabel = UILabel()
-        titleLabel.font = CSS.shared.iPhoneStoryContent_titleFont //DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+        titleLabel.font = DM_SERIF_DISPLAY_resize(23)
+        //CSS.shared.iPhoneStoryContent_titleFont //DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
         titleLabel.numberOfLines = 0
         titleLabel.text = text
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
@@ -2166,8 +2176,8 @@ extension StoryViewController: UIGestureRecognizerDelegate {
     }
     
     func attrText(_ text: String, index: Int) -> NSAttributedString {
-        let font = UIFont(name: "Aileron-Regular", size: 15)
-        let fontItalic = UIFont(name: "Aileron-Regular", size: 15)
+        let font = AILERON_resize(15) //UIFont(name: "Aileron-Regular", size: 15)
+        let fontItalic = AILERON_resize(15) //UIFont(name: "Aileron-Regular", size: 15)
         //let fontItalic = UIFont(name: "Merriweather-LightItalic", size: 14)
         let extraText = "[" + String(index) + "]"
         let mText = text + " " + extraText
@@ -2188,7 +2198,7 @@ extension StoryViewController: UIGestureRecognizerDelegate {
             value: CSS.shared.orange,
             range: range)
         mAttr.addAttribute(NSAttributedString.Key.font,
-            value: fontItalic!,
+            value: fontItalic,
             range: range)
             
             

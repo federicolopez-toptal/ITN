@@ -171,7 +171,7 @@ extension MainFeediPad_v3_viewController: CustomFeedListDelegate {
     }
     
     func feedListOnScrollToTop(sender: CustomFeedList) {
-        DELAY(1.0) {
+        DELAY(0.5) {
             self.showTopBars()
         }
     }

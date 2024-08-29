@@ -530,8 +530,8 @@ extension PublicFiguresViewController {
         let nameLabel = UILabel()
         //nameLabel.backgroundColor = .orange
         nameLabel.textAlignment = .center
-        nameLabel.numberOfLines = 0
-        nameLabel.font = AILERON(16)
+        nameLabel.numberOfLines = 2
+        nameLabel.font = AILERON_resize(16)
         nameLabel.textColor = CSS.shared.displayMode().main_textColor
         nameLabel.text = data.title
         //

@@ -51,7 +51,7 @@ class iPhoneStory_vImg_v3: CustomCellView_v3 {
         ])
         
         self.titleLabel.numberOfLines = 0
-        self.titleLabel.font = CSS.shared.iPhoneStory_titleFont
+        self.titleLabel.font = DM_SERIF_DISPLAY_resize(23)
         self.addSubview(self.titleLabel)
         self.titleLabel.activateConstraints([
             self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),

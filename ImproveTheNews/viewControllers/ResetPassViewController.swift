@@ -104,7 +104,7 @@ class ResetPassViewController: BaseViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = "Forgot Password"
-        titleLabel.font = DM_SERIF_DISPLAY(23)
+        titleLabel.font = DM_SERIF_DISPLAY_resize(23)
         titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(titleLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -112,14 +112,14 @@ class ResetPassViewController: BaseViewController {
         let blablaLabel = UILabel()
         blablaLabel.numberOfLines = 0
         blablaLabel.text = "Enter your email address below to reset your password."
-        blablaLabel.font = AILERON(16)
+        blablaLabel.font = AILERON_resize(16)
         blablaLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(blablaLabel)
         ADD_SPACER(to: VStack_form, height: 32)
         
         let emailLabel = UILabel()
         emailLabel.text = "Email"
-        emailLabel.font = AILERON(16)
+        emailLabel.font = AILERON_resize(16)
         emailLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
         VStack_form.addArrangedSubview(emailLabel)
         ADD_SPACER(to: VStack_form, height: 16)
@@ -150,7 +150,7 @@ class ResetPassViewController: BaseViewController {
         ])
         
         let questionLabel = UILabel()
-        questionLabel.font = AILERON(16)
+        questionLabel.font = AILERON_resize(16)
         questionLabel.textAlignment = .center
         questionLabel.text = "Click here to sign up!"
         questionLabel.textColor = UIColor(hex: 0xDA4933)
