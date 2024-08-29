@@ -183,7 +183,7 @@ extension NewsLetterContentViewController {
             let nData = self.narrativeData(from: N)
             
             let nTitle = UILabel()
-            nTitle.font = DM_SERIF_DISPLAY(20)
+            nTitle.font = DM_SERIF_DISPLAY_resize(20)
             nTitle.numberOfLines = 0
             nTitle.text = nData.0
             nTitle.textColor = CSS.shared.displayMode().sec_textColor
@@ -192,7 +192,7 @@ extension NewsLetterContentViewController {
             ADD_SPACER(to: colView, height: self.M())
             
             let nContent = UILabel()
-            nContent.font = AILERON(15)
+            nContent.font = AILERON_resize(15)
             nContent.numberOfLines = 0
             nContent.text = nData.1
             nContent.textColor = CSS.shared.displayMode().main_textColor
