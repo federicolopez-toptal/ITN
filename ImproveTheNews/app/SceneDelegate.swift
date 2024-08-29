@@ -64,6 +64,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
         
+        if(UIFontMetrics.default.scaledValue(for: 100) != AppDelegate.fontScale) {
+            AppDelegate.fontScale = UIFontMetrics.default.scaledValue(for: 100)
+            
+            CustomNavController.shared.tabsBar.selectTab(1, loadContent: false)
+            let vc = NAV_MAINFEED_VC()
+            CustomNavController.shared.viewControllers = [vc]
+        }
+        
         self.checkForOSThemeChange()
     }
     

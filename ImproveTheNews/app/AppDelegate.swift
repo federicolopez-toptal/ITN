@@ -12,8 +12,12 @@ import FBSDKCoreKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    static var fontScale: CGFloat = 0
+
     func application(_ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        AppDelegate.fontScale = UIFontMetrics.default.scaledValue(for: 100)
         
         return true
     }
