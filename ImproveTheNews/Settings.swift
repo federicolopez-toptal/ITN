@@ -36,8 +36,8 @@ func ITN_URL(shorten: Bool = false) -> String {
 }
 
 func BIASPEDIA_URL() -> String {
-//    return "https://biaspost.org/api/" // stage
-    return "https://biaspedia.org/api/" // prod
+    return "https://biaspost.org/api/" // stage
+//    return "https://biaspedia.org/api/" // prod
 }
 //////////////////////////////////////////////////
 func NAV_MAINFEED_VC(topic: String? = nil) -> UIViewController {
