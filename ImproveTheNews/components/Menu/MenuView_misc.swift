@@ -55,7 +55,7 @@ extension MenuView {
                 
             case .layout:
                 result = "Text & Images"
-                if(TEXT_IMAGES()){ result = "Text Only" }
+                if(TEXT_IMAGES()){ result = "Text-Only" }
                 
             case .preferences:
                 result = "Preferences"

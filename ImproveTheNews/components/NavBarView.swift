@@ -23,6 +23,8 @@ enum NavBarViewComponents {
     case headlines
     case question
     case info
+    
+    case newsletter
 }
 
 
@@ -477,6 +479,81 @@ class NavBarView: UIView {
                 self.sendSubviewToBack(button)
                 self.sendSubviewToBack(label)
             }
+            
+            if(C == .newsletter && IPHONE()) {
+                // Newsletter subscription
+                let newsletterIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("newNavBar.newsletter")))
+                self.addSubview(newsletterIcon)
+                newsletterIcon.activateConstraints([
+                    newsletterIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    newsletterIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    newsletterIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
+                    newsletterIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                ])
+                newsletterIcon.tag = 14
+                self.displayModeComponents.append(newsletterIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: newsletterIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: newsletterIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: newsletterIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: newsletterIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onNewsletterButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
+            }
+            
+            if(C == .newsletter && IPAD()) {
+                // Newsletter subscription
+                let colorView = UIView()
+                colorView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2d2d31) : UIColor(hex: 0xe3e3e3)
+                self.addSubview(colorView)
+                colorView.activateConstraints([
+                    colorView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    colorView.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    colorView.widthAnchor.constraint(equalToConstant: 138),
+                    colorView.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                ])
+                colorView.layer.cornerRadius = CSS.shared.navBar_icon_size/2
+                
+                let newsletterIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("newNavBar.newsletter")))
+                colorView.addSubview(newsletterIcon)
+                newsletterIcon.activateConstraints([
+                    newsletterIcon.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 8),
+                    newsletterIcon.centerYAnchor.constraint(equalTo: colorView.centerYAnchor),
+                    newsletterIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
+                    newsletterIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                ])
+                newsletterIcon.tag = 14
+                self.displayModeComponents.append(newsletterIcon)
+
+                let newsletterLabel = UILabel()
+                newsletterLabel.text = "Newsletters"
+                newsletterLabel.font = AILERON(15)
+                newsletterLabel.tag = 99
+                colorView.addSubview(newsletterLabel)
+                newsletterLabel.activateConstraints([
+                    newsletterLabel.centerYAnchor.constraint(equalTo: colorView.centerYAnchor),
+                    newsletterLabel.leadingAnchor.constraint(equalTo: newsletterIcon.trailingAnchor, constant: 5),
+                ])
+
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: colorView.topAnchor, constant: -self.buttonsMargin),
+                    button.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: self.buttonsMargin),
+                    button.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: self.buttonsMargin)
+                ])
+                button.addTarget(self, action: #selector(onNewsletterButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += 138 + CSS.shared.navBar_icon_sepX
+            }
         }
         
         self.refreshDisplayMode()
@@ -515,9 +592,18 @@ class NavBarView: UIView {
                         img = UIImage(named: DisplayMode.imageName("question"))
                     case 13: // info
                         img = UIImage(named: DisplayMode.imageName("info"))
+                    case 14: // newsletter
+                        img = UIImage(named: DisplayMode.imageName("newNavBar.newsletter"))
                     
                     default:
                         NOTHING()
+                }
+                
+                if(imgView.tag == 14 && IPAD()) {
+                    let colorView = imgView.superview!
+                    colorView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2d2d31) : UIColor(hex: 0xe3e3e3)
+                    let label = colorView.viewWithTag(99) as! UILabel
+                    label.textColor = CSS.shared.displayMode().main_textColor
                 }
                 
                 imgView.image = img
@@ -684,5 +770,9 @@ extension NavBarView {
         CustomNavController.shared.menu.gotoHeadlines(delayTime: 0)
     }
     
+    @objc func onNewsletterButtonTap(_ sender: UIButton) {
+        let vc = NewsletterSignUp()
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
     
 }

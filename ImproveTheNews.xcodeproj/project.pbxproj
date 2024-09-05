@@ -540,6 +540,7 @@
 		BDD4EA842C225C6B0002906A /* NewsLetterContentUI_daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */; };
 		BDE838A02BF7D61800C4C8D2 /* SVGLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */; };
 		BDE838A22BF7D76B00C4C8D2 /* NATO_OTAN.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */; };
+		BDF745A12C87857A0023751B /* NewsletterSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF745A02C87857A0023751B /* NewsletterSignUp.swift */; };
 		D4438EFBB252B6903AB56553 /* Pods_ImproveTheNews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A395E0433D69EEF51DC03966 /* Pods_ImproveTheNews.framework */; };
 /* End PBXBuildFile section */
 
@@ -1084,6 +1085,7 @@
 		BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterContentUI_daily.swift; sourceTree = "<group>"; };
 		BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLoader.swift; sourceTree = "<group>"; };
 		BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NATO_OTAN.jpg; sourceTree = "<group>"; };
+		BDF745A02C87857A0023751B /* NewsletterSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterSignUp.swift; sourceTree = "<group>"; };
 		C5FE7FE8A9666767DA91A834 /* Pods-ImproveTheNews.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.beta.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.beta.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1368,6 +1370,7 @@
 				1FE541C52A03FA9A000A2CF3 /* ResetPassViewController.swift */,
 				1FD5BDED28DC01AA003E650F /* ArticleViewController.swift */,
 				1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */,
+				BDF745A02C87857A0023751B /* NewsletterSignUp.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -2746,6 +2749,7 @@
 				1F56F727294B9D2900654CDB /* HyperlinkLabel.swift in Sources */,
 				1F0700A62BA99E3A007CE44C /* PublicFiguresViewController.swift in Sources */,
 				1F9EDD4F29AE9842007A97A6 /* iPadGroupItem_rowCellText.swift in Sources */,
+				BDF745A12C87857A0023751B /* NewsletterSignUp.swift in Sources */,
 				1FA48DA22AFC62F7009CEAAC /* iPhoneStory_2colsTxt_cell_v3.swift in Sources */,
 				1F5A0FFF2992D59700DD8CB3 /* DataUtils.swift in Sources */,
 				1F70BE6F2913FBD50061E3FA /* SearchViewController.swift in Sources */,
@@ -3001,7 +3005,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 119;
+				CURRENT_PROJECT_VERSION = 120;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3040,7 +3044,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 119;
+				CURRENT_PROJECT_VERSION = 120;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3132,7 +3136,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 119;
+				CURRENT_PROJECT_VERSION = 120;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
