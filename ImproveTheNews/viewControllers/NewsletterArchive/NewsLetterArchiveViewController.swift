@@ -121,6 +121,10 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.vStack.addArrangedSubview(searchText)
         ADD_SPACER(to: self.vStack, height: margin)
         
+        //!!!
+        self.addCopyButton()
+        //!!!
+        
         // VIEW ---------------------------------------
         let viewText = UILabel()
         viewText.font = AILERON(15)
@@ -1226,4 +1230,34 @@ extension NewsLetterArchiveViewController: CalendarViewDelegate {
         print("NEW DATE", date)
     }
 
+}
+
+extension NewsLetterArchiveViewController {
+    
+    func addCopyButton() {
+        let copyButton = UIButton(type: .custom)
+        copyButton.setTitle("Copy", for: .normal)
+        copyButton.titleLabel?.font = AILERON(14)
+        copyButton.backgroundColor = CSS.shared.cyan
+        copyButton.setTitleColor(UIColor(hex: 0x19191C), for: .normal)
+        copyButton.layer.cornerRadius = 4.0
+        self.mainContentView.addSubview(copyButton)
+        copyButton.activateConstraints([
+            copyButton.widthAnchor.constraint(equalToConstant: 75),
+            copyButton.heightAnchor.constraint(equalToConstant: 40),
+            copyButton.topAnchor.constraint(equalTo: self.mainContentView.topAnchor, constant: 16),
+            copyButton.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -16)
+        ])
+        copyButton.addTarget(self, action: #selector(self.onCopyButtonTap(_:)), for: .touchUpInside)
+    }
+    
+    @objc func onCopyButtonTap(_ sender: UIButton?) {
+        let toCopy = "Date range: " + self.getRange() + " (" +
+                        self.dateOptions[self.currentDate] + ") - Filter: " + self.getType()
+        
+        print(toCopy)
+        UIPasteboard.general.string = toCopy
+        CustomNavController.shared.infoAlert(message: "Text copied!")
+    }
+    
 }
