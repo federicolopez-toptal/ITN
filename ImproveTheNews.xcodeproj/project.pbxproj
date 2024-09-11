@@ -505,6 +505,12 @@
 		1FFAA58C2BBDA38300ABB272 /* ControDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFAA58B2BBDA38300ABB272 /* ControDetailViewController.swift */; };
 		1FFBD3082B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFBD3072B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift */; };
 		1FFF6F8C2B2294E30008DC07 /* TourIntroPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */; };
+		BD22571F2C90746A0097AD33 /* MainFeedv4_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22571E2C90746A0097AD33 /* MainFeedv4_iPhone.swift */; };
+		BD2257212C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257202C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift */; };
+		BD2257232C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257222C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift */; };
+		BD2257252C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257242C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift */; };
+		BD2257272C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257262C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift */; };
+		BD2257292C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257282C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift */; };
 		BD2F70962C3870D5000C9960 /* SharePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F70952C3870D4000C9960 /* SharePopupView.swift */; };
 		BD339B472C762C5E000554A3 /* fakeJson_Controversies.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD339B452C762C5E000554A3 /* fakeJson_Controversies.txt */; };
 		BD339B482C762C5E000554A3 /* fakeJson_PublicFigures.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD339B462C762C5E000554A3 /* fakeJson_PublicFigures.txt */; };
@@ -1050,6 +1056,12 @@
 		8D5B46307AEDFAA8CAB0BA84 /* Pods-ImproveTheNews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.debug.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.debug.xcconfig"; sourceTree = "<group>"; };
 		A395E0433D69EEF51DC03966 /* Pods_ImproveTheNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImproveTheNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B038FC5F8D4A9F9F2CF291F0 /* Pods-ImproveTheNews.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.app store.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.app store.xcconfig"; sourceTree = "<group>"; };
+		BD22571E2C90746A0097AD33 /* MainFeedv4_iPhone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedv4_iPhone.swift; sourceTree = "<group>"; };
+		BD2257202C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneLineSeparatorCell_v3.swift; sourceTree = "<group>"; };
+		BD2257222C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vImgDescr_cell_v3.swift; sourceTree = "<group>"; };
+		BD2257242C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vImgDescr_v3.swift; sourceTree = "<group>"; };
+		BD2257262C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vTxtDescr_cell_v3.swift; sourceTree = "<group>"; };
+		BD2257282C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vTxtDescr_v3.swift; sourceTree = "<group>"; };
 		BD2F70952C3870D4000C9960 /* SharePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopupView.swift; sourceTree = "<group>"; };
 		BD339B452C762C5E000554A3 /* fakeJson_Controversies.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fakeJson_Controversies.txt; sourceTree = "<group>"; };
 		BD339B462C762C5E000554A3 /* fakeJson_PublicFigures.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fakeJson_PublicFigures.txt; sourceTree = "<group>"; };
@@ -1480,10 +1492,12 @@
 			children = (
 				1FD014602B61E84E00209A63 /* iPhoneBannerPodCast_v3.swift */,
 				1FA48D952AFBD905009CEAAC /* iPhoneStory_vImg_v3.swift */,
+				BD2257242C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift */,
 				1FC9C4572B8852CC00E77FD5 /* iPadStory_vImg_v3.swift */,
 				1F6DA4082B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift */,
 				1FC9C45B2B88607700E77FD5 /* iPadStory_vTxt_v3.swift */,
 				1FA48D9D2AFC5DCC009CEAAC /* iPhoneStory_vTxt_v3.swift */,
+				BD2257282C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift */,
 				1FA48D932AFBD2C1009CEAAC /* iPhoneAllNews_vImgCol_v3.swift */,
 				1FA48DA32AFC647B009CEAAC /* iPhoneAllNews_vTxtCol_v3.swift */,
 			);
@@ -1494,8 +1508,10 @@
 			isa = PBXGroup;
 			children = (
 				1FE89CFF2AF1ADF200A6C99C /* iPhoneStory_vImg_cell_v3.swift */,
+				BD2257222C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift */,
 				1FC9C4552B8851C700E77FD5 /* iPadStory_vImg_cell_v3.swift */,
 				1FA48D992AFC5A9B009CEAAC /* iPhoneStory_vTxt_cell_v3.swift */,
+				BD2257262C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift */,
 				1FC9C4592B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift */,
 				1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */,
 				1F9C711D2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift */,
@@ -1538,6 +1554,7 @@
 				1FA4CE6728C286F40068DE4A /* MainFeed.swift */,
 				1F1788AA29363353003F528E /* MainFeedv2.swift */,
 				BD44510C2C7F5FFC00BBD346 /* MainFeedv3.swift */,
+				BD22571E2C90746A0097AD33 /* MainFeedv4_iPhone.swift */,
 				1F897CE228CC322900438FC5 /* Sources.swift */,
 				1F9508912B150BB000B7F35B /* fakeJson_OK.txt */,
 				1F9508932B150F3D00B7F35B /* fakeJson_FAIL.txt */,
@@ -1852,6 +1869,7 @@
 				BD4DC7E02BCEACED0097BFD1 /* iPadControversyCell_v3.swift */,
 				BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */,
 				BD4DC7D82BCE35420097BFD1 /* iPhoneHeaderLineCell_v3.swift */,
+				BD2257202C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift */,
 				1F58C85C2B05BBBA00E0A151 /* iPhoneSplitHeaderCell_v3.swift */,
 				1FD1BD4E2AF4208200BEF887 /* iPhoneBannerCell_v3.swift */,
 				1FFBD3072B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift */,
@@ -2585,6 +2603,7 @@
 				1F22E2E728C65CF4007F00D1 /* DisplayMode.swift in Sources */,
 				1FD699252B6B29E400C4B0F9 /* iPhoneArticle_4colsImgBanner_cell_v3.swift in Sources */,
 				1FE89CEB2AF19DDB00A6C99C /* CSS.swift in Sources */,
+				BD2257252C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift in Sources */,
 				1F455E822BA1754C00551336 /* UIStackViewExtension.swift in Sources */,
 				1F9E28C32954B22900041303 /* PrivacyPolicy_content.swift in Sources */,
 				1F106AED29071E30004B9943 /* MainFeed_cellTaps.swift in Sources */,
@@ -2603,6 +2622,7 @@
 				1FC9C45A2B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift in Sources */,
 				1F0700AA2BA9AA46007CE44C /* FigureFilterTextView.swift in Sources */,
 				1F1788AB29363353003F528E /* MainFeedv2.swift in Sources */,
+				BD2257272C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift in Sources */,
 				1FC9C4562B8851C700E77FD5 /* iPadStory_vImg_cell_v3.swift in Sources */,
 				1F0700AC2BA9BD95007CE44C /* PublicFigureData.swift in Sources */,
 				1FA158802B0D2F6A006EDCE0 /* StoryViewController.swift in Sources */,
@@ -2627,6 +2647,7 @@
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				BD5918762C61576B00AD8FC6 /* SourceCheck.swift in Sources */,
 				BD50541E2BEDCAF500AD1030 /* CustomButton.swift in Sources */,
+				BD2257292C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift in Sources */,
 				1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */,
 				1F1033DB2BBB0F0C0038EDDF /* ControversiesData.swift in Sources */,
 				1FA8AA3628D0E3F500B6C956 /* ArticleWI_cell.swift in Sources */,
@@ -2663,6 +2684,7 @@
 				1FA48DA42AFC647B009CEAAC /* iPhoneAllNews_vTxtCol_v3.swift in Sources */,
 				1FC5571C2AF2FC4200C0117A /* TopicSelectorView.swift in Sources */,
 				1FF7D8CD2A40868B00770B69 /* KeywordSearchTextView.swift in Sources */,
+				BD2257232C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift in Sources */,
 				1FE89CE82AF19ABD00A6C99C /* MenuView.swift.txt in Sources */,
 				1FE98DE62A43F22600FE0260 /* TopicsCell.swift in Sources */,
 				1F984B1D2A54D9420098758A /* iPadGroupItem_2ST_Cell.swift in Sources */,
@@ -2756,6 +2778,7 @@
 				1FA1728828D2B7AC00693B85 /* IntExtension.swift in Sources */,
 				1F9EDD5729AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift in Sources */,
 				1F16FD6A2B4716AA0082DACF /* EmailNotVerifiedPopupView.swift in Sources */,
+				BD22571F2C90746A0097AD33 /* MainFeedv4_iPhone.swift in Sources */,
 				1FE89CFD2AF1AD3A00A6C99C /* SpacerCell_v3.swift in Sources */,
 				1FF32A282A2FAEF100948FA4 /* KeywordSearch.swift in Sources */,
 				1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */,
@@ -2828,6 +2851,7 @@
 				1F9C71192B6AD7030060BB66 /* MainFeediPad_v3_misc.swift in Sources */,
 				1F9C63812A1C5B82006465D8 /* Facebook_SDK.swift in Sources */,
 				1FC287D529A645A50017433B /* MainFeed_v2ViewController.swift in Sources */,
+				BD2257212C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift in Sources */,
 				1FD2340A2915A07800B85AE9 /* Preferences_misc.swift in Sources */,
 				1F9C711C2B6AD7030060BB66 /* MainFeediPad_v3_list.swift in Sources */,
 				1FDEB1C828CB7E150029831E /* Layout.swift in Sources */,
@@ -3005,7 +3029,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 120;
+				CURRENT_PROJECT_VERSION = 121;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3044,7 +3068,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 120;
+				CURRENT_PROJECT_VERSION = 121;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3136,7 +3160,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 120;
+				CURRENT_PROJECT_VERSION = 121;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

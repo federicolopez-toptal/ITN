@@ -33,6 +33,15 @@ class DP3_splitHeaderItem: DP3_item {
 }
 
 // --------------------------
+class DP3_lineSeparator: DP3_item {
+    var type: Int = 1
+    
+    init(type: Int) {
+        self.type = type
+    }
+}
+
+// --------------------------
 class DP3_spacer: DP3_item {
     var size: CGFloat = 1.0
     

@@ -120,10 +120,8 @@ class NewsLetterArchiveViewController: BaseViewController {
         searchText.textColor = CSS.shared.displayMode().main_textColor
         self.vStack.addArrangedSubview(searchText)
         ADD_SPACER(to: self.vStack, height: margin)
-        
-        //!!!
-        self.addCopyButton()
-        //!!!
+
+        //self.addCopyButton() //!!!
         
         // VIEW ---------------------------------------
         let viewText = UILabel()
@@ -846,6 +844,7 @@ extension NewsLetterArchiveViewController {
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
+            formatter.calendar = Calendar(identifier: .gregorian)
         
             return formatter.string(from: dateFrom) + ":" + formatter.string(from: dateTo)
         } else {
@@ -868,6 +867,7 @@ extension NewsLetterArchiveViewController {
         
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
+            formatter.calendar = Calendar(identifier: .gregorian)
         
             return formatter.string(from: startDate) + ":" + formatter.string(from: endDate)
         }

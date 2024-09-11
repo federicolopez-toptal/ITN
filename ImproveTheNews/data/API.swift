@@ -228,6 +228,8 @@ class API {
             "frequency": freq
         ]
         
+        print(UUID.shared.getValue())
+        
         self.makeRequest(to: "newsletter/", with: json) { (success, json, serverMsg) in
             if let _json = json, success {
                 if let _status = _json["message"] as? String {

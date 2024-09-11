@@ -486,26 +486,38 @@ extension NewsletterSignUp {
     @objc func keyboardEvent(n: Notification) {
         let H = getKeyboardHeight(fromNotification: n)
         
+        var bottomFormBottomValue: CGFloat = 0
+        var scrollviewBottomValue: CGFloat = 0
+        var bottomFormAlphaValue: CGFloat = 1.0
+        
         if(n.name==UIResponder.keyboardWillShowNotification) {
-            self.bottomFormBottomConstraint?.constant = -H
+            bottomFormBottomValue = -H
+            bottomFormAlphaValue = 1
             
             if(SAFE_AREA()!.bottom > 0) {
-                self.scrollviewBottomConstraint?.constant = IPHONE_bottomOffset() - self.bottomFormHeight - 215
+                scrollviewBottomValue = IPHONE_bottomOffset() - self.bottomFormHeight - 215
             } else {
-                self.scrollviewBottomConstraint?.constant = IPHONE_bottomOffset() - self.bottomFormHeight
+                scrollviewBottomValue = IPHONE_bottomOffset() - self.bottomFormHeight
             }
             
         } else if(n.name==UIResponder.keyboardWillHideNotification) {
-            self.bottomFormBottomConstraint?.constant = IPHONE_bottomOffset()
+            bottomFormBottomValue = IPHONE_bottomOffset()
+            bottomFormAlphaValue = 0
             
             if(!self.bottomForm.isHidden) {
-                self.scrollviewBottomConstraint?.constant = IPHONE_bottomOffset() - self.bottomFormHeight
+                scrollviewBottomValue = IPHONE_bottomOffset() - self.bottomFormHeight
             } else {
-                self.scrollviewBottomConstraint?.constant = IPHONE_bottomOffset()
+                scrollviewBottomValue = IPHONE_bottomOffset()
             }
         }
         
-        self.view.layoutIfNeeded()
+        self.bottomFormBottomConstraint?.constant = bottomFormBottomValue
+        self.scrollviewBottomConstraint?.constant = scrollviewBottomValue
+        UIView.animate(withDuration: 0.3) {
+            self.bottomForm.alpha = bottomFormAlphaValue
+            self.view.layoutIfNeeded()
+        }
+        
     }
     
     func getKeyboardHeight(fromNotification notification: Notification) -> CGFloat {

@@ -57,6 +57,9 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneFooterCell_v3.self, forCellReuseIdentifier: iPhoneFooterCell_v3.identifier)
         
         self.list.register(iPhoneControversyCell_v3.self, forCellReuseIdentifier: iPhoneControversyCell_v3.identifier)
+        self.list.register(iPhoneLineSeparatorCell_v3.self, forCellReuseIdentifier: iPhoneLineSeparatorCell_v3.identifier)
+        self.list.register(iPhoneStory_vImgDescr_cell_v3.self, forCellReuseIdentifier: iPhoneStory_vImgDescr_cell_v3.identifier)
+        self.list.register(iPhoneStory_vTxtDescr_cell_v3.self, forCellReuseIdentifier: iPhoneStory_vTxtDescr_cell_v3.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -139,14 +142,14 @@ extension MainFeed_v3_viewController {
         if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
             if(_groupItem is DP3_iPhoneStory_1Wide) {
                 if(Layout.current() == .textImages) {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImgDescr_cell_v3.identifier)!
 //                    if(MUST_SPLIT() == 0) {
 //                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vImg_cell_v3.identifier)!
 //                    } else {
 //                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxt_cell_v3.identifier)!
 //                    }
                 } else {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxt_cell_v3.identifier)!
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_vTxtDescr_cell_v3.identifier)!
                 }
             } else if(_groupItem is DP3_iPhoneStory_2cols) {
                 if(Layout.current() == .textImages) {
@@ -175,6 +178,9 @@ extension MainFeed_v3_viewController {
             if item is DP3_spacer {
                 cell = self.list.dequeueReusableCell(withIdentifier: SpacerCell_v3.identifier)!
                 (cell as! SpacerCell_v3).refreshDisplayMode()
+            } else if let _item = item as? DP3_lineSeparator {
+                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneLineSeparatorCell_v3.identifier)!
+                (cell as! iPhoneLineSeparatorCell_v3).addLineWith(type: _item.type)
             } else if let _item = item as? DP3_headerItem {
                 if(_item.title == "-----") {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneHeaderLineCell_v3.identifier)!
@@ -247,7 +253,7 @@ extension MainFeed_v3_viewController {
             }
         } else if(item is DP3_iPhoneStory_1Wide) { // 1 wide story
             if(Layout.current() == .textImages) {
-                if let _cell = self.getCell(indexPath) as? iPhoneStory_vImg_cell_v3 {
+                if let _cell = self.getCell(indexPath) as? iPhoneStory_vImgDescr_cell_v3 {
                     result = _cell.calculateGroupHeight()
                 }
                 
@@ -257,7 +263,7 @@ extension MainFeed_v3_viewController {
 //                    result = (self.getCell(indexPath) as! iPhoneStory_vTxt_cell_v3).calculateGroupHeight()
 //                }
             } else {
-                if let _cell = self.getCell(indexPath) as? iPhoneStory_vTxt_cell_v3 {
+                if let _cell = self.getCell(indexPath) as? iPhoneStory_vTxtDescr_cell_v3 {
                     result = _cell.calculateGroupHeight()
                 }
             }
@@ -309,6 +315,8 @@ extension MainFeed_v3_viewController {
             }
         } else if(item is DP3_footer) { // footer
             result = iPhoneFooterCell_v3.getHeight()
+        } else if(item is DP3_lineSeparator) { // line separator
+            result = iPhoneLineSeparatorCell_v3.getHeight()
         } else if(item is DP3_controversy) {
             if let _cell = self.getCell(indexPath) as? iPhoneControversyCell_v3 {
                 result = _cell.calculateHeight()
@@ -324,14 +332,6 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
     
     func onShowMoreButtonTap(sender: iPhoneMoreCell_v3) {
         self.showLoading()
-        
-//        if(sender.topic == "CONTRO") {
-//            self.removeControversiesFromMainFeed()
-//        
-//            self.controversiesPage += 1
-//            self.loadControversies()
-//            return
-//        }
         
         let topic = sender.topic
         if(topic != self.topic) {
@@ -355,9 +355,9 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
                 
                 self.populateDataProvider()
                 
-                if(self.controversiesTotal > 0) {
-                    self.addControversiesToMainFeed(mustRefresh: false)
-                }
+//                if(self.controversiesTotal > 0) {
+//                    self.addControversiesToMainFeed(mustRefresh: false)
+//                }
                 
                 self.refreshList()
             }
