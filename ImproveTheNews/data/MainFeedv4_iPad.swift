@@ -1,5 +1,5 @@
 //
-//  MainFeedv4_iPhone.swift
+//  MainFeedv4_iPad.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 28/12/2022.
@@ -10,7 +10,7 @@ import UIKit
 
 
 // Main Feed for the new navigation
-class MainFeedv4_iPhone {
+class MainFeedv4_iPad {
 
     var topic = "news"                  // Current topic
     var topics = [MainFeedTopic]()      // All info
@@ -89,8 +89,8 @@ class MainFeedv4_iPhone {
         print("articles", self.articlesCount)
         print("stories", self.storiesCount)
         
-        let total = self.articlesCount + self.storiesCount + 8
-        let stories = self.storiesCount + 4
+        let total = self.articlesCount + self.storiesCount + 5
+        let stories = self.storiesCount + 3
          
         let strUrl = self.buildUrl(topic: T, A: total, B: 0, C: stories, S: 0)
         var request = URLRequest(url: URL(string: strUrl)!)
@@ -125,7 +125,7 @@ class MainFeedv4_iPhone {
 
 
 // MARK: - Data related
-extension MainFeedv4_iPhone {
+extension MainFeedv4_iPad {
     
     private func parse(_ json: [String: Any], mainTopicItemsLimit: Int) {
         
@@ -261,7 +261,7 @@ extension MainFeedv4_iPhone {
 
 
 // MARK: - Counting (Stories/Articles per Topic)
-extension MainFeedv4_iPhone {
+extension MainFeedv4_iPad {
     
     func resetCounting() {
         // Called from: MainFeed.../populateDataProvider (beginning)
@@ -282,7 +282,7 @@ extension MainFeedv4_iPhone {
 
 
 // MARK: - Utilities
-extension MainFeedv4_iPhone {
+extension MainFeedv4_iPad {
 
     private func buildUrl(topic: String, A: Int, B: Int, C: Int, S: Int) -> String {
         /*
@@ -539,7 +539,7 @@ extension MainFeedv4_iPhone {
 }
 
 // MARK: - IA extra topic
-extension MainFeedv4_iPhone {
+extension MainFeedv4_iPad {
 
     private func addIA() {
         let data: [Any] = [

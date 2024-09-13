@@ -258,11 +258,6 @@ extension MainFeed_v3_viewController {
         self.dataProvider.append(header)
     }
     
-    private func addSplitHeaders(L: String, R: String) {
-        let splitHeader = DP3_splitHeaderItem(leftTitle: L, rightTitle: R)
-        self.dataProvider.append(splitHeader)
-    }
-    
     private func insertNewBanner() {
         // chequeos previos...
             // El orden es podcast, youtube, newsletter (ver si se puede saltear youtube)
@@ -304,24 +299,6 @@ extension MainFeed_v3_viewController {
 //            
 //            let spacerToBottom = DP3_spacer(size: 24) // Space after the "Show more"
 //            self.dataProvider.append(spacerToBottom)
-        }
-    }
-    
-    private func insertBanner() { // OLD
-        var mustShow = true
-        if let _value = READ(LocalKeys.misc.bannerDontShowAgain), (_value == "1") {
-            mustShow = false
-        }
-    
-        if(self.data.banner != nil && mustShow && MUST_SPLIT()==0) {
-            let spacerAtTop = DP3_spacer(size: 10) // Space before the "Show more"
-            self.dataProvider.append(spacerAtTop)
-            
-            let banner = DP3_banner()
-            self.dataProvider.append(banner)
-            
-            let spacerToBottom = DP3_spacer(size: 24) // Space after the "Show more"
-            self.dataProvider.append(spacerToBottom)
         }
     }
     

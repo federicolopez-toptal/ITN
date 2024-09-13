@@ -505,6 +505,8 @@
 		1FFAA58C2BBDA38300ABB272 /* ControDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFAA58B2BBDA38300ABB272 /* ControDetailViewController.swift */; };
 		1FFBD3082B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFBD3072B2B4201006BFB1E /* iPhoneBannerPCCell_v3.swift */; };
 		1FFF6F8C2B2294E30008DC07 /* TourIntroPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */; };
+		BD12750E2C94799300B5EED0 /* MainFeedv4_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD12750D2C94799300B5EED0 /* MainFeedv4_iPad.swift */; };
+		BD1275102C94849600B5EED0 /* iPad5items_type1_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD12750F2C94849600B5EED0 /* iPad5items_type1_cell_v3.swift */; };
 		BD22571F2C90746A0097AD33 /* MainFeedv4_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22571E2C90746A0097AD33 /* MainFeedv4_iPhone.swift */; };
 		BD2257212C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257202C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift */; };
 		BD2257232C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257222C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift */; };
@@ -1056,6 +1058,8 @@
 		8D5B46307AEDFAA8CAB0BA84 /* Pods-ImproveTheNews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.debug.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.debug.xcconfig"; sourceTree = "<group>"; };
 		A395E0433D69EEF51DC03966 /* Pods_ImproveTheNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImproveTheNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B038FC5F8D4A9F9F2CF291F0 /* Pods-ImproveTheNews.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.app store.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.app store.xcconfig"; sourceTree = "<group>"; };
+		BD12750D2C94799300B5EED0 /* MainFeedv4_iPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedv4_iPad.swift; sourceTree = "<group>"; };
+		BD12750F2C94849600B5EED0 /* iPad5items_type1_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPad5items_type1_cell_v3.swift; sourceTree = "<group>"; };
 		BD22571E2C90746A0097AD33 /* MainFeedv4_iPhone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedv4_iPhone.swift; sourceTree = "<group>"; };
 		BD2257202C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneLineSeparatorCell_v3.swift; sourceTree = "<group>"; };
 		BD2257222C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vImgDescr_cell_v3.swift; sourceTree = "<group>"; };
@@ -1514,6 +1518,7 @@
 				BD2257262C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift */,
 				1FC9C4592B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift */,
 				1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */,
+				BD12750F2C94849600B5EED0 /* iPad5items_type1_cell_v3.swift */,
 				1F9C711D2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift */,
 				1FD699222B6B288700C4B0F9 /* iPhoneStory_4colsTxt_cell_v3.swift */,
 				1FA48DA12AFC62F7009CEAAC /* iPhoneStory_2colsTxt_cell_v3.swift */,
@@ -1555,6 +1560,7 @@
 				1F1788AA29363353003F528E /* MainFeedv2.swift */,
 				BD44510C2C7F5FFC00BBD346 /* MainFeedv3.swift */,
 				BD22571E2C90746A0097AD33 /* MainFeedv4_iPhone.swift */,
+				BD12750D2C94799300B5EED0 /* MainFeedv4_iPad.swift */,
 				1F897CE228CC322900438FC5 /* Sources.swift */,
 				1F9508912B150BB000B7F35B /* fakeJson_OK.txt */,
 				1F9508932B150F3D00B7F35B /* fakeJson_FAIL.txt */,
@@ -2866,6 +2872,7 @@
 				1F9EDD4D29AE9142007A97A6 /* ArticleBigTextView.swift in Sources */,
 				1FF326C328CA720E006FF2CE /* MainFeedArticle.swift in Sources */,
 				1F971CB82AF284BD0049BA42 /* GroupItemCell_v3.swift in Sources */,
+				BD1275102C94849600B5EED0 /* iPad5items_type1_cell_v3.swift in Sources */,
 				1FD5BDF128DC0F91003E650F /* NoInternetPopupView.swift in Sources */,
 				1F455E7E2BA151BF00551336 /* NewsLetterData.swift in Sources */,
 				1F58C85D2B05BBBA00E0A151 /* iPhoneSplitHeaderCell_v3.swift in Sources */,
@@ -2879,6 +2886,7 @@
 				1F66798229DEFC9D00CFB714 /* iPadGroupItem_rowNoStoriesCell.swift in Sources */,
 				1F081BF32BB1AB1900B66326 /* FigureDetails_topics.swift in Sources */,
 				1F6DA4092B1FFA640007C0EA /* iPhoneArticle_vImg_v3.swift in Sources */,
+				BD12750E2C94799300B5EED0 /* MainFeedv4_iPad.swift in Sources */,
 				BDCD3FC92C45ABC800BAA2E2 /* FloatingButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -77,6 +77,8 @@ extension MainFeediPad_v3_viewController {
         self.list.register(iPhoneHeaderLineCell_v3.self, forCellReuseIdentifier: iPhoneHeaderLineCell_v3.identifier)
         self.list.register(iPadControversyCell_v3.self, forCellReuseIdentifier: iPadControversyCell_v3.identifier)
         
+        self.list.register(iPad5items_type1_cell_v3.self, forCellReuseIdentifier: iPad5items_type1_cell_v3.identifier)
+        
         self.list.delegate = self
         self.list.dataSource = self
         
@@ -157,7 +159,15 @@ extension MainFeediPad_v3_viewController {
         let item = self.dataProvider[indexPath.row]
         
         if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
-            if(_groupItem is DP3_iPhoneStory_1Wide) {
+            if let _item = _groupItem as? DP3_iPad5items {
+                if(_item.type==1) {
+                    if(Layout.current() == .textImages) {
+                        cell = self.list.dequeueReusableCell(withIdentifier: iPad5items_type1_cell_v3.identifier)!
+                    } else {
+                        
+                    }
+                }
+            } else if(_groupItem is DP3_iPhoneStory_1Wide) {
                 if(Layout.current() == .textImages) {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPadStory_vImg_cell_v3.identifier)!
                 } else {
@@ -339,6 +349,12 @@ extension MainFeediPad_v3_viewController {
             return iPhoneFooterCell_v3.getHeight()
         } else if(item is DP3_controversies_x2) {
             result = (self.getCell(indexPath) as! iPadControversyCell_v3).calculateHeight()
+        } else if let _item = item as? DP3_iPad5items {
+            if(_item.type==1) {
+                if(Layout.current() == .textImages) {
+                    result = (self.getCell(indexPath) as! iPad5items_type1_cell_v3).calculateGroupHeight()
+                }
+            }
         }
                 
         return result.rounded()

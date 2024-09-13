@@ -75,3 +75,17 @@ class DP3_iPhoneArticle_4cols: DP3_groupItem {
         self.storyFlags = [false, false, false, false]
     }
 }
+
+// --------------------------
+class DP3_iPad5items: DP3_groupItem {
+    // 3 stories (1 big) + 2 articles
+    var type = 1
+    
+    init(type: Int = 1) {
+        super.init()
+        
+        self.type = type
+        self.MaxNumOfItems = 5
+        self.storyFlags = [true, true, true, false, false]
+    }
+}

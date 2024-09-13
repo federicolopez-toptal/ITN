@@ -18,7 +18,7 @@ class MainFeediPad_v3_viewController: BaseViewController {
     var list = CustomFeedList()
     
     var topic = "news"
-    let data = MainFeedv3()
+    let data = MainFeedv4_iPad()
     var dataProvider = [DP3_item]()
     
     var topicsCompleted = [String: Bool]()
@@ -160,7 +160,7 @@ extension MainFeediPad_v3_viewController {
                     return
                 }
 
-                self.data.loadData(self.topic, defaultValues: true) { (error) in
+                self.data.loadData(self.topic) { (error) in
                     MAIN_THREAD {/* --- */
                         if(error != nil || self.data.topics.count == 0) {
                             self.showErrorAlert()
