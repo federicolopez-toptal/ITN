@@ -82,7 +82,8 @@ class iPad5items_type1_cell_v3: GroupItemCell_v3 {
         self.view5_heightConstraint.isActive = true
         
         ///
-        let view1 = iPhoneAllNews_vImgCol_v3(width: colW)
+        let view1_width: CGFloat = SCREEN_SIZE_iPadSideTab().width - (colW*2) - (sep*4)
+        let view1 = iPadAllNews_vImgColBig_v3(width: view1_width)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -104,7 +105,7 @@ class iPad5items_type1_cell_v3: GroupItemCell_v3 {
     override func populate(with group: DP3_groupItem) {
         super.populate(with: group)
         
-        view1_heightConstraint.constant = (self.subViews[0] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
+        view1_heightConstraint.constant = (self.subViews[0] as! iPadAllNews_vImgColBig_v3).calculateHeight()
         view2_heightConstraint.constant = (self.subViews[1] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
         view3_heightConstraint.constant = (self.subViews[2] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
         view4_heightConstraint.constant = (self.subViews[3] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
@@ -125,7 +126,7 @@ class iPad5items_type1_cell_v3: GroupItemCell_v3 {
     
     // MARK: misc
     func calculateGroupHeight() -> CGFloat {
-        let height_1 = (self.subViews[0] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
+        let height_1 = (self.subViews[0] as! iPadAllNews_vImgColBig_v3).calculateHeight()
         let height_2 = (self.subViews[1] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
         let height_3 = (self.subViews[2] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
         let height_4 = (self.subViews[3] as! iPhoneAllNews_vImgCol_v3).calculateHeight()
