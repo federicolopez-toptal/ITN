@@ -29,6 +29,7 @@ extension MainFeediPad_v3_viewController {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
         
+        var topicLayout: Int = 1
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             //var _T = self.data.topics[i]
@@ -49,12 +50,14 @@ extension MainFeediPad_v3_viewController {
             // Headers
                 if(itemInTopic == 0) {
                     self.addHeader(text: _T.capitalizedName)
-                    itemInTopic += 1
+                    //itemInTopic += 1
+                    
+                    itemInTopic = topicLayout
                 }
                 
                 var newGroupItem: DP3_groupItem?
                 switch(itemInTopic) {
-                    case 1:
+                    case 1, 2, 3:
                         newGroupItem = DP3_iPad5items(type: itemInTopic)
                 
 //                    case 1:
@@ -114,11 +117,16 @@ extension MainFeediPad_v3_viewController {
                 } // fill ///////////////////
                 
                 
-                if(itemInTopic==2) {
+                if(itemInTopic==4) {
                     itemInTopic = 1
                 }
                 
             } // while
+            
+            topicLayout += 1
+            if(topicLayout==4) {
+                topicLayout = 1
+            }
             
             // Banner, only for 1rst topic (if apply)
             if(i==0) { self.insertNewBanner() }

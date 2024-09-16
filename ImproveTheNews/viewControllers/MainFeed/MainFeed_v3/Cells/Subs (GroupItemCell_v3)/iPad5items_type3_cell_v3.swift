@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 
-class iPad5items_type1_cell_v3: GroupItemCell_v3 {
+class iPad5items_type3_cell_v3: GroupItemCell_v3 {
 
-    static let identifier = "iPad5items_type1_cell_v3"
+    static let identifier = "iPad5items_type3_cell_v3"
     
     var view1_heightConstraint: NSLayoutConstraint!
     var view2_heightConstraint: NSLayoutConstraint!
@@ -36,12 +36,23 @@ class iPad5items_type1_cell_v3: GroupItemCell_v3 {
         let W = SCREEN_SIZE_iPadSideTab().width
         let colW: CGFloat = ceil(W * 0.24)
         
+        let view1_width: CGFloat = SCREEN_SIZE_iPadSideTab().width - (colW*2) - (sep*4)
+        let view1 = iPadAllNews_vImgColBig_v3(width: view1_width)
+        self.contentView.addSubview(view1)
+        view1.activateConstraints([
+            view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            view1.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sep),
+            view1.widthAnchor.constraint(equalToConstant: view1_width)
+        ])
+        self.view1_heightConstraint = view1.heightAnchor.constraint(equalToConstant: 1)
+        self.view1_heightConstraint.isActive = true
+        
         ///
         let view2 = iPhoneAllNews_vImgCol_v3(width: colW)
         self.contentView.addSubview(view2)
         view2.activateConstraints([
-            view2.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sep),
             view2.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            view2.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sep),
             view2.widthAnchor.constraint(equalToConstant: colW)
         ])
         self.view2_heightConstraint = view2.heightAnchor.constraint(equalToConstant: 1)
@@ -52,7 +63,7 @@ class iPad5items_type1_cell_v3: GroupItemCell_v3 {
         self.contentView.addSubview(view3)
         view3.activateConstraints([
             view3.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: sep),
-            view3.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sep),
+            view3.leadingAnchor.constraint(equalTo: view2.leadingAnchor),
             view3.widthAnchor.constraint(equalToConstant: colW)
         ])
         self.view3_heightConstraint = view3.heightAnchor.constraint(equalToConstant: 1)
@@ -63,7 +74,7 @@ class iPad5items_type1_cell_v3: GroupItemCell_v3 {
         self.contentView.addSubview(view4)
         view4.activateConstraints([
             view4.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            view4.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sep),
+            view4.leadingAnchor.constraint(equalTo: view2.trailingAnchor, constant: sep),
             view4.widthAnchor.constraint(equalToConstant: colW)
         ])
         self.view4_heightConstraint = view4.heightAnchor.constraint(equalToConstant: 1)
@@ -74,23 +85,13 @@ class iPad5items_type1_cell_v3: GroupItemCell_v3 {
         self.contentView.addSubview(view5)
         view5.activateConstraints([
             view5.topAnchor.constraint(equalTo: view4.bottomAnchor, constant: sep),
-            view5.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -sep),
+            view5.leadingAnchor.constraint(equalTo: view4.leadingAnchor),
             view5.widthAnchor.constraint(equalToConstant: colW)
         ])
         self.view5_heightConstraint = view5.heightAnchor.constraint(equalToConstant: 1)
         self.view5_heightConstraint.isActive = true
         
-        ///
-        let view1_width: CGFloat = SCREEN_SIZE_iPadSideTab().width - (colW*2) - (sep*4)
-        let view1 = iPadAllNews_vImgColBig_v3(width: view1_width)
-        self.contentView.addSubview(view1)
-        view1.activateConstraints([
-            view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            view1.leadingAnchor.constraint(equalTo: view2.trailingAnchor, constant: sep),
-            view1.trailingAnchor.constraint(equalTo: view4.leadingAnchor, constant: -sep),
-        ])
-        self.view1_heightConstraint = view1.heightAnchor.constraint(equalToConstant: 1)
-        self.view1_heightConstraint.isActive = true
+        
         
         
         self.subViews.append(view1)

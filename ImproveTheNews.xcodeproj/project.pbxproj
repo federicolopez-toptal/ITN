@@ -518,6 +518,8 @@
 		BD339B482C762C5E000554A3 /* fakeJson_PublicFigures.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD339B462C762C5E000554A3 /* fakeJson_PublicFigures.txt */; };
 		BD438B8F2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD438B8E2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift */; };
 		BD44483F2C986117001FFBBA /* iPadAllNews_vImgColBig_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44483E2C986117001FFBBA /* iPadAllNews_vImgColBig_v3.swift */; };
+		BD4448412C989A53001FFBBA /* iPad5items_type2_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4448402C989A53001FFBBA /* iPad5items_type2_cell_v3.swift */; };
+		BD4448432C989CC8001FFBBA /* iPad5items_type3_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4448422C989CC8001FFBBA /* iPad5items_type3_cell_v3.swift */; };
 		BD44510D2C7F5FFC00BBD346 /* MainFeedv3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44510C2C7F5FFC00BBD346 /* MainFeedv3.swift */; };
 		BD44510F2C7F600800BBD346 /* MainFeed_v3_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44510E2C7F600800BBD346 /* MainFeed_v3_dataProvider.swift */; };
 		BD4451112C7F691C00BBD346 /* misc.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD4451102C7F691C00BBD346 /* misc.txt */; };
@@ -1072,6 +1074,8 @@
 		BD339B462C762C5E000554A3 /* fakeJson_PublicFigures.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fakeJson_PublicFigures.txt; sourceTree = "<group>"; };
 		BD438B8E2C21C359001D83E7 /* NewsLetterContentUI_weekly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterContentUI_weekly.swift; sourceTree = "<group>"; };
 		BD44483E2C986117001FFBBA /* iPadAllNews_vImgColBig_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadAllNews_vImgColBig_v3.swift; sourceTree = "<group>"; };
+		BD4448402C989A53001FFBBA /* iPad5items_type2_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPad5items_type2_cell_v3.swift; sourceTree = "<group>"; };
+		BD4448422C989CC8001FFBBA /* iPad5items_type3_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPad5items_type3_cell_v3.swift; sourceTree = "<group>"; };
 		BD44510C2C7F5FFC00BBD346 /* MainFeedv3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedv3.swift; sourceTree = "<group>"; };
 		BD44510E2C7F600800BBD346 /* MainFeed_v3_dataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeed_v3_dataProvider.swift; sourceTree = "<group>"; };
 		BD4451102C7F691C00BBD346 /* misc.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = misc.txt; sourceTree = "<group>"; };
@@ -1522,6 +1526,8 @@
 				1FC9C4592B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift */,
 				1F5012F42AFA597200494772 /* iPhoneStory_2colsImg_cell_v3.swift */,
 				BD12750F2C94849600B5EED0 /* iPad5items_type1_cell_v3.swift */,
+				BD4448402C989A53001FFBBA /* iPad5items_type2_cell_v3.swift */,
+				BD4448422C989CC8001FFBBA /* iPad5items_type3_cell_v3.swift */,
 				1F9C711D2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift */,
 				1FD699222B6B288700C4B0F9 /* iPhoneStory_4colsTxt_cell_v3.swift */,
 				1FA48DA12AFC62F7009CEAAC /* iPhoneStory_2colsTxt_cell_v3.swift */,
@@ -2652,6 +2658,7 @@
 				1F2A2354294A5B4D00CA16D7 /* HeaderUnderItemCell.swift in Sources */,
 				1FC73912298A1515003EB38D /* SignUpView.swift in Sources */,
 				1F5261C929E844FE000CE599 /* BannernewsLetterCell.swift in Sources */,
+				BD4448412C989A53001FFBBA /* iPad5items_type2_cell_v3.swift in Sources */,
 				BD5C80812C5A959900ED0A60 /* DialogBubbleView_iPad.swift in Sources */,
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				BD5918762C61576B00AD8FC6 /* SourceCheck.swift in Sources */,
@@ -2806,6 +2813,7 @@
 				1FBD42712A40EDF200BFE68B /* KeywordSearchViewController.swift in Sources */,
 				1FC73906298961EA003EB38D /* Animator.swift in Sources */,
 				1F9EDD5329AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift in Sources */,
+				BD4448432C989CC8001FFBBA /* iPad5items_type3_cell_v3.swift in Sources */,
 				1FA4CE6F28C2D47F0068DE4A /* BundleExtension.swift in Sources */,
 				1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */,
 				1F05842F29E8733600850E60 /* API.swift in Sources */,

@@ -78,6 +78,8 @@ extension MainFeediPad_v3_viewController {
         self.list.register(iPadControversyCell_v3.self, forCellReuseIdentifier: iPadControversyCell_v3.identifier)
         
         self.list.register(iPad5items_type1_cell_v3.self, forCellReuseIdentifier: iPad5items_type1_cell_v3.identifier)
+        self.list.register(iPad5items_type2_cell_v3.self, forCellReuseIdentifier: iPad5items_type2_cell_v3.identifier)
+        self.list.register(iPad5items_type3_cell_v3.self, forCellReuseIdentifier: iPad5items_type3_cell_v3.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -161,11 +163,12 @@ extension MainFeediPad_v3_viewController {
         if let _groupItem = item as? DP3_groupItem { // Group(s) -------------- //
             if let _item = _groupItem as? DP3_iPad5items {
                 if(_item.type==1) {
-                    if(Layout.current() == .textImages) {
-                        cell = self.list.dequeueReusableCell(withIdentifier: iPad5items_type1_cell_v3.identifier)!
-                    } else {
-                        
-                    }
+//                    if(Layout.current() == .textImages) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPad5items_type1_cell_v3.identifier)!
+                } else if(_item.type==2) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPad5items_type2_cell_v3.identifier)!
+                } else if(_item.type==3) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPad5items_type3_cell_v3.identifier)!
                 }
             } else if(_groupItem is DP3_iPhoneStory_1Wide) {
                 if(Layout.current() == .textImages) {
@@ -351,9 +354,12 @@ extension MainFeediPad_v3_viewController {
             result = (self.getCell(indexPath) as! iPadControversyCell_v3).calculateHeight()
         } else if let _item = item as? DP3_iPad5items {
             if(_item.type==1) {
-                if(Layout.current() == .textImages) {
-                    result = (self.getCell(indexPath) as! iPad5items_type1_cell_v3).calculateGroupHeight()
-                }
+//                    if(Layout.current() == .textImages) {
+                result = (self.getCell(indexPath) as! iPad5items_type1_cell_v3).calculateGroupHeight()
+            } else if(_item.type==2) {
+                result = (self.getCell(indexPath) as! iPad5items_type2_cell_v3).calculateGroupHeight()
+            } else if(_item.type==3) {
+                result = (self.getCell(indexPath) as! iPad5items_type3_cell_v3).calculateGroupHeight()
             }
         }
                 
