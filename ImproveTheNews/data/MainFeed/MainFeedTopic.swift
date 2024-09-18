@@ -41,7 +41,20 @@ struct MainFeedTopic {
         
         self.articles = [MainFeedArticle]()
         for A in articles {
-            let newArticle = MainFeedArticle(A as! [Any])
+            var _A = [Any]()
+
+            if let _art = A as? NSDictionary {
+                for i in 0...20 {
+                    let key = String(i)
+                    if(_art[key] != nil) {
+                        _A.append( _art[key]! )
+                    }
+                }
+            } else {
+                _A = A as! [Any]
+            }
+                
+            let newArticle = MainFeedArticle(_A)
             self.articles.append(newArticle)
         }
     }

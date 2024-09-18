@@ -28,6 +28,8 @@ struct MainFeedArticle {
     var videoFile: String?
     var isContext: Bool = false
     
+    var summaryText: String = ""
+    
     
     init (_ json: [Any]) {
         self.source = json[0] as! String
@@ -59,8 +61,8 @@ struct MainFeedArticle {
         
         self.isStory = false
         self.storySources = [String]()
-        
-        if(json.count == 13) {
+                
+        if(json.count >= 13) {
             self.isStory = true
             if let _sources = json[12] as? [Any] {
                 for S in _sources {
@@ -68,6 +70,18 @@ struct MainFeedArticle {
                         self.storySources.append(S as! String)
                     }
                 }
+            }
+        }
+        
+        if(json.count>=14 && self.summaryText == "") {
+            if(json[13] is String) {
+                self.summaryText = json[13] as! String
+            }
+        }
+        
+        if(json.count>=15  && self.summaryText == "") {
+            if(json[14] is String) {
+                self.summaryText = json[14] as! String
             }
         }
         

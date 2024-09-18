@@ -107,7 +107,7 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
         self.mainImageView.showCorners(true)
         
         self.titleLabel.text = article.title
-        self.descrlabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        self.descrlabel.text = article.summaryText
         self.timeLabel.text = FIX_TIME(article.time).uppercased()
         
         if(PREFS_SHOW_SOURCE_ICONS()) {

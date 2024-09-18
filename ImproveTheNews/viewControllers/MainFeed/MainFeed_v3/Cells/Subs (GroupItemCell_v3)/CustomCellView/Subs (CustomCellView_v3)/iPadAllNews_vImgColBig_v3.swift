@@ -429,7 +429,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
 //                }
 //            }
             
-            self.descrlabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            self.descrlabel.text = article.summaryText
             
             self.storySources.load(article.storySources)
             self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
