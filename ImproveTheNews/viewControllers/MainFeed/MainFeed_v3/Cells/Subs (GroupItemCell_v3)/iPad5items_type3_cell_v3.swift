@@ -91,14 +91,32 @@ class iPad5items_type3_cell_v3: GroupItemCell_v3 {
         self.view5_heightConstraint = view5.heightAnchor.constraint(equalToConstant: 1)
         self.view5_heightConstraint.isActive = true
         
-        
-        
-        
         self.subViews.append(view1)
         self.subViews.append(view2)
         self.subViews.append(view3)
         self.subViews.append(view4)
         self.subViews.append(view5)
+        
+        //------------------------
+        let line1View = UIView()
+        self.contentView.addSubview(line1View)
+        line1View.activateConstraints([
+            line1View.leadingAnchor.constraint(equalTo: view2.leadingAnchor),
+            line1View.trailingAnchor.constraint(equalTo: view2.trailingAnchor),
+            line1View.topAnchor.constraint(equalTo: view2.bottomAnchor),
+            line1View.heightAnchor.constraint(equalToConstant: 2)
+        ])
+        ADD_HDASHES(to: line1View)
+            
+        let line2View = UIView()
+        self.contentView.addSubview(line2View)
+        line2View.activateConstraints([
+            line2View.leadingAnchor.constraint(equalTo: view4.leadingAnchor),
+            line2View.trailingAnchor.constraint(equalTo: view4.trailingAnchor),
+            line2View.topAnchor.constraint(equalTo: view4.bottomAnchor),
+            line2View.heightAnchor.constraint(equalToConstant: 2)
+        ])
+        ADD_HDASHES(to: line2View)
     }
 
     // MARK: Overrides

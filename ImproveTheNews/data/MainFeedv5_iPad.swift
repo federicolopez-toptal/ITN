@@ -1,5 +1,5 @@
 //
-//  MainFeedv4_iPhone.swift
+//  MainFeedv5_iPad.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 28/12/2022.
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 // MARK: Definition(s)
-class MainFeedv5_iPhone {
+class MainFeedv5_iPad {
     
     var topic = "news"          // Current topic
     var count_ST = 0
@@ -24,7 +24,7 @@ class MainFeedv5_iPhone {
 }
  
 // MARK: Load data
-extension MainFeedv5_iPhone {
+extension MainFeedv5_iPad {
     
     // main LOAD DATA
     func loadData(_ topic: String, callback: @escaping (Error?) -> ()) {
@@ -85,7 +85,8 @@ extension MainFeedv5_iPhone {
     
     // load MORE data
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
-        let strUrl = self.buildUrl(topic: T, A: 8, B: 0, C: 4, SA: self.count_AR, SS: self.count_ST)
+//        let strUrl = self.buildUrl(topic: T, A: 8, B: 1, C: 4, SA: self.count_AR, SS: self.count_ST)
+        let strUrl = self.buildUrl(topic: T, A: 5, B: 0, C: 3, SA: self.count_AR, SS: self.count_ST)
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
         
@@ -117,7 +118,7 @@ extension MainFeedv5_iPhone {
 }
 
 // MARK: Utils
-extension MainFeedv5_iPhone {
+extension MainFeedv5_iPad {
     
     private func buildUrl(topic: String, A: Int, B: Int, C: Int, SA: Int, SS: Int) -> String {
 
@@ -140,7 +141,7 @@ extension MainFeedv5_iPhone {
 
 
 // MARK: - Data related
-extension MainFeedv5_iPhone {
+extension MainFeedv5_iPad {
     
     private func parse(_ json: [String: Any], mainTopicItemsLimit: Int) {
         
@@ -307,7 +308,7 @@ extension MainFeedv5_iPhone {
 
 
 // MARK: - Counting (Stories/Articles per Topic)
-extension MainFeedv5_iPhone {
+extension MainFeedv5_iPad {
     
     func resetCounting() {
         // Called from: MainFeed.../populateDataProvider (beginning)
@@ -328,7 +329,7 @@ extension MainFeedv5_iPhone {
 
 
 // MARK: - Utilities
-extension MainFeedv5_iPhone {
+extension MainFeedv5_iPad {
 
     
     
@@ -560,7 +561,7 @@ extension MainFeedv5_iPhone {
 }
 
 // MARK: - IA extra topic
-extension MainFeedv5_iPhone {
+extension MainFeedv5_iPad {
 
     private func addIA() {
         let data: [Any] = [

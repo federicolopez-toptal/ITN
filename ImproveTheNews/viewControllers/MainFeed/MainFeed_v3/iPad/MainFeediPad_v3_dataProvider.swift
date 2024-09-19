@@ -51,7 +51,6 @@ extension MainFeediPad_v3_viewController {
                 if(itemInTopic == 0) {
                     self.addHeader(text: _T.capitalizedName)
                     //itemInTopic += 1
-                    
                     itemInTopic = topicLayout
                 }
                 
@@ -92,26 +91,6 @@ extension MainFeediPad_v3_viewController {
                         }
                     }
                 
-//                    // Extra spacer(s) - specific situations
-//                    if let _last = self.dataProvider.last {
-//                        if(_last is DP3_iPhoneStory_1Wide && _newGroupItem is DP3_iPhoneArticle_2cols) {
-//                            let spacer = DP3_spacer(size: 10)
-//                            self.dataProvider.append(spacer)
-//                        }
-//                    }
-//                    if let _last = self.dataProvider.last {
-//                        if(_last is DP3_iPhoneArticle_2cols && _newGroupItem is DP3_iPhoneStory_1Wide) {
-//                            let spacer = DP3_spacer(size: 20)
-//                            self.dataProvider.append(spacer)
-//                        }
-//                    }
-//                    if let _last = self.dataProvider.last {
-//                        if(_last is DP3_iPhoneStory_1Wide && _newGroupItem is DP3_iPhoneStory_2cols) {
-//                            let spacer = DP3_spacer(size: 10)
-//                            self.dataProvider.append(spacer)
-//                        }
-//                    }
-                                
                     self.dataProvider.append(_newGroupItem)
                     itemInTopic += 1
                 } // fill ///////////////////
@@ -145,9 +124,17 @@ extension MainFeediPad_v3_viewController {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
         
+        var topicLayout: Int = 1
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
-            var _T = self.data.topics[i]
+            //var _T = self.data.topics[i]
+            var _T: MainFeedTopic!
+            if(i<self.data.topics.count) {
+                _T = self.data.topics[i]
+            } else {
+                continue
+            }
+            
             if(_T.name == "ai" && self.topic != "ai") {
                 continue
             }
@@ -158,27 +145,30 @@ extension MainFeediPad_v3_viewController {
             // Headers
                 if(itemInTopic == 0) {
                     self.addHeader(text: _T.capitalizedName)
-                    itemInTopic += 1
+                    //itemInTopic += 1
+                    itemInTopic = topicLayout
                 }
                 
                 var newGroupItem: DP3_groupItem?
-                
                 switch(itemInTopic) {
-                    case 1:
-                        if(_T.stillHasStories()) {
-                            newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
-                        } else {
-                            itemInTopic += 1
-                        }
+                    case 1, 2, 3:
+                        newGroupItem = DP3_iPad5items(type: itemInTopic)
                 
-                    case 3, 6:
-                        newGroupItem = DP3_iPhoneArticle_4cols() // Row: 4 articles
-                
-                    case 2, 4:
-                        newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
-                
-                    case 5:
-                        newGroupItem = DP3_iPhoneStory_4cols() // Row: 4 stories
+//                    case 1:
+//                        if(_T.stillHasStories()) {
+//                            newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
+//                        } else {
+//                            itemInTopic += 1
+//                        }
+//                
+//                    case 3, 6:
+//                        newGroupItem = DP3_iPhoneArticle_4cols() // Row: 4 articles
+//                
+//                    case 2, 4:
+//                        newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
+//                
+//                    case 5:
+//                        newGroupItem = DP3_iPhoneStory_4cols() // Row: 4 stories
                                 
                     default:
                         NOTHING()
@@ -206,12 +196,17 @@ extension MainFeediPad_v3_viewController {
                 } // fill ///////////////////
                 
                 
-                if(itemInTopic==7) {
-                    itemInTopic = 5
+                if(itemInTopic==4) {
+                    itemInTopic = 1
                 }
                 
                 
             } // while
+            
+            topicLayout += 1
+            if(topicLayout==4) {
+                topicLayout = 1
+            }
             
             //Banner, only for 1rst topic (if apply)
             if(i==0) { self.insertNewBanner() }
@@ -231,6 +226,11 @@ extension MainFeediPad_v3_viewController {
 extension MainFeediPad_v3_viewController {
     
     private func addHeader(text: String) {
+        if(self.dataProvider.count > 0) {
+            let sep = DP3_lineSeparator(type: 1)
+            self.dataProvider.append(sep)
+        }
+    
         let header = DP3_headerItem(title: text)
         self.dataProvider.append(header)
     }

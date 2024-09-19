@@ -18,7 +18,7 @@ class MainFeediPad_v3_viewController: BaseViewController {
     var list = CustomFeedList()
     
     var topic = "news"
-    let data = MainFeedv4_iPad()
+    let data = MainFeedv5_iPad()
     var dataProvider = [DP3_item]()
     
     var topicsCompleted = [String: Bool]()
