@@ -86,7 +86,7 @@ extension MainFeedv5_iPad {
     // load MORE data
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
 //        let strUrl = self.buildUrl(topic: T, A: 8, B: 1, C: 4, SA: self.count_AR, SS: self.count_ST)
-        let strUrl = self.buildUrl(topic: T, A: 5, B: 0, C: 3, SA: self.count_AR, SS: self.count_ST)
+        let strUrl = self.buildUrl(topic: T, A: 8, B: 0, C: 4, SA: self.count_AR, SS: self.count_ST)
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
         

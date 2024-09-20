@@ -51,6 +51,23 @@ class iPhoneLineSeparatorCell_v3: UITableViewCell {
                 
                 posX += width + 16
             }
+        } else if(type==4) {
+            var posX: CGFloat = 16
+            let width: CGFloat = (SCREEN_SIZE_iPadSideTab().width-(16*5))/4
+        
+            for _ in 1...4 {
+                let lineView = UIView()
+                self.contentView.addSubview(lineView)
+                lineView.activateConstraints([
+                    lineView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: posX),
+                    lineView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+                    lineView.heightAnchor.constraint(equalToConstant: 2),
+                    lineView.widthAnchor.constraint(equalToConstant: width),
+                ])
+                ADD_HDASHES(to: lineView)
+                
+                posX += width + 16
+            }
         }
     }
     

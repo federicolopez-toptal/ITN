@@ -888,21 +888,26 @@ extension MainFeedv3 {
             result += "10" // default value: Hidden + Step 0
         }
         
-        // Banner(s)
-//        if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {
-//            let allBannerCodes = _allBannerCodesString.components(separatedBy: ",")
-//            
-//            for bCode in allBannerCodes {
-//                if let _bannerStatus = READ(LocalKeys.misc.bannerPrefix + bCode) {
-//                    result += bCode + _bannerStatus
-//                }
-//            }
-//        }
-        
-        result += "yT02pC02nL02"
+    // Banner(s)
+        result += "yT02"
         if(!result.contains("lO03")) {
             result += "lO03"
         }
+        
+        if let _allBannerCodesString = READ(LocalKeys.misc.allBannerCodes) {
+            let allBannerCodes = _allBannerCodesString.components(separatedBy: ",")
+            
+            for bCode in allBannerCodes {
+                if(bCode != "yT" && bCode != "lO") {
+                    if let _bannerStatus = READ(LocalKeys.misc.bannerPrefix + bCode) {
+                        result += bCode + _bannerStatus
+                    }
+                }
+            }
+        }
+        
+//        result += "yT02pC02nL02"
+        
         
         return result
     }
