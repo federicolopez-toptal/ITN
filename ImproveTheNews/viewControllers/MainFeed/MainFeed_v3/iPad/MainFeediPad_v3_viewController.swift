@@ -117,6 +117,8 @@ class MainFeediPad_v3_viewController: BaseViewController {
 //            let vc = PreferencesViewController()
 //            CustomNavController.shared.pushViewController(vc, animated: true)
 //        }
+
+        CHECK_AUTHENTICATED()
     }
     
     override func viewWillAppear(_ animated: Bool) {

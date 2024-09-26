@@ -183,7 +183,7 @@ class ControversiesData {
     }
     
     func loadList(topic: String, page: Int,
-        callback: @escaping (Error?, Int?, [ControversyListItem]?, [SimpleTopic]?) -> () ) {
+        callback: @escaping (Error?, Int?, [ControversyListItem]?, [SimpleTopic]?, ControversyPortalData?) -> () ) {
         // error, total, itemList, topics
         
 //        let url = ITN_URL() + "/claims-api/claim/search?topic=\(topic)&page=\(page)&per_page=8"
@@ -197,12 +197,12 @@ class ControversiesData {
         let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
-                callback(error, nil, nil, nil)
+                callback(error, nil, nil, nil, nil)
             }
             
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(_error, nil, nil, nil)
+                callback(_error, nil, nil, nil, nil)
             } else {
             
 //                if let _data = data {
@@ -222,14 +222,21 @@ class ControversiesData {
                 
                 if let _json = JSON(fromData: _data) {
                     if let _ = _json["error"] {
-                        callback(CustomError.jsonParseError, nil, nil, nil)
+                        callback(CustomError.jsonParseError, nil, nil, nil, nil)
                     } else {
 //                        if let _keyword = _json["keyword"] as? String,
                         if let _total = _json["total"] as? Int,
                             let _data = _json["data"] as? [[String: Any]],
 //                            let _topics = _json["topics"] as? [[String: Any]] {
                             let _topics = _json["parentCategories"] as? [[String: Any]] {
-                         
+                            
+                            var controData: ControversyPortalData? = nil
+                            if let _data = _json["categoryData"] as? [String: Any] {
+                                controData = ControversyPortalData(jsonObj: _data)
+                            }
+                            
+                            //let catData = _json["categoryData"] as? [[String: Any]] {
+                            
                             var cItems = [ControversyListItem]()
                             for I in _data {
                                 let newItem = ControversyListItem(jsonObj: I)
@@ -248,13 +255,13 @@ class ControversiesData {
                             }
                             
                             
-                            callback(nil, _total, cItems, topics)
+                            callback(nil, _total, cItems, topics, controData)
                         } else {
-                            callback(CustomError.jsonParseError, nil, nil, nil)
+                            callback(CustomError.jsonParseError, nil, nil, nil, nil)
                         }
                     }
                 } else {
-                    callback(CustomError.jsonParseError, nil, nil, nil)
+                    callback(CustomError.jsonParseError, nil, nil, nil, nil)
                 }
             }
         }
@@ -365,6 +372,18 @@ class ControversyListItem {
         print("--------------------------")
     }
     
+}
+
+// --------------------------------------------------
+class ControversyPortalData {
+    
+    var title: String = ""
+    var description: String = ""
+    
+    init(jsonObj: [String: Any]) {
+        self.title = CHECK(jsonObj["title"])
+        self.description = CHECK(jsonObj["description"])
+    }
 }
 
 // --------------------------------------------------

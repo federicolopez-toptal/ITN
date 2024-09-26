@@ -10,6 +10,7 @@ import UIKit
 class ControversiesViewController: BaseViewController {
 
     let M: CGFloat = CSS.shared.iPhoneSide_padding
+    let GRAPH_HEIGHT: CGFloat = 250
     var iPad_W: CGFloat = -1
     
     var page: Int = 0
@@ -18,6 +19,9 @@ class ControversiesViewController: BaseViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
     var vStack: UIStackView!
+    
+    var portalInfoView = UIStackView()
+    var portalInfoViewHeightConstraint: NSLayoutConstraint? = nil
     
     var items: [ControversyListItem] = []
     var containerViewHeightConstraint: NSLayoutConstraint?
@@ -109,7 +113,7 @@ class ControversiesViewController: BaseViewController {
             self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
             
-        // --------------------------------------
+        // -------------------------------------- //
         // Container / Structure
         ADD_SPACER(to: self.vStack, height: 16)
         
@@ -119,7 +123,15 @@ class ControversiesViewController: BaseViewController {
             self.topicsContainer.heightAnchor.constraint(equalToConstant: 40+16)
         ])
         
+        self.portalInfoView = VSTACK(into: self.vStack)
+        self.portalInfoView.backgroundColor = .clear //.orange
+        self.portalInfoViewHeightConstraint = self.portalInfoView.heightAnchor.constraint(equalToConstant: 50)
+        self.portalInfoViewHeightConstraint?.isActive = true
+        self.portalInfoView.hide()
+        
+        
         let mainView = self.createContainerView()
+        
         let containerView = UIView()
         mainView.addSubview(containerView)
         //containerView.backgroundColor = .orange
@@ -260,6 +272,8 @@ extension ControversiesViewController: UIGestureRecognizerDelegate {
 extension ControversiesViewController {
     
     private func loadContent(page P: Int) {
+        self.portalInfoView.hide()
+        self.showMoreButton(false)
         
         var T = ""
         if(self.topics.count>0 && self.currentTopic != -1) {
@@ -271,7 +285,7 @@ extension ControversiesViewController {
         self.loadsCount += 1
         
         print("LOAD CONTROVERSY \(self.loadsCount)")
-        ControversiesData.shared.loadList(topic: T, page: P) { (error, total, list, topics) in
+        ControversiesData.shared.loadList(topic: T, page: P) { (error, total, list, topics, controData) in
 
             self.hideLoading()
             if let _ = error {
@@ -289,7 +303,7 @@ extension ControversiesViewController {
             } else {
                 MAIN_THREAD {
                     if let _n = total, let _L = list, let _T = topics {
-                        self.fillContent(total: _n, items: _L, topics: _T)
+                        self.fillContent(total: _n, items: _L, topics: _T, controData: controData)
                     }
                 }
             }
@@ -297,12 +311,150 @@ extension ControversiesViewController {
                 
     }
     
-    func fillContent(total: Int, items: [ControversyListItem], topics: [SimpleTopic]) {
+    func fillContent(total: Int, items: [ControversyListItem], topics: [SimpleTopic], controData: ControversyPortalData?) {
         let containerView = self.view.viewWithTag(555)!
         
         if(self.topics.count==0) {
             self.addTopics(topics)
         }
+        
+        REMOVE_ALL_SUBVIEWS(from: self.portalInfoView)
+        /* Portal stuff */
+        if let _controData = controData {
+            let _W: CGFloat = IPHONE() ? (SCREEN_SIZE().width-32) : self.W()
+            
+            let portalView = UIView()
+            portalView.backgroundColor = .clear //.green
+            portalView.activateConstraints([
+                portalView.widthAnchor.constraint(equalToConstant: _W)
+            ])
+            
+            let titleLabel = UILabel()
+            titleLabel.numberOfLines = 0
+            titleLabel.font = DM_SERIF_DISPLAY_resize(22)
+            titleLabel.textColor = CSS.shared.displayMode().main_textColor
+            titleLabel.text = _controData.title
+            
+            let descrLabel = UILabel()
+            descrLabel.numberOfLines = 0
+            descrLabel.font = AILERON(14)
+            descrLabel.textColor = CSS.shared.displayMode().sec_textColor
+            descrLabel.text = _controData.description
+            descrLabel.setLineSpacing(lineSpacing: 6.0)
+            
+            let graphView = self.createGraphView()
+            
+            if(IPHONE()) {
+                let innerVStack = VSTACK(into: portalView)
+                innerVStack.backgroundColor = .clear
+                innerVStack.activateConstraints([
+                    innerVStack.topAnchor.constraint(equalTo: portalView.topAnchor),
+                    innerVStack.leadingAnchor.constraint(equalTo: portalView.leadingAnchor),
+                    innerVStack.trailingAnchor.constraint(equalTo: portalView.trailingAnchor)
+                ])
+                
+                innerVStack.addArrangedSubview(titleLabel)
+                ADD_SPACER(to: innerVStack, height: 8)
+                innerVStack.addArrangedSubview(descrLabel)
+                ADD_SPACER(to: innerVStack, height: 8)
+                
+                let graphContainerView = UIView()
+                graphContainerView.backgroundColor = .clear
+                innerVStack.addArrangedSubview(graphContainerView)
+                graphContainerView.activateConstraints([
+                    graphContainerView.heightAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT)
+                ])
+                
+                graphContainerView.addSubview(graphView)
+                graphView.activateConstraints([
+                    graphView.centerXAnchor.constraint(equalTo: graphContainerView.centerXAnchor)
+                ])
+
+            } else {
+                let innerHStack = HSTACK(into: portalView)
+                innerHStack.backgroundColor = .clear
+                innerHStack.activateConstraints([
+                    innerHStack.topAnchor.constraint(equalTo: portalView.topAnchor),
+                    innerHStack.leadingAnchor.constraint(equalTo: portalView.leadingAnchor),
+                    innerHStack.trailingAnchor.constraint(equalTo: portalView.trailingAnchor)
+                ])
+                
+                let innerVStack = VSTACK(into: innerHStack)
+                innerVStack.backgroundColor = .clear
+                innerVStack.addArrangedSubview(titleLabel)
+                ADD_SPACER(to: innerVStack, height: 8)
+                innerVStack.addArrangedSubview(descrLabel)
+                ADD_SPACER(to: innerVStack)
+                
+                ADD_SPACER(to: innerHStack, width: 16)
+                innerHStack.addArrangedSubview(graphView)
+            }
+            
+            
+            
+            
+        
+            var H: CGFloat = 0
+            
+            if(IPHONE()) {
+                H = titleLabel.calculateHeightFor(width: _W) + 8 +
+                descrLabel.calculateHeightFor(width: _W) + 8 +
+                self.GRAPH_HEIGHT
+            } else {
+                let _w: CGFloat = self.W() - 16 - self.GRAPH_HEIGHT
+                let _h = titleLabel.calculateHeightFor(width: _w) + 8 + descrLabel.calculateHeightFor(width: _w)
+                
+                if(_h > self.GRAPH_HEIGHT) {
+                    H = _h
+                } else {
+                    H = self.GRAPH_HEIGHT
+                }
+            }
+            H += 16
+        
+            self.portalInfoView.addSubview(portalView)
+            portalView.activateConstraints([
+                portalView.heightAnchor.constraint(equalToConstant: H),
+                portalView.centerXAnchor.constraint(equalTo: self.portalInfoView.centerXAnchor)
+            ])
+            self.portalInfoViewHeightConstraint?.constant = H
+        
+        
+
+//            
+//            let graphView = self.createGraphView()
+//            
+//            if(IPHONE()) {
+//                self.portalInfoView.addArrangedSubview(titleLabel)
+//                ADD_SPACER(to: self.portalInfoView, height: 8)
+//                self.portalInfoView.addArrangedSubview(descrLabel)
+//                ADD_SPACER(to: self.portalInfoView, height: 8)
+//                self.portalInfoView.addArrangedSubview(graphView)
+//            } else {
+//                let innerHStack = HSTACK(into: self.portalInfoView)
+//                innerHStack.backgroundColor = .clear
+//                
+//                let innerVStack = VSTACK(into: innerHStack)
+//                innerVStack.backgroundColor = .clear //.green
+//                innerVStack.addArrangedSubview(titleLabel)
+//                ADD_SPACER(to: innerVStack, height: 8)
+//                innerVStack.addArrangedSubview(descrLabel)
+//                
+//                ADD_SPACER(to: innerHStack, width: 16)
+//                innerHStack.addArrangedSubview(graphView)
+//                
+//                //ADD_SPACER(to: innerHStack, backgroundColor: .yellow, width: 250)
+//            }
+//            
+//            self.portalInfoViewHeightConstraint?.constant = 250+150
+            self.portalInfoView.show()
+            /* Portal stuff */
+        } else {
+            self.portalInfoView.hide()
+        }
+//        
+//        print("ITEMS", self.portalInfoView.arrangedSubviews.count)
+//        print("height", self.portalInfoViewHeightConstraint?.constant)
         
         var _items = items
 //        for _ in 1...1 {
@@ -487,14 +639,14 @@ extension ControversiesViewController {
     }
     
     func showMoreButton(_ visible: Bool) {
-        let moreView = self.view.viewWithTag(556)!
-        
-        if(visible) {
-            self.showMoreViewHeightConstraint?.constant = 88
-            moreView.show()
-        } else {
-            self.showMoreViewHeightConstraint?.constant = 0
-            moreView.hide()
+        if let moreView = self.view.viewWithTag(556) {
+            if(visible) {
+                self.showMoreViewHeightConstraint?.constant = 88
+                moreView.show()
+            } else {
+                self.showMoreViewHeightConstraint?.constant = 0
+                moreView.hide()
+            }
         }
     }
     
@@ -658,4 +810,20 @@ extension ControversiesViewController {
         CustomNavController.shared.tour.rotate()
     }
 
+}
+
+extension ControversiesViewController {
+    
+    func createGraphView() -> UIView {
+        let resultView = UIView()
+        resultView.backgroundColor = .systemPink
+        
+        resultView.activateConstraints([
+            resultView.widthAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT),
+            resultView.heightAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT)
+        ])
+        
+        return resultView
+    }
+    
 }

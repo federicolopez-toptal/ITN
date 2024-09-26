@@ -31,6 +31,7 @@ class ControversyCellView: UIView {
     let statusLabel = UILabel()
     
     let titleLabel = UILabel()
+    let pill = UILabel()
     let timeLabel = UILabel()
     
     var figureSlugs = [String]()
@@ -169,28 +170,27 @@ class ControversyCellView: UIView {
                 self.titleLabel.topAnchor.constraint(equalTo: self.statusLabel.bottomAnchor, constant: 10)
             ])
         
-            let pill = UILabel()
-            pill.text = "CONTROVERSY"
-            pill.font = AILERON(12)
-            pill.textAlignment = .center
-            pill.textColor = UIColor(hex: 0x19191C)
-            pill.backgroundColor = UIColor(hex: 0x60C4D6)
-            self.addSubview(pill)
-            pill.activateConstraints([
-                pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
-                pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: M),
-                pill.widthAnchor.constraint(equalToConstant: 120),
-                pill.heightAnchor.constraint(equalToConstant: 24)
+            self.pill.text = "CONTROVERSY"
+            self.pill.font = AILERON(12)
+            self.pill.textAlignment = .center
+            self.pill.textColor = UIColor(hex: 0x19191C)
+            self.pill.backgroundColor = UIColor(hex: 0x60C4D6)
+            self.addSubview(self.pill)
+            self.pill.activateConstraints([
+                self.pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: M),
+                self.pill.widthAnchor.constraint(equalToConstant: 120),
+                self.pill.heightAnchor.constraint(equalToConstant: 24),
+                self.pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
             ])
-            pill.layer.cornerRadius = 12
-            pill.clipsToBounds = true
+            self.pill.layer.cornerRadius = 12
+            self.pill.clipsToBounds = true
             
             self.timeLabel.font = AILERON(12)
             self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
             self.addSubview(self.timeLabel)
             self.timeLabel.activateConstraints([
-                self.timeLabel.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: 12),
-                self.timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor)
+                self.timeLabel.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: 12),
+                self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
             ])
             
             //self.buttonArea.backgroundColor = .red.withAlphaComponent(0.25)
@@ -257,6 +257,16 @@ class ControversyCellView: UIView {
             self.titleLabel.remarkSearchTerm(_remark, color: CSS.shared.displayMode().main_textColor)
         }
         
+        if(controversy.controversyType.uppercased() == "ELECTION_ISSUE") {
+            self.pill.text = "ELECTION ISSUE"
+            self.pill.font = AILERON_SEMIBOLD(12)
+            self.pill.backgroundColor = UIColor(hex: 0xf4e457)
+        } else {
+            self.pill.text = "CONTROVERSY"
+            self.pill.font = AILERON(12)
+            self.pill.backgroundColor = UIColor(hex: 0x60C4D6)
+        }
+        
         var time = controversy.time
         if(time == "1 second ago"){ time = "JUST NOW" }
         self.timeLabel.text = time.uppercased()
@@ -303,7 +313,7 @@ class ControversyCellView: UIView {
                     }
                 }
                 
-                _statusTopConstraint.constant = val
+                _statusTopConstraint.constant = val + 8
             }
         }
     }
