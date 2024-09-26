@@ -138,6 +138,8 @@ extension NewSlidersViewController {
             C = self.articlesPerLoadSplit
         }
         
+        UUID.shared.checkIfGenerated { (success) in // generates a new uuid (if needed)
+        /* ... */
         self.data.loadArticlesData(self.topic, amount: C) { error in
             MAIN_THREAD {/* --- */
                 if(error != nil || self.data.topics.count == 0) {
@@ -160,6 +162,9 @@ extension NewSlidersViewController {
                 self.slidersPanel.floatingButton.show()
             }
         }
+        /* ... */
+        }
+        
     }
     
     func showErrorAlert() {

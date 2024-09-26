@@ -47,6 +47,9 @@ class MainFeed_v3_viewController: BaseViewController {
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.preferencesSetDefaultValues()
         self.addNotificationObservers()
+        
+        UUID.shared.trace()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -111,7 +114,9 @@ class MainFeed_v3_viewController: BaseViewController {
             self.loadData(showLoading: true)
             CustomNavController.shared.menu.changeLayoutFromStoredValue()
             CustomNavController.shared.menu.changeDisplayModeFromStoredValue()
-        }        
+        }
+        
+        CHECK_AUTHENTICATED()
     }
     
     override func viewWillAppear(_ animated: Bool) {

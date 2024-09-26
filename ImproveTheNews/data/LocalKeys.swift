@@ -16,9 +16,18 @@ class LocalKeys { // Keys to store local values
     
     
     class LocalKeys_user { // For class "UUID"
-        let UUID = "user_uuid_v2"
-        let JWT = "user_jwt_v2"
-        let AUTHENTICATED = "user_authenticated"
+        static let version = "3.10"
+        
+        var UUID: String {
+            return "user_uuid_" + LocalKeys_user.version
+        }
+        var JWT: String {
+            return "user_jwt_" + LocalKeys_user.version
+        }
+        var  AUTHENTICATED: String {
+            return "user_authenticated_" + LocalKeys_user.version
+        }
+        
     }
     
     class LocalKeys_misc { // misc

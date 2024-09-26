@@ -581,6 +581,9 @@ extension MenuView {
                 WRITE(LocalKeys.preferences.sourceFilters, value: "")
                 WRITE(LocalKeys.user.AUTHENTICATED, value: "NO")
                 CustomNavController.shared.menu.updateLogout()
+                
+                DELETE(key: LocalKeys.user.UUID)
+                DELETE(key: LocalKeys.user.JWT)
 
                 self.resetAllSettings()
                 NOTIFY(Notification_reloadMainFeed)

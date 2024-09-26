@@ -186,7 +186,10 @@ class ControversiesData {
         callback: @escaping (Error?, Int?, [ControversyListItem]?, [SimpleTopic]?) -> () ) {
         // error, total, itemList, topics
         
-        let url = ITN_URL() + "/claims-api/claim/search?topic=\(topic)&page=\(page)&per_page=8"
+//        let url = ITN_URL() + "/claims-api/claim/search?topic=\(topic)&page=\(page)&per_page=8"
+        let url = ITN_URL() + "/claims-api/claim/search/d?page=" + String(page) +
+            "&per_page=4&category=" + topic
+            
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
@@ -224,7 +227,8 @@ class ControversiesData {
 //                        if let _keyword = _json["keyword"] as? String,
                         if let _total = _json["total"] as? Int,
                             let _data = _json["data"] as? [[String: Any]],
-                            let _topics = _json["topics"] as? [[String: Any]] {
+//                            let _topics = _json["topics"] as? [[String: Any]] {
+                            let _topics = _json["parentCategories"] as? [[String: Any]] {
                          
                             var cItems = [ControversyListItem]()
                             for I in _data {
@@ -306,6 +310,8 @@ class ControversyListItem {
     var image_title: String = ""
     var image_credit: String = ""
     
+    var controversyType: String = ""
+    
     
     init(jsonObj: [String: Any]) {
         self.title = CHECK(jsonObj["title"])
@@ -342,6 +348,10 @@ class ControversyListItem {
         
         if let _image = jsonObj["image"] as? String {
             self.image_url = _image
+        }
+        
+        if let _controversyType = jsonObj["controversyType"] as? String {
+            self.controversyType = _controversyType
         }
     }
     

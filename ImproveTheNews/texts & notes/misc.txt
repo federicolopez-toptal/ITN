@@ -1,1 +1,61 @@
+API (biaspedia)
 
+API.shared.savesSliderValues( MainFeedv3.sliderValues() )
+    Tour
+    TourView
+    MenuView
+    BannerCell
+    BannernewsLetterCell
+    iPadBannerCell
+    iPadBannerNewsletterCell
+    iPhoneBannerCell_v3
+    iPhoneBannerPCCell_v3
+    iPhoneBannerNLCell_v3
+    iPhoneBannerPodCast_v3
+    PrefCheckboxes_cell
+    PrefSliders_cell
+    SourceFilterViewController
+    SourceFilter_iPhoneViewController
+    SlidersPanel_misc
+    
+API.shared.socialDisconnect(socialName: "Linkedin") { (success, serverMsg) in
+    LinkedIn_SDK
+    Twitter_SDK
+    Facebook_SDK
+    
+API.shared.socialLogin(socialName: "Linkedin", accessToken: token) { (success, serverMsg) in
+    LinkedIn_SDK
+    Twitter_SDK
+    Facebook_SDK
+
+API.shared.subscribeToNewsletter(email: emailText.text()) { (success, _) in
+    BannernewsLetterCell
+    iPadBannerNewsletterCell
+    iPhoneBannerNLCell_v3
+    AccountViewController
+    
+API.shared.signIn(email: email, password: password) { (success, serverMsg, gotCookies) in
+    SignInView
+    
+API.shared.getUserInfo { (success, serverMsg, user) in
+    SignInView
+    AccountViewController
+    
+API.shared.resendVerificationEmail(email: self.emailText.text()) { (success, serverMsg) in
+    SignInView
+    
+API.shared.signUp(email: email, password: password, newsletter: self.newsLetterCheck.status) { (success, msg) in
+    SignUpView
+    
+API.shared.userInfoSave(user: userData) { (success, serverMsg) in
+    AccountViewController
+
+API.shared.changeSubscriptionTypeTo(type: sender.tag, email: self.emailText.text()) { (success, serverMSg) in
+    AccountViewController
+    NewsletterSignUp
+    
+API.shared.deleteAccount { (success, serverMsg) in
+    AccountViewController
+    
+API.shared.resetPassword(email: email) { (success, serverMsg) in
+    ResetPassViewController

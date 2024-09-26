@@ -16,9 +16,9 @@ struct MyUser {
     var socialnetworks = [String]()
     var sliderValues = ""
     
-    var subscriptionType = 0 // 0: Not subscribed, 1: Daily, 2: Weekly
-    
-    
+//    var subscriptionType = 0 // 0: Not subscribed, 1: Daily, 2: Weekly
+    var subscriptions = [String]()
+    var verified = false
     
     init() {
     }
@@ -37,21 +37,26 @@ struct MyUser {
             self.email = _email
         }
         
-        if let _subscribed = json["subscribed"] as? String {
-            self.subscriptionType = 0
-            if(_subscribed == "Y") {
-                self.subscriptionType = 1
-                if let _subscription = json["subscription"] as? [String: Any] {
-                    if let _strType = _subscription["frequency"] as? String {
-                        if(_strType.lowercased() == "daily") {
-                            self.subscriptionType = 1
-                        } else {
-                            self.subscriptionType = 2
-                        }
-                    }
-                }
-            }
+        self.subscriptions = []
+        if let _SOptions = json["subscription-options"] as? [String] {
+            self.subscriptions = _SOptions
         }
+        
+//        if let _subscribed = json["subscribed"] as? String {
+////            self.subscriptionType = 0
+//            if(_subscribed == "Y") {
+////                self.subscriptionType = 1
+////                if let _subscription = json["subscription"] as? [String: Any] {
+////                    if let _strType = _subscription["frequency"] as? String {
+////                        if(_strType.lowercased() == "daily") {
+////                            self.subscriptionType = 1
+////                        } else {
+////                            self.subscriptionType = 2
+////                        }
+////                    }
+////                }
+//            }
+//        }
         
         if let _socialnetworks = json["socialnetworks"] as? [String] {
             self.socialnetworks = _socialnetworks
@@ -59,6 +64,13 @@ struct MyUser {
         
         if let _sliderValues = json["slidercookies"] as? String {
             self.sliderValues = _sliderValues
+        }
+        
+        self.verified = false
+        if let _verified = json["verified"] as? String {
+            if(_verified.uppercased() == "Y") {
+                self.verified = true
+            }
         }
     }
 }
@@ -82,6 +94,45 @@ class API {
             "email": email,
             "password": password,
             "newsletter": newsletter ? "Y" : "N",
+            "app": "iOS"
+        ]
+    
+        self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _status = _json["status"] as? String {
+                    if(_status == "OK") {
+                        if let _jwt = _json["jwt"], let _uuid = _json["uuid"] as? String {
+                            WRITE(LocalKeys.user.JWT, value: _jwt)
+                            WRITE(LocalKeys.user.UUID, value: _uuid)
+                        }
+                        if let _sliderValues = _json["slidercookies"] as? String, !_sliderValues.isEmpty {
+                            MainFeedv3.parseSliderValues(_sliderValues)
+                        }
+                        
+                        callback(true, "")
+                    } else {
+                        if let _msg = _json["message"] as? String {
+                            callback(false, _msg)
+                        } else {
+                            callback(false, serverMsg)
+                        }
+                    }
+                } else {
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
+            }
+        }
+    }
+    
+    func signUp(email: String, subscriptions: [String], callback: @escaping (Bool, String) -> () ) {
+    
+        let json: [String: Any] = [
+            "type": "Sign Up",
+            "userId": UUID.shared.getValue(),
+            "email": email,
+            "subscription": subscriptions,
             "app": "iOS"
         ]
     
@@ -247,14 +298,42 @@ class API {
         }
     }
 // ---
+    func changeSubscriptionTypeTo(types: [String], email: String, callback: @escaping (Bool, String) -> () ) {
+        
+        let json: [String: Any] = [
+            "type": "Options",
+            "userId": UUID.shared.getValue(),
+            "email": email,
+            "frequency": types
+        ]
+        
+        print(UUID.shared.getValue())
+        
+        self.makeRequest(to: "newsletter/", with: json) { (success, json, serverMsg) in
+            if let _json = json, success {
+                if let _status = _json["message"] as? String {
+                    if(_status == "OK") {
+                        callback(true, "")
+                    } else {
+                        callback(false, serverMsg)
+                    }
+                } else {
+                    callback(false, serverMsg)
+                }
+            } else {
+                callback(false, serverMsg)
+            }
+        }
+    }
+// ---
     func getUserInfo( callback: @escaping (Bool, String, MyUser?) -> () ) {
         let json: [String: String] = [
             "type": "User Info Get",
             "userId": UUID.shared.getValue()
         ]
         
-        print("USER_ID", UUID.shared.getValue())
-        print("AUTH", self.getBearerAuth() )
+//        print("USER_ID", UUID.shared.getValue())
+//        print("AUTH", self.getBearerAuth() )
         
         self.makeRequest(to: "user/", with: json) { (success, json, serverMsg) in
             if let _json = json, success {
@@ -426,7 +505,7 @@ class API {
 
 extension API {
 
-    private func makeRequest(to urlPath: String, with bodyJson: [String: String],
+    private func makeRequest(to urlPath: String, with bodyJson: [String: Any],
         method: String = "POST",
         callback: @escaping (Bool, [String: Any]?, String) -> ()) {
         
@@ -454,7 +533,13 @@ extension API {
     }
 
     private func getBearerAuth() -> String {
-        return "Bearer " + READ(LocalKeys.user.JWT)!
+        var result = ""
+        
+        if let _jwt = READ(LocalKeys.user.JWT) {
+            result = "Bearer " + _jwt
+        }
+    
+        return result
     }
     
 }

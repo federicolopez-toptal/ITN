@@ -334,94 +334,96 @@ class AccountViewController: BaseViewController {
             self.subscribeButtonLabel.centerYAnchor.constraint(equalTo: subscribeButton.centerYAnchor)
         ])
         
-        ADD_SPACER(to: VStack_form, height: 30)
-        let newsletterFreqLabel = UILabel()
-        newsletterFreqLabel.text = "Newsletter frequency"
-        newsletterFreqLabel.font = AILERON_resize(16)
-        newsletterFreqLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
-        VStack_form.addArrangedSubview(newsletterFreqLabel)
         ADD_SPACER(to: VStack_form, height: 32)
         
-        //---
-        let hStackSubscriptionStyle = HSTACK(into: VStack_form)
+//        ADD_SPACER(to: VStack_form, height: 30)
+//        let newsletterFreqLabel = UILabel()
+//        newsletterFreqLabel.text = "Newsletter frequency"
+//        newsletterFreqLabel.font = AILERON_resize(16)
+//        newsletterFreqLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+//        VStack_form.addArrangedSubview(newsletterFreqLabel)
+//        ADD_SPACER(to: VStack_form, height: 32)
         
-        hStackSubscriptionStyle.addArrangedSubview(circle1)
-        circle1.activateConstraints([
-            circle1.widthAnchor.constraint(equalToConstant: 20),
-            circle1.heightAnchor.constraint(equalToConstant: 20)
-        ])
-        self.circle1.alpha = 0.3
-        self.circle1.tintColor = UIColor(hex: 0x60C4D6)
-        ADD_SPACER(to: hStackSubscriptionStyle, width: 8)
-        let dailyNewsletterLabel = UILabel()
-        dailyNewsletterLabel.text = "Daily"
-        dailyNewsletterLabel.font = AILERON_resize(16)
-        dailyNewsletterLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
-        hStackSubscriptionStyle.addArrangedSubview(dailyNewsletterLabel)
-        
-        let buttonCircle1 = UIButton(type: .custom)
-        buttonCircle1.backgroundColor = .clear //.green.withAlphaComponent(0.3)
-        hStackSubscriptionStyle.addSubview(buttonCircle1)
-        buttonCircle1.activateConstraints([
-            buttonCircle1.leadingAnchor.constraint(equalTo: circle1.leadingAnchor, constant: -10),
-            buttonCircle1.topAnchor.constraint(equalTo: circle1.topAnchor, constant: -10),
-            buttonCircle1.bottomAnchor.constraint(equalTo: circle1.bottomAnchor, constant: 10),
-            buttonCircle1.trailingAnchor.constraint(equalTo: dailyNewsletterLabel.trailingAnchor, constant: 10)
-        ])
-        buttonCircle1.tag = 1
-        buttonCircle1.addTarget(self, action: #selector(subscriptionTypeButtonTap(_:)), for: .touchUpInside)
-        
-            //---
-        ADD_SPACER(to: hStackSubscriptionStyle, width: 25)
-        hStackSubscriptionStyle.addArrangedSubview(circle2)
-        circle2.activateConstraints([
-            circle2.widthAnchor.constraint(equalToConstant: 20),
-            circle2.heightAnchor.constraint(equalToConstant: 20)
-        ])
-        self.circle2.alpha = 0.3
-        self.circle2.tintColor = UIColor(hex: 0x60C4D6)
-        ADD_SPACER(to: hStackSubscriptionStyle, width: 8)
-        let weeklyNewsletterLabel = UILabel()
-        weeklyNewsletterLabel.text = "Weekly"
-        weeklyNewsletterLabel.font = AILERON_resize(16)
-        weeklyNewsletterLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
-        hStackSubscriptionStyle.addArrangedSubview(weeklyNewsletterLabel)
-        
-        let buttonCircle2 = UIButton(type: .custom)
-        buttonCircle2.backgroundColor = .clear //.green.withAlphaComponent(0.3)
-        hStackSubscriptionStyle.addSubview(buttonCircle2)
-        buttonCircle2.activateConstraints([
-            buttonCircle2.leadingAnchor.constraint(equalTo: circle2.leadingAnchor, constant: -10),
-            buttonCircle2.topAnchor.constraint(equalTo: circle2.topAnchor, constant: -10),
-            buttonCircle2.bottomAnchor.constraint(equalTo: circle2.bottomAnchor, constant: 10),
-            buttonCircle2.trailingAnchor.constraint(equalTo: weeklyNewsletterLabel.trailingAnchor, constant: 10)
-        ])
-        buttonCircle2.tag = 2
-        buttonCircle2.addTarget(self, action: #selector(subscriptionTypeButtonTap(_:)), for: .touchUpInside)
-        ADD_SPACER(to: hStackSubscriptionStyle)
-        ADD_SPACER(to: VStack_form, height: 32)
-        
-        hStackSubscriptionStyle.addSubview(self.circleMark1)
-        self.circleMark1.tintColor = .black.withAlphaComponent(0.5)
-        self.circleMark1.activateConstraints([
-            self.circleMark1.widthAnchor.constraint(equalToConstant: 12),
-            self.circleMark1.heightAnchor.constraint(equalToConstant: 12),
-            self.circleMark1.centerXAnchor.constraint(equalTo: self.circle1.centerXAnchor),
-            self.circleMark1.centerYAnchor.constraint(equalTo: self.circle2.centerYAnchor)
-        ])
-        self.circleMark1.hide()
-        
-        hStackSubscriptionStyle.addSubview(self.circleMark2)
-        self.circleMark2.tintColor = .black.withAlphaComponent(0.5)
-        self.circleMark2.activateConstraints([
-            self.circleMark2.widthAnchor.constraint(equalToConstant: 12),
-            self.circleMark2.heightAnchor.constraint(equalToConstant: 12),
-            self.circleMark2.centerXAnchor.constraint(equalTo: self.circle2.centerXAnchor),
-            self.circleMark2.centerYAnchor.constraint(equalTo: self.circle2.centerYAnchor)
-        ])
-        self.circleMark2.hide()
-        
-        //---
+//        //---
+//        let hStackSubscriptionStyle = HSTACK(into: VStack_form)
+//        
+//        hStackSubscriptionStyle.addArrangedSubview(circle1)
+//        circle1.activateConstraints([
+//            circle1.widthAnchor.constraint(equalToConstant: 20),
+//            circle1.heightAnchor.constraint(equalToConstant: 20)
+//        ])
+//        self.circle1.alpha = 0.3
+//        self.circle1.tintColor = UIColor(hex: 0x60C4D6)
+//        ADD_SPACER(to: hStackSubscriptionStyle, width: 8)
+//        let dailyNewsletterLabel = UILabel()
+//        dailyNewsletterLabel.text = "Daily"
+//        dailyNewsletterLabel.font = AILERON_resize(16)
+//        dailyNewsletterLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+//        hStackSubscriptionStyle.addArrangedSubview(dailyNewsletterLabel)
+//        
+//        let buttonCircle1 = UIButton(type: .custom)
+//        buttonCircle1.backgroundColor = .clear //.green.withAlphaComponent(0.3)
+//        hStackSubscriptionStyle.addSubview(buttonCircle1)
+//        buttonCircle1.activateConstraints([
+//            buttonCircle1.leadingAnchor.constraint(equalTo: circle1.leadingAnchor, constant: -10),
+//            buttonCircle1.topAnchor.constraint(equalTo: circle1.topAnchor, constant: -10),
+//            buttonCircle1.bottomAnchor.constraint(equalTo: circle1.bottomAnchor, constant: 10),
+//            buttonCircle1.trailingAnchor.constraint(equalTo: dailyNewsletterLabel.trailingAnchor, constant: 10)
+//        ])
+//        buttonCircle1.tag = 1
+//        buttonCircle1.addTarget(self, action: #selector(subscriptionTypeButtonTap(_:)), for: .touchUpInside)
+//        
+//            //---
+//        ADD_SPACER(to: hStackSubscriptionStyle, width: 25)
+//        hStackSubscriptionStyle.addArrangedSubview(circle2)
+//        circle2.activateConstraints([
+//            circle2.widthAnchor.constraint(equalToConstant: 20),
+//            circle2.heightAnchor.constraint(equalToConstant: 20)
+//        ])
+//        self.circle2.alpha = 0.3
+//        self.circle2.tintColor = UIColor(hex: 0x60C4D6)
+//        ADD_SPACER(to: hStackSubscriptionStyle, width: 8)
+//        let weeklyNewsletterLabel = UILabel()
+//        weeklyNewsletterLabel.text = "Weekly"
+//        weeklyNewsletterLabel.font = AILERON_resize(16)
+//        weeklyNewsletterLabel.textColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+//        hStackSubscriptionStyle.addArrangedSubview(weeklyNewsletterLabel)
+//        
+//        let buttonCircle2 = UIButton(type: .custom)
+//        buttonCircle2.backgroundColor = .clear //.green.withAlphaComponent(0.3)
+//        hStackSubscriptionStyle.addSubview(buttonCircle2)
+//        buttonCircle2.activateConstraints([
+//            buttonCircle2.leadingAnchor.constraint(equalTo: circle2.leadingAnchor, constant: -10),
+//            buttonCircle2.topAnchor.constraint(equalTo: circle2.topAnchor, constant: -10),
+//            buttonCircle2.bottomAnchor.constraint(equalTo: circle2.bottomAnchor, constant: 10),
+//            buttonCircle2.trailingAnchor.constraint(equalTo: weeklyNewsletterLabel.trailingAnchor, constant: 10)
+//        ])
+//        buttonCircle2.tag = 2
+//        buttonCircle2.addTarget(self, action: #selector(subscriptionTypeButtonTap(_:)), for: .touchUpInside)
+//        ADD_SPACER(to: hStackSubscriptionStyle)
+//        ADD_SPACER(to: VStack_form, height: 32)
+//        
+//        hStackSubscriptionStyle.addSubview(self.circleMark1)
+//        self.circleMark1.tintColor = .black.withAlphaComponent(0.5)
+//        self.circleMark1.activateConstraints([
+//            self.circleMark1.widthAnchor.constraint(equalToConstant: 12),
+//            self.circleMark1.heightAnchor.constraint(equalToConstant: 12),
+//            self.circleMark1.centerXAnchor.constraint(equalTo: self.circle1.centerXAnchor),
+//            self.circleMark1.centerYAnchor.constraint(equalTo: self.circle2.centerYAnchor)
+//        ])
+//        self.circleMark1.hide()
+//        
+//        hStackSubscriptionStyle.addSubview(self.circleMark2)
+//        self.circleMark2.tintColor = .black.withAlphaComponent(0.5)
+//        self.circleMark2.activateConstraints([
+//            self.circleMark2.widthAnchor.constraint(equalToConstant: 12),
+//            self.circleMark2.heightAnchor.constraint(equalToConstant: 12),
+//            self.circleMark2.centerXAnchor.constraint(equalTo: self.circle2.centerXAnchor),
+//            self.circleMark2.centerYAnchor.constraint(equalTo: self.circle2.centerYAnchor)
+//        ])
+//        self.circleMark2.hide()
+//        
+//        //---
         let line2 = UIView()
         line2.backgroundColor = .systemPink //DARK_MODE() ? .white.withAlphaComponent(0.3) : .black.withAlphaComponent(0.3)
         line2.activateConstraints([
@@ -722,7 +724,7 @@ class AccountViewController: BaseViewController {
                     self.userNameText.setText(_user.userName)
                     self.emailText.setText(_user.email)
                     
-                    self.subscriptionType = _user.subscriptionType
+                    self.subscriptionType = 0 //_user.subscriptionType
                     self.updateSubscriptionType()
                     
                     self.updateSocialNetworks(_user.socialnetworks)
@@ -739,29 +741,31 @@ class AccountViewController: BaseViewController {
             2: Weekly
          */
     
-        let type = self.subscriptionType
-    
-        if(type==0) {
-            //self.subscriptionStateLabel.text = "Status:\nnot subscribed"
-            self.subscribeButtonLabel.text = "SUBSCRIBE".capitalized
-            self.circle1.alpha = 0.3
-            self.circle2.alpha = 0.3
-            self.circleMark1.hide()
-            self.circleMark2.hide()
-        } else {
-            //self.subscriptionStateLabel.text = "Status:\nsubscribed"
-            self.subscribeButtonLabel.text = "UNSUBSCRIBE".capitalized
-            self.circle1.alpha = 1.0
-            self.circle2.alpha = 1.0
-            
-            if(type==1) {
-                self.circleMark1.show()
-                self.circleMark2.hide()
-            } else {
-                self.circleMark1.hide()
-                self.circleMark2.show()
-            }
-        }
+//        let type = self.subscriptionType
+//    
+//        if(type==0) {
+//            //self.subscriptionStateLabel.text = "Status:\nnot subscribed"
+//            self.subscribeButtonLabel.text = "SUBSCRIBE".capitalized
+//            self.circle1.alpha = 0.3
+//            self.circle2.alpha = 0.3
+//            self.circleMark1.hide()
+//            self.circleMark2.hide()
+//        } else {
+//            //self.subscriptionStateLabel.text = "Status:\nsubscribed"
+//            self.subscribeButtonLabel.text = "UNSUBSCRIBE".capitalized
+//            self.circle1.alpha = 1.0
+//            self.circle2.alpha = 1.0
+//            
+//            if(type==1) {
+//                self.circleMark1.show()
+//                self.circleMark2.hide()
+//            } else {
+//                self.circleMark1.hide()
+//                self.circleMark2.show()
+//            }
+//        }
+
+        self.subscribeButtonLabel.text = "Manage"
     }
     
     func updateSocialNetworks(_ socialnetworks: [String]) {
@@ -889,6 +893,11 @@ extension AccountViewController {
     }
     
     @objc func subscribeButtonTap(_ sender: UIButton) {
+        let vc = NewsletterSignUp()
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    @objc func subscribeButtonTap_old(_ sender: UIButton) { //!!!
         self.showLoading()
         self.contentView.isUserInteractionEnabled = false
         
@@ -961,8 +970,13 @@ extension AccountViewController {
                         if(!success) {
                             CustomNavController.shared.infoAlert(message: serverMsg)
                         } else {
+                            WRITE(LocalKeys.preferences.sourceFilters, value: "")
                             WRITE(LocalKeys.user.AUTHENTICATED, value: "NO")
                             CustomNavController.shared.menu.updateLogout()
+                            
+                            DELETE(key: LocalKeys.user.UUID)
+                            DELETE(key: LocalKeys.user.JWT)
+                
                             CustomNavController.shared.popViewController(animated: true)
                         }
                     }

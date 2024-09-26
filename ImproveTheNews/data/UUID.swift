@@ -15,7 +15,10 @@ class UUID {
         if let _value = READ(LocalKeys.user.UUID) {
             return _value
         } else {
-            return self.randomValue()
+            let newValue = self.randomValue()
+            WRITE(LocalKeys.user.UUID, value: newValue)
+            
+            return newValue
         }
     }
     
@@ -59,9 +62,10 @@ class UUID {
                 callback(_error, nil)
             } else {
                 if let _json = JSON(fromData: data) {
-                    if let _jwt = _json["jwt"] as? String, let _uuid = _json["uuid"] as? String {
+//                    if let _jwt = _json["jwt"] as? String, let _uuid = _json["uuid"] as? String {
+                    if let _uuid = _json["uuid"] as? String {
                         WRITE(LocalKeys.user.UUID, value: _uuid)
-                        WRITE(LocalKeys.user.JWT, value: _jwt)
+//                        WRITE(LocalKeys.user.JWT, value: _jwt)
                         
                         self.trace()
                         callback(nil, _uuid)
@@ -107,6 +111,8 @@ class UUID {
         } else {
             print("AUTH nil")
         }
+        print("LOGGED", USER_AUTHENTICATED())
+        
         print("----")
     }
     

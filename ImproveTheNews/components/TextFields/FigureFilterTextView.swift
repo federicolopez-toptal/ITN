@@ -78,6 +78,16 @@ class FigureFilterTextView: UIView {
         return self.searchTextField.text!
     }
     
+    func setText(_ text: String, enabled: Bool = true) {
+        self.searchTextField.text = text
+        self.searchTextField.isEnabled = enabled
+        self.placeHolderLabel.hide()
+        
+        if(!enabled) {
+            self.searchTextField.textColor = CSS.shared.displayMode().sec_textColor.withAlphaComponent(0.5)
+        }
+    }
+    
     func refreshDisplayMode() {
         self.backgroundColor = DARK_MODE() ? UIColor(hex: 0x19191c) : .white
         self.layer.cornerRadius = 4

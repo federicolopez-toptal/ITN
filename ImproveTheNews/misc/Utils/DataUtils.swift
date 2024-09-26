@@ -36,6 +36,27 @@ func USER_AUTHENTICATED() -> Bool {
     }
 }
 
+func CHECK_AUTHENTICATED() {
+    
+    print("Chequeo de verified")
+    if(!USER_AUTHENTICATED()) {
+        API.shared.getUserInfo { (success, serverMsg, user) in
+            if(success) {
+                if let _user = user {
+                    if(_user.verified) {
+                        WRITE(LocalKeys.user.AUTHENTICATED, value: "YES")
+                        
+                        MAIN_THREAD {
+                            CustomNavController.shared.menu.updateLogout()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
 
 // MARK: - Preferences
 func PREF(key: String) -> Bool {
@@ -70,6 +91,11 @@ func PREFS_SHOW_TIPS() -> Bool {
 // MARK: Basics
 func WRITE(_ key: String, value: Any) {
     UserDefaults.standard.setValue(value, forKey: key)
+    UserDefaults.standard.synchronize()
+}
+
+func DELETE(key: String) {
+    UserDefaults.standard.setValue(nil, forKey: key)
     UserDefaults.standard.synchronize()
 }
 

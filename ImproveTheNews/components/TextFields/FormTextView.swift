@@ -126,6 +126,7 @@ extension FormTextView {
     }
     
     func setPasswordMode(_ state: Bool) {
+        self.mainTextField.textContentType = .password
         self.mainTextField.isSecureTextEntry = state
     }
     

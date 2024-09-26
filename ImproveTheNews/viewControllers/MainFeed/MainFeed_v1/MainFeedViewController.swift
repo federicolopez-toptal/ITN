@@ -85,7 +85,7 @@ class MainFeedViewController: BaseViewController {
             self.loadUserData()
             self.testFeature()
             
-            UUID.shared.trace()
+//            UUID.shared.trace()
             
 //            DELAY(0.5) { //!!!
 //                let vc = FAQViewController()
