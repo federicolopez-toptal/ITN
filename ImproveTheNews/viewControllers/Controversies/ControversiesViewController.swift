@@ -356,7 +356,7 @@ extension ControversiesViewController {
                 innerVStack.addArrangedSubview(titleLabel)
                 ADD_SPACER(to: innerVStack, height: 8)
                 innerVStack.addArrangedSubview(descrLabel)
-                ADD_SPACER(to: innerVStack, height: 8)
+                ADD_SPACER(to: innerVStack, height: 16)
                 
                 let graphContainerView = UIView()
                 graphContainerView.backgroundColor = .clear
@@ -398,7 +398,7 @@ extension ControversiesViewController {
             
             if(IPHONE()) {
                 H = titleLabel.calculateHeightFor(width: _W) + 8 +
-                descrLabel.calculateHeightFor(width: _W) + 8 +
+                descrLabel.calculateHeightFor(width: _W) + 16 +
                 self.GRAPH_HEIGHT
             } else {
                 let _w: CGFloat = self.W() - 16 - self.GRAPH_HEIGHT
@@ -816,11 +816,31 @@ extension ControversiesViewController {
     
     func createGraphView() -> UIView {
         let resultView = UIView()
-        resultView.backgroundColor = .systemPink
+        resultView.backgroundColor = .clear //.systemPink
         
         resultView.activateConstraints([
             resultView.widthAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT),
             resultView.heightAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT)
+        ])
+        
+        let vLine = UIView()
+        vLine.backgroundColor = CSS.shared.displayMode().main_textColor
+        resultView.addSubview(vLine)
+        vLine.activateConstraints([
+            vLine.widthAnchor.constraint(equalToConstant: 1),
+            vLine.topAnchor.constraint(equalTo: resultView.topAnchor),
+            vLine.bottomAnchor.constraint(equalTo: resultView.bottomAnchor),
+            vLine.centerXAnchor.constraint(equalTo: resultView.centerXAnchor)
+        ])
+        
+        let hLine = UIView()
+        hLine.backgroundColor = CSS.shared.displayMode().main_textColor
+        resultView.addSubview(hLine)
+        hLine.activateConstraints([
+            hLine.heightAnchor.constraint(equalToConstant: 1),
+            hLine.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
+            hLine.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
+            hLine.centerYAnchor.constraint(equalTo: resultView.centerYAnchor)
         ])
         
         return resultView
