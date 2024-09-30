@@ -159,7 +159,7 @@ func ADD_HDASHES(to view: UIView) {
     }
 }
 
-func ADD_VDASHES(to view: UIView, height: CGFloat) {
+func ADD_VDASHES(to view: UIView, height: CGFloat = 300) {
     view.backgroundColor = CSS.shared.displayMode().main_bgColor
     view.clipsToBounds = true
     REMOVE_ALL_SUBVIEWS(from: view)

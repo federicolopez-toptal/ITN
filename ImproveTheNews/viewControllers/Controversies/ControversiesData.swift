@@ -375,14 +375,61 @@ class ControversyListItem {
 }
 
 // --------------------------------------------------
+class FigureForPortalGraph {
+    var name: String = ""
+    var image: String = ""
+    var slug: String = ""
+    var vValue: CGFloat = 0.0
+    var hValue: CGFloat = 0.0
+    
+    init(jsonObj: [String: Any]) {
+        self.name = CHECK(jsonObj["title"])
+        self.image = CHECK(jsonObj["image"])
+        self.slug = CHECK(jsonObj["slug"])
+        self.hValue = CGFloat(CHECK_NUM(jsonObj["LR"]))
+        self.vValue = CGFloat(CHECK_NUM(jsonObj["PE"]))
+    }
+}
+
+class controversyPortalGraph {
+    var left: String = ""
+    var right: String = ""
+    var top: String = ""
+    var bottom: String = ""
+    var figures: [FigureForPortalGraph] = []
+    
+    init(jsonObj: [String: Any]) {
+        if let _chartTitle = jsonObj["chartTitle"] as? [String: String] {
+            self.left = CHECK(_chartTitle["left"])
+            self.right = CHECK(_chartTitle["right"])
+            self.top = CHECK(_chartTitle["top"])
+            self.bottom = CHECK(_chartTitle["bottom"])
+        }
+        
+        if let _figures = jsonObj["figures"] as? [[String: Any]] {
+            for F in _figures {
+                let newFigure = FigureForPortalGraph(jsonObj: F)
+                self.figures.append(newFigure)
+            }
+        }
+    }
+}
+
 class ControversyPortalData {
     
     var title: String = ""
     var description: String = ""
     
+    var graph: controversyPortalGraph? = nil
+    
     init(jsonObj: [String: Any]) {
         self.title = CHECK(jsonObj["title"])
         self.description = CHECK(jsonObj["description"])
+        
+        if let _figureData = jsonObj["figuresData"] as? [String: Any] {
+            self.graph = controversyPortalGraph(jsonObj: _figureData)
+        }
+        
     }
 }
 

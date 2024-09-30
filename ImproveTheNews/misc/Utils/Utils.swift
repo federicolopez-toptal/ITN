@@ -257,3 +257,10 @@ func BRIGHT_MODE_iOS() -> Bool {
 }
 
 
+// ---------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
+func INTERPOLATE(minA: CGFloat, maxA: CGFloat, value: CGFloat, minB: CGFloat, maxB: CGFloat) -> CGFloat {
+    // "value" exists between "minA" and "maxA". Interpolate it between "minB" and "maxB"
+    return minB + (maxB - minB) * (value - minA) / (maxA - minA)
+}
+//REFERENCE: https://stackoverflow.com/questions/42817020/how-to-interpolate-from-number-in-one-range-to-a-corresponding-value-in-another

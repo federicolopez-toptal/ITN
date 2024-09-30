@@ -1,4 +1,5 @@
 //
+//
 //  ControversiesViewController.swift
 //  ImproveTheNews
 //
@@ -10,7 +11,7 @@ import UIKit
 class ControversiesViewController: BaseViewController {
 
     let M: CGFloat = CSS.shared.iPhoneSide_padding
-    let GRAPH_HEIGHT: CGFloat = 250
+    let GRAPH_HEIGHT: CGFloat = 300
     var iPad_W: CGFloat = -1
     
     var page: Int = 0
@@ -32,6 +33,10 @@ class ControversiesViewController: BaseViewController {
     let topicsContainer = UIView()
     
     var loadsCount = 0
+    
+    var twitterText: String = ""
+    var twitterUrl: String = ""
+    var figureSlugs: [String] = []
     
     
     // MARK: - Init
@@ -323,8 +328,15 @@ extension ControversiesViewController {
         if let _controData = controData {
             let _W: CGFloat = IPHONE() ? (SCREEN_SIZE().width-32) : self.W()
             
+            var _slug = ""
+            if(self.topics.count>0 && self.currentTopic != -1) {
+                _slug = self.topics[self.currentTopic].slug
+            }
+            self.twitterText = "Where do you stand on this: " + _controData.title
+            self.twitterUrl = ITN_URL() + "/controversies/" + _slug
+
             let portalView = UIView()
-            portalView.backgroundColor = .clear //.green
+            portalView.backgroundColor = .clear
             portalView.activateConstraints([
                 portalView.widthAnchor.constraint(equalToConstant: _W)
             ])
@@ -342,13 +354,16 @@ extension ControversiesViewController {
             descrLabel.text = _controData.description
             descrLabel.setLineSpacing(lineSpacing: 6.0)
             
-            let graphView = self.createGraphView()
+            var graphView: UIView = UIView()
+            if let _graphData = _controData.graph {
+                graphView = self.createGraphView(data: _graphData)
+            }
             
             if(IPHONE()) {
                 let innerVStack = VSTACK(into: portalView)
                 innerVStack.backgroundColor = .clear
                 innerVStack.activateConstraints([
-                    innerVStack.topAnchor.constraint(equalTo: portalView.topAnchor),
+                    innerVStack.topAnchor.constraint(equalTo: portalView.topAnchor, constant: 12),
                     innerVStack.leadingAnchor.constraint(equalTo: portalView.leadingAnchor),
                     innerVStack.trailingAnchor.constraint(equalTo: portalView.trailingAnchor)
                 ])
@@ -356,7 +371,9 @@ extension ControversiesViewController {
                 innerVStack.addArrangedSubview(titleLabel)
                 ADD_SPACER(to: innerVStack, height: 8)
                 innerVStack.addArrangedSubview(descrLabel)
-                ADD_SPACER(to: innerVStack, height: 16)
+                ADD_SPACER(to: innerVStack, height: 24)
+                self.createTwitterButton(into: innerVStack)
+                ADD_SPACER(to: innerVStack, height: 24)
                 
                 let graphContainerView = UIView()
                 graphContainerView.backgroundColor = .clear
@@ -374,7 +391,7 @@ extension ControversiesViewController {
                 let innerHStack = HSTACK(into: portalView)
                 innerHStack.backgroundColor = .clear
                 innerHStack.activateConstraints([
-                    innerHStack.topAnchor.constraint(equalTo: portalView.topAnchor),
+                    innerHStack.topAnchor.constraint(equalTo: portalView.topAnchor, constant: 12),
                     innerHStack.leadingAnchor.constraint(equalTo: portalView.leadingAnchor),
                     innerHStack.trailingAnchor.constraint(equalTo: portalView.trailingAnchor)
                 ])
@@ -397,21 +414,24 @@ extension ControversiesViewController {
             var H: CGFloat = 0
             
             if(IPHONE()) {
-                H = titleLabel.calculateHeightFor(width: _W) + 8 +
-                descrLabel.calculateHeightFor(width: _W) + 16 +
-                self.GRAPH_HEIGHT
+                H = 12 + titleLabel.calculateHeightFor(width: _W) + 8 +
+                descrLabel.calculateHeightFor(width: _W) + 24 +
+                40 + 24 + self.GRAPH_HEIGHT
             } else {
                 let _w: CGFloat = self.W() - 16 - self.GRAPH_HEIGHT
-                let _h = titleLabel.calculateHeightFor(width: _w) + 8 + descrLabel.calculateHeightFor(width: _w)
                 
-                if(_h > self.GRAPH_HEIGHT) {
+                let _h = 12 + titleLabel.calculateHeightFor(width: _w) + 8 +
+                descrLabel.calculateHeightFor(width: _w)
+                
+                if(_h > (self.GRAPH_HEIGHT+12)) {
                     H = _h
                 } else {
-                    H = self.GRAPH_HEIGHT
+                    H = (self.GRAPH_HEIGHT+12)
                 }
+                H += 16
             }
             H += 16
-        
+
             self.portalInfoView.addSubview(portalView)
             portalView.activateConstraints([
                 portalView.heightAnchor.constraint(equalToConstant: H),
@@ -814,9 +834,38 @@ extension ControversiesViewController {
 
 extension ControversiesViewController {
     
-    func createGraphView() -> UIView {
+    func createTwitterButton(into containerView: UIStackView) {
+        
+        let resultView = HSTACK(into: containerView)
+        let resultButton = UIButton(type: .custom)
+        resultButton.backgroundColor = CSS.shared.cyan
+        resultView.addArrangedSubview(resultButton)
+        resultButton.activateConstraints([
+            resultButton.widthAnchor.constraint(equalToConstant: 138),
+            resultButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        resultButton.titleLabel?.font = AILERON(16)
+        resultButton.setTitleColor(UIColor(hex: 0x19191C), for: .normal)
+        resultButton.setTitle("Share on       ", for: .normal)
+        resultButton.layer.cornerRadius = 8
+        resultButton.addTarget(self, action: #selector(self.twitterButtonOnTap(_:)), for: .touchUpInside)
+        
+        let logoImageView = UIImageView(image: UIImage(named: "twitter_X_logo"))
+        resultButton.addSubview(logoImageView)
+        logoImageView.activateConstraints([
+            logoImageView.widthAnchor.constraint(equalToConstant: 15),
+            logoImageView.heightAnchor.constraint(equalToConstant: 15),
+            logoImageView.centerYAnchor.constraint(equalTo: resultButton.centerYAnchor),
+            logoImageView.trailingAnchor.constraint(equalTo: resultButton.trailingAnchor, constant: -20)
+        ])
+        
+        ADD_SPACER(to: resultView)
+    }
+    
+    func createGraphView(data: controversyPortalGraph) -> UIView {
         let resultView = UIView()
-        resultView.backgroundColor = .clear //.systemPink
+        resultView.backgroundColor = self.view.backgroundColor
         
         resultView.activateConstraints([
             resultView.widthAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT),
@@ -832,9 +881,10 @@ extension ControversiesViewController {
             vLine.bottomAnchor.constraint(equalTo: resultView.bottomAnchor),
             vLine.centerXAnchor.constraint(equalTo: resultView.centerXAnchor)
         ])
+        ADD_VDASHES(to: vLine)
         
         let hLine = UIView()
-        hLine.backgroundColor = CSS.shared.displayMode().main_textColor
+        hLine.backgroundColor = .clear //CSS.shared.displayMode().main_textColor
         resultView.addSubview(hLine)
         hLine.activateConstraints([
             hLine.heightAnchor.constraint(equalToConstant: 1),
@@ -842,8 +892,130 @@ extension ControversiesViewController {
             hLine.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
             hLine.centerYAnchor.constraint(equalTo: resultView.centerYAnchor)
         ])
+        ADD_HDASHES(to: hLine)
+        
+        let bgColor = UIColor.clear
+        
+        let leftLabel = UILabel()
+        resultView.addSubview(leftLabel)
+        leftLabel.font = AILERON(12)
+        leftLabel.backgroundColor = bgColor
+        leftLabel.textColor = CSS.shared.displayMode().main_textColor
+        leftLabel.activateConstraints([
+            leftLabel.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
+            leftLabel.topAnchor.constraint(equalTo: hLine.bottomAnchor, constant: 6)
+        ])
+        leftLabel.text = data.left.uppercased()
+        
+        let rightLabel = UILabel()
+        resultView.addSubview(rightLabel)
+        rightLabel.font = AILERON(12)
+        rightLabel.textAlignment = .right
+        rightLabel.backgroundColor = bgColor
+        rightLabel.textColor = CSS.shared.displayMode().main_textColor
+        rightLabel.activateConstraints([
+            rightLabel.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
+            rightLabel.topAnchor.constraint(equalTo: leftLabel.topAnchor)
+        ])
+        rightLabel.text = data.right.uppercased()
+        
+        let topLabel = UILabel()
+        resultView.addSubview(topLabel)
+        topLabel.font = AILERON(12)
+        topLabel.backgroundColor = bgColor
+        topLabel.textColor = CSS.shared.displayMode().main_textColor
+        topLabel.activateConstraints([
+            topLabel.leadingAnchor.constraint(equalTo: vLine.trailingAnchor, constant: 6),
+            topLabel.topAnchor.constraint(equalTo: resultView.topAnchor)
+        ])
+        topLabel.text = data.top.uppercased()
+        
+        let bottomLabel = UILabel()
+        resultView.addSubview(bottomLabel)
+        bottomLabel.font = AILERON(12)
+        bottomLabel.textAlignment = .right
+        bottomLabel.backgroundColor = bgColor
+        bottomLabel.textColor = CSS.shared.displayMode().main_textColor
+        bottomLabel.activateConstraints([
+            bottomLabel.trailingAnchor.constraint(equalTo: vLine.leadingAnchor, constant: -6),
+            bottomLabel.bottomAnchor.constraint(equalTo: resultView.bottomAnchor)
+        ])
+        bottomLabel.text = data.bottom.uppercased()
+        
+        let minX: CGFloat = 0
+        let maxX: CGFloat = self.GRAPH_HEIGHT-44
+        let minY: CGFloat = 0
+        let maxY: CGFloat = self.GRAPH_HEIGHT-44
+        
+        self.figureSlugs = []
+        for (i, F) in data.figures.enumerated() {
+            let val_x: CGFloat = INTERPOLATE(minA: 1.0, maxA: 10.0, value: F.hValue, minB: minX, maxB: maxX)
+            let val_y: CGFloat = INTERPOLATE(minA: 1.0, maxA: 10.0, value: F.vValue, minB: minY, maxB: maxY)
+            
+            let figureImageView = UIImageView()
+            figureImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.05) : .black.withAlphaComponent(0.1)
+            resultView.addSubview(figureImageView)
+            figureImageView.activateConstraints([
+                figureImageView.widthAnchor.constraint(equalToConstant: 44),
+                figureImageView.heightAnchor.constraint(equalToConstant: 44),
+                figureImageView.leadingAnchor.constraint(equalTo: resultView.leadingAnchor, constant: val_x),
+                figureImageView.bottomAnchor.constraint(equalTo: resultView.bottomAnchor, constant: -val_y)
+            ])
+            figureImageView.layer.cornerRadius = 22
+            figureImageView.clipsToBounds = true
+            figureImageView.layer.borderColor = CSS.shared.displayMode().main_bgColor.cgColor
+            figureImageView.layer.borderWidth = 2.0
+            figureImageView.sd_setImage(with: URL(string: F.image))
+            
+            var name = F.name.uppercased()
+            if let lastName = name.components(separatedBy: " ").last {
+                name = lastName
+            }
+            
+            let nameLabel = UILabel()
+            nameLabel.font = AILERON(9)
+            nameLabel.textColor = CSS.shared.displayMode().sec_textColor
+            nameLabel.text = name
+            nameLabel.textAlignment = .center
+            nameLabel.isUserInteractionEnabled = false
+            nameLabel.backgroundColor = resultView.backgroundColor
+            resultView.addSubview(nameLabel)
+            nameLabel.lineBreakMode = .byTruncatingTail
+            nameLabel.activateConstraints([
+                nameLabel.leadingAnchor.constraint(equalTo: figureImageView.leadingAnchor),
+                nameLabel.trailingAnchor.constraint(equalTo: figureImageView.trailingAnchor),
+                nameLabel.topAnchor.constraint(equalTo: figureImageView.bottomAnchor, constant: 4)
+            ])
+            
+            let imgButton = UIButton(type: .custom)
+            imgButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+            resultView.addSubview(imgButton)
+            imgButton.activateConstraints([
+                imgButton.leadingAnchor.constraint(equalTo: figureImageView.leadingAnchor),
+                imgButton.topAnchor.constraint(equalTo: figureImageView.topAnchor),
+                imgButton.trailingAnchor.constraint(equalTo: figureImageView.trailingAnchor),
+                imgButton.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor)
+            ])
+            imgButton.tag = i
+            self.figureSlugs.append(F.slug)
+            imgButton.addTarget(self, action: #selector(self.graphFigureOnTap(_:)), for: .touchUpInside)
+        }
         
         return resultView
     }
     
+    @objc func twitterButtonOnTap(_ sender: UIButton?) {
+        SHARE_ON_TWITTER_2(url: self.twitterUrl, text: self.twitterText)
+    }
+    
+    @objc func graphFigureOnTap(_ sender: UIButton?) {
+        var slug = ""
+        if let _index = sender?.tag {
+            slug = self.figureSlugs[_index]
+        }
+
+        let vc = FigureDetailsViewController()
+        vc.slug = slug
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
 }
