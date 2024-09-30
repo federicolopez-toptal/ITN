@@ -183,7 +183,8 @@ class ControversiesData {
     }
     
     func loadList(topic: String, page: Int,
-        callback: @escaping (Error?, Int?, [ControversyListItem]?, [SimpleTopic]?, ControversyPortalData?) -> () ) {
+        callback: @escaping (Error?, Int?, [ControversyListItem]?, [SimpleTopic]?, [SimpleTopic]?,
+            ControversyPortalData?) -> () ) {
         // error, total, itemList, topics
         
 //        let url = ITN_URL() + "/claims-api/claim/search?topic=\(topic)&page=\(page)&per_page=8"
@@ -197,12 +198,12 @@ class ControversiesData {
         let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
-                callback(error, nil, nil, nil, nil)
+                callback(error, nil, nil, nil, nil, nil)
             }
             
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(_error, nil, nil, nil, nil)
+                callback(_error, nil, nil, nil, nil, nil)
             } else {
             
 //                if let _data = data {
@@ -222,13 +223,28 @@ class ControversiesData {
                 
                 if let _json = JSON(fromData: _data) {
                     if let _ = _json["error"] {
-                        callback(CustomError.jsonParseError, nil, nil, nil, nil)
+                        callback(CustomError.jsonParseError, nil, nil, nil, nil, nil)
                     } else {
 //                        if let _keyword = _json["keyword"] as? String,
                         if let _total = _json["total"] as? Int,
                             let _data = _json["data"] as? [[String: Any]],
 //                            let _topics = _json["topics"] as? [[String: Any]] {
                             let _topics = _json["parentCategories"] as? [[String: Any]] {
+                            
+                            var subtopics = [SimpleTopic]()
+                            if let _subTopics = _json["categories"] as? [[String: Any]] {
+                                if(_subTopics.count>0) {
+                                    subtopics.append(SimpleTopic(jsonObj: [
+                                        "title": "All",
+                                        "slug": "all"
+                                    ]))
+                                    
+                                    for T in _subTopics {
+                                        let newItem = SimpleTopic(jsonObj: T)
+                                        subtopics.append(newItem)
+                                    }
+                                }
+                            }
                             
                             var controData: ControversyPortalData? = nil
                             if let _data = _json["categoryData"] as? [String: Any] {
@@ -255,13 +271,13 @@ class ControversiesData {
                             }
                             
                             
-                            callback(nil, _total, cItems, topics, controData)
+                            callback(nil, _total, cItems, topics, subtopics, controData)
                         } else {
-                            callback(CustomError.jsonParseError, nil, nil, nil, nil)
+                            callback(CustomError.jsonParseError, nil, nil, nil, nil, nil)
                         }
                     }
                 } else {
-                    callback(CustomError.jsonParseError, nil, nil, nil, nil)
+                    callback(CustomError.jsonParseError, nil, nil, nil, nil, nil)
                 }
             }
         }
@@ -419,11 +435,13 @@ class ControversyPortalData {
     
     var title: String = ""
     var description: String = ""
+    var subTitle: String = ""
     
     var graph: controversyPortalGraph? = nil
     
     init(jsonObj: [String: Any]) {
         self.title = CHECK(jsonObj["title"])
+        self.subTitle = CHECK(jsonObj["type"])
         self.description = CHECK(jsonObj["description"])
         
         if let _figureData = jsonObj["figuresData"] as? [String: Any] {
