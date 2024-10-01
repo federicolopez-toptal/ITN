@@ -14,6 +14,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
 
     var article: MainFeedArticle!
     private var WIDTH: CGFloat = 1
+    private var minimumLineNum: Bool = true
 
     private let imgWidth: CGFloat = 160
     private let imgHeight: CGFloat = 88
@@ -47,9 +48,10 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat) {
+    init(width: CGFloat, minimumLineNum: Bool = true) {
         super.init(frame: .zero)
         self.WIDTH = width
+        self.minimumLineNum = minimumLineNum
         
         self.buildContent()
     }
@@ -404,11 +406,13 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
                 self.storyTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().main_textColor)
             }
             
-            let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
-            let diff = MAX_NUM_LINES - Int(numLines)
-            if(diff>0) {
-                for _ in 1...diff {
-                    self.storyTitleLabel.text! += "\n"
+            if(self.minimumLineNum) {
+                let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
+                let diff = MAX_NUM_LINES - Int(numLines)
+                if(diff>0) {
+                    for _ in 1...diff {
+                        self.storyTitleLabel.text! += "\n"
+                    }
                 }
             }
             

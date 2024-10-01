@@ -34,6 +34,8 @@ class ControversiesViewController: BaseViewController {
     var subtopics = [SimpleTopic]()
     let topicsContainer = UIView()
     let subtopicsContainer = UIView()
+    var storiesContainer = UIStackView()
+    var storiesShowMore = UIView()
     
     var loadsCount = 0
     
@@ -43,6 +45,9 @@ class ControversiesViewController: BaseViewController {
     
     var isSubTopic: Bool = false
     
+    var stories: [StorySearchResult] = []
+    var storiesTotal: Int = 0
+    var storiesPage: Int = 1
     
     // MARK: - Init
     override func viewDidLayoutSubviews() {
@@ -142,7 +147,7 @@ class ControversiesViewController: BaseViewController {
         self.subtopicsContainer.backgroundColor = .clear //.white.withAlphaComponent(0.15)
         self.vStack.addArrangedSubview(self.subtopicsContainer)
         self.subtopicsContainer.activateConstraints([
-            self.subtopicsContainer.heightAnchor.constraint(equalToConstant: 85+8)
+            self.subtopicsContainer.heightAnchor.constraint(equalToConstant: IPHONE() ? 93 : 108)
         ])
         
         let mainView = self.createContainerView()
@@ -157,6 +162,7 @@ class ControversiesViewController: BaseViewController {
             containerView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor)            
         ])
         containerView.tag = 555
+        
         self.containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 200)
         self.containerViewHeightConstraint!.isActive = true
         
@@ -206,6 +212,31 @@ class ControversiesViewController: BaseViewController {
         self.showMoreButton(false)
         mainView.bottomAnchor.constraint(equalTo: moreView.bottomAnchor, constant: M).isActive = true
         
+        // --------------------------------------
+        if(IPHONE()) {
+            self.storiesContainer = VSTACK(into: self.vStack)
+            self.storiesContainer.backgroundColor = .clear
+            self.storiesContainer.activateConstraints([
+                self.storiesContainer.leadingAnchor.constraint(equalTo: self.vStack.leadingAnchor, constant: 16),
+                self.storiesContainer.trailingAnchor.constraint(equalTo: self.vStack.trailingAnchor, constant: -16),
+            ])
+        } else {
+            let hstack = HSTACK(into: self.vStack)
+            hstack.backgroundColor = .clear
+        
+            let W: CGFloat = SCREEN_SIZE_iPadSideTab().width-(16*2)
+        
+            ADD_SPACER(to: hstack)
+            self.storiesContainer = VSTACK(into: hstack)
+            self.storiesContainer.backgroundColor = .clear
+            self.storiesContainer.activateConstraints([
+                self.storiesContainer.widthAnchor.constraint(equalToConstant: W),
+                self.storiesContainer.centerXAnchor.constraint(equalTo: hstack.centerXAnchor)
+            ])
+            ADD_SPACER(to: hstack)
+        }
+
+        self.storiesContainer.hide()
         // --------------------------------------
         self.refreshDisplayMode_local()
     }
@@ -298,6 +329,11 @@ extension ControversiesViewController {
             self.portalInfoView.hide()
             self.subtopicsContainer.hide()
         }
+        
+        //if(self.storiesContainer.subviews.count == 0) {
+            self.storiesContainer.hide()
+        //}
+        
         self.showMoreButton(false)
         
         var T = ""
@@ -321,9 +357,9 @@ extension ControversiesViewController {
         
         self.showLoading()
         self.loadsCount += 1
-        
+                
         print("LOAD CONTROVERSY \(self.loadsCount)")
-        ControversiesData.shared.loadList(topic: T, page: P) { (error, total, list, topics, subtopics, controData) in
+        ControversiesData.shared.loadList(topic: T, page: P) { (error, total, list, topics, subtopics, controData, storiesCount, stories) in
 
             self.hideLoading()
             if let _ = error {
@@ -341,7 +377,8 @@ extension ControversiesViewController {
             } else {
                 MAIN_THREAD {
                     if let _n = total, let _L = list, let _T = topics {
-                        self.fillContent(total: _n, items: _L, topics: _T, subtopics: subtopics,controData: controData)
+                        self.fillContent(total: _n, items: _L, topics: _T, subtopics: subtopics,
+                            controData: controData, storiesTotal: storiesCount, stories: stories)
                     }
                 }
             }
@@ -350,7 +387,7 @@ extension ControversiesViewController {
     }
     
     func fillContent(total: Int, items: [ControversyListItem], topics: [SimpleTopic],
-        subtopics: [SimpleTopic]?, controData: ControversyPortalData?) {
+        subtopics: [SimpleTopic]?, controData: ControversyPortalData?, storiesTotal: Int?, stories: [StorySearchResult]?) {
     
         var subTitle = "Controversies"
         let containerView = self.view.viewWithTag(555)!
@@ -490,7 +527,7 @@ extension ControversiesViewController {
         }
     }
     
-        var _items = items
+        let _items = items
 //        for _ in 1...1 {
 //            _items.remove(at: _items.count-1)
 //        }
@@ -621,6 +658,22 @@ extension ControversiesViewController {
             self.showMoreButton(false)
         }
 
+        // stories
+        self.stories = []
+        self.storiesTotal = 0
+        self.storiesPage = 1
+        REMOVE_ALL_SUBVIEWS(from: self.storiesContainer)
+        self.storiesContainer.hide()
+        
+        var storiesToAdd: [StorySearchResult] = []
+        if let _stories = stories {
+            storiesToAdd = _stories
+        }
+        if let _storiesTotal = storiesTotal {
+            self.storiesTotal = _storiesTotal
+        }
+        self.updateStories(adding: storiesToAdd)
+        
         // Finally
         self.containerViewHeightConstraint?.constant = val_y
         self.topicsContainer.show()
@@ -1167,4 +1220,178 @@ extension ControversiesViewController {
         let i = sender.tag - 400
         self.selectSubTopic(index: i)
     }
+}
+
+// MARK: - Stories
+extension ControversiesViewController {
+    
+    func updateStories(adding newStories: [StorySearchResult]) {
+        var mustShowStories = false
+        if(self.storiesTotal>0) {
+            mustShowStories = true
+        }
+        
+        if(mustShowStories) {
+
+            if(self.storiesContainer.subviews.count == 0) {
+                let titleLabel = UILabel()
+                titleLabel.numberOfLines = 0
+                titleLabel.font = DM_SERIF_DISPLAY_resize(22)
+                titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                titleLabel.text = "Go Deeper"
+                self.storiesContainer.addArrangedSubview(titleLabel)
+                ADD_SPACER(to: self.storiesContainer, height: 10)
+            }
+            
+            var storiesVStack: UIStackView!
+            
+            if let _vstack = self.view.viewWithTag(777) as? UIStackView {
+                storiesVStack = _vstack
+            } else {
+                storiesVStack = VSTACK(into: self.storiesContainer)
+                storiesVStack.tag = 777
+            }
+            
+            if(IPHONE()) {
+                let col_WIDTH = SCREEN_SIZE().width
+                
+                for ST in newStories {
+                    let storyView = iPhoneAllNews_vImgCol_v3(width: col_WIDTH, minimumLineNum: false)
+                    storiesVStack.addArrangedSubview(storyView)
+                    storyView.populate(story: ST)
+                    if(ST.type==2) {
+                        storyView.storyPill.setAsContext()
+                    }
+                    
+                    storyView.activateConstraints([
+                        storyView.heightAnchor.constraint(equalToConstant: storyView.calculateHeight())
+                    ])
+                    
+                    self.stories.append(ST)
+                }
+            } else {
+                let col_WIDTH = (SCREEN_SIZE_iPadSideTab().width-(16*3))/2
+                
+                var col = 1
+                for ST in newStories {
+                    var rowHStack: UIStackView!
+                    
+                    if(col==1) {
+                        rowHStack = HSTACK(into: storiesVStack)
+                        rowHStack.backgroundColor = .clear
+                    } else {
+                        rowHStack = storiesVStack.arrangedSubviews.last as? UIStackView
+                    }
+                
+                    let storyView = iPhoneAllNews_vImgCol_v3(width: col_WIDTH, minimumLineNum: false)
+                    rowHStack.addArrangedSubview(storyView)
+                    storyView.populate(story: ST)
+                    if(ST.type==2) {
+                        storyView.storyPill.setAsContext()
+                    }
+                    storyView.activateConstraints([
+                        storyView.heightAnchor.constraint(equalToConstant: storyView.calculateHeight()),
+                        storyView.widthAnchor.constraint(equalToConstant: col_WIDTH)
+                    ])
+                    
+                    if(col==1) {
+                        ADD_SPACER(to: rowHStack)
+                    }
+                    col += 1
+                    
+                    if(col==3){ col=1 }
+                    self.stories.append(ST)
+                }
+            }
+            self.storiesContainer.show()
+            
+            //show more
+            if(self.stories.count < self.storiesTotal) {
+                // ---- Show More
+                if(self.storiesShowMore.subviews.count==0) {
+                    self.storiesShowMore.backgroundColor = CSS.shared.displayMode().main_bgColor
+                    self.storiesShowMore.activateConstraints([
+                        self.storiesShowMore.heightAnchor.constraint(equalToConstant: 88)
+                    ])
+
+                    let button = UIButton(type: .custom)
+                    self.storiesShowMore.addSubview(button)
+                    button.activateConstraints([
+                        button.heightAnchor.constraint(equalToConstant: 42),
+                        button.widthAnchor.constraint(equalToConstant: 150),
+                        button.centerXAnchor.constraint(equalTo: self.storiesShowMore.centerXAnchor),
+                        button.centerYAnchor.constraint(equalTo: self.storiesShowMore.centerYAnchor)
+                    ])
+                    button.setTitle("Show more", for: .normal)
+                    button.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
+                    button.titleLabel?.font = AILERON(15)
+                    button.layer.masksToBounds = true
+                    button.layer.cornerRadius = 9
+                    button.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xBBBDC0)
+                    
+                    button.addTarget(self, action: #selector(self.onLoadMoreStoriesTap(_:)), for: .touchUpInside)
+                }
+
+                storiesVStack.addArrangedSubview(self.storiesShowMore)
+                storiesVStack.show()
+                // ----
+            } else {
+                self.storiesShowMore.removeFromSuperview()
+            }
+        } else {
+            self.storiesContainer.hide()
+            REMOVE_ALL_SUBVIEWS(from: self.storiesContainer)
+        }
+    }
+    
+    @objc func onLoadMoreStoriesTap(_ sender: UIButton?) {
+        self.loadMoreStories(page: self.storiesPage+1)
+    }
+    
+    private func loadMoreStories(page P: Int) {
+        var T = ""
+        if(!self.isSubTopic) {
+            if(self.topics.count>0 && self.currentTopic != -1) {
+                T = self.topics[self.currentTopic].slug
+                if(T == "all"){ T = "" }
+            }
+        } else {
+            if(self.subtopics.count>0 && self.currentSubTopic != -1) {
+                T = self.subtopics[self.currentSubTopic].slug
+                if(T == "all"){
+                     //T = ""
+                     if(self.topics.count>0 && self.currentTopic != -1) {
+                        T = self.topics[self.currentTopic].slug
+                        if(T == "all"){ T = "" }
+                    }
+                }
+            }
+        }
+        
+        self.showLoading()
+        print("LOAD more STORIES (for CONTROVERSY)")
+        ControversiesData.shared.loadList(topic: T, page: P) { (error, total, list, topics, subtopics, controData, storiesCount, stories) in
+            self.hideLoading()
+            if let _ = error {
+                ALERT(vc: self, title: "Server error",
+                    message: "Trouble loading Stories,\nplease try again later.", onCompletion: {
+                        CustomNavController.shared.popViewController(animated: true)
+                })
+            } else {
+                MAIN_THREAD {
+                    if let _t = storiesCount, let _stories = stories {
+                        self.storiesPage += 1
+                        self.addMoreStories(total: _t, items: _stories)
+                    }
+                }
+            }
+        }
+                
+    }
+    
+    func addMoreStories(total: Int, items: [StorySearchResult]) {
+        self.storiesTotal = total
+        self.updateStories(adding: items)
+    }
+    
 }

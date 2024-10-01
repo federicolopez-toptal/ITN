@@ -184,7 +184,7 @@ class ControversiesData {
     
     func loadList(topic: String, page: Int,
         callback: @escaping (Error?, Int?, [ControversyListItem]?, [SimpleTopic]?, [SimpleTopic]?,
-            ControversyPortalData?) -> () ) {
+            ControversyPortalData?, Int?, [StorySearchResult]?) -> () ) {
         // error, total, itemList, topics
         
 //        let url = ITN_URL() + "/claims-api/claim/search?topic=\(topic)&page=\(page)&per_page=8"
@@ -198,12 +198,12 @@ class ControversiesData {
         let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
             if(error as? URLError)?.code == .timedOut {
                 print("TIME OUT!!!")
-                callback(error, nil, nil, nil, nil, nil)
+                callback(error, nil, nil, nil, nil, nil, nil, nil)
             }
             
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(_error, nil, nil, nil, nil, nil)
+                callback(_error, nil, nil, nil, nil, nil, nil, nil)
             } else {
             
 //                if let _data = data {
@@ -223,13 +223,25 @@ class ControversiesData {
                 
                 if let _json = JSON(fromData: _data) {
                     if let _ = _json["error"] {
-                        callback(CustomError.jsonParseError, nil, nil, nil, nil, nil)
+                        callback(CustomError.jsonParseError, nil, nil, nil, nil, nil, nil, nil)
                     } else {
 //                        if let _keyword = _json["keyword"] as? String,
                         if let _total = _json["total"] as? Int,
                             let _data = _json["data"] as? [[String: Any]],
 //                            let _topics = _json["topics"] as? [[String: Any]] {
                             let _topics = _json["parentCategories"] as? [[String: Any]] {
+                            
+                            var storiesCount: Int? = nil
+                            var stories: [StorySearchResult]? = []
+                            if let _stories = _json["stories"] as? [String: Any] {
+                                 if let _total = _stories["total"] as? Int, let _data = _stories["data"] as? [[String: Any]] {
+                                    storiesCount = _total
+                                    for D in _data {
+                                        let newItem = StorySearchResult(D)
+                                        stories?.append(newItem)
+                                    }
+                                 }
+                            }
                             
                             var subtopics = [SimpleTopic]()
                             if let _subTopics = _json["categories"] as? [[String: Any]] {
@@ -271,13 +283,13 @@ class ControversiesData {
                             }
                             
                             
-                            callback(nil, _total, cItems, topics, subtopics, controData)
+                            callback(nil, _total, cItems, topics, subtopics, controData, storiesCount, stories)
                         } else {
-                            callback(CustomError.jsonParseError, nil, nil, nil, nil, nil)
+                            callback(CustomError.jsonParseError, nil, nil, nil, nil, nil, nil, nil)
                         }
                     }
                 } else {
-                    callback(CustomError.jsonParseError, nil, nil, nil, nil, nil)
+                    callback(CustomError.jsonParseError, nil, nil, nil, nil, nil, nil, nil)
                 }
             }
         }
