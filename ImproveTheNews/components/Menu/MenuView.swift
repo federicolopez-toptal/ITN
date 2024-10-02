@@ -49,7 +49,8 @@ class MenuView: UIView {
         .layout,
         .about,
         
-        .contactUs
+        .contactUs,
+        .elections
     ]
     
     var themeIsOpened = false
@@ -571,6 +572,31 @@ extension MenuView {
         let vc = ControversiesViewController()
         CustomNavController.shared.viewControllers = [vc]
         CustomNavController.shared.tabsBar.selectTab(2)
+    }
+    
+    // ---------
+    func showElections() {
+        self.dismissMe()
+    
+        if(CustomNavController.shared.tabsBar.currentTab() != 2) {
+            ControversiesViewController.topic = "us-election-2024"
+            CustomNavController.shared.tabsBar.selectTab(2, loadContent: true)
+        } else {
+            if let _vc = CustomNavController.shared.viewControllers.last as? ControversiesViewController {
+                var i = 1
+                for (j, T) in _vc.topics.enumerated() {
+                    if(T.slug == "us-election-2024") {
+                        i = j
+                        break
+                    }
+                }
+                
+                let button = UIButton(type: .custom)
+                button.tag = i + 400
+                _vc.topicButton_iPhoneOnTap(button)
+            }
+        }
+        
     }
     
     // ---------

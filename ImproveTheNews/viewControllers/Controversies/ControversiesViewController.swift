@@ -10,6 +10,8 @@ import UIKit
 
 class ControversiesViewController: BaseViewController {
 
+    static var topic = ""
+
     let M: CGFloat = CSS.shared.iPhoneSide_padding
     let GRAPH_HEIGHT: CGFloat = 300
     var iPad_W: CGFloat = -1
@@ -299,6 +301,7 @@ class ControversiesViewController: BaseViewController {
     
     @objc func loadMoreOnTap(_ sender: UIButton) {
         self.page += 1
+        self.storiesPage = self.page
         self.loadsCount = 0
         
         self.loadContent(page: self.page) //
@@ -337,19 +340,23 @@ extension ControversiesViewController {
         self.showMoreButton(false)
         
         var T = ""
-        if(!self.isSubTopic) {
-            if(self.topics.count>0 && self.currentTopic != -1) {
-                T = self.topics[self.currentTopic].slug
-                if(T == "all"){ T = "" }
-            }
+        if(!ControversiesViewController.topic.isEmpty) {
+            T = ControversiesViewController.topic
         } else {
-            if(self.subtopics.count>0 && self.currentSubTopic != -1) {
-                T = self.subtopics[self.currentSubTopic].slug
-                if(T == "all"){
-                     //T = ""
-                     if(self.topics.count>0 && self.currentTopic != -1) {
-                        T = self.topics[self.currentTopic].slug
-                        if(T == "all"){ T = "" }
+            if(!self.isSubTopic) {
+                if(self.topics.count>0 && self.currentTopic != -1) {
+                    T = self.topics[self.currentTopic].slug
+                    if(T == "all"){ T = "" }
+                }
+            } else {
+                if(self.subtopics.count>0 && self.currentSubTopic != -1) {
+                    T = self.subtopics[self.currentSubTopic].slug
+                    if(T == "all"){
+                         //T = ""
+                         if(self.topics.count>0 && self.currentTopic != -1) {
+                            T = self.topics[self.currentTopic].slug
+                            if(T == "all"){ T = "" }
+                        }
                     }
                 }
             }
@@ -398,6 +405,17 @@ extension ControversiesViewController {
             }
         }
         
+        if(!ControversiesViewController.topic.isEmpty) {
+            for (i, _T) in self.topics.enumerated() {
+//                print(_T.name, ControversiesViewController.topic)
+                if(_T.slug == ControversiesViewController.topic) {
+                    self.currentTopic = i
+                    ControversiesViewController.topic = ""
+                    break
+                }
+            }
+        }
+            
         /* Portal stuff */
     if(!self.isSubTopic) {
         REMOVE_ALL_SUBVIEWS(from: self.portalInfoView)
@@ -658,12 +676,12 @@ extension ControversiesViewController {
             self.showMoreButton(false)
         }
 
-        // stories
-        self.stories = []
-        self.storiesTotal = 0
-        self.storiesPage = 1
-        REMOVE_ALL_SUBVIEWS(from: self.storiesContainer)
-        self.storiesContainer.hide()
+//        // stories
+//        self.stories = []
+//        self.storiesTotal = 0
+//        self.storiesPage = 1
+//        REMOVE_ALL_SUBVIEWS(from: self.storiesContainer)
+//        self.storiesContainer.hide()
         
         var storiesToAdd: [StorySearchResult] = []
         if let _stories = stories {
@@ -851,7 +869,6 @@ extension ControversiesViewController {
         
         if(mustLoad) {
             //self.topics = []
-            
             let containerView = self.view.viewWithTag(555)!
             REMOVE_ALL_SUBVIEWS(from: containerView)
             
@@ -859,6 +876,14 @@ extension ControversiesViewController {
             self.items = []
             self.loadsCount = 0
             self.isSubTopic = false
+            
+            // stories
+            self.stories = []
+            self.storiesTotal = 0
+            self.storiesPage = 1
+            REMOVE_ALL_SUBVIEWS(from: self.storiesContainer)
+            self.storiesContainer.hide()
+            
             self.loadContent(page: self.page)
         }
     }
@@ -1212,6 +1237,14 @@ extension ControversiesViewController {
             self.items = []
             self.loadsCount = 0
             self.isSubTopic = true
+            
+            // stories
+            self.stories = []
+            self.storiesTotal = 0
+            self.storiesPage = 1
+            REMOVE_ALL_SUBVIEWS(from: self.storiesContainer)
+            self.storiesContainer.hide()
+            
             self.loadContent(page: self.page)
         }
     }
@@ -1226,6 +1259,20 @@ extension ControversiesViewController {
 extension ControversiesViewController {
     
     func updateStories(adding newStories: [StorySearchResult]) {
+        var _newStories = [StorySearchResult]()
+        for ST in newStories {
+            var add = true
+            
+            let foundItems = self.stories.filter { $0.slug == ST.slug }
+            if(foundItems.count>0) {
+                add = false
+            }
+            
+            if(add) {
+                _newStories.append(ST)
+            }
+        }
+        
         var mustShowStories = false
         if(self.storiesTotal>0) {
             mustShowStories = true
@@ -1255,7 +1302,7 @@ extension ControversiesViewController {
             if(IPHONE()) {
                 let col_WIDTH = SCREEN_SIZE().width
                 
-                for ST in newStories {
+                for ST in _newStories {
                     let storyView = iPhoneAllNews_vImgCol_v3(width: col_WIDTH, minimumLineNum: false)
                     storiesVStack.addArrangedSubview(storyView)
                     storyView.populate(story: ST)
@@ -1273,7 +1320,7 @@ extension ControversiesViewController {
                 let col_WIDTH = (SCREEN_SIZE_iPadSideTab().width-(16*3))/2
                 
                 var col = 1
-                for ST in newStories {
+                for ST in _newStories {
                     var rowHStack: UIStackView!
                     
                     if(col==1) {

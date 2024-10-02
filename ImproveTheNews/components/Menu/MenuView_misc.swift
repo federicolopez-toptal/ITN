@@ -36,6 +36,8 @@ enum MenuItem {
     case newsletters2
     case podcast
     case videos
+    
+    case elections
 }
 
 // ------------
@@ -114,6 +116,8 @@ extension MenuView {
             case .videos:
                 result = "Videos"
          
+            case .elections:
+                result = "US Election Portal"
          
             default:
                 result = ""
@@ -197,6 +201,9 @@ extension MenuView {
             case .videos:
                 icon = "videos"
             
+            case .elections:
+                icon = "bandera"
+            
             default:
                 return nil
         }
@@ -250,6 +257,9 @@ extension MenuView {
             
             case .controversies:
                 self.showControversies()
+            
+            case .elections:
+                self.showElections()
             
             default:
                 NOTHING()

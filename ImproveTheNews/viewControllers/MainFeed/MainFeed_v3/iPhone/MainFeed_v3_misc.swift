@@ -145,12 +145,18 @@ extension MainFeed_v3_viewController: TopicSelectorViewDelegate {
         if(index==0) {
             self.list.scrollToTop()
         } else {
-            let vc = MainFeed_v3_viewController()
             let topic = self.data.topics[index].name
-            vc.topic = topic
-            
-            CustomNavController.shared.tour_old?.cancel()
-            CustomNavController.shared.pushViewController(vc, animated: true)
+        
+            if(topic == "us-election-2024") {
+                ControversiesViewController.topic = "us-election-2024"
+                CustomNavController.shared.tabsBar.selectTab(2, loadContent: true)
+            } else {
+                let vc = MainFeed_v3_viewController()
+                vc.topic = topic
+                
+                CustomNavController.shared.tour_old?.cancel()
+                CustomNavController.shared.pushViewController(vc, animated: true)
+            }
         }
     }
     
