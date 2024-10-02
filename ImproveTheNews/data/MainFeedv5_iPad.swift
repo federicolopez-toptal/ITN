@@ -168,11 +168,11 @@ extension MainFeedv5_iPad {
                     
                 if(!isBanner) {
                     var articles = _obj[1] as! [Any]
-//                    if(i==1) {
-//                        while(articles.count>mainTopicItemsLimit) { // api fix
-//                            articles.removeLast()
-//                        }
-//                    }
+                    if(i==1) {
+                        while(articles.count>mainTopicItemsLimit) { // api fix
+                            articles.removeLast()
+                        }
+                    }
                     let newTopic = MainFeedTopic(topicInfo, articles)
                     
                     if(newTopic.name == self.topic) {

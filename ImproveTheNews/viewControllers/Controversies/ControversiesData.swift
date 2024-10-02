@@ -347,6 +347,10 @@ class ControversyListItem {
     
     var controversyType: String = ""
     
+    var resolvedText: String = ""
+    var resolvedDate: String = ""
+    
+    
     
     init(jsonObj: [String: Any]) {
         self.title = CHECK(jsonObj["title"])
@@ -388,6 +392,9 @@ class ControversyListItem {
         if let _controversyType = jsonObj["controversyType"] as? String {
             self.controversyType = _controversyType
         }
+        
+        self.resolvedText = CHECK(jsonObj["resolvedText"])
+        self.resolvedDate = CHECK(jsonObj["resolvedDate"])
     }
     
     func trace() {

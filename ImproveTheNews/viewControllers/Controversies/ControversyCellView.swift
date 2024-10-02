@@ -15,6 +15,7 @@ protocol ControversyCellViewDelegate: AnyObject {
 class ControversyCellView: UIView {
 
     weak var delegate: ControversyCellViewDelegate?
+    let resolvedViewHeight: CGFloat = 80
 
     let M: CGFloat = 16
     private var WIDTH: CGFloat = 1
@@ -44,6 +45,10 @@ class ControversyCellView: UIView {
 
     var mainImageView: UIImageView!
     var mainImageViewHeightConstraint: NSLayoutConstraint?
+
+    let resolutionDataLabel = UILabel()
+    let resolvedDataLabel = UILabel()
+
 
     // MARK: - Init(s)
     init() {
@@ -193,7 +198,7 @@ class ControversyCellView: UIView {
                 self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
             ])
             
-            //self.buttonArea.backgroundColor = .red.withAlphaComponent(0.25)
+            self.buttonArea.backgroundColor = .red //.withAlphaComponent(0.25)
             self.addSubview(self.buttonArea)
             self.buttonArea.activateConstraints([
                 self.buttonArea.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
@@ -283,9 +288,6 @@ class ControversyCellView: UIView {
         }
         self.statusLabelTextColor = self.statusLabel.textColor
         
-        self.mainHeightConstraint?.constant = self.calculateHeight()
-        self.refreshDisplayMode()
-        
         if(self.mustShowChartFlag) {
             if(self.mainImageView != nil) {
                 self.mainImageView.hide()
@@ -316,6 +318,76 @@ class ControversyCellView: UIView {
                 _statusTopConstraint.constant = val + 8
             }
         }
+        
+        // Resolved (bottom)
+        if(controversy.resolved.lowercased() == "resolved") {
+            var resolvedView: UIStackView!
+
+            if let _resolvedView = self.viewWithTag(696) as? UIStackView {
+                resolvedView = _resolvedView
+            } else {
+                resolvedView = VSTACK(into: self)
+                
+                resolvedView.tag = 696
+                resolvedView.backgroundColor = .clear //.orange
+                resolvedView.activateConstraints([
+                    resolvedView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+                    resolvedView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+                    resolvedView.topAnchor.constraint(equalTo: self.pill.bottomAnchor),
+                    resolvedView.heightAnchor.constraint(equalToConstant: self.resolvedViewHeight)
+                ])
+                
+                let resolutionLabel = UILabel()
+                resolutionLabel.textColor = CSS.shared.displayMode().sec_textColor
+                resolutionLabel.font = AILERON(15)
+                resolutionLabel.text = "Resolution:"
+                resolvedView.addSubview(resolutionLabel)
+                resolutionLabel.activateConstraints([
+                    resolutionLabel.leadingAnchor.constraint(equalTo: resolvedView.leadingAnchor),
+                    resolutionLabel.topAnchor.constraint(equalTo: resolvedView.topAnchor, constant: 22)
+                ])
+                
+                self.resolutionDataLabel.textColor = CSS.shared.cyan
+                self.resolutionDataLabel.font = AILERON(15)
+                self.resolutionDataLabel.text = "Lorem Ipsum"
+                resolvedView.addSubview(self.resolutionDataLabel)
+                self.resolutionDataLabel.activateConstraints([
+                    self.resolutionDataLabel.leadingAnchor.constraint(equalTo: resolutionLabel.trailingAnchor, constant: 8),
+                    self.resolutionDataLabel.topAnchor.constraint(equalTo: resolutionLabel.topAnchor)
+                ])
+                
+                let resolvedLabel = UILabel()
+                resolvedLabel.textColor = CSS.shared.displayMode().sec_textColor
+                resolvedLabel.font = AILERON(15)
+                resolvedLabel.text = "Resolved on:"
+                resolvedView.addSubview(resolvedLabel)
+                resolvedLabel.activateConstraints([
+                    resolvedLabel.leadingAnchor.constraint(equalTo: resolvedView.leadingAnchor),
+                    resolvedLabel.topAnchor.constraint(equalTo: resolutionLabel.bottomAnchor, constant: 8),
+                ])
+                
+                self.resolvedDataLabel.textColor = CSS.shared.cyan
+                self.resolvedDataLabel.font = AILERON(15)
+                self.resolvedDataLabel.text = "Lorem Ipsum"
+                resolvedView.addSubview(self.resolvedDataLabel)
+                self.resolvedDataLabel.activateConstraints([
+                    self.resolvedDataLabel.leadingAnchor.constraint(equalTo: resolvedLabel.trailingAnchor, constant: 8),
+                    self.resolvedDataLabel.topAnchor.constraint(equalTo: resolvedLabel.topAnchor)
+                ])
+            }
+            
+            self.resolutionDataLabel.text = controversy.resolvedText
+            self.resolvedDataLabel.text = controversy.resolvedDate
+            
+            resolvedView.show()
+        } else {
+            if let _resolvedView = self.viewWithTag(696) as? UIStackView {
+                _resolvedView.hide()
+            }
+        }
+        
+        self.mainHeightConstraint?.constant = self.calculateHeight()
+        self.refreshDisplayMode()
     }
 
     func refreshDisplayMode() {
@@ -356,6 +428,12 @@ class ControversyCellView: UIView {
                 
             if let _h = self.mainImageViewHeightConstraint {
                     H += _h.constant
+            }
+        }
+        
+        if(self.showBottom) {
+            if let _resolvedView = self.viewWithTag(696), !_resolvedView.isHidden {
+                H += self.resolvedViewHeight
             }
         }
         

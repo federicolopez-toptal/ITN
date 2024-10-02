@@ -38,7 +38,6 @@ func USER_AUTHENTICATED() -> Bool {
 
 func CHECK_AUTHENTICATED() {
     
-    print("Chequeo de verified")
     if(!USER_AUTHENTICATED()) {
         API.shared.getUserInfo { (success, serverMsg, user) in
             if(success) {

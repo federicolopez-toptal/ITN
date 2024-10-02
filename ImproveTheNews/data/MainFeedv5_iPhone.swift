@@ -51,7 +51,7 @@ extension MainFeedv5_iPhone {
             } else {
                 let mData = ADD_MAIN_NODE(to: data)
                 if let jsonString = String(data: mData, encoding: .utf8) {
-                    if(jsonString.containsItemInArray(["Invalid topic requested"])) {
+                    if(jsonString.containsItemInArray(["Invalid topic requested", "Invalid argument received"])) {
                         print("SERVER ERROR", "Invalid topic requested", "Oops")
                         
                         let _error = CustomError.jsonParseError
@@ -167,11 +167,11 @@ extension MainFeedv5_iPhone {
                     
                 if(!isBanner) {
                     var articles = _obj[1] as! [Any]
-//                    if(i==1) {
-//                        while(articles.count>mainTopicItemsLimit) { // api fix
-//                            articles.removeLast()
-//                        }
-//                    }
+                    if(i==1) {
+                        while(articles.count>mainTopicItemsLimit) { // api fix
+                            articles.removeLast()
+                        }
+                    }
                     let newTopic = MainFeedTopic(topicInfo, articles)
                     
                     if(newTopic.name == self.topic) {

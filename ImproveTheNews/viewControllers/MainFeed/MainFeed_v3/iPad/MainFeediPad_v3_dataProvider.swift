@@ -57,7 +57,7 @@ extension MainFeediPad_v3_viewController {
                 var newGroupItem: DP3_groupItem?
                 switch(itemInTopic) {
                     case 1:
-                        newGroupItem = DP3_iPad5items(type: itemInTopic)
+                        newGroupItem = DP3_iPad5items(type: topicLayout)
                     case 2:
                         newGroupItem = DP3_iPhoneStory_4cols()
                     case 3:
@@ -175,7 +175,7 @@ extension MainFeediPad_v3_viewController {
                 var newGroupItem: DP3_groupItem?
                 switch(itemInTopic) {
                     case 1:
-                        newGroupItem = DP3_iPad5items(type: itemInTopic)
+                        newGroupItem = DP3_iPad5items(type: topicLayout)
                     case 2:
                         newGroupItem = DP3_iPhoneStory_4cols()
                     case 3:
