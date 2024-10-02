@@ -145,19 +145,33 @@ extension MainFeediPad_v3_viewController: TopicSelectorViewDelegate {
         if(index==0) {
             self.list.scrollToTop()
         } else {
-            var vc: UIViewController!
             let topic = self.data.topics[index].name
         
-            if(IPHONE()) {
-                vc = MainFeed_v3_viewController()
-                (vc as! MainFeed_v3_viewController).topic = topic
+            if(topic == "us-election-2024") {
+                ControversiesViewController.topic = "us-election-2024"
+                CustomNavController.shared.tabsBar.selectTab(2, loadContent: true)
             } else {
-                vc = MainFeediPad_v3_viewController()
-                (vc as! MainFeediPad_v3_viewController).topic = topic
+                let vc = MainFeediPad_v3_viewController()
+                vc.topic = topic
+                
+                CustomNavController.shared.tour_old?.cancel()
+                CustomNavController.shared.pushViewController(vc, animated: true)
             }
         
-            CustomNavController.shared.tour_old?.cancel()
-            CustomNavController.shared.pushViewController(vc, animated: true)
+        
+//            var vc: UIViewController!
+//            let topic = self.data.topics[index].name
+//        
+//            if(IPHONE()) {
+//                vc = MainFeed_v3_viewController()
+//                (vc as! MainFeed_v3_viewController).topic = topic
+//            } else {
+//                vc = MainFeediPad_v3_viewController()
+//                (vc as! MainFeediPad_v3_viewController).topic = topic
+//            }
+        
+//            CustomNavController.shared.tour_old?.cancel()
+//            CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
     

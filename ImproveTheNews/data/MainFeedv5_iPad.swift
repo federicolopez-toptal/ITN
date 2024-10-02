@@ -61,6 +61,7 @@ extension MainFeedv5_iPad {
                             self.parse(_json, mainTopicItemsLimit: 5)
                             if(self.topic == "news") {
                                 self.addIA()
+                                self.add_US_Election()
                             }
                             if(self.topic == "ai") {
                                 self.replaceFirstStoryIA()
@@ -571,6 +572,15 @@ extension MainFeedv5_iPad {
         let iaTopic = MainFeedTopic(data, [])
         
         self.topics.insert(iaTopic, at: 1)
+    }
+    
+    private func add_US_Election() {
+        let data: [Any] = [
+            "us-election-2024", "us-election-2024", "US Election", 0, "us-election-2024",
+            0, 0, 0, []
+        ]
+        let newTopic = MainFeedTopic(data, [])
+        self.topics.insert(newTopic, at: 3)
     }
     
     private func replaceFirstStoryIA() {
