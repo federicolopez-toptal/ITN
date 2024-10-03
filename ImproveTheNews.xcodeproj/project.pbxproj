@@ -513,6 +513,7 @@
 		BD2257252C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257242C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift */; };
 		BD2257272C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257262C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift */; };
 		BD2257292C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257282C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift */; };
+		BD28E9752CAF037300C2C7BC /* FormOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD28E9742CAF037300C2C7BC /* FormOptionView.swift */; };
 		BD2BD8CF2CA45BAF00BBA933 /* NewsletterSignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BD8CE2CA45BAF00BBA933 /* NewsletterSignUp2.swift */; };
 		BD2F70962C3870D5000C9960 /* SharePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F70952C3870D4000C9960 /* SharePopupView.swift */; };
 		BD339B472C762C5E000554A3 /* fakeJson_Controversies.txt in Resources */ = {isa = PBXBuildFile; fileRef = BD339B452C762C5E000554A3 /* fakeJson_Controversies.txt */; };
@@ -1076,6 +1077,7 @@
 		BD2257242C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vImgDescr_v3.swift; sourceTree = "<group>"; };
 		BD2257262C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vTxtDescr_cell_v3.swift; sourceTree = "<group>"; };
 		BD2257282C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vTxtDescr_v3.swift; sourceTree = "<group>"; };
+		BD28E9742CAF037300C2C7BC /* FormOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormOptionView.swift; sourceTree = "<group>"; };
 		BD2BD8CE2CA45BAF00BBA933 /* NewsletterSignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsletterSignUp2.swift; sourceTree = "<group>"; };
 		BD2F70952C3870D4000C9960 /* SharePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopupView.swift; sourceTree = "<group>"; };
 		BD339B452C762C5E000554A3 /* fakeJson_Controversies.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fakeJson_Controversies.txt; sourceTree = "<group>"; };
@@ -1440,6 +1442,7 @@
 				1FE92BBA2B56F9DF003C2F86 /* FormCheckView.swift */,
 				1F19386C2BB5ED010039D7BA /* RectangularDashedView.swift */,
 				BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */,
+				BD28E9742CAF037300C2C7BC /* FormOptionView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -2864,6 +2867,7 @@
 				1F1938692BB2FDBD0039D7BA /* FigureDetails_claims.swift in Sources */,
 				1FACBF8329AD01D0009A8E0F /* iPadSplitHeaderCell.swift in Sources */,
 				1F9EDD4729AE5819007A97A6 /* iPadFooterCell.swift in Sources */,
+				BD28E9752CAF037300C2C7BC /* FormOptionView.swift in Sources */,
 				1FE89CF92AF1A97900A6C99C /* DP3_groupItem.swift in Sources */,
 				1F1493F32AF95DBF001BF4B7 /* UIDeviceExtension.swift in Sources */,
 				1F0BFFFF28F5F2C7007280FF /* MoreCell.swift in Sources */,

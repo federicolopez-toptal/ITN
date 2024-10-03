@@ -85,15 +85,21 @@ class API {
     var isLogged = false
 
 // ---
-    func signUp(email: String, password: String, newsletter: Bool = false,
+    func signUp(email: String, password: String, newsletter: Int,
         callback: @escaping (Bool, String) -> () ) {
     
-        let json: [String: String] = [
+        let newsletterState = (newsletter == 0) ? "N" : "Y"
+        var subscriptionValue: [String] = []
+        if(newsletter == 1){ subscriptionValue = ["daily"] }
+        else if(newsletter == 2){ subscriptionValue = ["weekly"] }
+    
+        let json: [String: Any] = [
             "type": "Sign Up",
             "userId": UUID.shared.getValue(),
             "email": email,
             "password": password,
-            "newsletter": newsletter ? "Y" : "N",
+            "newsletter": newsletterState,
+            "subscription": subscriptionValue,
             "app": "iOS"
         ]
     

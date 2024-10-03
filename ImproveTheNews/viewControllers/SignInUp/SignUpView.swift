@@ -26,7 +26,12 @@ class SignUpView: UIView {
     let emailText = FormTextView()
     let passText = FormTextView()
     let pass2Text = FormTextView()
+    
     let newsLetterCheck = FormCheckView()
+    var newsLetterOptionValue = 0
+    let newsLetterOption1 = FormOptionView()
+    let newsLetterOption2 = FormOptionView()
+    
     let mainActionButton = UIButton(type: .custom)
 
 
@@ -284,9 +289,20 @@ class SignUpView: UIView {
         VStack_form.addArrangedSubview(passNoteLabel)
         ADD_SPACER(to: VStack_form, height: 22)
         
-        self.newsLetterCheck.text = "Sign me up for the newsletter!"
-        VStack_form.addArrangedSubview(self.newsLetterCheck)
-        ADD_SPACER(to: VStack_form, height: 24)
+        VStack_form.addArrangedSubview(self.newsLetterOption1)
+        self.newsLetterOption1.setValue(1)
+        self.newsLetterOption1.setText("Sign me up for the Daily Briefing Newsletter!")
+        self.newsLetterOption1.delegate = self
+        ADD_SPACER(to: VStack_form, height: 8)
+        VStack_form.addArrangedSubview(self.newsLetterOption2)
+        self.newsLetterOption2.setValue(2)
+        self.newsLetterOption2.setText("Sign me up for the Weekly Roundup Newsletter!")
+        self.newsLetterOption2.delegate = self
+        ADD_SPACER(to: VStack_form, height: 32)
+        
+//        self.newsLetterCheck.text = "Sign me up for the newsletter!"
+//        VStack_form.addArrangedSubview(self.newsLetterCheck)
+//        ADD_SPACER(to: VStack_form, height: 24)
         
         if(IPAD()){ ADD_SPACER(to: VStack_form, height: 32) }
         let hStack_mainActionButton = HSTACK(into: VStack_form)
@@ -553,7 +569,8 @@ extension SignUpView {
             
             let email = self.emailText.text()
             let password = self.passText.text()
-            API.shared.signUp(email: email, password: password, newsletter: self.newsLetterCheck.status) { (success, msg) in
+            //let newsLetterValue = (self.newsLetterOptionValue == 0) ? false : true
+            API.shared.signUp(email: email, password: password, newsletter: self.newsLetterOptionValue) { (success, msg) in
                 if(success) {
                     let msg = "Registration successful. You'll receive a validation email to complete the process"
                     CustomNavController.shared.infoAlert(message: msg)
@@ -660,3 +677,19 @@ func VALIDATE_PASS(_ text: String) -> Bool {
     return result
 }
 
+extension SignUpView: FormOptionViewDelegate {
+
+    func FormOptionViewOnSelected(sender: FormOptionView) {
+        let value = sender.getValue()
+        self.newsLetterOptionValue = value
+        
+        if(value == 1) {
+            self.newsLetterOption1.setState(true)
+            self.newsLetterOption2.setState(false)
+        } else {
+            self.newsLetterOption1.setState(false)
+            self.newsLetterOption2.setState(true)
+        }
+    }
+    
+}

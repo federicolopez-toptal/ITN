@@ -114,7 +114,7 @@ extension MainFeediPad_v3_viewController: UITableViewDelegate, UITableViewDataSo
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {        
         return self.dataProvider.count
     }
     
