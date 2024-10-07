@@ -416,6 +416,13 @@ extension ControversiesViewController {
             }
         }
             
+    let topicName = self.topics[self.currentTopic].name
+    if(topicName.lowercased() == "all") {
+        self.navBar.setTitle("Controversies")
+    } else {
+        self.navBar.setTitle(topicName)
+    }
+            
         /* Portal stuff */
     if(!self.isSubTopic) {
         REMOVE_ALL_SUBVIEWS(from: self.portalInfoView)
@@ -435,11 +442,13 @@ extension ControversiesViewController {
                 portalView.widthAnchor.constraint(equalToConstant: _W)
             ])
             
-            let titleLabel = UILabel()
-            titleLabel.numberOfLines = 0
-            titleLabel.font = DM_SERIF_DISPLAY_resize(22)
-            titleLabel.textColor = CSS.shared.displayMode().main_textColor
-            titleLabel.text = _controData.title
+            //self.navBar.setTitle(_controData.title)
+            
+//            let titleLabel = UILabel()
+//            titleLabel.numberOfLines = 0
+//            titleLabel.font = DM_SERIF_DISPLAY_resize(22)
+//            titleLabel.textColor = CSS.shared.displayMode().main_textColor
+//            titleLabel.text = _controData.title
             
             let descrLabel = UILabel()
             descrLabel.numberOfLines = 0
@@ -464,8 +473,8 @@ extension ControversiesViewController {
                     innerVStack.trailingAnchor.constraint(equalTo: portalView.trailingAnchor)
                 ])
                 
-                innerVStack.addArrangedSubview(titleLabel)
-                ADD_SPACER(to: innerVStack, height: 8)
+//                innerVStack.addArrangedSubview(titleLabel)
+//                ADD_SPACER(to: innerVStack, height: 8)
                 innerVStack.addArrangedSubview(descrLabel)
                 ADD_SPACER(to: innerVStack, height: 24)
                 self.createTwitterButton(into: innerVStack)
@@ -494,8 +503,8 @@ extension ControversiesViewController {
                 
                 let innerVStack = VSTACK(into: innerHStack)
                 innerVStack.backgroundColor = .clear
-                innerVStack.addArrangedSubview(titleLabel)
-                ADD_SPACER(to: innerVStack, height: 8)
+//                innerVStack.addArrangedSubview(titleLabel)
+//                ADD_SPACER(to: innerVStack, height: 8)
                 innerVStack.addArrangedSubview(descrLabel)
                 ADD_SPACER(to: innerVStack)
                 
@@ -507,13 +516,13 @@ extension ControversiesViewController {
             var H: CGFloat = 0
             
             if(IPHONE()) {
-                H = 12 + titleLabel.calculateHeightFor(width: _W) + 8 +
+                H = 12 + //titleLabel.calculateHeightFor(width: _W) + 8 +
                 descrLabel.calculateHeightFor(width: _W) + 24 +
                 40 + 24 + self.GRAPH_HEIGHT
             } else {
                 let _w: CGFloat = self.W() - 16 - self.GRAPH_HEIGHT
                 
-                let _h = 12 + titleLabel.calculateHeightFor(width: _w) + 8 +
+                let _h = 12 + //titleLabel.calculateHeightFor(width: _w) + 8 +
                 descrLabel.calculateHeightFor(width: _w)
                 
                 if(_h > (self.GRAPH_HEIGHT+12)) {
