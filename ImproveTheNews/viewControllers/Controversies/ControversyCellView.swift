@@ -198,7 +198,7 @@ class ControversyCellView: UIView {
                 self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
             ])
             
-            self.buttonArea.backgroundColor = .red //.withAlphaComponent(0.25)
+            self.buttonArea.backgroundColor = CSS.shared.displayMode().main_bgColor //.withAlphaComponent(0.25)
             self.addSubview(self.buttonArea)
             self.buttonArea.activateConstraints([
                 self.buttonArea.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),

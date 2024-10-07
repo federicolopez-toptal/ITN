@@ -125,6 +125,20 @@ extension MainFeed_v3_viewController {
         
         //Footer at the end of all
         self.addFooter()
+        
+        self.removeDuplicatedMore()
+    }
+    
+    func removeDuplicatedMore() {
+        for (i, DP) in self.dataProvider.enumerated() {
+            if(DP is DP3_more) {
+                let prev = self.dataProvider[i-1]
+                if(prev is DP3_more) {
+                    self.dataProvider.remove(at: i)
+                    break
+                }
+            }
+        }
     }
     
     private func itemHas2Cols(item: DP3_groupItem) -> Bool {
@@ -242,6 +256,7 @@ extension MainFeed_v3_viewController {
         //Footer at the end of all
         self.addFooter()
 
+        self.removeDuplicatedMore()
     }
 }
 

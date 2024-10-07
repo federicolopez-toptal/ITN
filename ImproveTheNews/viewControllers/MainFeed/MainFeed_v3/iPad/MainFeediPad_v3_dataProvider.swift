@@ -29,7 +29,7 @@ extension MainFeediPad_v3_viewController {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
         
-        var topicLayout: Int = 1
+        var topicLayout: Int = 0
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             //var _T = self.data.topics[i]
@@ -49,6 +49,11 @@ extension MainFeediPad_v3_viewController {
             
             // Headers
                 if(itemInTopic == 0) {
+                    topicLayout += 1
+                    if(topicLayout==4) {
+                        topicLayout = 1
+                    }
+                
                     self.addHeader(text: _T.capitalizedName)
                     itemInTopic += 1
                     //itemInTopic = topicLayout
@@ -57,6 +62,7 @@ extension MainFeediPad_v3_viewController {
                 var newGroupItem: DP3_groupItem?
                 switch(itemInTopic) {
                     case 1:
+                        print("topicLayout", topicLayout)
                         newGroupItem = DP3_iPad5items(type: topicLayout)
                     case 2:
                         newGroupItem = DP3_iPhoneStory_4cols()
@@ -125,11 +131,6 @@ extension MainFeediPad_v3_viewController {
                 
             } // while
             
-            topicLayout += 1
-            if(topicLayout==4) {
-                topicLayout = 1
-            }
-            
             // Banner, only for 1rst topic (if apply)
             if(i==0) { self.insertNewBanner() }
 
@@ -140,6 +141,20 @@ extension MainFeediPad_v3_viewController {
         
         //Footer at the end of all
         self.addFooter()
+        
+        self.removeDuplicatedMore()
+    }
+    
+    func removeDuplicatedMore() {
+        for (i, DP) in self.dataProvider.enumerated() {
+            if(DP is DP3_more) {
+                let prev = self.dataProvider[i-1]
+                if(prev is DP3_more) {
+                    self.dataProvider.remove(at: i)
+                    break
+                }
+            }
+        }
     }
     
     // Text only
@@ -147,7 +162,7 @@ extension MainFeediPad_v3_viewController {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
         
-        var topicLayout: Int = 1
+        var topicLayout: Int = 0
         if(self.data.topic.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             //var _T = self.data.topics[i]
@@ -167,6 +182,11 @@ extension MainFeediPad_v3_viewController {
             
             // Headers
                 if(itemInTopic == 0) {
+                    topicLayout += 1
+                    if(topicLayout==4) {
+                        topicLayout = 1
+                    }
+                
                     self.addHeader(text: _T.capitalizedName)
                     itemInTopic += 1
                     //itemInTopic = topicLayout
@@ -230,11 +250,6 @@ extension MainFeediPad_v3_viewController {
                 
             } // while
             
-            topicLayout += 1
-            if(topicLayout==4) {
-                topicLayout = 1
-            }
-            
             //Banner, only for 1rst topic (if apply)
             if(i==0) { self.insertNewBanner() }
 
@@ -246,6 +261,7 @@ extension MainFeediPad_v3_viewController {
         //Footer at the end of all
         self.addFooter()
 
+        self.removeDuplicatedMore()
     }
     
     private func itemHas4Cols(item: DP3_groupItem) -> Bool {

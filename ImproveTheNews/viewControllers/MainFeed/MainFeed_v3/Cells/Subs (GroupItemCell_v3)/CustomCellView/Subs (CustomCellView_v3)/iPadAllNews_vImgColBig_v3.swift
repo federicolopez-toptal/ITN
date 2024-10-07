@@ -13,6 +13,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
 
     var article: MainFeedArticle!
     private var WIDTH: CGFloat = 1
+    private var IMG_WIDTH: CGFloat = 1
 
 //    private let imgWidth: CGFloat = 160
 //    private let imgHeight: CGFloat = 88
@@ -51,15 +52,16 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat) {
+    init(width: CGFloat, imageWidth: CGFloat) {
         super.init(frame: .zero)
         self.WIDTH = width
+        self.IMG_WIDTH = imageWidth
         
         self.buildContent()
     }
     
     private func calculateImageViewHeight() -> CGFloat {
-        let H = (self.WIDTH * imgHeight)/imgWidth
+        let H = (self.IMG_WIDTH * imgHeight)/imgWidth
         return H
     }
     
@@ -402,11 +404,14 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
 //            self.mainImageView.load(url: article.imgUrl)
 //        }
         
+        //self.mainImageView.backgroundColor = .red
+        
         self.mainImageView.load(url: article.imgUrl) { (success, imgSize) in
             if success, let _imgSize = imgSize {
-                
             }
         }
+        
+        //self.mainImageView.
         
 //        if(!self.isContext) {
 //            
@@ -560,7 +565,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         
         self.descrlabel.textColor = CSS.shared.displayMode().sec_textColor
         
-        self.mainImageView.refreshDisplayMode()        
+        self.mainImageView.refreshDisplayMode()
     }
     
     // MARK: misc

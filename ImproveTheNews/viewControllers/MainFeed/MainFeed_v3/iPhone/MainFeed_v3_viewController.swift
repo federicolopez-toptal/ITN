@@ -48,8 +48,7 @@ class MainFeed_v3_viewController: BaseViewController {
         self.preferencesSetDefaultValues()
         self.addNotificationObservers()
         
-        UUID.shared.trace()
-        
+//        UUID.shared.trace()
     }
     
     override func viewDidLayoutSubviews() {

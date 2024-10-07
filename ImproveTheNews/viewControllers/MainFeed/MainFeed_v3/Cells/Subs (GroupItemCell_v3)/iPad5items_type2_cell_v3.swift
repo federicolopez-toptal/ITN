@@ -37,7 +37,12 @@ class iPad5items_type2_cell_v3: GroupItemCell_v3 {
         let colW: CGFloat = ceil(W * 0.24)
         
         let view1_width: CGFloat = SCREEN_SIZE_iPadSideTab().width - (colW*2) - (sep*4)
-        let view1 = iPadAllNews_vImgColBig_v3(width: view1_width)
+        // --------
+        let view1_height: CGFloat = SCREEN_SIZE_iPadSideTab().height - (colW*2) - (sep*4)
+        var minDim: CGFloat = view1_width
+        if(view1_height < minDim){ minDim = view1_height }
+        
+        let view1 = iPadAllNews_vImgColBig_v3(width: view1_width, imageWidth: minDim)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
