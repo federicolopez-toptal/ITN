@@ -61,7 +61,7 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
         ])
         
         self.descrlabel.numberOfLines = 0
-        self.descrlabel.font = AILERON_resize(17)
+        self.descrlabel.font = AILERON_resize(16)
         self.addSubview(self.descrlabel)
         self.descrlabel.activateConstraints([
             self.descrlabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -108,6 +108,8 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
         
         self.titleLabel.text = article.title
         self.descrlabel.text = article.summaryText
+        self.descrlabel.setLineSpacing(lineSpacing: 6.0)
+        
         self.timeLabel.text = FIX_TIME(article.time).uppercased()
         
         if(PREFS_SHOW_SOURCE_ICONS()) {
@@ -130,7 +132,7 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
     
     override func refreshDisplayMode() {
         self.titleLabel.textColor = CSS.shared.displayMode().main_textColor
-        self.descrlabel.textColor = CSS.shared.displayMode().main_textColor
+        self.descrlabel.textColor = CSS.shared.displayMode().sec_textColor
         self.pill.refreshDisplayMode()
         self.sources.refreshDisplayMode()
         self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
