@@ -24,6 +24,7 @@ class FAQViewController: BaseViewController {
     var normalStories = [StorySearchResult]()
     var contextStories = [StorySearchResult]()
     
+    var establishmentBiasButton: UIButton? = nil
     var controversiesButton: UIButton? = nil
     var newsSlidersButton: UIButton? = nil
     
@@ -408,7 +409,9 @@ class FAQViewController: BaseViewController {
         buttonArea.tag = self.VStack.arrangedSubviews.count
         buttonArea.addTarget(self, action: #selector(self.onSectionTap(_:)), for: .touchUpInside)
         
-        if(index == 15) {
+        if(index == 5) {
+            self.establishmentBiasButton = buttonArea
+        } else if(index == 15) {
             self.controversiesButton = buttonArea
         } else if(index == 16) {
             self.newsSlidersButton = buttonArea
@@ -671,6 +674,22 @@ extension FAQViewController {
     func scrollTo(valY: CGFloat) {
         let bottomOffset = CGPoint(x: 0, y: valY)
         self.scrollView.setContentOffset(bottomOffset, animated: true)
+    }
+    
+    func scrollToEstablishmentBias() {
+        if let _button = self.establishmentBiasButton {
+            self.onSectionTap(_button)
+            
+            let sectionView = _button.superview!
+            let valY: CGFloat = sectionView.frame.origin.y
+            self.scrollView.setContentOffset(CGPoint(x: 0, y: valY), animated: true)
+            
+            sectionView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.2) : CSS.shared.cyan
+            UIView.animate(withDuration: 0.5, delay: 0.5) {
+                sectionView.backgroundColor = CSS.shared.displayMode().main_bgColor
+            }
+
+        }
     }
     
     func scrollToControversies() {

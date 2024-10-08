@@ -104,6 +104,7 @@ extension KeywordSearchViewController {
             self.searchTextfield.heightAnchor.constraint(equalToConstant: 48),
             self.searchTextfield.topAnchor.constraint(equalTo: closeIcon.bottomAnchor, constant: 47)
         ])
+        self.searchTextfield.setPlaceHolder(text: "Search All")
         
         self.searchSelector.buildInto(self.view, yOffset: topValue+32+47+48+25)
         self.searchSelector.setTopics(["All", "Topics", "Stories", "Controversies", "Articles"])
@@ -151,6 +152,8 @@ extension KeywordSearchViewController: KeywordSearchTextViewDelegate {
 extension KeywordSearchViewController: TopicSelectorViewDelegate {
     
     func onTopicSelected(_ index: Int) {
+        self.searchTextfield.setPlaceHolder(text: "Search " + self.searchSelector.topics[index])
+        
         self.searchSelector.selectTopic(index: index)
         self.resultType = index
         

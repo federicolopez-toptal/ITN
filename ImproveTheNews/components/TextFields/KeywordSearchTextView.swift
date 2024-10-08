@@ -116,6 +116,10 @@ class KeywordSearchTextView: UIView {
     func text() -> String {
         return self.searchTextField.text!
     }
+    
+    func setPlaceHolder(text: String) {
+        self.placeHolderLabel.text = text
+    }
 }
 
 // MARK: - Event(s)

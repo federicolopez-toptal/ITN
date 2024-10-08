@@ -14,6 +14,7 @@ protocol TopicSelectorViewDelegate: AnyObject {
 class TopicSelectorView: UIView {
 
     weak var delegate: TopicSelectorViewDelegate?
+    var topics: [String] = []
 
     var displayModeComponents = [Any]()
     private var viewHeightConstraint: NSLayoutConstraint?
@@ -107,6 +108,7 @@ class TopicSelectorView: UIView {
 
     func setTopics(_ topics: [String]) {
         MAIN_THREAD {
+            self.topics = topics
             REMOVE_ALL_SUBVIEWS(from: self.contentView)
 
             let HStack = HSTACK(into: self.contentView)

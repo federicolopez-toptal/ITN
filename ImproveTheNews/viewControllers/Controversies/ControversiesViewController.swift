@@ -70,8 +70,15 @@ class ControversiesViewController: BaseViewController {
                 let vc = FAQViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)
                 
-                DELAY(0.4) {
-                    vc.scrollToControversies()
+                let _topic = self.topics[self.currentTopic]
+                if(_topic.slug == "us-election-2024") {
+                    DELAY(0.4) {
+                        vc.scrollToEstablishmentBias()
+                    }
+                } else {
+                    DELAY(0.4) {
+                        vc.scrollToControversies()
+                    }
                 }
             }
             
