@@ -1151,6 +1151,7 @@ extension StoryViewController {
                     let naWebHStack = HSTACK(into: innerHStack)
                     ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
                     let webView = WKWebView()
+                    webView.navigationDelegate = self
                     webView.load(URLRequest(url: URL(string: embedUrl)!))
                     
                     let _W = SCREEN_SIZE_iPadSideTab().width - (M*2)
@@ -2625,12 +2626,10 @@ extension StoryViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        if let url = navigationAction.request.url?.absoluteString {
-            if(url.contains("metaculus.php") || url.contains("question_embed")) {
+        if let url = navigationAction.request.mainDocumentURL?.absoluteString {
+            if(url.contains("metaculus.php")) {
                 decisionHandler(.allow)
-            } else {
-                //OPEN_URL(url)
-                
+            } else if(url.contains("metaculus.com")) {
                 let vc = ArticleViewController()
                 vc.article = MainFeedArticle(url: url)
                 vc.showComponentsOnClose = false
@@ -2639,6 +2638,28 @@ extension StoryViewController: WKNavigationDelegate {
                 
                 decisionHandler(.cancel)
             }
+            
+            
+        
+//        if let url = navigationAction.request.url?.absoluteString {
+//            print("URL", url)
+            
+            
+            
+            
+//            if(url.contains("metaculus.php") || url.contains("question_embed")) {
+//                decisionHandler(.allow)
+//            } else {
+//                //OPEN_URL(url)
+//                
+//                let vc = ArticleViewController()
+//                vc.article = MainFeedArticle(url: url)
+//                vc.showComponentsOnClose = false
+//                vc.altTitle = "Metaculus"
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//                
+//                decisionHandler(.cancel)
+//            }
         }
     }
 }

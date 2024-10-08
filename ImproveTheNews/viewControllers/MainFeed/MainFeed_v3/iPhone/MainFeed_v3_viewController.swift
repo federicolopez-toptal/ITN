@@ -80,7 +80,7 @@ class MainFeed_v3_viewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+                
         if(!self.didAppear) {
             //CustomNavController.shared.tour.start()
             

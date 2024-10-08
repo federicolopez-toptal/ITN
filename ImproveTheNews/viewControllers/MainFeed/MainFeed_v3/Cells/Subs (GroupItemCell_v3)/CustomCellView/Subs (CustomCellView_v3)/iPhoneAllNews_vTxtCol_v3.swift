@@ -288,15 +288,18 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
     
     func calculateHeight() -> CGFloat {
         var result: CGFloat = 0
-        if(self.article.isStory) {
-            result += self.calculateHeightForStory()
-        } else {
-            result += self.calculateHeightForArticle()
-        }
-
         var extra: CGFloat = 0
-        if(PREFS_SHOW_FLAGS() || PREFS_SHOW_SOURCE_ICONS()) {
-            extra = 10
+        
+        if(self.article != nil) {
+            if(self.article.isStory) {
+                result += self.calculateHeightForStory()
+            } else {
+                result += self.calculateHeightForArticle()
+            }
+            
+            if(PREFS_SHOW_FLAGS() || PREFS_SHOW_SOURCE_ICONS()) {
+                extra = 10
+            }
         }
         
         return result + 25 + extra

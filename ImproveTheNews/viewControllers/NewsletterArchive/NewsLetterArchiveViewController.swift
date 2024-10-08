@@ -121,7 +121,8 @@ class NewsLetterArchiveViewController: BaseViewController {
         self.vStack.addArrangedSubview(searchText)
         ADD_SPACER(to: self.vStack, height: margin)
 
-        //self.addCopyButton() //!!!
+//        self.addCopyButton() //!!!
+        self.addCrashButton()
         
         // VIEW ---------------------------------------
         let viewText = UILabel()
@@ -1233,6 +1234,26 @@ extension NewsLetterArchiveViewController: CalendarViewDelegate {
 }
 
 extension NewsLetterArchiveViewController {
+    
+    func addCrashButton() {
+        let crashButton = UIButton(type: .custom)
+        crashButton.setTitle("    ", for: .normal)
+        crashButton.titleLabel?.font = AILERON(14)
+        crashButton.backgroundColor = .clear //CSS.shared.cyan
+        crashButton.setTitleColor(UIColor(hex: 0x19191C), for: .normal)
+        crashButton.layer.cornerRadius = 4.0
+        self.mainContentView.addSubview(crashButton)
+        crashButton.activateConstraints([
+            crashButton.widthAnchor.constraint(equalToConstant: 75),
+            crashButton.heightAnchor.constraint(equalToConstant: 40),
+            crashButton.topAnchor.constraint(equalTo: self.mainContentView.topAnchor, constant: 16),
+            crashButton.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -16)
+        ])
+        crashButton.addTarget(self, action: #selector(self.onCrashButtonTap(_:)), for: .touchUpInside)
+    }
+    @objc func onCrashButtonTap(_ sender: UIButton?) {
+        fatalError()
+    }
     
     func addCopyButton() {
         let copyButton = UIButton(type: .custom)
