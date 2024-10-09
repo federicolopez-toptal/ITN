@@ -721,10 +721,13 @@ extension ControDetailViewController {
         if(IPHONE()) {
             ADD_SPACER(to: self.vStack, height: 24)
         
+            print( listItem.controversyType )
+        
             let container1View = self.createContainerView()
             self.addTextHeader(containerView: container1View, width: self.W(), title: T,
                 status: listItem.resolved, figures: F,
-                image: (listItem.image_url, listItem.image_title, listItem.image_credit))
+                image: (listItem.image_url, listItem.image_title, listItem.image_credit),
+                type: listItem.controversyType)
             
             if(listItem.figures.count > 0) {
                 let container2View = self.createContainerView()
@@ -764,13 +767,15 @@ extension ControDetailViewController {
                 
                 self.addTextHeader(containerView: col1View, width: _W, title: T,
                     status: listItem.resolved, figures: F,
-                    image: (listItem.image_url, listItem.image_title, listItem.image_credit))
+                    image: (listItem.image_url, listItem.image_title, listItem.image_credit),
+                    type: listItem.controversyType)
             } else {
                 col1View.widthAnchor.constraint(equalToConstant: self.W()).isActive = true
                 
                 self.addTextHeader(containerView: col1View, width: self.W(), title: T,
                     status: listItem.resolved, figures: F,
-                    image: (listItem.image_url, listItem.image_title, listItem.image_credit))
+                    image: (listItem.image_url, listItem.image_title, listItem.image_credit),
+                    type: listItem.controversyType)
             }
             
             if(listItem.figures.count>0) {
@@ -861,7 +866,8 @@ extension ControDetailViewController {
     
     func addTextHeader(containerView: UIView, width: CGFloat, title: String,
         status: String, figures: [FigureForScale],
-        image: (String, String, String)) {
+        image: (String, String, String),
+        type: String) {
         
         self.creditUrl = image.2
         var mustShowImage = false
@@ -884,6 +890,12 @@ extension ControDetailViewController {
         ])
         pill.layer.cornerRadius = 12
         pill.clipsToBounds = true
+        
+        if(type.uppercased() == "ELECTION_ISSUE") {
+            pill.text = "ELECTION ISSUE"
+            pill.font = AILERON_SEMIBOLD(12)
+            pill.backgroundColor = UIColor(hex: 0xf4e457)
+        }
         
         // -------------------------------------------
         let figuresContainer = UIView()

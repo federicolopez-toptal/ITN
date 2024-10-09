@@ -122,7 +122,8 @@ class NewsLetterArchiveViewController: BaseViewController {
         ADD_SPACER(to: self.vStack, height: margin)
 
 //        self.addCopyButton() //!!!
-        self.addCrashButton()
+//        self.addCrashButton()
+//        self.addCrashButton()
         
         // VIEW ---------------------------------------
         let viewText = UILabel()

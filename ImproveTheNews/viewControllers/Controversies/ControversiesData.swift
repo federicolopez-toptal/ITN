@@ -391,6 +391,8 @@ class ControversyListItem {
         
         if let _controversyType = jsonObj["controversyType"] as? String {
             self.controversyType = _controversyType
+        } else if let _controversyType = jsonObj["type"] as? String {
+            self.controversyType = _controversyType
         }
         
         self.resolvedText = CHECK(jsonObj["resolvedText"])
