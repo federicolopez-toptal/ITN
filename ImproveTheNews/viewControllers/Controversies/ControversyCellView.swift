@@ -300,7 +300,9 @@ class ControversyCellView: UIView {
             self.applyGradient(A: UIColor(hex: controversy.colorMin), B: UIColor(hex: controversy.colorMax))
             self.gradientView.show()
         } else {
-            self.mainImageView.show()
+            if(self.mainImageView != nil) {
+                self.mainImageView.show()
+            }
             self.gradientView.hide()
             self.startLabel.hide()
             self.endLabel.hide()

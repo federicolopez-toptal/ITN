@@ -721,18 +721,25 @@ extension ControDetailViewController {
         if(IPHONE()) {
             ADD_SPACER(to: self.vStack, height: 24)
         
-            print( listItem.controversyType )
-        
             let container1View = self.createContainerView()
             self.addTextHeader(containerView: container1View, width: self.W(), title: T,
                 status: listItem.resolved, figures: F,
                 image: (listItem.image_url, listItem.image_title, listItem.image_credit),
                 type: listItem.controversyType)
             
+            var showTwitterButton = false
+            
             if(listItem.figures.count > 0) {
                 let container2View = self.createContainerView()
                 self.addGraph(containerView: container2View, width: SCREEN_SIZE().width, listItem: listItem)
-            
+                
+                showTwitterButton = true
+            } else if(!listItem.image_url.isEmpty) {
+                ADD_SPACER(to: self.vStack, height: 8*3)
+                showTwitterButton = true
+            }
+
+            if(showTwitterButton) {
                 let container3View = self.createContainerView(bgColor: .clear, height: 40)
                 let button = self.twitterButton()
                 container3View.addSubview(button)
@@ -780,7 +787,7 @@ extension ControDetailViewController {
             
             if(listItem.figures.count>0) {
                 let col1b_view = UIView()
-                //col1b_view.backgroundColor = .green
+                col1b_view.backgroundColor = .green
                 centeredView.addSubview(col1b_view)
                 col1b_view.activateConstraints([
                     col1b_view.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor),
@@ -806,6 +813,35 @@ extension ControDetailViewController {
                 self.addGraph(containerView: col2View, width: _W, listItem: listItem)
                 
                 centeredView.bottomAnchor.constraint(equalTo: col1b_view.bottomAnchor, constant: 0).isActive = true
+            } else {
+                ADD_SPACER(to: self.vStack, height: 16)
+            
+                let container3View = self.createContainerView(bgColor: .clear, height: 40)
+                let button = self.twitterButton()
+                container3View.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: container3View.leadingAnchor, constant: M+16),
+                    button.topAnchor.constraint(equalTo: container3View.topAnchor)
+                ])
+            
+            
+//                let col1b_view = UIView()
+//                col1b_view.backgroundColor = .orange
+//                centeredView.addSubview(col1b_view)
+//                col1b_view.activateConstraints([
+//                    col1b_view.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor),
+//                    col1b_view.topAnchor.constraint(equalTo: col1View.bottomAnchor),
+//                    col1b_view.widthAnchor.constraint(equalToConstant: _W),
+//                    col1b_view.heightAnchor.constraint(equalToConstant: 40+M)
+//                ])
+//                let button = self.twitterButton()
+//                col1b_view.addSubview(button)
+//                button.activateConstraints([
+//                    button.leadingAnchor.constraint(equalTo: col1b_view.leadingAnchor, constant: M),
+//                    button.topAnchor.constraint(equalTo: col1b_view.topAnchor, constant: M)
+//                ])
+                
+                ADD_SPACER(to: self.vStack, height: 8)
             }
             
             if(listItem.figures.count == 0) {
