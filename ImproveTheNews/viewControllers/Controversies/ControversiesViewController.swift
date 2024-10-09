@@ -29,6 +29,7 @@ class ControversiesViewController: BaseViewController {
     var items: [ControversyListItem] = []
     var containerViewHeightConstraint: NSLayoutConstraint?
     var showMoreViewHeightConstraint: NSLayoutConstraint?
+    var tmpContainer2HeightConstraint: NSLayoutConstraint?
     
     var currentTopic = -1
     var currentSubTopic = -1
@@ -141,22 +142,42 @@ class ControversiesViewController: BaseViewController {
         // Container / Structure
         ADD_SPACER(to: self.vStack, height: 16)
         
-        self.topicsContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
-        self.vStack.addArrangedSubview(self.topicsContainer)
-        self.topicsContainer.activateConstraints([
-            self.topicsContainer.heightAnchor.constraint(equalToConstant: 40+16)
+        let tmpContainer = UIView()
+        tmpContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.vStack.addArrangedSubview(tmpContainer)
+        tmpContainer.activateConstraints([
+            tmpContainer.heightAnchor.constraint(equalToConstant: 40+16)
         ])
         
+        tmpContainer.addSubview(self.topicsContainer)
+        self.topicsContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.topicsContainer.activateConstraints([
+            self.topicsContainer.topAnchor.constraint(equalTo: tmpContainer.topAnchor),
+            self.topicsContainer.heightAnchor.constraint(equalToConstant: 40+16),
+            self.topicsContainer.widthAnchor.constraint(equalToConstant: self.W()),
+            self.topicsContainer.centerXAnchor.constraint(equalTo: tmpContainer.centerXAnchor)
+        ])
+    
         self.portalInfoView = VSTACK(into: self.vStack)
         self.portalInfoView.backgroundColor = .clear //.orange
         self.portalInfoViewHeightConstraint = self.portalInfoView.heightAnchor.constraint(equalToConstant: 50)
         self.portalInfoViewHeightConstraint?.isActive = true
         self.portalInfoView.hide()
         
-        self.subtopicsContainer.backgroundColor = .clear //.white.withAlphaComponent(0.15)
-        self.vStack.addArrangedSubview(self.subtopicsContainer)
+        
+        let tmpContainer2 = UIView()
+        tmpContainer2.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.vStack.addArrangedSubview(tmpContainer2)
+        self.tmpContainer2HeightConstraint = tmpContainer2.heightAnchor.constraint(equalToConstant: 0)
+        self.tmpContainer2HeightConstraint?.isActive = true
+        
+        tmpContainer2.addSubview(self.subtopicsContainer)
+        self.subtopicsContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.subtopicsContainer.activateConstraints([
-            self.subtopicsContainer.heightAnchor.constraint(equalToConstant: IPHONE() ? 93 : 108)
+            self.subtopicsContainer.topAnchor.constraint(equalTo: tmpContainer2.topAnchor),
+            self.subtopicsContainer.heightAnchor.constraint(equalToConstant: IPHONE() ? 93 : 108),
+            self.subtopicsContainer.widthAnchor.constraint(equalToConstant: self.W()),
+            self.subtopicsContainer.centerXAnchor.constraint(equalTo: tmpContainer2.centerXAnchor)
         ])
         
         let mainView = self.createContainerView()
@@ -233,7 +254,7 @@ class ControversiesViewController: BaseViewController {
             let hstack = HSTACK(into: self.vStack)
             hstack.backgroundColor = .clear
         
-            let W: CGFloat = SCREEN_SIZE_iPadSideTab().width-(16*2)
+            let W: CGFloat = self.W()
         
             ADD_SPACER(to: hstack)
             self.storiesContainer = VSTACK(into: hstack)
@@ -304,6 +325,13 @@ class ControversiesViewController: BaseViewController {
         self.loadsCount = 0
         
         self.loadContent(page: self.page) //
+        
+        
+//        self.scrollView.backgroundColor = .systemPink
+//        self.contentView.backgroundColor = .yellow
+
+//        self.vStack.backgroundColor = .green
+        self.topicsContainer.backgroundColor = .orange
     }
     
     @objc func loadMoreOnTap(_ sender: UIButton) {
@@ -338,6 +366,7 @@ extension ControversiesViewController {
         if(!self.isSubTopic) {
             self.portalInfoView.hide()
             self.subtopicsContainer.hide()
+            self.tmpContainer2HeightConstraint?.constant = 0
         }
         
         //if(self.storiesContainer.subviews.count == 0) {
@@ -558,6 +587,7 @@ extension ControversiesViewController {
             self.addSubTopics(_subtopics, title: subTitle)
         } else {
             self.subtopicsContainer.hide()
+            self.tmpContainer2HeightConstraint?.constant = 0
         }
     }
     
@@ -752,8 +782,7 @@ extension ControversiesViewController {
                 
                 if(w<h){ value = w }
                 else{ value = h }
-                self.iPad_W = value - 74
-                self.iPad_W -= IPAD_sideOffset()
+                self.iPad_W = value - IPAD_sideOffset() - 32 //- 74
             }
         
             return self.iPad_W
@@ -793,8 +822,8 @@ extension ControversiesViewController {
         innerScrollView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.topicsContainer.addSubview(innerScrollView)
         innerScrollView.activateConstraints([
-            innerScrollView.leadingAnchor.constraint(equalTo: self.topicsContainer.leadingAnchor, constant: _m),
-            innerScrollView.trailingAnchor.constraint(equalTo: self.topicsContainer.trailingAnchor, constant: -_m),
+            innerScrollView.leadingAnchor.constraint(equalTo: self.topicsContainer.leadingAnchor),
+            innerScrollView.trailingAnchor.constraint(equalTo: self.topicsContainer.trailingAnchor),
             innerScrollView.topAnchor.constraint(equalTo: self.topicsContainer.topAnchor),
             innerScrollView.bottomAnchor.constraint(equalTo: self.topicsContainer.bottomAnchor)
         ])
@@ -1222,6 +1251,7 @@ extension ControversiesViewController {
         self.selectSubTopic(index: 0, mustLoad: false)
         // ----------------------------
         self.subtopicsContainer.show()
+        self.tmpContainer2HeightConstraint?.constant = IPHONE() ? 93 : 108
     }
     
     func selectSubTopic(index: Int, mustLoad: Bool = true) {
