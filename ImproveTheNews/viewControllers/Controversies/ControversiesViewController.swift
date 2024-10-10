@@ -108,7 +108,7 @@ class ControversiesViewController: BaseViewController {
         self.scrollView.activateConstraints([
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: NavBarView.HEIGHT()),
-            self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset())
         ])
         
@@ -120,7 +120,7 @@ class ControversiesViewController: BaseViewController {
         self.contentView.activateConstraints([
             self.contentView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
             self.contentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
-            self.contentView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
+            self.contentView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: 0 ),
             self.contentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor),
             self.contentView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor),
             H
@@ -132,10 +132,10 @@ class ControversiesViewController: BaseViewController {
         self.vStack = VSTACK(into: self.contentView)
         //self.vStack.backgroundColor = .yellow
         self.vStack.activateConstraints([
-            self.vStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            self.vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.vStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: IPHONE() ? -16 : 0),
+            self.vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 0),
             self.vStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: extraOffset),
-            self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+            self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
             
         // -------------------------------------- //
@@ -149,12 +149,15 @@ class ControversiesViewController: BaseViewController {
             tmpContainer.heightAnchor.constraint(equalToConstant: 40+16)
         ])
         
+        //ADD_SPACER(to: self.vStack, height: 16)
+        let extraWidth: CGFloat = IPHONE() ? 32 : 0
+        
         tmpContainer.addSubview(self.topicsContainer)
         self.topicsContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.topicsContainer.activateConstraints([
             self.topicsContainer.topAnchor.constraint(equalTo: tmpContainer.topAnchor),
             self.topicsContainer.heightAnchor.constraint(equalToConstant: 40+16),
-            self.topicsContainer.widthAnchor.constraint(equalToConstant: self.W()),
+            self.topicsContainer.widthAnchor.constraint(equalToConstant: self.W()+extraWidth),
             self.topicsContainer.centerXAnchor.constraint(equalTo: tmpContainer.centerXAnchor)
         ])
     
@@ -176,7 +179,7 @@ class ControversiesViewController: BaseViewController {
         self.subtopicsContainer.activateConstraints([
             self.subtopicsContainer.topAnchor.constraint(equalTo: tmpContainer2.topAnchor),
             self.subtopicsContainer.heightAnchor.constraint(equalToConstant: IPHONE() ? 93 : 108),
-            self.subtopicsContainer.widthAnchor.constraint(equalToConstant: self.W()),
+            self.subtopicsContainer.widthAnchor.constraint(equalToConstant: self.W()+extraWidth),
             self.subtopicsContainer.centerXAnchor.constraint(equalTo: tmpContainer2.centerXAnchor)
         ])
         
@@ -822,8 +825,8 @@ extension ControversiesViewController {
         innerScrollView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.topicsContainer.addSubview(innerScrollView)
         innerScrollView.activateConstraints([
-            innerScrollView.leadingAnchor.constraint(equalTo: self.topicsContainer.leadingAnchor),
-            innerScrollView.trailingAnchor.constraint(equalTo: self.topicsContainer.trailingAnchor),
+            innerScrollView.leadingAnchor.constraint(equalTo: self.topicsContainer.leadingAnchor, constant: 0),
+            innerScrollView.trailingAnchor.constraint(equalTo: self.topicsContainer.trailingAnchor, constant: 0),
             innerScrollView.topAnchor.constraint(equalTo: self.topicsContainer.topAnchor),
             innerScrollView.bottomAnchor.constraint(equalTo: self.topicsContainer.bottomAnchor)
         ])
@@ -878,9 +881,9 @@ extension ControversiesViewController {
             val_x += SEP + _W
         }
 
-        if(IPHONE()) {
-            val_x += M
-        }
+//        if(IPHONE()) {
+//            val_x += M
+//        }
 
         innerContentView.widthAnchor.constraint(equalToConstant: val_x).isActive = true
         innerScrollView.contentSize = CGSize(width: val_x, height: H)

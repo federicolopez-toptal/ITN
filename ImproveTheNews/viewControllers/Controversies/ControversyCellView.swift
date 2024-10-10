@@ -130,7 +130,7 @@ class ControversyCellView: UIView {
             self.addSubview(self.mainImageView)
             self.mainImageView.activateConstraints([
                 self.mainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
-                self.mainImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: IPHONE() ? -M*2 : -M),
+                self.mainImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
                 self.mainImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: M),
             ])
             
@@ -171,7 +171,7 @@ class ControversyCellView: UIView {
             self.addSubview(self.titleLabel)
             self.titleLabel.activateConstraints([
                 self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: M),
-                self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: IPHONE() ? -M*2 : -M),
+                self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -M),
                 self.titleLabel.topAnchor.constraint(equalTo: self.statusLabel.bottomAnchor, constant: 10)
             ])
         
