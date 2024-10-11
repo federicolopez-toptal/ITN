@@ -1349,7 +1349,12 @@ extension ControversiesViewController {
             }
             
             if(IPHONE()) {
-                let col_WIDTH = SCREEN_SIZE().width
+                storiesVStack.activateConstraints([
+                    storiesVStack.leadingAnchor.constraint(equalTo: self.storiesContainer.leadingAnchor, constant: 16),
+                    storiesVStack.trailingAnchor.constraint(equalTo: self.storiesContainer.trailingAnchor, constant: 0)
+                ])
+            
+                let col_WIDTH = SCREEN_SIZE().width-32
                 
                 for ST in _newStories {
                     let storyView = iPhoneAllNews_vImgCol_v3(width: col_WIDTH, minimumLineNum: false)

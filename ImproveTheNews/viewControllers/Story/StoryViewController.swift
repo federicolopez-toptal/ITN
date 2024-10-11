@@ -78,7 +78,10 @@ class StoryViewController: BaseViewController {
     }
     
     func buildContent() {
-        self.isContext = self.story!.isContext
+        self.isContext = false
+        if let _story = self.story {
+            self.isContext = _story.isContext
+        }
         self.view.backgroundColor = CSS.shared.displayMode().main_bgColor
         
         //DARK_MODE() ? UIColor(hex: 0x0B121E) : .white

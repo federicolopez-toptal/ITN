@@ -183,8 +183,9 @@ extension ControDetailViewController {
         let containerView = self.view.viewWithTag(666)!
         
         var col: CGFloat = 0
-        var item_W: CGFloat = SCREEN_SIZE().width
+        var item_W: CGFloat = SCREEN_SIZE().width-32
         if(IPAD()){ item_W = (W()-M)/2 }
+        
         var val_y: CGFloat = 0
         for (i, GD) in goDeepers.enumerated() {
             let stView = iPhoneStory_vImg_v3(width: item_W)
@@ -192,9 +193,20 @@ extension ControDetailViewController {
             
             stView.tag = 200 + i
             var val_x: CGFloat = col * item_W
-            if(IPAD() && col==1) {
-                val_x += M
+//            if(IPAD() && col==1) {
+//                //val_x += M
+//            } else {
+//                val_x = 16
+//            }
+  
+            if(IPHONE()) {
+                val_x = 16
+            } else {
+                if(col == 1) {
+                    val_x += 16
+                }
             }
+            //print(col, val_x)
             
             containerView.addSubview(stView)
             stView.activateConstraints([
@@ -230,8 +242,8 @@ extension ControDetailViewController {
                     col = 0
                     val_y += stView.calculateHeight()
                 }
-                
-                if(goDeepers.count==1) {
+                              
+                if(col==1 && i==goDeepers.count-1) {
                     val_y += stView.calculateHeight()
                 }
             } else {
@@ -283,7 +295,7 @@ extension ControDetailViewController {
         
         let containerView = UIView()
         mainView.addSubview(containerView)
-        //containerView.backgroundColor = .orange
+        containerView.backgroundColor = .clear
         mainView.addSubview(containerView)
         containerView.activateConstraints([
             containerView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: M),
@@ -1112,43 +1124,84 @@ extension ControDetailViewController {
                 }
             }
             
-            let imageCreditLabel = UILabel()
-            imageCreditLabel.text = image.1
-            imageCreditLabel.font = ROBOTO(14)
-            imageCreditLabel.textColor = CSS.shared.orange
-            containerView.addSubview(imageCreditLabel)
-            imageCreditLabel.activateConstraints([
-                imageCreditLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5)
-            ])
-            
             if(IPHONE()) {
-                imageCreditLabel.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor,
-                    constant: -5).isActive = true
+                let photolabel = UILabel()
+                photolabel.text = "Photo:"
+                photolabel.font = ROBOTO(14)
+                photolabel.textColor = CSS.shared.displayMode().sec_textColor
+                containerView.addSubview(photolabel)
+                photolabel.activateConstraints([
+                    photolabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5),
+                    photolabel.leadingAnchor.constraint(equalTo: self.mainImageView.leadingAnchor, constant: 16)
+                ])
+            
+                let imageCreditLabel = UILabel()
+                imageCreditLabel.text = image.1
+                imageCreditLabel.font = ROBOTO(14)
+                //imageCreditLabel.lineBreakMode = .byTruncatingTail
+                imageCreditLabel.textAlignment = .left
+                imageCreditLabel.textColor = CSS.shared.orange
+                //imageCreditLabel.backgroundColor = .yellow.withAlphaComponent(0.5)
+                containerView.addSubview(imageCreditLabel)
+                imageCreditLabel.activateConstraints([
+                    imageCreditLabel.topAnchor.constraint(equalTo: photolabel.topAnchor, constant: 0),
+                    imageCreditLabel.leadingAnchor.constraint(equalTo: photolabel.trailingAnchor, constant: 5),
+                    //imageCreditLabel.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor, constant: -16)
+                ])
+                
+                
+                let creditButton = UIButton(type: .custom)
+                creditButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+                containerView.addSubview(creditButton)
+                creditButton.activateConstraints([
+                    creditButton.leadingAnchor.constraint(equalTo: photolabel.leadingAnchor, constant: 0),
+                    creditButton.trailingAnchor.constraint(equalTo: mainImageView.trailingAnchor, constant: -16),
+                    creditButton.topAnchor.constraint(equalTo: mainImageView.bottomAnchor),
+                    creditButton.heightAnchor.constraint(equalToConstant: 25)
+                    //creditButton.bottomAnchor.constraint(equalTo: imageCreditLabel.bottomAnchor)
+                ])
+                creditButton.addTarget(self, action: #selector(creditButtonOnTap(_:)), for: .touchUpInside)
+                
             } else {
-                imageCreditLabel.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor,
-                    constant: 0).isActive = true
+                let imageCreditLabel = UILabel()
+                imageCreditLabel.text = image.1
+                imageCreditLabel.font = ROBOTO(14)
+                imageCreditLabel.textColor = CSS.shared.orange
+                containerView.addSubview(imageCreditLabel)
+                imageCreditLabel.activateConstraints([
+                    imageCreditLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5)
+                ])
+                
+                if(IPHONE()) {
+                    imageCreditLabel.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor,
+                        constant: -5).isActive = true
+                } else {
+                    imageCreditLabel.trailingAnchor.constraint(equalTo: self.mainImageView.trailingAnchor,
+                        constant: 0).isActive = true
+                }
+                
+                let photolabel = UILabel()
+                photolabel.text = "Photo:"
+                photolabel.font = ROBOTO(14)
+                photolabel.textColor = CSS.shared.displayMode().sec_textColor
+                containerView.addSubview(photolabel)
+                photolabel.activateConstraints([
+                    photolabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5),
+                    photolabel.trailingAnchor.constraint(equalTo: imageCreditLabel.leadingAnchor, constant: -5)
+                ])
+                
+                let creditButton = UIButton(type: .custom)
+                creditButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+                containerView.addSubview(creditButton)
+                creditButton.activateConstraints([
+                    creditButton.leadingAnchor.constraint(equalTo: photolabel.leadingAnchor, constant: -5),
+                    creditButton.trailingAnchor.constraint(equalTo: mainImageView.trailingAnchor),
+                    creditButton.topAnchor.constraint(equalTo: mainImageView.bottomAnchor),
+                    creditButton.heightAnchor.constraint(equalToConstant: 25)
+                ])
+                creditButton.addTarget(self, action: #selector(creditButtonOnTap(_:)), for: .touchUpInside)
             }
             
-            let photolabel = UILabel()
-            photolabel.text = "Photo:"
-            photolabel.font = ROBOTO(14)
-            photolabel.textColor = CSS.shared.displayMode().sec_textColor
-            containerView.addSubview(photolabel)
-            photolabel.activateConstraints([
-                photolabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 5),
-                photolabel.trailingAnchor.constraint(equalTo: imageCreditLabel.leadingAnchor, constant: -5)
-            ])
-            
-            let creditButton = UIButton(type: .custom)
-            creditButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-            containerView.addSubview(creditButton)
-            creditButton.activateConstraints([
-                creditButton.leadingAnchor.constraint(equalTo: photolabel.leadingAnchor, constant: -5),
-                creditButton.trailingAnchor.constraint(equalTo: mainImageView.trailingAnchor),
-                creditButton.topAnchor.constraint(equalTo: mainImageView.bottomAnchor),
-                creditButton.heightAnchor.constraint(equalToConstant: 25)
-            ])
-            creditButton.addTarget(self, action: #selector(creditButtonOnTap(_:)), for: .touchUpInside)
         }
         
         // -------------------------------------------
