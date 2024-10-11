@@ -322,20 +322,22 @@ class ControversyCellView: UIView {
         }
         
         // Resolved (bottom)
-        if(controversy.resolved.lowercased() == "resolved") {
+        if(controversy.resolved.lowercased() == "resolved" && showBottom) {
             var resolvedView: UIStackView!
 
             if let _resolvedView = self.viewWithTag(696) as? UIStackView {
                 resolvedView = _resolvedView
             } else {
-                resolvedView = VSTACK(into: self)
+                if let _superView = self.pill.superview {
+                    resolvedView = VSTACK(into: _superView)
+                }
                 
                 resolvedView.tag = 696
-                resolvedView.backgroundColor = .clear //.orange
+                resolvedView.backgroundColor = .clear
                 resolvedView.activateConstraints([
                     resolvedView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
                     resolvedView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-                    resolvedView.topAnchor.constraint(equalTo: self.pill.bottomAnchor),
+                    resolvedView.topAnchor.constraint(equalTo: self.pill.bottomAnchor, constant: 0),
                     resolvedView.heightAnchor.constraint(equalToConstant: self.resolvedViewHeight)
                 ])
                 

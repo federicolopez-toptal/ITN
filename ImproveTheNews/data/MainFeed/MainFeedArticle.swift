@@ -84,6 +84,17 @@ struct MainFeedArticle {
                 self.summaryText = json[14] as! String
             }
         }
+//        if(json.count>=15) {
+//            if let _newText = json[14] as? String {
+//                if(self.summaryText == "") {
+//                    self.summaryText = _newText
+//                } else {
+//                    if( self.storySources.contains(self.summaryText) ) {
+//                        self.summaryText = _newText
+//                    }
+//                }
+//            }
+//        }
         
         self.used = false
     }

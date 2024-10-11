@@ -725,8 +725,8 @@ extension ControDetailViewController {
             self.addTextHeader(containerView: container1View, width: self.W(), title: T,
                 status: listItem.resolved, figures: F,
                 image: (listItem.image_url, listItem.image_title, listItem.image_credit),
-                type: listItem.controversyType)
-            
+                type: listItem.controversyType, resolved: (listItem.resolvedText, listItem.resolvedDate))
+
             var showTwitterButton = false
             
             if(listItem.figures.count > 0) {
@@ -775,19 +775,21 @@ extension ControDetailViewController {
                 self.addTextHeader(containerView: col1View, width: _W, title: T,
                     status: listItem.resolved, figures: F,
                     image: (listItem.image_url, listItem.image_title, listItem.image_credit),
-                    type: listItem.controversyType)
+                    type: listItem.controversyType,
+                    resolved: (listItem.resolvedText, listItem.resolvedDate))
             } else {
                 col1View.widthAnchor.constraint(equalToConstant: self.W()).isActive = true
                 
                 self.addTextHeader(containerView: col1View, width: self.W(), title: T,
                     status: listItem.resolved, figures: F,
                     image: (listItem.image_url, listItem.image_title, listItem.image_credit),
-                    type: listItem.controversyType)
+                    type: listItem.controversyType,
+                    resolved: (listItem.resolvedText, listItem.resolvedDate))
             }
             
             if(listItem.figures.count>0) {
                 let col1b_view = UIView()
-                col1b_view.backgroundColor = .green
+                col1b_view.backgroundColor = .clear
                 centeredView.addSubview(col1b_view)
                 col1b_view.activateConstraints([
                     col1b_view.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor),
@@ -903,7 +905,7 @@ extension ControDetailViewController {
     func addTextHeader(containerView: UIView, width: CGFloat, title: String,
         status: String, figures: [FigureForScale],
         image: (String, String, String),
-        type: String) {
+        type: String, resolved: (String, String)) {
         
         self.creditUrl = image.2
         var mustShowImage = false
@@ -1028,6 +1030,62 @@ extension ControDetailViewController {
         ])
         
         // -------------------------------------------
+        var showResolved = true
+        if(resolved.0.isEmpty || resolved.1.isEmpty) { showResolved = false }
+        
+        if(showResolved) {
+            let resolvedView = VSTACK(into: containerView)
+
+            resolvedView.backgroundColor = .clear
+            resolvedView.activateConstraints([
+                resolvedView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+                resolvedView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+                resolvedView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
+                resolvedView.heightAnchor.constraint(equalToConstant: 70)
+            ])
+            
+            let resolutionLabel = UILabel()
+            resolutionLabel.textColor = CSS.shared.displayMode().sec_textColor
+            resolutionLabel.font = AILERON(15)
+            resolutionLabel.text = "Resolution:"
+            resolvedView.addSubview(resolutionLabel)
+            resolutionLabel.activateConstraints([
+                resolutionLabel.leadingAnchor.constraint(equalTo: resolvedView.leadingAnchor),
+                resolutionLabel.topAnchor.constraint(equalTo: resolvedView.topAnchor, constant: 12)
+            ])
+            
+            let resolutionDataLabel = UILabel()
+            resolutionDataLabel.textColor = CSS.shared.cyan
+            resolutionDataLabel.font = AILERON(15)
+            resolutionDataLabel.text = resolved.0
+            resolvedView.addSubview(resolutionDataLabel)
+            resolutionDataLabel.activateConstraints([
+                resolutionDataLabel.leadingAnchor.constraint(equalTo: resolutionLabel.trailingAnchor, constant: 8),
+                resolutionDataLabel.topAnchor.constraint(equalTo: resolutionLabel.topAnchor)
+            ])
+            
+            let resolvedLabel = UILabel()
+            resolvedLabel.textColor = CSS.shared.displayMode().sec_textColor
+            resolvedLabel.font = AILERON(15)
+            resolvedLabel.text = "Resolved on:"
+            resolvedView.addSubview(resolvedLabel)
+            resolvedLabel.activateConstraints([
+                resolvedLabel.leadingAnchor.constraint(equalTo: resolvedView.leadingAnchor),
+                resolvedLabel.topAnchor.constraint(equalTo: resolutionLabel.bottomAnchor, constant: 8),
+            ])
+            
+            let resolvedDataLabel = UILabel()
+            resolvedDataLabel.textColor = CSS.shared.cyan
+            resolvedDataLabel.font = AILERON(15)
+            resolvedDataLabel.text = resolved.1
+            resolvedView.addSubview(resolvedDataLabel)
+            resolvedDataLabel.activateConstraints([
+                resolvedDataLabel.leadingAnchor.constraint(equalTo: resolvedLabel.trailingAnchor, constant: 8),
+                resolvedDataLabel.topAnchor.constraint(equalTo: resolvedLabel.topAnchor)
+            ])
+        }
+        
+        // -------------------------------------------
         if(mustShowImage && self.mainImageView==nil) {
             self.mainImageView = UIImageView()
             self.mainImageView.backgroundColor = CSS.shared.displayMode().imageView_bgColor
@@ -1101,6 +1159,10 @@ extension ControDetailViewController {
         
         var H: CGFloat = 24 + 24 + statusLabel.calculateHeightFor(width: _w) + 10 +
             titleLabel.calculateHeightFor(width: _w)
+
+        if(showResolved) {
+            H += 70
+        }
 
         if(mustShowImage) {
             H += 10 + 75 + M
