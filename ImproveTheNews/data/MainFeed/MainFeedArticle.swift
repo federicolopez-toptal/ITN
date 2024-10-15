@@ -72,18 +72,14 @@ struct MainFeedArticle {
                 }
             }
         }
-        
-        if(json.count>=14 && self.summaryText == "") {
+
+        self.summaryText = ""
+        if(json.count>=14) {
             if(json[13] is String) {
                 self.summaryText = json[13] as! String
             }
         }
-        
-//        if(json.count>=15  && self.summaryText == "") {
-//            if(json[14] is String) {
-//                self.summaryText = json[14] as! String
-//            }
-//        }
+
         if(json.count>=15) {
             if let _newText = json[14] as? String {
                 if(self.summaryText == "") {
@@ -95,6 +91,34 @@ struct MainFeedArticle {
                 }
             }
         }
+
+
+
+
+
+//        print(json.count)
+//        if(json.count>=14) { // && self.summaryText == "") {
+//            if(json[13] is String) {
+//                self.summaryText = json[13] as! String
+//            }
+//        }
+        
+//        if(json.count>=15  && self.summaryText == "") {
+//            if(json[14] is String) {
+//                self.summaryText = json[14] as! String
+//            }
+//        }
+//        if(json.count>=15) {
+//            if let _newText = json[14] as? String {
+//                if(self.summaryText == "") {
+//                    self.summaryText = _newText
+//                } else {
+//                    if( self.storySources.contains(self.summaryText) ) {
+//                        self.summaryText = _newText
+//                    }
+//                }
+//            }
+//        }
         
         self.used = false
     }

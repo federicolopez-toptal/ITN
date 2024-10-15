@@ -166,6 +166,66 @@ class CustomImageView: UIImageView {
 
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
+class StoryPillBigView: UIView {
+    
+    let label = UILabel()
+    private var widthConstraint: NSLayoutConstraint? = nil
+    
+    init() {
+        super.init(frame: .zero)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func buildInto(_ container: UIView) {
+        let W: CGFloat = 75
+        let H: CGFloat = 32
+        let F: CGFloat = 13
+        
+        container.addSubview(self)
+        self.widthConstraint = self.widthAnchor.constraint(equalToConstant: W)
+        self.activateConstraints([
+            self.widthConstraint!,
+            self.heightAnchor.constraint(equalToConstant: H)
+        ])
+        self.layer.cornerRadius = H/2
+        
+        self.label.text = "STORY"
+        self.label.textAlignment = .center
+        self.label.font = AILERON_BOLD(F, resize: false)
+        self.addSubview(self.label)
+        self.label.activateConstraints([
+            self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.label.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+        ])
+        
+        self.refreshDisplayMode()
+    }
+    
+    func refreshDisplayMode() {
+        self.backgroundColor = CSS.shared.orange
+        self.label.textColor = .white
+    }
+    
+    func setAsContext() {
+        self.label.text = "CONTEXT"
+        self.label.textColor = UIColor(hex: 0x19191C)
+        self.backgroundColor = UIColor(hex: 0x71D656)
+        self.widthConstraint?.constant = 75
+    }
+    
+    func setAsStory() {
+        self.label.text = "STORY"
+        self.label.textColor = .white
+        self.backgroundColor = CSS.shared.orange
+        self.widthConstraint?.constant = 75
+    }
+    
+}
+//////////////////////////////////////////////////////
+
 class StoryPillView: UIView {
     
     let label = UILabel()

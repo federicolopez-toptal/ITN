@@ -1,5 +1,5 @@
 //
-//  iPadAllNews_vImgColBig_v3.swift
+//  iPhoneAllNews_vImgCol_v3.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 08/11/2023.
@@ -8,17 +8,16 @@
 import Foundation
 import UIKit
 
+//let MAX_NUM_LINES = 4
 
-class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
+class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
 
     var article: MainFeedArticle!
     private var WIDTH: CGFloat = 1
-    private var IMG_WIDTH: CGFloat = 1
+    private var minimumLineNum: Bool = true
 
-//    private let imgWidth: CGFloat = 160
-//    private let imgHeight: CGFloat = 88
-    private let imgWidth: CGFloat = 900
-    private let imgHeight: CGFloat = 750
+    private let imgWidth: CGFloat = 160
+    private let imgHeight: CGFloat = 88
     
     let mainImageView = CustomImageView()
     var isContext = false
@@ -43,25 +42,22 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         var sourceTime_leading: NSLayoutConstraint?
         var source_leading: NSLayoutConstraint?
 
-    let descrlabel = UILabel()
-
-
     
     // MARK: - Start
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat, imageWidth: CGFloat) {
+    init(width: CGFloat, minimumLineNum: Bool = true) {
         super.init(frame: .zero)
         self.WIDTH = width
-        self.IMG_WIDTH = imageWidth
+        self.minimumLineNum = minimumLineNum
         
         self.buildContent()
     }
     
     private func calculateImageViewHeight() -> CGFloat {
-        let H = (self.IMG_WIDTH * imgHeight)/imgWidth
+        let H = (self.WIDTH * imgHeight)/imgWidth
         return H
     }
     
@@ -78,7 +74,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         
     // Story
         self.storyTitleLabel.numberOfLines = 0
-        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(32)
+        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(18)
         self.addSubview(self.storyTitleLabel)
         self.storyTitleLabel.activateConstraints([
             self.storyTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -87,18 +83,9 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         ])
         storyComponents.append(self.storyTitleLabel)
         
-        self.descrlabel.numberOfLines = 0
-        self.descrlabel.font = AILERON_resize(17)
-        self.addSubview(self.descrlabel)
-        self.descrlabel.activateConstraints([
-            self.descrlabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.descrlabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.descrlabel.topAnchor.constraint(equalTo: self.storyTitleLabel.bottomAnchor, constant: 8),
-        ])
-        
         self.storyPill.buildInto(self)
         self.storyPill.activateConstraints([
-            self.storyPill.topAnchor.constraint(equalTo: self.descrlabel.bottomAnchor, constant: 22),
+            self.storyPill.topAnchor.constraint(equalTo: self.storyTitleLabel.bottomAnchor, constant: 12),
             self.storyPill.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
         storyComponents.append(self.storyPill)
@@ -404,14 +391,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
 //            self.mainImageView.load(url: article.imgUrl)
 //        }
         
-        //self.mainImageView.backgroundColor = .red
-        
-        self.mainImageView.load(url: article.imgUrl) { (success, imgSize) in
-            if success, let _imgSize = imgSize {
-            }
-        }
-        
-        //self.mainImageView.
+        self.mainImageView.load(url: article.imgUrl)
         
 //        if(!self.isContext) {
 //            
@@ -426,15 +406,15 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
                 self.storyTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().main_textColor)
             }
             
-//            let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
-//            let diff = MAX_NUM_LINES - Int(numLines)
-//            if(diff>0) {
-//                for _ in 1...diff {
-//                    self.storyTitleLabel.text! += "\n"
-//                }
-//            }
-            
-            self.descrlabel.text = article.summaryText
+            if(self.minimumLineNum) {
+                let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
+                let diff = MAX_NUM_LINES - Int(numLines)
+                if(diff>0) {
+                    for _ in 1...diff {
+                        self.storyTitleLabel.text! += "\n"
+                    }
+                }
+            }
             
             self.storySources.load(article.storySources)
             self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
@@ -563,8 +543,6 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         self.articleStanceIcon.refreshDisplayMode()
         self.openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         
-        self.descrlabel.textColor = CSS.shared.displayMode().sec_textColor
-        
         self.mainImageView.refreshDisplayMode()
     }
     
@@ -578,29 +556,16 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
     }
     
     func calculateHeight() -> CGFloat {
-        var result: CGFloat = 0
+        var result: CGFloat = self.calculateImageViewHeight() + CSS.shared.iPhoneSide_padding
+        if(self.article == nil){ return 0 }
         
-        result += self.calculateImageViewHeight() + 16
-        result += self.storyTitleLabel.calculateHeightFor(width: self.WIDTH)
-        result += 8 + self.descrlabel.calculateHeightFor(width: self.WIDTH)
-        result += 22 + 32 + 25
-        
-        //if(self.article == nil){ return 0 }
-        
-        //result += self.storyTitleLabel.calculateHeightFor(width: self.WIDTH)
-        
-//        if(self.article.isStory) {
-//            result += self.calculateHeightForStory()
-//        } else {
-//            result += self.calculateHeightForArticle()
-//        }
+        if(self.article.isStory) {
+            result += self.calculateHeightForStory()
+        } else {
+            result += self.calculateHeightForArticle()
+        }
 
-//        result += 8 + self.descrlabel.calculateHeightFor(width: self.WIDTH)
-//        result += 22 + 18 + 25
-
-//        return result + (12 + 18) + 25
-
-        return result
+        return result + (12 + 32) + 25
     }
     
     // MARK: Actions
@@ -621,7 +586,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
     }
 }
 
-extension iPadAllNews_vImgColBig_v3: StanceIconViewDelegate {
+extension iPhoneAllNews_vImgCol_v3_B: StanceIconViewDelegate {
     
     func onStanceIconTap(sender: StanceIconView) {
 //        let info: [String : Any] = [

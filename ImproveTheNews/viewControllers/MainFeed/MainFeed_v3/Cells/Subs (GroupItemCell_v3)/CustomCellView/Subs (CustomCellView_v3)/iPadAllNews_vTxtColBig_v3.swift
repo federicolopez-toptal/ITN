@@ -26,8 +26,8 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
     
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
-        let storyPill = StoryPillMiniView()
-        let storySources = SourceIconsView(size: 18, border: 2, separation: 15)
+        let storyPill = StoryPillBigView()
+        let storySources = SourceIconsView(size: 28, border: 2, separation: 25)
         let storyTimeLabel = UILabel()
 
     var articleComponents = [UIView]()
@@ -582,7 +582,7 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
         result -= 10
         result += self.storyTitleLabel.calculateHeightFor(width: self.WIDTH)
         result += 8 + self.descrlabel.calculateHeightFor(width: self.WIDTH)
-        result += 22 + 18 + 25
+        result += 22 + 32 + 25
         
         //if(self.article == nil){ return 0 }
         

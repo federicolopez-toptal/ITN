@@ -551,6 +551,8 @@
 		BDCD3FCD2C46C03900BAA2E2 /* SlidersPanel_misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCD3FCC2C46C03900BAA2E2 /* SlidersPanel_misc.swift */; };
 		BDD3DACB2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */; };
 		BDD4EA842C225C6B0002906A /* NewsLetterContentUI_daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */; };
+		BDE79DAD2CBEE1BC00B6E4AF /* iPhoneAllNews_vImgCol_v3_B.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE79DAC2CBEE1BC00B6E4AF /* iPhoneAllNews_vImgCol_v3_B.swift */; };
+		BDE79DAF2CBEE56400B6E4AF /* iPhoneAllNews_vTxtCol_v3_B.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE79DAE2CBEE56400B6E4AF /* iPhoneAllNews_vTxtCol_v3_B.swift */; };
 		BDE838A02BF7D61800C4C8D2 /* SVGLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */; };
 		BDE838A22BF7D76B00C4C8D2 /* NATO_OTAN.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */; };
 		BDE8E7622C9C5B6F008AB5CA /* MainFeedv5_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8E7612C9C5B6F008AB5CA /* MainFeedv5_iPad.swift */; };
@@ -1115,6 +1117,8 @@
 		BDCD3FCC2C46C03900BAA2E2 /* SlidersPanel_misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidersPanel_misc.swift; sourceTree = "<group>"; };
 		BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPhone.swift; sourceTree = "<group>"; };
 		BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterContentUI_daily.swift; sourceTree = "<group>"; };
+		BDE79DAC2CBEE1BC00B6E4AF /* iPhoneAllNews_vImgCol_v3_B.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneAllNews_vImgCol_v3_B.swift; sourceTree = "<group>"; };
+		BDE79DAE2CBEE56400B6E4AF /* iPhoneAllNews_vTxtCol_v3_B.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneAllNews_vTxtCol_v3_B.swift; sourceTree = "<group>"; };
 		BDE8389F2BF7D61800C4C8D2 /* SVGLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLoader.swift; sourceTree = "<group>"; };
 		BDE838A12BF7D76B00C4C8D2 /* NATO_OTAN.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NATO_OTAN.jpg; sourceTree = "<group>"; };
 		BDE8E7612C9C5B6F008AB5CA /* MainFeedv5_iPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedv5_iPad.swift; sourceTree = "<group>"; };
@@ -1527,7 +1531,9 @@
 				1FA48D9D2AFC5DCC009CEAAC /* iPhoneStory_vTxt_v3.swift */,
 				BD2257282C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift */,
 				1FA48D932AFBD2C1009CEAAC /* iPhoneAllNews_vImgCol_v3.swift */,
+				BDE79DAC2CBEE1BC00B6E4AF /* iPhoneAllNews_vImgCol_v3_B.swift */,
 				1FA48DA32AFC647B009CEAAC /* iPhoneAllNews_vTxtCol_v3.swift */,
+				BDE79DAE2CBEE56400B6E4AF /* iPhoneAllNews_vTxtCol_v3_B.swift */,
 				BD44483E2C986117001FFBBA /* iPadAllNews_vImgColBig_v3.swift */,
 				BDE8E7652C9C679D008AB5CA /* iPadAllNews_vTxtColBig_v3.swift */,
 			);
@@ -2707,6 +2713,7 @@
 				1F2D3228294230CA00BA1B00 /* CircleAnimation.swift in Sources */,
 				1FC557112AF2C86F00C0117A /* CustomCellView_v3.swift in Sources */,
 				1FD014632B61FAAD00209A63 /* iPhoneArticle_2colsTxtBanner_cell_v3.swift in Sources */,
+				BDE79DAD2CBEE1BC00B6E4AF /* iPhoneAllNews_vImgCol_v3_B.swift in Sources */,
 				BD57D5DA2C63A9B700073A85 /* TopicSelectorViewPlus.swift in Sources */,
 				1F0B000128F5FD35007280FF /* FooterCell.swift in Sources */,
 				BD44510D2C7F5FFC00BBD346 /* MainFeedv3.swift in Sources */,
@@ -2885,6 +2892,7 @@
 				1F0700A32BA88943007CE44C /* NewsLetterContentViewController.swift in Sources */,
 				1F1033DD2BBB3C860038EDDF /* ControversyCellView.swift in Sources */,
 				1F9C711E2B6AE3EF0060BB66 /* iPhoneStory_4colsImg_cell_v3.swift in Sources */,
+				BDE79DAF2CBEE56400B6E4AF /* iPhoneAllNews_vTxtCol_v3_B.swift in Sources */,
 				1F1BBA4329E87D6000D8C697 /* iPadBannerNewsletterCell.swift in Sources */,
 				1F95136328BFC69200A77AB6 /* MainFeedViewController.swift in Sources */,
 				1FA4CE7328C2DDFD0068DE4A /* ErrorExtension.swift in Sources */,
@@ -3081,7 +3089,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 129;
+				CURRENT_PROJECT_VERSION = 132;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3120,7 +3128,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 129;
+				CURRENT_PROJECT_VERSION = 132;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3212,7 +3220,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 129;
+				CURRENT_PROJECT_VERSION = 132;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
