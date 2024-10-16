@@ -45,7 +45,7 @@ class TabsBar: UIView {
         if(IPHONE()) {
             dim = TabsBar_iPhone.HEIGHT
         } else {
-            dim = TabsBar_iPad.WIDTH
+            dim = TabsBar_iPad.HEIGHT
         }
         
         return dim

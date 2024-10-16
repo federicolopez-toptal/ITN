@@ -1,8 +1,8 @@
 //
-//  TabsBar_iPad.swift
+//  TabsBar_iPhone.swift
 //  ImproveTheNews
 //
-//  Created by Federico Lopez on 24/06/2024.
+//  Created by Federico Lopez on 25/06/2024.
 //
 
 import Foundation
@@ -12,8 +12,15 @@ import UIKit
 class TabsBar_iPad: TabsBar {
     
     static let WIDTH: CGFloat = 92
+    
+    
+    
+    
+    
+    static let HEIGHT: CGFloat = 92
     private let itemsCount: CGFloat = 4
     private var _currentTab: Int = 1
+    var tabsTopConstraint: NSLayoutConstraint?
     
     override func currentTab() -> Int {
         return self._currentTab
@@ -25,56 +32,86 @@ class TabsBar_iPad: TabsBar {
 
         containerView.addSubview(self)
         self.activateConstraints([
-            self.topAnchor.constraint(equalTo: containerView.topAnchor),
             self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            self.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            self.widthAnchor.constraint(equalToConstant: TabsBar_iPad.WIDTH)
+            self.heightAnchor.constraint(equalToConstant: IPHONE_bottomOffset() * -1)
         ])
         
         self.addtabs()
     }
     
     override func refreshDisplayMode() {
-        self.backgroundColor = CSS.shared.displayMode().main_bgColor
-        self.subviews.first!.backgroundColor = self.backgroundColor
+        self.backgroundColor = .systemPink //CSS.shared.displayMode().main_bgColor
+        self.subviews.first!.backgroundColor = .green //self.backgroundColor
+        
+        for i in 1...Int(self.itemsCount) {
+            let iconLabel = self.viewWithTag(30 + i) as! UILabel
+            iconLabel.textColor = CSS.shared.displayMode().main_textColor
+        }
+        
         self.selectTab(self._currentTab)
     }
     
     func addtabs() {
-        let itemDim: CGFloat = 64
-        let itemSep: CGFloat = 16
+        let itemDim: CGFloat = 32
+        let _W = SCREEN_SIZE().width - 150 //- (26 * 2.5)
+        let itemSep: CGFloat = (_W - (itemDim * self.itemsCount)) / 3
         
-        let _H = (itemDim * self.itemsCount) + (itemSep * (self.itemsCount+1))
         
-        let vContainer = UIView()
-//        vContainer.backgroundColor = .systemPink
-        vContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
-        self.addSubview(vContainer)
-        vContainer.activateConstraints([
-            vContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            vContainer.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            vContainer.widthAnchor.constraint(equalTo: self.widthAnchor),
-            vContainer.heightAnchor.constraint(equalToConstant: _H),
+        let hContainer = UIView()
+        //hContainer.backgroundColor = .green
+        hContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.addSubview(hContainer)
+        hContainer.activateConstraints([
+            hContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            hContainer.heightAnchor.constraint(equalToConstant: itemDim+16),
+            hContainer.widthAnchor.constraint(equalToConstant: _W)
         ])
+        self.tabsTopConstraint = hContainer.topAnchor.constraint(equalTo: self.topAnchor, constant: 0)
+        self.tabsTopConstraint?.isActive = true
         
-        var offset: CGFloat = itemSep
+        var offset: CGFloat = 0 //itemSep
         for i in 1...Int(self.itemsCount) {
             let iconName = self.iconName(i, false)
+            
             let iconImageView = UIImageView(image: UIImage(named: iconName))
-            vContainer.addSubview(iconImageView)
+            //iconImageView.backgroundColor = .black.withAlphaComponent(0.1)
+            hContainer.addSubview(iconImageView)
             iconImageView.activateConstraints([
-                iconImageView.topAnchor.constraint(equalTo: vContainer.topAnchor, constant: offset),
-                iconImageView.centerXAnchor.constraint(equalTo: vContainer.centerXAnchor),
+                iconImageView.topAnchor.constraint(equalTo: hContainer.topAnchor, constant: 12),
+                iconImageView.leadingAnchor.constraint(equalTo: hContainer.leadingAnchor, constant: offset),
                 iconImageView.widthAnchor.constraint(equalToConstant: itemDim),
                 iconImageView.heightAnchor.constraint(equalToConstant: itemDim)
             ])
+            //iconImageView.backgroundColor = .red
             iconImageView.tag = 20 + i
+            
+            let iconLabel = UILabel()
+            iconLabel.textAlignment = .center
+            iconLabel.text = self.titleForItem(at: i)
+            
+            iconLabel.font = LIMIT_FONT(AILERON(10), with: AILERON(15, resize: false))
+            
+//            iconLabel.font = AILERON(10)
+//            let limit: CGFloat = 15
+//            if(iconLabel.font.pointSize > limit) {
+//                iconLabel.font = AILERON(limit, resize: false)
+//            }
+
+            iconLabel.textColor = CSS.shared.displayMode().main_textColor
+            hContainer.addSubview(iconLabel)
+            iconLabel.activateConstraints([
+                iconLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 0),
+                iconLabel.centerXAnchor.constraint(equalTo: iconImageView.centerXAnchor)
+            ])
+            iconLabel.tag = 30 + i
             
             let button = UIButton(type: .custom)
             //button.backgroundColor = .red.withAlphaComponent(0.25)
             button.tag = i
             
-            vContainer.addSubview(button)
+            hContainer.addSubview(button)
             button.activateConstraints([
                 button.leadingAnchor.constraint(equalTo: iconImageView.leadingAnchor),
                 button.topAnchor.constraint(equalTo: iconImageView.topAnchor),
@@ -87,7 +124,19 @@ class TabsBar_iPad: TabsBar {
             offset += itemDim + itemSep
         }
         
+        //hContainer.backgroundColor = .green
+        
         self.selectTab(1)
+    }
+    
+    func iPhone_yOffset_fix() {
+        if let _bottom = SAFE_AREA()?.bottom {
+            if(_bottom == 0) {
+                self.tabsTopConstraint?.constant = (TabsBar_iPhone.HEIGHT-(32+16))/2
+            } else {
+                self.tabsTopConstraint?.constant = 7
+            }
+        }
     }
     
     @objc func tabButtonOnTap(_ sender: UIButton?) {
@@ -117,7 +166,7 @@ class TabsBar_iPad: TabsBar {
                     CustomNavController.shared.loadPublicFigures()
                 case 4:
                     CustomNavController.shared.loadNewsSliders()
-                
+            
                 default:
                     NOTHING()
             }
@@ -125,7 +174,7 @@ class TabsBar_iPad: TabsBar {
     }
     
     func iconName(_ index: Int, _ state: Bool) -> String {
-        var result = "iPad.tab.0\(index)"
+        var result = "iPhone.tab.0\(index)"
         if(state){ result += "_ON" }
         else {
             result += DARK_MODE() ? ".dark" : ".bright"
@@ -134,18 +183,35 @@ class TabsBar_iPad: TabsBar {
         return result
     }
     
+    func titleForItem(at index: Int) -> String {
+        switch(index) {
+            case 1:
+                return "Headlines"
+            case 2:
+                return "Controversies"
+            case 3:
+                return "Public Figures"
+            case 4:
+                return "New Slider"
+                
+            default:
+                return ""
+        }
+    }
+    
+    
 }
 
 // ----------------------------------------------------------
 func SCREEN_SIZE_iPadSideTab() -> CGSize {
     var result = UIScreen.main.bounds.size
-    if(IPAD()){ result.width -= TabsBar_iPad.WIDTH }
+    //if(IPAD()){ result.width -= TabsBar_iPad.WIDTH }
     
     return result
 }
 
 func IPAD_sideOffset(multiplier: CGFloat = 1) -> CGFloat {
     var offset: CGFloat = 0
-    if(IPAD()){ offset = TabsBar_iPad.WIDTH * multiplier }
+    //if(IPAD()){ offset = TabsBar_iPad.WIDTH * multiplier }
     return offset
 }

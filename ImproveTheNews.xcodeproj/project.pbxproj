@@ -542,8 +542,9 @@
 		BD7B65072C3ECF9100EA20B7 /* NewSlidersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B65062C3ECF9100EA20B7 /* NewSlidersViewController.swift */; };
 		BD7B65092C3EE78D00EA20B7 /* NewSliders_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B65082C3EE78D00EA20B7 /* NewSliders_list.swift */; };
 		BD7B650B2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B650A2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift */; };
+		BD85A6572CC034AE00CF5595 /* TabsBar_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD85A6562CC034AE00CF5595 /* TabsBar_iPad.swift */; };
 		BDB3CB0A2BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */; };
-		BDBC3CE92C29C11100648945 /* TabsBar_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC3CE82C29C11100648945 /* TabsBar_iPad.swift */; };
+		BDBC3CE92C29C11100648945 /* TabsBar_iPad_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC3CE82C29C11100648945 /* TabsBar_iPad_2.swift */; };
 		BDBC3CEC2C29C2BC00648945 /* TabsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC3CEB2C29C2BC00648945 /* TabsBar.swift */; };
 		BDCD3FC72C45A03C00BAA2E2 /* TopicShownTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCD3FC62C45A03C00BAA2E2 /* TopicShownTextCell.swift */; };
 		BDCD3FC92C45ABC800BAA2E2 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCD3FC82C45ABC800BAA2E2 /* FloatingButton.swift */; };
@@ -1108,8 +1109,9 @@
 		BD7B65062C3ECF9100EA20B7 /* NewSlidersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSlidersViewController.swift; sourceTree = "<group>"; };
 		BD7B65082C3EE78D00EA20B7 /* NewSliders_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSliders_list.swift; sourceTree = "<group>"; };
 		BD7B650A2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSliders_dataProvider.swift; sourceTree = "<group>"; };
+		BD85A6562CC034AE00CF5595 /* TabsBar_iPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsBar_iPad.swift; sourceTree = "<group>"; };
 		BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyNarrowCell_v3.swift; sourceTree = "<group>"; };
-		BDBC3CE82C29C11100648945 /* TabsBar_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPad.swift; sourceTree = "<group>"; };
+		BDBC3CE82C29C11100648945 /* TabsBar_iPad_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPad_2.swift; sourceTree = "<group>"; };
 		BDBC3CEB2C29C2BC00648945 /* TabsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar.swift; sourceTree = "<group>"; };
 		BDCD3FC62C45A03C00BAA2E2 /* TopicShownTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicShownTextCell.swift; sourceTree = "<group>"; };
 		BDCD3FC82C45ABC800BAA2E2 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
@@ -2239,8 +2241,9 @@
 			isa = PBXGroup;
 			children = (
 				BDBC3CEB2C29C2BC00648945 /* TabsBar.swift */,
-				BDBC3CE82C29C11100648945 /* TabsBar_iPad.swift */,
+				BD85A6562CC034AE00CF5595 /* TabsBar_iPad.swift */,
 				BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */,
+				BDBC3CE82C29C11100648945 /* TabsBar_iPad_2.swift */,
 			);
 			path = SideTabs;
 			sourceTree = "<group>";
@@ -2672,6 +2675,7 @@
 				1F0700AC2BA9BD95007CE44C /* PublicFigureData.swift in Sources */,
 				1FA158802B0D2F6A006EDCE0 /* StoryViewController.swift in Sources */,
 				1FC73910298A1501003EB38D /* SignInView.swift in Sources */,
+				BD85A6572CC034AE00CF5595 /* TabsBar_iPad.swift in Sources */,
 				1F18C88928F89EF600197F38 /* MenuItemCell.swift in Sources */,
 				1F9E28C52954DC0200041303 /* FAQViewController.swift in Sources */,
 				1FB820422B5048C00038082C /* StanceBigIconView.swift in Sources */,
@@ -2772,7 +2776,7 @@
 				1F95134128BFB92E00A77AB6 /* AppDelegate.swift in Sources */,
 				1FE89CD72AF1552400A6C99C /* ComponentUtils.swift in Sources */,
 				1FC287DB29A64BC90017433B /* CustomFeedList.swift in Sources */,
-				BDBC3CE92C29C11100648945 /* TabsBar_iPad.swift in Sources */,
+				BDBC3CE92C29C11100648945 /* TabsBar_iPad_2.swift in Sources */,
 				1FC9C4582B8852CC00E77FD5 /* iPadStory_vImg_v3.swift in Sources */,
 				1F68CD032BACC7C7007AC92C /* FigureDetails_extras.swift in Sources */,
 				1F721AF82A43C9970052ADC4 /* ArrayExtension.swift in Sources */,

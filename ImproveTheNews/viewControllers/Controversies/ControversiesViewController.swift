@@ -403,7 +403,13 @@ extension ControversiesViewController {
         
         self.showLoading()
         self.loadsCount += 1
-                
+            
+        if(T == "us-election-2024") {
+            self.navBar.setShareUrl(ITN_URL() + "/controversies/us-election-2024", vc: self)
+        } else {
+            self.navBar.setShareUrl(ITN_URL() + "/controversies", vc: self)
+        }
+                            
         print("LOAD CONTROVERSY \(self.loadsCount)")
         ControversiesData.shared.loadList(topic: T, page: P) { (error, total, list, topics, subtopics, controData, storiesCount, stories) in
 
