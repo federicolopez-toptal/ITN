@@ -49,7 +49,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
 
     // Story
         self.storyTitleLabel.numberOfLines = 0
-        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(self.fontSize)
+        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(24)
         self.addSubview(self.storyTitleLabel)
         self.storyTitleLabel.activateConstraints([
             self.storyTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -85,7 +85,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         
     // Article
         self.articleTitleLabel.numberOfLines = 0
-        self.articleTitleLabel.font = AILERON_resize(16)
+        self.articleTitleLabel.font = AILERON_resize(20)
         self.addSubview(self.articleTitleLabel)
         self.articleTitleLabel.activateConstraints([
             self.articleTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//let MAX_NUM_LINES = 4
+let MAX_NUM_LINES_B = 3
 
 class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
 
@@ -74,7 +74,7 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
         
     // Story
         self.storyTitleLabel.numberOfLines = 0
-        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(18)
+        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(24)
         self.addSubview(self.storyTitleLabel)
         self.storyTitleLabel.activateConstraints([
             self.storyTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -109,12 +109,15 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
         
     // Article
         self.articleTitleLabel.numberOfLines = 0
-        self.articleTitleLabel.font = AILERON_resize(16)
+        //self.articleTitleLabel.backgroundColor = .red
+        self.articleTitleLabel.adjustsFontSizeToFitWidth = false
+        self.articleTitleLabel.lineBreakMode = .byTruncatingTail
+        self.articleTitleLabel.font = AILERON_resize(20)
         self.addSubview(self.articleTitleLabel)
         self.articleTitleLabel.activateConstraints([
             self.articleTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.articleTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.articleTitleLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: CSS.shared.iPhoneSide_padding),
+            self.articleTitleLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
         articleComponents.append(self.articleTitleLabel)
         
@@ -408,7 +411,7 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
             
             if(self.minimumLineNum) {
                 let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
-                let diff = MAX_NUM_LINES - Int(numLines)
+                let diff = MAX_NUM_LINES_B - Int(numLines)
                 if(diff>0) {
                     for _ in 1...diff {
                         self.storyTitleLabel.text! += "\n"
@@ -420,18 +423,22 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
             self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title
-            if let _searchTerm = KeywordSearch.searchTerm {
-                self.articleTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().sec_textColor)
-            }
+//            if let _searchTerm = KeywordSearch.searchTerm {
+//                self.articleTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().sec_textColor)
+//            }
             self.articleTitleLabel.setLineSpacing(lineSpacing: 6.0)
-            
+                        
             let numLines = self.articleTitleLabel.calculateHeightFor(width: self.WIDTH) / self.articleTitleLabel.font.lineHeight
-            let diff = MAX_NUM_LINES - Int(numLines)
+            let diff = MAX_NUM_LINES_B - Int(numLines)
+            
             if(diff>0) {
                 for _ in 1...diff {
                     self.articleTitleLabel.text! += "\n"
                 }
             }
+            
+            
+            
             
             var sourcesArray = [String]()
             if let _identifier = Sources.shared.search(name: article.source) {
