@@ -112,12 +112,12 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
         ])
         storyComponents.append(self.storySources)
         
-        self.storyTimeLabel.font = CSS.shared.iPhoneStory_textFont
+        self.storyTimeLabel.font = AILERON(14)
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
             self.storyTimeLabel.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor),
-            self.storyTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 8)
         ])
         storyComponents.append(self.storyTimeLabel)
         

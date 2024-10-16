@@ -98,12 +98,13 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
         ])
         storyComponents.append(self.storySources)
         
-        self.storyTimeLabel.font = CSS.shared.iPhoneStory_textFont
+        self.storyTimeLabel.font = AILERON(14)
         self.storyTimeLabel.textAlignment = .left
+//        self.storyTimeLabel.backgroundColor = .red
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
             self.storyTimeLabel.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor),
-            self.storyTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 8)
         ])
         storyComponents.append(self.storyTimeLabel)
         
@@ -156,7 +157,7 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
             self.openIcon.leadingAnchor.constraint(equalTo: self.articleSourceNameLabel.trailingAnchor, constant: 0)
         ])
         
-        self.articleTimeLabel.font = self.articleSourceNameLabel.font
+        self.articleTimeLabel.font = AILERON(14)
         self.addSubview(self.articleTimeLabel)
         self.articleTimeLabel.activateConstraints([
             self.articleTimeLabel.centerYAnchor.constraint(equalTo: self.articleSourceNameLabel.centerYAnchor),
