@@ -688,7 +688,7 @@ extension ControversiesViewController {
                         let first = containerView.subviews.first as! ControversyCellView
                         controView.topAnchor.constraint(equalTo: first.topAnchor, constant: 0).isActive = true
                     } else {
-                        controView.topAnchor.constraint(equalTo: prev!.bottomAnchor).isActive = true
+                        controView.topAnchor.constraint(equalTo: prev!.bottomAnchor, constant: 0).isActive = true
                     }
                 }
             }

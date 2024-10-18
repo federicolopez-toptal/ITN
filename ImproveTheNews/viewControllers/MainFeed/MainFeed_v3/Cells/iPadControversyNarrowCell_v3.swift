@@ -84,9 +84,9 @@ class iPadControversyNarrowCell_v3: UITableViewCell {
         let H2 = view2.calculateHeight()
         
         if(H1>H2) {
-            return H1
+            return H1+10
         } else {
-            return H2
+            return H2+10
         }
     }
     

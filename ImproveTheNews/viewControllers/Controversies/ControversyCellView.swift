@@ -207,7 +207,7 @@ class ControversyCellView: UIView {
             ])
             
             let circleView = UIView()
-            circleView.layer.borderColor = CSS.shared.displayMode().line_color.cgColor
+            circleView.layer.borderColor = CSS.shared.displayMode().factLines_color.cgColor
             circleView.layer.borderWidth = 1.0
             circleView.layer.cornerRadius = 20
             circleView.backgroundColor = CSS.shared.displayMode().main_bgColor
@@ -219,7 +219,7 @@ class ControversyCellView: UIView {
                 circleView.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
             ])
             let arrowImageView = UIImageView(image: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate))
-            arrowImageView.tintColor = .white
+            arrowImageView.tintColor = CSS.shared.displayMode().main_textColor
             circleView.addSubview(arrowImageView)
             arrowImageView.activateConstraints([
                 arrowImageView.centerXAnchor.constraint(equalTo: circleView.centerXAnchor),
@@ -260,6 +260,7 @@ class ControversyCellView: UIView {
                 borderBG.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
             ])
             
+            //borderBG.backgroundColor = .green
             self.sendSubviewToBack(borderBG)
         }
         
@@ -421,7 +422,10 @@ class ControversyCellView: UIView {
                 _resolvedView.hide()
             }
         }
-        self.addSourceFigures(width: controversy)
+        
+        if(!self.mustShowChartFlag) {
+            self.addSourceFigures(width: controversy)
+        }
         
         self.mainHeightConstraint?.constant = self.calculateHeight()
         self.refreshDisplayMode()
@@ -540,6 +544,9 @@ class ControversyCellView: UIView {
             }
         }
         
+        if(IPAD()) {
+            H += 16
+        }
         return H
     }
 
