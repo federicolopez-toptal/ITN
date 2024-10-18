@@ -455,6 +455,7 @@ extension ControversiesViewController {
 //                print(_T.name, ControversiesViewController.topic)
                 if(_T.slug == ControversiesViewController.topic) {
                     self.currentTopic = i
+                    self.selectTopic_iPhone(index: i, mustLoad: false)
                     ControversiesViewController.topic = ""
                     break
                 }

@@ -33,6 +33,7 @@ class ControversyCellView: UIView {
     
     let titleLabel = UILabel()
     let pill = UILabel()
+    var figuresContainer_B_View = UIStackView()
     let timeLabel = UILabel()
     
     var figureSlugs = [String]()
@@ -190,13 +191,44 @@ class ControversyCellView: UIView {
             self.pill.layer.cornerRadius = 12
             self.pill.clipsToBounds = true
             
+            self.figuresContainer_B_View = VSTACK(into: self)
+            //self.figuresContainer_B_View.backgroundColor = .orange
+            self.figuresContainer_B_View.activateConstraints([
+                self.figuresContainer_B_View.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: 0),
+                self.figuresContainer_B_View.heightAnchor.constraint(equalToConstant: 24+4),
+                self.figuresContainer_B_View.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
+            ])
+            
             self.timeLabel.font = AILERON(12)
             self.timeLabel.textColor = CSS.shared.displayMode().sec_textColor
             self.addSubview(self.timeLabel)
             self.timeLabel.activateConstraints([
-                self.timeLabel.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: 12),
                 self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
             ])
+            
+            let circleView = UIView()
+            circleView.layer.borderColor = CSS.shared.displayMode().line_color.cgColor
+            circleView.layer.borderWidth = 1.0
+            circleView.layer.cornerRadius = 20
+            circleView.backgroundColor = CSS.shared.displayMode().main_bgColor
+            self.addSubview(circleView)
+            circleView.activateConstraints([
+                circleView.widthAnchor.constraint(equalToConstant: 40),
+                circleView.heightAnchor.constraint(equalToConstant: 40),
+                circleView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+                circleView.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
+            ])
+            let arrowImageView = UIImageView(image: UIImage(systemName: "chevron.right")?.withRenderingMode(.alwaysTemplate))
+            arrowImageView.tintColor = .white
+            circleView.addSubview(arrowImageView)
+            arrowImageView.activateConstraints([
+                arrowImageView.centerXAnchor.constraint(equalTo: circleView.centerXAnchor),
+                arrowImageView.centerYAnchor.constraint(equalTo: circleView.centerYAnchor)
+            ])
+            
+            self.timeLabel.trailingAnchor.constraint(equalTo: circleView.leadingAnchor,
+                    constant: -7).isActive = true
+            
             
             self.buttonArea.backgroundColor = CSS.shared.displayMode().main_bgColor //.withAlphaComponent(0.25)
             self.addSubview(self.buttonArea)
@@ -389,9 +421,75 @@ class ControversyCellView: UIView {
                 _resolvedView.hide()
             }
         }
+        self.addSourceFigures(width: controversy)
         
         self.mainHeightConstraint?.constant = self.calculateHeight()
         self.refreshDisplayMode()
+    }
+
+    func addSourceFigures(width controversy: ControversyListItem) {
+        REMOVE_ALL_SUBVIEWS(from: self.figuresContainer_B_View)
+        if(controversy.figures_B.count > 0) {
+            let containerView = UIView()
+            
+            containerView.backgroundColor = .clear
+            self.figuresContainer_B_View.addArrangedSubview(containerView)
+//            containerView.activateConstraints([
+//                containerView.widthAnchor.constraint(equalToConstant: 200)
+//            ])
+        
+            var count = 0
+            let DIM: CGFloat = 24+4
+            var val_x: CGFloat = 6
+            for F in controversy.figures_B {
+                let figureImageView = UIImageView()
+                figureImageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.05) : .black.withAlphaComponent(0.1)
+                containerView.addSubview(figureImageView)
+                figureImageView.activateConstraints([
+                    figureImageView.widthAnchor.constraint(equalToConstant: DIM),
+                    figureImageView.heightAnchor.constraint(equalToConstant: DIM),
+                    figureImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: val_x),
+                    figureImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 0)
+                ])
+                figureImageView.layer.cornerRadius = DIM/2
+                figureImageView.clipsToBounds = true
+                figureImageView.layer.borderColor = CSS.shared.displayMode().main_bgColor.cgColor
+                figureImageView.layer.borderWidth = 2.0
+                figureImageView.sd_setImage(with: URL(string: F.image))
+                
+                val_x += DIM-6
+                count += 1
+                
+                if(count == 3) {
+                    break
+                }
+            }
+            for V in containerView.subviews.reversed() {
+                containerView.bringSubviewToFront(V)
+            }
+            var _W: CGFloat = val_x + 6
+            
+            // -----
+            _W += 6
+            if(controversy.figures_B.count>3) {
+                let extraFiguresCount = UILabel()
+                extraFiguresCount.font = AILERON(12)
+                extraFiguresCount.textColor = CSS.shared.displayMode().sec_textColor
+                containerView.addSubview(extraFiguresCount)
+                extraFiguresCount.activateConstraints([
+                    extraFiguresCount.leadingAnchor.constraint(equalTo: containerView.leadingAnchor,
+                        constant: _W),
+                    extraFiguresCount.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+                ])
+                extraFiguresCount.text = "+" + String(controversy.figures_B.count-3)
+            }
+            _W += 20
+            // ------
+            
+            containerView.activateConstraints([
+                containerView.widthAnchor.constraint(equalToConstant: _W)
+            ])
+        }
     }
 
     func refreshDisplayMode() {

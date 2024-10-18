@@ -337,6 +337,7 @@ class ControversyListItem {
     var colorMax: String = ""
     
     var figures = [FigureForScale]()
+    var figures_B = [FigureForScale]()
     var used = false
     
     var resolved: String = ""
@@ -397,6 +398,18 @@ class ControversyListItem {
         
         self.resolvedText = CHECK(jsonObj["resolvedText"])
         self.resolvedDate = CHECK(jsonObj["resolvedDate"])
+        
+        // -------
+        if let _figures = jsonObj["figures"] as? [[String: Any]] {
+            self.figures_B = [FigureForScale]()
+            
+            for _obj in _figures {
+                let F = FigureForScale(jsonObj: _obj)
+                self.figures_B.append(F)
+            }
+        }
+        // -------
+        
     }
     
     func trace() {
