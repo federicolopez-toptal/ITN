@@ -14,7 +14,7 @@ extension FigureDetailsViewController {
         self.topics = topics
         let mainView = self.createContainerView(bgColor: .clear, height: H)
         
-        var _m: CGFloat = 0
+        var _m: CGFloat = 16
         if(IPAD()) {
             _m = (SCREEN_SIZE_iPadSideTab().width - W())/2
         }
@@ -42,7 +42,7 @@ extension FigureDetailsViewController {
         innerContentView.tag = 333
     
         let SEP: CGFloat = 8.0
-        var val_x: CGFloat = IPHONE() ? M : 0
+        var val_x: CGFloat = IPHONE() ? 0 : 0
         for (i, T) in topics.enumerated() {
             let label = UILabel()
             label.font = AILERON(15)

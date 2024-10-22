@@ -18,8 +18,8 @@ extension FigureDetailsViewController {
         //containerView.backgroundColor = .orange
         mainView.addSubview(containerView)
         containerView.activateConstraints([
-            containerView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
-            containerView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor),
+            containerView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width-32 : W()),
+            containerView.centerXAnchor.constraint(equalTo: mainView.centerXAnchor, constant: IPHONE() ? 0 : 0),
             containerView.topAnchor.constraint(equalTo: mainView.topAnchor)
         ])
         containerView.tag = 222
@@ -39,7 +39,7 @@ extension FigureDetailsViewController {
         }
         
         var col: CGFloat = 0
-        var item_W: CGFloat = SCREEN_SIZE().width
+        var item_W: CGFloat = SCREEN_SIZE().width-32
         if(IPAD()){ item_W = (W()-M)/2 }
         var val_y: CGFloat = 0
         for (i, ST) in stories.enumerated() {
