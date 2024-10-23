@@ -542,6 +542,7 @@
 		BD7B65072C3ECF9100EA20B7 /* NewSlidersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B65062C3ECF9100EA20B7 /* NewSlidersViewController.swift */; };
 		BD7B65092C3EE78D00EA20B7 /* NewSliders_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B65082C3EE78D00EA20B7 /* NewSliders_list.swift */; };
 		BD7B650B2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B650A2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift */; };
+		BD7CCA652CC7F95700F048EF /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7CCA642CC7F95700F048EF /* VideosViewController.swift */; };
 		BD85A6572CC034AE00CF5595 /* TabsBar_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD85A6562CC034AE00CF5595 /* TabsBar_iPad.swift */; };
 		BDB3CB0A2BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */; };
 		BDBC3CE92C29C11100648945 /* TabsBar_iPad_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC3CE82C29C11100648945 /* TabsBar_iPad_2.swift */; };
@@ -1109,6 +1110,7 @@
 		BD7B65062C3ECF9100EA20B7 /* NewSlidersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSlidersViewController.swift; sourceTree = "<group>"; };
 		BD7B65082C3EE78D00EA20B7 /* NewSliders_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSliders_list.swift; sourceTree = "<group>"; };
 		BD7B650A2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSliders_dataProvider.swift; sourceTree = "<group>"; };
+		BD7CCA642CC7F95700F048EF /* VideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
 		BD85A6562CC034AE00CF5595 /* TabsBar_iPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsBar_iPad.swift; sourceTree = "<group>"; };
 		BDB3CB092BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPadControversyNarrowCell_v3.swift; sourceTree = "<group>"; };
 		BDBC3CE82C29C11100648945 /* TabsBar_iPad_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPad_2.swift; sourceTree = "<group>"; };
@@ -1416,6 +1418,7 @@
 				1F9E28BD2954976F00041303 /* FeedbackFormViewController.swift */,
 				BDF745A02C87857A0023751B /* NewsletterSignUp.swift */,
 				BD2BD8CE2CA45BAF00BBA933 /* NewsletterSignUp2.swift */,
+				BD7CCA642CC7F95700F048EF /* VideosViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -2713,6 +2716,7 @@
 				1FE89CF72AF1A91F00A6C99C /* DP3_item.swift in Sources */,
 				1FE89D002AF1ADF300A6C99C /* iPhoneStory_vImg_cell_v3.swift in Sources */,
 				1F2D9FD628D386B600CE3008 /* StoryWT_cell.swift in Sources */,
+				BD7CCA652CC7F95700F048EF /* VideosViewController.swift in Sources */,
 				BDB3CB0A2BD04248008FCBFA /* iPadControversyNarrowCell_v3.swift in Sources */,
 				1F2D3228294230CA00BA1B00 /* CircleAnimation.swift in Sources */,
 				1FC557112AF2C86F00C0117A /* CustomCellView_v3.swift in Sources */,

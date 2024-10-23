@@ -17,7 +17,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     private var minimumLineNum: Bool = true
 
     private let imgWidth: CGFloat = 160
-    private let imgHeight: CGFloat = 88
+    private var imgHeight: CGFloat = 88
     
     let mainImageView = CustomImageView()
     var isContext = false
@@ -48,9 +48,10 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat, minimumLineNum: Bool = true) {
+    init(width: CGFloat, minimumLineNum: Bool = true, imgHeight: CGFloat = 88) {
         super.init(frame: .zero)
         self.WIDTH = width
+        self.imgHeight = imgHeight
         self.minimumLineNum = minimumLineNum
         
         self.buildContent()
@@ -203,6 +204,41 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     
     
     // MARK: Overrides
+    func populate(videoStory: VideoStory) {
+        self.openIcon.hide()
+        
+        for V in self.articleComponents {
+            V.hide()
+        }
+        
+        self.mainImageView.load(url: videoStory.image)
+        self.mainImageView.showCorners(false)
+        
+        self.storyTitleLabel.text = videoStory.title
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.calendar = Calendar(identifier: .gregorian)
+        let storyDate = formatter.date(from: videoStory.time)
+    
+        formatter.dateFormat = "MMM dd, yyyy"
+        self.storyTimeLabel.text = formatter.string(from: storyDate!)
+    
+        let storyTimeLabel2 = UILabel()
+        storyTimeLabel2.font = self.storyTimeLabel.font
+        storyTimeLabel2.textColor = self.storyTimeLabel.textColor
+        self.addSubview(storyTimeLabel2)
+        storyTimeLabel2.activateConstraints([
+            storyTimeLabel2.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            storyTimeLabel2.centerYAnchor.constraint(equalTo: self.storyTimeLabel.centerYAnchor)
+        ])
+        storyTimeLabel2.text = self.storyTimeLabel.text
+    
+        self.storyTimeLabel.hide()
+        self.storyPill.hide()
+        self.storySources.hide()
+    }
+    
     func populate(story: StorySearchResult) {
         if(story.type == 2) {
             self.isContext = true

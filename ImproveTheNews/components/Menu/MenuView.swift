@@ -45,6 +45,9 @@ class MenuView: UIView {
         .tour,
         
         .newsletter,
+        
+        .videos,
+        
         .preferences,
         .layout,
         .about,
@@ -597,6 +600,14 @@ extension MenuView {
             }
         }
         
+    }
+    
+    // ---------
+    func showVideos() {
+        self.dismissMe()
+        
+        let vc = VideosViewController()
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
     // ---------

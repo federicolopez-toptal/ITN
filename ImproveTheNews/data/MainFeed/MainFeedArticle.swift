@@ -142,6 +142,22 @@ struct MainFeedArticle {
         }
     }
     
+    init(videoStory: VideoStory) {
+        self.source = ""
+        self.title = videoStory.title
+        self.url = videoStory.url
+        self.imgUrl = videoStory.image
+        self.LR = 1
+        self.PE = 1
+        self.country = ""
+        self.markups = [Markup]()
+        self.isStory = true
+        self.used = false
+        self.time = videoStory.time
+        self.storySources = [String]()
+        self.isContext = true
+    }
+    
     init(url: String) {
         self.source = ""
         self.time = ""

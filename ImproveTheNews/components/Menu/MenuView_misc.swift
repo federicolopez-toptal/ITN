@@ -261,6 +261,9 @@ extension MenuView {
             case .elections:
                 self.showElections()
             
+            case .videos:
+                self.showVideos()
+            
             default:
                 NOTHING()
         }

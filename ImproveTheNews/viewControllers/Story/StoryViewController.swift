@@ -1312,7 +1312,7 @@ extension StoryViewController {
                     
                     let H: CGFloat = (9 * SCREEN_SIZE().width)/16
                     webView.activateConstraints([
-                        webView.heightAnchor.constraint(equalToConstant: floor(H))
+                        webView.heightAnchor.constraint(equalToConstant: floor(H/2))
                     ])
                     naWebHStack.addArrangedSubview(webView)
                 
