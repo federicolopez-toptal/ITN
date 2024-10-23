@@ -1220,14 +1220,74 @@ extension StoryViewController {
             colVStack.addArrangedSubview(descriptionLabel)
             
             ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
-            let ART = iPhoneArticle_vImg_v3(width: W)
-            ART.refreshDisplayMode()
-            ART.populate(spin: S)
-            colVStack.addArrangedSubview(ART)
-            ART.activateConstraints([
-                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+            ///
+//            let ART = iPhoneArticle_vImg_v3(width: W)
+//            ART.refreshDisplayMode()
+//            ART.populate(spin: S)
+//            colVStack.addArrangedSubview(ART)
+//            ART.activateConstraints([
+//                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+//            ])
+
+            let spinDataView = UIView()
+            spinDataView.backgroundColor = .clear
+            colVStack.addArrangedSubview(spinDataView)
+            spinDataView.activateConstraints([
+                spinDataView.heightAnchor.constraint(equalToConstant: 32)
             ])
-            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
+
+        // Source (icon)
+            let spinSource = SourceIconsView(size: 30, border: 2, separation: 15)
+            spinSource.buildInto(spinDataView)
+            spinSource.activateConstraints([
+                spinSource.topAnchor.constraint(equalTo: spinDataView.topAnchor),
+                spinSource.leadingAnchor.constraint(equalTo: spinDataView.leadingAnchor, constant: 16)
+            ])
+            
+            var sourcesArray = [String]()
+            if let _identifier = Sources.shared.search(name: S.media_title) {
+                sourcesArray.append(_identifier)
+            }
+            spinSource.load(sourcesArray)
+            
+        // Source (name)
+            let spinName = UILabel()
+            spinName.font = CSS.shared.iPhoneArticle_bigTextFont
+            spinName.numberOfLines = 0
+            spinName.textAlignment = .left
+            spinDataView.addSubview(spinName)
+            spinName.activateConstraints([
+                spinName.leadingAnchor.constraint(equalTo: spinSource.trailingAnchor, constant: 10),
+                spinName.centerYAnchor.constraint(equalTo: spinSource.centerYAnchor)
+            ])
+            let sourceName = CLEAN_SOURCE(from: S.media_title).uppercased()
+            spinName.text = sourceName
+            
+        let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
+            
+            spinDataView.addSubview(openIcon)
+            openIcon.activateConstraints([
+                openIcon.widthAnchor.constraint(equalToConstant: 12),
+                openIcon.heightAnchor.constraint(equalToConstant: 12),
+                openIcon.centerYAnchor.constraint(equalTo: spinName.centerYAnchor),
+                openIcon.leadingAnchor.constraint(equalTo: spinName.trailingAnchor, constant: 6)
+            ])
+            openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
+            
+        let buttonArea = UIButton(type: .custom)
+        buttonArea.tag = 222 + i
+        buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        spinDataView.addSubview(buttonArea)
+        buttonArea.activateConstraints([
+            buttonArea.leadingAnchor.constraint(equalTo: spinSource.leadingAnchor, constant: -5),
+            buttonArea.trailingAnchor.constraint(equalTo: openIcon.trailingAnchor, constant: 16),
+            buttonArea.topAnchor.constraint(equalTo: spinSource.topAnchor),
+            buttonArea.bottomAnchor.constraint(equalTo: spinSource.bottomAnchor)
+        ])
+        buttonArea.addTarget(self, action: #selector(self.spinButtonAreaOnTap(_:)), for: .touchUpInside)
+
+            ///
+            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding*2)
             
             
             //***
@@ -1352,20 +1412,83 @@ extension StoryViewController {
             ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
             
         ///
-            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
-            let ART_HStack = HSTACK(into: innerHStack)
-            
-            let W = SCREEN_SIZE().width //- (CSS.shared.iPhoneSide_padding * 2)
-            let ART = iPhoneArticle_vImg_v3(width: W)
-            ART.refreshDisplayMode()
-            ART.populate(spin: S)
-            ART_HStack.addArrangedSubview(ART)
-            ART.activateConstraints([
-                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+        ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+
+            let spinDataView = UIView()
+            spinDataView.backgroundColor = .clear
+            innerHStack.addArrangedSubview(spinDataView)
+            spinDataView.activateConstraints([
+                spinDataView.heightAnchor.constraint(equalToConstant: 32)
+            ])
+
+        // Source (icon)
+            let spinSource = SourceIconsView(size: 30, border: 2, separation: 15)
+            spinSource.buildInto(spinDataView)
+            spinSource.activateConstraints([
+                spinSource.topAnchor.constraint(equalTo: spinDataView.topAnchor),
+                spinSource.leadingAnchor.constraint(equalTo: spinDataView.leadingAnchor, constant: 16)
             ])
             
-            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+            var sourcesArray = [String]()
+            if let _identifier = Sources.shared.search(name: S.media_title) {
+                sourcesArray.append(_identifier)
+            }
+            spinSource.load(sourcesArray)
+            
+        // Source (name)
+            let spinName = UILabel()
+            spinName.font = CSS.shared.iPhoneArticle_bigTextFont
+            spinName.numberOfLines = 0
+            spinName.textAlignment = .left
+            spinDataView.addSubview(spinName)
+            spinName.activateConstraints([
+                spinName.leadingAnchor.constraint(equalTo: spinSource.trailingAnchor, constant: 10),
+                spinName.centerYAnchor.constraint(equalTo: spinSource.centerYAnchor)
+            ])
+            let sourceName = CLEAN_SOURCE(from: S.media_title).uppercased()
+            spinName.text = sourceName
+            
+        let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
+            
+            spinDataView.addSubview(openIcon)
+            openIcon.activateConstraints([
+                openIcon.widthAnchor.constraint(equalToConstant: 12),
+                openIcon.heightAnchor.constraint(equalToConstant: 12),
+                openIcon.centerYAnchor.constraint(equalTo: spinName.centerYAnchor),
+                openIcon.leadingAnchor.constraint(equalTo: spinName.trailingAnchor, constant: 6)
+            ])
+            openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
+            
+        let buttonArea = UIButton(type: .custom)
+        buttonArea.tag = 222 + i
+        buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        spinDataView.addSubview(buttonArea)
+        buttonArea.activateConstraints([
+            buttonArea.leadingAnchor.constraint(equalTo: spinSource.leadingAnchor, constant: -5),
+            buttonArea.trailingAnchor.constraint(equalTo: openIcon.trailingAnchor, constant: 16),
+            buttonArea.topAnchor.constraint(equalTo: spinSource.topAnchor),
+            buttonArea.bottomAnchor.constraint(equalTo: spinSource.bottomAnchor)
+        ])
+        buttonArea.addTarget(self, action: #selector(self.spinButtonAreaOnTap(_:)), for: .touchUpInside)
+          
+        ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding*2)
         }
+    }
+    
+    @objc func spinButtonAreaOnTap(_ sender: UIButton?) {
+        CustomNavController.shared.tour_old?.cancel()
+        
+        let spin = self.spins[sender!.tag-222]
+        
+        var article = MainFeedArticle(url: spin.url)
+        article.LR = spin.LR
+        article.PE = spin.CP
+        article.country = spin.media_country_code
+        article.source = spin.media_name
+        
+        let vc = ArticleViewController()
+        vc.article = article
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
     func metaculus(_ spin: Spin) -> Bool {

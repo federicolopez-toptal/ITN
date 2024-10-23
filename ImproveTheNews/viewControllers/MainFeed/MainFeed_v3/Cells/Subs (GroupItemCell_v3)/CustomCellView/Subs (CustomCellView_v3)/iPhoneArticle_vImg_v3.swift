@@ -14,7 +14,7 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
     private var WIDTH: CGFloat = 1
 
     private let imgWidth: CGFloat = 370
-    private let imgHeight: CGFloat = 213
+    private var imgHeight: CGFloat = 213
     
     let mainImageView = CustomImageView()
         var articleComponents = [UIView]()
@@ -32,9 +32,10 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat) {
+    init(width: CGFloat, imgHeight: CGFloat = 213) {
         super.init(frame: .zero)
         self.WIDTH = width
+        self.imgHeight = imgHeight
         
         self.buildContent()
     }
@@ -164,17 +165,17 @@ class iPhoneArticle_vImg_v3: CustomCellView_v3 {
         self.article.PE = spin.CP
         self.article.country = spin.media_country_code
         self.article.source = spin.media_name
-        ///
-
-        self.mainImageView.load(url: spin.image) { (sucess, size) in
+        
+        if(self.imgHeight>0) {
+            self.mainImageView.load(url: spin.image) { (sucess, size) in
+            }
+            self.mainImageView.showCorners(false)
             
+            self.articleTitleLabel.text = spin.subTitle
+            self.articleTitleLabel.setLineSpacing(lineSpacing: 6)
         }
-        self.mainImageView.showCorners(false)
         
         //self.articleTitleLabel.font = CSS.shared.iPhoneStory_titleFont_small
-        self.articleTitleLabel.text = spin.subTitle
-        self.articleTitleLabel.setLineSpacing(lineSpacing: 6)
-            
         var sourcesArray = [String]()
         if let _identifier = Sources.shared.search(name: spin.media_title) {
             sourcesArray.append(_identifier)
