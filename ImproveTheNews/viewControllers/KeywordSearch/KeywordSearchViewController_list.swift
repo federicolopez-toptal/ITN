@@ -131,6 +131,13 @@ extension KeywordSearchViewController {
         } else if let _item = dpItem as? DP3_text {
             cell = self.list.dequeueReusableCell(withIdentifier: CenteredTextCell.identifier) as! CenteredTextCell
             (cell as! CenteredTextCell).populate(with: _item.text, offsetY: -15)
+            
+            if(KeywordSearch.shared.loadingControversies) {
+                (cell as! CenteredTextCell).showLoading(true)
+            } else {
+                (cell as! CenteredTextCell).showLoading(false)
+            }
+            
         } else if let _item = dpItem as? DP3_controversy {
             cell = self.list.dequeueReusableCell(withIdentifier: iPhoneControversyCell_v3.identifier) as! iPhoneControversyCell_v3
             (cell as! iPhoneControversyCell_v3).populate(item: _item.controversy, remark: KeywordSearch.searchTerm)

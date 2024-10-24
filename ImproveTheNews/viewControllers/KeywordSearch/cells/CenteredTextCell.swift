@@ -15,6 +15,8 @@ class CenteredTextCell: UITableViewCell {
     var customTextLabel = UILabel()
     var offsetY_layout: NSLayoutConstraint!
     
+    var loading = UIActivityIndicatorView(style: .medium)
+    
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,6 +39,14 @@ class CenteredTextCell: UITableViewCell {
         
         self.offsetY_layout = self.customTextLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: 0)
         self.offsetY_layout.isActive = true
+        
+        self.contentView.addSubview(self.loading)
+        self.loading.activateConstraints([
+            self.loading.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.loading.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+        ])
+        self.loading.hidesWhenStopped = true
+        self.showLoading(true)
     }
     
     func populate(with text: String, offsetY: CGFloat = 0) {
@@ -48,6 +58,16 @@ class CenteredTextCell: UITableViewCell {
     func refreshDisplayMode() {
         self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.customTextLabel.textColor = UIColor(hex: 0xDA4933)
+    }
+    
+    func showLoading(_ state: Bool) {
+        if(state) {
+            self.customTextLabel.hide()
+            self.loading.startAnimating()
+        } else {
+            self.customTextLabel.show()
+            self.loading.stopAnimating()
+        }
     }
 
 }

@@ -20,7 +20,9 @@ class KeywordSearch {
     var topics: [TopicSearchResult] = []
     var stories: [StorySearchResult] = []
     var articles: [ArticleSearchResult] = []
+    
     var controversies: [ControversyListItem] = []
+    var loadingControversies = false
     
     var task: URLSessionDataTask? = nil
     
@@ -77,21 +79,36 @@ class KeywordSearch {
             if let _json = json, success {
             
                 var count = self.parseResult(_json)
-            
-                if(pageNumber==1) {
-                    ControversiesData.shared.loadListForSearch(term: text.urlEncodedString()) { (_, list, total) in
-                        if let _list = list, let _total = total {
-                            self.controversies = _list
-                            count += _total
+                callback(true, count)
+                
+                if(pageNumber == 1) {
+                    self.loadingControversies = true
+                    DELAY(1.5) {
+                        ControversiesData.shared.loadListForSearch(term: text.urlEncodedString()) { (_, list, total) in
+                            if let _list = list, let _total = total {
+                                self.controversies = _list
+                                count += _total
+                            }
+                            self.loadingControversies = false
+                            callback(true, count)
                         }
-
-                        callback(true, count)
                     }
-                } else {
-                    callback(true, count)
                 }
-            
-                //callback(true, count)
+                
+//                if(pageNumber==1) {
+//                    ControversiesData.shared.loadListForSearch(term: text.urlEncodedString()) { (_, list, total) in
+//                        if let _list = list, let _total = total {
+//                            self.controversies = _list
+//                            count += _total
+//                        }
+//
+//                        callback(true, count)
+//                    }
+//                } else {
+//                    callback(true, count)
+//                }
+
+//                callback(true, count)
             
             } else {
                 print("ERROR", serverMsg)

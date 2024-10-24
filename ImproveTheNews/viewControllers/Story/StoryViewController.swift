@@ -1159,10 +1159,9 @@ extension StoryViewController {
                     
                     let _W = SCREEN_SIZE_iPadSideTab().width - (M*2)
                     let H: CGFloat = (9 * _W)/16
-                    print("H", H)
                     
                     webView.activateConstraints([
-                        webView.heightAnchor.constraint(equalToConstant: floor(H))
+                        webView.heightAnchor.constraint(equalToConstant: floor(H/2))
                     ])
                     
                     naWebHStack.addArrangedSubview(webView)
@@ -1372,10 +1371,9 @@ extension StoryViewController {
                     
                     let H: CGFloat = (9 * SCREEN_SIZE().width)/16
                     webView.activateConstraints([
-                        webView.heightAnchor.constraint(equalToConstant: floor(H/2))
+                        webView.heightAnchor.constraint(equalToConstant: floor(H/1))
                     ])
                     naWebHStack.addArrangedSubview(webView)
-                
                 
                     continue
                 }
