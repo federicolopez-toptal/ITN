@@ -1137,7 +1137,8 @@ extension StoryViewController {
         for (i, S) in spins.enumerated() {
             // Metaculus ----------------------------------------
             if(self.metaculus(S)) {
-                if let _mUrl = self.getMetaculusUrl(from: S.url) {
+//                if let _mUrl = self.getMetaculusUrl(from: S.url) {
+                if let _HTML = self.getMetaculusHTML(from: S.url, width: SCREEN_SIZE_iPadSideTab().width - (M*2)) {
                     let natitleHStack = HSTACK(into: innerHStack)
                     ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                         let titleLabel = UILabel()
@@ -1150,23 +1151,25 @@ extension StoryViewController {
                     ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                     ADD_SPACER(to: innerHStack, height: 10)
                     
-                    let embedUrl = self.getMetaculusUrl(from: S.url)!
+//                    let embedUrl = self.getMetaculusUrl(from: S.url)!
                     let naWebHStack = HSTACK(into: innerHStack)
                     ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
                     let webView = WKWebView()
-                    webView.navigationDelegate = self
-                    webView.load(URLRequest(url: URL(string: embedUrl)!))
+//                    webView.navigationDelegate = self
+//                    webView.load(URLRequest(url: URL(string: embedUrl)!))
+                    webView.loadHTMLString(_HTML, baseURL: nil)
                     
                     let _W = SCREEN_SIZE_iPadSideTab().width - (M*2)
-                    let H: CGFloat = (9 * _W)/16
+//                    let H: CGFloat = (9 * _W)/16
+                    let H = (430 * _W)/550
                     
                     webView.activateConstraints([
-                        webView.heightAnchor.constraint(equalToConstant: floor(H/2))
+                        webView.heightAnchor.constraint(equalToConstant: floor(H))
                     ])
                     
                     naWebHStack.addArrangedSubview(webView)
                     ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
-                
+                                
                     continue
                 }
             }
@@ -1350,7 +1353,8 @@ extension StoryViewController {
         for (i, S) in spins.enumerated() {
             // Metaculus ----------------------------------------
             if(self.metaculus(S)) {
-                if let _mUrl = self.getMetaculusUrl(from: S.url) {
+//                if let _mUrl = self.getMetaculusUrl(from: S.url) {
+                if let _HTML = self.getMetaculusHTML(from: S.url, width: SCREEN_SIZE().width) {
                     let natitleHStack = HSTACK(into: innerHStack)
                     ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                         let titleLabel = UILabel()
@@ -1363,15 +1367,18 @@ extension StoryViewController {
                     ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                     ADD_SPACER(to: innerHStack, height: 10)
                     
-                    let embedUrl = self.getMetaculusUrl(from: S.url)!
+//                    let embedUrl = self.getMetaculusUrl(from: S.url)!
                     let naWebHStack = HSTACK(into: innerHStack)
                     let webView = WKWebView()
-                    webView.navigationDelegate = self
-                    webView.load(URLRequest(url: URL(string: embedUrl)!))
+                    //webView.navigationDelegate = self
+                    webView.loadHTMLString(_HTML, baseURL: nil)
+                    //webView.load(URLRequest(url: URL(string: embedUrl)!))
                     
-                    let H: CGFloat = (9 * SCREEN_SIZE().width)/16
+//                    let H: CGFloat = (9 * SCREEN_SIZE().width)/16
+                    let H = (430 * SCREEN_SIZE().width)/550
+
                     webView.activateConstraints([
-                        webView.heightAnchor.constraint(equalToConstant: floor(H/1))
+                        webView.heightAnchor.constraint(equalToConstant: floor(H))
                     ])
                     naWebHStack.addArrangedSubview(webView)
                 
@@ -1494,6 +1501,33 @@ extension StoryViewController {
         if(spin.url.lowercased().contains("metaculus")) {
             result = true
         }
+        
+        return result
+    }
+    
+    func getMetaculusHTML(from url: String, width: CGFloat) -> String? {
+        var result: String? = nil
+        
+        // Parse URL -------------------------------------
+        var parsedUrl = url.replacingOccurrences(of: "questions/", with: "questions/embed/")
+        if(parsedUrl.last! == "/") {
+            parsedUrl = parsedUrl.subString(from: 0, count: parsedUrl.count-2)!
+        }
+        
+        var lastBar = -1
+        for (i, CHR) in parsedUrl.enumerated() {
+            if(CHR=="/") { lastBar = i }
+        }
+        parsedUrl = parsedUrl.subString(from: 0, count: lastBar-1)!
+        // -----------------------------------------------
+        // iframe original size: 550(w) x 430(h)
+        let theme = DARK_MODE() ? "dark" : "light"
+        var W = Int(width * UIScreen.main.scale)
+        if(IPAD()){ W = Int(width) }
+        let H = Int((430 * W)/550)
+        
+        result = "<iframe src=\"" + parsedUrl + "?theme=" + theme + "&zoom=all\" " +
+            "style=\"width:" + String(W) + "px; height:" + String(H) + "px; border:none\"></iframe>"
         
         return result
     }
