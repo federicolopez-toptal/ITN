@@ -1137,6 +1137,367 @@ extension StoryViewController {
         for (i, S) in spins.enumerated() {
             // Metaculus ----------------------------------------
             if(self.metaculus(S)) {
+                if let _mUrl = self.getMetaculusUrl(from: S.url) {
+                    let natitleHStack = HSTACK(into: innerHStack)
+                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                        let titleLabel = UILabel()
+                        titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+                        titleLabel.text = "Metaculus Prediction"
+                        titleLabel.numberOfLines = 0
+                        titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                        natitleHStack.addArrangedSubview(titleLabel)
+                        self.addInfoButtonNextTo(label: titleLabel, index: 4)
+                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                    ADD_SPACER(to: innerHStack, height: 10)
+                    
+                    let embedUrl = self.getMetaculusUrl(from: S.url)!
+                    let naWebHStack = HSTACK(into: innerHStack)
+                    ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
+                    let webView = WKWebView()
+                    webView.navigationDelegate = self
+                    webView.load(URLRequest(url: URL(string: embedUrl)!))
+                    
+                    let _W = SCREEN_SIZE_iPadSideTab().width - (M*2)
+                    let H: CGFloat = (9 * _W)/16
+                    
+                    webView.activateConstraints([
+                        webView.heightAnchor.constraint(equalToConstant: floor(H))
+                    ])
+                    
+                    naWebHStack.addArrangedSubview(webView)
+                    ADD_SPACER(to: naWebHStack, width: CSS.shared.iPhoneSide_padding)
+                
+                    continue
+                }
+            }
+            // Metaculus ----------------------------------------
+        
+            var rowView: UIView!
+            if(col==1) {
+                rowView = UIView()
+                ADD_SPACER(to: innerHStack, width: M)
+                    innerHStack.addArrangedSubview(rowView)
+                ADD_SPACER(to: innerHStack, width: M)
+            } else {
+                let _i = innerHStack.arrangedSubviews.count-1-1
+                if(_i>=0) {
+                    rowView = innerHStack.arrangedSubviews[_i]
+                }
+            }
+            
+            var offsetX: CGFloat = M
+            if(col==2){ offsetX += W+M }
+            
+            let colVStack = VSTACK(into: rowView)
+            colVStack.activateConstraints([
+                colVStack.widthAnchor.constraint(equalToConstant: W),
+                colVStack.topAnchor.constraint(equalTo: rowView.topAnchor),
+                colVStack.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: offsetX),
+                colVStack.bottomAnchor.constraint(equalTo: rowView.bottomAnchor)
+            ])
+            
+            var _title = S.title
+            if(_title.isEmpty) {
+                let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                _title = "Narrative " + letters.getCharAt(index: i)!
+            }
+            
+            let titleLabel = UILabel()
+            titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+            titleLabel.text = _title
+            titleLabel.numberOfLines = 0
+            titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+            colVStack.addArrangedSubview(titleLabel)
+            
+            ADD_SPACER(to: colVStack, height: 10)
+            let descriptionLabel = UILabel()
+            descriptionLabel.font = AILERON_resize(16) //CSS.shared.iPhoneStoryContent_textFont
+            descriptionLabel.numberOfLines = 0
+            descriptionLabel.text = S.description
+            descriptionLabel.setLineSpacing(lineSpacing: 7.0)
+            descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
+            colVStack.addArrangedSubview(descriptionLabel)
+            
+//            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
+//            let ART = iPhoneArticle_vImg_v3(width: W)
+//            ART.refreshDisplayMode()
+//            ART.populate(spin: S)
+//            colVStack.addArrangedSubview(ART)
+//            ART.activateConstraints([
+//                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+//            ])
+//            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
+            
+            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
+
+            let spinDataView = UIView()
+            spinDataView.backgroundColor = .clear
+            colVStack.addArrangedSubview(spinDataView)
+            spinDataView.activateConstraints([
+                spinDataView.heightAnchor.constraint(equalToConstant: 32)
+            ])
+
+        // Source (icon)
+            let spinSource = SourceIconsView(size: 30, border: 2, separation: 15)
+            spinSource.buildInto(spinDataView)
+            spinSource.activateConstraints([
+                spinSource.topAnchor.constraint(equalTo: spinDataView.topAnchor),
+                spinSource.leadingAnchor.constraint(equalTo: spinDataView.leadingAnchor, constant: 16)
+            ])
+            
+            var sourcesArray = [String]()
+            if let _identifier = Sources.shared.search(name: S.media_title) {
+                sourcesArray.append(_identifier)
+            }
+            spinSource.load(sourcesArray)
+            
+        // Source (name)
+            let spinName = UILabel()
+            spinName.font = CSS.shared.iPhoneArticle_bigTextFont
+            spinName.numberOfLines = 0
+            spinName.textAlignment = .left
+            spinDataView.addSubview(spinName)
+            spinName.activateConstraints([
+                spinName.leadingAnchor.constraint(equalTo: spinSource.trailingAnchor, constant: 10),
+                spinName.centerYAnchor.constraint(equalTo: spinSource.centerYAnchor)
+            ])
+            let sourceName = CLEAN_SOURCE(from: S.media_title).uppercased()
+            spinName.text = sourceName
+            
+        let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
+            
+            spinDataView.addSubview(openIcon)
+            openIcon.activateConstraints([
+                openIcon.widthAnchor.constraint(equalToConstant: 12),
+                openIcon.heightAnchor.constraint(equalToConstant: 12),
+                openIcon.centerYAnchor.constraint(equalTo: spinName.centerYAnchor),
+                openIcon.leadingAnchor.constraint(equalTo: spinName.trailingAnchor, constant: 6)
+            ])
+            openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
+            
+        let buttonArea = UIButton(type: .custom)
+        buttonArea.tag = 222 + i
+        buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        spinDataView.addSubview(buttonArea)
+        buttonArea.activateConstraints([
+            buttonArea.leadingAnchor.constraint(equalTo: spinSource.leadingAnchor, constant: -5),
+            buttonArea.trailingAnchor.constraint(equalTo: openIcon.trailingAnchor, constant: 16),
+            buttonArea.topAnchor.constraint(equalTo: spinSource.topAnchor),
+            buttonArea.bottomAnchor.constraint(equalTo: spinSource.bottomAnchor)
+        ])
+        buttonArea.addTarget(self, action: #selector(self.spinButtonAreaOnTap(_:)), for: .touchUpInside)
+
+            ///
+            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding*2)
+            
+            //***
+            col += 1
+            if(col==3){ col=1 }
+        }
+        
+        return
+        
+        ////////////////////////////////////////////////
+        
+
+        for (i, S) in spins.enumerated() {
+            var _title = S.title
+            if(_title.isEmpty) {
+                let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                _title = "Narrative " + letters.getCharAt(index: i)!
+            }
+            
+            let natitleHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                let titleLabel = UILabel()
+                titleLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+                titleLabel.text = _title
+                titleLabel.numberOfLines = 0
+                titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                natitleHStack.addArrangedSubview(titleLabel)
+            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+            
+            ADD_SPACER(to: innerHStack, height: 10)
+            let descrHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
+                let descriptionLabel = UILabel()
+                descriptionLabel.font = CSS.shared.iPhoneStoryContent_textFont
+                descriptionLabel.numberOfLines = 0
+                //descriptionLabel.backgroundColor = .green.withAlphaComponent(0.2)
+                descriptionLabel.text = S.description
+                descriptionLabel.setLineSpacing(lineSpacing: 7.0)
+                descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
+                descrHStack.addArrangedSubview(descriptionLabel)
+            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
+            
+        ///
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+            let ART_HStack = HSTACK(into: innerHStack)
+            
+            let W = SCREEN_SIZE().width //- (CSS.shared.iPhoneSide_padding * 2)
+            let ART = iPhoneArticle_vImg_v3(width: W)
+            ART.refreshDisplayMode()
+            ART.populate(spin: S)
+            ART_HStack.addArrangedSubview(ART)
+            ART.activateConstraints([
+                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+            ])
+            
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+        }
+    }
+    
+    func addSpins_iPhone(_ spins: [Spin], innerHStack: UIStackView) {
+        for (i, S) in spins.enumerated() {
+            // Metaculus ----------------------------------------
+            if(self.metaculus(S)) {
+                if let _mUrl = self.getMetaculusUrl(from: S.url) {
+                    let natitleHStack = HSTACK(into: innerHStack)
+                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                        let titleLabel = UILabel()
+                        titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+                        titleLabel.text = "Metaculus Prediction"
+                        titleLabel.numberOfLines = 0
+                        titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                        natitleHStack.addArrangedSubview(titleLabel)
+                        self.addInfoButtonNextTo(label: titleLabel, index: 4)
+                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                    ADD_SPACER(to: innerHStack, height: 10)
+                    
+                    let embedUrl = self.getMetaculusUrl(from: S.url)!
+                    let naWebHStack = HSTACK(into: innerHStack)
+                    let webView = WKWebView()
+                    webView.navigationDelegate = self
+                    webView.load(URLRequest(url: URL(string: embedUrl)!))
+                    
+                    let H: CGFloat = (9 * SCREEN_SIZE().width)/16
+                    webView.activateConstraints([
+                        webView.heightAnchor.constraint(equalToConstant: floor(H))
+                    ])
+                    naWebHStack.addArrangedSubview(webView)
+                
+                
+                    continue
+                }
+            }
+            // Metaculus ----------------------------------------
+            
+            var _title = S.title
+            if(_title.isEmpty) {
+                let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                _title = "Narrative " + letters.getCharAt(index: i)!
+            }
+            
+            let natitleHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                let titleLabel = UILabel()
+                titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+                titleLabel.text = _title
+                titleLabel.numberOfLines = 0
+                titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                natitleHStack.addArrangedSubview(titleLabel)
+            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+            
+            ADD_SPACER(to: innerHStack, height: 10)
+            let descrHStack = HSTACK(into: innerHStack)
+            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
+                let descriptionLabel = UILabel()
+                descriptionLabel.font = AILERON_resize(16) //CSS.shared.iPhoneStoryContent_textFont
+                descriptionLabel.numberOfLines = 0
+                //descriptionLabel.backgroundColor = .green.withAlphaComponent(0.2)
+                descriptionLabel.text = S.description
+                descriptionLabel.setLineSpacing(lineSpacing: 7.0)
+                descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
+                descrHStack.addArrangedSubview(descriptionLabel)
+            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
+            
+        ///
+//            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+//            let ART_HStack = HSTACK(into: innerHStack)
+//            
+//            let W = SCREEN_SIZE().width //- (CSS.shared.iPhoneSide_padding * 2)
+//            let ART = iPhoneArticle_vImg_v3(width: W)
+//            ART.refreshDisplayMode()
+//            ART.populate(spin: S)
+//            ART_HStack.addArrangedSubview(ART)
+//            ART.activateConstraints([
+//                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
+//            ])
+//            
+//            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
+
+            let spinDataView = UIView()
+            spinDataView.backgroundColor = .clear
+            innerHStack.addArrangedSubview(spinDataView)
+            spinDataView.activateConstraints([
+                spinDataView.heightAnchor.constraint(equalToConstant: 32)
+            ])
+
+        // Source (icon)
+            let spinSource = SourceIconsView(size: 30, border: 2, separation: 15)
+            spinSource.buildInto(spinDataView)
+            spinSource.activateConstraints([
+                spinSource.topAnchor.constraint(equalTo: spinDataView.topAnchor),
+                spinSource.leadingAnchor.constraint(equalTo: spinDataView.leadingAnchor, constant: 16)
+            ])
+            
+            var sourcesArray = [String]()
+            if let _identifier = Sources.shared.search(name: S.media_title) {
+                sourcesArray.append(_identifier)
+            }
+            spinSource.load(sourcesArray)
+            
+        // Source (name)
+            let spinName = UILabel()
+            spinName.font = CSS.shared.iPhoneArticle_bigTextFont
+            spinName.numberOfLines = 0
+            spinName.textAlignment = .left
+            spinDataView.addSubview(spinName)
+            spinName.activateConstraints([
+                spinName.leadingAnchor.constraint(equalTo: spinSource.trailingAnchor, constant: 10),
+                spinName.centerYAnchor.constraint(equalTo: spinSource.centerYAnchor)
+            ])
+            let sourceName = CLEAN_SOURCE(from: S.media_title).uppercased()
+            spinName.text = sourceName
+            
+            let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
+            
+            spinDataView.addSubview(openIcon)
+            openIcon.activateConstraints([
+                openIcon.widthAnchor.constraint(equalToConstant: 12),
+                openIcon.heightAnchor.constraint(equalToConstant: 12),
+                openIcon.centerYAnchor.constraint(equalTo: spinName.centerYAnchor),
+                openIcon.leadingAnchor.constraint(equalTo: spinName.trailingAnchor, constant: 6)
+            ])
+            openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
+            
+            let buttonArea = UIButton(type: .custom)
+            buttonArea.tag = 222 + i
+            buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+            spinDataView.addSubview(buttonArea)
+            buttonArea.activateConstraints([
+                buttonArea.leadingAnchor.constraint(equalTo: spinSource.leadingAnchor, constant: -5),
+                buttonArea.trailingAnchor.constraint(equalTo: openIcon.trailingAnchor, constant: 16),
+                buttonArea.topAnchor.constraint(equalTo: spinSource.topAnchor),
+                buttonArea.bottomAnchor.constraint(equalTo: spinSource.bottomAnchor)
+            ])
+            buttonArea.addTarget(self, action: #selector(self.spinButtonAreaOnTap(_:)), for: .touchUpInside)
+              
+            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding*2)
+        }
+    }
+    
+    func addSpins_iPad_iframe(_ spins: [Spin], innerHStack: UIStackView) {
+        let M = CSS.shared.iPhoneSide_padding
+        let W = ((SCREEN_SIZE_iPadSideTab().width) - (M * 3))/2
+        
+        var col = 1
+        //for i in 1...3 {
+        for (i, S) in spins.enumerated() {
+            // Metaculus ----------------------------------------
+            if(self.metaculus(S)) {
 //                if let _mUrl = self.getMetaculusUrl(from: S.url) {
                 if let _HTML = self.getMetaculusHTML(from: S.url, width: SCREEN_SIZE_iPadSideTab().width - (M*2)) {
                     let natitleHStack = HSTACK(into: innerHStack)
@@ -1349,7 +1710,7 @@ extension StoryViewController {
         }
     }
     
-    func addSpins_iPhone(_ spins: [Spin], innerHStack: UIStackView) {
+    func addSpins_iPhone_iframe(_ spins: [Spin], innerHStack: UIStackView) {
         for (i, S) in spins.enumerated() {
             // Metaculus ----------------------------------------
             if(self.metaculus(S)) {
