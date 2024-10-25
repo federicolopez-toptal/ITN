@@ -1454,6 +1454,7 @@ extension StoryViewController {
             spinName.font = CSS.shared.iPhoneArticle_bigTextFont
             spinName.numberOfLines = 0
             spinName.textAlignment = .left
+            spinName.textColor = CSS.shared.displayMode().main_textColor
             spinDataView.addSubview(spinName)
             spinName.activateConstraints([
                 spinName.leadingAnchor.constraint(equalTo: spinSource.trailingAnchor, constant: 10),
@@ -1902,7 +1903,9 @@ extension StoryViewController {
                 if(CHR=="/") {
                     if let _id = parsed.subString2(from: 0, count: i-1) {
 //                        result = "https://www.improvemynews.com/php/metaculus.php?id=" + _id
-                        result = ITN_URL() + "/php/metaculus.php?id=" + _id
+//                        result = ITN_URL() + "/php/metaculus.php?id=" + _id
+                        result = "https://www.improvemynews.com/php/metaculus.php?id=" + _id
+                        
                     }
                     break
                 }

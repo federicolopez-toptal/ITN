@@ -45,6 +45,7 @@ class CenteredTextCell: UITableViewCell {
             self.loading.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.loading.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
+        self.loading.color = CSS.shared.displayMode().main_textColor
         self.loading.hidesWhenStopped = true
         self.showLoading(true)
     }
