@@ -46,6 +46,7 @@ class MenuView: UIView {
         
         .newsletter,
         
+        //.podcast,
         .videos,
         
         .preferences,
@@ -607,6 +608,14 @@ extension MenuView {
         self.dismissMe()
         
         let vc = VideosViewController()
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    // ---------
+    func showPodcast() {
+        self.dismissMe()
+        
+        let vc = PodcastViewController()
         CustomNavController.shared.pushViewController(vc, animated: true)
     }
     

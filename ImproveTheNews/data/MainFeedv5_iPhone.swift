@@ -34,7 +34,11 @@ extension MainFeedv5_iPhone {
         self.count_ST = 0
         self.count_AR = 0
         
-        let strUrl = self.buildUrl(topic: topic, A: 5, B: 5, C: 3, SA: 0, SS: 0)
+        var strUrl = self.buildUrl(topic: topic, A: 5, B: 5, C: 3, SA: 0, SS: 0)
+        if(topic == "ai") {
+            strUrl = self.buildUrl(topic: topic, A: 4, B: 0, C: 2, SA: 0, SS: 1)
+        }
+        
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
         
@@ -58,13 +62,19 @@ extension MainFeedv5_iPhone {
                         callback(_error)
                     } else {                    
                         if let _json = JSON(fromData: mData) {
-                            self.parse(_json, mainTopicItemsLimit: 5)
+                            if(topic == "ai") {
+                                self.parse(_json, mainTopicItemsLimit: 4)
+                            } else {
+                                self.parse(_json, mainTopicItemsLimit: 5)
+                            }
+                            
                             if(self.topic == "news") {
                                 self.addIA()
                                 self.add_US_Election()
                             }
                             if(self.topic == "ai") {
-                                self.replaceFirstStoryIA()
+                                self.addFirstStoryIA()
+                                //self.replaceFirstStoryIA()
                             }
                             
                             callback(nil)
@@ -86,7 +96,12 @@ extension MainFeedv5_iPhone {
     
     // load MORE data
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
+        if(topic == "ai") {
+            self.count_ST += 1
+            self.count_AR += 1
+        }
         let strUrl = self.buildUrl(topic: T, A: 8, B: 0, C: 4, SA: self.count_AR, SS: self.count_ST)
+        
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
         
@@ -579,6 +594,21 @@ extension MainFeedv5_iPhone {
         ]
         let newTopic = MainFeedTopic(data, [])
         self.topics.insert(newTopic, at: 3)
+    }
+    
+    private func addFirstStoryIA() {
+        if(self.topics.first?.name == "ai") {
+            var newStory = MainFeedArticle(url: "")
+            newStory.title = "What is Artificial Intelligence?"
+            newStory.imgUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/65b7a1da0d52e_image.png"
+            newStory.isContext = true
+            newStory.isStory = true
+            newStory.storySources = []
+            newStory.time = "" //DATE_TO_TIMEAGO("2023-03-19 00:01:00")
+            newStory.url = ITN_URL() + "/story/2023/artificial-intelligence"
+            
+            self.topics[0].articles.insert(newStory, at: 0)
+        }
     }
     
     private func replaceFirstStoryIA() {
