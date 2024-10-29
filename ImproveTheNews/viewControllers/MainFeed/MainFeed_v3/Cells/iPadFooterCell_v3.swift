@@ -1,5 +1,5 @@
 //
-//  iPhoneFooterCell_v3.swift
+//  iPadFooterCell_v3.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 28/02/2023.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class iPhoneFooterCell_v3: UITableViewCell {
-    static let identifier = "iPhoneFooterCell_v3"
+class iPadFooterCell_v3: UITableViewCell {
+    static let identifier = "iPadFooterCell_v3"
     
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -36,8 +36,8 @@ class iPhoneFooterCell_v3: UITableViewCell {
         logo.activateConstraints([
             logo.widthAnchor.constraint(equalToConstant: 121),
             logo.heightAnchor.constraint(equalToConstant: 25),
-            logo.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 36),
-            logo.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            logo.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 45),
+            logo.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16*2)
         ])
         logo.tag = 44
         
@@ -47,20 +47,27 @@ class iPhoneFooterCell_v3: UITableViewCell {
         let sliders = self.createItemWith(text: "How our sliders work", into: self.contentView, tag: 1)
         sliders.activateConstraints([
             sliders.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 44),
-            sliders.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding),
+            sliders.leadingAnchor.constraint(equalTo: logo.leadingAnchor),
             sliders.widthAnchor.constraint(equalToConstant: (SCREEN_SIZE().width-32)/2)
         ])
         
         let about = self.createItemWith(text: "About", into: self.contentView, tag: 2)
         about.activateConstraints([
             about.topAnchor.constraint(equalTo: sliders.bottomAnchor, constant: vSep),
-            about.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            about.leadingAnchor.constraint(equalTo: logo.leadingAnchor)
         ])
         
         let feedback = self.createItemWith(text: "Feedback", into: self.contentView, tag: 3)
         feedback.activateConstraints([
             feedback.topAnchor.constraint(equalTo: about.bottomAnchor, constant: vSep),
-            feedback.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            feedback.leadingAnchor.constraint(equalTo: logo.leadingAnchor)
+        ])
+        
+        let privacy = self.createItemWith(text: "Privacy Policy", into: self.contentView, tag: 4)
+        privacy.activateConstraints([
+            //privacy.topAnchor.constraint(equalTo: newsletter.bottomAnchor, constant: vSep),
+            privacy.topAnchor.constraint(equalTo: sliders.topAnchor),
+            privacy.leadingAnchor.constraint(equalTo: sliders.leadingAnchor, constant: 200)
         ])
         
         
@@ -70,32 +77,32 @@ class iPhoneFooterCell_v3: UITableViewCell {
 //            feedback.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: SCREEN_SIZE().width/2)
 //        ])
         
-        let twitter = self.createSocialButton("twitter", into: self.contentView, tag: 1)
-        twitter.activateConstraints([
-            twitter.topAnchor.constraint(equalTo: feedback.bottomAnchor, constant: 44),
-            twitter.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: CSS.shared.iPhoneSide_padding)
+        let linkedin = self.createSocialButton("linkedin", into: self.contentView, tag: 3)
+        linkedin.activateConstraints([
+            linkedin.centerYAnchor.constraint(equalTo: logo.centerYAnchor),
+            linkedin.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16*2)
         ])
         
         let facebook = self.createSocialButton("facebook", into: self.contentView, tag: 2)
         facebook.activateConstraints([
-            facebook.topAnchor.constraint(equalTo: twitter.topAnchor),
-            facebook.leadingAnchor.constraint(equalTo: twitter.trailingAnchor, constant: 12)
+            facebook.centerYAnchor.constraint(equalTo: logo.centerYAnchor),
+            facebook.trailingAnchor.constraint(equalTo: linkedin.leadingAnchor, constant: -12)
         ])
-        
-        let linkedin = self.createSocialButton("linkedin", into: self.contentView, tag: 3)
-        linkedin.activateConstraints([
-            linkedin.topAnchor.constraint(equalTo: twitter.topAnchor),
-            linkedin.leadingAnchor.constraint(equalTo: facebook.trailingAnchor, constant: 12)
+
+        let twitter = self.createSocialButton("twitter", into: self.contentView, tag: 1)
+        twitter.activateConstraints([
+            twitter.centerYAnchor.constraint(equalTo: logo.centerYAnchor),
+            twitter.trailingAnchor.constraint(equalTo: facebook.leadingAnchor, constant: -12)
         ])
         
         // -------
         let ITNLogo = UIImageView(image: UIImage(named: DisplayMode.imageName("ITNF_logo")))
         self.contentView.addSubview(ITNLogo)
         ITNLogo.activateConstraints([
-            ITNLogo.centerYAnchor.constraint(equalTo: twitter.centerYAnchor),
-            ITNLogo.leadingAnchor.constraint(equalTo: linkedin.trailingAnchor, constant: 94),
             ITNLogo.widthAnchor.constraint(equalToConstant: 108),
-            ITNLogo.heightAnchor.constraint(equalToConstant: 32)
+            ITNLogo.heightAnchor.constraint(equalToConstant: 32),
+            ITNLogo.trailingAnchor.constraint(equalTo: linkedin.trailingAnchor),
+            ITNLogo.bottomAnchor.constraint(equalTo: feedback.bottomAnchor),
         ])
         ITNLogo.tag = 88
         
@@ -105,14 +112,6 @@ class iPhoneFooterCell_v3: UITableViewCell {
 //            newsletter.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor)
 //        ])
         
-        let privacy = self.createItemWith(text: "Privacy Policy", into: self.contentView, tag: 4)
-        privacy.activateConstraints([
-            //privacy.topAnchor.constraint(equalTo: newsletter.bottomAnchor, constant: vSep),
-            privacy.topAnchor.constraint(equalTo: sliders.topAnchor),
-            privacy.leadingAnchor.constraint(equalTo: ITNLogo.leadingAnchor),
-            privacy.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
-        ])
-        
         //bottom line
         let bottomLine = UIView()
         self.contentView.addSubview(bottomLine)
@@ -120,21 +119,19 @@ class iPhoneFooterCell_v3: UITableViewCell {
             bottomLine.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             bottomLine.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             bottomLine.heightAnchor.constraint(equalToConstant: 1),
-            bottomLine.bottomAnchor.constraint(equalTo: twitter.bottomAnchor, constant: 36),
+            bottomLine.bottomAnchor.constraint(equalTo: feedback.bottomAnchor, constant: 36),
         ])
         bottomLine.tag = 12
         
         // Copyright
         let copyrightLabel = UILabel()
         copyrightLabel.textColor = CSS.shared.displayMode().sec_textColor
-        copyrightLabel.numberOfLines = 0
         copyrightLabel.text = "© 2024 Improve the News Foundation. All rights reserved."
         copyrightLabel.font = AILERON(15)
         self.contentView.addSubview(copyrightLabel)
         copyrightLabel.activateConstraints([
             copyrightLabel.topAnchor.constraint(equalTo: bottomLine.bottomAnchor, constant: 22),
-            copyrightLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            copyrightLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
+            copyrightLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16*2)
         ])
         
         self.refreshDisplayMode()
@@ -256,7 +253,7 @@ class iPhoneFooterCell_v3: UITableViewCell {
     
 }
 
-extension iPhoneFooterCell_v3 {
+extension iPadFooterCell_v3 {
 
     private func addDashesTo(_ view: UIView) {
         REMOVE_ALL_SUBVIEWS(from: view)
@@ -281,11 +278,11 @@ extension iPhoneFooterCell_v3 {
     }
     
     static func getHeight() -> CGFloat {
-        return 330 + 40 + 40
+        return 410
     }
 }
 
-extension iPhoneFooterCell_v3 {
+extension iPadFooterCell_v3 {
 
     func slidersButtonTap() {
         DELAY(0.5) {

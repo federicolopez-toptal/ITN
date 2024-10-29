@@ -72,7 +72,7 @@ extension MainFeediPad_v3_viewController {
         self.list.register(iPhoneBannerPCCell_v3.self, forCellReuseIdentifier: iPhoneBannerPCCell_v3.identifier)
         self.list.register(iPhoneBannerNLCell_v3.self, forCellReuseIdentifier: iPhoneBannerNLCell_v3.identifier)
         self.list.register(iPhoneMoreCell_v3.self, forCellReuseIdentifier: iPhoneMoreCell_v3.identifier)
-        self.list.register(iPhoneFooterCell_v3.self, forCellReuseIdentifier: iPhoneFooterCell_v3.identifier)
+        self.list.register(iPadFooterCell_v3.self, forCellReuseIdentifier: iPadFooterCell_v3.identifier)
         
         self.list.register(iPhoneHeaderLineCell_v3.self, forCellReuseIdentifier: iPhoneHeaderLineCell_v3.identifier)
         self.list.register(iPadControversyCell_v3.self, forCellReuseIdentifier: iPadControversyCell_v3.identifier)
@@ -290,8 +290,8 @@ extension MainFeediPad_v3_viewController {
                     }
                 }
             } else if item is DP3_footer {
-                cell = self.list.dequeueReusableCell(withIdentifier: iPhoneFooterCell_v3.identifier)!
-                (cell as! iPhoneFooterCell_v3).refreshDisplayMode()
+                cell = self.list.dequeueReusableCell(withIdentifier: iPadFooterCell_v3.identifier)!
+                (cell as! iPadFooterCell_v3).refreshDisplayMode()
             } else if let _item = item as? DP3_controversies_x2 {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadControversyCell_v3.identifier)!
                 (cell as! iPadControversyCell_v3).populate(item1: _item.controversy1, item2: _item.controversy2)
@@ -369,7 +369,7 @@ extension MainFeediPad_v3_viewController {
                 }
             }
         } else if(item is DP3_footer) { // footer
-            return iPhoneFooterCell_v3.getHeight()
+            return iPadFooterCell_v3.getHeight()
         } else if(item is DP3_lineSeparator) { // line separator
             result = iPhoneLineSeparatorCell_v3.getHeight()
         } else if(item is DP3_controversies_x2) {
