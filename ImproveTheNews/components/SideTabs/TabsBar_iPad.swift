@@ -42,8 +42,8 @@ class TabsBar_iPad: TabsBar {
     }
     
     override func refreshDisplayMode() {
-        self.backgroundColor = .systemPink //CSS.shared.displayMode().main_bgColor
-        self.subviews.first!.backgroundColor = .green //self.backgroundColor
+        self.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.subviews.first!.backgroundColor = self.backgroundColor
         
         for i in 1...Int(self.itemsCount) {
             let iconLabel = self.viewWithTag(30 + i) as! UILabel
