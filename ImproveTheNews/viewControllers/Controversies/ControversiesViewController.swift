@@ -334,7 +334,7 @@ class ControversiesViewController: BaseViewController {
 //        self.contentView.backgroundColor = .yellow
 
 //        self.vStack.backgroundColor = .green
-        self.topicsContainer.backgroundColor = .orange
+        //self.topicsContainer.backgroundColor = .orange
     }
     
     @objc func loadMoreOnTap(_ sender: UIButton) {
@@ -946,6 +946,7 @@ extension ControversiesViewController {
     func refreshDisplayModeForTopics() {
         let C = CSS.shared.displayMode().main_bgColor
         
+        self.topicsContainer.superview!.backgroundColor = C
         self.topicsContainer.backgroundColor = C
         let scrollview = self.topicsContainer.subviews.first!
         scrollview.backgroundColor = C
@@ -1173,6 +1174,8 @@ extension ControversiesViewController {
         
         let H: CGFloat = 40.0
         REMOVE_ALL_SUBVIEWS(from: self.subtopicsContainer)
+        self.subtopicsContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
+        self.subtopicsContainer.superview!.backgroundColor = CSS.shared.displayMode().main_bgColor
 
         var _m: CGFloat = 0
         if(IPAD()) {
