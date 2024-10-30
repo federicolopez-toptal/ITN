@@ -351,4 +351,12 @@ class ClaimSource {
         self.name = CHECK(jsonObj["name"])
         self.url = CHECK(jsonObj["url"])
     }
+    
+    func trace() {
+        print("CLAIM SOURCE ------")
+        print(numId, strId)
+        print(name)
+        print(url)
+        print("-------------------")
+    }
 }

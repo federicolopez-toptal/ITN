@@ -495,6 +495,13 @@ extension ControDetailViewController {
             let claimView = ClaimCellView(width: item_W, showControversyLink: false)
             claimView.delegate = self
             
+            var showMetaculusChart = false
+            if(i==0) {
+                if let _firstSource = CL.sources.first, _firstSource.name.lowercased() == "metaculus" {
+                    showMetaculusChart = true
+                }
+            }
+        
             var val_x: CGFloat = col * item_W
             if(IPAD() && col==1) {
                 val_x += M
@@ -534,7 +541,12 @@ extension ControDetailViewController {
                     }
                 }
             }
-            claimView.populate(with: CL)
+            if(showMetaculusChart) {
+                claimView.populateForChart(with: CL)
+            } else {
+                claimView.populate(with: CL)
+            }
+            
             
             if(IPAD()) {
                 col += 1

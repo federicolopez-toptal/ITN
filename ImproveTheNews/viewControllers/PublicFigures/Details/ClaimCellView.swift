@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import WebKit
+
 
 protocol ClaimCellViewDelegate: AnyObject {
     func claimCellViewOnHeightChanged(sender: ClaimCellView?)
@@ -58,6 +60,9 @@ class ClaimCellView: UIView {
     var figureSlug: String = ""
     var controversySlug: String = ""
     
+    var showMetaculusChart = false
+    var webView: WKWebView?
+    
     //let clickView = UIView()
     
     // MARK: - Init(s)
@@ -89,6 +94,7 @@ class ClaimCellView: UIView {
                 line.topAnchor.constraint(equalTo: self.topAnchor),
                 line.heightAnchor.constraint(equalToConstant: 1)
             ])
+            line.tag = 555
             ADD_HDASHES(to: line)
         }
         
@@ -336,6 +342,7 @@ class ClaimCellView: UIView {
             borderBG.dashColor = CSS.shared.displayMode().line_color
             borderBG.dashLength = 5
             borderBG.betweenDashesSpace = 5
+            borderBG.tag = 444
             
             self.addSubview(borderBG)
             borderBG.activateConstraints([
@@ -419,6 +426,12 @@ class ClaimCellView: UIView {
     }
     
     func calculateHeight() -> CGFloat {
+        if(self.showMetaculusChart) {
+            var H = 16 + self.heightForChart() + 16
+            if(IPAD()){ H += 16 }
+            return H
+        }
+        
         let W: CGFloat = self.WIDTH - 16 - 40 - 7 - 16
         
         var controversyLabelHeight: CGFloat = 0
@@ -440,7 +453,88 @@ class ClaimCellView: UIView {
         return H + extraH
     }
     
+    func showComponents(_ state: Bool) {
+        for V in self.subviews {
+            if(V is WKWebView) {
+            } else {
+                V.isHidden = !state
+            }
+        }
+    }
+    
+    func heightForChart() -> CGFloat {
+        var W = self.WIDTH
+        if(IPAD()){ W -= 32 }
+        
+        let H: CGFloat = (9 * W)/16
+
+        return H
+    }
+    
+    func populateForChart(with claim: Claim) {
+        self.showMetaculusChart = true
+        self.showComponents(false)
+        
+        // top line
+        if let _line = self.viewWithTag(555) {
+            _line.show()
+        }
+        // border
+        if let _border = self.viewWithTag(444) {
+            _border.show()
+        }
+        
+        var iframeUrl = ""
+        if let _firstSource = claim.sources.first {
+            iframeUrl =  self.getMetaculusUrl(from: _firstSource.url)
+        }
+        
+        if(self.webView == nil) {
+            self.webView = WKWebView()
+            self.addSubview(self.webView!)
+            self.webView?.activateConstraints([
+                self.webView!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: IPHONE() ? 0 : 16),
+                self.webView!.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: IPHONE() ? 0 : -16),
+                self.webView!.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+                self.webView!.heightAnchor.constraint(equalToConstant: self.heightForChart())
+            ])
+            self.webView!.navigationDelegate = self
+            self.webView?.load(URLRequest(url: URL(string: iframeUrl)!))
+        }
+        
+        self.webView?.isHidden = false
+        self.mainHeightConstraint?.constant = self.calculateHeight()
+    }
+    
+    func getMetaculusUrl(from url: String) -> String {
+        var result: String = ""
+    
+        var parsed = url.replacingOccurrences(of: "https://www.metaculus.com/questions/", with: "")
+        if(!parsed.isEmpty) {
+            for (i, CHR) in parsed.enumerated() {
+                if(CHR=="/") {
+                    if let _id = parsed.subString2(from: 0, count: i-1) {
+                        result = ITN_URL() + "/php/metaculus.php?id=" + _id
+                    }
+                    break
+                }
+            }
+        }
+
+        if(!result.isEmpty) {
+            result += "&mode="
+            result += DARK_MODE() ? "dark" : "light"
+        }
+        
+        print("METACULUS URL", result)
+        return result
+    }
+    
     func populate(with claim: Claim) {
+        self.showMetaculusChart = false
+        self.showComponents(true)
+        self.webView?.isHidden = true
+
         let W: CGFloat = self.WIDTH - 16 - 40 - 7 - 16
         self.figureSlug = claim.figureSlug
         self.controversySlug = claim.controversySlug
@@ -611,4 +705,24 @@ extension ClaimCellView {
         return result
     }
     
+}
+
+extension ClaimCellView: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        if let url = navigationAction.request.mainDocumentURL?.absoluteString {
+            if(url.contains("metaculus.php")) {
+                decisionHandler(.allow)
+            } else if(url.contains("metaculus.com")) {
+                let vc = ArticleViewController()
+                vc.article = MainFeedArticle(url: url)
+                vc.showComponentsOnClose = false
+                vc.altTitle = "Metaculus"
+                CustomNavController.shared.pushViewController(vc, animated: true)
+                
+                decisionHandler(.cancel)
+            }
+        }
+    }
 }
