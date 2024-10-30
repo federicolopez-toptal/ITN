@@ -310,6 +310,12 @@ class ControversiesViewController: BaseViewController {
         moreView.backgroundColor = self.view.backgroundColor
         moreView.hide()
         
+        self.storiesShowMore.backgroundColor = CSS.shared.displayMode().main_bgColor
+        if let _moreButton = self.storiesShowMore.subviews.first as? UIButton {
+            _moreButton.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xBBBDC0)
+            _moreButton.setTitleColor(CSS.shared.displayMode().main_textColor, for: .normal)
+        }
+        
         for sView in moreView.subviews {
             if(sView.tag == 444) {
                 ADD_HDASHES(to: sView)

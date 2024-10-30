@@ -106,6 +106,7 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
             line1View.topAnchor.constraint(equalTo: view2.bottomAnchor),
             line1View.heightAnchor.constraint(equalToConstant: 2)
         ])
+        line1View.tag = 111
         ADD_HDASHES(to: line1View)
             
         let line2View = UIView()
@@ -116,6 +117,7 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
             line2View.topAnchor.constraint(equalTo: view4.bottomAnchor),
             line2View.heightAnchor.constraint(equalToConstant: 2)
         ])
+        line2View.tag = 222
         ADD_HDASHES(to: line2View)
     }
 
@@ -139,7 +141,15 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
             V.refreshDisplayMode()
         }
         
-        //self.contentView.backgroundColor = .systemPink
+        // line 1
+        let line1View = self.contentView.viewWithTag(111)!
+        REMOVE_ALL_SUBVIEWS(from: line1View)
+        ADD_HDASHES(to: line1View)
+        
+        // line 2
+        let line2View = self.contentView.viewWithTag(222)!
+        REMOVE_ALL_SUBVIEWS(from: line2View)
+        ADD_HDASHES(to: line2View)
     }
     
     // MARK: misc
