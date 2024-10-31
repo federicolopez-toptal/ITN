@@ -1353,6 +1353,10 @@ extension ControversiesViewController {
                 titleLabel.text = "Go Deeper"
                 self.storiesContainer.addArrangedSubview(titleLabel)
                 ADD_SPACER(to: self.storiesContainer, height: 10)
+            } else {
+                if let _titleLabel = self.storiesContainer.subviews.first as? UILabel {
+                    _titleLabel.textColor = CSS.shared.displayMode().sec_textColor
+                }
             }
             
             var storiesVStack: UIStackView!
@@ -1363,6 +1367,27 @@ extension ControversiesViewController {
                 storiesVStack = VSTACK(into: self.storiesContainer)
                 storiesVStack.tag = 777
             }
+            
+            // Refresh stories UI /////////
+            if(IPHONE()) {
+                for STView in storiesVStack.arrangedSubviews {
+                    if(STView is iPhoneAllNews_vImgCol_v3) {
+                        (STView as! iPhoneAllNews_vImgCol_v3).refreshDisplayMode()
+                    }
+                }
+            } else {
+                for STACKView in storiesVStack.arrangedSubviews {
+                    if(STACKView is UIStackView) {
+                        let _STACKView = (STACKView as! UIStackView)
+                        for STView in _STACKView.arrangedSubviews {
+                            if(STView is iPhoneAllNews_vImgCol_v3) {
+                                (STView as! iPhoneAllNews_vImgCol_v3).refreshDisplayMode()
+                            }
+                        }
+                    }
+                }
+            }
+            ///////////////////////////////
             
             if(IPHONE()) {
                 storiesVStack.activateConstraints([

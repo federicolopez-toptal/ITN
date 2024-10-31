@@ -250,6 +250,8 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         
         self.article = MainFeedArticle(story: story)
         self.populate(article)
+        
+        self.refreshDisplayMode()
     }
     
     func populate(article: StoryArticle) {
