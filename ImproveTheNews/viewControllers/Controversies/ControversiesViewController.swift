@@ -7,13 +7,18 @@
 //
 
 import UIKit
+import WebKit
+
 
 class ControversiesViewController: BaseViewController {
 
     static var topic = ""
 
     let M: CGFloat = CSS.shared.iPhoneSide_padding
-    let GRAPH_HEIGHT: CGFloat = 300
+    var GRAPH_WIDTH: CGFloat = 320
+    let GRAPH_HEIGHT: CGFloat = 400
+    let GRAPH_URL = "/election-results?theme="
+    
     var iPad_W: CGFloat = -1
     
     var page: Int = 0
@@ -51,8 +56,17 @@ class ControversiesViewController: BaseViewController {
     var stories: [StorySearchResult] = []
     var storiesTotal: Int = 0
     var storiesPage: Int = 1
+        
     
     // MARK: - Init
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if(IPAD()) {
+            self.GRAPH_WIDTH = 400
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
@@ -572,7 +586,7 @@ extension ControversiesViewController {
                 descrLabel.calculateHeightFor(width: _W) + 24 +
                 40 + 24 + self.GRAPH_HEIGHT
             } else {
-                let _w: CGFloat = self.W() - 16 - self.GRAPH_HEIGHT
+                let _w: CGFloat = self.W() - 16 - self.GRAPH_WIDTH
                 
                 let _h = 12 + //titleLabel.calculateHeightFor(width: _w) + 8 +
                 descrLabel.calculateHeightFor(width: _w)
@@ -1019,7 +1033,31 @@ extension ControversiesViewController {
         ADD_SPACER(to: resultView)
     }
     
-    func createGraphView(data: controversyPortalGraph) -> UIView {
+    func createGraphView(data: controversyPortalGraph) -> UIView { //!!!
+        let webView = WKWebView()
+        webView.activateConstraints([
+            webView.widthAnchor.constraint(equalToConstant: self.GRAPH_WIDTH),
+            webView.heightAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT)
+        ])
+        
+        var domain = "https://improve-the-news-frontend.vercel.app"
+        //domain = ITN_URL()
+        
+        let theme = DARK_MODE() ? "dark" : "light"
+        let url = domain + self.GRAPH_URL + theme
+        
+        print("GRAPH", url)
+        
+        //webView.isUserInteractionEnabled = false
+        webView.navigationDelegate = self
+        webView.load(URLRequest(url: URL(string: url)!))
+        
+//        webView.layer.borderColor = UIColor.red.cgColor
+//        webView.layer.borderWidth = 1.0
+        
+        return webView
+        
+        /*
         let resultView = UIView()
         resultView.backgroundColor = self.view.backgroundColor
         
@@ -1158,6 +1196,7 @@ extension ControversiesViewController {
         }
         
         return resultView
+        */
     }
     
     @objc func twitterButtonOnTap(_ sender: UIButton?) {
@@ -1533,6 +1572,43 @@ extension ControversiesViewController {
     func addMoreStories(total: Int, items: [StorySearchResult]) {
         self.storiesTotal = total
         self.updateStories(adding: items)
+    }
+    
+}
+
+extension ControversiesViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        if let _url = navigationAction.request.mainDocumentURL?.absoluteString {
+            
+            //print("URL", _url)
+            
+            if(_url.contains(self.GRAPH_URL)) {
+                decisionHandler(.allow)
+                webView.isUserInteractionEnabled = false
+            } else {
+                print(_url)
+                decisionHandler(.cancel)
+            }
+            
+            
+
+            
+
+//            if(url.contains("metaculus.php")) {
+//                decisionHandler(.allow)
+//            } else if(url.contains("metaculus.com")) {
+//                let vc = ArticleViewController()
+//                vc.article = MainFeedArticle(url: url)
+//                vc.showComponentsOnClose = false
+//                vc.altTitle = "Metaculus"
+//                CustomNavController.shared.pushViewController(vc, animated: true)
+//                
+//                decisionHandler(.cancel)
+//            }
+        }
     }
     
 }
