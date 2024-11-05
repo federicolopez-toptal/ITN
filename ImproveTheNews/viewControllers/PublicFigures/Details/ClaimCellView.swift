@@ -488,6 +488,10 @@ class ClaimCellView: UIView {
         if let _firstSource = claim.sources.first {
             iframeUrl =  self.getMetaculusUrl(from: _firstSource.url)
         }
+//        print("IFRAME")
+//        print(iframeUrl)
+//        print(claim.title)
+//        print("------------------")
         
         if(self.webView == nil) {
             self.webView = WKWebView()
@@ -510,6 +514,8 @@ class ClaimCellView: UIView {
         var result: String = ""
     
         var parsed = url.replacingOccurrences(of: "https://www.metaculus.com/questions/", with: "")
+        parsed = parsed.replacingOccurrences(of: "https://metaculus.com/questions/", with: "")
+        
         if(!parsed.isEmpty) {
             for (i, CHR) in parsed.enumerated() {
                 if(CHR=="/") {

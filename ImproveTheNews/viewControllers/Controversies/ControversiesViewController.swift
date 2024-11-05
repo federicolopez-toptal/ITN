@@ -1388,7 +1388,6 @@ extension ControversiesViewController {
                 }
             }
             ///////////////////////////////
-            
             if(IPHONE()) {
                 storiesVStack.activateConstraints([
                     storiesVStack.leadingAnchor.constraint(equalTo: self.storiesContainer.leadingAnchor, constant: 16),
