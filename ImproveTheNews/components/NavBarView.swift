@@ -107,16 +107,16 @@ class NavBarView: UIView {
                 logo.tag = 1
                 self.displayModeComponents.append(logo)
 
-//                let button = UIButton(type: .system)
-//                button.backgroundColor = .clear
-//                self.addSubview(button)
-//                button.activateConstraints([
-//                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
-//                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
-//                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
-//                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
-//                ])
-//                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: logo.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: logo.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: logo.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: logo.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onLogoButtonTap(_:)), for: .touchUpInside)
             }
             
             if(C == .menuIcon) {
