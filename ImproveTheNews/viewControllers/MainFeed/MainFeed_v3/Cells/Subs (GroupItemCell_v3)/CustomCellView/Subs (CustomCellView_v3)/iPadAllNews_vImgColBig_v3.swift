@@ -61,7 +61,16 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
     }
     
     private func calculateImageViewHeight() -> CGFloat {
-        let H = (self.IMG_WIDTH * imgHeight)/imgWidth
+        var _H: CGFloat = 0
+        let orientation = UIDevice.current.orientation
+        
+        if(orientation.isPortrait) {
+            _H = 750
+        } else if(orientation.isLandscape) {
+            _H = 1350
+        }
+
+        let H = (self.IMG_WIDTH * _H)/imgWidth
         return H
     }
     

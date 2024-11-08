@@ -1040,8 +1040,9 @@ extension ControversiesViewController {
             webView.heightAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT)
         ])
         
-        var domain = "https://improve-the-news-frontend.vercel.app"
-        //domain = ITN_URL()
+//        let domain = "https://improve-the-news-frontend.vercel.app"
+        let domain = "https://www.improvemynews.com"
+//        let domain = ITN_URL()
         
         let theme = DARK_MODE() ? "dark" : "light"
         let url = domain + self.GRAPH_URL + theme
@@ -1052,8 +1053,8 @@ extension ControversiesViewController {
         webView.navigationDelegate = self
         webView.load(URLRequest(url: URL(string: url)!))
         
-//        webView.layer.borderColor = UIColor.red.cgColor
-//        webView.layer.borderWidth = 1.0
+        webView.layer.borderColor = UIColor.red.cgColor
+        webView.layer.borderWidth = 1.0
         
         return webView
         
@@ -1585,13 +1586,15 @@ extension ControversiesViewController: WKNavigationDelegate {
             
             //print("URL", _url)
             
-            if(_url.contains(self.GRAPH_URL)) {
-                decisionHandler(.allow)
-                webView.isUserInteractionEnabled = false
-            } else {
-                print(_url)
-                decisionHandler(.cancel)
-            }
+//            if(_url.contains(self.GRAPH_URL)) {
+//                
+//            } else {
+//                print(_url)
+//                decisionHandler(.cancel)
+//            }
+            
+            decisionHandler(.allow)
+            webView.isUserInteractionEnabled = false
             
             
 

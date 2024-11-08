@@ -27,7 +27,6 @@ class TabsBar_iPad: TabsBar {
     }
     
     override func buildInto(_ containerView: UIView) {
-//        self.backgroundColor = .systemPink //.withAlphaComponent(0.25)
         self.backgroundColor = CSS.shared.displayMode().main_bgColor
 
         containerView.addSubview(self)
@@ -55,9 +54,13 @@ class TabsBar_iPad: TabsBar {
     
     func addtabs() {
         let itemDim: CGFloat = 32
-        let _W = SCREEN_SIZE().width - 150 //- (26 * 2.5)
-        let itemSep: CGFloat = (_W - (itemDim * self.itemsCount)) / 3
         
+        var _width = SCREEN_SIZE().width
+        if(SCREEN_SIZE().height<_width){ _width = SCREEN_SIZE().height }
+        
+        
+        let _W = _width - 150 //- (26 * 2.5)
+        let itemSep: CGFloat = (_W - (itemDim * self.itemsCount)) / 3
         
         let hContainer = UIView()
         //hContainer.backgroundColor = .green
