@@ -550,7 +550,7 @@ extension ControversiesViewController {
                 graphContainerView.backgroundColor = .clear
                 innerVStack.addArrangedSubview(graphContainerView)
                 graphContainerView.activateConstraints([
-                    graphContainerView.heightAnchor.constraint(equalToConstant: self.GRAPH_HEIGHT)
+                    graphContainerView.heightAnchor.constraint(equalToConstant: self.graphImageSize().height)
                 ])
                 
                 graphContainerView.addSubview(graphView)
@@ -584,17 +584,17 @@ extension ControversiesViewController {
             if(IPHONE()) {
                 H = 12 + //titleLabel.calculateHeightFor(width: _W) + 8 +
                 descrLabel.calculateHeightFor(width: _W) + 24 +
-                40 + 24 + self.GRAPH_HEIGHT
+                40 + 24 + self.graphImageSize().height
             } else {
                 let _w: CGFloat = self.W() - 16 - self.GRAPH_WIDTH
                 
                 let _h = 12 + //titleLabel.calculateHeightFor(width: _w) + 8 +
                 descrLabel.calculateHeightFor(width: _w)
                 
-                if(_h > (self.GRAPH_HEIGHT+12)) {
+                if(_h > (self.graphImageSize().height+12)) {
                     H = _h
                 } else {
-                    H = (self.GRAPH_HEIGHT+12)
+                    H = (self.graphImageSize().height+12)
                 }
                 H += 16
             }
@@ -1033,7 +1033,35 @@ extension ControversiesViewController {
         ADD_SPACER(to: resultView)
     }
     
+    func graphImageSize() -> CGSize {
+        var _W: CGFloat = 360
+        if(IPHONE()) {
+            _W = SCREEN_SIZE().width - 16
+        } else {
+            _W = 400
+        }
+        
+        let _H: CGFloat = (_W * 450)/540
+        
+        return CGSize(width: _W, height: _H)
+    }
+    
     func createGraphView(data: controversyPortalGraph) -> UIView { //!!!
+        let size = graphImageSize()
+        
+        let imageview = UIImageView(image: UIImage(named: DisplayMode.imageName("US_election")))
+        imageview.activateConstraints([
+            imageview.widthAnchor.constraint(equalToConstant: size.width),
+            imageview.heightAnchor.constraint(equalToConstant: size.height)
+        ])
+        
+//        imageview.layer.borderColor = UIColor.red.cgColor
+//        imageview.layer.borderWidth = 1.0
+        
+        return imageview
+    }
+    
+    func createGraphView_3(data: controversyPortalGraph) -> UIView {
         let webView = WKWebView()
         webView.activateConstraints([
             webView.widthAnchor.constraint(equalToConstant: self.GRAPH_WIDTH),
@@ -1057,8 +1085,9 @@ extension ControversiesViewController {
         webView.layer.borderWidth = 1.0
         
         return webView
-        
-        /*
+    }
+     
+    func createGraphView_2(data: controversyPortalGraph) -> UIView { //!!!
         let resultView = UIView()
         resultView.backgroundColor = self.view.backgroundColor
         
@@ -1197,7 +1226,6 @@ extension ControversiesViewController {
         }
         
         return resultView
-        */
     }
     
     @objc func twitterButtonOnTap(_ sender: UIButton?) {
