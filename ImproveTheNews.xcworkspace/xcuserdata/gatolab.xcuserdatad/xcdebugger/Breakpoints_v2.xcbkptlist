@@ -3,22 +3,4 @@
    uuid = "1D5532FC-7BD0-45AE-81EC-B8CBAD1CE22A"
    type = "0"
    version = "2.0">
-   <Breakpoints>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C192FEAF-DA71-4BDE-A16B-58CDC041ACE5"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ImproveTheNews/viewControllers/MainFeed/MainFeed_v3/Cells/Subs (GroupItemCell_v3)/CustomCellView/Subs (CustomCellView_v3)/iPadAllNews_vImgColBig_v3.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "calculateImageViewHeight()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-   </Breakpoints>
 </Bucket>
