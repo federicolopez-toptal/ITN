@@ -44,15 +44,14 @@ func BIASPEDIA_URL() -> String {
 func NAV_MAINFEED_VC(topic: String? = nil) -> UIViewController {
     var vc: UIViewController!
     
-        
-    if(IPHONE()) {
-//        vc = NewSlidersViewController()
+//    ControversiesViewController.topic = "us-election-2024"
+//    vc = ControversiesViewController()
+//    return vc
     
+    if(IPHONE()) {
         vc = MainFeed_v3_viewController()
         if(topic != nil){ (vc as! MainFeed_v3_viewController).topic = topic! }
     } else {
-        //vc = PreferencesViewController()
-    
         vc = MainFeediPad_v3_viewController()
         if(topic != nil){ (vc as! MainFeediPad_v3_viewController).topic = topic! }
     }

@@ -537,6 +537,7 @@
 		BD5918742C614FA500AD8FC6 /* SourceFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5918732C614FA500AD8FC6 /* SourceFilterCell.swift */; };
 		BD5918762C61576B00AD8FC6 /* SourceCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5918752C61576B00AD8FC6 /* SourceCheck.swift */; };
 		BD5975872BFEE49600BDBEBB /* StoryInfoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */; };
+		BD598ACD2CE2E401001252A7 /* ElectionResultsPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD598ACC2CE2E401001252A7 /* ElectionResultsPopupView.swift */; };
 		BD5C80762C59359B00ED0A60 /* Tour_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C80752C59359B00ED0A60 /* Tour_v2.swift */; };
 		BD5C80782C59500800ED0A60 /* DialogBubbleView_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C80772C59500800ED0A60 /* DialogBubbleView_iPhone.swift */; };
 		BD5C807C2C59524200ED0A60 /* DialogBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C807B2C59524200ED0A60 /* DialogBubbleView.swift */; };
@@ -1108,6 +1109,7 @@
 		BD5918732C614FA500AD8FC6 /* SourceFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFilterCell.swift; sourceTree = "<group>"; };
 		BD5918752C61576B00AD8FC6 /* SourceCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCheck.swift; sourceTree = "<group>"; };
 		BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoPopupView.swift; sourceTree = "<group>"; };
+		BD598ACC2CE2E401001252A7 /* ElectionResultsPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElectionResultsPopupView.swift; sourceTree = "<group>"; };
 		BD5C80752C59359B00ED0A60 /* Tour_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tour_v2.swift; sourceTree = "<group>"; };
 		BD5C80772C59500800ED0A60 /* DialogBubbleView_iPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubbleView_iPhone.swift; sourceTree = "<group>"; };
 		BD5C807B2C59524200ED0A60 /* DialogBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubbleView.swift; sourceTree = "<group>"; };
@@ -1813,6 +1815,7 @@
 				1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */,
 				1F16FD692B4716AA0082DACF /* EmailNotVerifiedPopupView.swift */,
 				BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */,
+				BD598ACC2CE2E401001252A7 /* ElectionResultsPopupView.swift */,
 				BD2F70952C3870D4000C9960 /* SharePopupView.swift */,
 			);
 			path = popups;
@@ -2710,6 +2713,7 @@
 				BD5C80812C5A959900ED0A60 /* DialogBubbleView_iPad.swift in Sources */,
 				1F90105E28C5B2A300A5BDC9 /* Notifications.swift in Sources */,
 				BD5918762C61576B00AD8FC6 /* SourceCheck.swift in Sources */,
+				BD598ACD2CE2E401001252A7 /* ElectionResultsPopupView.swift in Sources */,
 				BD50541E2BEDCAF500AD1030 /* CustomButton.swift in Sources */,
 				BD2257292C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift in Sources */,
 				1F47CD8F290F5683003F0003 /* ArticleCT_cell.swift in Sources */,

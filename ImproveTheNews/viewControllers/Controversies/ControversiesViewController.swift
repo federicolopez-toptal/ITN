@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import SDWebImage
 
 
 class ControversiesViewController: BaseViewController {
@@ -57,6 +58,11 @@ class ControversiesViewController: BaseViewController {
     var storiesTotal: Int = 0
     var storiesPage: Int = 1
         
+    var candidates: [FigureForPortalGraph] = []
+    var graphHeight: CGFloat = 360
+    var mediaItems: [MediaItemForElectionResult] = []
+    var mediaItemsHeight: CGFloat = 0
+    var yetToCallWinnerHeight: CGFloat = 0
     
     // MARK: - Init
     override func viewDidLoad() {
@@ -550,7 +556,7 @@ extension ControversiesViewController {
                 graphContainerView.backgroundColor = .clear
                 innerVStack.addArrangedSubview(graphContainerView)
                 graphContainerView.activateConstraints([
-                    graphContainerView.heightAnchor.constraint(equalToConstant: self.graphImageSize().height)
+                    graphContainerView.heightAnchor.constraint(equalToConstant: self.graphSize().height)
                 ])
                 
                 graphContainerView.addSubview(graphView)
@@ -584,17 +590,17 @@ extension ControversiesViewController {
             if(IPHONE()) {
                 H = 12 + //titleLabel.calculateHeightFor(width: _W) + 8 +
                 descrLabel.calculateHeightFor(width: _W) + 24 +
-                40 + 24 + self.graphImageSize().height
+                40 + 24 + self.graphSize().height
             } else {
                 let _w: CGFloat = self.W() - 16 - self.GRAPH_WIDTH
                 
                 let _h = 12 + //titleLabel.calculateHeightFor(width: _w) + 8 +
                 descrLabel.calculateHeightFor(width: _w)
                 
-                if(_h > (self.graphImageSize().height+12)) {
+                if(_h > (self.graphSize().height+12)) {
                     H = _h
                 } else {
-                    H = (self.graphImageSize().height+12)
+                    H = (self.graphSize().height+12)
                 }
                 H += 16
             }
@@ -1033,21 +1039,123 @@ extension ControversiesViewController {
         ADD_SPACER(to: resultView)
     }
     
-    func graphImageSize() -> CGSize {
-        var _W: CGFloat = 360
-        if(IPHONE()) {
-            _W = SCREEN_SIZE().width - 16
-        } else {
-            _W = 400
-        }
-        
-        let _H: CGFloat = (_W * 450)/540
-        
-        return CGSize(width: _W, height: _H)
+    func graphSize() -> CGSize {
+//        var _W: CGFloat = 360
+//        if(IPHONE()) {
+//            _W = SCREEN_SIZE().width - 16
+//        } else {
+//            _W = 400
+//        }
+//        
+//        let _H: CGFloat = (_W * 450)/540
+//        
+//        return CGSize(width: _W, height: _H)
+
+        return CGSize(width: 360, height: self.graphHeight)
     }
     
-    func createGraphView(data: controversyPortalGraph) -> UIView { //!!!
-        let size = graphImageSize()
+    func createGraphView(data: controversyPortalGraph) -> UIView {
+        self.mediaItems = data.mediaItems
+        self.mediaItemsHeight = 0
+        
+        self.candidates = []
+        if let _data = data.figures.first(where: { $0.id == 3 }) { // Trump (id: 3)
+            self.candidates.append(_data)
+        }
+        if let _data = data.figures.first(where: { $0.id == 19 }) { // Kamala Harris (id: 19)
+            self.candidates.append(_data)
+        }
+        
+        // -----------------------------------------
+        let resultView = UIView()
+        resultView.backgroundColor = .clear //.systemPink
+        
+        let _W: CGFloat = 360
+                
+        resultView.activateConstraints([
+            resultView.widthAnchor.constraint(equalToConstant: _W)
+        ])
+        
+        for i in 1...2 {
+            let sideView = UIView()
+            sideView.backgroundColor = .clear
+            resultView.addSubview(sideView)
+            sideView.activateConstraints([
+                sideView.topAnchor.constraint(equalTo: resultView.topAnchor),
+                sideView.bottomAnchor.constraint(equalTo: resultView.bottomAnchor),
+                sideView.widthAnchor.constraint(equalToConstant: _W/2)
+            ])
+            
+            let candidateView = candidateView(dataIndex: i-1)
+            sideView.addSubview(candidateView)
+            candidateView.activateConstraints([
+                candidateView.centerXAnchor.constraint(equalTo: sideView.centerXAnchor),
+                candidateView.topAnchor.constraint(equalTo: sideView.topAnchor)
+            ])
+            
+            let mediaItemsView = mediaItemsView(forCandidateIndex: i-1)
+            sideView.addSubview(mediaItemsView)
+            mediaItemsView.activateConstraints([
+                mediaItemsView.topAnchor.constraint(equalTo: candidateView.bottomAnchor, constant: 12),
+                mediaItemsView.centerXAnchor.constraint(equalTo: sideView.centerXAnchor)
+            ])
+            
+            if(i==1) {
+                sideView.leadingAnchor.constraint(equalTo: resultView.leadingAnchor).isActive = true
+            } else {
+                sideView.trailingAnchor.constraint(equalTo: resultView.trailingAnchor).isActive = true
+            }
+        }
+        
+        self.graphHeight += 12 + self.mediaItemsHeight + 20
+        
+        let vline = UIView()
+        resultView.addSubview(vline)
+        vline.activateConstraints([
+            vline.widthAnchor.constraint(equalToConstant: 2),
+            vline.topAnchor.constraint(equalTo: resultView.topAnchor),
+            vline.centerXAnchor.constraint(equalTo: resultView.centerXAnchor),
+            vline.bottomAnchor.constraint(equalTo: resultView.topAnchor, constant: self.graphHeight)
+        ])
+        ADD_VDASHES(to: vline)
+        
+        let hline = UIView()
+        resultView.addSubview(hline)
+        hline.activateConstraints([
+            hline.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
+            hline.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
+            hline.heightAnchor.constraint(equalToConstant: 2),
+            hline.bottomAnchor.constraint(equalTo: vline.bottomAnchor)
+        ])
+        ADD_HDASHES(to: hline)
+        
+        let yetToCallWinnerLabel = UILabel()
+        yetToCallWinnerLabel.textAlignment = .center
+        yetToCallWinnerLabel.font = AILERON(13)
+        yetToCallWinnerLabel.textColor = CSS.shared.displayMode().main_textColor
+        yetToCallWinnerLabel.text = "YET TO CALL WINNER"
+        yetToCallWinnerLabel.backgroundColor = .clear
+        resultView.addSubview(yetToCallWinnerLabel)
+        yetToCallWinnerLabel.activateConstraints([
+            yetToCallWinnerLabel.topAnchor.constraint(equalTo: hline.bottomAnchor, constant: 12),
+            yetToCallWinnerLabel.centerXAnchor.constraint(equalTo: resultView.centerXAnchor)
+        ])
+        
+        let yetToCallWinnerView = self.yetToCallWinnerView(width: _W)
+        resultView.addSubview(yetToCallWinnerView)
+        yetToCallWinnerView.activateConstraints([
+            yetToCallWinnerView.topAnchor.constraint(equalTo: yetToCallWinnerLabel.bottomAnchor, constant: 12),
+            yetToCallWinnerView.leadingAnchor.constraint(equalTo: resultView.leadingAnchor)
+        ])
+        self.graphHeight += self.yetToCallWinnerHeight + 60
+        
+        resultView.heightAnchor.constraint(equalToConstant: self.graphHeight).isActive = true
+        return resultView
+    }
+    
+    
+    func createGraphView_4(data: controversyPortalGraph) -> UIView { //!!!
+        let size = graphSize()
         
         let imageview = UIImageView(image: UIImage(named: DisplayMode.imageName("US_election")))
         imageview.activateConstraints([
@@ -1640,6 +1748,298 @@ extension ControversiesViewController: WKNavigationDelegate {
 //                decisionHandler(.cancel)
 //            }
         }
+    }
+    
+}
+
+extension ControversiesViewController {
+    
+    func candidateView(dataIndex: Int) -> UIView {
+        let candidate = self.candidates[dataIndex]
+        self.graphHeight = 64+6+16+6
+        
+        let resultView = UIView()
+        resultView.backgroundColor = .clear //.green
+        resultView.activateConstraints([
+            resultView.widthAnchor.constraint(equalToConstant: 90),
+            resultView.heightAnchor.constraint(equalToConstant: self.graphHeight)
+        ])
+        
+        let circleBorderView = UIView()
+        circleBorderView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x232326) : UIColor(hex: 0xE3E3E3)
+        resultView.addSubview(circleBorderView)
+        circleBorderView.activateConstraints([
+            circleBorderView.widthAnchor.constraint(equalToConstant: 64),
+            circleBorderView.heightAnchor.constraint(equalToConstant: 64),
+            circleBorderView.centerXAnchor.constraint(equalTo: resultView.centerXAnchor),
+            circleBorderView.topAnchor.constraint(equalTo: resultView.topAnchor)
+        ])
+        circleBorderView.layer.cornerRadius = 64/2
+        
+        let imageView = UIImageView()
+        circleBorderView.addSubview(imageView)
+        imageView.activateConstraints([
+            imageView.widthAnchor.constraint(equalToConstant: 46),
+            imageView.heightAnchor.constraint(equalToConstant: 46),
+            imageView.centerXAnchor.constraint(equalTo: circleBorderView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: circleBorderView.centerYAnchor)
+        ])
+        imageView.layer.cornerRadius = 46/2
+        imageView.clipsToBounds = true
+        imageView.sd_setImage(with: URL(string: candidate.image))
+        
+        let nameLabel = UILabel()
+        nameLabel.textAlignment = .center
+        nameLabel.font = AILERON(13)
+        nameLabel.textColor = CSS.shared.displayMode().main_textColor
+        nameLabel.text = candidate.name.uppercased()
+        nameLabel.backgroundColor = .clear //.blue
+        resultView.addSubview(nameLabel)
+        nameLabel.activateConstraints([
+            nameLabel.topAnchor.constraint(equalTo: circleBorderView.bottomAnchor, constant: 6),
+            nameLabel.centerXAnchor.constraint(equalTo: circleBorderView.centerXAnchor)
+        ])
+        
+        let buttonArea = UIButton(type: .system)
+        buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        resultView.addSubview(buttonArea)
+        buttonArea.activateConstraints([
+            buttonArea.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
+            buttonArea.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
+            buttonArea.topAnchor.constraint(equalTo: resultView.topAnchor),
+            buttonArea.bottomAnchor.constraint(equalTo: resultView.bottomAnchor)
+        ])
+        buttonArea.tag = dataIndex
+        buttonArea.addTarget(self, action: #selector(self.candidateButtonOnTap(_:)), for: .touchUpInside)
+        
+        return resultView
+    }
+    @objc func candidateButtonOnTap(_ sender: UIButton?) {
+        let index = sender!.tag
+        let candidate = self.candidates[index]
+        
+        let vc = FigureDetailsViewController()
+        vc.slug = candidate.slug
+        CustomNavController.shared.pushViewController(vc, animated: true)
+    }
+    
+    // ---------------------------------
+    func mediaItemsView(forCandidateIndex dataIndex: Int) -> UIView {
+        let candidate = self.candidates[dataIndex]
+        let _mediaItems = self.mediaItems.filter({ $0.figureId == candidate.id })
+
+//        let _mediaItems = self.mediaItems.filter({ $0.name.count > 3 })
+//        let _mediaItems = self.mediaItems
+        
+        let resultView = UIView()
+        resultView.backgroundColor = .clear //.yellow
+    
+        // -------------------
+        let items_dim: CGFloat = 34.0
+        let items_per_row: CGFloat = 4.0
+        let items_sep: CGFloat = 11.0
+        
+        let _W: CGFloat = (items_dim + items_sep) * items_per_row
+        var _H: CGFloat = 0
+        
+        var val_x: CGFloat = 0
+        var val_y: CGFloat = 0
+        var row: Int = 1
+        var col: Int = 1
+        
+        for (j, M) in _mediaItems.enumerated() {
+            if(val_x >= _W) {
+                val_x = 0
+                val_y += items_sep + items_dim
+                
+                _H = val_y + items_dim
+                row += 1
+            }
+            
+            var rowView: UIView!
+            if(resultView.subviews.count < row) {
+                rowView = UIView()
+                rowView.backgroundColor = .clear //.green
+                resultView.addSubview(rowView)
+                rowView.activateConstraints([
+                    rowView.topAnchor.constraint(equalTo: resultView.topAnchor, constant: val_y),
+                    rowView.heightAnchor.constraint(equalToConstant: items_dim)
+                ])
+            } else {
+                rowView = resultView.subviews.last!
+            }
+            
+            let mediaIcon = UIImageView()
+            mediaIcon.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.25) : .black.withAlphaComponent(0.25)
+            rowView.addSubview(mediaIcon)
+            mediaIcon.activateConstraints([
+                mediaIcon.widthAnchor.constraint(equalToConstant: items_dim),
+                mediaIcon.heightAnchor.constraint(equalToConstant: items_dim),
+                mediaIcon.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: val_x),
+                mediaIcon.topAnchor.constraint(equalTo: rowView.topAnchor)
+            ])
+            mediaIcon.layer.cornerRadius = items_dim/2
+            mediaIcon.clipsToBounds = true
+            mediaIcon.sd_setImage(with: URL(string: M.image))
+        
+            let buttonArea = UIButton(type: .system)
+            buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+            rowView.addSubview(buttonArea)
+            buttonArea.activateConstraints([
+                buttonArea.leadingAnchor.constraint(equalTo: mediaIcon.leadingAnchor),
+                buttonArea.topAnchor.constraint(equalTo: mediaIcon.topAnchor),
+                buttonArea.trailingAnchor.constraint(equalTo: mediaIcon.trailingAnchor),
+                buttonArea.bottomAnchor.constraint(equalTo: mediaIcon.bottomAnchor)
+            ])
+            buttonArea.tag = j
+            buttonArea.addTarget(self, action: #selector(self.mediaButtonOnTap(_:)), for: .touchUpInside)
+        
+            val_x += items_dim + items_sep
+            col += 1
+            
+            if(col==4) {
+                rowView.widthAnchor.constraint(equalToConstant: _W).isActive = true
+                rowView.leadingAnchor.constraint(equalTo: resultView.leadingAnchor).isActive = true
+                col = 1
+            } else {
+                if(j == _mediaItems.count-1) {
+                    rowView.widthAnchor.constraint(equalToConstant: val_x).isActive = true
+                    if(dataIndex == 0) {
+                        rowView.trailingAnchor.constraint(equalTo: resultView.trailingAnchor).isActive = true
+                    } else {
+                        rowView.leadingAnchor.constraint(equalTo: resultView.leadingAnchor).isActive = true
+                    }
+                }
+            }
+        }
+        
+        resultView.activateConstraints([
+            resultView.widthAnchor.constraint(equalToConstant: _W),
+            resultView.heightAnchor.constraint(equalToConstant: _H),
+        ])
+        
+        if(_H > self.mediaItemsHeight) {
+            self.mediaItemsHeight = _H
+        }
+        
+        return resultView
+    }
+    @objc func mediaButtonOnTap(_ sender: UIButton?) {
+        let index = sender!.tag
+        let mediaItem = self.mediaItems[index]
+
+//        let vc = ArticleViewController()
+//        vc.article = MainFeedArticle(url: mediaItem.url)
+//        CustomNavController.shared.pushViewController(vc, animated: true)
+
+        let text = "Result called on " + mediaItem.time + ". [0]"
+        
+        let popup = ElectionResultsPopupView(title: mediaItem.name,
+                    description: text, linkedTexts: ["Source"], links: [mediaItem.url], height: 175)
+        
+        popup.delegate = self
+        popup.pushFromBottom()
+    }
+    
+    // ---------------------------------
+    func yetToCallWinnerView(width: CGFloat) -> UIView {
+        let resultView = UIView()
+        resultView.backgroundColor = .clear
+        
+        resultView.activateConstraints([
+            resultView.widthAnchor.constraint(equalToConstant: width)
+        ])
+        
+        let _mediaItems = self.mediaItems.filter({ $0.figureId == 0 })
+        //let _mediaItems = self.mediaItems
+        self.yetToCallWinnerHeight = 0
+        
+        // -------------------
+        let items_dim: CGFloat = 34.0
+        let items_per_row: CGFloat = 8.0
+        let items_sep: CGFloat = 11.0
+        
+        var _H: CGFloat = 0
+        var val_x: CGFloat = 0
+        var val_y: CGFloat = 0
+        var row: Int = 1
+        var col: Int = 1
+        
+        for (j, M) in _mediaItems.enumerated() {
+            if(val_x >= width) {
+                val_x = 0
+                val_y += items_sep + items_dim
+                
+                _H = val_y + items_dim
+                row += 1
+            }
+            
+            var rowView: UIView!
+            if(resultView.subviews.count < row) {
+                rowView = UIView()
+                rowView.backgroundColor = .clear //.green
+                resultView.addSubview(rowView)
+                rowView.activateConstraints([
+                    rowView.topAnchor.constraint(equalTo: resultView.topAnchor, constant: val_y),
+                    rowView.heightAnchor.constraint(equalToConstant: items_dim)
+                ])
+                
+                self.yetToCallWinnerHeight += items_dim + items_sep
+            } else {
+                rowView = resultView.subviews.last!
+            }
+            
+            let mediaIcon = UIImageView()
+            mediaIcon.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.25) : .black.withAlphaComponent(0.25)
+            rowView.addSubview(mediaIcon)
+            mediaIcon.activateConstraints([
+                mediaIcon.widthAnchor.constraint(equalToConstant: items_dim),
+                mediaIcon.heightAnchor.constraint(equalToConstant: items_dim),
+                mediaIcon.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: val_x),
+                mediaIcon.topAnchor.constraint(equalTo: rowView.topAnchor)
+            ])
+            mediaIcon.layer.cornerRadius = items_dim/2
+            mediaIcon.clipsToBounds = true
+            mediaIcon.sd_setImage(with: URL(string: M.image))
+        
+            let buttonArea = UIButton(type: .system)
+            buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+            rowView.addSubview(buttonArea)
+            buttonArea.activateConstraints([
+                buttonArea.leadingAnchor.constraint(equalTo: mediaIcon.leadingAnchor),
+                buttonArea.topAnchor.constraint(equalTo: mediaIcon.topAnchor),
+                buttonArea.trailingAnchor.constraint(equalTo: mediaIcon.trailingAnchor),
+                buttonArea.bottomAnchor.constraint(equalTo: mediaIcon.bottomAnchor)
+            ])
+            buttonArea.tag = j
+            buttonArea.addTarget(self, action: #selector(self.mediaButtonOnTap(_:)), for: .touchUpInside)
+        
+            val_x += items_dim + items_sep
+            col += 1
+            
+            if(col==Int(items_per_row)) {
+                rowView.widthAnchor.constraint(equalToConstant: width-items_sep).isActive = true
+                rowView.centerXAnchor.constraint(equalTo: resultView.centerXAnchor).isActive = true
+                col = 1
+            } else {
+                if(j == _mediaItems.count-1) {
+                    rowView.widthAnchor.constraint(equalToConstant: val_x).isActive = true
+                    rowView.centerXAnchor.constraint(equalTo: resultView.centerXAnchor).isActive = true
+                }
+            }
+        }
+        
+        resultView.heightAnchor.constraint(equalToConstant: self.yetToCallWinnerHeight).isActive = true
+        return resultView
+    }
+}
+
+extension ControversiesViewController: ElectionResultsPopupViewDelegate {
+    
+    func ElectionResultsPopupView_onUrlOpened(sender: ElectionResultsPopupView, url: String) {
+        let vc = ArticleViewController()
+        vc.article = MainFeedArticle(url: url)
+        CustomNavController.shared.pushViewController(vc, animated: true)
     }
     
 }

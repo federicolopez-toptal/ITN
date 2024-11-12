@@ -425,6 +425,25 @@ class ControversyListItem {
 }
 
 // --------------------------------------------------
+class MediaItemForElectionResult {
+    var name: String = ""
+    var slug: String = ""
+    var image: String = ""
+    var url: String = ""
+    var time: String = ""
+    var figureId: Int = 0
+    
+    init(jsonObj: [String: Any]) {
+        self.name = CHECK(jsonObj["title"])
+        self.slug = CHECK(jsonObj["slug"])
+        self.image = CHECK(jsonObj["image"])
+        self.url = CHECK(jsonObj["url"])
+        self.time = CHECK(jsonObj["timestamp"])
+        self.figureId = CHECK_NUM(jsonObj["figure_id"])
+    }
+}
+
+// --------------------------------------------------
 class FigureForPortalGraph {
     var name: String = ""
     var image: String = ""
@@ -432,12 +451,17 @@ class FigureForPortalGraph {
     var vValue: CGFloat = 0.0
     var hValue: CGFloat = 0.0
     
+    var id: Int = 0
+    
     init(jsonObj: [String: Any]) {
         self.name = CHECK(jsonObj["title"])
         self.image = CHECK(jsonObj["image"])
         self.slug = CHECK(jsonObj["slug"])
         self.hValue = CGFloat(CHECK_NUM(jsonObj["LR"]))
         self.vValue = CGFloat(CHECK_NUM(jsonObj["PE"]))
+        
+        // new
+        self.id = CHECK_NUM(jsonObj["id"])
     }
 }
 
@@ -446,7 +470,9 @@ class controversyPortalGraph {
     var right: String = ""
     var top: String = ""
     var bottom: String = ""
+    
     var figures: [FigureForPortalGraph] = []
+    var mediaItems: [MediaItemForElectionResult] = []
     
     init(jsonObj: [String: Any]) {
         if let _chartTitle = jsonObj["chartTitle"] as? [String: String] {
@@ -460,6 +486,13 @@ class controversyPortalGraph {
             for F in _figures {
                 let newFigure = FigureForPortalGraph(jsonObj: F)
                 self.figures.append(newFigure)
+            }
+        }
+        
+        if let _electionResults = jsonObj["electionResultData"] as? [[String: Any]] {
+            for R in _electionResults {
+                let newResult = MediaItemForElectionResult(jsonObj: R)
+                self.mediaItems.append(newResult)
             }
         }
     }
