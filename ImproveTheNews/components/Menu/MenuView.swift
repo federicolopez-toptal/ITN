@@ -46,7 +46,7 @@ class MenuView: UIView {
         
         .newsletter,
         
-        //.podcast,
+        .podcast,
         .videos,
         
         .preferences,
