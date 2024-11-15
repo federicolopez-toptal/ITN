@@ -400,7 +400,7 @@ class SourceIconsView: UIView {
         img.clipsToBounds = true
         img.backgroundColor = .lightGray
         
-        img.layer.borderColor = UIColor.red.cgColor
+        img.layer.borderColor = CSS.shared.displayMode().main_bgColor.cgColor
         img.layer.borderWidth = self.BORDER
         
         let subImage = UIImageView()

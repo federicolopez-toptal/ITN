@@ -67,9 +67,22 @@ class PodcastViewController: BaseViewController {
         webView.navigationDelegate = self
         webView.loadHTMLString(HTML, baseURL: nil)
         
-//        DELAY(3.0) {
-//            OPEN_URL("https://podcasts.apple.com/ar/podcast/verity/id1618971104?l=en-GB")
-//        }
+        _m = 12
+        let listenAlsoLabel = HyperlinkLabel.parrafo2(text: "Listen also on [0], [1], [2], [3] and [4]",
+                                linkTexts: ["Spotify", "Amazon", "Podbean", "iHeart Radio", "PlayerFM"],
+                                    urls: ["https://open.spotify.com/show/6f0N5HoyXABPBM8vS0iI8H",
+                                        "https://music.amazon.com/podcasts/f5de9928-7979-4710-ab1a-13dc22007e70/verity",
+                                        "https://maxry.podbean.com/?ref=verity.news/podcasts",
+                                        "https://www.iheart.com/podcast/338-verity-95449534/?ref=verity.news/podcasts",
+                                        "https://player.fm/series/3338118?ref=verity.news/podcasts"],
+                                onTap: self.onLinkTap(_:))
+                                
+        self.view.addSubview(listenAlsoLabel)
+        listenAlsoLabel.activateConstraints([
+            listenAlsoLabel.leadingAnchor.constraint(equalTo: webView.leadingAnchor, constant: _m),
+            listenAlsoLabel.trailingAnchor.constraint(equalTo: webView.trailingAnchor, constant: -_m),
+            listenAlsoLabel.topAnchor.constraint(equalTo: webView.bottomAnchor, constant: _m),
+        ])
     }
     
     func podcastHTML() -> String {
@@ -81,6 +94,10 @@ class PodcastViewController: BaseViewController {
         text = text.replacingOccurrences(of: "IFRAME_THEME", with: IFRAME_THEME)
         
         return text
+    }
+    
+    func onLinkTap(_ url: URL) {
+        OPEN_URL(url.absoluteString)
     }
     
 }
@@ -117,13 +134,3 @@ extension PodcastViewController: WKUIDelegate {
 }
 
 
-/*
-    URL about:blank
-    https://support.apple.com/kb/HT211247
-
-    https://podcasts.apple.com/ar/podcast/verity/id1618971104?l=en-GB
-*/
-
-/*
-https://www.gfrigerio.com/custom-url-schemes-in-a-wkwebview/
-*/
