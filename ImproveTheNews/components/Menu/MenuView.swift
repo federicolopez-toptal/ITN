@@ -371,6 +371,7 @@ extension MenuView {
             WRITE(LocalKeys.preferences.menuDisplayMode, value: "3")
         }
         
+        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
         CustomNavController.shared.refreshDisplayMode()
         CustomNavController.shared.refreshTour()
         self.dismissMe()
@@ -385,6 +386,7 @@ extension MenuView {
         var newValue = "0"
         if(changeTo == .bright){ newValue = "1" }
         WRITE(LocalKeys.preferences.displayMode, value: newValue)
+//        API.shared.savesSliderValues( MainFeedv3.sliderValues() )
 
         CustomNavController.shared.refreshDisplayMode()
         //NOTIFY(Notification_reloadMainFeed)
@@ -647,7 +649,7 @@ extension MenuView {
         }
     }
     
-    private func resetAllSettings() {
+    func resetAllSettings() {
         // Back all settings to default
         
         // Sliders

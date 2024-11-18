@@ -27,7 +27,7 @@ let SPACER_COLOR: UIColor? = nil //.systemPink
 func ITN_URL(shorten: Bool = false) -> String {
 //    let value = "https://www.improvethenews.org"      // prod 1
     let value = "https://verity.news"                   // prod 2
-//    let value = "https://www.improvemynews.com"     // stage
+//    let value = "https://www.improvemynews.com"       // stage
 
     if(shorten){
         return value.replacingOccurrences(of: "https://", with: "")

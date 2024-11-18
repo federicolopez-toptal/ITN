@@ -951,14 +951,30 @@ extension AccountViewController {
         let msg = "Are you sure you want to sign out\nfrom your account?"
         CustomNavController.shared.ask(question: msg) { (success) in
             if(success) {
+                WRITE(LocalKeys.preferences.sourceFilters, value: "")
                 WRITE(LocalKeys.user.AUTHENTICATED, value: "NO")
                 CustomNavController.shared.menu.updateLogout()
+            
+                DELETE(key: LocalKeys.user.UUID)
+                DELETE(key: LocalKeys.user.JWT)
+            
+                CustomNavController.shared.menu.resetAllSettings()
+                NOTIFY(Notification_reloadMainFeedOnShow)
+            
+                if(Layout.current() == .textOnly) {
+                    CustomNavController.shared.menu.changeLayout()
+                }
+                
+                if(DisplayMode.current() == .bright) {
+                    CustomNavController.shared.menu.changeDisplayMode()
+                }
+            
                 CustomNavController.shared.popViewController(animated: true)
             }
         }
     }
     
-    @objc func deleteButtonTap(_ sender: UIButton) {
+    @objc func deleteButtonTap(_ sender: UIButton) { 
         let msg = "Are you sure you want to delete your account? This will remove all your data from our system. This action cannot be undone."
         
         CustomNavController.shared.ask(question: msg) { (success) in
