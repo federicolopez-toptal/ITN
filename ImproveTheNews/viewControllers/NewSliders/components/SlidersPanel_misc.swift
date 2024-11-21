@@ -230,7 +230,8 @@ extension SlidersPanel {
             self.refreshButton.widthAnchor.constraint(equalToConstant: 40),
             self.refreshButton.heightAnchor.constraint(equalToConstant: 40),
             self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.margin),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.margin)
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor,
+                constant: IPHONE() ? -self.margin : -self.margin-80 )
         ])
         self.refreshButton.addTarget(self, action: #selector(refreshButtonOnTap(_:)), for: .touchUpInside)
         
@@ -251,7 +252,8 @@ extension SlidersPanel {
         self.moreButton.activateConstraints([
             self.moreButton.heightAnchor.constraint(equalToConstant: 40),
             self.moreButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.margin),
-            self.moreButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.margin),
+            self.moreButton.bottomAnchor.constraint(equalTo: self.bottomAnchor,
+                constant: IPHONE() ? -self.margin : -self.margin-80),
             self.moreButton.trailingAnchor.constraint(equalTo: self.refreshButton.leadingAnchor, constant: -10)
         ])
         self.moreButton.addTarget(self, action: #selector(moreButtonOnTap(_:)), for: .touchUpInside)

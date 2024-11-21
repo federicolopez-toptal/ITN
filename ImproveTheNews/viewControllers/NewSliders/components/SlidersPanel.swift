@@ -181,6 +181,10 @@ class SlidersPanel: UIView {
         }
         if(count==0){ H=0 }
         
+        if(IPAD()) {
+            H += 80 // iPhone TabsBar height
+        }
+        
         self.moreButton.setTitle(moreButtonTitle, for: .normal)
         if(animate) {
             self.heightConstraint?.constant = H
@@ -207,8 +211,16 @@ class SlidersPanel: UIView {
         }
         
         self.contentViewHeightConstraint?.constant = 200
-        
         //self.scrollView.contentSize = CGSize(width: SCREEN_SIZE().width-(self.margin*2), height: H)
+        
+//        DELAY(2.0) {
+//            self.moreButton.show()
+//            self.refreshButton.show()
+//            
+//            print(self.moreButton, self.refreshButton)
+//            CustomNavController.shared.tabsBar.alpha = 0.25
+//        }
+        
     }
     
     func setRowsVisible(_ count: Int) {
@@ -233,7 +245,6 @@ class SlidersPanel: UIView {
             slider.setValue(Float(sliderValue), animated: true)
         }
     
-        
     }
 }
 
