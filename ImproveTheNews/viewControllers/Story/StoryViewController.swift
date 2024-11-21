@@ -1255,6 +1255,7 @@ extension StoryViewController {
             let spinName = UILabel()
             spinName.font = CSS.shared.iPhoneArticle_bigTextFont
             spinName.numberOfLines = 0
+            spinName.textColor = CSS.shared.displayMode().main_textColor
             spinName.textAlignment = .left
             spinDataView.addSubview(spinName)
             spinName.activateConstraints([
