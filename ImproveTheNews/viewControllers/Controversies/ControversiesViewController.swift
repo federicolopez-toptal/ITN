@@ -104,7 +104,7 @@ class ControversiesViewController: BaseViewController {
             }
             
             // -----------------------------
-            self.navBar.setShareUrl(ITN_URL() + "/controversies", vc: self)
+            //self.navBar.setShareUrl(ITN_URL() + "/controversies", vc: self)
             
 //            self.navBar.onShareButtonTap {
 //                let popup = SharePopupView(text: "Share Controversies",
