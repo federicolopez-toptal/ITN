@@ -50,6 +50,8 @@ class ControversyCellView: UIView {
     let resolutionDataLabel = UILabel()
     let resolvedDataLabel = UILabel()
 
+    var figuresInteractive = false
+
 
     // MARK: - Init(s)
     init() {
@@ -59,10 +61,11 @@ class ControversyCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat, showBottom: Bool = true) {
+    init(width: CGFloat, showBottom: Bool = true, figuresInteractive: Bool = false) {
         super.init(frame: .zero)
         self.WIDTH = width
         self.showBottom = showBottom
+        self.figuresInteractive = figuresInteractive
         
         self.buildContent()
     }
@@ -606,18 +609,20 @@ extension ControversyCellView {
             figureImageView.layer.borderWidth = 2.0
             figureImageView.sd_setImage(with: URL(string: F.image))
             
-//            let imgButton = UIButton(type: .custom)
-//            //imgButton.backgroundColor = .red.withAlphaComponent(0.5)
-//            self.figuresContainerView.addSubview(imgButton)
-//            imgButton.activateConstraints([
-//                imgButton.leadingAnchor.constraint(equalTo: figureImageView.leadingAnchor),
-//                imgButton.topAnchor.constraint(equalTo: figureImageView.topAnchor),
-//                imgButton.trailingAnchor.constraint(equalTo: figureImageView.trailingAnchor),
-//                imgButton.bottomAnchor.constraint(equalTo: figureImageView.bottomAnchor)
-//            ])
-//            imgButton.tag = i
-//            self.figureSlugs.append(F.slug)
-//            imgButton.addTarget(self, action: #selector(imgButtonOnTap(_:)), for: .touchUpInside)
+            if(self.figuresInteractive) {
+                let imgButton = UIButton(type: .custom)
+                //imgButton.backgroundColor = .red.withAlphaComponent(0.5)
+                self.figuresContainerView.addSubview(imgButton)
+                imgButton.activateConstraints([
+                    imgButton.leadingAnchor.constraint(equalTo: figureImageView.leadingAnchor),
+                    imgButton.topAnchor.constraint(equalTo: figureImageView.topAnchor),
+                    imgButton.trailingAnchor.constraint(equalTo: figureImageView.trailingAnchor),
+                    imgButton.bottomAnchor.constraint(equalTo: figureImageView.bottomAnchor)
+                ])
+                imgButton.tag = i
+                self.figureSlugs.append(F.slug)
+                imgButton.addTarget(self, action: #selector(imgButtonOnTap(_:)), for: .touchUpInside)
+            }
             
             var name = F.name.uppercased()
             if let lastName = name.components(separatedBy: " ").last {

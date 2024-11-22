@@ -909,7 +909,7 @@ extension ControDetailViewController {
     
     // ------------------------------------------------------------
     func addGraph(containerView: UIView, width: CGFloat, listItem: ControversyListItem) {
-        let cell = ControversyCellView(width: width, showBottom: false)
+        let cell = ControversyCellView(width: width, showBottom: false, figuresInteractive: true)
         cell.delegate = self
         cell.populate(with: listItem)
         cell.hideTopLine()
