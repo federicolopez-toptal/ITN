@@ -1367,32 +1367,38 @@ extension ControDetailViewController: ControversyCellViewDelegate {
             let searchFor = _CO.figureSlug
             
             let targetView = self.contentView.viewWithTag(140)!
-            var val_Y: CGFloat = 0
-            
-            if( IPHONE() ){
-                val_Y = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y + (M*2) + 28 + M
-            } else { // IPAD
-                val_Y = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y + (M*2) + 28
-            }
+            let val_Y: CGFloat = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y + (M*2) + 28 + M
             
             var extraY: CGFloat = 0
             let containerView = self.view.viewWithTag(555)!
-            for (i, view) in containerView.subviews.enumerated() {
+            
+            for view in containerView.subviews { // close them all
                 if view is ClaimCellView {
                     let claimView = view as! ClaimCellView
-                    
-                    if(claimView.figureSlug == searchFor) {
-                        if(!claimView.isOpen) {
-                            claimView.openButtonOnTap(nil, callDelegate: true)
-                        }
-                    
-                        extraY = claimView.frame.origin.y
-                        break
+                    if(claimView.isOpen) {
+                        claimView.openButtonOnTap(nil, callDelegate: true)
                     }
                 }
             }
             
-            self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y + extraY), animated: true)
+            DELAY(0.2) {
+                /**/
+                for (i, view) in containerView.subviews.enumerated() {
+                    if view is ClaimCellView {
+                        let claimView = view as! ClaimCellView
+                        
+                        if(claimView.figureSlug == searchFor) {
+                            claimView.openButtonOnTap(nil, callDelegate: true) // Open target claim
+                            extraY = claimView.frame.origin.y
+                            break
+                        }
+                    }
+                }
+                
+                self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y + extraY), animated: true)
+                /**/
+            }
+            
         }
     }
     
