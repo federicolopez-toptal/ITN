@@ -1549,6 +1549,9 @@ extension ControversiesViewController {
                 for STView in storiesVStack.arrangedSubviews {
                     if(STView is iPhoneAllNews_vImgCol_v3) {
                         (STView as! iPhoneAllNews_vImgCol_v3).refreshDisplayMode()
+                        if((STView as! iPhoneAllNews_vImgCol_v3).isContext) {
+                            (STView as! iPhoneAllNews_vImgCol_v3).storyPill.setAsContext()
+                        }
                     }
                 }
             } else {
@@ -1558,6 +1561,9 @@ extension ControversiesViewController {
                         for STView in _STACKView.arrangedSubviews {
                             if(STView is iPhoneAllNews_vImgCol_v3) {
                                 (STView as! iPhoneAllNews_vImgCol_v3).refreshDisplayMode()
+                                if((STView as! iPhoneAllNews_vImgCol_v3).isContext) {
+                                    (STView as! iPhoneAllNews_vImgCol_v3).storyPill.setAsContext()
+                                }
                             }
                         }
                     }
@@ -1577,6 +1583,7 @@ extension ControversiesViewController {
                     storiesVStack.addArrangedSubview(storyView)
                     storyView.populate(story: ST)
                     if(ST.type==2) {
+                        storyView.isContext = true
                         storyView.storyPill.setAsContext()
                     }
                     
@@ -1604,6 +1611,7 @@ extension ControversiesViewController {
                     rowHStack.addArrangedSubview(storyView)
                     storyView.populate(story: ST)
                     if(ST.type==2) {
+                        storyView.isContext = true
                         storyView.storyPill.setAsContext()
                     }
                     storyView.activateConstraints([
