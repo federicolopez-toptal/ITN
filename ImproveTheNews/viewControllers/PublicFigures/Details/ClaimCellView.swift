@@ -62,6 +62,7 @@ class ClaimCellView: UIView {
     
     var showMetaculusChart = false
     var webView: WKWebView?
+    var chartExtraComponents = [UIView]()
     
     //let clickView = UIView()
     
@@ -419,6 +420,7 @@ class ClaimCellView: UIView {
             self.mainHeightConstraint?.constant = self.calculateHeight()
             self.layoutIfNeeded() // visual update
             
+            
             if(callDelegate) {
                 self.delegate?.claimCellViewOnHeightChanged(sender: self)
             }
@@ -488,10 +490,6 @@ class ClaimCellView: UIView {
         if let _firstSource = claim.sources.first {
             iframeUrl =  self.getMetaculusUrl(from: _firstSource.url)
         }
-//        print("IFRAME")
-//        print(iframeUrl)
-//        print(claim.title)
-//        print("------------------")
         
         if(self.webView == nil) {
             self.webView = WKWebView()

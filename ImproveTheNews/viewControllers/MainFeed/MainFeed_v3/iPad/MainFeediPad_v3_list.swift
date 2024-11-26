@@ -313,7 +313,11 @@ extension MainFeediPad_v3_viewController {
         } else if(item is DP3_splitHeaderItem) { // split header
             result = (self.getCell(indexPath) as! iPhoneSplitHeaderCell_v3).calculateHeight()
         } else if(item is DP3_more) { // more
-            result = (self.getCell(indexPath) as! iPhoneMoreCell_v3).calculateHeight()
+            if let _cell = self.getCell(indexPath) as? iPhoneMoreCell_v3 {
+                result = _cell.calculateHeight()
+            } else {
+                result = 13 + 48 + 13
+            }
         } else if(item is DP3_iPhoneStory_1Wide) { // 1 wide story
             if(Layout.current() == .textImages) {
                 result = (self.getCell(indexPath) as! iPadStory_vImg_cell_v3).calculateGroupHeight()

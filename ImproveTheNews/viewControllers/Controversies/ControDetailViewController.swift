@@ -492,30 +492,36 @@ extension ControDetailViewController {
         var val_y: CGFloat = 0
         
         for (i, CL) in claims.enumerated() {
-            let claimView = ClaimCellView(width: item_W, showControversyLink: false)
-            claimView.delegate = self
             
-            var showMetaculusChart = false
-            if(i==0) {
-                if let _firstSource = CL.sources.first, _firstSource.name.lowercased() == "metaculus" {
-                    showMetaculusChart = true
-                }
+            var showChart = false
+            if let _firstSource = CL.sources.first, _firstSource.name.lowercased() == "metaculus" {
+                showChart = true
             }
         
+            var claimView: UIView!
+            if(!showChart) {
+                claimView = ClaimCellView(width: item_W, showControversyLink: false)
+                (claimView as! ClaimCellView).delegate = self
+            } else {
+                claimView = MetaculusClaimCellView(width: item_W)
+                (claimView as! MetaculusClaimCellView).delegate = self
+            }
+
+            // ---
             var val_x: CGFloat = col * item_W
             if(IPAD() && col==1) {
                 val_x += M
             }
             
-            var prev: ClaimCellView? = nil
+            var prev: UIView? = nil
             if(i>0) {
                 if(IPHONE()) {
-                    prev = (containerView.subviews.last as! ClaimCellView)
+                    prev = containerView.subviews.last
                 } else { // IPAD
                     if(i==1) {
-                        prev = (containerView.subviews.first as! ClaimCellView)
+                        prev = containerView.subviews.first
                     } else {
-                        prev = (containerView.subviews[i-2] as! ClaimCellView)
+                        prev = containerView.subviews[i-2]
                     }
                 }
             }
@@ -534,28 +540,31 @@ extension ControDetailViewController {
                     claimView.topAnchor.constraint(equalTo: prev!.bottomAnchor).isActive = true
                 } else { // IPAD
                     if(i==1) { // col2
-                        let first = containerView.subviews.first as! ClaimCellView
+                        let first = containerView.subviews.first!
                         claimView.topAnchor.constraint(equalTo: first.topAnchor, constant: 0).isActive = true
                     } else {
                         claimView.topAnchor.constraint(equalTo: prev!.bottomAnchor).isActive = true
                     }
                 }
             }
-            if(showMetaculusChart) {
-                claimView.populateForChart(with: CL)
-            } else {
-                claimView.populate(with: CL)
-            }
             
+            var _H: CGFloat = 0
+            if(!showChart) {
+                (claimView as! ClaimCellView).populate(with: CL)
+                _H = (claimView as! ClaimCellView).calculateHeight()
+            } else {
+                (claimView as! MetaculusClaimCellView).populate(with: CL)
+                _H = (claimView as! MetaculusClaimCellView).calculateHeight()
+            }
             
             if(IPAD()) {
                 col += 1
                 if(col==2) {
                     col = 0
-                    val_y += claimView.calculateHeight()
+                    val_y += _H
                 }
             } else {
-                val_y += claimView.calculateHeight()
+                val_y += _H
             }
         }
         
@@ -1358,6 +1367,22 @@ extension ControDetailViewController: ClaimCellViewDelegate {
         }
     }
     
+}
+
+extension ControDetailViewController: ClaimMetaculusCellViewDelegate {
+    func claimMetaculusCellViewOnHeightChanged(sender: MetaculusClaimCellView?) {
+    }
+    
+    func claimMetaculusCellViewOnFigureTap(sender: MetaculusClaimCellView?) {
+        if let _slug = sender?.figureSlug {
+            let vc = FigureDetailsViewController()
+            vc.slug = _slug
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func claimMetaculusCellViewOnControversyTap(sender: MetaculusClaimCellView?) {
+    }
 }
 
 extension ControDetailViewController: ControversyCellViewDelegate {
