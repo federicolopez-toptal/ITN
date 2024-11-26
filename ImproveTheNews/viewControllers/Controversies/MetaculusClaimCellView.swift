@@ -24,6 +24,7 @@ class MetaculusClaimCellView: UIView {
     
     var isOpen = false
     var figureSlug: String = ""
+    var controversySlug: String = ""
     var mainHeightConstraint: NSLayoutConstraint?
         
     let componentsContainer = UIView()
@@ -34,20 +35,6 @@ class MetaculusClaimCellView: UIView {
     let browserContainer = UIView()
     let webView = WKWebView()
         
-        
-        
-    
-    
-
-    
-    
-    
-    
-    var controversySlug: String = ""
-    
-    
-    
-    //let clickView = UIView()
     
     // MARK: - Init(s)
     init() {
@@ -177,8 +164,10 @@ class MetaculusClaimCellView: UIView {
         
         self.browserContainer.addSubview(self.webView)
         self.webView.activateConstraints([
-            self.webView.leadingAnchor.constraint(equalTo: self.browserContainer.leadingAnchor),
-            self.webView.trailingAnchor.constraint(equalTo: self.browserContainer.trailingAnchor),
+            self.webView.leadingAnchor.constraint(equalTo: self.browserContainer.leadingAnchor,
+                constant: IPHONE() ? 0 : 16),
+            self.webView.trailingAnchor.constraint(equalTo: self.browserContainer.trailingAnchor,
+                constant: IPHONE() ? 0 : -16),
             self.webView.topAnchor.constraint(equalTo: self.browserContainer.topAnchor),
             self.webView.heightAnchor.constraint(equalToConstant: self.heightForChart())
         ])
@@ -275,6 +264,10 @@ class MetaculusClaimCellView: UIView {
                 24 + 32 + 16
         } else {
             _H = 16 + self.heightForChart() + 16+32+16
+        }
+        
+        if(IPAD()) {
+            _H += 16
         }
         
         return _H
