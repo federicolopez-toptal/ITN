@@ -97,7 +97,7 @@ class ControversiesData {
     
     func loadListForFeed(topic: String, page: Int, callback: @escaping (Error?, [ControversyListItem]?, Int?) -> ()) {
         //https://www.improvethenews.org/claims-api/claim/search/d?page=1&per_page=2&topic=world
-        var url = ITN_URL() + "/claims-api/claim/search/d?page=\(page)&per_page=2"
+        var url = ITN_URL() + "/claims-api/claim/search/d?page=\(page)&per_page=4"
         if(topic != "news") {
             url += "&topic=\(topic)"
         }

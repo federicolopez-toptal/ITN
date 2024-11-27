@@ -36,7 +36,7 @@ extension MainFeedv5_iPhone {
         
         var strUrl = self.buildUrl(topic: topic, A: 5, B: 5, C: 3, SA: 0, SS: 0)
         if(topic == "ai") {
-            strUrl = self.buildUrl(topic: topic, A: 4, B: 0, C: 2, SA: 0, SS: 1)
+            strUrl = self.buildUrl(topic: topic, A: 4, B: 0, C: 0, SA: 0, SS: 0)
         }
         
         var request = URLRequest(url: URL(string: strUrl)!)

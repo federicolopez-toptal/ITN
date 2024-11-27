@@ -168,7 +168,6 @@ extension MainFeed_v3_viewController {
                     
                         self.navBar.setTitle(self.getTopicName(topic: self.topic))
                         self.topicSelector.setTopics(self.data.topicNames())
-                        
                         //print(self.data.topicNamesss())
                         
                         self.populateDataProvider()
@@ -202,10 +201,12 @@ extension MainFeed_v3_viewController {
 //                            self.list.scrollToBottom()
 //                        }
                         
-//                        self.controversies = []
-//                        self.controversiesPage = 1
-//                        self.controversiesTotal = 0
-//                        self.loadControversies()
+                        if(self.topic == "ai") {
+                            self.controversies = []
+                            self.controversiesPage = 1
+                            self.controversiesTotal = 0
+                            self.loadControversies()
+                        }
                     }
                 }
             }
@@ -213,6 +214,7 @@ extension MainFeed_v3_viewController {
     }
     
     func loadControversies() {
+        // For now, only for the "ai" topic
         ControversiesData.shared.loadListForFeed(topic: self.topic, page: self.controversiesPage) { (error, list, total) in
             if let _ = error {
                 NOTHING()
@@ -262,6 +264,49 @@ extension MainFeed_v3_viewController {
     }
     
     func addControversiesToMainFeed(mustRefresh: Bool = true) {
+        var topicIndex = -1
+        var articlesRow = 0
+        var afterStoryWide = false
+                
+        for (i, DP) in self.dataProvider.enumerated() {
+            if let _DP = DP as? DP3_headerItem, _DP.title.lowercased() != "split" {
+                topicIndex += 1
+            }
+            
+            if(topicIndex==0) { // first topic, "ai"
+                if(DP is DP3_iPhoneStory_1Wide) {
+                    let CO = DP3_controversy(controversy: self.controversies.first!)
+                    self.dataProvider.insert(CO, at: i+1)
+                    
+//                    for _ in 1...3 { // more, line, footer
+//                        self.dataProvider.removeLast()
+//                    }
+                    
+                    for (j, C) in self.controversies.enumerated() {
+                        if(j>0) {
+                            let CO = DP3_controversy(controversy: C)
+                            self.dataProvider.insert(CO, at: i+4+j)
+                        }
+                    }
+                    
+//                    self.addLoadMore(topicName: self.topic)
+//                    self.addFooter()
+                    
+                    break
+                }
+            }
+        }
+        
+        MAIN_THREAD {
+            self.hideLoading()
+        }
+    
+        if(mustRefresh) {
+            self.refreshList()
+        }
+    }
+     
+    func addControversiesToMainFeed_2(mustRefresh: Bool = true) {
         var topicIndex = -1
                 
         for (i, DP) in self.dataProvider.enumerated() {

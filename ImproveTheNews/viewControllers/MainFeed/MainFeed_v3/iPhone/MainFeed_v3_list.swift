@@ -355,6 +355,16 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
                 
                 self.populateDataProvider()
                 
+                if(self.topic == "ai") {
+                    self.addControversiesToMainFeed(mustRefresh: false)
+                    
+                    for (i, DP) in self.dataProvider.enumerated() {
+                        if(DP is DP3_more) {
+                            self.dataProvider.remove(at: i)
+                            break
+                        }
+                    }
+                }
 //                if(self.controversiesTotal > 0) {
 //                    self.addControversiesToMainFeed(mustRefresh: false)
 //                }

@@ -12,10 +12,14 @@ extension MainFeed_v3_viewController {
 
     // main POPULATE
     func populateDataProvider() {
-        if(Layout.current() == .textImages) {
-            self.populateDataProvider_iPhone_textImages()
+        if(self.topic != "ai") {
+            if(Layout.current() == .textImages) {
+                self.populateDataProvider_iPhone_textImages()
+            } else {
+                self.populateDataProvider_iPhone_textOnly()
+            }
         } else {
-            self.populateDataProvider_iPhone_textOnly()
+            self.populateDataProvider_iPhone_textImages_AI()
         }
 
         // -------------------------------------------------
@@ -23,6 +27,8 @@ extension MainFeed_v3_viewController {
         let initSpacer = DP3_spacer(size: topSpacerHeight)
         self.dataProvider.insert(initSpacer, at: 0)
     }
+    
+    
     
     // Text & Images
     private func populateDataProvider_iPhone_textImages() {
@@ -317,7 +323,7 @@ extension MainFeed_v3_viewController {
         }
     }
     
-    private func addLoadMore(topicName: String) {
+    func addLoadMore(topicName: String) {
         var isCompleted = false
         if let _ = self.topicsCompleted[topicName] {
             isCompleted = true
@@ -326,12 +332,123 @@ extension MainFeed_v3_viewController {
         self.dataProvider.append(loadMore)
     }
     
-    private func addFooter() {
+    func addFooter() {
         let spacer = DP3_spacer(size: 15)
         self.dataProvider.append(spacer)
     
         let footer = DP3_footer()
         self.dataProvider.append(footer)
+    }
+    
+}
+
+extension MainFeed_v3_viewController {
+
+    private func populateDataProvider_iPhone_textImages_AI() {
+        self.data.resetCounting()
+        self.dataProvider = [DP3_item]()
+        
+        if(self.data.topic.count==0) { return }
+        for i in 0...self.data.topics.count-1 {
+            //var _T = self.data.topics[i]
+            var _T: MainFeedTopic!
+            if(i<self.data.topics.count) {
+                _T = self.data.topics[i]
+            } else {
+                continue
+            }
+            
+            if(_T.name == "ai" && self.topic != "ai") {
+                continue
+            }
+            
+            var itemInTopic = 0
+            while(_T.hasNewsAvailable()) {
+            
+            // Headers
+                if(itemInTopic == 0) {
+                    self.addHeader(text: _T.capitalizedName)
+                    itemInTopic += 1
+                }
+                
+                var newGroupItem: DP3_groupItem?
+                
+                switch(itemInTopic) {
+                    case 1:
+                        if(_T.stillHasStories()) {
+                            newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
+                        } else {
+                            itemInTopic += 1
+                        }
+                        
+                    case 2, 3:
+                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
+                        
+                    case 4, 5:
+                        newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
+                
+                    case 6, 7:
+                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
+                
+//                    case 1, 2, 5:
+//                        if(_T.stillHasStories()) {
+//                            newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
+//                        } else {
+//                            itemInTopic += 1
+//                        }
+//                    case 3, 4, 9, 10:
+//                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
+//                    case 6, 7, 8:
+//                        newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
+                
+                    default:
+                        NOTHING()
+                }
+                
+                ///////// fill "newGroupItem"
+                if let _newGroupItem = newGroupItem {
+                    for j in 1..._newGroupItem.MaxNumOfItems {
+                        let storyFlag = _newGroupItem.storyFlags[j-1]
+                        if let _A = _T.nextAvailableArticle(isStory: storyFlag) {
+                            _newGroupItem.articles.append(_A)
+                            self.data.addCountTo(topic: _T.name)
+                        } else {
+                            break
+                        }
+                    }
+                
+                    // Sepatator (if apply)
+                    if(self.itemHas2Cols(item: newGroupItem!)) {
+                        if let _lastItem = self.dataProvider.last, self.itemHas2Cols(item: _lastItem as! DP3_groupItem) {
+                            let sep = DP3_lineSeparator(type: 2)
+                            self.dataProvider.append(sep)
+                        }
+                    }
+                                      
+                    self.dataProvider.append(_newGroupItem)
+                    itemInTopic += 1
+                } // fill ///////////////////
+                
+                
+                if(itemInTopic==8) {
+                    itemInTopic = 4
+                }
+                
+                
+            } // while
+            
+            // Banner, only for 1rst topic (if apply)
+            if(i==0) { self.insertNewBanner() }
+
+            // "Load more" item
+            self.addLoadMore(topicName: _T.name)
+            
+        } // for
+        
+        //Footer at the end of all
+        self.addFooter()
+        
+        self.removeDuplicatedMore()
     }
     
 }
