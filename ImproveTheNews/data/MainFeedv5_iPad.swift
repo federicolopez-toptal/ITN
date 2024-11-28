@@ -607,6 +607,7 @@ extension MainFeedv5_iPad {
             newStory.storySources = []
             newStory.time = "" //DATE_TO_TIMEAGO("2023-03-19 00:01:00")
             newStory.url = ITN_URL() + "/story/2023/artificial-intelligence"
+            newStory.summaryText = "WHAT IS AI? Artificial intelligence, AI, is simply non-biological intelligence. Intelligence is often defined as the ability to accomplish goals. Early AI systems, like the one that first beat humans at chess, had skills programmed by humans, while today's best AI instead learns its own skills from large amounts of data."
             
             self.topics[0].articles.insert(newStory, at: 0)
         }

@@ -410,14 +410,6 @@ extension MainFeediPad_v3_viewController: iPhoneMoreCell_v3_delegate {
     func onShowMoreButtonTap(sender: iPhoneMoreCell_v3) {
         self.showLoading()
 
-//        if(sender.topic == "CONTRO") {
-//            self.removeControversiesFromMainFeed()
-//        
-//            self.controversiesPage += 1
-//            self.loadControversies()
-//            return
-//        }
-
         let topic = sender.topic
         if(topic != self.topic) {
             let vc = MainFeediPad_v3_viewController()
@@ -435,18 +427,26 @@ extension MainFeediPad_v3_viewController: iPhoneMoreCell_v3_delegate {
                 // Mostrar algun error?
             } else if let _articlesAdded = articlesAdded {
                 let count = self.data.topicsCount[topic]! + _articlesAdded
-                
                 let A = (count >= MAX_ARTICLES_PER_TOPIC)
                 let B = (_articlesAdded == 0)
-                
                 if(A || B) { self.topicsCompleted[topic] = true }
                 
                 self.populateDataProvider()
                 
-                if(self.controversiesTotal > 0) {
+                if(self.topic == "ai") {
                     self.addControversiesToMainFeed(mustRefresh: false)
+                    
+                    for (i, DP) in self.dataProvider.enumerated() {
+                        if(DP is DP3_more) {
+                            self.dataProvider.remove(at: i)
+                            break
+                        }
+                    }
                 }
-//                self.refreshList()
+                
+//                if(self.controversiesTotal > 0) {
+//                    self.addControversiesToMainFeed(mustRefresh: false)
+//                }
             }
 
             MAIN_THREAD {

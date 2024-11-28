@@ -192,10 +192,12 @@ extension MainFeediPad_v3_viewController {
 //                            self.list.scrollToBottom()
 //                        }
                         
-//                        self.controversies = []
-//                        self.controversiesPage = 1
-//                        self.controversiesTotal = 0
-//                        self.loadControversies()
+                        if(self.topic == "ai") {
+                            self.controversies = []
+                            self.controversiesPage = 1
+                            self.controversiesTotal = 0
+                            self.loadControversies()
+                        }
                         
                     }
                 }
@@ -204,7 +206,11 @@ extension MainFeediPad_v3_viewController {
     }
     
     func loadControversies() {
+        // For now, only for the "ai" topic
+        self.showLoading()
         ControversiesData.shared.loadListForFeed(topic: self.topic, page: self.controversiesPage) { (error, list, total) in
+            self.hideLoading()
+                
             if let _ = error {
                 NOTHING()
             } else {
@@ -264,61 +270,53 @@ extension MainFeediPad_v3_viewController {
                 topicIndex += 1
             }
             
-            if(topicIndex==0 && DP is DP3_more) {
-                //let line = DP3_headerItem(title: "-----")
-                let spacer0 = DP3_spacer(size: 20)
-                self.dataProvider.insert(spacer0, at: i+1)
-            
-                let header = DP3_headerItem(title: self.latestControversies)
-                self.dataProvider.insert(header, at: i+2)
+            if(topicIndex==0) { // first topic, "ai"
+                if(DP is DP3_iPad5items) {
+                    /* */
+                    var count = 1
+                    var offset = 0
+                    for j in 0...upperBound {
+
+                        var li1: ControversyListItem? = nil
+                        var li2: ControversyListItem? = nil
+
+                        if(count==1) {
+                            if(j==self.controversies.count-1) {
+                                li1 = self.controversies[j]
+                                li2 = nil
+                            }
+                        } else if(count==2) {
+                            li1 = self.controversies[j-1]
+                            li2 = self.controversies[j]
+                        }
+
+                        if(li1 != nil) {
+                            let CO = DP3_controversies_x2(controversy1: li1!, controversy2: li2)
+                            self.dataProvider.insert(CO, at: i+1+offset)
+                            offset += 1
+                        }
+
+                        count += 1
+                        if(count==3) { count=1 }
+                    }
+                    /* */
+                    break
+                }
                 
-                var count = 1
-                var offset = 3
-                
-                for j in 0...upperBound {
-                    //let CO = DP3_controversy(controversy: LI)
-                    
-//                    let CO = DP3_controversies_x2(controversy1: LI, controversy2: LI)
-//                    self.dataProvider.insert(CO, at: i+offset)
+//                let spacer1 = DP3_spacer(size: 20)
+//                self.dataProvider.insert(spacer1, at: i+offset)
+//                
+//                if(self.controversies.count < self.controversiesTotal) {
+//                    offset += 1
+//                    let more = DP3_more(topic: "CONTRO", completed: false)
+//                    self.dataProvider.insert(more, at: i+offset)
 //                    
 //                    offset += 1
-                    var li1: ControversyListItem? = nil
-                    var li2: ControversyListItem? = nil
-
-                    if(count==1) {
-                        if(j==self.controversies.count-1) {
-                            li1 = self.controversies[j]
-                            li2 = nil
-                        }
-                    } else if(count==2) {
-                        li1 = self.controversies[j-1]
-                        li2 = self.controversies[j]
-                    }
-
-                    if(li1 != nil) {
-                        let CO = DP3_controversies_x2(controversy1: li1!, controversy2: li2)
-                        self.dataProvider.insert(CO, at: i+offset)
-                        offset += 1
-                    }
-
-                    count += 1
-                    if(count==3) { count=1 }
-                }
+//                    let spacer2 = DP3_spacer(size: 35)
+//                    self.dataProvider.insert(spacer2, at: i+offset)
+//                }
                 
-                let spacer1 = DP3_spacer(size: 20)
-                self.dataProvider.insert(spacer1, at: i+offset)
                 
-                if(self.controversies.count < self.controversiesTotal) {
-                    offset += 1
-                    let more = DP3_more(topic: "CONTRO", completed: false)
-                    self.dataProvider.insert(more, at: i+offset)
-                    
-                    offset += 1
-                    let spacer2 = DP3_spacer(size: 35)
-                    self.dataProvider.insert(spacer2, at: i+offset)
-                }
-                
-                break
             }
         }
         

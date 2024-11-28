@@ -1510,8 +1510,8 @@
 			isa = PBXGroup;
 			children = (
 				1F9C71162B6AD7030060BB66 /* MainFeediPad_v3_viewController.swift */,
-				1F9C71182B6AD7030060BB66 /* MainFeediPad_v3_list.swift */,
 				1F9C71152B6AD7030060BB66 /* MainFeediPad_v3_misc.swift */,
+				1F9C71182B6AD7030060BB66 /* MainFeediPad_v3_list.swift */,
 				1F9C71172B6AD7030060BB66 /* MainFeediPad_v3_dataProvider.swift */,
 			);
 			path = iPad;
