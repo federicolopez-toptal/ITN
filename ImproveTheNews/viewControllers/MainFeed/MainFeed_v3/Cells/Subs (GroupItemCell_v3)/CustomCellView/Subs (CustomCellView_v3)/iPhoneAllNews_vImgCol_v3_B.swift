@@ -93,8 +93,9 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
         self.storySources.buildInto(self)
         self.storySources.activateConstraints([
             self.storySources.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor),
-            self.storySources.leadingAnchor.constraint(equalTo: self.storyPill.trailingAnchor,
-                constant: CSS.shared.iPhoneSide_padding/2)
+            self.storySources.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+//            self.storySources.leadingAnchor.constraint(equalTo: self.storyPill.trailingAnchor,
+//                constant: CSS.shared.iPhoneSide_padding/2)
         ])
         storyComponents.append(self.storySources)
         
@@ -529,6 +530,7 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
             }
         }
 
+        self.storyPill.hide()
     }
     
     override func refreshDisplayMode() {

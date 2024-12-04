@@ -34,7 +34,7 @@ extension MainFeedv5_iPad {
         self.count_ST = 0
         self.count_AR = 0
         
-        var strUrl = self.buildUrl(topic: topic, A: 5, B: 5, C: 3, SA: 0, SS: 0)
+        var strUrl = self.buildUrl(topic: topic, A: 6, B: 6, C: 6, SA: 0, SS: 0)
         if(topic == "ai") {
             strUrl = self.buildUrl(topic: topic, A: 4, B: 0, C: 2, SA: 0, SS: 1)
         }
@@ -65,7 +65,7 @@ extension MainFeedv5_iPad {
                             if(topic == "ai") {
                                 self.parse(_json, mainTopicItemsLimit: 4)
                             } else {
-                                self.parse(_json, mainTopicItemsLimit: 5)
+                                self.parse(_json, mainTopicItemsLimit: 6)
                             }
                             
                             if(self.topic == "news") {
@@ -100,7 +100,7 @@ extension MainFeedv5_iPad {
             self.count_ST += 1
             self.count_AR += 1
         }
-        let strUrl = self.buildUrl(topic: T, A: 8, B: 0, C: 4, SA: self.count_AR, SS: self.count_ST)
+        let strUrl = self.buildUrl(topic: T, A: 8, B: 0, C: 8, SA: self.count_AR, SS: self.count_ST)
         
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"

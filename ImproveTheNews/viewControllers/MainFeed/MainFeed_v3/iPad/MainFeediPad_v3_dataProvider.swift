@@ -63,10 +63,11 @@ extension MainFeediPad_v3_viewController {
                 switch(itemInTopic) {
                     case 1:
                         newGroupItem = DP3_iPad5items(type: topicLayout)
-                    case 2:
+                    case 2, 3:
                         newGroupItem = DP3_iPhoneStory_4cols()
-                    case 3:
-                        newGroupItem = DP3_iPhoneArticle_4cols()
+//                    case 3:
+//                        newGroupItem = DP3_iPhoneArticle_4cols()
+                
                 
 //                    case 1:
 //                        if(_T.stillHasStories()) {
@@ -195,10 +196,11 @@ extension MainFeediPad_v3_viewController {
                 switch(itemInTopic) {
                     case 1:
                         newGroupItem = DP3_iPad5items(type: topicLayout)
-                    case 2:
+                    case 2, 3:
                         newGroupItem = DP3_iPhoneStory_4cols()
-                    case 3:
-                        newGroupItem = DP3_iPhoneArticle_4cols()
+//                    case 3:
+//                        newGroupItem = DP3_iPhoneArticle_4cols()
+                
                 
 //                    case 1:
 //                        if(_T.stillHasStories()) {

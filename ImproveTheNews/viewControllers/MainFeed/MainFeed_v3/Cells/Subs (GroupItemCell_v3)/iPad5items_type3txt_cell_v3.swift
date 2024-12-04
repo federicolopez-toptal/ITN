@@ -18,6 +18,7 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
     var view3_heightConstraint: NSLayoutConstraint!
     var view4_heightConstraint: NSLayoutConstraint!
     var view5_heightConstraint: NSLayoutConstraint!
+    var view6_heightConstraint: NSLayoutConstraint!
 
 
     // MARK: - Start
@@ -46,35 +47,14 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
         ])
         self.view1_heightConstraint = view1.heightAnchor.constraint(equalToConstant: 1)
         self.view1_heightConstraint.isActive = true
-        
-        ///
-        let view2 = iPhoneAllNews_vTxtCol_v3_B(width: colW)
-        self.contentView.addSubview(view2)
-        view2.activateConstraints([
-            view2.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            view2.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sep),
-            view2.widthAnchor.constraint(equalToConstant: colW)
-        ])
-        self.view2_heightConstraint = view2.heightAnchor.constraint(equalToConstant: 1)
-        self.view2_heightConstraint.isActive = true
-        
-        ///
-        let view3 = iPhoneAllNews_vTxtCol_v3_B(width: colW)
-        self.contentView.addSubview(view3)
-        view3.activateConstraints([
-            view3.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: sep),
-            view3.leadingAnchor.constraint(equalTo: view2.leadingAnchor),
-            view3.widthAnchor.constraint(equalToConstant: colW)
-        ])
-        self.view3_heightConstraint = view3.heightAnchor.constraint(equalToConstant: 1)
-        self.view3_heightConstraint.isActive = true
                         
         ///
         let view4 = iPhoneAllNews_vTxtCol_v3_B(width: colW)
         self.contentView.addSubview(view4)
         view4.activateConstraints([
             view4.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            view4.leadingAnchor.constraint(equalTo: view2.trailingAnchor, constant: sep),
+            //view4.leadingAnchor.constraint(equalTo: view2.trailingAnchor, constant: sep),
+            view4.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: sep),
             view4.widthAnchor.constraint(equalToConstant: colW)
         ])
         self.view4_heightConstraint = view4.heightAnchor.constraint(equalToConstant: 1)
@@ -91,11 +71,45 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
         self.view5_heightConstraint = view5.heightAnchor.constraint(equalToConstant: 1)
         self.view5_heightConstraint.isActive = true
         
+        ///
+        let view6 = iPhoneAllNews_vTxtCol_v3_B(width: colW)
+        self.contentView.addSubview(view6)
+        view6.activateConstraints([
+            view6.topAnchor.constraint(equalTo: view5.bottomAnchor, constant: sep),
+            view6.leadingAnchor.constraint(equalTo: view5.leadingAnchor),
+            view6.widthAnchor.constraint(equalToConstant: colW)
+        ])
+        self.view6_heightConstraint = view5.heightAnchor.constraint(equalToConstant: 1)
+        self.view6_heightConstraint.isActive = true
+        
+        ///
+        let view2 = iPhoneAllNews_vTxtCol_v3_B(width: colW)
+        self.contentView.addSubview(view2)
+        view2.activateConstraints([
+            view2.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            view2.leadingAnchor.constraint(equalTo: view4.trailingAnchor, constant: sep),
+            view2.widthAnchor.constraint(equalToConstant: colW)
+        ])
+        self.view2_heightConstraint = view2.heightAnchor.constraint(equalToConstant: 1)
+        self.view2_heightConstraint.isActive = true
+        
+        ///
+        let view3 = iPhoneAllNews_vTxtCol_v3_B(width: colW)
+        self.contentView.addSubview(view3)
+        view3.activateConstraints([
+            view3.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: sep),
+            view3.leadingAnchor.constraint(equalTo: view2.leadingAnchor),
+            view3.widthAnchor.constraint(equalToConstant: colW)
+        ])
+        self.view3_heightConstraint = view3.heightAnchor.constraint(equalToConstant: 1)
+        self.view3_heightConstraint.isActive = true
+        
         self.subViews.append(view1)
         self.subViews.append(view2)
         self.subViews.append(view3)
         self.subViews.append(view4)
         self.subViews.append(view5)
+        self.subViews.append(view6)
         
         //------------------------
         let line1View = UIView()
@@ -119,6 +133,17 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
         ])
         line2View.tag = 222
         ADD_HDASHES(to: line2View)
+        
+        let line3View = UIView()
+        self.contentView.addSubview(line3View)
+        line3View.activateConstraints([
+            line3View.leadingAnchor.constraint(equalTo: view5.leadingAnchor),
+            line3View.trailingAnchor.constraint(equalTo: view5.trailingAnchor),
+            line3View.topAnchor.constraint(equalTo: view5.bottomAnchor),
+            line3View.heightAnchor.constraint(equalToConstant: 2)
+        ])
+        line3View.tag = 333
+        ADD_HDASHES(to: line3View)
     }
 
     // MARK: Overrides
@@ -130,6 +155,7 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
         view3_heightConstraint.constant = (self.subViews[2] as! iPhoneAllNews_vTxtCol_v3_B).calculateHeight()
         view4_heightConstraint.constant = (self.subViews[3] as! iPhoneAllNews_vTxtCol_v3_B).calculateHeight()
         view5_heightConstraint.constant = (self.subViews[4] as! iPhoneAllNews_vTxtCol_v3_B).calculateHeight()
+        view6_heightConstraint.constant = (self.subViews[5] as! iPhoneAllNews_vTxtCol_v3_B).calculateHeight()
         
         self.refreshDisplayMode()
     }
@@ -150,6 +176,11 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
         let line2View = self.contentView.viewWithTag(222)!
         REMOVE_ALL_SUBVIEWS(from: line2View)
         ADD_HDASHES(to: line2View)
+        
+        // line 2
+        let line3View = self.contentView.viewWithTag(333)!
+        REMOVE_ALL_SUBVIEWS(from: line3View)
+        ADD_HDASHES(to: line3View)
     }
     
     // MARK: misc
@@ -159,12 +190,20 @@ class iPad5items_type3txt_cell_v3: GroupItemCell_v3 {
         let height_3 = (self.subViews[2] as! iPhoneAllNews_vTxtCol_v3_B).calculateHeight()
         let height_4 = (self.subViews[3] as! iPhoneAllNews_vTxtCol_v3_B).calculateHeight()
         let height_5 = (self.subViews[4] as! iPhoneAllNews_vTxtCol_v3_B).calculateHeight()
+        let height_6 = (self.subViews[5] as! iPhoneAllNews_vTxtCol_v3_B).calculateHeight()
     
-        var result: CGFloat = height_1
-        if(height_2 + height_3 > result){ result = height_2 + height_3 }
-        if(height_4 + height_5 > result){ result = height_4 + height_5 }
+//        var result: CGFloat = height_1
+//        if(height_2 + height_3 > result){ result = height_2 + height_3 }
+//        if(height_4 + height_5 > result){ result = height_4 + height_5 }
+//        return result
+
+        let sep: CGFloat = 16
         
-        return result
+        let col1 = height_1
+        let col2 = height_2 + sep + height_3
+        let col3 = height_4 + sep + height_5 + sep + height_6
+        
+        return [col1, col2, col3].max()! + 20
     }
 
 }

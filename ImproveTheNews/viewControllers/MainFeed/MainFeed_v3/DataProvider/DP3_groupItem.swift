@@ -85,7 +85,7 @@ class DP3_iPad5items: DP3_groupItem {
         super.init()
         
         self.type = type
-        self.MaxNumOfItems = 5
-        self.storyFlags = [true, true, true, false, false]
+        self.MaxNumOfItems = 6
+        self.storyFlags = [true, true, true, true, true, true]
     }
 }
