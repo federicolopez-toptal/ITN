@@ -78,8 +78,10 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
         self.sources.buildInto(self)
         self.sources.activateConstraints([
             self.sources.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
-            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor,
-                constant: CSS.shared.iPhoneSide_padding)
+            self.sources.leadingAnchor.constraint(equalTo: self.pill.leadingAnchor)
+            
+//            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor,
+//                constant: CSS.shared.iPhoneSide_padding)
         ])
         
         self.timeLabel.font = CSS.shared.iPhoneStory_textFont
@@ -120,6 +122,8 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
             self.sources.customHide()
             self.time_leading?.constant = 0
         }
+        
+        self.pill.hide()
     }
     
     func showFigureImage(_ url: String) {

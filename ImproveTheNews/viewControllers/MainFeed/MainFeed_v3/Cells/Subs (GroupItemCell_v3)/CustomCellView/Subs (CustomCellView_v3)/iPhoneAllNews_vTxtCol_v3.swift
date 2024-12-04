@@ -107,7 +107,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         self.articleSourceNameLabel.activateConstraints([
             self.articleSourceNameLabel.centerYAnchor.constraint(equalTo: self.articleSource.centerYAnchor)
         ])
-        self.sourceTime_leading = self.articleSourceNameLabel.leadingAnchor.constraint(equalTo: self.articleSource.trailingAnchor, constant: 4)
+        self.sourceTime_leading = self.articleSourceNameLabel.leadingAnchor.constraint(equalTo: self.articleSource.trailingAnchor, constant: 10)
         self.sourceTime_leading?.isActive = true
         articleComponents.append(self.articleSourceNameLabel)
         
@@ -139,6 +139,169 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         // -------------------
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewOnTap(_:)))
         self.addGestureRecognizer(tapGesture)
+    }
+    
+    func customPopulate(_ article: MainFeedArticle) { // for Stories
+        self.article = article
+        
+        self.openIcon.hide()
+        for V in self.storyComponents {
+            V.show()
+        }
+        for V in self.articleComponents {
+            V.hide()
+        }
+        
+        self.storyTitleLabel.text = article.title
+        let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
+        let diff = MAX_NUM_LINES - Int(numLines)
+        if(diff>0) {
+            for _ in 1...diff {
+                self.storyTitleLabel.text! += "\n"
+            }
+        }
+        
+        self.articleTitleLabel.font = self.storyTitleLabel.font
+        self.articleTitleLabel.text = self.storyTitleLabel.text
+        
+        self.storyTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+        self.storyTimeLabel.hide()
+        self.storyPill.hide()
+        
+        // -----------------------
+        self.articleFlag.customHide()
+        self.source_leading?.constant = 0
+        
+        self.articleSource.load(article.storySources)
+        self.articleSource.show()
+
+        self.articleSourceNameLabel.font = self.storyTimeLabel.font
+        self.articleSourceNameLabel.textColor = self.storyTimeLabel.textColor
+        self.articleSourceNameLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+        self.articleSourceNameLabel.show()
+
+        
+        
+        /* */
+        
+//        if(article.isStory) {
+//            self.storyTitleLabel.text = article.title
+//            
+//            let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
+//            let diff = MAX_NUM_LINES - Int(numLines)
+//            if(diff>0) {
+//                for _ in 1...diff {
+//                    self.storyTitleLabel.text! += "\n"
+//                }
+//            }
+//            
+//            self.storyTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+//        } else {
+//            self.articleTitleLabel.text = article.title
+//            self.articleTitleLabel.setLineSpacing(lineSpacing: 6.0)
+//            
+//            let numLines = self.articleTitleLabel.calculateHeightFor(width: self.WIDTH) / self.articleTitleLabel.font.lineHeight
+//            let diff = MAX_NUM_LINES - Int(numLines)
+//            if(diff>0) {
+//                for _ in 1...diff {
+//                    self.articleTitleLabel.text! += "\n"
+//                }
+//            }
+//            
+////            var sourcesArray = [String]()
+////            if let _identifier = Sources.shared.search(name: article.source) {
+////                sourcesArray.append(_identifier)
+////            }
+//
+//            var sourcesArray = [String]()
+//            if let _identifier = Sources.shared.search(name: article.source) {
+//                sourcesArray.append(_identifier)
+//            }
+//            self.articleSource.load(sourcesArray)
+//            
+//            self.openIcon.show()
+//            let sourceName = CLEAN_SOURCE(from: article.source).uppercased()
+//            self.articleSourceNameLabel.text = ""
+//            self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+////            if(sourceName.count<=10) {
+////                self.articleSourceNameLabel.text = sourceName
+////                self.articleTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+////            } else {
+////                self.articleSourceNameLabel.text = sourceName + "\n" + SHORT_TIME(input:FIX_TIME(article.time))
+////                self.articleTimeLabel.text = ""
+////            }
+//                        
+//            self.articleStanceIcon.setValues(article.LR, article.PE)
+//        }
+//        
+//        ///////
+//        for V in self.storyComponents {
+//            if(self.article.isStory) {
+//                V.show()
+//            } else {
+//                V.hide()
+//            }
+//        }
+//        for V in self.articleComponents {
+//            if(!self.article.isStory) {
+//                V.show()
+//            } else {
+//                V.hide()
+//            }
+//        }
+//        ///
+//        
+////        if(!self.article.isStory) {
+////            if(PREFS_SHOW_STANCE_ICONS()) {
+////                self.articleStanceIcon.show()
+////            } else {
+////                self.articleStanceIcon.hide()
+////            }
+////        }
+//
+//        if(self.article.isStory) {
+////            if(PREFS_SHOW_SOURCE_ICONS()) {
+////                self.storySources.show()
+////            } else {
+////                self.storySources.customHide()
+////            }
+//        } else {
+//            if(PREFS_SHOW_SOURCE_ICONS()) {
+//                self.articleSource.show()
+//                self.sourceTime_leading?.constant = 5
+//            } else {
+//                self.articleSource.customHide()
+//                self.sourceTime_leading?.constant = 0
+//            }
+//            
+//            if(PREFS_SHOW_FLAGS()) {
+//                self.articleFlag.setFlag(article.country)
+//                self.articleFlag.customShow()
+//                self.source_leading?.constant = 2
+//                if(!PREFS_SHOW_SOURCE_ICONS()) {
+//                    self.source_leading?.constant = 5
+//                }
+//            } else {
+//                self.articleFlag.customHide()
+//                self.source_leading?.constant = 0
+//            }
+//            
+//            if(PREFS_SHOW_STANCE_ICONS()) {
+//                self.articleStanceIcon.show()
+//            } else {
+//                self.articleStanceIcon.hide()
+//            }
+//        }
+//        
+//        if let button = self.viewWithTag(64) {
+//            if(self.article.isStory) {
+//                button.hide()
+//            } else {
+//                button.show()
+//            }
+//        }
+        
+        /* */
     }
     
     // MARK: Overrides
@@ -262,6 +425,12 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
                 button.show()
             }
         }
+        
+        
+//        if(article.isStory) {
+//            print("TITLE", article.title)
+//            self.storyPill.alpha = 0.5
+//        }
     }
     
     override func refreshDisplayMode() {

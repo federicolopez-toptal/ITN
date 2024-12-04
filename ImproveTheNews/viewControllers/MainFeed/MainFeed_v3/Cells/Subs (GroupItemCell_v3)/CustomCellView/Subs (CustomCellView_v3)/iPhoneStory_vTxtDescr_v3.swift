@@ -63,7 +63,8 @@ class iPhoneStory_vTxtDescr_v3: CustomCellView_v3 {
         self.sources.buildInto(self)
         self.sources.activateConstraints([
             self.sources.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
-            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
+            self.sources.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
+//            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
         ])
         
         self.timeLabel.font = CSS.shared.iPhoneStory_textFont
@@ -90,14 +91,16 @@ class iPhoneStory_vTxtDescr_v3: CustomCellView_v3 {
         self.descrlabel.text = article.summaryText        
         self.timeLabel.text = FIX_TIME(article.time).uppercased()
         
-        if(PREFS_SHOW_SOURCE_ICONS() && Layout.current() == .textImages) {
+//        if(PREFS_SHOW_SOURCE_ICONS() && Layout.current() == .textImages) {
             self.sources.load(article.storySources)
             self.sources.show()
             self.time_leading?.constant = 8
-        } else {
-            self.sources.customHide()
-            self.time_leading?.constant = 0
-        }
+//        } else {
+//            self.sources.customHide()
+//            self.time_leading?.constant = 0
+//        }
+        
+        self.pill.hide()
     }
     
     override func refreshDisplayMode() {

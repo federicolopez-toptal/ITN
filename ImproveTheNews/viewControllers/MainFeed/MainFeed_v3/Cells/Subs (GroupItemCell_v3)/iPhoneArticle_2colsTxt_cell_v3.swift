@@ -19,6 +19,8 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
     var view2_heightConstraint: NSLayoutConstraint!
     var vLine = UIView()
 
+    var customPopulate = false
+
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -67,7 +69,46 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
     }
 
     // MARK: Overrides
+    func customPopulate(with group: DP3_groupItem) {
+        // ------ (super.populate(with: group)
+        var limit = group.articles.count
+        if(limit > self.subViews.count){ limit = self.subViews.count }
+        
+        var count = 0
+        for i in 0...limit-1 {
+            let A = group.articles[i]
+            let V = self.subViews[i]
+            
+            V.show()
+//            self.subViews[i].populate(A)
+            if(V is iPhoneAllNews_vTxtCol_v3) {
+                (V as! iPhoneAllNews_vTxtCol_v3).customPopulate(A)
+            }
+            
+            if(A.isEmpty()) {
+                V.hide()
+            }
+            
+            count += 1
+        }
+        
+        if(count < self.subViews.count) {
+            for i in count+1...self.subViews.count {
+                self.subViews[i-1].hide()
+            }
+        }
+        
+        self.vLine.hide()
+        self.refreshDisplayMode()
+        // ------
+    }
+    
     override func populate(with group: DP3_groupItem) {
+        if(self.customPopulate) {
+            self.customPopulate(with: group)
+            return
+        }
+        
         super.populate(with: group)
         view1_heightConstraint.constant = (self.subViews[0] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
         view2_heightConstraint.constant = (self.subViews[1] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
@@ -88,6 +129,7 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
                 ADD_VDASHES(to: self.vLine, height: self.calculateGroupHeight())
             }
         }
+
     }
     
     override func refreshDisplayMode() {

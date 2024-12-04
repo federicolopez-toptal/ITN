@@ -31,7 +31,8 @@ class iPhoneStory_2colsTxt_cell_v3: GroupItemCell_v3 {
         let col_WIDTH: CGFloat = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
         
         ///
-        let view1 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH, fontSize: 26)
+//        let view1 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH, fontSize: 26)
+        let view1 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -43,7 +44,8 @@ class iPhoneStory_2colsTxt_cell_v3: GroupItemCell_v3 {
         self.subViews.append(view1)
         
         ///
-        let view2 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH, fontSize: 26)
+//        let view2 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH, fontSize: 26)
+        let view2 = iPhoneAllNews_vTxtCol_v3(width: col_WIDTH)
         self.contentView.addSubview(view2)
         view2.activateConstraints([
             view2.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -57,6 +59,11 @@ class iPhoneStory_2colsTxt_cell_v3: GroupItemCell_v3 {
 
     // MARK: Overrides
     override func populate(with group: DP3_groupItem) {
+//        print(">>")
+//        for item in group.articles {
+//            print("title", item.isStory, item.title)
+//        }
+        
         super.populate(with: group)
         view1_heightConstraint.constant = (self.subViews[0] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
         view2_heightConstraint.constant = (self.subViews[1] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()

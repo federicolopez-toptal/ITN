@@ -279,7 +279,7 @@ class MetaculusClaimCellView: UIView {
         
         let H: CGFloat = (9 * W)/16
 
-        return H
+        return H-2
     }
     
     func getMetaculusUrl(from url: String) -> String {

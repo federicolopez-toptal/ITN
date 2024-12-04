@@ -67,23 +67,15 @@ extension MainFeed_v3_viewController {
                         } else {
                             itemInTopic += 1
                         }
-                        
-                    case 2, 4, 5:
+                      
+                    case 2, 3, 4, 5, 6, 7:
                         newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
-                
-                    case 3, 6, 7:
-                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
-                
-//                    case 1, 2, 5:
-//                        if(_T.stillHasStories()) {
-//                            newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
-//                        } else {
-//                            itemInTopic += 1
-//                        }
-//                    case 3, 4, 9, 10:
-//                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
-//                    case 6, 7, 8:
+                      
+//                    case 2, 4, 5:
 //                        newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
+//                
+//                    case 3, 6, 7:
+//                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
                 
                     default:
                         NOTHING()
@@ -194,22 +186,14 @@ extension MainFeed_v3_viewController {
                             itemInTopic += 1
                         }
                         
-                    case 2, 4, 5:
+                    case 2, 3, 4, 5, 6, 7:
                         newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
-                
-                    case 3, 6, 7:
-                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
-                
-//                    case 1, 2, 5:
-//                        if(_T.stillHasStories()) {
-//                            newGroupItem = DP3_iPhoneStory_1Wide() // Story, VImage
-//                        } else {
-//                            itemInTopic += 1
-//                        }
-//                    case 3, 4, 9, 10:
-//                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
-//                    case 6, 7, 8:
+                        
+//                    case 2, 4, 5:
 //                        newGroupItem = DP3_iPhoneStory_2cols() // Row: 2 stories
+//                
+//                    case 3, 6, 7:
+//                        newGroupItem = DP3_iPhoneArticle_2cols() // Row: 2 articles
                         
                     default:
                         NOTHING()

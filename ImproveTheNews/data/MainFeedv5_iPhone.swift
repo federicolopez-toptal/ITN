@@ -34,7 +34,7 @@ extension MainFeedv5_iPhone {
         self.count_ST = 0
         self.count_AR = 0
         
-        var strUrl = self.buildUrl(topic: topic, A: 5, B: 5, C: 3, SA: 0, SS: 0)
+        var strUrl = self.buildUrl(topic: topic, A: 5, B: 5, C: 5, SA: 0, SS: 0)
         if(topic == "ai") {
             strUrl = self.buildUrl(topic: topic, A: 4, B: 0, C: 0, SA: 0, SS: 0)
         }
@@ -100,7 +100,8 @@ extension MainFeedv5_iPhone {
             self.count_ST += 1
             self.count_AR += 1
         }
-        let strUrl = self.buildUrl(topic: T, A: 8, B: 0, C: 4, SA: self.count_AR, SS: self.count_ST)
+        //let strUrl = self.buildUrl(topic: T, A: 8, B: 0, C: 4, SA: self.count_AR, SS: self.count_ST)
+        let strUrl = self.buildUrl(topic: T, A: 8, B: 0, C: 8, SA: self.count_AR, SS: self.count_ST)
         
         var request = URLRequest(url: URL(string: strUrl)!)
         request.httpMethod = "GET"
@@ -606,6 +607,7 @@ extension MainFeedv5_iPhone {
             newStory.storySources = []
             newStory.time = "" //DATE_TO_TIMEAGO("2023-03-19 00:01:00")
             newStory.url = ITN_URL() + "/story/2023/artificial-intelligence"
+            newStory.summaryText = "WHAT IS AI? Artificial intelligence, AI, is simply non-biological intelligence. Intelligence is often defined as the ability to accomplish goals. Early AI systems, like the one that first beat humans at chess, had skills programmed by humans, while today's best AI instead learns its own skills from large amounts of data."
             
             self.topics[0].articles.insert(newStory, at: 0)
         }
