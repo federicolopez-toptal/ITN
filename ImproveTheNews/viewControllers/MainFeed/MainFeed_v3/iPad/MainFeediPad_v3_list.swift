@@ -85,7 +85,7 @@ extension MainFeediPad_v3_viewController {
         self.list.register(iPad5items_type1txt_cell_v3.self, forCellReuseIdentifier: iPad5items_type1txt_cell_v3.identifier)
         self.list.register(iPad5items_type2txt_cell_v3.self, forCellReuseIdentifier: iPad5items_type2txt_cell_v3.identifier)
         self.list.register(iPad5items_type3txt_cell_v3.self, forCellReuseIdentifier: iPad5items_type3txt_cell_v3.identifier)
-        
+        self.list.register(newAdCell_v3.self, forCellReuseIdentifier: newAdCell_v3.identifier)
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -295,6 +295,9 @@ extension MainFeediPad_v3_viewController {
             } else if let _item = item as? DP3_controversies_x2 {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPadControversyCell_v3.identifier)!
                 (cell as! iPadControversyCell_v3).populate(item1: _item.controversy1, item2: _item.controversy2)
+            } else if let _item = item as? DP3_newAd {
+                cell = self.list.dequeueReusableCell(withIdentifier: newAdCell_v3.identifier)!
+                (cell as! newAdCell_v3).populateWithType(_item.type)
             }
         }
         
@@ -397,6 +400,10 @@ extension MainFeediPad_v3_viewController {
                 } else {
                     result = (self.getCell(indexPath) as! iPad5items_type3txt_cell_v3).calculateGroupHeight()
                 }
+            }
+        } else if(item is DP3_newAd) {
+            if let _cell = self.getCell(indexPath) as? newAdCell_v3 {
+                result = _cell.calculateHeight()
             }
         }
                 

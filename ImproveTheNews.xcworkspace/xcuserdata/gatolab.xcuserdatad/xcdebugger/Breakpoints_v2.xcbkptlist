@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "CCBDBCDB-B93E-417B-B601-D81086AA8E9F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImproveTheNews/viewControllers/MainFeed/MainFeed_v3/Cells/Subs (GroupItemCell_v3)/CustomCellView/Subs (CustomCellView_v3)/iPhoneAllNews_vImgCol_v3.swift"
@@ -24,7 +24,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "78A2AA08-BABB-4F26-9374-B4BBBA0B9D19"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImproveTheNews/viewControllers/MainFeed/MainFeed_v3/Cells/Subs (GroupItemCell_v3)/CustomCellView/Subs (CustomCellView_v3)/iPhoneAllNews_vImgCol_v3.swift"

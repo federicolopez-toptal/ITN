@@ -132,7 +132,7 @@ extension MainFeediPad_v3_viewController {
             } // while
             
             // Banner, only for 1rst topic (if apply)
-            if(i==0) { self.insertNewBanner() }
+            //if(i==0) { self.insertNewBanner() }
 
             // "Load more" item
             self.addLoadMore(topicName: _T.name)
@@ -143,6 +143,7 @@ extension MainFeediPad_v3_viewController {
         self.addFooter()
         
         self.removeDuplicatedMore()
+        newAds.appendAds(to: &self.dataProvider)
     }
     
     func removeDuplicatedMore() {
@@ -252,7 +253,7 @@ extension MainFeediPad_v3_viewController {
             } // while
             
             //Banner, only for 1rst topic (if apply)
-            if(i==0) { self.insertNewBanner() }
+            //if(i==0) { self.insertNewBanner() }
 
             // "Load more" item
             self.addLoadMore(topicName: _T.name)
@@ -263,6 +264,7 @@ extension MainFeediPad_v3_viewController {
         self.addFooter()
 
         self.removeDuplicatedMore()
+        newAds.appendAds(to: &self.dataProvider)
     }
     
     private func itemHas4Cols(item: DP3_groupItem) -> Bool {

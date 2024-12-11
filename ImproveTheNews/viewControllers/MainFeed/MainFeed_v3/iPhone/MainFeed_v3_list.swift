@@ -61,6 +61,9 @@ extension MainFeed_v3_viewController {
         self.list.register(iPhoneStory_vImgDescr_cell_v3.self, forCellReuseIdentifier: iPhoneStory_vImgDescr_cell_v3.identifier)
         self.list.register(iPhoneStory_vTxtDescr_cell_v3.self, forCellReuseIdentifier: iPhoneStory_vTxtDescr_cell_v3.identifier)
         
+        self.list.register(newAdCell_v3.self, forCellReuseIdentifier: newAdCell_v3.identifier)
+        
+        
         self.list.delegate = self
         self.list.dataSource = self
         
@@ -220,6 +223,9 @@ extension MainFeed_v3_viewController {
             } else if let _item = item as? DP3_controversy {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneControversyCell_v3.identifier)!
                 (cell as! iPhoneControversyCell_v3).populate(item: _item.controversy)
+            } else if let _item = item as? DP3_newAd {
+                cell = self.list.dequeueReusableCell(withIdentifier: newAdCell_v3.identifier)!
+                (cell as! newAdCell_v3).populateWithType(_item.type)
             }
         }
         
@@ -334,7 +340,18 @@ extension MainFeed_v3_viewController {
             if let _cell = self.getCell(indexPath) as? iPhoneControversyCell_v3 {
                 result = _cell.calculateHeight()
             }
+        } else if(item is DP3_newAd) {
+            if let _cell = self.getCell(indexPath) as? newAdCell_v3 {
+                result = _cell.calculateHeight()
+            }
         }
+        
+//        else if let _item = item as? DP3_newAd {
+//            
+//                
+//                cell = self.list.dequeueReusableCell(withIdentifier: newAdCell_v3.identifier)!
+//                //(cell as! newAdCell_v3).populate(item: _item.controversy)
+//        }
                   
         return result.rounded()
     }
