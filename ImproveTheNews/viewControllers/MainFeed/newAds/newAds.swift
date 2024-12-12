@@ -304,20 +304,55 @@ class newAdCell_v3: UITableViewCell {
                     logo.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -350),
                 ])
             }
+// Podacst
+        } else if(self.currentType == .podcast) {
+            let img = UIImage(named: "podcast_title")?.withRenderingMode(.alwaysTemplate)
+            let titleImageView = UIImageView(image: img)
+            titleImageView.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
+            self.mainContentView.addSubview(titleImageView)
+
+            if(IPHONE()) {
+                titleImageView.activateConstraints([
+                    titleImageView.widthAnchor.constraint(equalToConstant: 70),
+                    titleImageView.heightAnchor.constraint(equalToConstant: 58),
+                    titleImageView.leadingAnchor.constraint(equalTo: self.mainContentView.leadingAnchor, constant: 17),
+                    titleImageView.topAnchor.constraint(equalTo: self.mainContentView.topAnchor, constant: 20)
+                ])
+            } else {
+                titleImageView.activateConstraints([
+                    titleImageView.widthAnchor.constraint(equalToConstant: 70),
+                    titleImageView.heightAnchor.constraint(equalToConstant: 58),
+                    titleImageView.leadingAnchor.constraint(equalTo: self.mainContentView.leadingAnchor, constant: 25),
+                    titleImageView.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor)
+                ])
+            }
+            
+            var subTitle = "The Day’s Biggest Stories with\nScott Wallace & the Podcast Team."
+            if(IPHONE()){ subTitle = "With Scott Wallace &\nthe Podcast Team." }
+            
+            let subTitleLabel = self.subTitleLabel(text: subTitle)
+            self.mainContentView.addSubview(subTitleLabel)
+            
+            if(IPHONE()) {
+                subTitleLabel.font = AILERON(15)
+            
+                subTitleLabel.activateConstraints([
+                    subTitleLabel.leadingAnchor.constraint(equalTo: titleImageView.leadingAnchor),
+                    subTitleLabel.topAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 10)
+                ])
+            } else {
+                subTitleLabel.activateConstraints([
+                    subTitleLabel.leadingAnchor.constraint(equalTo: titleImageView.trailingAnchor, constant: 42),
+                    subTitleLabel.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor)
+                ])
+            }
+        
         }
         
     }
 
     // ----------------------------------
     func calculateHeight() -> CGFloat {
-        //print(self.currentType.rawValue)
-        
-//        if(IPHONE()) {
-//            return 153
-//        } else {
-//            return 169
-//        }
-        
         if(IPHONE()) {
             return 11 + self.colorRectHeight()
         } else {
