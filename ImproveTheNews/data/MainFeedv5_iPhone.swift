@@ -70,7 +70,7 @@ extension MainFeedv5_iPhone {
                             
                             if(self.topic == "news") {
                                 self.addIA()
-                                self.add_US_Election()
+                                //self.add_US_Election()
                             }
                             if(self.topic == "ai") {
                                 self.addFirstStoryIA()

@@ -53,8 +53,8 @@ class MenuView: UIView {
         .layout,
         .about,
         
-        .contactUs,
-        .elections
+        .contactUs
+        //,.elections
     ]
     
     var themeIsOpened = false

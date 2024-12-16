@@ -35,7 +35,8 @@ class newAds {
     // Append ads, for testing purposes
     static func appendAds(to dataProvider: inout [DP3_item]) {
         var currentAd = 0
-        let ads: [NewAdType] = [.podcast, .usElection, .newsLetter, .whatsApp]
+        //let ads: [NewAdType] = [.podcast, .usElection, .newsLetter, .whatsApp]
+        let ads: [NewAdType] = [.newsLetter, .whatsApp, .podcast]
         
         for (i, DP) in dataProvider.enumerated() {
             if(DP is DP3_more) {
