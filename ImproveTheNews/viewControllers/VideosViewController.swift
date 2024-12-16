@@ -121,7 +121,7 @@ extension VideosViewController {
         var col = 1
         var maxH: CGFloat = 0
         var val_y: CGFloat = 0
-        for _vidStory in videos {
+        for (i, _vidStory) in videos.enumerated() {
             let storyView = iPhoneAllNews_vImgCol_v3(width: _W, imgHeight: 97)
 //            storyView.article = MainFeedArticle(url: "")
 //            storyView.article.isStory = true
@@ -151,6 +151,12 @@ extension VideosViewController {
                 val_y += maxH + 16
                 
                 maxH = 0
+            }
+        
+            if(i == videos.count-1) {
+                if(col==2) {
+                    val_y += maxH + 16
+                }
             }
         }
         
@@ -282,7 +288,7 @@ class VideoStory {
         self.title = CHECK(json["title"])
         self.url = CHECK(json["url"])
         self.videoFile = CHECK(json["videofile"])
-        self.image = CHECK(json["image"])
+        self.image = CHECK(json["image_url"])
         self.excerpt = CHECK(json["excerpt"])
     }
     
