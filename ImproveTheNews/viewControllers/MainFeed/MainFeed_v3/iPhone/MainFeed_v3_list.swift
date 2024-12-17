@@ -226,6 +226,7 @@ extension MainFeed_v3_viewController {
             } else if let _item = item as? DP3_newAd {
                 cell = self.list.dequeueReusableCell(withIdentifier: newAdCell_v3.identifier)!
                 (cell as! newAdCell_v3).populateWithType(_item.type)
+                //cell.setNeedsDisplay()
             }
         }
         

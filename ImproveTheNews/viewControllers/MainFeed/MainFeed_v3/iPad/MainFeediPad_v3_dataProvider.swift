@@ -143,7 +143,7 @@ extension MainFeediPad_v3_viewController {
         self.addFooter()
         
         self.removeDuplicatedMore()
-        newAds.appendAds(to: &self.dataProvider)
+        newAds.appendAds(to: &self.dataProvider, topic: self.topic)
     }
     
     func removeDuplicatedMore() {
@@ -264,7 +264,7 @@ extension MainFeediPad_v3_viewController {
         self.addFooter()
 
         self.removeDuplicatedMore()
-        newAds.appendAds(to: &self.dataProvider)
+        newAds.appendAds(to: &self.dataProvider, topic: self.topic)
     }
     
     private func itemHas4Cols(item: DP3_groupItem) -> Bool {

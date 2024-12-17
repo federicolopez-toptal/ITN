@@ -85,6 +85,29 @@ extension MainFeed_v3_viewController {
         NotificationCenter.default.addObserver(self,
             selector: #selector(self.refreshList),
             name: Notification_refreshMainFeed, object: nil)
+            
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(self.newAdOnClose),
+            name: Notification_newAdOnClose, object: nil)
+    }
+    
+    @objc func newAdOnClose(_ notification: Notification) {
+        let type = newAdCell_v3.adTypeClosed
+        
+        for (i, DP) in self.dataProvider.enumerated() {
+            if(DP is DP3_newAd) {
+                if((DP as! DP3_newAd).type == type) {
+                    self.dataProvider.remove(at: i)
+                    
+                    let sep = DP3_lineSeparator(type: 1)
+                    self.dataProvider.insert(sep, at: i)
+                    
+                    break
+                }
+            }
+        }
+        
+        self.refreshList()
     }
     
     @objc func onStanceIconTap(_ notification: Notification) {

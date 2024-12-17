@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// --------------------------
+let Notification_newAdOnClose = Notification.Name("NewAdOnClose")
 
 // --------------------------
 enum NewAdType: String {
@@ -18,8 +20,6 @@ enum NewAdType: String {
     case podcast = "podcast"
     case whatsApp = "whatsApp"
 }
-
-// https://chat.whatsapp.com/GDJz4KdKt3hDk6cN9Pe94u
 
 class DP3_newAd: DP3_item {
     var type: NewAdType
@@ -33,29 +33,40 @@ class DP3_newAd: DP3_item {
 class newAds {
     
     // Append ads, for testing purposes
-    static func appendAds(to dataProvider: inout [DP3_item]) {
-        var currentAd = 0
-        //let ads: [NewAdType] = [.podcast, .usElection, .newsLetter, .whatsApp]
-        let ads: [NewAdType] = [.newsLetter, .whatsApp, .podcast]
+    static func appendAds(to dataProvider: inout [DP3_item], topic: String) {
         
+
+        var currentAd = 0
+        let ads: [NewAdType] = [.newsLetter, .podcast, .whatsApp]
+        //let ads: [NewAdType] = [.podcast, .usElection, .newsLetter, .whatsApp]
         for (i, DP) in dataProvider.enumerated() {
-            if(DP is DP3_more) {
-                // 1. Append Ad
-                let newAd = DP3_newAd(type: ads[currentAd])
-                dataProvider.insert(newAd, at: i+1)
+            if(DP is DP3_more && currentAd != -1) {
+                let adType = ads[currentAd]
                 
-                // 2. Remove topic line separator
-                let nextIndex = i+2
-                if(nextIndex < dataProvider.count) {
-                    dataProvider.remove(at: i+2)
+                if( !newAdCell_v3.keyExists(key: newAdCell_v3.key(type: adType)) ) {
+                    // 1. Append Ad
+                    let newAd = DP3_newAd(type: adType)
+                    dataProvider.insert(newAd, at: i+1)
+                    
+                    // 2. Remove topic line separator
+                    let nextIndex = i+2
+                    if(nextIndex < dataProvider.count) {
+                        dataProvider.remove(at: i+2)
+                    }
+                }
+
+                if(topic != "news") {
+                    break
                 }
 
                 currentAd += 1
                 if(currentAd == ads.count) {
-                    currentAd = 0
+                    //currentAd = 0
+                    currentAd = -1
                 }
             }
         }
+        
     }
 
 }
@@ -64,12 +75,16 @@ class newAds {
 class newAdCell_v3: UITableViewCell {
 
     static let identifier = "newAdCell_v3"
+    static let version = "0.6"
+    
     static let orange = UIColor(hex: 0xDA4933)
     static let green = UIColor(hex: 0x71D656)
     static let cyan = UIColor(hex: 0x60C4D6)
     
+    static var adTypeClosed: NewAdType = .undefined
     
     var currentType: NewAdType = .undefined
+    var currentDisplayMode: DisplayMode = .dark
     var colorRectHeightConstraint: NSLayoutConstraint? = nil
 
     let mainImageView = UIImageView()
@@ -78,6 +93,9 @@ class newAdCell_v3: UITableViewCell {
     
     let mainContentView = UIView()
     let actionButtonArea = UIButton(type: .system)
+    let closeButtonImageView = UIImageView()
+    let closeButton = UIButton(type: .system)
+    
     
     // MARK: - Start
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -124,6 +142,18 @@ class newAdCell_v3: UITableViewCell {
             self.mainImageViewHeightConstraint!
         ])
         
+        colorRect.addSubview(self.closeButtonImageView)
+        self.closeButtonImageView.image = UIImage(named: "popup.close.bright")!.withRenderingMode(.alwaysTemplate)
+        self.closeButtonImageView.tintColor = .red
+        self.closeButtonImageView.activateConstraints([
+            self.closeButtonImageView.widthAnchor.constraint(equalToConstant: 24),
+            self.closeButtonImageView.heightAnchor.constraint(equalToConstant: 24),
+            self.closeButtonImageView.topAnchor.constraint(equalTo: colorRect.topAnchor,
+                constant: IPHONE() ? 5 : 10),
+            self.closeButtonImageView.trailingAnchor.constraint(equalTo: colorRect.trailingAnchor,
+                constant: IPHONE() ? -5 : -10)
+        ])
+        
         colorRect.addSubview(self.mainContentView)
         self.mainContentView.activateConstraints([
             self.mainContentView.leadingAnchor.constraint(equalTo: colorRect.leadingAnchor),
@@ -141,6 +171,23 @@ class newAdCell_v3: UITableViewCell {
             self.actionButtonArea.bottomAnchor.constraint(equalTo: colorRect.bottomAnchor)
         ])
         self.actionButtonArea.addTarget(self, action: #selector(self.actionButtonAreaOnTap(_:)), for: .touchUpInside)
+        
+        colorRect.addSubview(self.closeButton)
+        self.closeButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.closeButton.activateConstraints([
+            self.closeButton.centerXAnchor.constraint(equalTo: self.closeButtonImageView.centerXAnchor),
+            self.closeButton.centerYAnchor.constraint(equalTo: self.closeButtonImageView.centerYAnchor),
+            self.closeButton.widthAnchor.constraint(equalToConstant: 40),
+            self.closeButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        self.closeButton.addTarget(self, action: #selector(self.closeButtonOnTap(_:)), for: .touchUpInside)
+    }
+    
+    // ----------------------------------
+    @objc func closeButtonOnTap(_ sender: UIButton?) {
+        WRITE(self.key(), value: "CLOSED")
+        newAdCell_v3.adTypeClosed = self.currentType
+        NOTIFY(Notification_newAdOnClose)
     }
     
     @objc func actionButtonAreaOnTap(_ sender: UIButton?) {
@@ -167,10 +214,24 @@ class newAdCell_v3: UITableViewCell {
     
     // ----------------------------------
     func populateWithType(_ type: NewAdType) {
-        if(type == self.currentType) {
-            return
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        if let colorRect = self.mainImageView.superview {
+            colorRect.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2d2d31) : UIColor(hex: 0xe3e3e3)
         }
+        self.closeButtonImageView.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
+        
+        ///////////////////////////////////////////////////////
+        if(self.currentType == .undefined) {
+            self.currentDisplayMode = DisplayMode.current()
+            self.currentType = type
+        } else {
+            if(type == self.currentType && self.currentDisplayMode == DisplayMode.current()) {
+                return
+            }
+        }
+        
         self.currentType = type
+        self.currentDisplayMode = DisplayMode.current()
         
         let image = UIImage(named: self.imageName(from: type.rawValue))
         if let _image = image {
@@ -184,7 +245,9 @@ class newAdCell_v3: UITableViewCell {
         
         self.colorRectHeightConstraint?.constant = self.colorRectHeight()
         self.addContent()
+        
         self.actionButtonArea.superview?.bringSubviewToFront(self.actionButtonArea)
+        self.closeButton.superview?.bringSubviewToFront(self.closeButton)
     }
 
     func addContent() {
@@ -363,8 +426,25 @@ class newAdCell_v3: UITableViewCell {
     
 }
 
+// MARK: - Utils
 extension newAdCell_v3 {
-    // Utils
+    
+    func key() -> String {
+        return newAdCell_v3.key(type: self.currentType)
+    }
+    
+    static func key(type: NewAdType) -> String {
+        return "newAd_" + type.rawValue + "_v" + String(newAdCell_v3.version)
+    }
+    
+    static func keyExists(key: String) -> Bool {
+        if let _value = READ( key ) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     private func colorRectHeight() -> CGFloat {
         var result: CGFloat = 0
         if(IPHONE()) {

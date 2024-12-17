@@ -288,7 +288,12 @@ class VideoStory {
         self.title = CHECK(json["title"])
         self.url = CHECK(json["url"])
         self.videoFile = CHECK(json["videofile"])
-        self.image = CHECK(json["image_url"])
+        
+        self.image = CHECK(json["image"])
+        if(self.image.isEmpty) {
+            self.image = CHECK(json["image_url"])
+        }
+        
         self.excerpt = CHECK(json["excerpt"])
     }
     

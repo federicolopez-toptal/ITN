@@ -297,7 +297,7 @@ extension MainFeediPad_v3_viewController {
                 (cell as! iPadControversyCell_v3).populate(item1: _item.controversy1, item2: _item.controversy2)
             } else if let _item = item as? DP3_newAd {
                 cell = self.list.dequeueReusableCell(withIdentifier: newAdCell_v3.identifier)!
-                (cell as! newAdCell_v3).populateWithType(_item.type)
+                (cell as! newAdCell_v3).populateWithType(_item.type)      
             }
         }
         
