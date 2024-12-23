@@ -98,6 +98,9 @@ class iPhoneArticle_2colsTxt_cell_v3: GroupItemCell_v3 {
             }
         }
         
+        view1_heightConstraint.constant = (self.subViews[0] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
+        view2_heightConstraint.constant = (self.subViews[1] as! iPhoneAllNews_vTxtCol_v3).calculateHeight()
+        
         self.vLine.hide()
         self.refreshDisplayMode()
         // ------
