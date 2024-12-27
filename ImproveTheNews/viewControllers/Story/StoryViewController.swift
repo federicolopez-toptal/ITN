@@ -53,6 +53,10 @@ class StoryViewController: BaseViewController {
     var upButton = UIButton(type: .custom)
     var upButtonBottomConstraint: NSLayoutConstraint?
     
+    var showSplitSource: Bool = true
+    
+    
+    
     deinit {
         self.audioPlayer.close()
         self.secondaryAudioPlayer.close()
@@ -304,8 +308,12 @@ extension StoryViewController {
         
         self.addSpins(story.spins)
         
-        self.addSourcesStructure()
+        if(self.showSplitSource) {
+            self.addSourceSplitGraph()
+        } else {
+            self.addSourcesStructure()
             self.populateSources()
+        }
 
         if(story.splitType.isEmpty) {
             if(self.isContext) {
@@ -3186,4 +3194,177 @@ extension StoryViewController: WKNavigationDelegate {
 //            }
         }
     }
+}
+
+extension StoryViewController {
+    
+    func addSourceSplitGraph() {
+        let squareSize: CGFloat = 40
+        let squareSep: CGFloat = 5
+        let squareCount: CGFloat = 5
+        let offset_x: CGFloat = 40
+        let offset_y: CGFloat = 22
+
+        let size = (squareSize * squareCount) + (squareSep * (squareCount-1))
+        
+        let containerView = UIView()
+        containerView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        containerView.activateConstraints([
+            containerView.heightAnchor.constraint(equalToConstant: 330)
+        ])
+        self.VStack.addArrangedSubview(containerView)
+        
+        let mTitleLabel = UILabel()
+        mTitleLabel.font = DM_SERIF_DISPLAY_fixed_resize(17)
+        if(IPAD()){ mTitleLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) }
+        mTitleLabel.text = "Sources Split"
+        mTitleLabel.textColor = CSS.shared.displayMode().main_textColor
+        containerView.addSubview(mTitleLabel)
+        mTitleLabel.activateConstraints([
+            mTitleLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            mTitleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16)
+        ])
+        self.addInfoButtonNextTo(label: mTitleLabel, index: 3)
+        
+        let centeredView = UIView()
+        centeredView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        containerView.addSubview(centeredView)
+        centeredView.activateConstraints([
+            centeredView.widthAnchor.constraint(equalToConstant: size + offset_x),
+            centeredView.heightAnchor.constraint(equalToConstant: size + offset_y),
+            centeredView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            centeredView.topAnchor.constraint(equalTo: mTitleLabel.bottomAnchor, constant: 30)
+        ])
+        
+    // Squares ----------------------------------------------
+        var pos_x: CGFloat = offset_x
+        var pos_y: CGFloat = offset_y
+        
+        for _ in 1...Int(squareCount) {
+            for _ in 1...Int(squareCount) {
+                let squareView = UIView()
+                squareView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2D2D31) : UIColor(hex: 0xe3e3e3)
+                squareView.layer.cornerRadius = 8
+                centeredView.addSubview(squareView)
+                squareView.activateConstraints([
+                    squareView.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor, constant: pos_x),
+                    squareView.topAnchor.constraint(equalTo: centeredView.topAnchor, constant: pos_y),
+                    squareView.widthAnchor.constraint(equalToConstant: squareSize),
+                    squareView.heightAnchor.constraint(equalToConstant: squareSize),
+                ])
+                
+                pos_x += squareSize + squareSep
+            }
+            
+            pos_y += squareSize + squareSep
+            pos_x = offset_x
+        }
+        
+    // Vertical labels ----------------------------------------------
+        let vOffsets: [CGFloat] = [30, 130, 210]
+        let vTexts = ["ESTAB\nCRIT", "CENTRE", "PRO\nESTAB"]
+        let vAligns: [NSTextAlignment] = [.right, .center,.left]
+        
+        for i in 1...3 {
+            let vLabel = UILabel()
+            vLabel.numberOfLines = 2
+            vLabel.font = AILERON_SEMIBOLD(11)
+            vLabel.text = vTexts[i-1]
+            vLabel.textAlignment = vAligns[i-1]
+            vLabel.textColor = CSS.shared.displayMode().sec_textColor
+            
+            centeredView.addSubview(vLabel)
+            vLabel.activateConstraints([
+                vLabel.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor, constant: 0),
+                vLabel.topAnchor.constraint(equalTo: centeredView.topAnchor, constant: vOffsets[i-1])
+            ])
+            
+            vLabel.transform = CGAffineTransform(rotationAngle: -(.pi/2)) // 90 degrees rotation
+        }
+        
+    // Horizontal labels ----------------------------------------------
+        let hOffsets: [CGFloat] = [40, 130, 226]
+        let hTexts = ["LEFT", "CENTRE", "RIGHT"]
+        let hAligns: [NSTextAlignment] = [.left, .center, .right]
+    
+        for i in 1...3 {
+            let hLabel = UILabel()
+            hLabel.numberOfLines = 1
+            hLabel.font = AILERON_SEMIBOLD(11)
+            hLabel.text = hTexts[i-1]
+            hLabel.textAlignment = vAligns[i-1]
+            hLabel.textColor = CSS.shared.displayMode().sec_textColor
+            
+            centeredView.addSubview(hLabel)
+            hLabel.activateConstraints([
+                hLabel.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor, constant: hOffsets[i-1]),
+                hLabel.topAnchor.constraint(equalTo: centeredView.topAnchor, constant: 0)
+            ])
+        }
+        
+    // Sources -------------------------------------------------------
+        var alreadyLoaded = [String]()
+        
+        for F in self.facts {
+            for S in F.sources {
+                if(!S.id.isEmpty && S.LR != -1 && S.CP != -1) {
+                    if(!alreadyLoaded.contains(S.id)) {
+                        let _pos_x: CGFloat = offset_x + ((CGFloat(S.LR)-1) * (squareSize + squareSep))
+                        let _pos_y: CGFloat = offset_y + ((CGFloat(S.CP)-1) * (squareSize + squareSep))
+                        
+                        let newIcon = UIImageView()
+                        newIcon.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
+                        centeredView.addSubview(newIcon)
+                        newIcon.activateConstraints([
+                            newIcon.widthAnchor.constraint(equalToConstant: 28),
+                            newIcon.heightAnchor.constraint(equalToConstant: 28),
+                            newIcon.topAnchor.constraint(equalTo: centeredView.topAnchor, constant: _pos_y+6),
+                            newIcon.leadingAnchor.constraint(equalTo: centeredView.leadingAnchor, constant: _pos_x+6)
+                        ])
+                        
+                        if let _icon = Sources.shared.search(identifier: S.id), _icon.url != nil {
+                            if(!_icon.url!.contains(".svg")) {
+                                newIcon.sd_setImage(with: URL(string: _icon.url!))
+                            } else {
+                                newIcon.image = UIImage(named: _icon.identifier + ".png")
+                            }
+                        } else {
+                            let url = self.buildLogoUrl(WithId: S.name)
+                            
+                            newIcon.sd_setImage(with: URL(string: url)) { (image, error, cacheType, url) in
+                                if let _ = error {
+                                    newIcon.image = UIImage(named: "LINK64.png")
+                                } else {
+                                    newIcon.superview?.bringSubviewToFront(newIcon)
+                                }
+                            }
+                        }
+                        
+                        newIcon.layer.cornerRadius = 28/2
+                        newIcon.clipsToBounds = true
+                        
+                        ///////////
+                        alreadyLoaded.append(S.id)
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
+    private func buildLogoUrl(WithId id: String) -> String {
+        var _id = id
+        switch(_id) {
+            case "Dw.Com":
+                _id = "DW"
+                
+            default:
+                NOTHING()
+        }
+        
+    
+        return ITN_URL() + "/_next/image?url=https%3A%2F%2Fwww.verity.news%2Fnon-verity-favicons%2F" + _id + ".png&w=32&q=75"
+    }
+    
 }

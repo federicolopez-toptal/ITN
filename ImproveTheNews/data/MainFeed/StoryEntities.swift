@@ -119,22 +119,53 @@ struct Spin {
 struct Fact {
 
     var title: String = ""           // text
+    
     var source_title: String = ""    // source name
     var source_url: String = ""      // source url
-    
     var sourceIndex: Int = -1        // Utility, to link fact with a grouped source
     
+    var sources = [SourceForGraph]()
+    
+    
+    // -----------------------------------
     init(_ json: [String: Any]) {
         self.title = getSTRING(json["title"])
 
         if let _sourceArray = json["source"] as? [[String: Any]] {
             if(_sourceArray.count>0) {
                 let first = _sourceArray[0]
-                
                 self.source_title = getSTRING(first["title"])
                 self.source_url = FIX_URL( getSTRING(first["url"]) )
+                
+                for S in _sourceArray {
+                    self.sources.append( SourceForGraph(json: S) )
+                }
             }
         }
+    }
+}
+
+struct SourceForGraph {
+    var id: String = ""
+    var name: String = ""
+    var LR: Int = -1
+    var CP: Int = -1
+    
+    init(json: [String: Any]) {
+
+        if let _media = json["media"] as? [String: Any] {
+            self.id = CHECK(_media["label"])
+            self.name = CHECK(_media["name"])
+        }
+        
+        self.LR = CHECK_NUM(json["LR"])
+        self.CP = CHECK_NUM(json["CP"])
+    }
+    
+    func trace() {
+        print("SourceForGraph -------------")
+        print("id", self.id, "name", self.name)
+        print("LR", self.LR, "CP", self.CP)
     }
 }
 
