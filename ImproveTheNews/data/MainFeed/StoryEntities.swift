@@ -150,6 +150,7 @@ struct SourceForGraph {
     var name: String = ""
     var LR: Int = -1
     var CP: Int = -1
+    var url: String = ""
     
     init(json: [String: Any]) {
 
@@ -160,6 +161,8 @@ struct SourceForGraph {
         
         self.LR = CHECK_NUM(json["LR"])
         self.CP = CHECK_NUM(json["CP"])
+        
+        self.url = CHECK(json["url"])
     }
     
     func trace() {

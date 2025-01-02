@@ -26,19 +26,29 @@ struct MainFeedTopic {
         self.name = json[0] as! String
         self.nonCapitalizedName = json[1] as! String
         self.capitalizedName = json[2] as! String
-        self.subtopicsCount = json[3] as! Int
+        
+        self.subtopicsCount = 0
+        if let _count = json[3] as? Int {
+            self.subtopicsCount = _count
+        } else if let _strCount = json[3] as? String {
+            self.subtopicsCount = Int(_strCount)!
+        }
+        
         self.sliderCode = json[4] as! String
 //        self.baselinePopularity = (json[5] as! NSNumber).floatValue
 //        self.chosenLocalPopularity = (json[6] as! NSNumber).floatValue
 //        self.globalPopularity = (json[7] as! NSNumber).floatValue
         
         self.hierarchy = [TopicPath]()
-        let _path = json[8] as! [Any]
-        for P in _path {
-            let newTopicPath = TopicPath(P as! [Any])
-            self.hierarchy.append(newTopicPath)
+        if(json.count > 8) {
+            if let _path = json[8] as? [Any] {
+                for P in _path {
+                    let newTopicPath = TopicPath(P as! [Any])
+                    self.hierarchy.append(newTopicPath)
+                }
+            }
         }
-        
+
         self.articles = [MainFeedArticle]()
         for A in articles {
             var _A = [Any]()

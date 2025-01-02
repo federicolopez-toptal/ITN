@@ -543,6 +543,8 @@
 		BD5C80782C59500800ED0A60 /* DialogBubbleView_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C80772C59500800ED0A60 /* DialogBubbleView_iPhone.swift */; };
 		BD5C807C2C59524200ED0A60 /* DialogBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C807B2C59524200ED0A60 /* DialogBubbleView.swift */; };
 		BD5C80812C5A959900ED0A60 /* DialogBubbleView_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C80802C5A959900ED0A60 /* DialogBubbleView_iPad.swift */; };
+		BD7686A32D26E58F00033D2A /* CollapsableSingleSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7686A22D26E58F00033D2A /* CollapsableSingleSourceView.swift */; };
+		BD7686A62D26F4A100033D2A /* CollapsableSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7686A52D26F4A100033D2A /* CollapsableSources.swift */; };
 		BD7B65072C3ECF9100EA20B7 /* NewSlidersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B65062C3ECF9100EA20B7 /* NewSlidersViewController.swift */; };
 		BD7B65092C3EE78D00EA20B7 /* NewSliders_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B65082C3EE78D00EA20B7 /* NewSliders_list.swift */; };
 		BD7B650B2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B650A2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift */; };
@@ -1117,6 +1119,8 @@
 		BD5C80772C59500800ED0A60 /* DialogBubbleView_iPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubbleView_iPhone.swift; sourceTree = "<group>"; };
 		BD5C807B2C59524200ED0A60 /* DialogBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubbleView.swift; sourceTree = "<group>"; };
 		BD5C80802C5A959900ED0A60 /* DialogBubbleView_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubbleView_iPad.swift; sourceTree = "<group>"; };
+		BD7686A22D26E58F00033D2A /* CollapsableSingleSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsableSingleSourceView.swift; sourceTree = "<group>"; };
+		BD7686A52D26F4A100033D2A /* CollapsableSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsableSources.swift; sourceTree = "<group>"; };
 		BD7B65062C3ECF9100EA20B7 /* NewSlidersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSlidersViewController.swift; sourceTree = "<group>"; };
 		BD7B65082C3EE78D00EA20B7 /* NewSliders_list.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSliders_list.swift; sourceTree = "<group>"; };
 		BD7B650A2C3EFD4700EA20B7 /* NewSliders_dataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSliders_dataProvider.swift; sourceTree = "<group>"; };
@@ -1287,6 +1291,8 @@
 				1FA1587F2B0D2F6A006EDCE0 /* StoryViewController.swift */,
 				1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift.txt */,
 				1F7B9EBD296DEFBA00D99C5D /* StoryContent.swift */,
+				BD7686A52D26F4A100033D2A /* CollapsableSources.swift */,
+				BD7686A22D26E58F00033D2A /* CollapsableSingleSourceView.swift */,
 			);
 			path = Story;
 			sourceTree = "<group>";
@@ -2802,6 +2808,7 @@
 				1F8EAED029085FE30015F6F6 /* BreadcrumbsView.swift.txt in Sources */,
 				1FE541C62A03FA9A000A2CF3 /* ResetPassViewController.swift in Sources */,
 				BD4A868D2C3598190007E3A7 /* UIScrollViewExtension.swift in Sources */,
+				BD7686A62D26F4A100033D2A /* CollapsableSources.swift in Sources */,
 				BDD4EA842C225C6B0002906A /* NewsLetterContentUI_daily.swift in Sources */,
 				1FEE16ED28C83CED0079BE54 /* TopicSelectorView.swift.txt in Sources */,
 				BDE576052D0883690021E7B3 /* newAds.swift in Sources */,
@@ -2889,6 +2896,7 @@
 				1FC73906298961EA003EB38D /* Animator.swift in Sources */,
 				1F9EDD5329AEA5DD007A97A6 /* iPadGroupItem_splitCell.swift in Sources */,
 				BD4448432C989CC8001FFBBA /* iPad5items_type3_cell_v3.swift in Sources */,
+				BD7686A32D26E58F00033D2A /* CollapsableSingleSourceView.swift in Sources */,
 				1FA4CE6F28C2D47F0068DE4A /* BundleExtension.swift in Sources */,
 				1F9E28C02954A9D600041303 /* PrivacyPolicyViewController.swift in Sources */,
 				1F05842F29E8733600850E60 /* API.swift in Sources */,

@@ -54,8 +54,7 @@ class StoryViewController: BaseViewController {
     var upButtonBottomConstraint: NSLayoutConstraint?
     
     var showSplitSource: Bool = true
-    
-    
+    var collapsableSources: [CollapsableSources] = []
     
     deinit {
         self.audioPlayer.close()
@@ -304,7 +303,12 @@ extension StoryViewController {
         self.addFactsStructure()
             self.facts = story.facts
             self.groupSources()     // works with self.facts
+            
+        if(self.showSplitSource) {
+            self.populateFacts_new()
+        } else {
             self.populateFacts()    // works with self.facts
+        }
         
         if(self.showSplitSource) {
             self.addSourceSplitGraph()
@@ -2059,6 +2063,255 @@ extension StoryViewController {
 //        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
     }
     
+    private func addMultipleSourceIcons(withSources sources: [SourceForGraph], into container: UIStackView, factIndex: Int) {
+        let newSources = CollapsableSources(buildInto: container, sources: sources)
+        self.collapsableSources.append(newSources)
+    }
+    
+    private func addSourceIcon(withSource S: SourceForGraph, into container: UIStackView, factIndex: Int) {
+        let resultView = HSTACK(into: container, spacing: 7)
+        resultView.backgroundColor = .clear
+        resultView.activateConstraints([
+            resultView.heightAnchor.constraint(equalToConstant: 31)
+        ])
+        resultView.tag = factIndex
+        
+        let imageView = UIImageView()
+        resultView.addArrangedSubview(imageView)
+        imageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
+        imageView.activateConstraints([
+            imageView.widthAnchor.constraint(equalToConstant: 31),
+            imageView.heightAnchor.constraint(equalToConstant: 31),
+            imageView.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: resultView.topAnchor)
+        ])
+        
+        if let _icon = Sources.shared.search(identifier: S.id), _icon.url != nil {
+            if(!_icon.url!.contains(".svg")) {
+                imageView.sd_setImage(with: URL(string: _icon.url!))
+            } else {
+                imageView.image = UIImage(named: _icon.identifier + ".png")
+            }
+        } else {
+            let url = self.buildLogoUrl(WithId: S.name)
+            
+            imageView.sd_setImage(with: URL(string: url)) { (image, error, cacheType, url) in
+                if let _ = error {
+                    imageView.image = UIImage(named: "LINK64.png")
+                }
+            }
+        }
+        imageView.layer.cornerRadius = 28/2
+        imageView.clipsToBounds = true
+        
+        
+        let label = UILabel()
+        label.text = S.name
+        label.font = AILERON(14)
+        label.textColor = CSS.shared.displayMode().main_textColor
+        resultView.addArrangedSubview(label)
+        
+        let openIconVStack = VSTACK(into: resultView)
+        ADD_SPACER(to: openIconVStack, height: 9.5)
+        
+        let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
+        openIconVStack.addArrangedSubview(openIcon)
+        openIcon.activateConstraints([
+            openIcon.widthAnchor.constraint(equalToConstant: 12),
+            openIcon.heightAnchor.constraint(equalToConstant: 12),
+            //openIcon.centerYAnchor.constraint(equalTo: spinName.centerYAnchor),
+        ])
+        openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
+        
+        ADD_SPACER(to: openIconVStack, height: 9.5)
+        ADD_SPACER(to: resultView, width: 5)
+        
+        let button = UIButton(type: .system)
+        button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        resultView.addSubview(button)
+        button.activateConstraints([
+            button.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
+            button.topAnchor.constraint(equalTo: resultView.topAnchor),
+            button.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
+            button.bottomAnchor.constraint(equalTo: resultView.bottomAnchor)
+        ])
+        button.addTarget(self, action: #selector(self.sourceButtonOnLinkTap(_:)), for: .touchUpInside)
+        button.tag = 0
+        
+        ADD_SPACER(to: container)
+    }
+    @objc func sourceButtonOnLinkTap(_ sender: UIButton?) {
+        if let _sender = sender, let _sView = _sender.superview {
+            let fIndex = _sView.tag
+            let sIndex = _sender.tag
+            
+            let url = self.facts[fIndex].sources[sIndex].url
+            
+            var article = MainFeedArticle(url: url)
+            let vc = ArticleViewController()
+            vc.article = article
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
+    }
+    
+    
+    
+    private func populateFacts_new() {
+        self.collapsableSources = []
+        let VStack = self.view.viewWithTag(140) as! UIStackView
+        
+        //VStack.backgroundColor = .systemPink
+        REMOVE_ALL_SUBVIEWS(from: VStack)
+        //ADD_SPACER(to: VStack, height: 20)
+        
+        ADD_SPACER(to: VStack, height: 2)
+        if(self.facts.count==0) {
+            let noFactsLabel = UILabel()
+            noFactsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
+            if(IPAD()){ noFactsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
+            }
+            noFactsLabel.text = "No facts available"
+            noFactsLabel.textColor = CSS.shared.displayMode().main_textColor
+            VStack.addArrangedSubview(noFactsLabel)
+        } else {
+            let FactsLabel = UILabel()
+            FactsLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+            
+            //DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
+            if(IPAD()){ FactsLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
+            }
+            FactsLabel.text = "The Facts"
+            FactsLabel.textColor = CSS.shared.displayMode().main_textColor
+            //DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
+            VStack.addArrangedSubview(FactsLabel)
+            self.addInfoButtonNextTo(label: FactsLabel, index: 1)
+            
+            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
+            let lineColor: UIColor = CSS.shared.displayMode().factLines_color
+            
+            self.lastSourceIndex = -1
+            for (i, F) in self.facts.enumerated() {
+                if(i==0) {
+                    let hStackZero = HSTACK(into: VStack)
+                    ADD_SPACER(to: hStackZero, height: CSS.shared.iPhoneSide_padding)
+                    
+                    let vLine = UIView()
+                    vLine.backgroundColor = lineColor
+                    hStackZero.addSubview(vLine)
+                    vLine.activateConstraints([
+                        vLine.leadingAnchor.constraint(equalTo: hStackZero.leadingAnchor, constant: 11),
+                        vLine.topAnchor.constraint(equalTo: hStackZero.topAnchor),
+                        vLine.bottomAnchor.constraint(equalTo: hStackZero.bottomAnchor),
+                        vLine.widthAnchor.constraint(equalToConstant: 2.0)
+                    ])
+                }
+                
+                let HStack = HSTACK(into: VStack)
+                ADD_SPACER(to: HStack, width: 34)
+
+                let dot = UIView()
+                dot.backgroundColor = HStack.backgroundColor
+                HStack.addSubview(dot)
+                dot.activateConstraints([
+                    dot.widthAnchor.constraint(equalToConstant: 24),
+                    dot.heightAnchor.constraint(equalToConstant: 24),
+                    dot.leadingAnchor.constraint(equalTo: HStack.leadingAnchor, constant: 0),
+                    dot.topAnchor.constraint(equalTo: HStack.topAnchor, constant: 0)
+                ])
+                dot.layer.cornerRadius = 12
+                dot.layer.borderWidth = 2.0
+                dot.layer.borderColor = lineColor.cgColor
+
+                let extraH: CGFloat = (CSS.shared.iPhoneSide_padding * 3)
+                let vLineBelow = UIView()
+                vLineBelow.backgroundColor = lineColor
+                HStack.addSubview(vLineBelow)
+                vLineBelow.activateConstraints([
+                    vLineBelow.leadingAnchor.constraint(equalTo: HStack.leadingAnchor, constant: 11),
+                    vLineBelow.topAnchor.constraint(equalTo: HStack.topAnchor, constant: 24),
+                    vLineBelow.bottomAnchor.constraint(equalTo: HStack.bottomAnchor, constant: extraH),
+                    vLineBelow.widthAnchor.constraint(equalToConstant: 2.0)
+                ])
+
+                let contentVStack = VSTACK(into: HStack)
+                contentVStack.backgroundColor = .clear
+
+                let contentLabel = UILabel()
+                contentLabel.numberOfLines = 0
+                contentLabel.font = AILERON_resize(15)
+                contentLabel.text = F.title
+                contentLabel.textColor = CSS.shared.displayMode().main_textColor
+                
+                //contentLabel.attributedText = self.attrText(F.title, index: F.sourceIndex+1)
+                contentLabel.setLineSpacing(lineSpacing: 7.0)
+                contentVStack.addArrangedSubview(contentLabel)
+                
+                ADD_SPACER(to: contentVStack, height: 16)
+                
+                let sourcesContainer = HSTACK(into: contentVStack)
+                sourcesContainer.backgroundColor = .clear //.green.withAlphaComponent(0.1)
+               
+                if(F.sources.count==1) { // Single source
+                    let S = F.sources.first!
+                    self.addSourceIcon(withSource: S, into: sourcesContainer, factIndex: i)
+                } else { // Multiple sources
+                    self.addMultipleSourceIcons(withSources: F.sources, into: sourcesContainer, factIndex: i)
+                }
+
+                ADD_SPACER(to: VStack, height: 16*2) // separation from next item
+                
+                if(self.show3 && i==2) {
+                    self.lastSourceIndex =  F.sourceIndex
+                    break
+                }
+            }
+            
+            //ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
+            //////////////////////////////////////
+            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
+            
+            let showMoreLabel = UILabel()
+            showMoreLabel.textColor = CSS.shared.orange
+            showMoreLabel.textAlignment = .center
+            showMoreLabel.font = CSS.shared.iPhoneStoryContent_textFont
+            showMoreLabel.text = self.show3 ? "Show More" : "Show Fewer Facts"
+            VStack.addArrangedSubview(showMoreLabel)
+            
+            let showMoreButton = UIButton(type: .custom)
+            //showMoreButton.backgroundColor = .red.withAlphaComponent(0.5)
+            VStack.addSubview(showMoreButton)
+            showMoreButton.activateConstraints([
+                showMoreButton.heightAnchor.constraint(equalToConstant: 22),
+                showMoreButton.widthAnchor.constraint(equalToConstant: 180),
+                showMoreButton.centerXAnchor.constraint(equalTo: showMoreLabel.centerXAnchor),
+                showMoreButton.centerYAnchor.constraint(equalTo: showMoreLabel.centerYAnchor)
+            ])
+            showMoreButton.addTarget(self, action: #selector(showMoreButtonOnTap(_:)), for: .touchUpInside)
+            //////////////////////////////////////
+            ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
+//            let line = UIView()
+//            line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
+//            VStack.addArrangedSubview(line)
+//            line.activateConstraints([
+//                line.heightAnchor.constraint(equalToConstant: 1)
+//            ])
+//            ADD_SPACER(to: VStack, height: 20)
+            //////////////////////////////////////
+
+            ADD_SPACER(to: VStack, height: 15)
+        }
+        
+        //ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding * 2)
+        //print("--------------------")
+        
+//        let line2 = UIView()
+//        self.VStack.addArrangedSubview(line2)
+//        line2.activateConstraints([
+//            line2.heightAnchor.constraint(equalToConstant: 1),
+//        ])
+//        ADD_HDASHES(to: line2)
+    }
+    
     private func populateFacts() {
         let VStack = self.view.viewWithTag(140) as! UIStackView
         
@@ -2790,7 +3043,13 @@ extension StoryViewController {
     
     @objc func showMoreButtonOnTap(_ sender: UIButton) {
         self.show3 = !self.show3
-        self.populateFacts()
+        
+        if(self.showSplitSource) {
+            self.populateFacts_new()
+        } else {
+            self.populateFacts()
+        }
+        
         //self.populateSources()
     }
     
