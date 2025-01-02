@@ -306,14 +306,14 @@ extension StoryViewController {
             self.groupSources()     // works with self.facts
             self.populateFacts()    // works with self.facts
         
-        self.addSpins(story.spins)
-        
         if(self.showSplitSource) {
             self.addSourceSplitGraph()
         } else {
             self.addSourcesStructure()
             self.populateSources()
         }
+
+        self.addSpins(story.spins)
 
         if(story.splitType.isEmpty) {
             if(self.isContext) {
