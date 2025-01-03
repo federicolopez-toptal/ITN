@@ -62,22 +62,29 @@ extension MainFeedv5_iPad {
                         callback(_error)
                     } else {                    
                         if let _json = JSON(fromData: mData) {
-                            if(topic == "ai") {
-                                self.parse(_json, mainTopicItemsLimit: 4)
+                            if let _ = _json["data"] as? [Any] {
+                                ///
+                                if(topic == "ai") {
+                                    self.parse(_json, mainTopicItemsLimit: 4)
+                                } else {
+                                    self.parse(_json, mainTopicItemsLimit: 6)
+                                }
+                                
+                                if(self.topic == "news") {
+                                    self.addIA()
+                                    //self.add_US_Election()
+                                }
+                                if(self.topic == "ai") {
+                                    self.addFirstStoryIA()
+                                    //self.replaceFirstStoryIA()
+                                }
+                                
+                                callback(nil)
+                                ///
                             } else {
-                                self.parse(_json, mainTopicItemsLimit: 6)
+                                let _error = CustomError.jsonParseError
+                                callback(_error)
                             }
-                            
-                            if(self.topic == "news") {
-                                self.addIA()
-                                //self.add_US_Election()
-                            }
-                            if(self.topic == "ai") {
-                                self.addFirstStoryIA()
-                                //self.replaceFirstStoryIA()
-                            }
-                            
-                            callback(nil)
                         } else {
                             let _error = CustomError.jsonParseError
                             callback(_error)

@@ -24,9 +24,33 @@ class CollapsableSources {
         container.spacing = 0
         container.heightAnchor.constraint(equalToConstant: 31).isActive = true
         
-        for S in sources {
+        for (i, S) in sources.enumerated() {
+            var pos_x: CGFloat = -1
+            var width: CGFloat = -1
+            
+            if(i==1 && IPHONE()) {
+                let prev = container.arrangedSubviews.first as! CollapsableSingleSourceView
+                
+                pos_x = prev.fullWidth()
+                width = SCREEN_SIZE().width-32-24-pos_x-32
+                
+//                let tmpView = UIView()
+//                tmpView.backgroundColor = .green
+//                container.addSubview(tmpView)
+//                tmpView.activateConstraints([
+//                    tmpView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: pos_x),
+//                    tmpView.widthAnchor.constraint(equalToConstant: width),
+//                    
+//                    tmpView.topAnchor.constraint(equalTo: container.topAnchor, constant: 30),
+//                    tmpView.heightAnchor.constraint(equalToConstant: 20)
+//                    
+//                ])
+
+            }
+            
             let sourceView = CollapsableSingleSourceView()
             sourceView.url = S.url
+            sourceView.widthLimit = width
             sourceView.buildInto(container, source: S)
         }
         

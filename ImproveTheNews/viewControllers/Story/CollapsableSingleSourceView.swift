@@ -14,6 +14,7 @@ class CollapsableSingleSourceView: UIView {
     let nameLabel = UILabel()
     let actionButton = UIButton(type: .system)
     var url: String = ""
+    var widthLimit: CGFloat = -1
     
     
     // MARK: - Init(s)
@@ -52,7 +53,7 @@ class CollapsableSingleSourceView: UIView {
                 imageView.image = UIImage(named: _icon.identifier + ".png")
             }
         } else {
-            let url = self.buildLogoUrl(WithId: S.name)
+            let url = BUILD_LOGO_URL(id: S.name)
             
             imageView.sd_setImage(with: URL(string: url)) { (image, error, cacheType, url) in
                 if let _ = error {
@@ -84,6 +85,18 @@ class CollapsableSingleSourceView: UIView {
             self.nameLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 7),
             self.nameLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
         ])
+        
+        if(self.widthLimit != -1) {
+            let limit = self.widthLimit-31-7
+            let currentWidth = self.nameLabel.calculateWidthFor(height: 17)
+            
+            if(currentWidth > limit) {
+                //self.nameLabel.backgroundColor = .red.withAlphaComponent(0.25)
+                self.nameLabel.numberOfLines = 1
+                self.nameLabel.widthAnchor.constraint(equalToConstant: limit).isActive = true
+            }
+        }
+        
         self.nameLabel.hide()
         
         self.actionButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
@@ -99,8 +112,26 @@ class CollapsableSingleSourceView: UIView {
         self.close()
     }
     
+    func fullWidth() -> CGFloat {
+        return 31+7+self.nameLabel.calculateWidthFor(height: 17)+10
+    }
+    
     func open(animated: Bool = false) {
-        self.widthConstraint?.constant = 31+7+self.nameLabel.calculateWidthFor(height: 17)+10
+        var w: CGFloat = 31+7
+        if(self.widthLimit == -1) {
+            w += self.nameLabel.calculateWidthFor(height: 17)+10
+        } else {
+            let limit = self.widthLimit-31-7
+            let currentWidth = self.nameLabel.calculateWidthFor(height: 17)
+            
+            if(currentWidth > limit) {
+                w += limit
+            } else {
+                w += self.nameLabel.calculateWidthFor(height: 17)+10
+            }
+        }
+        
+        self.widthConstraint?.constant = w
         self.nameLabel.show()
         self.actionButton.show()
         
@@ -142,18 +173,32 @@ class CollapsableSingleSourceView: UIView {
     
 }
 
-extension CollapsableSingleSourceView {
-    func buildLogoUrl(WithId id: String) -> String {
-        var _id = id
+
+// -----------------------------------------------------
+// ------------------------------------------------
+// -------------------------------------------
+func BUILD_LOGO_URL(id: String) -> String {
+    var _id = id
         switch(_id) {
             case "Dw.Com":
                 _id = "DW"
+            case "The Economic Times":
+                _id = "The%20Economic%20Times"
+            case "Barrons":
+                _id = "Barron_s"
+            case "Firstpost":
+                _id = "Firstpost"
                 
             default:
+                print("Could not find logo for id:", id)
                 NOTHING()
         }
         
+        var domainParam = ITN_URL()
+        domainParam = domainParam.replacingOccurrences(of: ":", with: "%3A")
+        domainParam = domainParam.replacingOccurrences(of: "/", with: "%2F")
     
-        return ITN_URL() + "/_next/image?url=https%3A%2F%2Fwww.verity.news%2Fnon-verity-favicons%2F" + _id + ".png&w=32&q=75"
-    }
+    
+        let result = ITN_URL() + "/_next/image?url=" + domainParam + "%2Fnon-verity-favicons%2F" + _id + ".png&w=32&q=75"
+        return result
 }

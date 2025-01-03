@@ -53,7 +53,7 @@ class StoryViewController: BaseViewController {
     var upButton = UIButton(type: .custom)
     var upButtonBottomConstraint: NSLayoutConstraint?
     
-    var showSplitSource: Bool = false
+    var showSplitSource: Bool = true
     var collapsableSources: [CollapsableSources] = []
     
     deinit {
@@ -2099,7 +2099,7 @@ extension StoryViewController {
                 imageView.image = UIImage(named: _icon.identifier + ".png")
             }
         } else {
-            let url = self.buildLogoUrl(WithId: S.name)
+            let url = BUILD_LOGO_URL(id: S.name)
             
             imageView.sd_setImage(with: URL(string: url)) { (image, error, cacheType, url) in
                 if let _ = error {
@@ -2240,7 +2240,6 @@ extension StoryViewController {
                 ])
 
                 let contentVStack = VSTACK(into: HStack)
-                contentVStack.backgroundColor = .clear
 
                 let contentLabel = UILabel()
                 contentLabel.numberOfLines = 0
@@ -2255,7 +2254,7 @@ extension StoryViewController {
                 ADD_SPACER(to: contentVStack, height: 16)
                 
                 let sourcesContainer = HSTACK(into: contentVStack)
-                sourcesContainer.backgroundColor = .clear //.green.withAlphaComponent(0.1)
+                //sourcesContainer.backgroundColor = .green.withAlphaComponent(0.1)
                
                 if(F.sources.count==1) { // Single source
                     let S = F.sources.first!
@@ -2619,7 +2618,7 @@ extension StoryViewController {
             //HStack.backgroundColor = .green
             ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
             let VStack_borders = VSTACK(into: HStack)
-            ADD_SPACER(to: HStack, width: 35)
+            ADD_SPACER(to: HStack, width: 16)
             //VStack_borders.layer.borderWidth = 8.0
             //VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE1E3E3).cgColor
 
@@ -3633,7 +3632,7 @@ extension StoryViewController {
                                 newIcon.image = UIImage(named: _icon.identifier + ".png")
                             }
                         } else {
-                            let url = self.buildLogoUrl(WithId: S.name)
+                            let url = BUILD_LOGO_URL(id: S.name)
                             
                             newIcon.sd_setImage(with: URL(string: url)) { (image, error, cacheType, url) in
                                 if let _ = error {
@@ -3656,19 +3655,5 @@ extension StoryViewController {
         
         
     }
-    
-    private func buildLogoUrl(WithId id: String) -> String {
-        var _id = id
-        switch(_id) {
-            case "Dw.Com":
-                _id = "DW"
-                
-            default:
-                NOTHING()
-        }
-        
-    
-        return ITN_URL() + "/_next/image?url=https%3A%2F%2Fwww.verity.news%2Fnon-verity-favicons%2F" + _id + ".png&w=32&q=75"
-    }
-    
+
 }

@@ -129,7 +129,7 @@ extension MainFeed_v3_viewController {
     
     func removeDuplicatedMore() {
         for (i, DP) in self.dataProvider.enumerated() {
-            if(DP is DP3_more) {
+            if(DP is DP3_more && i>0) {
                 let prev = self.dataProvider[i-1]
                 if(prev is DP3_more) {
                     self.dataProvider.remove(at: i)
