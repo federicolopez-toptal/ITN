@@ -53,7 +53,7 @@ class StoryViewController: BaseViewController {
     var upButton = UIButton(type: .custom)
     var upButtonBottomConstraint: NSLayoutConstraint?
     
-    var showSplitSource: Bool = true
+    var showSplitSource: Bool = false
     var collapsableSources: [CollapsableSources] = []
     
     deinit {
@@ -311,7 +311,13 @@ extension StoryViewController {
         }
         
         if(self.showSplitSource) {
-            self.addSourceSplitGraph()
+            if(IPHONE()) {
+                self.addSourceSplitGraph(container: self.VStack)
+            } else {
+                if let _container = self.view.viewWithTag(555) as? UIStackView {
+                    self.addSourceSplitGraph(container: _container)
+                }
+            }
         } else {
             self.addSourcesStructure()
             self.populateSources()
@@ -2601,23 +2607,59 @@ extension StoryViewController {
     }
     
     private func addFactsStructure() {
-        ADD_SPACER(to: self.VStack, height: 1)
-    
-        let HStack = HSTACK(into: self.VStack)
-        //HStack.backgroundColor = .green
-        ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
-        let VStack_borders = VSTACK(into: HStack)
-        ADD_SPACER(to: HStack, width: 35)
-        //VStack_borders.layer.borderWidth = 8.0
-        //VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE1E3E3).cgColor
+        var useNewUI = false
+        if(IPAD() && self.showSplitSource){
+            useNewUI = true
+        }
+        
+        if(!useNewUI) { // OLD
+            ADD_SPACER(to: self.VStack, height: 1)
+        
+            let HStack = HSTACK(into: self.VStack)
+            //HStack.backgroundColor = .green
+            ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+            let VStack_borders = VSTACK(into: HStack)
+            ADD_SPACER(to: HStack, width: 35)
+            //VStack_borders.layer.borderWidth = 8.0
+            //VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE1E3E3).cgColor
 
-        VStack_borders.backgroundColor = self.view.backgroundColor
-        let innerHStack = HSTACK(into: VStack_borders)
-        //innerHStack.backgroundColor = .blue
-        //ADD_SPACER(to: innerHStack, width: 13)
-        let innerVStack = VSTACK(into: innerHStack)
-        innerVStack.tag = 140
-        //ADD_SPACER(to: innerHStack, width: 13)
+            VStack_borders.backgroundColor = self.view.backgroundColor
+            let innerHStack = HSTACK(into: VStack_borders)
+            //innerHStack.backgroundColor = .blue
+            //ADD_SPACER(to: innerHStack, width: 13)
+            let innerVStack = VSTACK(into: innerHStack)
+            innerVStack.tag = 140
+            //ADD_SPACER(to: innerHStack, width: 13)
+        } else { // NEW
+            ADD_SPACER(to: self.VStack, height: 1)
+        
+            let HStack = HSTACK(into: self.VStack)
+            //HStack.backgroundColor = .green
+            ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
+            let VStack_borders = VSTACK(into: HStack)
+            ADD_SPACER(to: HStack, width: 35)
+            
+            //VStack_borders.layer.borderWidth = 8.0
+            //VStack_borders.layer.borderColor = DARK_MODE() ? UIColor(hex: 0x28282D).cgColor : UIColor(hex: 0xE1E3E3).cgColor
+
+            VStack_borders.backgroundColor = self.view.backgroundColor
+            
+            let innerHStack = HSTACK(into: VStack_borders)
+            //innerHStack.backgroundColor = .blue
+            //ADD_SPACER(to: innerHStack, width: 13)
+            
+            let innerVStack = VSTACK(into: innerHStack)
+//            innerVStack.backgroundColor = .yellow
+            innerVStack.tag = 140
+            
+                ADD_SPACER(to: innerHStack, width: 25)
+                let innerVStack2 = VSTACK(into: innerHStack)
+                innerVStack2.widthAnchor.constraint(equalToConstant: 360).isActive = true
+                //innerVStack2.backgroundColor = .green
+                innerVStack2.tag = 555
+            
+            //ADD_SPACER(to: innerHStack, width: 13)
+        }
     }
     
     private func addSourcesStructure() {
@@ -3457,7 +3499,7 @@ extension StoryViewController: WKNavigationDelegate {
 
 extension StoryViewController {
     
-    func addSourceSplitGraph() {
+    func addSourceSplitGraph(container mainContainer: UIStackView) {
         let squareSize: CGFloat = 40
         let squareSep: CGFloat = 5
         let squareCount: CGFloat = 5
@@ -3468,10 +3510,13 @@ extension StoryViewController {
         
         let containerView = UIView()
         containerView.backgroundColor = CSS.shared.displayMode().main_bgColor
-        containerView.activateConstraints([
-            containerView.heightAnchor.constraint(equalToConstant: 330)
-        ])
-        self.VStack.addArrangedSubview(containerView)
+        if(mainContainer == self.VStack) {
+            containerView.activateConstraints([
+                containerView.heightAnchor.constraint(equalToConstant: 330)
+            ])
+        }
+//        self.VStack.addArrangedSubview(containerView)
+        mainContainer.addArrangedSubview(containerView)
         
         let mTitleLabel = UILabel()
         mTitleLabel.font = DM_SERIF_DISPLAY_fixed_resize(17)
