@@ -3564,9 +3564,9 @@ extension StoryViewController {
         }
         
     // Vertical labels ----------------------------------------------
-        let vOffsets: [CGFloat] = [30, 130, 210]
-        let vTexts = ["ESTAB\nCRIT", "CENTRE", "PRO\nESTAB"]
-        let vAligns: [NSTextAlignment] = [.right, .center,.left]
+        let vOffsets: [CGFloat] = [30, 128, 210]
+        let vTexts = ["ESTAB\nCRIT", "CENTER", "PRO\nESTAB"]
+        let vAligns: [NSTextAlignment] = [.right, .center, .left]
         
         for i in 1...3 {
             let vLabel = UILabel()
@@ -3586,8 +3586,8 @@ extension StoryViewController {
         }
         
     // Horizontal labels ----------------------------------------------
-        let hOffsets: [CGFloat] = [40, 130, 226]
-        let hTexts = ["LEFT", "CENTRE", "RIGHT"]
+        let hOffsets: [CGFloat] = [40, 128, 226]
+        let hTexts = ["LEFT", "CENTER", "RIGHT"]
         let hAligns: [NSTextAlignment] = [.left, .center, .right]
     
         for i in 1...3 {
