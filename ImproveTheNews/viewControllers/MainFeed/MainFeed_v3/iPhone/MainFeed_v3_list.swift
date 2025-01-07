@@ -156,12 +156,12 @@ extension MainFeed_v3_viewController {
                 }
             } else if(_groupItem is DP3_iPhoneStory_2cols) {
                 if(Layout.current() == .textImages) {
-                    if(indexPath.row == 5) {
-                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
-                        (cell as! iPhoneArticle_2colsTxt_cell_v3).customPopulate = true
-                    } else {
+//                    if(indexPath.row == 5) {
+//                        cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
+//                        (cell as! iPhoneArticle_2colsTxt_cell_v3).customPopulate = true
+//                    } else {
                         cell = self.list.dequeueReusableCell(withIdentifier: iPhoneStory_2colsImg_cell_v3.identifier)!
-                    }
+//                    }
                 } else {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
                     (cell as! iPhoneArticle_2colsTxt_cell_v3).customPopulate = true
@@ -296,14 +296,14 @@ extension MainFeed_v3_viewController {
             }
         } else if(item is DP3_iPhoneStory_2cols) { // row: 2 stories
             if(Layout.current() == .textImages) {
-                if(indexPath.row == 5) {
-                    if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsTxt_cell_v3 {
-                        result = _cell.calculateGroupHeight()
-                    }
-                } else {
+//                if(indexPath.row == 5) {
+//                    if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsTxt_cell_v3 {
+//                        result = _cell.calculateGroupHeight()
+//                    }
+//                } else {
                     if let _cell = self.getCell(indexPath) as? iPhoneStory_2colsImg_cell_v3 {
                         result = _cell.calculateGroupHeight()
-                    }
+//                    }
                 }
             } else {
 //                if let _cell = self.getCell(indexPath) as? iPhoneStory_2colsTxt_cell_v3 {
