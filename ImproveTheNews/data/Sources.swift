@@ -12,7 +12,9 @@ class Sources {
     static let shared = Sources()
 
     var all: [SourceIcon]?
+    var allExtra: [SourceExtraIcon]?
     private let sourcesUrl = ITN_URL() + "/news.json" //"/php/api/news/sources.php"
+    private let extraSourcesUrl = ITN_URL() + "/news-non-itn.json"
 
     func checkIfLoaded(callback: @escaping (Bool) -> ()) {
         if(all != nil) {
@@ -40,6 +42,36 @@ class Sources {
                 let mData = ADD_MAIN_NODE(to: data)
                 if let _json = JSON(fromData: mData) {
                     self.parse(_json)
+                    
+                    if(self.allExtra == nil) {
+                        self.loadExtraData { (error) in
+                            callback(nil)
+                        }
+                    } else {
+                        callback(nil)
+                    }
+                    
+                } else {
+                    let _error = CustomError.jsonParseError
+                    callback(_error)
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    private func loadExtraData(callback: @escaping (Error?) -> ()) {
+        var request = URLRequest(url: URL(string: extraSourcesUrl)!)
+        request.httpMethod = "GET"
+        
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error)
+            } else {
+                let mData = ADD_MAIN_NODE(to: data)
+                if let _json = JSON(fromData: mData) {
+                    self.parseExtra(_json)
                     callback(nil)
                 } else {
                     let _error = CustomError.jsonParseError
@@ -48,6 +80,16 @@ class Sources {
             }
         }
         task.resume()
+    }
+
+    private func parseExtra(_ json: [String: Any]) {
+        let mainNode = json["data"] as! [Any]
+        self.allExtra = [SourceExtraIcon]()
+        
+        for obj in mainNode {
+            var newExtraSource = SourceExtraIcon(obj as! [String: Any])
+            self.allExtra?.append(newExtraSource)
+        }
     }
 
     private func parse(_ json: [String: Any]) {
@@ -75,7 +117,22 @@ class Sources {
     func search(identifier: String) -> SourceIcon? {
         let _identifier = self.fixIdentifier(identifier)
     
-        let found = self.all?.first(where: { $0.identifier == _identifier.lowercased() })
+        var found: SourceIcon? = nil
+        found = self.all?.first(where: { $0.identifier == _identifier.lowercased() })
+        
+        if(found == nil) {
+            found = self.all?.first(where: { $0.name.lowercased() == _identifier.lowercased() })
+        }
+        
+        if(found == nil) {
+            print("EXTRA", _identifier)
+            if let _eFound = self.allExtra?.first(where: { $0.name.lowercased() == _identifier.lowercased() }) {
+                found = SourceIcon(data: _eFound)
+                
+                print(_eFound.icon, found!.url)
+            }
+        }
+        
         return found
     }
     func fixIdentifier(_ id: String) -> String {
@@ -133,16 +190,35 @@ class Sources {
     
 }
 
+struct SourceExtraIcon {
+    var name: String
+    var icon: String
+    
+    init(_ json: [String: Any]) {
+        self.name = CHECK(json["name"])
+        self.icon = CHECK(json["icon"])
+    }
+}
+
 struct SourceIcon {
 
     var identifier: String
     var url: String?
     var name: String
     var paywall: Bool
-    var code: String?
+    var code: String? = nil
     var state: Bool = true
     var LR: Int = 1
     var PE: Int = 1
+    
+    init(data: SourceExtraIcon) {
+        self.identifier = data.name
+        self.name = data.name
+        self.paywall = false
+        
+        // code, state, LR, PE
+        self.url = ITN_URL() + "/" + data.icon
+    }
     
     init(_ json: [String: Any]) {
         self.identifier = ""

@@ -436,6 +436,7 @@ class SourceIconsView: UIView {
         
         var num = 1
         for S in sources {
+            
             if let _icon = Sources.shared.search(identifier: S), _icon.url != nil {
                 let img = self.imgs[num-1]
                 img.show()
