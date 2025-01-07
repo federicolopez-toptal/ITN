@@ -53,7 +53,7 @@ class StoryViewController: BaseViewController {
     var upButton = UIButton(type: .custom)
     var upButtonBottomConstraint: NSLayoutConstraint?
     
-    var showSplitSource: Bool = true
+    var showSplitSource: Bool = false
     var collapsableSources: [CollapsableSources] = []
     
     deinit {
