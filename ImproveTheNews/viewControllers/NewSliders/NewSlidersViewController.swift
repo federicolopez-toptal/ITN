@@ -28,6 +28,9 @@ class NewSlidersViewController: BaseViewController {
     
     let slidersPanel = SlidersPanel()
     
+    var lastTopicTapped: String = ""
+    var topicReloading = ("", -1)
+    
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,11 +150,17 @@ extension NewSlidersViewController {
                     return
                 }
                 
+                self.topicReloading = ("", -1)
                 self.data.fixTopicsForNewSliders()
                 
                 var backButton = false
                 if(self.topic != "news"){ backButton = true }
-                self.topicSelector.setTopics(self.data.topicNames(), addBack: backButton)                
+                
+                var topicNames = self.data.topicNames()
+                if(self.lastTopicTapped == "Russia/Ukraine" || self.lastTopicTapped == "Israel/Palestine") {
+                    topicNames = [self.lastTopicTapped]
+                }
+                self.topicSelector.setTopics(topicNames, addBack: backButton)
                 
                 self.populateDataProvider()
                 self.refreshList()
@@ -173,8 +182,23 @@ extension NewSlidersViewController {
             
             ALERT(vc: self, title: "",
                 message: "Trouble loading the news,\nplease try again later.", onCompletion: {
-                DELAY(1.0) {
-                    self.loadContent()
+                
+                var reloading = true
+                if(self.topic != self.topicReloading.0) {
+                    self.topicReloading = (self.topic, 1)
+                } else {
+                    let value = self.topicReloading.1 + 1
+                    self.topicReloading.1 = value
+                    
+                    if(value == 3) {
+                        reloading = false
+                    }
+                }
+
+                if(reloading) {
+                    DELAY(1.0) {
+                        self.loadContent()
+                    }
                 }
             })
         }
@@ -230,12 +254,15 @@ extension NewSlidersViewController: TopicSelectorViewPlusDelegate {
 //            CustomNavController.shared.pushViewController(vc, animated: true)
 //        }
 
-        let newTopic = self.data.topics[index].name
-        self.topic = newTopic
+        let T = self.data.topics[index]
+        self.lastTopicTapped = T.capitalizedName
+        
+        self.topic = T.name
         self.loadContent()
     }
     
     func onTopicBackButtonTap() {
+        self.lastTopicTapped = ""
         self.topic = "news"
         self.loadContent()
     }

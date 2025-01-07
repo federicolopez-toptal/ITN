@@ -169,7 +169,7 @@ extension MainFeed_v3_viewController: TopicSelectorViewDelegate {
             self.list.scrollToTop()
         } else {
             let topic = self.data.topics[index].name
-        
+            
             if(topic == "us-election-2024") {
                 ControversiesViewController.topic = "us-election-2024"
                 CustomNavController.shared.tabsBar.selectTab(2, loadContent: true)

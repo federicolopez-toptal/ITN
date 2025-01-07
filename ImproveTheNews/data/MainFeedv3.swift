@@ -476,6 +476,7 @@ extension MainFeedv3 {
     private func addRussiaUkraine() {
         let data: [Any] = [
             "russia_ukraine", "russia_ukraine", "Russia/Ukraine", 0, "ru",
+            //"military", "military", "Russia/Ukraine", 0, "ru",
             0, 0, 0, []
         ]
         let newTopic = MainFeedTopic(data, [])
@@ -485,6 +486,7 @@ extension MainFeedv3 {
     private func addIsraelPalestine() {
         let data: [Any] = [
             "israel_palestine", "israel_palestine", "Israel/Palestine", 0, "ip",
+            //"middle_east", "middle_east", "Israel/Palestine", 0, "ip",
             0, 0, 0, []
         ]
         let newTopic = MainFeedTopic(data, [])

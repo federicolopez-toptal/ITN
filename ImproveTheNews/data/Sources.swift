@@ -125,11 +125,8 @@ class Sources {
         }
         
         if(found == nil) {
-            print("EXTRA", _identifier)
             if let _eFound = self.allExtra?.first(where: { $0.name.lowercased() == _identifier.lowercased() }) {
                 found = SourceIcon(data: _eFound)
-                
-                print(_eFound.icon, found!.url)
             }
         }
         

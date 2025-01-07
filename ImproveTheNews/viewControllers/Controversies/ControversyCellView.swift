@@ -15,7 +15,7 @@ protocol ControversyCellViewDelegate: AnyObject {
 class ControversyCellView: UIView {
 
     weak var delegate: ControversyCellViewDelegate?
-    let resolvedViewHeight: CGFloat = 80
+    let resolvedViewHeight: CGFloat = 60
 
     let M: CGFloat = 16
     private var WIDTH: CGFloat = 1

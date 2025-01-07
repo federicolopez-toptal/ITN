@@ -173,7 +173,12 @@ extension NewSlidersViewController: UITableViewDelegate, UITableViewDataSource {
                 (cell as! iPhoneMoreCell_v3).delegate = self
             } else if let _item = item as? DP3_text {
                 cell = self.list.dequeueReusableCell(withIdentifier: TopicShownTextCell.identifier)!
-                (cell as! TopicShownTextCell).populate(with: _item.text)
+                var text = _item.text
+                if(self.lastTopicTapped == "Russia/Ukraine" || self.lastTopicTapped == "Israel/Palestine") {
+                    text = self.lastTopicTapped
+                }
+                
+                (cell as! TopicShownTextCell).populate(with: text)
             } else if let _item = item as? DP3_splitHeaderItem {
                 cell = self.list.dequeueReusableCell(withIdentifier: iPhoneSplitHeaderCell_v3.identifier)!
                 (cell as! iPhoneSplitHeaderCell_v3).populate(with: _item)
