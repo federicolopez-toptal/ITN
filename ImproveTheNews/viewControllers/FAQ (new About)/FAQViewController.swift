@@ -595,7 +595,6 @@ class FAQViewController: BaseViewController {
         let tag = sender!.tag
         let sectionView = sender!.superview!
         
-        print("TAG", tag)
         if(sectionView.tag == 0) { // Open section!
             var extraHeight: CGFloat = 0
 //            if(IPAD()) {
