@@ -41,7 +41,6 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         
         var sourceTime_leading: NSLayoutConstraint?
         var source_leading: NSLayoutConstraint?
-
     
     // MARK: - Start
     required init?(coder: NSCoder) {
@@ -162,6 +161,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             self.articleTimeLabel.centerYAnchor.constraint(equalTo: self.articleSourceNameLabel.centerYAnchor),
             self.articleTimeLabel.leadingAnchor.constraint(equalTo: self.openIcon.trailingAnchor, constant: 5)
         ])
+        articleComponents.append(self.articleTimeLabel)
         
         self.addSubview(self.articleStanceIcon)
         self.articleStanceIcon.activateConstraints([
@@ -412,7 +412,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     
     override func populate(_ article: MainFeedArticle) {
         //print("from MAIN_FEED, SEARCH, ABOUT")
-        
+                
         self.openIcon.hide()
         self.isContext = article.isContext
         if(self.isContext) {
@@ -562,6 +562,21 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         }
 
         self.storyPill.hide()
+        
+        //print(self.articleTimeLabel.superview)
+        //print( self.articleTimeLabel.text, self.articleTimeLabel.isHidden )
+        
+//        self.articleTimeLabel.show()
+//        self.articleTimeLabel.textColor = .red
+        
+//        self.articleTimeLabel.text = "ABCDEFGHIJKL"
+//        DELAY(2.0) {
+//            self.articleTimeLabel.textColor = .red
+//        }
+        
+        if(article.isStory) {
+            self.articleTimeLabel.hide()
+        }
     }
     
     override func refreshDisplayMode() {
