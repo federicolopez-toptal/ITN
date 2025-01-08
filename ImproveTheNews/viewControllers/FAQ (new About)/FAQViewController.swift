@@ -369,7 +369,7 @@ class FAQViewController: BaseViewController {
         vLine.alpha = 0
         
         let titleHStack = HSTACK(into: sectionView)
-        titleHStack.backgroundColor = .clear //.orange
+        titleHStack.backgroundColor = .clear
         titleHStack.activateConstraints([
             titleHStack.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: 15),
             titleHStack.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -15),
@@ -530,36 +530,56 @@ class FAQViewController: BaseViewController {
         
         var height: CGFloat = 0
         if(open) {
-            sectionView.tag = 1
-            height = 24 + titleLabel.calculateHeightFor(width: W-50) + 24 + contentLabel.calculateHeightFor(width: W) + 24
-            contentLabel.show()
-            vLine.backgroundColor = UIColor(hex: 0xFF643C)
-            titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
-            
-//            var imageName = "minusLight"
-//            if(DARK_MODE()){ imageName = "minusDark" }
-            icon.image = UIImage(named: DisplayMode.imageName("about-up"))
-            
-            imageView?.show()
-            var H: CGFloat = 0
-            if let _imageInfo = self.images(index) {
-                let _w = _imageInfo.1.width
-                let _h = _imageInfo.1.height
-                H = ((W+50) * _h)/_w
+            if(IPHONE()) {
+                ///
+                sectionView.tag = 1
+                height = 24 + titleLabel.calculateHeightFor(width: W-50) + 24 + contentLabel.calculateHeightFor(width: W) + 24
+                contentLabel.show()
+                vLine.backgroundColor = UIColor(hex: 0xFF643C)
+                titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+                
+    //            var imageName = "minusLight"
+    //            if(DARK_MODE()){ imageName = "minusDark" }
+                icon.image = UIImage(named: DisplayMode.imageName("about-up"))
+                
+                imageView?.show()
+                var H: CGFloat = 0
+                if let _imageInfo = self.images(index) {
+                    let _w = _imageInfo.1.width
+                    let _h = _imageInfo.1.height
+                    H = ((W+50) * _h)/_w
+                }
+    //            if(index==5 || index==6) {
+    //                if(index == 5) {
+    //                    H = ((W+50) * 175)/468
+    //                } else if(index == 6) {
+    //                    H = ((W+50) * 216)/1280
+    //                }
+                    height += H + 15
+    //            }
+            ///
+            } else {
+                sectionView.tag = 1
+                
+                let _w = SCREEN_SIZE().width - 120 - 30
+                height = 24 + titleLabel.calculateHeightFor(width: _w) + 24 + contentLabel.calculateHeightFor(width: _w) + 24
+                contentLabel.show()
+                vLine.backgroundColor = UIColor(hex: 0xFF643C)
+                titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
+                
+                icon.image = UIImage(named: DisplayMode.imageName("about-up"))
             }
-//            if(index==5 || index==6) {
-//                if(index == 5) {
-//                    H = ((W+50) * 175)/468
-//                } else if(index == 6) {
-//                    H = ((W+50) * 216)/1280
-//                }
-                height += H + 15
-//            }
-            
             
         } else {
             sectionView.tag = 0
-            height = 24 + titleLabel.calculateHeightFor(width: W-50) + 24
+            
+            if(IPHONE()) {
+                height = 24 + titleLabel.calculateHeightFor(width: W-50) + 24
+            } else {
+                let _w = SCREEN_SIZE().width - 120 - 30
+                height = 24 + titleLabel.calculateHeightFor(width: _w) + 24
+            }
+            
             contentLabel.hide()
             vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x4C596C) : UIColor(hex: 0x1D242F)
             titleLabel.textColor = DARK_MODE() ? .white : UIColor(hex: 0x1D242F)
@@ -578,16 +598,16 @@ class FAQViewController: BaseViewController {
         print("TAG", tag)
         if(sectionView.tag == 0) { // Open section!
             var extraHeight: CGFloat = 0
-            if(IPAD()) {
-                extraHeight = 30
-                if(tag == 5) {
-                    extraHeight += 30
-                } else if(tag==7) {
-                    extraHeight = 0
-                } else if(tag==6) {
-                    extraHeight -= 20
-                }
-            }
+//            if(IPAD()) {
+//                extraHeight = 30
+//                if(tag == 5) {
+//                    extraHeight += 30
+//                } else if(tag==7) {
+//                    extraHeight = 0
+//                } else if(tag==6) {
+//                    extraHeight -= 20
+//                }
+//            }
             
             self.updateSectionHeight(index: tag, open: true, animate: true, extraHeight: extraHeight)
         } else { // Close section!
