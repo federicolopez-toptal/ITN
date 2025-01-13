@@ -580,10 +580,28 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     }
     
     override func refreshDisplayMode() {
-        if(KeywordSearch.searchTerm == nil || self.ignoreSearch) {
+        if self.article == nil {
             self.storyTitleLabel.textColor = CSS.shared.displayMode().main_textColor
             self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
+        } else {
+            if let _searchTerm = KeywordSearch.searchTerm {
+                if(self.article.isStory) {
+                    self.storyTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().main_textColor)
+                } else {
+                    self.articleTitleLabel.remarkSearchTerm(_searchTerm, color: CSS.shared.displayMode().sec_textColor)
+                }
+            } else {
+                self.storyTitleLabel.textColor = CSS.shared.displayMode().main_textColor
+                self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
+            }
         }
+        
+        
+        
+//        if(KeywordSearch.searchTerm == nil || self.ignoreSearch) {
+//            self.storyTitleLabel.textColor = CSS.shared.displayMode().main_textColor
+//            self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
+//        }
         
         
         if(!self.isContext) {

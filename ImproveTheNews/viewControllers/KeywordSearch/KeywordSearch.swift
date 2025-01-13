@@ -43,7 +43,7 @@ class KeywordSearch {
         self.task?.cancel()
     }
     
-    func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool, Int) -> () ) {
+    func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool, Int, Bool) -> () ) {
         
         self.searchType = type
         self.lastSearch = text
@@ -79,7 +79,7 @@ class KeywordSearch {
             if let _json = json, success {
             
                 var count = self.parseResult(_json)
-                callback(true, count)
+                callback(true, count, false)
                 
                 if(pageNumber == 1) {
                     self.loadingControversies = true
@@ -90,7 +90,7 @@ class KeywordSearch {
                                 count += _total
                             }
                             self.loadingControversies = false
-                            callback(true, count)
+                            callback(true, count, true)
                         }
                     }
                 }
@@ -112,7 +112,7 @@ class KeywordSearch {
             
             } else {
                 print("ERROR", serverMsg)
-                callback(false, -1)
+                callback(false, -1, false)
             }
         }
     }

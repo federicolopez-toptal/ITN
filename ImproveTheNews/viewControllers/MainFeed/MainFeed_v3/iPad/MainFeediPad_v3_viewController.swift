@@ -80,6 +80,7 @@ class MainFeediPad_v3_viewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        KeywordSearch.searchTerm = nil
         
         if(!self.didAppear) {
 //            CustomNavController.shared.tour.start()

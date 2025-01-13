@@ -27,8 +27,6 @@ class KeywordSearchViewController: BaseViewController {
     var articleSearchPage: Int = 1
     
     var middleIndexPath: IndexPath?
-            
-            
     
 
     // MARK: - Init(s)
@@ -181,6 +179,7 @@ extension KeywordSearchViewController {
         self.showLoading()
 
         KeywordSearch.searchTerm = nil
+        
 //        if(self.textHasSpecialCharacters(text)) {
 //            DELAY(2.5) {
 //                KeywordSearch.shared.toZero()
@@ -197,14 +196,14 @@ extension KeywordSearchViewController {
 //        }
         
         // -----------------------------------
-        KeywordSearch.shared.search(text, type: sType) { (success, _) in
+        KeywordSearch.shared.search(text, type: sType) { (success, _, isControversy) in
             self.searchCount += 1
-            //print("SEARCH DONE!")
             
             if(success) {
                 KeywordSearch.searchTerm = text
             
-                self.fillDataProvider()
+                print("isControversy", isControversy)
+                self.fillDataProvider(controversies: isControversy)
                 self.updateFilteredDataProvider()
 
                 MAIN_THREAD {
@@ -260,7 +259,6 @@ extension KeywordSearchViewController {
     }
 
     @objc func onTryAgainButtonTap(_ notification: Notification) {
-        print("TAP!")
         DELAY(0.5) {
             self.search(self.searchTextfield.text(), type: .all)
         }
@@ -292,12 +290,19 @@ extension KeywordSearchViewController: UITableViewDelegate, UITableViewDataSourc
 // MARK: - Dataprovider
 extension KeywordSearchViewController {
 
-    func fillDataProvider(tapOnTab: Bool = false) {
+    func fillDataProvider(tapOnTab: Bool = false, controversies: Bool = false) {
         self.dataProvider = [DP3_item]()
     
         self.addTopics()
         let _ = self.addStories(tapOnTab: true)
         let _ = self.addControversies()
+        
+        if(controversies) {
+            for (i, A) in KeywordSearch.shared.articles.enumerated() {
+                KeywordSearch.shared.articles[i].used = false
+            }
+        }
+        
         let _ = self.addArticles()
     
 //        switch(self.resultType) {

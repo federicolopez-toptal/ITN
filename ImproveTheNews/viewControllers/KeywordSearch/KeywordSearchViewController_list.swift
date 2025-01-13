@@ -120,6 +120,11 @@ extension KeywordSearchViewController {
                 }
             }
             
+            if(self.searchTextfield.text().isEmpty) {
+                KeywordSearch.searchTerm = nil
+            } else {
+                KeywordSearch.searchTerm = self.searchTextfield.text()
+            }
             (cell as! GroupItemCell_v3).populate(with: _group)
             
         } else if let _group = dpItem as? DP3_topics {
@@ -234,7 +239,7 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             
             self.showLoading()
             let T = self.searchTextfield.text()
-            KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage+1) { (ok, _) in
+            KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage+1) { (ok, _, isControversy) in
                 if(ok) {
                     self.storySearchPage += 1
                     let i = self.removeAddMoreItem(isStory: true)
@@ -270,7 +275,7 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             
             self.showLoading()
             let T = self.searchTextfield.text()
-            KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage+1) { (ok, _) in
+            KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage+1) { (ok, _, isControversy) in
                 if(ok) {
                     self.articleSearchPage += 1
                     let i = self.removeAddMoreItem(isStory: false)
