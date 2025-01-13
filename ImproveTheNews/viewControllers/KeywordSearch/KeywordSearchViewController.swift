@@ -202,8 +202,35 @@ extension KeywordSearchViewController {
             if(success) {
                 KeywordSearch.searchTerm = text
             
-                print("isControversy", isControversy)
-                self.fillDataProvider(controversies: isControversy)
+                if(!isControversy) {
+                    self.fillDataProvider()
+                } else {
+                    var controv = false
+                    for (i, DP) in self.dataProvider.enumerated() {
+                        if let _header = DP as? DP3_headerItem {
+                            if(_header.title.lowercased() == "controversies") {
+                                controv = true
+                            }
+                        }
+                        
+                        if(controv) {
+                            self.dataProvider.remove(at: i+2)
+                            let _ = self.addControversies(index: i+2)
+                            break
+                        }
+                    }
+                    
+                    //let _ = self.addControversies()
+                    
+//                    if(self.thereAreControversiesToShow()) {
+//                        let i = self.removeAddMoreControversy()
+//                        let _ = self.addControversies(index: i)
+//                        
+//                        self.updateFilteredDataProvider()
+//                        self.refreshList()
+//                    }
+                }
+                
                 self.updateFilteredDataProvider()
 
                 MAIN_THREAD {
@@ -290,20 +317,20 @@ extension KeywordSearchViewController: UITableViewDelegate, UITableViewDataSourc
 // MARK: - Dataprovider
 extension KeywordSearchViewController {
 
-    func fillDataProvider(tapOnTab: Bool = false, controversies: Bool = false) {
+    func fillDataProvider(tapOnTab: Bool = false) {
         self.dataProvider = [DP3_item]()
     
         self.addTopics()
         let _ = self.addStories(tapOnTab: true)
         let _ = self.addControversies()
-        
-        if(controversies) {
-            for (i, A) in KeywordSearch.shared.articles.enumerated() {
-                KeywordSearch.shared.articles[i].used = false
-            }
-        }
-        
         let _ = self.addArticles()
+        
+//        if(controversies) {
+//            for (i, A) in KeywordSearch.shared.articles.enumerated() {
+//                KeywordSearch.shared.articles[i].used = false
+//            }
+//        }
+                
     
 //        switch(self.resultType) {
 //            case 0:
