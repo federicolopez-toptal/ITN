@@ -128,7 +128,7 @@ class iPhoneFooterCell_v3: UITableViewCell {
         let copyrightLabel = UILabel()
         copyrightLabel.textColor = CSS.shared.displayMode().sec_textColor
         copyrightLabel.numberOfLines = 0
-        copyrightLabel.text = "© 2024 Improve the News Foundation. All rights reserved."
+        copyrightLabel.text = "© 2025 Improve the News Foundation. All rights reserved."
         copyrightLabel.font = AILERON(15)
         self.contentView.addSubview(copyrightLabel)
         copyrightLabel.activateConstraints([
