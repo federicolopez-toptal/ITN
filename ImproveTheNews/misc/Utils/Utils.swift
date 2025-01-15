@@ -189,7 +189,9 @@ func DATE_TO_TIMEAGO(_ date: String) -> String {
     var result = date
     
     let formatter = DateFormatter()
+    formatter.calendar = Calendar(identifier: .gregorian)
     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    
     if let _inputDate = formatter.date(from: date) {
         //Example: 39347427.55886698
         let secs = Date().timeIntervalSince(_inputDate) //Seconds

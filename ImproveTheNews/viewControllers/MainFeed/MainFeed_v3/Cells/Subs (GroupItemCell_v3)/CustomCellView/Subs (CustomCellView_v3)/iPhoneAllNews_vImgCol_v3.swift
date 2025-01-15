@@ -457,6 +457,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             }
             
             self.storySources.load(article.storySources)
+            
             self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title

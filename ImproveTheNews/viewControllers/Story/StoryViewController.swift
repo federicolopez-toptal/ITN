@@ -488,7 +488,7 @@ extension StoryViewController {
             let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
             
             // item 1
-            if let _A = self.goDeeperStories.first {
+            if let _A = self.goDeeperStories.first {                
                 VIEW1.refreshDisplayMode()
                 VIEW1.populate(story: _A)
                 H1 = VIEW1.calculateHeight()
