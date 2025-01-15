@@ -75,10 +75,17 @@ class CustomNavController: UINavigationController {
     }
 
     func refreshDisplayMode() {
-        self.loading.refreshDisplayMode()
-        self.darkView.refreshDisplayMode()
+        var delayTime: CGFloat = 0
+        if(IPAD()) {
+            delayTime = 0.4
+        }
+        
         self.menu.refreshDisplayMode()
-        self.tabsBar.refreshDisplayMode()
+        DELAY(delayTime) {
+            self.loading.refreshDisplayMode()
+            self.darkView.refreshDisplayMode()
+            self.tabsBar.refreshDisplayMode()
+        }
 
         for vc in self.viewControllers {
             if let _vc = vc as? BaseViewController {
