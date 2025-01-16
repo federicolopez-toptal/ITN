@@ -29,6 +29,8 @@ class StoryViewController: BaseViewController {
     var facts: [Fact]!
     var spins: [Spin]!
     var articles: [StoryArticle]!
+    var controversies: [ControversyListItem]!
+    
     var imageHeightConstraint: NSLayoutConstraint? = nil
     
     var imageCreditUrl: String = ""
@@ -42,6 +44,7 @@ class StoryViewController: BaseViewController {
     
     var sections_y = [CGFloat]()
     var backGoTo: Int = -1
+    var iPad_W: CGFloat = -1
     
     var loadedImage: UIImage? = nil
     var loadedStory: MainFeedStory!
@@ -324,6 +327,7 @@ extension StoryViewController {
         }
 
         self.addSpins(story.spins)
+        self.addControversies(story.controversies)
 
         if(story.splitType.isEmpty) {
             if(self.isContext) {
@@ -3016,6 +3020,188 @@ extension StoryViewController {
 
     }
 
+
+    func addControversies(_ controversies: [ControversyListItem]) {
+        self.controversies = controversies
+        if(controversies.count==0) {
+            return
+        }
+        
+        let vMainContainer = VSTACK(into: self.VStack)
+        vMainContainer.backgroundColor = CSS.shared.displayMode().main_bgColor
+        
+        // ------------------------
+        let hTitleContainer = HSTACK(into: vMainContainer)
+        ADD_SPACER(to: hTitleContainer, width: 16)
+        
+        let titleLabel = UILabel()
+        titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+        if(IPAD()){ titleLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
+        }
+        titleLabel.text = "The Controversies"
+        titleLabel.textColor = CSS.shared.displayMode().main_textColor
+        hTitleContainer.addArrangedSubview(titleLabel)
+        
+        ADD_SPACER(to: hTitleContainer, width: 16)
+        if(IPAD()){ ADD_SPACER(to: vMainContainer, height: 10) }
+        // ------------------------
+        let middleOrangeView = UIView()
+        middleOrangeView.backgroundColor = CSS.shared.displayMode().main_bgColor // .orange
+        vMainContainer.addArrangedSubview(middleOrangeView)
+        
+        let claimsContainerView = UIView()
+        claimsContainerView.backgroundColor = CSS.shared.displayMode().main_bgColor
+        middleOrangeView.addSubview(claimsContainerView)
+        claimsContainerView.activateConstraints([
+            claimsContainerView.widthAnchor.constraint(equalToConstant: IPHONE() ? SCREEN_SIZE().width : W()),
+            claimsContainerView.centerXAnchor.constraint(equalTo: middleOrangeView.centerXAnchor)
+        ])
+        
+        
+        //if(IPHONE()) {
+            
+//        } else {
+//            let hstack = HSTACK(into: vMainContainer)
+//            ADD_SPACER(to: hstack, width: 16)
+//            hstack.addArrangedSubview(claimsContainerView)
+//        }
+        
+        let M: CGFloat = CSS.shared.iPhoneSide_padding
+        var col: CGFloat = 0
+        var item_W: CGFloat = SCREEN_SIZE().width
+        if(IPAD()){ item_W = (W()-M)/2 }
+        var val_y: CGFloat = 0
+        
+        var col1: CGFloat = 0
+        var col2: CGFloat = 0
+        var index: Int = 0
+        
+        for (_, CO) in controversies.enumerated() {
+            let controView = ControversyCellView(width: item_W)
+            controView.buttonArea.hide()
+            controView.tag = 600 + index
+            if(claimsContainerView.subviews.count==0 && index==0 && IPHONE()){ controView.hideTopLine() }
+            
+            var val_x: CGFloat = col * item_W
+            if(IPAD() && col==1) {
+                val_x += M
+            }
+            
+            var prev: ControversyCellView? = nil
+            if(index>0) {
+                if(IPHONE()) {
+                    prev = (claimsContainerView.subviews.last as! ControversyCellView)
+                } else { // IPAD
+                    if(index==1) {
+                        prev = (claimsContainerView.subviews.first as! ControversyCellView)
+                    } else {
+                        prev = (claimsContainerView.subviews[index-2] as! ControversyCellView)
+                    }
+                }
+            }
+            
+            claimsContainerView.addSubview(controView)
+            controView.activateConstraints([
+                controView.leadingAnchor.constraint(equalTo: claimsContainerView.leadingAnchor, constant: val_x),
+                controView.widthAnchor.constraint(equalToConstant: item_W)
+            ])
+            
+            if(index==0) {
+                controView.topAnchor.constraint(equalTo: claimsContainerView.topAnchor, constant: val_y).isActive = true
+            } else {
+            
+                if(IPHONE()) {
+                    controView.topAnchor.constraint(equalTo: prev!.bottomAnchor).isActive = true
+                } else { // IPAD
+                    if(index==1) { // col2
+                        let first = claimsContainerView.subviews.first as! ControversyCellView
+                        controView.topAnchor.constraint(equalTo: first.topAnchor, constant: 0).isActive = true
+                    } else {
+                        controView.topAnchor.constraint(equalTo: prev!.bottomAnchor, constant: 0).isActive = true
+                    }
+                }
+            }
+            controView.populate(with: CO)
+            
+            if(col==0) {
+                col1 += controView.calculateHeight()
+            } else {
+                col2 += controView.calculateHeight()
+            }
+            
+            if(IPAD()) {
+                col += 1
+                if(col==2) {
+                    col = 0
+                    val_y += controView.calculateHeight()
+                }
+            } else {
+                val_y += controView.calculateHeight()
+            }
+            
+            if(index==controversies.count-1 && IPAD() && col==1) {
+                val_y += controView.calculateHeight()
+            }
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(controversyOnTap(_:)))
+            controView.addGestureRecognizer(tapGesture)
+            
+            index += 1
+        }
+        
+        if(IPAD()) {
+            val_y = (col1 > col2) ? col1 : col2
+        }
+        
+        middleOrangeView.heightAnchor.constraint(equalToConstant: val_y).isActive = true
+        claimsContainerView.heightAnchor.constraint(equalToConstant: val_y).isActive = true
+        
+        ADD_SPACER(to: self.VStack, height: 16*2)
+            let hLine = UIView()
+            
+            if(IPHONE()) {
+                self.VStack.addArrangedSubview(hLine)
+            } else {
+                let hstack = HSTACK(into: self.VStack)
+                ADD_SPACER(to: hstack, width: 16)
+                hstack.addArrangedSubview(hLine)
+                ADD_SPACER(to: hstack, width: 16)
+            }
+            
+            hLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
+            ADD_HDASHES(to: hLine)
+        ADD_SPACER(to: self.VStack, height: 16*2)
+    }
+
+    @objc func controversyOnTap(_ gesture: UITapGestureRecognizer) {
+        if let _view = gesture.view as? ControversyCellView {
+            let index = _view.tag - 600
+            
+            let vc = ControDetailViewController()
+            vc.slug = self.controversies[index].slug
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
+    }
+
+    func W() -> CGFloat {
+        let M: CGFloat = CSS.shared.iPhoneSide_padding
+        
+        if(IPHONE()) {
+            return SCREEN_SIZE().width - (M*2)
+        } else {
+            if(self.iPad_W == -1) {
+                var value: CGFloat = 0
+                let w = SCREEN_SIZE().width
+                let h = SCREEN_SIZE().height
+                
+                if(w<h){ value = w }
+                else{ value = h }
+                self.iPad_W = value - IPAD_sideOffset() - 32 //- 74
+            }
+        
+            return self.iPad_W
+        }
+    }
 
 }
 

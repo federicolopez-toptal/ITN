@@ -22,6 +22,7 @@ struct MainFeedStory {
     var spins = [Spin]()
     var articles = [StoryArticle]()
     var goDeeper = [StorySearchResult]()
+    var controversies = [ControversyListItem]()
     
     var audio: AudioFile?
     var video: String = ""
@@ -124,7 +125,16 @@ struct MainFeedStory {
             
             self.goDeeper.append(newStory)
         }
+        
+        // Controversies/Claims
+        let controversiesNode = removeNULL(from: json["claims"])
+        self.controversies = [ControversyListItem]()
+        for C in controversiesNode {
+            let newClaim = ControversyListItem(jsonObj: C)
+            self.controversies.append(newClaim)
+        }
     }
+        
 
 }
 
