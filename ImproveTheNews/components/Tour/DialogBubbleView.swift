@@ -51,14 +51,23 @@ extension DialogBubbleView {
 
     func getContent(_ index: Int) -> String {
         switch(index) {
+//            case 1:
+//                return "Here you'll find the stories authored by our Verity editorial team"
+//            case 2:
+//                return "Our Controversies compare the claims made by key public figures on a wide range of issues in today's media."
+//            case 3:
+//                return "The Public Figures section lets you discover more about individuals who often make the headlines."
+//            case 4:
+//                return "Our News Slider lets you filter news sources by aspects of bias. Choose a topic, and adjust the sliders to explore reporting from across the spectrum."
+                
             case 1:
-                return "Here you'll find the stories authored by our Verity editorial team"
+                return "The latest news curated by our editorial team. We separate facts from spin to help you stay informed!"
             case 2:
-                return "Our Controversies compare the claims made by key public figures on a wide range of issues in today's media."
+                return "Our Controversies compare the claims made by key public figures on a wide range of issues in today’s media."
             case 3:
-                return "The Public Figures section lets you discover more about individuals who often make the headlines."
+                return "Discover news and controversies about public figures in a new and unique way."
             case 4:
-                return "Our News Slider lets you filter news sources by aspects of bias. Choose a topic, and adjust the sliders to explore reporting from across the spectrum."
+                return "Use our sliders and stance-split feature for a more deliberate view of today’s headlines from other outlets."
                 
             default:
                 return ""
