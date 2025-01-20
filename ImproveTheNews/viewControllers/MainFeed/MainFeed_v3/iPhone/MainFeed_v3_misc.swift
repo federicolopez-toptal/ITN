@@ -172,7 +172,7 @@ extension MainFeed_v3_viewController: TopicSelectorViewDelegate {
             
             if(topic == "us-election-2024") {
                 ControversiesViewController.topic = "us-election-2024"
-                CustomNavController.shared.tabsBar.selectTab(2, loadContent: true)
+                CustomNavController.shared.tabsBar.selectTab(4, loadContent: true)
             } else {
                 let vc = MainFeed_v3_viewController()
                 vc.topic = topic

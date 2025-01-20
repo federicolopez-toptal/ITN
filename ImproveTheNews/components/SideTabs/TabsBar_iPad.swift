@@ -150,10 +150,12 @@ class TabsBar_iPad: TabsBar {
     override func selectTab(_ index: Int, loadContent: Bool = false) {
         for i in 1...Int(self.itemsCount) {
             let iconImageView = self.viewWithTag(20 + i) as! UIImageView
+
             if(i==index) {
-                iconImageView.image = UIImage(named: self.iconName(i, true))
+                iconImageView.image = UIImage(named: "iPhone.tab.0" + String(i) + "_ON")
             } else {
-                iconImageView.image = UIImage(named: self.iconName(i, false))
+                iconImageView.image = UIImage(named: "iPhone.tab.0" + String(i) + "_ON")?.withRenderingMode(.alwaysTemplate)
+                iconImageView.tintColor = DARK_MODE() ? UIColor(hex: 0xBBBDC0) : UIColor(hex: 0x19191C)
             }
         }
         
@@ -189,13 +191,13 @@ class TabsBar_iPad: TabsBar {
     func titleForItem(at index: Int) -> String {
         switch(index) {
             case 1:
-                return "Headlines"
+                return "Home"
             case 2:
-                return "Controversies"
+                return "Bias Split"
             case 3:
                 return "Public Figures"
             case 4:
-                return "New Slider"
+                return "Controversies"
                 
             default:
                 return ""

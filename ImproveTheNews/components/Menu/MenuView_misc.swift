@@ -53,7 +53,7 @@ extension MenuView {
                 result = "Theme"
                 
             case .headlines:
-                result = "Headlines"
+                result = "Home"
                 
             case .layout:
                 result = "Text & Images"

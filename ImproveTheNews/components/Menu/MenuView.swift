@@ -35,6 +35,7 @@ class MenuView: UIView {
     
     let dp_mainItems: [MenuItem] = [ // Items order
         .headlines,
+        .tour,
         .profile,
         
 //        .newsletters2,
@@ -42,7 +43,7 @@ class MenuView: UIView {
 //        .videos,
         
         .theme,
-        .tour,
+        
         
         .newsletter,
         
@@ -577,7 +578,7 @@ extension MenuView {
         
         let vc = ControversiesViewController()
         CustomNavController.shared.viewControllers = [vc]
-        CustomNavController.shared.tabsBar.selectTab(2)
+        CustomNavController.shared.tabsBar.selectTab(4)
     }
     
     // ---------
@@ -586,7 +587,7 @@ extension MenuView {
     
         if(CustomNavController.shared.tabsBar.currentTab() != 2) {
             ControversiesViewController.topic = "us-election-2024"
-            CustomNavController.shared.tabsBar.selectTab(2, loadContent: true)
+            CustomNavController.shared.tabsBar.selectTab(4, loadContent: true)
         } else {
             if let _vc = CustomNavController.shared.viewControllers.last as? ControversiesViewController {
                 var i = 1

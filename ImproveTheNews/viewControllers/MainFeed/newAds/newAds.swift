@@ -194,7 +194,7 @@ class newAdCell_v3: UITableViewCell {
         switch(self.currentType) {
             case .usElection:
                 ControversiesViewController.topic = "us-election-2024"
-                CustomNavController.shared.tabsBar.selectTab(2, loadContent: true)
+                CustomNavController.shared.tabsBar.selectTab(4, loadContent: true)
                 
             case .newsLetter:
                 let vc = NewsletterSignUp()
