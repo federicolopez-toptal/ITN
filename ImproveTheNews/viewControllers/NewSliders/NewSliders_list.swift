@@ -44,6 +44,7 @@ extension NewSlidersViewController {
             _parentView.bringSubviewToFront(self.slidersPanel.floatingButton)
         }
         
+    // FILTER
         let filterImageView = UIImageView(image: UIImage(named: DisplayMode.imageName("filter")))
         self.view.addSubview(filterImageView)
         filterImageView.activateConstraints([
@@ -63,6 +64,35 @@ extension NewSlidersViewController {
             filterButton.bottomAnchor.constraint(equalTo: filterImageView.bottomAnchor)
         ])
         filterButton.addTarget(self, action: #selector(filterButtonOnTap(_:)), for: .touchUpInside)
+        
+    // QUESTION
+        let questionImageView = UIImageView(image: UIImage(named: DisplayMode.imageName("question")))
+        self.view.addSubview(questionImageView)
+        questionImageView.activateConstraints([
+            questionImageView.widthAnchor.constraint(equalToConstant: 32),
+            questionImageView.heightAnchor.constraint(equalToConstant: 32),
+            questionImageView.topAnchor.constraint(equalTo: self.list.topAnchor, constant: 14),
+            questionImageView.trailingAnchor.constraint(equalTo: filterImageView.leadingAnchor, constant: -8)
+        ])
+        
+        let questionButton = UIButton(type: .custom)
+        questionButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+        self.view.addSubview(questionButton)
+        questionButton.activateConstraints([
+            questionButton.leadingAnchor.constraint(equalTo: questionImageView.leadingAnchor),
+            questionButton.trailingAnchor.constraint(equalTo: questionImageView.trailingAnchor),
+            questionButton.topAnchor.constraint(equalTo: questionImageView.topAnchor),
+            questionButton.bottomAnchor.constraint(equalTo: questionImageView.bottomAnchor)
+        ])
+        questionButton.addTarget(self, action: #selector(questionButtonOnTap(_:)), for: .touchUpInside)
+    }
+    @objc func questionButtonOnTap(_ sender: UIButton?) {
+        let vc = FAQViewController()
+        CustomNavController.shared.pushViewController(vc, animated: true)
+        
+        DELAY(0.4) {
+            vc.scrollToNewsSliders()
+        }
     }
     @objc func filterButtonOnTap(_ sender: UIButton?) {
         var vc: UIViewController!

@@ -57,11 +57,23 @@ class NewSlidersViewController: BaseViewController {
             self.didLayout = true
 
             self.navBar.buildInto(viewController: self)
-            self.navBar.addComponents([.menuIcon, .title, .share, .question])
+            self.navBar.addComponents([.menuIcon, .title, .share]) //.question .info2
             self.navBar.setTitle("Bias Split")
+            self.navBar.addInfoButton()
             self.navBar.addBottomLine()
             
             // ------------------------------
+            self.navBar.onInfoButtonTap {
+                let popup = StoryInfoPopupView(title: "Bias Split",
+                    description: """
+                    Use our sliders and stance-split feature for a more deliberate view of today’s headlines from other outlets.
+                    """,
+                    linkedTexts: [], links: [],
+                    height: 180)
+                    
+                popup.pushFromBottom()
+            }
+            
             self.navBar.onQuestionButtonTap {
                 let vc = FAQViewController()
                 CustomNavController.shared.pushViewController(vc, animated: true)

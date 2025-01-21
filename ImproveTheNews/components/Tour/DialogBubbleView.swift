@@ -63,11 +63,11 @@ extension DialogBubbleView {
             case 1:
                 return "The latest news curated by our editorial team. We separate facts from spin to help you stay informed!"
             case 2:
-                return "Our Controversies compare the claims made by key public figures on a wide range of issues in today’s media."
+                return "Use our sliders and stance-split feature for a more deliberate view of today’s headlines from other outlets."
             case 3:
                 return "Discover news and controversies about public figures in a new and unique way."
             case 4:
-                return "Use our sliders and stance-split feature for a more deliberate view of today’s headlines from other outlets."
+                return "Our Controversies compare the claims made by key public figures on a wide range of issues in today’s media."
                 
             default:
                 return ""

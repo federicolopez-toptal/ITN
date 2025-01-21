@@ -62,7 +62,19 @@ class PublicFiguresViewController: BaseViewController {
 //            self.navBar.addComponents([.back, .title])
             self.navBar.addComponents([.menuIcon, .title])
             self.navBar.setTitle("Public Figures")
+            self.navBar.addInfoButton()
             self.navBar.addBottomLine()
+
+            self.navBar.onInfoButtonTap {
+                let popup = StoryInfoPopupView(title: "Public Figures",
+                    description: """
+                    Discover news and controversies about public figures in a new and unique way.
+                    """,
+                    linkedTexts: [], links: [],
+                    height: 160)
+                    
+                popup.pushFromBottom()
+            }
 
             self.buildContent()
         }

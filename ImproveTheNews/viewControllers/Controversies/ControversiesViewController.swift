@@ -81,10 +81,22 @@ class ControversiesViewController: BaseViewController {
 
             self.navBar.buildInto(viewController: self)
             //self.navBar.addComponents([.back, .title])
-            self.navBar.addComponents([.menuIcon, .title, .share, .question])
+            self.navBar.addComponents([.menuIcon, .title, .share]) //.question
 //            self.navBar.setTitle("Latest controversies")
             self.navBar.setTitle("Controversies")
+            self.navBar.addInfoButton()
             self.navBar.addBottomLine()
+            
+            self.navBar.onInfoButtonTap {
+                let popup = StoryInfoPopupView(title: "Controversies",
+                    description: """
+                    Our Controversies compare the claims made by key public figures on a wide range of issues in today’s media.
+                    """,
+                    linkedTexts: [], links: [],
+                    height: 160)
+                    
+                popup.pushFromBottom()
+            }
             
             // ------------------------------
             self.navBar.onQuestionButtonTap {
@@ -177,9 +189,37 @@ class ControversiesViewController: BaseViewController {
         self.topicsContainer.activateConstraints([
             self.topicsContainer.topAnchor.constraint(equalTo: tmpContainer.topAnchor),
             self.topicsContainer.heightAnchor.constraint(equalToConstant: 40+16),
-            self.topicsContainer.widthAnchor.constraint(equalToConstant: self.W()+extraWidth),
-            self.topicsContainer.centerXAnchor.constraint(equalTo: tmpContainer.centerXAnchor)
+            
         ])
+    
+        if(IPHONE()) {
+            self.topicsContainer.widthAnchor.constraint(equalToConstant: self.W()+extraWidth-16-32-16).isActive = true
+            self.topicsContainer.leadingAnchor.constraint(equalTo: tmpContainer.leadingAnchor).isActive = true
+            
+            // QUESTION
+            let questionImageView = UIImageView(image: UIImage(named: DisplayMode.imageName("question")))
+            tmpContainer.addSubview(questionImageView)
+            questionImageView.activateConstraints([
+                questionImageView.widthAnchor.constraint(equalToConstant: 32),
+                questionImageView.heightAnchor.constraint(equalToConstant: 32),
+                questionImageView.topAnchor.constraint(equalTo: tmpContainer.topAnchor, constant: 4),
+                questionImageView.trailingAnchor.constraint(equalTo: tmpContainer.trailingAnchor, constant: -16)
+            ])
+            
+            let questionButton = UIButton(type: .custom)
+            questionButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+            tmpContainer.addSubview(questionButton)
+            questionButton.activateConstraints([
+                questionButton.leadingAnchor.constraint(equalTo: questionImageView.leadingAnchor),
+                questionButton.trailingAnchor.constraint(equalTo: questionImageView.trailingAnchor),
+                questionButton.topAnchor.constraint(equalTo: questionImageView.topAnchor),
+                questionButton.bottomAnchor.constraint(equalTo: questionImageView.bottomAnchor)
+            ])
+            questionButton.addTarget(self, action: #selector(questionButtonOnTap(_:)), for: .touchUpInside)
+        } else {
+            self.topicsContainer.widthAnchor.constraint(equalToConstant: self.W()+extraWidth).isActive = true
+            self.topicsContainer.centerXAnchor.constraint(equalTo: tmpContainer.centerXAnchor).isActive = true
+        }
     
         self.portalInfoView = VSTACK(into: self.vStack)
         self.portalInfoView.backgroundColor = .clear //.orange
@@ -292,6 +332,21 @@ class ControversiesViewController: BaseViewController {
         self.storiesContainer.hide()
         // --------------------------------------
         self.refreshDisplayMode_local()
+    }
+    @objc func questionButtonOnTap(_ sender: UIButton?) {
+        let vc = FAQViewController()
+        CustomNavController.shared.pushViewController(vc, animated: true)
+        
+        let _topic = self.topics[self.currentTopic]
+        if(_topic.slug == "us-election-2024") {
+            DELAY(0.4) {
+                vc.scrollToEstablishmentBias()
+            }
+        } else {
+            DELAY(0.4) {
+                vc.scrollToControversies()
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

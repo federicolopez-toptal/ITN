@@ -24,6 +24,8 @@ enum NavBarViewComponents {
     case question
     case info
     
+    case info2
+    
     case newsletter
 }
 
@@ -326,6 +328,7 @@ class NavBarView: UIView {
             if(C == .question) {
                 // Search
                 let questionIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("question")))
+                questionIcon.backgroundColor = .clear //.green.withAlphaComponent(0.5)
                 self.addSubview(questionIcon)
                 questionIcon.activateConstraints([
                     questionIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
@@ -373,6 +376,33 @@ class NavBarView: UIView {
                     button.heightAnchor.constraint(equalTo: infoIcon.heightAnchor, constant: self.buttonsMargin * 2)
                 ])
                 button.addTarget(self, action: #selector(onInfoButtonTap(_:)), for: .touchUpInside)
+                
+                self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
+            }
+            
+            if(C == .info2) {
+                // Info for main screen(s)
+                let infoIcon = UIImageView(image: UIImage(named: DisplayMode.imageName("info2")))
+                self.addSubview(infoIcon)
+                infoIcon.activateConstraints([
+                    infoIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.right_x),
+                    infoIcon.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
+                    infoIcon.widthAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size),
+                    infoIcon.heightAnchor.constraint(equalToConstant: CSS.shared.navBar_icon_size)
+                ])
+                infoIcon.tag = 15
+                self.displayModeComponents.append(infoIcon)
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear
+                self.addSubview(button)
+                button.activateConstraints([
+                    button.leadingAnchor.constraint(equalTo: infoIcon.leadingAnchor, constant: -self.buttonsMargin),
+                    button.topAnchor.constraint(equalTo: infoIcon.topAnchor, constant: -self.buttonsMargin),
+                    button.widthAnchor.constraint(equalTo: infoIcon.widthAnchor, constant: self.buttonsMargin * 2),
+                    button.heightAnchor.constraint(equalTo: infoIcon.heightAnchor, constant: self.buttonsMargin * 2)
+                ])
+                button.addTarget(self, action: #selector(onInfo2ButtonTap(_:)), for: .touchUpInside)
                 
                 self.right_x += CSS.shared.navBar_icon_size + CSS.shared.navBar_icon_sepX
             }
@@ -594,6 +624,8 @@ class NavBarView: UIView {
                         img = UIImage(named: DisplayMode.imageName("info"))
                     case 14: // newsletter
                         img = UIImage(named: DisplayMode.imageName("newNavBar.newsletter"))
+                    case 15: // info2
+                        img = UIImage(named: DisplayMode.imageName("info2"))
                     
                     default:
                         NOTHING()
@@ -652,6 +684,41 @@ class NavBarView: UIView {
         
         self.shareUrl = _url
         self.vc = vc
+    }
+    
+    //////////////////////////////////////////////////
+    func addInfoButton() {
+        var label: UILabel? = nil
+        
+        if let _label = self.viewWithTag(7) as? UILabel {
+            label = _label
+        } else if let _label = self.viewWithTag(11) as? UILabel {
+            label = _label
+        }
+        
+        if let _label = label, let _superview = _label.superview  {
+            let iconImageView = UIImageView()
+            iconImageView.image = UIImage(named: DisplayMode.imageName("storyInfo"))
+            _superview.addSubview(iconImageView)
+            iconImageView.activateConstraints([
+                iconImageView.centerYAnchor.constraint(equalTo: _label.centerYAnchor),
+                iconImageView.leadingAnchor.constraint(equalTo: _label.trailingAnchor, constant: 5),
+                iconImageView.widthAnchor.constraint(equalToConstant: 72/3),
+                iconImageView.heightAnchor.constraint(equalToConstant: 72/3)
+            ])
+            
+            let button = UIButton(type: .custom)
+            button.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+            _superview.addSubview(button)
+            button.activateConstraints([
+                button.leadingAnchor.constraint(equalTo: iconImageView.leadingAnchor, constant: -5),
+                button.topAnchor.constraint(equalTo: iconImageView.topAnchor, constant: -5),
+                button.trailingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 5),
+                button.bottomAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 5)
+            ])
+            
+            button.addTarget(self, action: #selector(onInfoButtonTap(_:)), for: .touchUpInside)
+        }
     }
     
 }
@@ -737,6 +804,11 @@ extension NavBarView {
         self.infoAction = callback
     }
     
+    @objc func onInfo2ButtonTap(_ sender: UIButton) {
+        if let _action = self.infoAction {
+            _action()
+        }
+    }
     
     
     
