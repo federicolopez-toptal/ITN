@@ -74,7 +74,7 @@ extension UILabel {
         
         let orangeAttributedString = NSMutableAttributedString(string: prefix, attributes: [
             .font: ogFont,
-            .foregroundColor: CSS.shared.displayMode().main_textColor
+            .foregroundColor: CSS.shared.displayMode().sec_textColor //main_textColor
         ])
         
         let range = (attributedString.string.lowercased() as NSString).range(of: prefix.lowercased())

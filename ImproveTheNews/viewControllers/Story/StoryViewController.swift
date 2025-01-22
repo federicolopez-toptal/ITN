@@ -292,10 +292,9 @@ extension StoryViewController {
 //        }
 //        
         
-        self.addStoryMetaData(time: story.time, created: story.created)
-
+        self.addStoryMetaData(figures: story.figures, time: story.time)
         if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
-            self.addImageCredit(story.image_credit_title, story.image_credit_url)
+            self.addImageCredit(story.image_credit_title, story.image_credit_url, description: story.image_description)
         }
 
 //        story.time
@@ -2724,7 +2723,21 @@ extension StoryViewController {
     }
     
     
-    private func addImageCredit(_ title: String, _ url: String) {
+    private func addImageCredit(_ title: String, _ url: String, description: String) {
+        if(!description.isEmpty) {
+            let descrLabel = UILabel()
+            descrLabel.font = ROBOTO_resize(14)
+            descrLabel.textColor = CSS.shared.displayMode().sec_textColor
+            descrLabel.numberOfLines = 0
+            descrLabel.text = "Above: " + description
+            if(IPHONE()){ descrLabel.text! += "\n" }
+            
+            let HStack = HSTACK(into: self.VStack)
+            ADD_SPACER(to: HStack, width: 13)
+            HStack.addArrangedSubview(descrLabel)
+            ADD_SPACER(to: HStack, width: 13)
+        }
+        
         let prefix = "Image copyright: "
         let creditLabel = UILabel()
         creditLabel.numberOfLines = 0
@@ -2861,13 +2874,121 @@ extension StoryViewController {
         }
     }
 
-    private func addStoryMetaData(time: String, created: String = "") {
+    //private func addStoryMetaData(figures: [PublicFigureListItem], time: String, created: String = "") {
+    private func addStoryMetaData(figures: [PublicFigureListItem], time: String) {
+        if(IPAD()) { ADD_SPACER(to: self.VStack, height: 16) }
+        
         let rowView = UIView()
         rowView.activateConstraints([
-            rowView.heightAnchor.constraint(equalToConstant: 24)
+            rowView.heightAnchor.constraint(equalToConstant: 36)
+        ])
+        rowView.backgroundColor = self.view.backgroundColor //.green.withAlphaComponent(0.25)
+        self.VStack.addArrangedSubview(rowView)
+        
+        var val_x: CGFloat = 16
+        var limit = 3
+        
+        if(figures.count>0) {
+            var count = 0
+            let size: CGFloat = 32
+            let border: CGFloat = 3
+            
+            for F in figures {
+                let figureView = UIView()
+                figureView.backgroundColor = CSS.shared.displayMode().main_bgColor
+                rowView.addSubview(figureView)
+                figureView.activateConstraints([
+                    figureView.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: val_x),
+                    figureView.topAnchor.constraint(equalTo: rowView.topAnchor),
+                    figureView.widthAnchor.constraint(equalToConstant: size+(border*2)),
+                    figureView.heightAnchor.constraint(equalToConstant: size+(border*2))
+                ])
+                figureView.layer.cornerRadius = (size+(border*2))/2
+                
+                let imageView = UIImageView()
+                rowView.addSubview(imageView)
+                imageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
+                imageView.activateConstraints([
+                    imageView.widthAnchor.constraint(equalToConstant: size),
+                    imageView.heightAnchor.constraint(equalToConstant: size),
+                    imageView.centerXAnchor.constraint(equalTo: figureView.centerXAnchor),
+                    imageView.centerYAnchor.constraint(equalTo: figureView.centerYAnchor)
+                ])
+                
+                if(!F.image.isEmpty) {
+                    imageView.sd_setImage(with: URL(string: F.image)) { (image, error, cacheType, url) in
+                    }
+                }
+                imageView.layer.cornerRadius = size/2
+                imageView.clipsToBounds = true
+                
+                let button = UIButton(type: .system)
+                button.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+                rowView.addSubview(button)
+                button.activateConstraints([
+                    button.centerXAnchor.constraint(equalTo: figureView.centerXAnchor),
+                    button.centerYAnchor.constraint(equalTo: figureView.centerYAnchor),
+                    button.widthAnchor.constraint(equalTo: figureView.widthAnchor),
+                    button.heightAnchor.constraint(equalTo: figureView.heightAnchor)
+                ])
+                button.tag = count
+                button.addTarget(self, action: #selector(figureOnButtonTap(_:)), for: .touchUpInside)
+                
+                val_x += 28-border
+                
+                count += 1
+                if(count == limit) { break }
+            }
+            
+            val_x += 16
+            if(figures.count>limit) {
+                let moreLabel = UILabel()
+                moreLabel.textColor = CSS.shared.displayMode().sec_textColor
+                moreLabel.font = AILERON(12)
+                moreLabel.text = "+" + String(figures.count-3)
+                rowView.addSubview(moreLabel)
+                moreLabel.activateConstraints([
+                    moreLabel.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: val_x),
+                    moreLabel.centerYAnchor.constraint(equalTo: rowView.centerYAnchor)
+                ])
+                
+                val_x += moreLabel.calculateWidthFor(height: 24) + 12
+            } else {
+                val_x += 6
+            }
+        }
+        
+        let timeLabel = UILabel()
+        timeLabel.textColor = CSS.shared.displayMode().sec_textColor
+        timeLabel.font = AILERON(12)
+        timeLabel.text = FIX_TIME(time).uppercased()
+        rowView.addSubview(timeLabel)
+        timeLabel.activateConstraints([
+            timeLabel.centerYAnchor.constraint(equalTo: rowView.centerYAnchor),
+            timeLabel.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: val_x),
+        ])
+        
+        ///////////////////////////////
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+    }
+    @objc func figureOnButtonTap(_ sender: UIButton?) {
+        if let _sender = sender {
+            let index = _sender.tag
+            let slug = self.loadedStory.figures[index].slug
+            
+            let vc = FigureDetailsViewController()
+            vc.slug = slug
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
+    }
+
+    private func addStoryMetaData_2(figures: [PublicFigureListItem], time: String, created: String = "") {
+        let rowView = UIView()
+        rowView.activateConstraints([
+            rowView.heightAnchor.constraint(equalToConstant: 31)
         ])
         rowView.clipsToBounds = false
-        rowView.backgroundColor = self.view.backgroundColor
+        rowView.backgroundColor = .green //self.view.backgroundColor
     
         if(IPAD()) {
             ADD_SPACER(to: self.VStack, height: 10)
@@ -2878,50 +2999,60 @@ extension StoryViewController {
         HStack.addArrangedSubview(rowView)
         ADD_SPACER(to: HStack, width: CSS.shared.iPhoneSide_padding)
         
-        let pill = StoryPillView()
-        pill.buildInto(rowView)
-        pill.activateConstraints([
-            pill.topAnchor.constraint(equalTo: rowView.topAnchor),
-            pill.leadingAnchor.constraint(equalTo: rowView.leadingAnchor)
-        ])
-        if(self.isContext) {
-            pill.setAsContext()
-        }
+//        let pill = StoryPillView()
+//        pill.buildInto(rowView)
+//        pill.activateConstraints([
+//            pill.topAnchor.constraint(equalTo: rowView.topAnchor),
+//            pill.leadingAnchor.constraint(equalTo: rowView.leadingAnchor)
+//        ])
+//        if(self.isContext) {
+//            pill.setAsContext()
+//        }
         
-        var sources: SourceIconsView!
-        if(PREFS_SHOW_SOURCE_ICONS()) {
-            sources = SourceIconsView()
-            sources.buildInto(rowView)
-            sources.activateConstraints([
-                sources.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
-                sources.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
-            ])
-            sources.load(self.story!.storySources)
-            sources.refreshDisplayMode()
-        }
+        let imageView = UIImageView()
+        rowView.addSubview(imageView)
+        imageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.15) : .lightGray
+        imageView.activateConstraints([
+            imageView.widthAnchor.constraint(equalToConstant: 31),
+            imageView.heightAnchor.constraint(equalToConstant: 31),
+            imageView.leadingAnchor.constraint(equalTo: rowView.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: rowView.topAnchor)
+        ])
+        
+//        var sources: SourceIconsView!
+//        if(PREFS_SHOW_SOURCE_ICONS()) {
+//            sources = SourceIconsView()
+//            sources.buildInto(rowView)
+//            sources.activateConstraints([
+//                sources.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
+//                sources.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding)
+//            ])
+//            sources.load(self.story!.storySources)
+//            sources.refreshDisplayMode()
+//        }
 
-        let timeLabel = UILabel()
-        timeLabel.font = CSS.shared.iPhoneStory_textFont
-        timeLabel.textAlignment = .left
-        
-        timeLabel.numberOfLines = 0
-        if(!created.isEmpty) {
-            timeLabel.text = "PUBLISHED " + created.uppercased() + "\n" + "UPDATED " + FIX_TIME(time).uppercased()
-        } else {
-            timeLabel.text = "UPDATED " + FIX_TIME(time).uppercased()
-        }
-        
-        timeLabel.textColor = CSS.shared.displayMode().sec_textColor
-        rowView.addSubview(timeLabel)
-        timeLabel.activateConstraints([
-            timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
-        ])
-        
-        if(PREFS_SHOW_SOURCE_ICONS()) {
-            timeLabel.leadingAnchor.constraint(equalTo: sources.trailingAnchor, constant: 8).isActive = true
-        } else {
-            timeLabel.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding).isActive = true
-        }
+//        let timeLabel = UILabel()
+//        timeLabel.font = CSS.shared.iPhoneStory_textFont
+//        timeLabel.textAlignment = .left
+//        
+//        timeLabel.numberOfLines = 0
+//        if(!created.isEmpty) {
+//            timeLabel.text = "PUBLISHED " + created.uppercased() + "\n" + "UPDATED " + FIX_TIME(time).uppercased()
+//        } else {
+//            timeLabel.text = "UPDATED " + FIX_TIME(time).uppercased()
+//        }
+//        
+//        timeLabel.textColor = CSS.shared.displayMode().sec_textColor
+//        rowView.addSubview(timeLabel)
+//        timeLabel.activateConstraints([
+//            timeLabel.centerYAnchor.constraint(equalTo: pill.centerYAnchor),
+//        ])
+//        
+//        if(PREFS_SHOW_SOURCE_ICONS()) {
+//            timeLabel.leadingAnchor.constraint(equalTo: sources.trailingAnchor, constant: 8).isActive = true
+//        } else {
+//            timeLabel.leadingAnchor.constraint(equalTo: pill.trailingAnchor, constant: CSS.shared.iPhoneSide_padding).isActive = true
+//        }
         
         
         

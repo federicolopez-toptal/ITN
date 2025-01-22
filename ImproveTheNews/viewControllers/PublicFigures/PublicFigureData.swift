@@ -176,8 +176,9 @@ class PublicFigureListItem {
         }
     
         self.slug = CHECK(jsonObj["slug"])
-        self.title = CHECK(jsonObj["title"])
         self.image = CHECK(jsonObj["image"])
+        
+        self.title = CHECK(jsonObj["title"])
     }
     
 }

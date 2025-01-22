@@ -14,6 +14,7 @@ struct MainFeedStory {
     var image_src: String = ""
     var image_credit_title: String = ""
     var image_credit_url: String = ""
+    var image_description: String = ""
     var time: String = ""
     var created: String = ""
     var splitType: String = ""
@@ -23,6 +24,7 @@ struct MainFeedStory {
     var articles = [StoryArticle]()
     var goDeeper = [StorySearchResult]()
     var controversies = [ControversyListItem]()
+    var figures = [PublicFigureListItem]()
     
     var audio: AudioFile?
     var video: String = ""
@@ -43,11 +45,22 @@ struct MainFeedStory {
         
         if let _imageObj = mainNode["image"] as? [String: Any] {
             self.image_src = FIX_URL( getSTRING(_imageObj["src"]) )
+            self.image_description = getSTRING(_imageObj["desc"])
             if let _imageCreditObj = _imageObj["credit"] as? [String: String] {
                 self.image_credit_title = getSTRING(_imageCreditObj["title"])
                 self.image_credit_url = getSTRING(_imageCreditObj["url"])
             }
         }
+    
+        // Public Figures
+        self.figures = [PublicFigureListItem]()
+        if let _figures = mainNode["figures"] as? [[String: Any]] {
+            for F in _figures {
+                let figureObject = PublicFigureListItem(jsonObj: F)
+                self.figures.append(figureObject)
+            }
+        }
+    
     
     // Audio
 //        let aUrl = "https://itnaudio.s3.us-east-2.amazonaws.com/split_audio/ITNPod07JUN2023_8176.mp3"
@@ -133,6 +146,7 @@ struct MainFeedStory {
             let newClaim = ControversyListItem(jsonObj: C)
             self.controversies.append(newClaim)
         }
+    
     }
         
 
