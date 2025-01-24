@@ -81,8 +81,13 @@ class ControversiesViewController: BaseViewController {
 
             self.navBar.buildInto(viewController: self)
             //self.navBar.addComponents([.back, .title])
-            self.navBar.addComponents([.menuIcon, .title, .share]) //.question
-//            self.navBar.setTitle("Latest controversies")
+            
+            if(IPHONE()) {
+                self.navBar.addComponents([.menuIcon, .title, .share])
+            } else {
+                self.navBar.addComponents([.menuIcon, .title, .share, .question])
+            }
+            
             self.navBar.setTitle("Controversies")
             self.navBar.addInfoButton()
             self.navBar.addBottomLine()
