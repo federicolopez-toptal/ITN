@@ -251,6 +251,8 @@ class newAdCell_v3: UITableViewCell {
     }
 
     func addContent() {
+        print(IPAD(), SCREEN_SIZE())
+        
         REMOVE_ALL_SUBVIEWS(from: self.mainContentView)
 // US Election
         if(self.currentType == .usElection) {
@@ -319,12 +321,16 @@ class newAdCell_v3: UITableViewCell {
                     titleLabel.leadingAnchor.constraint(equalTo: self.mainContentView.leadingAnchor, constant: 42),
                     titleLabel.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor)
                 ])
-            
+
                 actionButton.activateConstraints([
                     actionButton.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -288),
                     actionButton.widthAnchor.constraint(equalToConstant: IPHONE() ? 111 : 143),
                     actionButton.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor)
                 ])
+                
+                if(SMALL_IPAD()) {
+                    titleLabel.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -15).isActive = true
+                }
             }
 // WhatsApp
         } else if(self.currentType == .whatsApp) {
@@ -364,11 +370,16 @@ class newAdCell_v3: UITableViewCell {
                 logo.activateConstraints([
                     logo.widthAnchor.constraint(equalToConstant: 66),
                     logo.heightAnchor.constraint(equalToConstant: 66),
-                    logo.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor),
-                    logo.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -350),
+                    logo.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor)
                 ])
+                
+                if(!SMALL_IPAD()) {
+                    logo.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -350).isActive = true
+                } else {
+                    logo.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -300).isActive = true
+                }
             }
-// Podacst
+// Podcast
         } else if(self.currentType == .podcast) {
             let img = UIImage(named: "podcast_title")?.withRenderingMode(.alwaysTemplate)
             let titleImageView = UIImageView(image: img)
@@ -405,10 +416,21 @@ class newAdCell_v3: UITableViewCell {
                     subTitleLabel.topAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 10)
                 ])
             } else {
-                subTitleLabel.activateConstraints([
-                    subTitleLabel.leadingAnchor.constraint(equalTo: titleImageView.trailingAnchor, constant: 42),
-                    subTitleLabel.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor)
-                ])
+                subTitleLabel.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor).isActive = true
+            
+                if(!SMALL_IPAD()) {
+                    subTitleLabel.activateConstraints([
+                        subTitleLabel.leadingAnchor.constraint(equalTo: titleImageView.trailingAnchor, constant: 42)
+                    ])
+                } else {
+                    subTitleLabel.activateConstraints([
+                        subTitleLabel.leadingAnchor.constraint(equalTo: titleImageView.trailingAnchor, constant: 16),
+                        subTitleLabel.widthAnchor.constraint(equalToConstant: 200)
+                    ])
+                    
+                    subTitleLabel.font = AILERON(15)
+                    subTitleLabel.numberOfLines = 0
+                }
             }
         
         }
@@ -502,5 +524,16 @@ extension newAdCell_v3 {
         button.layer.cornerRadius = IPHONE() ? 20 : 24
         
         return button
+    }
+    
+    func SMALL_IPAD() -> Bool {
+        print("SIZE", SCREEN_SIZE())
+        
+        var result = false
+        if(IPAD() && SCREEN_SIZE().width <= 834 && SCREEN_SIZE().height <= 1194) { // iPad (11 inches screen)
+            return true
+        }
+        
+        return result
     }
 }
