@@ -65,9 +65,9 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         
         let size = SCREEN_SIZE()
         if(size.height > size.width) { // portrait
-            _H = 750
+            _H = 500// 750
         } else { // landscape
-            _H = 1350
+            _H = 1000 //1350
         }
 
         let H = (self.IMG_WIDTH * _H)/imgWidth
@@ -87,7 +87,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         
     // Story
         self.storyTitleLabel.numberOfLines = 0
-        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(32)
+        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(38)
         self.addSubview(self.storyTitleLabel)
         self.storyTitleLabel.activateConstraints([
             self.storyTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -97,7 +97,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         storyComponents.append(self.storyTitleLabel)
         
         self.descrlabel.numberOfLines = 0
-        self.descrlabel.font = AILERON_resize(17)
+        self.descrlabel.font = AILERON_resize(23)
         self.addSubview(self.descrlabel)
         self.descrlabel.activateConstraints([
             self.descrlabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
