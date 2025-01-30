@@ -529,7 +529,7 @@ extension newAdCell_v3 {
     func SMALL_IPAD() -> Bool {
         var result = false
         if(IPAD() && SCREEN_SIZE().width <= 834 && SCREEN_SIZE().height <= 1194) { // iPad (11 inches screen)
-            return true
+            result = true
         }
         
         return result

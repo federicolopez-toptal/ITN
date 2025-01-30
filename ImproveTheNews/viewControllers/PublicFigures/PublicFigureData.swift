@@ -179,6 +179,9 @@ class PublicFigureListItem {
         self.image = CHECK(jsonObj["image"])
         
         self.title = CHECK(jsonObj["title"])
+        if(self.title.isEmpty) {
+            self.title = CHECK(jsonObj["name"])
+        }
     }
     
 }

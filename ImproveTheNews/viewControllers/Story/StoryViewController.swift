@@ -326,6 +326,7 @@ extension StoryViewController {
         }
 
         self.addSpins(story.spins)
+        self.addPublicFigures(story.figures)
         self.addControversies(story.controversies)
 
         if(story.splitType.isEmpty) {
@@ -1101,6 +1102,141 @@ extension StoryViewController {
         
         ADD_SPACER(to: vStack, height: 20) // Space to next item
         return vStack
+    }
+    
+    func publicFigureItem(_ data: PublicFigureListItem) -> UIView {
+        let items_DIM: CGFloat = 92
+        let imgs_DIM: CGFloat = 66
+        let texts_WIDTH: CGFloat = 160
+        
+        let mainView = UIView()
+        mainView.activateConstraints([
+            mainView.widthAnchor.constraint(equalToConstant: items_DIM),
+            mainView.heightAnchor.constraint(equalToConstant: items_DIM + 40)
+        ])
+        
+        let borderView = UIView()
+        mainView.addSubview(borderView)
+        borderView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x232326) : UIColor(hex: 0xE3E3E3)
+        borderView.activateConstraints([
+            borderView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            borderView.topAnchor.constraint(equalTo: mainView.topAnchor),
+            borderView.widthAnchor.constraint(equalToConstant: items_DIM),
+            borderView.heightAnchor.constraint(equalToConstant: items_DIM)
+        ])
+        borderView.layer.cornerRadius = items_DIM/2
+        
+        let imageView = UIImageView()
+        imageView.backgroundColor = DARK_MODE() ? .white.withAlphaComponent(0.05) : .black.withAlphaComponent(0.1)
+        borderView.addSubview(imageView)
+        imageView.activateConstraints([
+            imageView.widthAnchor.constraint(equalToConstant: imgs_DIM),
+            imageView.heightAnchor.constraint(equalToConstant: imgs_DIM),
+            imageView.centerXAnchor.constraint(equalTo: borderView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: borderView.centerYAnchor)
+        ])
+        imageView.layer.cornerRadius = imgs_DIM/2
+        imageView.clipsToBounds = true
+        let imageUrl = data.image.replacingOccurrences(of: " ", with: "%20")
+        imageView.sd_setImage(with: URL(string: imageUrl))
+        
+        let nameLabel = UILabel()
+        nameLabel.textAlignment = .center
+        nameLabel.numberOfLines = 2
+        nameLabel.font = AILERON_resize(16)
+        nameLabel.textColor = CSS.shared.displayMode().main_textColor
+        nameLabel.text = data.title
+        mainView.addSubview(nameLabel)
+        nameLabel.activateConstraints([
+            nameLabel.topAnchor.constraint(equalTo: borderView.bottomAnchor, constant: 10),
+            nameLabel.widthAnchor.constraint(equalToConstant: texts_WIDTH),
+            nameLabel.centerXAnchor.constraint(equalTo: borderView.centerXAnchor)
+        ])
+        
+        let buttonArea = UIButton(type: .custom)
+        //buttonArea.backgroundColor = .red.withAlphaComponent(0.5)
+        mainView.addSubview(buttonArea)
+        buttonArea.activateConstraints([
+            buttonArea.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            buttonArea.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            buttonArea.topAnchor.constraint(equalTo: mainView.topAnchor),
+            buttonArea.bottomAnchor.constraint(equalTo: mainView.bottomAnchor)
+        ])
+        buttonArea.tag = data.id
+        buttonArea.addTarget(self, action: #selector(publicFigureItemOnTap(_:)), for: .touchUpInside)
+        
+        return mainView
+    }
+    
+    @objc func publicFigureItemOnTap(_ sender: UIButton?) {
+        if let _item = self.loadedStory.figures.first(where: { $0.id == sender!.tag }) {
+            let vc = FigureDetailsViewController()
+            vc.slug = _item.slug
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func addPublicFigures(_ figures: [PublicFigureListItem]) {
+        let line1 = UIView()
+        ADD_HDASHES(to: line1)
+        line1.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        self.VStack.addArrangedSubview(line1)
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+        // --------
+        
+        let hLocalStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: hLocalStack, width: 16)
+        
+            let vLocalStack = VSTACK(into: hLocalStack)
+
+            let figuresLabel = UILabel()
+            figuresLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+            if(IPAD()){ figuresLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
+            }
+            figuresLabel.text = "Public figures in this story"
+            figuresLabel.textColor = CSS.shared.displayMode().main_textColor
+            vLocalStack.addArrangedSubview(figuresLabel)
+            ADD_SPACER(to: vLocalStack, height: 8)
+            
+            let scrollview = UIScrollView()
+            scrollview.clipsToBounds = false
+            scrollview.heightAnchor.constraint(equalToConstant: 92+40).isActive = true
+            vLocalStack.addArrangedSubview(scrollview)
+            
+            let contentView = UIView()
+            contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
+            scrollview.addSubview(contentView)
+            contentView.activateConstraints([
+                contentView.leadingAnchor.constraint(equalTo: scrollview.leadingAnchor),
+                contentView.topAnchor.constraint(equalTo: scrollview.topAnchor),
+                contentView.heightAnchor.constraint(equalToConstant: 92+40)
+            ])
+            
+            var val_x: CGFloat = 0
+            for F in figures {
+//            for _ in 1...10 {
+//                let F = figures.first!
+            
+                let figureView = self.publicFigureItem(F)
+                contentView.addSubview(figureView)
+                figureView.activateConstraints([
+                    figureView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: val_x),
+                    figureView.topAnchor.constraint(equalTo: contentView.topAnchor)
+                ])
+                
+                val_x += 92 + (92/2)
+            }
+            contentView.widthAnchor.constraint(equalToConstant: val_x).isActive = true
+            scrollview.contentSize = CGSize(width: val_x, height: 92+40)
+        
+        ADD_SPACER(to: hLocalStack, width: 16)
+        
+        // --------
+        ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
+        let line2 = UIView()
+        ADD_HDASHES(to: line2)
+        line2.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        self.VStack.addArrangedSubview(line2)
     }
     
 // -----------------------------
