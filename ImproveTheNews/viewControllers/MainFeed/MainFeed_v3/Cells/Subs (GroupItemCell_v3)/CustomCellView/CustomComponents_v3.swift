@@ -368,7 +368,7 @@ class SourceIconsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func size() -> CGFloat {
+    func size() -> CGFloat {
         return self.SIZE + (self.BORDER * 2)
     }
     

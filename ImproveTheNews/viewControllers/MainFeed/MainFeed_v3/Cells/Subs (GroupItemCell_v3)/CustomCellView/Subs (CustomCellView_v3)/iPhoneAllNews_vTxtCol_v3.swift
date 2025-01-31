@@ -12,7 +12,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
 
     var article: MainFeedArticle!
     private var WIDTH: CGFloat = 1
-    private var fontSize: CGFloat = 18
+    private var fontSize: CGFloat = 19
     
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
@@ -22,7 +22,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
     var articleComponents = [UIView]()
         let articleTitleLabel = UILabel()
         let articleFlag = FlagView(size: 24)
-        let articleSource = SourceIconsView(size: 24, border: 2, separation: 15)
+        let articleSource = SourceIconsView(size: 24, border: 2, separation: 18)
         let articleSourceNameLabel = UILabel()
         let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
         let articleTimeLabel = UILabel()
@@ -64,7 +64,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         ])
         storyComponents.append(self.storyPill)
         
-        self.storyTimeLabel.font = CSS.shared.iPhoneStory_textFont
+        self.storyTimeLabel.font = AILERON(13)
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
@@ -107,7 +107,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         self.articleSourceNameLabel.activateConstraints([
             self.articleSourceNameLabel.centerYAnchor.constraint(equalTo: self.articleSource.centerYAnchor)
         ])
-        self.sourceTime_leading = self.articleSourceNameLabel.leadingAnchor.constraint(equalTo: self.articleSource.trailingAnchor, constant: 10)
+        self.sourceTime_leading = self.articleSourceNameLabel.leadingAnchor.constraint(equalTo: self.articleSource.trailingAnchor, constant: 8)
         self.sourceTime_leading?.isActive = true
         articleComponents.append(self.articleSourceNameLabel)
         
@@ -176,8 +176,15 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         self.articleSource.show()
 
         self.articleSourceNameLabel.font = self.storyTimeLabel.font
-        self.articleSourceNameLabel.textColor = self.storyTimeLabel.textColor
-        self.articleSourceNameLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+        self.articleSourceNameLabel.textColor = CSS.shared.displayMode().sec_textColor
+        
+        var timeText = ""
+        if(article.storySources.count>3) {
+            timeText = "+\(article.storySources.count-3)  •  "
+        }
+        timeText += SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
+        self.articleSourceNameLabel.text = timeText
+        
         self.articleSourceNameLabel.show()
     }
     
@@ -270,11 +277,12 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         } else {
             if(PREFS_SHOW_SOURCE_ICONS()) {
                 self.articleSource.show()
-                self.sourceTime_leading?.constant = 5
+//                self.sourceTime_leading?.constant = 5
             } else {
                 self.articleSource.customHide()
-                self.sourceTime_leading?.constant = 0
+//                self.sourceTime_leading?.constant = 0
             }
+            self.sourceTime_leading?.constant = 8
             
             if(PREFS_SHOW_FLAGS()) {
                 self.articleFlag.setFlag(article.country)
@@ -317,7 +325,7 @@ class iPhoneAllNews_vTxtCol_v3: CustomCellView_v3 {
         self.openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
         
         self.articleTitleLabel.textColor = CSS.shared.displayMode().sec_textColor
-        self.articleSourceNameLabel.textColor = CSS.shared.displayMode().main_textColor
+        self.articleSourceNameLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.articleTimeLabel.textColor = self.articleSourceNameLabel.textColor
         self.articleSource.refreshDisplayMode()
         self.articleStanceIcon.refreshDisplayMode()

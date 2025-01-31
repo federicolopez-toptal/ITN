@@ -17,7 +17,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
         let storyPill = StoryPillBigView()
-        let storySources = SourceIconsView(size: 28, border: 2, separation: 25)
+        let storySources = SourceIconsView(size: 32, border: 3, separation: 22)
         let storyTimeLabel = UILabel()
 
     var articleComponents = [UIView]()
@@ -75,7 +75,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         storyComponents.append(self.storySources)
         self.storySources.refreshDisplayMode()
         
-        self.storyTimeLabel.font = AILERON(14)
+        self.storyTimeLabel.font = AILERON(16)
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
@@ -169,7 +169,14 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
             }
             
             self.storySources.load(article.storySources)
-            self.storyTimeLabel.text = SHORT_TIME(input:FIX_TIME(article.time))
+            
+            
+            var timeText = ""
+            if(article.storySources.count>3) {
+                timeText = "+\(article.storySources.count-3)  •  "
+            }
+            timeText += SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
+            self.storyTimeLabel.text = timeText
         } else {
             self.articleTitleLabel.text = article.title
             self.articleTitleLabel.setLineSpacing(lineSpacing: 6.0)

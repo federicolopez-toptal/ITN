@@ -27,7 +27,7 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
         let storyPill = StoryPillBigView()
-        let storySources = SourceIconsView(size: 28, border: 2, separation: 25)
+        let storySources = SourceIconsView(size: 32, border: 3, separation: 22)
         let storyTimeLabel = UILabel()
 
     var articleComponents = [UIView]()
@@ -78,7 +78,7 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
         
     // Story
         self.storyTitleLabel.numberOfLines = 0
-        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(32)
+        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(38)
         //self.storyTitleLabel.backgroundColor = .systemPink
         self.addSubview(self.storyTitleLabel)
         self.storyTitleLabel.activateConstraints([
@@ -89,7 +89,7 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
         storyComponents.append(self.storyTitleLabel)
         
         self.descrlabel.numberOfLines = 0
-        self.descrlabel.font = AILERON_resize(17)
+        self.descrlabel.font = AILERON_resize(23)
         self.addSubview(self.descrlabel)
         self.descrlabel.activateConstraints([
             self.descrlabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -99,7 +99,7 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
         
         self.storyPill.buildInto(self)
         self.storyPill.activateConstraints([
-            self.storyPill.topAnchor.constraint(equalTo: self.descrlabel.bottomAnchor, constant: 22),
+            self.storyPill.topAnchor.constraint(equalTo: self.descrlabel.bottomAnchor, constant: 26),
             self.storyPill.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
         storyComponents.append(self.storyPill)
@@ -113,7 +113,7 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
         ])
         storyComponents.append(self.storySources)
         
-        self.storyTimeLabel.font = AILERON(14)
+        self.storyTimeLabel.font = AILERON(16)
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
@@ -433,9 +433,15 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
 //            }
             
             self.descrlabel.text = article.summaryText
-            
             self.storySources.load(article.storySources)
-            self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
+            
+            
+            var timeText = ""
+            if(article.storySources.count>3) {
+                timeText = "+\(article.storySources.count-3)  •  "
+            }
+            timeText += SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
+            self.storyTimeLabel.text = timeText
         } else {
             self.articleTitleLabel.text = article.title
             if let _searchTerm = KeywordSearch.searchTerm {
@@ -584,7 +590,7 @@ class iPadAllNews_vTxtColBig_v3: CustomCellView_v3 {
         result -= 10
         result += self.storyTitleLabel.calculateHeightFor(width: self.WIDTH)
         result += 8 + self.descrlabel.calculateHeightFor(width: self.WIDTH)
-        result += 22 + 32 + 25
+        result += 26 + 32 + 25
         
         //if(self.article == nil){ return 0 }
         

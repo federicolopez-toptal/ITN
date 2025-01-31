@@ -28,7 +28,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
         let storyPill = StoryPillBigView()
-        let storySources = SourceIconsView(size: 28, border: 2, separation: 25)
+        let storySources = SourceIconsView(size: 32, border: 3, separation: 22)
         let storyTimeLabel = UILabel()
 
     var articleComponents = [UIView]()
@@ -92,7 +92,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         self.storyTitleLabel.activateConstraints([
             self.storyTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.storyTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.storyTitleLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: CSS.shared.iPhoneSide_padding)
+            self.storyTitleLabel.topAnchor.constraint(equalTo: self.mainImageView.bottomAnchor, constant: 19)
         ])
         storyComponents.append(self.storyTitleLabel)
         
@@ -102,12 +102,12 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         self.descrlabel.activateConstraints([
             self.descrlabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.descrlabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.descrlabel.topAnchor.constraint(equalTo: self.storyTitleLabel.bottomAnchor, constant: 8),
+            self.descrlabel.topAnchor.constraint(equalTo: self.storyTitleLabel.bottomAnchor, constant: 12),
         ])
         
         self.storyPill.buildInto(self)
         self.storyPill.activateConstraints([
-            self.storyPill.topAnchor.constraint(equalTo: self.descrlabel.bottomAnchor, constant: 22),
+            self.storyPill.topAnchor.constraint(equalTo: self.descrlabel.bottomAnchor, constant: 26),
             self.storyPill.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
         storyComponents.append(self.storyPill)
@@ -121,7 +121,7 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
         ])
         storyComponents.append(self.storySources)
         
-        self.storyTimeLabel.font = AILERON(14)
+        self.storyTimeLabel.font = AILERON(16)
         self.storyTimeLabel.textAlignment = .left
         //self.storyTimeLabel.backgroundColor = .red
         self.addSubview(self.storyTimeLabel)
@@ -446,9 +446,14 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
 //            }
             
             self.descrlabel.text = article.summaryText
-            
             self.storySources.load(article.storySources)
-            self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
+            
+            var timeText = ""
+            if(article.storySources.count>3) {
+                timeText = "+\(article.storySources.count-3)  •  "
+            }
+            timeText += SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
+            self.storyTimeLabel.text = timeText
         } else {
             self.articleTitleLabel.text = article.title
             if let _searchTerm = KeywordSearch.searchTerm {
@@ -592,10 +597,10 @@ class iPadAllNews_vImgColBig_v3: CustomCellView_v3 {
     func calculateHeight() -> CGFloat {
         var result: CGFloat = 0
         
-        result += self.calculateImageViewHeight() + 16
+        result += self.calculateImageViewHeight() + 19
         result += self.storyTitleLabel.calculateHeightFor(width: self.WIDTH)
-        result += 8 + self.descrlabel.calculateHeightFor(width: self.WIDTH)
-        result += 22 + 32 + 25
+        result += 12 + self.descrlabel.calculateHeightFor(width: self.WIDTH)
+        result += 26 + self.storySources.size() + 25
         
         //if(self.article == nil){ return 0 }
         

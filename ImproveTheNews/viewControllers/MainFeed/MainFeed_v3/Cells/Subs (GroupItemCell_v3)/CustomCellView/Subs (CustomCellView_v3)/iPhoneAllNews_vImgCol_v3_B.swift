@@ -27,7 +27,7 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
         let storyPill = StoryPillBigView()
-        let storySources = SourceIconsView(size: 28, border: 2, separation: 25)
+        let storySources = SourceIconsView(size: 32, border: 3, separation: 22)
         let storyTimeLabel = UILabel()
 
     var articleComponents = [UIView]()
@@ -99,7 +99,7 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
         ])
         storyComponents.append(self.storySources)
         
-        self.storyTimeLabel.font = AILERON(14)
+        self.storyTimeLabel.font = AILERON(16)
         self.storyTimeLabel.textAlignment = .left
 //        self.storyTimeLabel.backgroundColor = .red
         self.addSubview(self.storyTimeLabel)
@@ -422,7 +422,15 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
             }
             
             self.storySources.load(article.storySources)
-            self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
+            
+            var timeText = ""
+            if(article.storySources.count>3) {
+                timeText = "+\(article.storySources.count-3)  •  "
+            }
+            timeText += SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
+            self.storyTimeLabel.text = timeText
+            
+//            self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
         } else {
             self.articleTitleLabel.text = article.title
 //            if let _searchTerm = KeywordSearch.searchTerm {

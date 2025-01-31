@@ -19,7 +19,7 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
     let titleLabel = UILabel()
     let descrlabel = UILabel()
     var pill = StoryPillView()
-    let sources = SourceIconsView()
+    let sources = SourceIconsView(size: 24, border: 2, separation: 20)
     let timeLabel = UILabel()
     var time_leading: NSLayoutConstraint?
     
@@ -61,7 +61,7 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
         ])
         
         self.descrlabel.numberOfLines = 0
-        self.descrlabel.font = AILERON_resize(16)
+        self.descrlabel.font = AILERON_resize(17)
         self.addSubview(self.descrlabel)
         self.descrlabel.activateConstraints([
             self.descrlabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -79,16 +79,12 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
         self.sources.activateConstraints([
             self.sources.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor),
             self.sources.leadingAnchor.constraint(equalTo: self.pill.leadingAnchor)
-            
-//            self.sources.leadingAnchor.constraint(equalTo: self.pill.trailingAnchor,
-//                constant: CSS.shared.iPhoneSide_padding)
         ])
-        
-        self.timeLabel.font = CSS.shared.iPhoneStory_textFont
-        self.timeLabel.textAlignment = .right
+    
+        self.timeLabel.font = AILERON(14)
         self.addSubview(self.timeLabel)
         self.timeLabel.activateConstraints([
-            self.timeLabel.centerYAnchor.constraint(equalTo: self.pill.centerYAnchor)
+            self.timeLabel.centerYAnchor.constraint(equalTo: self.sources.centerYAnchor)
         ])
         self.time_leading = self.timeLabel.leadingAnchor.constraint(equalTo: self.sources.trailingAnchor, constant: 8)
         self.time_leading?.isActive = true
@@ -112,7 +108,12 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
         self.descrlabel.text = article.summaryText
         self.descrlabel.setLineSpacing(lineSpacing: 6.0)
         
-        self.timeLabel.text = FIX_TIME(article.time).uppercased()
+        var timeText = ""
+        if(article.storySources.count>3) {
+            timeText = "+\(article.storySources.count-3)   •   "
+        }
+        timeText += FIX_TIME(article.time).uppercased()
+        self.timeLabel.text = timeText
         
         if(PREFS_SHOW_SOURCE_ICONS()) {
             self.sources.load(article.storySources)
@@ -149,6 +150,7 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
                 self.pill.setAsStory()
             }
         }
+
     }
     
     // MARK: misc
@@ -156,7 +158,7 @@ class iPhoneStory_vImgDescr_v3: CustomCellView_v3 {
         return self.calculateImageViewHeight() + 16 +
                 self.titleLabel.calculateHeightFor(width: self.WIDTH) +
                 8 + self.descrlabel.calculateHeightFor(width: self.WIDTH) +
-                22 + 24 + 32
+                22 + self.sources.size() + 32
     }
     
     // MARK: Actions

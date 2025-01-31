@@ -27,7 +27,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
         let storyPill = StoryPillMiniView()
-        let storySources = SourceIconsView(size: 18, border: 2, separation: 15)
+        let storySources = SourceIconsView(size: 24, border: 2, separation: 18)
         let storyTimeLabel = UILabel()
 
     var articleComponents = [UIView]()
@@ -74,7 +74,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         
     // Story
         self.storyTitleLabel.numberOfLines = 0
-        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(18)
+        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(19)
         self.addSubview(self.storyTitleLabel)
         self.storyTitleLabel.activateConstraints([
             self.storyTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -99,13 +99,13 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         ])
         storyComponents.append(self.storySources)
         
-        self.storyTimeLabel.font = CSS.shared.iPhoneStory_textFont
+        self.storyTimeLabel.font = AILERON(13)
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
             self.storyTimeLabel.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor),
 //            self.storyTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 12)
+            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 8)
         ])
         storyComponents.append(self.storyTimeLabel)
         
@@ -458,7 +458,14 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             
             self.storySources.load(article.storySources)
             
-            self.storyTimeLabel.text = SHORT_TIME(input: FIX_TIME(article.time))
+            var timeText = ""
+            if(article.storySources.count>3) {
+                timeText = "+\(article.storySources.count-3)  •  "
+            }
+            timeText += SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
+//            timeText += FIX_TIME(article.time).uppercased()
+
+            self.storyTimeLabel.text = timeText
         } else {
             self.articleTitleLabel.text = article.title
             if let _searchTerm = KeywordSearch.searchTerm {
