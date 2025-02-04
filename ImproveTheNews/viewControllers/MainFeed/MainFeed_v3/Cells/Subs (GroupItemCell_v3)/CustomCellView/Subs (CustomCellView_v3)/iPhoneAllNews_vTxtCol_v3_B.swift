@@ -76,11 +76,13 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         self.storySources.refreshDisplayMode()
         
         self.storyTimeLabel.font = AILERON(16)
+        self.storyTimeLabel.numberOfLines = 0
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
             self.storyTimeLabel.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor),
-            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 8)
+            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 8),
+            self.storyTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
         ])
         storyComponents.append(self.storyTimeLabel)
         

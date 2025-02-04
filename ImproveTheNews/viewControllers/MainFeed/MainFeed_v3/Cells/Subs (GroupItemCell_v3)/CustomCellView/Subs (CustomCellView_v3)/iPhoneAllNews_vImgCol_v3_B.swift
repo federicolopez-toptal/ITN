@@ -100,13 +100,16 @@ class iPhoneAllNews_vImgCol_v3_B: CustomCellView_v3 {
         storyComponents.append(self.storySources)
         
         self.storyTimeLabel.font = AILERON(16)
+        self.storyTimeLabel.numberOfLines = 0
         self.storyTimeLabel.textAlignment = .left
-//        self.storyTimeLabel.backgroundColor = .red
+//        self.storyTimeLabel.backgroundColor = .red.withAlphaComponent(0.5)
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
             self.storyTimeLabel.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor),
-            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 8)
+            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 8),
+            self.storyTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
         ])
+        
         storyComponents.append(self.storyTimeLabel)
         
     // Article
