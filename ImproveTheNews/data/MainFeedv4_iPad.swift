@@ -86,9 +86,6 @@ class MainFeedv4_iPad {
     // load MORE data
     func loadMoreData(topic T: String, bannerClosed: Bool = false, callback: @escaping (Error?, Int?) -> ()) {
         
-        print("articles", self.articlesCount)
-        print("stories", self.storiesCount)
-        
         let total = self.articlesCount + self.storiesCount + 5
         let stories = self.storiesCount + 3
          

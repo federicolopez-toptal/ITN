@@ -1177,6 +1177,10 @@ extension StoryViewController {
     }
     
     func addPublicFigures(_ figures: [PublicFigureListItem]) {
+        if(figures.count==0) {
+            return
+        }
+    
         let line1 = UIView()
         ADD_HDASHES(to: line1)
         line1.heightAnchor.constraint(equalToConstant: 1).isActive = true

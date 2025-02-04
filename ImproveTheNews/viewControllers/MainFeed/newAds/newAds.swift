@@ -251,8 +251,6 @@ class newAdCell_v3: UITableViewCell {
     }
 
     func addContent() {
-        print(IPAD(), SCREEN_SIZE())
-        
         REMOVE_ALL_SUBVIEWS(from: self.mainContentView)
 // US Election
         if(self.currentType == .usElection) {
