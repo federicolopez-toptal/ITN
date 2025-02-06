@@ -62,7 +62,7 @@ class PublicFiguresViewController: BaseViewController {
 //            self.navBar.addComponents([.back, .title])
             self.navBar.addComponents([.menuIcon, .title])
             self.navBar.setTitle("Public Figures")
-            self.navBar.addInfoButton()
+            self.navBar.addInfoButton(icon_yOffset: 2)
             self.navBar.addBottomLine()
 
             self.navBar.onInfoButtonTap {

@@ -59,7 +59,7 @@ class NewSlidersViewController: BaseViewController {
             self.navBar.buildInto(viewController: self)
             self.navBar.addComponents([.menuIcon, .title, .share]) //.question .info2
             self.navBar.setTitle("Bias Split")
-            self.navBar.addInfoButton()
+            self.navBar.addInfoButton(icon_yOffset: 2)
             self.navBar.addBottomLine()
             
             // ------------------------------

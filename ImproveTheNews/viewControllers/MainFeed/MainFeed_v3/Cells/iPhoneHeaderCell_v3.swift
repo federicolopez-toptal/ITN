@@ -94,7 +94,7 @@ class iPhoneHeaderCell_v3: UITableViewCell {
             self.infoView?.activateConstraints([
                 self.infoView!.widthAnchor.constraint(equalToConstant: 34),
                 self.infoView!.heightAnchor.constraint(equalToConstant: 34),
-                self.infoView!.leadingAnchor.constraint(equalTo: label.trailingAnchor),
+                self.infoView!.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: IPHONE() ? 4 : 8),
                 self.infoView!.centerYAnchor.constraint(equalTo: label.centerYAnchor)
             ])
         
@@ -104,8 +104,8 @@ class iPhoneHeaderCell_v3: UITableViewCell {
             iconImageView.activateConstraints([
                 iconImageView.centerYAnchor.constraint(equalTo: self.infoView!.centerYAnchor),
                 iconImageView.centerXAnchor.constraint(equalTo: self.infoView!.centerXAnchor),
-                iconImageView.widthAnchor.constraint(equalToConstant: 72/3),
-                iconImageView.heightAnchor.constraint(equalToConstant: 72/3)
+                iconImageView.widthAnchor.constraint(equalToConstant: 32),
+                iconImageView.heightAnchor.constraint(equalToConstant: 32)
             ])
             
             let button = UIButton(type: .custom)

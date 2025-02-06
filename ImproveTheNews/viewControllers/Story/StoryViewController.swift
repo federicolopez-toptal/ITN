@@ -2091,7 +2091,32 @@ extension StoryViewController {
     func getMetaculusUrl(from url: String) -> String? {
         var result: String? = nil
     
+        // Example: https://www.metaculus.com/questions/23528/palestine-un-member-state-date/
         var parsed = url.replacingOccurrences(of: "https://www.metaculus.com/questions/", with: "")
+        
+        if(parsed.contains("https://www.metaculus.com/c/")) {
+            /*
+                Examples:
+                    https://www.metaculus.com/c/future-perfect/
+                    https://www.metaculus.com/c/brightlinewatch/
+             */
+             
+             parsed = url.replacingOccurrences(of: "https://www.metaculus.com/c/", with: "")
+             
+             if(!parsed.isEmpty) {
+                for (i, CHR) in parsed.enumerated() {
+                    if(CHR=="/") {
+                        if let _id_suffix = parsed.subString2(from: i+1, count: i+10) {
+                            parsed = _id_suffix
+                        }
+                        break
+                    }
+                }
+            }
+            ///
+        }
+        
+        
         if(!parsed.isEmpty) {
             for (i, CHR) in parsed.enumerated() {
                 if(CHR=="/") {

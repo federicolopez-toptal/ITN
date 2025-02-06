@@ -687,7 +687,7 @@ class NavBarView: UIView {
     }
     
     //////////////////////////////////////////////////
-    func addInfoButton() {
+    func addInfoButton(icon_yOffset: CGFloat = 0) {
         var label: UILabel? = nil
         
         if let _label = self.viewWithTag(7) as? UILabel {
@@ -701,11 +701,12 @@ class NavBarView: UIView {
             iconImageView.image = UIImage(named: DisplayMode.imageName("storyInfo"))
             _superview.addSubview(iconImageView)
             iconImageView.activateConstraints([
-                iconImageView.centerYAnchor.constraint(equalTo: _label.centerYAnchor),
+                iconImageView.centerYAnchor.constraint(equalTo: _label.centerYAnchor, constant: icon_yOffset),
                 iconImageView.leadingAnchor.constraint(equalTo: _label.trailingAnchor, constant: 5),
-                iconImageView.widthAnchor.constraint(equalToConstant: 72/3),
-                iconImageView.heightAnchor.constraint(equalToConstant: 72/3)
+                iconImageView.widthAnchor.constraint(equalToConstant: 32),
+                iconImageView.heightAnchor.constraint(equalToConstant: 32)
             ])
+            
             
             let button = UIButton(type: .custom)
             button.backgroundColor = .clear //.red.withAlphaComponent(0.25)
