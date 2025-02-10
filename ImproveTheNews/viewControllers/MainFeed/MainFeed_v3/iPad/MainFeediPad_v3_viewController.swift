@@ -73,8 +73,12 @@ class MainFeediPad_v3_viewController: BaseViewController {
             //self.tabsBar.buildInto(viewController: self)
             
             if let _safeAreaTop = SAFE_AREA()?.top {
+                self.list.setRefresher_yOffset(_safeAreaTop)
                 self.safeAreaTop = _safeAreaTop
             }
+            
+//            self.navBar.alpha = 0.25
+//            self.topicSelector.alpha = 0.25
         }
     }
     

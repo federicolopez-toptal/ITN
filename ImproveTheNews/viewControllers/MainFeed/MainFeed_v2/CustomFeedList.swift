@@ -36,6 +36,14 @@ class CustomFeedList: UITableView {
         self.refreshControl = self.refresher
     }
     
+    func setRefresher_yOffset(_ yValue: CGFloat) {
+        let _yValue: CGFloat = yValue - NavBarView.HEIGHT() - TopicSelectorView.HEIGHT() - 11
+        self.refresher.bounds = CGRect(x: self.refresher.bounds.minX,
+                                        y: _yValue,
+                                        width: self.refresher.bounds.width,
+                                        height: self.refresher.bounds.height)
+    }
+    
     func fixRefresher_yOffset(_ offset: CGFloat) {
 //        var mBounds = self.refresher.bounds
 //        mBounds.origin.x = offset

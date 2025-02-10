@@ -71,10 +71,14 @@ class MainFeed_v3_viewController: BaseViewController {
             self.setupList()
             
             if let _safeAreaTop = SAFE_AREA()?.top {
+                self.list.setRefresher_yOffset(_safeAreaTop)                
                 self.safeAreaTop = _safeAreaTop
             }
             
             (CustomNavController.shared.tabsBar as! TabsBar_iPhone).iPhone_yOffset_fix()
+            
+//            self.navBar.alpha = 0.25
+//            self.topicSelector.alpha = 0.25
         }
     }
     
