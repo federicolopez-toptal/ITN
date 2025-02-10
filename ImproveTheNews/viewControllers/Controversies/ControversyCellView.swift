@@ -33,6 +33,8 @@ class ControversyCellView: UIView {
     
     let titleLabel = UILabel()
     let pill = UILabel()
+    var pillWidthConstraint: NSLayoutConstraint?
+    
     var figuresContainer_B_View = UIStackView()
     let timeLabel = UILabel()
     
@@ -187,12 +189,14 @@ class ControversyCellView: UIView {
             self.addSubview(self.pill)
             self.pill.activateConstraints([
                 self.pill.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: M),
-                self.pill.widthAnchor.constraint(equalToConstant: 120),
                 self.pill.heightAnchor.constraint(equalToConstant: 24),
                 self.pill.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
             ])
             self.pill.layer.cornerRadius = 12
             self.pill.clipsToBounds = true
+            
+            self.pillWidthConstraint = self.pill.widthAnchor.constraint(equalToConstant: 120)
+            self.pillWidthConstraint?.isActive = true
             
             self.figuresContainer_B_View = VSTACK(into: self)
             //self.figuresContainer_B_View.backgroundColor = .orange
@@ -298,10 +302,17 @@ class ControversyCellView: UIView {
             self.titleLabel.remarkSearchTerm(_remark, color: CSS.shared.displayMode().main_textColor)
         }
         
+        self.pillWidthConstraint?.constant = 120
         if(controversy.controversyType.uppercased() == "ELECTION_ISSUE") {
             self.pill.text = "ELECTION ISSUE"
             self.pill.font = AILERON_SEMIBOLD(12)
             self.pill.backgroundColor = UIColor(hex: 0xf4e457)
+        } else if(controversy.controversyType.uppercased() == "ELECTION_CAMPAIGN") {
+            self.pill.text = "ELECTION CAMPAING"
+            self.pill.font = AILERON_SEMIBOLD(12)
+            self.pill.backgroundColor = UIColor(hex: 0xDA4933)
+            self.pill.textColor = .white
+            self.pillWidthConstraint?.constant = 160
         } else {
             self.pill.text = "CONTROVERSY"
             self.pill.font = AILERON(12)

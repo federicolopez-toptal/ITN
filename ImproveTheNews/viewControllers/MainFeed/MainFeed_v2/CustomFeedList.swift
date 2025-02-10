@@ -44,15 +44,6 @@ class CustomFeedList: UITableView {
                                         height: self.refresher.bounds.height)
     }
     
-    func fixRefresher_yOffset(_ offset: CGFloat) {
-//        var mBounds = self.refresher.bounds
-//        mBounds.origin.x = offset
-//        self.refresher.frame = mBounds
-  
-//        self.refresher.bounds = CGRect(x: self.refresher.bounds.minX, y: 100,
-//            width: self.refresher.bounds.width, height: self.refresher.bounds.height)
-    }
-    
     func hideRefresher() {
         DispatchQueue.main.async {
             if(!self.refresher.isRefreshing){ return }

@@ -946,6 +946,8 @@ extension ControDetailViewController {
             mustShowImage = true
         }
     
+        var pillWidth: CGFloat = 120
+    
         let pill = UILabel()
         pill.text = "CONTROVERSY"
         pill.font = AILERON(12)
@@ -956,7 +958,6 @@ extension ControDetailViewController {
         pill.activateConstraints([
             pill.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: M),
             pill.topAnchor.constraint(equalTo: containerView.topAnchor),
-            pill.widthAnchor.constraint(equalToConstant: 120),
             pill.heightAnchor.constraint(equalToConstant: 24)
         ])
         pill.layer.cornerRadius = 12
@@ -966,7 +967,16 @@ extension ControDetailViewController {
             pill.text = "ELECTION ISSUE"
             pill.font = AILERON_SEMIBOLD(12)
             pill.backgroundColor = UIColor(hex: 0xf4e457)
+        } else if(type.uppercased() == "ELECTION_CAMPAIGN") {
+            pill.text = "ELECTION CAMPAIGN"
+            pill.font = AILERON_SEMIBOLD(12)
+            pill.backgroundColor = UIColor(hex: 0xf4e457)
+            pill.backgroundColor = UIColor(hex: 0xDA4933)
+            pill.textColor = .white
+            pillWidth = 160
         }
+        
+        pill.widthAnchor.constraint(equalToConstant: pillWidth).isActive = true
         
         // -------------------------------------------
         let figuresContainer = UIView()

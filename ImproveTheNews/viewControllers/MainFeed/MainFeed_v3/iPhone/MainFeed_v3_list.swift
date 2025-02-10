@@ -20,8 +20,6 @@ extension MainFeed_v3_viewController {
             topOffset += _safeAreaTop
         }
         
-        self.list.fixRefresher_yOffset(topOffset)
-        
         self.view.addSubview(self.list)
         self.list.activateConstraints([
             self.list.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
