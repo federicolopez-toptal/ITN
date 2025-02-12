@@ -352,6 +352,7 @@ class SourceIconsView: UIView {
     
     let imgs = [UIImageView(), UIImageView(), UIImageView()]
     var widthConstraint: NSLayoutConstraint?
+    var count: Int = 0
 
     private var SIZE: CGFloat
     private var BORDER: CGFloat
@@ -433,6 +434,8 @@ class SourceIconsView: UIView {
             I.hide()
         }
         self.widthConstraint?.constant = 0
+        
+        self.count = sources.count
         
         var num = 1
         for S in sources {

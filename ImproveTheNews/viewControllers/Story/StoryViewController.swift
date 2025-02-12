@@ -329,15 +329,28 @@ extension StoryViewController {
         self.addPublicFigures(story.figures)
         self.addControversies(story.controversies)
 
-        if(story.splitType.isEmpty) {
-            if(self.isContext) {
-                self.addGoDeeper(stories: story.goDeeper)
-            } else {
-                self.addArticles(story.articles)
-            }
-        } else {
-            self.addSplitArticles(type: story.splitType, story.articles)
+        if(story.goDeeper.count > 0) {
+            self.addGoDeeper(stories: story.goDeeper)
         }
+        if(story.articles.count > 0) {
+            self.addArticles(story.articles)
+        }
+        
+        if(!story.splitType.isEmpty) {
+            if(story.articles.count > 0) {
+                self.addSplitArticles(type: story.splitType, story.articles)
+            }
+        }
+        
+//        if(story.splitType.isEmpty) {
+//            if(self.isContext) {
+//                self.addGoDeeper(stories: story.goDeeper)
+//            } else {
+//                self.addArticles(story.articles)
+//            }
+//        } else {
+//            self.addSplitArticles(type: story.splitType, story.articles)
+//        }
         
         if(story.audio != nil) {
             ADD_SPACER(to: VStack, height: 200)
@@ -488,13 +501,15 @@ extension StoryViewController {
             
             var H1: CGFloat = 1
             var H2: CGFloat = 1
-            let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W)
-            let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W)
+            let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W, minimumLineNum: false)
+            let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W, minimumLineNum: false)
             
             // item 1
             if let _A = self.goDeeperStories.first {                
                 VIEW1.refreshDisplayMode()
                 VIEW1.populate(story: _A)
+                self.adaptToGoDeeper(view: VIEW1)
+                                
                 H1 = VIEW1.calculateHeight()
                 colsHStack.addArrangedSubview(VIEW1)
                 VIEW1.activateConstraints([
@@ -512,6 +527,8 @@ extension StoryViewController {
             if let _A = self.goDeeperStories.first {
                 VIEW2.refreshDisplayMode()
                 VIEW2.populate(story: _A)
+                self.adaptToGoDeeper(view: VIEW2)
+                
                 H2 = VIEW2.calculateHeight()
                 colsHStack.addArrangedSubview(VIEW2)
                 VIEW2.activateConstraints([
@@ -539,6 +556,24 @@ extension StoryViewController {
         self.sectionViewHeightConstraint = nil
         self.sectionViewHeightConstraint = sectionView.heightAnchor.constraint(equalToConstant: posY)
         self.sectionViewHeightConstraint?.isActive = true
+    }
+
+    func adaptToGoDeeper(view _V: iPhoneAllNews_vImgCol_v3) {
+        _V.isContext = true
+        _V.storyPill.setAsContext()
+        _V.storyPill.show()
+        
+        
+//        if(_V.storySources.count <= 1) {
+//            _V.storyTimeLeadingConstraint?.constant = 53 + 8
+//        } else {
+//            _V.storyTimeLeadingConstraint?.constant = 0
+//        }
+        
+        _V.storySources.hide()
+        _V.storySources.widthConstraint?.constant = 0
+        
+        _V.storyTimeLeadingConstraint?.constant = 53 + 8
     }
 
     // ------------------------------------------
@@ -3466,7 +3501,12 @@ extension StoryViewController {
             
             hLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
             ADD_HDASHES(to: hLine)
-        ADD_SPACER(to: self.VStack, height: 16*2)
+        
+        if(IPHONE()) {
+            ADD_SPACER(to: self.VStack, height: 16/2)
+        } else {
+            ADD_SPACER(to: self.VStack, height: 16*2)
+        }
     }
 
     @objc func controversyOnTap(_ gesture: UITapGestureRecognizer) {

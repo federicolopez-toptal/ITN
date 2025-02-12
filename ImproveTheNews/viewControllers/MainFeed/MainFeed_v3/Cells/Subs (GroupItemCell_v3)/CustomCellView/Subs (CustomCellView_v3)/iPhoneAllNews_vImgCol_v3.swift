@@ -28,7 +28,9 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         let storyTitleLabel = UILabel()
         let storyPill = StoryPillMiniView()
         let storySources = SourceIconsView(size: 24, border: 2, separation: 18)
+        
         let storyTimeLabel = UILabel()
+        var storyTimeLeadingConstraint: NSLayoutConstraint?
 
     var articleComponents = [UIView]()
         let articleTitleLabel = UILabel()
@@ -103,10 +105,13 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
-            self.storyTimeLabel.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor),
-//            self.storyTimeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-            self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor, constant: 8)
+            self.storyTimeLabel.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor)
         ])
+        
+        self.storyTimeLeadingConstraint = self.storyTimeLabel.leadingAnchor.constraint(equalTo: self.storySources.trailingAnchor,
+            constant: 8)
+        self.storyTimeLeadingConstraint?.isActive = true
+        
         storyComponents.append(self.storyTimeLabel)
         
     // Article
@@ -459,7 +464,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
             self.storySources.load(article.storySources)
             
             var timeText = ""
-            if(article.storySources.count>3) {
+            if(article.storySources.count>3 && self.minimumLineNum) {
                 timeText = "+\(article.storySources.count-3)  •  "
             }
             timeText += SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
