@@ -38,6 +38,24 @@ extension FigureDetailsViewController {
             REMOVE_ALL_SUBVIEWS(from: containerView)
         }
         
+        // No items
+        if(stories.count == 0) {
+            let noitemsView = UILabel()
+            noitemsView.numberOfLines = 0
+            noitemsView.font = ROBOTO(16)
+            noitemsView.textAlignment = .center
+            noitemsView.textColor = CSS.shared.displayMode().sec_textColor
+            noitemsView.text = "No stories found\nfor this topic"
+            
+            containerView.addSubview(noitemsView)
+            noitemsView.activateConstraints([
+                noitemsView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16*3),
+                noitemsView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+            ])
+            
+            return
+        }
+        
         var col: CGFloat = 0
         var item_W: CGFloat = SCREEN_SIZE().width-32
         if(IPAD()){ item_W = (W()-M)/2 }
@@ -111,11 +129,12 @@ extension FigureDetailsViewController {
         var limit = self.STORIES_PER_TIME
         if(self.storiesBuffer.count < limit) { limit = self.storiesBuffer.count }
         
-        for _ in 0...limit-1 {
-            self.stories.append(self.storiesBuffer.first!)
-            self.storiesBuffer.remove(at: 0)
+        if(limit>0) {
+            for _ in 0...limit-1 {
+                self.stories.append(self.storiesBuffer.first!)
+                self.storiesBuffer.remove(at: 0)
+            }
         }
-
     }
     
     func addMoreStories(_ stories: [MainFeedArticle], count: Int) {
