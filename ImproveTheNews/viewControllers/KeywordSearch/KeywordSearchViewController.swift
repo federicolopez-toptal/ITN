@@ -25,6 +25,7 @@ class KeywordSearchViewController: BaseViewController {
     var searchCount: Int = 0
     var storySearchPage: Int = 1
     var articleSearchPage: Int = 1
+    var contextStoriesSearchPage: Int = 1
     
     var middleIndexPath: IndexPath?
     
@@ -105,7 +106,7 @@ extension KeywordSearchViewController {
         self.searchTextfield.setPlaceHolder(text: "Search All")
         
         self.searchSelector.buildInto(self.view, yOffset: topValue+32+47+48+25)
-        self.searchSelector.setTopics(["All", "Topics", "Stories", "Controversies", "Articles"])
+        self.searchSelector.setTopics(["All", "Topics", "Stories", "Context Stories", "Controversies", "Articles"])
         self.searchSelector.delegate = self
         
         self.listInit()
@@ -174,7 +175,8 @@ extension KeywordSearchViewController {
         
         self.storySearchPage = 1
         self.articleSearchPage = 1
-                    
+        self.contextStoriesSearchPage = 1
+             
         self.dataProvider = [DP3_item]()
         self.showLoading()
 
@@ -322,8 +324,10 @@ extension KeywordSearchViewController {
     
         self.addTopics()
         let _ = self.addStories(tapOnTab: true)
+        let _ = self.addContextStories()
         let _ = self.addControversies()
         let _ = self.addArticles()
+        
         
 //        if(controversies) {
 //            for (i, A) in KeywordSearch.shared.articles.enumerated() {
@@ -366,6 +370,58 @@ extension KeywordSearchViewController {
             let topicsItem = DP3_topics(topics: topics)
             self.dataProvider.append(topicsItem)
         }
+    }
+    
+    func addContextStories(index: Int = -1) -> Int {
+        var count = 0
+        if(index == -1){ self.addHeaderWith(text: "CONTEXT STORIES") }
+        
+        if(KeywordSearch.shared.contextStories.count == 0) {
+            let empty = DP3_text(text: "No context stories found")
+            self.dataProvider.append(empty)
+            return 0
+        }
+        
+        let div = 2 //IPHONE() ? 1 : 2
+        for i in 1...(self.PAGE_SIZE/div) {
+            let group = DP3_groupItem()
+            group.MaxNumOfItems = 2 //IPHONE() ? 1 : 2
+            group.storyFlags = [true]
+            
+            for (i, ST) in KeywordSearch.shared.contextStories.enumerated() {
+                if(ST.used == false) {
+                    //StorySearchResult
+                    var _ST = MainFeedArticle(story: ST)
+//                    if(ST.type == 2 || ST.strType == "CONTEXT") {
+//                        _ST.isContext = true
+//                    }
+                    _ST.isContext = true // force context type
+                    
+                    group.articles.append(_ST)
+                    count += 1
+                    KeywordSearch.shared.contextStories[i].used = true
+                    
+                    if(group.articles.count == group.MaxNumOfItems) {
+                        break
+                    }
+                }
+            }
+            
+            if(group.articles.count>0) {
+                if(index == -1) {
+                    self.dataProvider.append(group)
+                } else {
+                    self.dataProvider.insert(group, at: index+i-1)
+                }
+            }
+        }
+        
+        if(index == -1 && count==self.PAGE_SIZE) {
+            let moreItem = DP3_more(topic: "CX", completed: false)
+            self.dataProvider.append(moreItem)
+        }
+        
+        return count
     }
     
     func addStories(index: Int = -1, tapOnTab: Bool = false) -> Int {
@@ -422,6 +478,18 @@ extension KeywordSearchViewController {
     func thereAreStoriesToShow() -> Bool {
         var result = false
         for ST in KeywordSearch.shared.stories {
+            if(ST.used == false) {
+                result = true
+                break
+            }
+        }
+        
+        return result
+    }
+    
+    func thereAreContextStoriesToShow() -> Bool {
+        var result = false
+        for ST in KeywordSearch.shared.contextStories {
             if(ST.used == false) {
                 result = true
                 break
@@ -496,7 +564,13 @@ extension KeywordSearchViewController {
         
         if(KeywordSearch.shared.controversies.count == 0) {
             let empty = DP3_text(text: "No controversies found")
-            self.dataProvider.append(empty)
+            
+            if(index == -1) {
+                self.dataProvider.append(empty)
+            } else {
+                self.dataProvider.insert(empty, at: index)
+            }
+            
             return 0
         }
         

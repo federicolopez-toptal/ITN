@@ -40,7 +40,7 @@ class StoryViewController: BaseViewController {
     var lastSourceIndex = -1
     
     var isContext: Bool = false
-    var thirdPillText = "Articles"
+    var thirdPillText = ""
     
     var sections_y = [CGFloat]()
     var backGoTo: Int = -1
@@ -259,7 +259,11 @@ extension StoryViewController {
             if(self.isContext) {
                 self.thirdPillText = "Go deeper"
             } else {
-                self.thirdPillText = "Articles"
+                if(self.articles != nil) {
+                    if(self.articles.count>0) {
+                        self.thirdPillText = "Articles"
+                    }
+                }
             }
         } else {
             self.thirdPillText = "Split"
@@ -431,6 +435,10 @@ extension StoryViewController {
             
             //------------------
             val_X += W + CSS.shared.iPhoneSide_padding
+            
+            if(i==3 && self.thirdPillText.isEmpty) {
+                tab.hide()
+            }
         }
         
     ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
@@ -3748,9 +3756,10 @@ extension StoryViewController: UIScrollViewDelegate {
                     let value = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
                     self.sections_y.append(value)
                 case 3:
-                    let targetView = self.view.viewWithTag(170)!
-                    let value = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
-                    self.sections_y.append(value)
+                    if let targetView = self.view.viewWithTag(170) {
+                        let value = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
+                        self.sections_y.append(value)
+                    }
                 default:
                     NOTHING()
             }

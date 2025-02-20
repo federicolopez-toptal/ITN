@@ -209,6 +209,8 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             self.loadMoreStories()
         } else if(sender.topic == "CO") {
             self.loadMoreControversies()
+        } else if(sender.topic == "CX") {
+            self.loadMoreContextStories()
         } else {
             self.loadMoreArticles()
         }
@@ -224,12 +226,49 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
         }
     }
     
+    func loadMoreContextStories() {
+        if(self.thereAreContextStoriesToShow()) {
+            let i = self.removeAddMoreItem(isStory: true, topic: "CX")
+            let count = self.addContextStories(index: i)
+            if(count==self.PAGE_SIZE){
+                self.addMoreItem(forStories: true, topic: "CX")
+            }
+            
+            self.updateFilteredDataProvider()
+            self.refreshList()
+        } else {
+            //print("SEARCHING...")
+            
+            self.showLoading()
+            let T = self.searchTextfield.text()
+            
+            KeywordSearch.shared.search(T, type: .contextStories, pageNumber: self.contextStoriesSearchPage+1) { (ok, _, isControversy) in
+                if(ok) {
+                    self.contextStoriesSearchPage += 1
+                    let i = self.removeAddMoreItem(isStory: true, topic: "CX")
+                    let count = self.addContextStories(index: i)
+                    
+//                    if(count >= self.PAGE_SIZE) {
+//                        self.addMoreItem(forStories: true, topic: "CX")
+//                    }
+                
+                    self.updateFilteredDataProvider()
+                    self.refreshList()
+                } else {
+                    self.showErrorOnLoadMore()
+                }
+
+                self.hideLoading()
+            }
+        }
+    }
+    
     func loadMoreStories() {
         if(self.thereAreStoriesToShow()) {
-            let i = self.removeAddMoreItem(isStory: true)
+            let i = self.removeAddMoreItem(isStory: true, topic: "ST")
             let count = self.addStories(index: i)
             if(count==self.PAGE_SIZE){
-                self.addMoreItem(forStories: true)
+                self.addMoreItem(forStories: true, topic: "ST")
             }
             
             self.updateFilteredDataProvider()
@@ -242,11 +281,11 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage+1) { (ok, _, isControversy) in
                 if(ok) {
                     self.storySearchPage += 1
-                    let i = self.removeAddMoreItem(isStory: true)
+                    let i = self.removeAddMoreItem(isStory: true, topic: "ST")
                     let count = self.addStories(index: i)
                     
                     if(count >= self.PAGE_SIZE) {
-                        self.addMoreItem(forStories: true)
+                        self.addMoreItem(forStories: true, topic: "ST")
                     }
                 
                     self.updateFilteredDataProvider()
@@ -262,10 +301,10 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
     
     func loadMoreArticles() {
         if(self.thereAreArticlesToShow()) {
-            let i = self.removeAddMoreItem(isStory: false)
+            let i = self.removeAddMoreItem(isStory: false, topic: "AR")
             let count = self.addArticles(index: i)
             if(count==self.PAGE_SIZE){
-                self.addMoreItem(forStories: false)
+                self.addMoreItem(forStories: false, topic: "AR")
             }
             
             self.updateFilteredDataProvider()
@@ -278,10 +317,10 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage+1) { (ok, _, isControversy) in
                 if(ok) {
                     self.articleSearchPage += 1
-                    let i = self.removeAddMoreItem(isStory: false)
+                    let i = self.removeAddMoreItem(isStory: false, topic: "AR")
                     let count = self.addArticles(index: i)
                     if(count >= self.PAGE_SIZE) {
-                        self.addMoreItem(forStories: false)
+                        self.addMoreItem(forStories: false, topic: "AR")
                     }
                 
                     self.updateFilteredDataProvider()
@@ -319,7 +358,7 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
         return result
     }
     
-    func removeAddMoreItem(isStory: Bool) -> Int {
+    func removeAddMoreItem(isStory: Bool, topic: String) -> Int {
         if(isStory==false) {
             self.dataProvider.remove(at: self.dataProvider.count-1)
             return self.dataProvider.count
@@ -335,16 +374,18 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             }
 
             if(found && item is DP3_more) {
-                self.dataProvider.remove(at: i)
-                result = i
-                break
+                if((item as! DP3_more).topic == topic) {
+                    self.dataProvider.remove(at: i)
+                    result = i
+                    break
+                }
             }
         }
     
         return result
     }
     
-    func addMoreItem(forStories: Bool) {
+    func addMoreItem(forStories: Bool, topic: String) {
         if(forStories==false) {
             let moreItem = DP3_more(topic: "AR", completed: false)
             self.dataProvider.append(moreItem)
@@ -354,13 +395,18 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
         var found = false
         for (i, item) in self.dataProvider.enumerated() {
             if(!found && item is DP3_groupItem) {
-                if((item as! DP3_groupItem).articles.first!.isStory == forStories) {
+                let firstArticle = (item as! DP3_groupItem).articles.first!
+                
+                var isContext  = false
+                if(topic == "CX"){ isContext = true }
+            
+                if(firstArticle.isStory == forStories && firstArticle.isContext == isContext) {
                     found = true
                 }
             }
             
             if(forStories==true && found && item is DP3_headerItem) {
-                let moreItem = DP3_more(topic: "ST", completed: false)
+                let moreItem = DP3_more(topic: topic, completed: false)
                 self.dataProvider.insert(moreItem, at: i)
                 break
             }

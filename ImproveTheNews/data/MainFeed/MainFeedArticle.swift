@@ -252,6 +252,10 @@ extension MainFeedArticle {
         self.source = "ITN"
         self.LR = 1
         self.PE = 2
+        
+        if(A.strType == "CX") {
+            self.isContext = true
+        }
     }
     
     init(story A: StoryArticle) {

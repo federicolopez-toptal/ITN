@@ -19,6 +19,7 @@ class KeywordSearch {
     var searchType: searchType = .all
     var topics: [TopicSearchResult] = []
     var stories: [StorySearchResult] = []
+    var contextStories: [StorySearchResult] = []
     var articles: [ArticleSearchResult] = []
     
     var controversies: [ControversyListItem] = []
@@ -35,6 +36,7 @@ class KeywordSearch {
     func toZero() {
         self.topics = []
         self.stories = []
+        self.contextStories = []
         self.articles = []
         self.controversies = []
     }
@@ -52,6 +54,7 @@ class KeywordSearch {
         if(type == .all) {
             self.topics = []
             self.stories = []
+            self.contextStories = []
             self.articles = []
             self.controversies = []
         }
@@ -185,6 +188,17 @@ class KeywordSearch {
                 for STO in _stories {
                     let newStory = StorySearchResult(STO as! [String: Any])
                     self.stories.append(newStory)
+                    myCount += 1
+                }
+            }
+            
+            // CONTEXT STORIES
+            if let _cStories = json["contextstories"] as? [Any] {
+                count += _cStories.count
+                
+                for STO in _cStories {
+                    let newStory = StorySearchResult(STO as! [String: Any], strType: "CX")
+                    self.contextStories.append(newStory)
                     myCount += 1
                 }
             }
@@ -350,7 +364,9 @@ struct StorySearchResult {
     var type: Int = 1
     var videoFile: String?
     
-    init(_ data: [String: Any]) {
+    var strType: String = ""
+    
+    init(_ data: [String: Any], strType: String = "") {
         let num = CHECK_NUM(data["id"])
         if(num != -1) {
             self.id = String(num)
@@ -411,6 +427,8 @@ struct StorySearchResult {
                 self.figureImageUrl = CHECK(F["image"])
             }
         }
+        
+        self.strType = strType
     }
     
     func formattedUpdatedTime(input: String) -> String {
@@ -464,6 +482,7 @@ enum searchType: String {
     case all = "all"
     case topics = "topics"
     case stories = "stories"
+    case contextStories = "contextstories"
     case articles = "articles"
 }
 
