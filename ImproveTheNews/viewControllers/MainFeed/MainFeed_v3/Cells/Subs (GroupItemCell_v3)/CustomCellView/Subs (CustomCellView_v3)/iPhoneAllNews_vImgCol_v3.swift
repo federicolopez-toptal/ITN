@@ -14,7 +14,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
 
     var article: MainFeedArticle!
     private var WIDTH: CGFloat = 1
-    private var minimumLineNum: Bool = true
+    var minimumLineNum: Bool = true
 
     private let imgWidth: CGFloat = 160
     private var imgHeight: CGFloat = 88

@@ -127,6 +127,14 @@ extension KeywordSearchViewController {
             }
             (cell as! GroupItemCell_v3).populate(with: _group)
             
+            if let _cell = cell as? iPhoneStory_2colsImg_cell_v3 {
+                if let _first = _group.articles.first, _first.isContext {
+                    _cell.adaptToContextStories(with: _group)
+                } else {
+                    _cell.adaptToContextStories(with: _group)
+                }
+            }
+            
         } else if let _group = dpItem as? DP3_topics {
             cell = self.list.dequeueReusableCell(withIdentifier: TopicsCell.identifier) as! TopicsCell
             (cell as! TopicsCell).populate(with: _group.topics)
