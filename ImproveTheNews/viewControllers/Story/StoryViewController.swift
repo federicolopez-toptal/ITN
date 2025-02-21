@@ -255,19 +255,31 @@ extension StoryViewController {
 //        ADD_HDASHES(to: line2)
         
         //self.addPill()
-        if(story.splitType.isEmpty) {
-            if(self.isContext) {
-                self.thirdPillText = "Go deeper"
+        
+        self.thirdPillText = ""
+        if(story.goDeeper.count > 0) {
+            self.thirdPillText = "Go deeper"
+        } else if(story.articles.count > 0) {
+            if(!story.splitType.isEmpty) {
+                self.thirdPillText = "Split"
             } else {
-                if(self.articles != nil) {
-                    if(self.articles.count>0) {
-                        self.thirdPillText = "Articles"
-                    }
-                }
+                self.thirdPillText = "Articles"
             }
-        } else {
-            self.thirdPillText = "Split"
         }
+        
+//        if(story.splitType.isEmpty) {
+//            if(self.isContext) {
+//                self.thirdPillText = "Go deeper"
+//            } else {
+//                if(story.articles != nil) {
+//                    if(story.articles.count>0) {
+//                        self.thirdPillText = "Articles"
+//                    }
+//                }
+//            }
+//        } else {
+//            self.thirdPillText = "Split"
+//        }
         
         
         self.addTabs()
