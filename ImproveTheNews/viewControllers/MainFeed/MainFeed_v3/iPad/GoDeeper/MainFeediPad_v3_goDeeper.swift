@@ -1,5 +1,5 @@
 //
-//  MainFeed_v3_goDeeper.swift
+//  MainFeediPad_v3_goDeeper.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 24/02/2025.
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 // MARK: - Go Deeper
-extension MainFeed_v3_viewController {
+extension MainFeediPad_v3_viewController {
 
     private func showGoDeeperErrorAlert() {
         MAIN_THREAD {
@@ -74,9 +74,9 @@ extension MainFeed_v3_viewController {
                 // Add/Distribute GO DEEPER content
                 var sum = 1
                 while( self.data.topics[TIndex].hasNewsAvailable() ) {
-                    let newGroupItem = DP3_iPhoneGoDeeper_2cols() // A reemplazar
+                    let newGroupItem = DP3_iPhoneGoDeeper_4cols() // A reemplazar
 
-                    for _ in 1...2 {
+                    for _ in 1...4 {
                         if let A = self.data.topics[TIndex].nextAvailableArticle(isStory: true) {
                             newGroupItem.articles.append(A)
                             self.data.addCountTo(topic: self.data.topics[TIndex].name)

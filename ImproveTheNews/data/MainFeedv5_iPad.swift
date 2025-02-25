@@ -72,6 +72,7 @@ extension MainFeedv5_iPad {
                                 
                                 if(self.topic == "news") {
                                     self.addIA()
+                                    self.addGoDeeperSection()
                                     //self.add_US_Election()
                                 }
                                 if(self.topic == "ai") {
@@ -320,7 +321,9 @@ extension MainFeedv5_iPad {
     func topicNames() -> [String] { // For "TopicSelectorView"
         var result = [String]()
         for T in self.topics {
-            result.append(T.capitalizedName)
+            if(T.name != "godeeper") {
+                result.append(T.capitalizedName)
+            }
         }
         
         return result
@@ -649,3 +652,60 @@ extension MainFeedv5_iPad {
  /*
  https://www.improvemynews.com/php/util/get-news.php?topic=news&page=2&slider=LR50PE50NU70DE70SL70RE70lO00yT00aL00mL00nL00SS10IN00ST01AP01&per_page=9&A=2&B=4&S=0&C=4&slidercookies=LR50PE50NU70DE70SL70RE70lO00yT00aL00mL00nL00SS10IN00ST01AP01
   */
+
+// MARK: - goDeeper extra section
+extension MainFeedv5_iPad {
+
+    func addGoDeeperSection() {
+        let data: [Any] = [
+            "godeeper", "godeeper", "Go Deeper", 0, "gd",
+            0, 0, 0, []
+        ]
+        let newTopic = MainFeedTopic(data, [])
+        self.topics.insert(newTopic, at: 1)
+    }
+    
+    func loadGoDeeper(page: Int, callback: @escaping (Error?, Int?) -> () ) {
+        let strUrl = ITN_URL() + "/php/stories/index.php?path=home-page-extra-content&page=" + String(page)
+        var request = URLRequest(url: URL(string: strUrl)!)
+        request.httpMethod = "GET"
+        
+        print("GO DEEPER from\n", request.url!.absoluteString)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("Reques TIME OUT!")
+                callback(error, nil)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    if let _data = _json["data"] as? [[String: Any]], let _total = _json["total"] as? Int {
+                        // Load OK
+                        for (i, T) in self.topics.enumerated() {                            
+                            if(T.name == "godeeper") {
+                                for _item in _data {
+                                    let newObj = MainFeedArticle(jsonFromGoDeeper: _item)
+                                    self.topics[i].articles.append(newObj)
+                                }
+                                break
+                            }
+                        }
+                        
+                        callback(nil, _total)
+                    } else {
+                        let _error = CustomError.jsonParseError
+                        callback(_error, nil)
+                    }
+                } else {
+                    let _error = CustomError.jsonParseError
+                    callback(_error, nil)
+                }
+            }
+        }
+
+        task.resume()
+    }
+}

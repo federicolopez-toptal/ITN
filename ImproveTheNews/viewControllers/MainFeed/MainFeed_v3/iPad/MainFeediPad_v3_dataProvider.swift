@@ -44,6 +44,12 @@ extension MainFeediPad_v3_viewController {
                 continue
             }
             
+            if(_T.name == "godeeper") {
+                self.addHeader(text: _T.capitalizedName)
+                self.dataProvider.append(DP3_text(text: "text"))
+                continue
+            }
+            
             var itemInTopic = 0
             while(_T.hasNewsAvailable()) {
             
@@ -175,6 +181,12 @@ extension MainFeediPad_v3_viewController {
             }
             
             if(_T.name == "ai" && self.topic != "ai") {
+                continue
+            }
+            
+            if(_T.name == "godeeper") {
+                self.addHeader(text: _T.capitalizedName)
+                self.dataProvider.append(DP3_text(text: "text"))
                 continue
             }
             

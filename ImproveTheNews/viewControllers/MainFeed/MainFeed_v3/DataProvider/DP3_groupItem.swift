@@ -64,6 +64,18 @@ class DP3_iPhoneStory_4cols: DP3_groupItem {
     }
 }
 
+class DP3_iPhoneGoDeeper_4cols: DP3_groupItem {
+    // 4 stories in a row, 4 columns (image & text versions)
+    override init() {
+        super.init()
+        self.articles = [MainFeedArticle]()
+        
+        self.MaxNumOfItems = 4
+        self.storyFlags = [true, true, true, true]
+    }
+}
+
+
 // --------------------------
 class DP3_iPhoneArticle_2cols: DP3_groupItem {
     // 2 articles in a row, 2 columns (image & text versions)

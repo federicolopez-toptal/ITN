@@ -1,5 +1,5 @@
 //
-//  iPhoneGoDeeper_2colsImg_cell_v3.swift
+//  iPhoneGoDeeper_2colsTxt_cell_v3.swift
 //  ImproveTheNews
 //
 //  Created by Federico Lopez on 07/11/2023.
@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 
-class iPhoneGoDeeper_2colsImg_cell_v3: GroupItemCell_v3 {
+class iPhoneGoDeeper_2colsTxt_cell_v3: GroupItemCell_v3 {
 
-    static let identifier = "iPhoneGoDeeper_2colsImg_cell_v3"
+    static let identifier = "iPhoneGoDeeper_2colsTxt_cell_v3"
     
     var view1_heightConstraint: NSLayoutConstraint!
     var view2_heightConstraint: NSLayoutConstraint!
@@ -34,7 +34,7 @@ class iPhoneGoDeeper_2colsImg_cell_v3: GroupItemCell_v3 {
         let col_WIDTH: CGFloat = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
         
         ///
-        let view1 = iPhoneGoDeeper_vImgCol_v3(width: col_WIDTH)
+        let view1 = iPhoneGoDeeper_vImgCol_v3(width: col_WIDTH, imgHeight: 0)
         self.contentView.addSubview(view1)
         view1.activateConstraints([
             view1.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -60,7 +60,7 @@ class iPhoneGoDeeper_2colsImg_cell_v3: GroupItemCell_v3 {
             self.bgViews.append(bgView1)
         
         ///
-        let view2 = iPhoneGoDeeper_vImgCol_v3(width: col_WIDTH)
+        let view2 = iPhoneGoDeeper_vImgCol_v3(width: col_WIDTH, imgHeight: 0)
         self.contentView.addSubview(view2)
         view2.activateConstraints([
             view2.topAnchor.constraint(equalTo: self.contentView.topAnchor),

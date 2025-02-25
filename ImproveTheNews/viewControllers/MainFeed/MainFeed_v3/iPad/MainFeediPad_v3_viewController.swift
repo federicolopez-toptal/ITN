@@ -40,7 +40,7 @@ class MainFeediPad_v3_viewController: BaseViewController {
     let latestControversies = "Latest controversies"
 
     var safeAreaTop: CGFloat = 0
-
+    var goDeeperPage: Int = 1
 
     
     // MARK: - Start
@@ -202,6 +202,11 @@ extension MainFeediPad_v3_viewController {
                             self.controversiesPage = 1
                             self.controversiesTotal = 0
                             self.loadControversies()
+                        }
+                        
+                        if(self.topic == "news") {
+                            self.goDeeperPage = 1
+                            self.loadGoDeeper()
                         }
                         
                     }

@@ -698,17 +698,6 @@ extension MainFeedv5_iPhone {
                         let _error = CustomError.jsonParseError
                         callback(_error, nil)
                     }
-
-//                    if let data = _json["data"] as? [[String: Any]], let _total = _json["total"] as? Int {
-//                        // Load OK
-//                        for F in self.topics {
-//                            print("TOPIC NAME ", F.name)
-//                        }
-//                        
-//                        callback(nil, _total)
-//                    } else {
-//
-//                    }
                 } else {
                     let _error = CustomError.jsonParseError
                     callback(_error, nil)

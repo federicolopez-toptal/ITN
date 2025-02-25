@@ -63,6 +63,8 @@ extension MainFeed_v3_viewController {
         
         self.list.register(CenteredTextCell.self, forCellReuseIdentifier: CenteredTextCell.identifier)
         self.list.register(iPhoneGoDeeper_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneGoDeeper_2colsImg_cell_v3.identifier)
+        self.list.register(iPhoneGoDeeper_2colsTxt_cell_v3.self, forCellReuseIdentifier: iPhoneGoDeeper_2colsTxt_cell_v3.identifier)
+        
         
         
         self.list.delegate = self
@@ -171,8 +173,8 @@ extension MainFeed_v3_viewController {
                 if(Layout.current() == .textImages) {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsImg_cell_v3.identifier)!
                 } else {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
-                    (cell as! iPhoneArticle_2colsTxt_cell_v3).customPopulate = true
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsImg_cell_v3.identifier)!
+//                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsTxt_cell_v3.identifier)!
                 }
             }
             
@@ -331,7 +333,8 @@ extension MainFeed_v3_viewController {
                     result = _cell.calculateGroupHeight()
                 }
             } else {
-                if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsTxt_cell_v3 {
+                if let _cell = self.getCell(indexPath) as? iPhoneGoDeeper_2colsImg_cell_v3 {
+//                if let _cell = self.getCell(indexPath) as? iPhoneGoDeeper_2colsTxt_cell_v3 {
                     result = _cell.calculateGroupHeight()
                 }
             }
@@ -391,8 +394,8 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
     
     func onShowMoreButtonTap(sender: iPhoneMoreCell_v3) {
         self.showLoading()
-        
         let topic = sender.topic
+        
         if( topic != self.topic && topic != "godeeper" ) {
             let vc = MainFeed_v3_viewController()
             vc.topic = topic

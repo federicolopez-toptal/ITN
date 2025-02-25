@@ -51,7 +51,7 @@ extension MainFeed_v3_viewController {
             
             if(_T.name == "godeeper") {
                 self.addHeader(text: _T.capitalizedName)
-                self.dataProvider.append(DP3_text(text: "miau miau"))
+                self.dataProvider.append(DP3_text(text: "text"))
                 continue
             }
             
@@ -171,6 +171,12 @@ extension MainFeed_v3_viewController {
             }
             
             if(_T.name == "ai" && self.topic != "ai") {
+                continue
+            }
+            
+            if(_T.name == "godeeper") {
+                self.addHeader(text: _T.capitalizedName)
+                self.dataProvider.append(DP3_text(text: "text"))
                 continue
             }
             

@@ -133,8 +133,10 @@ class iPhoneGoDeeper_vImgCol_v3: CustomCellView_v3 {
     override func populate(_ article: MainFeedArticle) {
         self.article = article
         
-        self.mainImageView.load(url: article.imgUrl)
-        self.mainImageView.showCorners(self.article.isStory)
+        if(self.imgHeight > 0) {
+            self.mainImageView.load(url: article.imgUrl)
+            self.mainImageView.showCorners(self.article.isStory)
+        }
         
         ///
         self.storyTitleLabel.text = article.title
