@@ -525,9 +525,10 @@ extension StoryViewController {
             let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W, minimumLineNum: false)
             
             // item 1
-            if let _A = self.goDeeperStories.first {                
+            if let _A = self.goDeeperStories.first {            
                 VIEW1.refreshDisplayMode()
                 VIEW1.populate(story: _A)
+//                if(_A.type == 2){ self.adaptToGoDeeper(view: VIEW1) }
                 self.adaptToGoDeeper(view: VIEW1)
                                 
                 H1 = VIEW1.calculateHeight()
@@ -547,6 +548,7 @@ extension StoryViewController {
             if let _A = self.goDeeperStories.first {
                 VIEW2.refreshDisplayMode()
                 VIEW2.populate(story: _A)
+//                if(_A.type == 2){ self.adaptToGoDeeper(view: VIEW2) }
                 self.adaptToGoDeeper(view: VIEW2)
                 
                 H2 = VIEW2.calculateHeight()
