@@ -308,7 +308,7 @@ class ControversyCellView: UIView {
             self.pill.font = AILERON_SEMIBOLD(12)
             self.pill.backgroundColor = UIColor(hex: 0xf4e457)
         } else if(controversy.controversyType.uppercased() == "ELECTION_CAMPAIGN") {
-            self.pill.text = "ELECTION CAMPAING"
+            self.pill.text = "ELECTION CAMPAIGN"
             self.pill.font = AILERON_SEMIBOLD(12)
             self.pill.backgroundColor = UIColor(hex: 0xDA4933)
             self.pill.textColor = .white
