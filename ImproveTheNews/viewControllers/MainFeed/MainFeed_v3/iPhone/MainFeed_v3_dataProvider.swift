@@ -35,7 +35,7 @@ extension MainFeed_v3_viewController {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
         
-        if(self.data.topic.count==0) { return }
+        if(self.data.topics.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             //var _T = self.data.topics[i]
             var _T: MainFeedTopic!
@@ -48,6 +48,13 @@ extension MainFeed_v3_viewController {
             if(_T.name == "ai" && self.topic != "ai") {
                 continue
             }
+            
+            if(_T.name == "godeeper") {
+                self.addHeader(text: _T.capitalizedName)
+                self.dataProvider.append(DP3_text(text: "miau miau"))
+                continue
+            }
+            
             
             var itemInTopic = 0
             while(_T.hasNewsAvailable()) {
@@ -153,7 +160,7 @@ extension MainFeed_v3_viewController {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
         
-        if(self.data.topic.count==0) { return }
+        if(self.data.topics.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             //var _T = self.data.topics[i]
             var _T: MainFeedTopic!
@@ -334,7 +341,7 @@ extension MainFeed_v3_viewController {
         self.data.resetCounting()
         self.dataProvider = [DP3_item]()
         
-        if(self.data.topic.count==0) { return }
+        if(self.data.topics.count==0) { return }
         for i in 0...self.data.topics.count-1 {
             //var _T = self.data.topics[i]
             var _T: MainFeedTopic!

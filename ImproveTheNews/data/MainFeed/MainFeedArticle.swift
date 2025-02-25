@@ -123,6 +123,47 @@ struct MainFeedArticle {
         self.used = false
     }
     
+    init(jsonFromGoDeeper jsonObj: [String: Any]) {
+        self.isStory = true
+        self.used = false
+        self.time = CHECK(jsonObj["time"])
+        self.title = CHECK(jsonObj["title"])
+        self.url = CHECK(jsonObj["url"])
+        self.imgUrl = CHECK(jsonObj["image"])
+        
+        self.summaryText = CHECK(jsonObj["storytype"])
+        
+        self.storySources = []
+        if let _logos = jsonObj["logos"] as? [[String: Any]] {
+            for _L in _logos {
+                let currentSource = CHECK(_L["medianame"])
+                
+                var found = false
+                for _source in self.storySources {
+                    if(_source == currentSource) {
+                        found = true
+                        break
+                    }
+                }
+            
+                if(!found) {
+                    self.storySources.append(currentSource)
+                }
+            }
+        }
+        
+        self.videoFile = nil
+        if let _video = jsonObj["videofile"] as? String {
+            self.videoFile = _video
+        }
+        
+        self.source = ""
+        self.LR = 1
+        self.PE = 1
+        self.country = ""
+        self.markups = [Markup]()
+    }
+    
     init(jsonFromFigure jsonObj: [String: Any]) {
         self.source = ""
         self.title = CHECK(jsonObj["title"])

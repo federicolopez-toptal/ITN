@@ -168,7 +168,8 @@ extension MainFeed_v3_viewController: TopicSelectorViewDelegate {
         if(index==0) {
             self.list.scrollToTop()
         } else {
-            let topic = self.data.topics[index].name
+            let _i = index+1
+            let topic = self.data.topics[_i].name
             
             if(topic == "us-election-2024") {
                 ControversiesViewController.topic = "us-election-2024"
@@ -199,3 +200,5 @@ extension MainFeed_v3_viewController: CustomFeedListDelegate {
     }
     
 }
+
+

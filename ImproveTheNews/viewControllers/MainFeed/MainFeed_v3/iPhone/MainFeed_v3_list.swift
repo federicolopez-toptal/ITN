@@ -61,6 +61,9 @@ extension MainFeed_v3_viewController {
         
         self.list.register(newAdCell_v3.self, forCellReuseIdentifier: newAdCell_v3.identifier)
         
+        self.list.register(CenteredTextCell.self, forCellReuseIdentifier: CenteredTextCell.identifier)
+        self.list.register(iPhoneGoDeeper_2colsImg_cell_v3.self, forCellReuseIdentifier: iPhoneGoDeeper_2colsImg_cell_v3.identifier)
+        
         
         self.list.delegate = self
         self.list.dataSource = self
@@ -164,7 +167,16 @@ extension MainFeed_v3_viewController {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
                     (cell as! iPhoneArticle_2colsTxt_cell_v3).customPopulate = true
                 }
-            } else if(_groupItem is DP3_iPhoneArticle_2cols) {
+            } else if(_groupItem is DP3_iPhoneGoDeeper_2cols) { // GO DEEPER
+                if(Layout.current() == .textImages) {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsImg_cell_v3.identifier)!
+                } else {
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsTxt_cell_v3.identifier)!
+                    (cell as! iPhoneArticle_2colsTxt_cell_v3).customPopulate = true
+                }
+            }
+            
+            else if(_groupItem is DP3_iPhoneArticle_2cols) {
                 if(self.hasColumnBanner(index: indexPath.row)) {
                     if(Layout.current() == .textImages) {
                         cell = self.list.dequeueReusableCell(withIdentifier: iPhoneArticle_2colsImgBanner_cell_v3.identifier)!
@@ -225,6 +237,10 @@ extension MainFeed_v3_viewController {
                 cell = self.list.dequeueReusableCell(withIdentifier: newAdCell_v3.identifier)!
                 (cell as! newAdCell_v3).populateWithType(_item.type)
                 //cell.setNeedsDisplay()
+            } else if let _item = item as? DP3_text {
+                cell = self.list.dequeueReusableCell(withIdentifier: CenteredTextCell.identifier) as! CenteredTextCell
+                (cell as! CenteredTextCell).populate(with: _item.text, offsetY: -15)
+                (cell as! CenteredTextCell).showLoading(true)
             }
         }
         
@@ -309,7 +325,19 @@ extension MainFeed_v3_viewController {
                     result = _cell.calculateGroupHeight()
                 }
             }
-        } else if(item is DP3_iPhoneArticle_2cols) { // row: 2 articles
+        } else if(item is DP3_iPhoneGoDeeper_2cols) { // GO DEEPER
+            if(Layout.current() == .textImages) {
+                if let _cell = self.getCell(indexPath) as? iPhoneGoDeeper_2colsImg_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
+            } else {
+                if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsTxt_cell_v3 {
+                    result = _cell.calculateGroupHeight()
+                }
+            }
+        }
+        
+        else if(item is DP3_iPhoneArticle_2cols) { // row: 2 articles
             if(self.hasColumnBanner(index: indexPath.row)) {
                 if(Layout.current() == .textImages) {
                     if let _cell = self.getCell(indexPath) as? iPhoneArticle_2colsImgBanner_cell_v3 {
@@ -343,7 +371,9 @@ extension MainFeed_v3_viewController {
             if let _cell = self.getCell(indexPath) as? newAdCell_v3 {
                 result = _cell.calculateHeight()
             }
-        }
+        } else if(item is DP3_text) {
+            return CenteredTextCell.height + 10
+        } 
         
 //        else if let _item = item as? DP3_newAd {
 //            
@@ -363,7 +393,7 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
         self.showLoading()
         
         let topic = sender.topic
-        if(topic != self.topic) {
+        if( topic != self.topic && topic != "godeeper" ) {
             let vc = MainFeed_v3_viewController()
             vc.topic = topic
             
@@ -373,37 +403,40 @@ extension MainFeed_v3_viewController: iPhoneMoreCell_v3_delegate {
             return
         }
         
-        self.data.loadMoreData(topic: topic, bannerClosed: self.bannerClosed) { (error, articlesAdded) in
-            if let _ = error {
-                // Mostrar algun error?
-            } else if let _articlesAdded = articlesAdded {
-                let count = self.data.topicsCount[topic]! + _articlesAdded
-                let A = (count >= MAX_ARTICLES_PER_TOPIC)
-                let B = (_articlesAdded == 0)
-                if(A || B) { self.topicsCompleted[topic] = true }
-                
-                self.populateDataProvider()
-                
-                if(self.topic == "ai") {
-                    self.addControversiesToMainFeed(mustRefresh: false)
+        if(topic != "godeeper") {
+            self.data.loadMoreData(topic: topic, bannerClosed: self.bannerClosed) { (error, articlesAdded) in
+                if let _ = error {
+                    // Mostrar algun error?
+                } else if let _articlesAdded = articlesAdded {
+                    let count = self.data.topicsCount[topic]! + _articlesAdded
+                    let A = (count >= MAX_ARTICLES_PER_TOPIC)
+                    let B = (_articlesAdded == 0)
+                    if(A || B) { self.topicsCompleted[topic] = true }
                     
-                    for (i, DP) in self.dataProvider.enumerated() {
-                        if(DP is DP3_more) {
-                            self.dataProvider.remove(at: i)
-                            break
+                    self.populateDataProvider()
+                    
+                    if(self.topic == "ai") {
+                        self.addControversiesToMainFeed(mustRefresh: false)
+                        
+                        for (i, DP) in self.dataProvider.enumerated() {
+                            if(DP is DP3_more) {
+                                self.dataProvider.remove(at: i)
+                                break
+                            }
                         }
                     }
+    //                if(self.controversiesTotal > 0) {
+    //                    self.addControversiesToMainFeed(mustRefresh: false)
+    //                }
+                    
+                    self.refreshList()
                 }
-//                if(self.controversiesTotal > 0) {
-//                    self.addControversiesToMainFeed(mustRefresh: false)
-//                }
-                
-                self.refreshList()
+                self.hideLoading()
             }
-            
-            self.hideLoading()
+        } else {
+            self.goDeeperPage += 1
+            self.loadGoDeeper()
         }
-        
     }
     
 }

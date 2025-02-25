@@ -37,6 +37,10 @@ class MainFeed_v3_viewController: BaseViewController {
     
     var safeAreaTop: CGFloat = 0
     
+    var goDeeperPage: Int = 1
+    
+    
+    
     //var debugText = UITextField()
     
     // MARK: - Start
@@ -211,6 +215,11 @@ extension MainFeed_v3_viewController {
                             self.controversiesPage = 1
                             self.controversiesTotal = 0
                             self.loadControversies()
+                        }
+                        
+                        if(self.topic == "news") {
+                            self.goDeeperPage = 1
+                            self.loadGoDeeper()
                         }
                         
                     }

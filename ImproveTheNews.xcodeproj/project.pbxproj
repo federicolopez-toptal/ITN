@@ -507,12 +507,15 @@
 		1FFF6F8C2B2294E30008DC07 /* TourIntroPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFF6F8B2B2294E30008DC07 /* TourIntroPopupView.swift */; };
 		BD12750E2C94799300B5EED0 /* MainFeedv4_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD12750D2C94799300B5EED0 /* MainFeedv4_iPad.swift */; };
 		BD1275102C94849600B5EED0 /* iPad5items_type1_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD12750F2C94849600B5EED0 /* iPad5items_type1_cell_v3.swift */; };
+		BD223DD32D6D3DC8008F29CB /* iPhoneGoDeeper_2colsImg_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD223DD22D6D3DC8008F29CB /* iPhoneGoDeeper_2colsImg_cell_v3.swift */; };
+		BD223DD52D6D3EA3008F29CB /* iPhoneGoDeeper_vImgCol_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD223DD42D6D3EA3008F29CB /* iPhoneGoDeeper_vImgCol_v3.swift */; };
 		BD22571F2C90746A0097AD33 /* MainFeedv4_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22571E2C90746A0097AD33 /* MainFeedv4_iPhone.swift */; };
 		BD2257212C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257202C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift */; };
 		BD2257232C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257222C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift */; };
 		BD2257252C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257242C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift */; };
 		BD2257272C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257262C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift */; };
 		BD2257292C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2257282C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift */; };
+		BD2320682D6CD5300080346A /* MainFeed_v3_goDeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2320672D6CD5300080346A /* MainFeed_v3_goDeeper.swift */; };
 		BD28E9752CAF037300C2C7BC /* FormOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD28E9742CAF037300C2C7BC /* FormOptionView.swift */; };
 		BD2BD8CF2CA45BAF00BBA933 /* NewsletterSignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BD8CE2CA45BAF00BBA933 /* NewsletterSignUp2.swift */; };
 		BD2D0A782CF5413D00CAEC74 /* MetaculusClaimCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2D0A772CF5413D00CAEC74 /* MetaculusClaimCellView.swift */; };
@@ -1083,12 +1086,15 @@
 		B038FC5F8D4A9F9F2CF291F0 /* Pods-ImproveTheNews.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImproveTheNews.app store.xcconfig"; path = "Target Support Files/Pods-ImproveTheNews/Pods-ImproveTheNews.app store.xcconfig"; sourceTree = "<group>"; };
 		BD12750D2C94799300B5EED0 /* MainFeedv4_iPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedv4_iPad.swift; sourceTree = "<group>"; };
 		BD12750F2C94849600B5EED0 /* iPad5items_type1_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPad5items_type1_cell_v3.swift; sourceTree = "<group>"; };
+		BD223DD22D6D3DC8008F29CB /* iPhoneGoDeeper_2colsImg_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iPhoneGoDeeper_2colsImg_cell_v3.swift; path = "ImproveTheNews/viewControllers/MainFeed/MainFeed_v3/Cells/Subs (GroupItemCell_v3)/iPhoneGoDeeper_2colsImg_cell_v3.swift"; sourceTree = SOURCE_ROOT; };
+		BD223DD42D6D3EA3008F29CB /* iPhoneGoDeeper_vImgCol_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = iPhoneGoDeeper_vImgCol_v3.swift; path = "ImproveTheNews/viewControllers/MainFeed/MainFeed_v3/Cells/Subs (GroupItemCell_v3)/CustomCellView/Subs (CustomCellView_v3)/iPhoneGoDeeper_vImgCol_v3.swift"; sourceTree = SOURCE_ROOT; };
 		BD22571E2C90746A0097AD33 /* MainFeedv4_iPhone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedv4_iPhone.swift; sourceTree = "<group>"; };
 		BD2257202C91C32E0097AD33 /* iPhoneLineSeparatorCell_v3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneLineSeparatorCell_v3.swift; sourceTree = "<group>"; };
 		BD2257222C91CC3E0097AD33 /* iPhoneStory_vImgDescr_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vImgDescr_cell_v3.swift; sourceTree = "<group>"; };
 		BD2257242C91CE290097AD33 /* iPhoneStory_vImgDescr_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vImgDescr_v3.swift; sourceTree = "<group>"; };
 		BD2257262C91D3A90097AD33 /* iPhoneStory_vTxtDescr_cell_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vTxtDescr_cell_v3.swift; sourceTree = "<group>"; };
 		BD2257282C91D43F0097AD33 /* iPhoneStory_vTxtDescr_v3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneStory_vTxtDescr_v3.swift; sourceTree = "<group>"; };
+		BD2320672D6CD5300080346A /* MainFeed_v3_goDeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeed_v3_goDeeper.swift; sourceTree = "<group>"; };
 		BD28E9742CAF037300C2C7BC /* FormOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormOptionView.swift; sourceTree = "<group>"; };
 		BD2BD8CE2CA45BAF00BBA933 /* NewsletterSignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsletterSignUp2.swift; sourceTree = "<group>"; };
 		BD2D0A772CF5413D00CAEC74 /* MetaculusClaimCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaculusClaimCellView.swift; sourceTree = "<group>"; };
@@ -1510,6 +1516,7 @@
 				1FE89CEF2AF19E9700A6C99C /* MainFeed_v3_misc.swift */,
 				1FE89CEE2AF19E9700A6C99C /* MainFeed_v3_list.swift */,
 				BD44510E2C7F600800BBD346 /* MainFeed_v3_dataProvider.swift */,
+				BD223DD12D6D3C86008F29CB /* GoDeeper */,
 			);
 			path = iPhone;
 			sourceTree = "<group>";
@@ -2244,6 +2251,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BD223DD12D6D3C86008F29CB /* GoDeeper */ = {
+			isa = PBXGroup;
+			children = (
+				BD2320672D6CD5300080346A /* MainFeed_v3_goDeeper.swift */,
+				BD223DD22D6D3DC8008F29CB /* iPhoneGoDeeper_2colsImg_cell_v3.swift */,
+				BD223DD42D6D3EA3008F29CB /* iPhoneGoDeeper_vImgCol_v3.swift */,
+			);
+			path = GoDeeper;
+			sourceTree = "<group>";
+		};
 		BD5C80742C59357400ED0A60 /* 01 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2701,6 +2718,7 @@
 				1F38214629A6EA71004D4D29 /* CustomCellView.swift in Sources */,
 				1F68CD012BAB1DB6007AC92C /* FigureDetailsViewController.swift in Sources */,
 				1F8A7A9F2B6B60C60049328A /* UIViewExtension.swift in Sources */,
+				BD2320682D6CD5300080346A /* MainFeed_v3_goDeeper.swift in Sources */,
 				1F106AEB2907186E004B9943 /* MainFeed_dataProvider.swift in Sources */,
 				1F455E802BA15BED00551336 /* NewsLetterStory.swift in Sources */,
 				1FC9C45A2B885FBA00E77FD5 /* iPadStory_vTxt_cell_v3.swift in Sources */,
@@ -2862,6 +2880,7 @@
 				1FC5571A2AF2EEE400C0117A /* NavBarView.swift in Sources */,
 				1F025CB228E133D800AA866D /* BannerCell.swift in Sources */,
 				1F9EDD4929AE8510007A97A6 /* SpacerCell.swift in Sources */,
+				BD223DD52D6D3EA3008F29CB /* iPhoneGoDeeper_vImgCol_v3.swift in Sources */,
 				1FD1BD4F2AF4208200BEF887 /* iPhoneBannerCell_v3.swift in Sources */,
 				1F6506472AD6FA2C00535337 /* FAQ_Stories.swift in Sources */,
 				1FE89CE92AF19ABD00A6C99C /* MenuView_misc.swift.txt in Sources */,
@@ -2877,6 +2896,7 @@
 				1F9EDD5729AEB267007A97A6 /* iPadGroupItem_splitStoriesCellText.swift in Sources */,
 				1F16FD6A2B4716AA0082DACF /* EmailNotVerifiedPopupView.swift in Sources */,
 				BD22571F2C90746A0097AD33 /* MainFeedv4_iPhone.swift in Sources */,
+				BD223DD32D6D3DC8008F29CB /* iPhoneGoDeeper_2colsImg_cell_v3.swift in Sources */,
 				1FE89CFD2AF1AD3A00A6C99C /* SpacerCell_v3.swift in Sources */,
 				1FF32A282A2FAEF100948FA4 /* KeywordSearch.swift in Sources */,
 				1F2FB1022A02D5BE00B4E99B /* AccountViewController.swift in Sources */,
