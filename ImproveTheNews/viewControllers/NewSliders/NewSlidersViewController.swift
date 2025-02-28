@@ -144,8 +144,8 @@ extension NewSlidersViewController: UIGestureRecognizerDelegate {
 // MARK: data
 extension NewSlidersViewController {
 
-    func loadContent() {
-        self.showLoading()
+    func loadContent(showLoading: Bool = true) {
+        if(showLoading){ self.showLoading() }
         self.topicsCompleted = [String: Bool]()
         
         var C = self.articlesPerLoad

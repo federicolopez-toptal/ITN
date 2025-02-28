@@ -32,15 +32,19 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         var sourceTime_leading: NSLayoutConstraint?
         var source_leading: NSLayoutConstraint?
     
+    var useMaxNumLines: Bool = true
+    
+    
     // MARK: - Start
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat, fontSize: CGFloat = 18) {
+    init(width: CGFloat, fontSize: CGFloat = 18, useMaxNumLines: Bool = true) {
         super.init(frame: .zero)
         self.WIDTH = width
         self.fontSize = fontSize
+        self.useMaxNumLines = useMaxNumLines
         
         self.buildContent()
     }
@@ -162,11 +166,13 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         if(article.isStory) {
             self.storyTitleLabel.text = article.title
             
-            let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
-            let diff = MAX_NUM_LINES - Int(numLines)
-            if(diff>0) {
-                for _ in 1...diff {
-                    self.storyTitleLabel.text! += "\n"
+            if(self.self.useMaxNumLines) {
+                let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight
+                let diff = MAX_NUM_LINES - Int(numLines)
+                if(diff>0) {
+                    for _ in 1...diff {
+                        self.storyTitleLabel.text! += "\n"
+                    }
                 }
             }
             

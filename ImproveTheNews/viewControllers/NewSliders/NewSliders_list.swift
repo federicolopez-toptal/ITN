@@ -134,7 +134,7 @@ extension NewSlidersViewController {
 extension NewSlidersViewController: CustomFeedListDelegate {
 
     func feedListOnRefreshPulled(sender: CustomFeedList) {
-        self.loadContent()
+        self.loadContent(showLoading: false)
     }
     func feedListOnScrollToTop(sender: CustomFeedList) {
         // show navBar (?)

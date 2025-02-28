@@ -165,6 +165,15 @@ struct SourceForGraph {
         self.url = CHECK(json["url"])
     }
     
+    init(id: String, name: String, url: String) {
+        self.id = id
+        self.name = name
+        
+        self.LR = 1
+        self.CP = 1
+        self.url = url
+    }
+    
     func trace() {
         print("SourceForGraph -------------")
         print("id", self.id, "name", self.name)

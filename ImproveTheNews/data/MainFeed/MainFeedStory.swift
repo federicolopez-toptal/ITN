@@ -29,6 +29,9 @@ struct MainFeedStory {
     var audio: AudioFile?
     var video: String = ""
     
+    var mediaList: [String] = []
+    
+    
     init (_ json: [String: Any]) {
     // main fields
         var mainNode: [String: Any] = [:]
@@ -38,6 +41,24 @@ struct MainFeedStory {
             return
         }
         //let mainNode = json["storyData"] as! [String: Any]
+        
+        if let _media = mainNode["media"] as? [String: String], let _mediaList = _media["mediaList"] {
+            let mediaListItems = _mediaList.components(separatedBy: ",")
+            
+            for _M in mediaListItems {
+                var found = false
+                for M in self.mediaList {
+                    if(M == _M) {
+                        found = true
+                        break
+                    }
+                }
+                
+                if(!found) {
+                    self.mediaList.append(_M)
+                }
+            }
+        }
         
         self.id = getSTRING(mainNode["id"], defaultValue: "1")
         self.title = getSTRING(mainNode["title"], defaultValue: "Title not available")

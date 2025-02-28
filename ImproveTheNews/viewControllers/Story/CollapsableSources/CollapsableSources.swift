@@ -18,7 +18,7 @@ class CollapsableSources {
     var arrowSpacerWidthConstraint: NSLayoutConstraint? = nil
     
 
-    init(buildInto container: UIStackView, sources: [SourceForGraph]) {
+    init(buildInto container: UIStackView, sources: [SourceForGraph], extraText: String? = nil) {
         self.container = container
         
         container.spacing = 0
@@ -54,6 +54,19 @@ class CollapsableSources {
             sourceView.buildInto(container, source: S)
         }
         
+        if let _extraText = extraText {
+            ADD_SPACER(to: container, width: 16)
+            
+            let extraLabel = UILabel()
+            extraLabel.text = _extraText
+            extraLabel.textColor = CSS.shared.displayMode().main_textColor
+            extraLabel.font = AILERON(14)
+            container.addArrangedSubview(extraLabel)
+            extraLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+            
+            extraLabel.tag = 99
+        }
+        
         let spacer = UIView()
         container.addArrangedSubview(spacer)
         self.arrowSpacerWidthConstraint = spacer.widthAnchor.constraint(equalToConstant: 16)
@@ -71,7 +84,7 @@ class CollapsableSources {
         ])
         ADD_SPACER(to: arrowVStack, height: 6.5)
         
-        ADD_SPACER(to: container)
+        ADD_SPACER(to: container) // filler
         
         self.actionButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
         container.addSubview(self.actionButton)
@@ -87,12 +100,16 @@ class CollapsableSources {
     
     // MARK: Button actions
     @objc func actionButtonTap(_ sender: UIButton?) {
+        let extraTextLabel = self.container?.viewWithTag(99)
+        
         for V in self.container!.arrangedSubviews {
             if let _V = V as? CollapsableSingleSourceView {
                 if(self.isOpen) {
                     _V.close(animated: true)
+                    extraTextLabel?.show()
                 } else {
                     _V.open(animated: true)
+                    extraTextLabel?.hide()
                 }
             }
         }

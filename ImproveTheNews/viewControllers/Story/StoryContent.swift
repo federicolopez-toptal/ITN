@@ -13,17 +13,17 @@ class StoryContent {
     private let storyID_url = ITN_URL() + "/api/route?slug="
     private let storyData_url = ITN_URL() + "/php/stories/index.php?path=story&id=<ID>&filters=<FILTERS>"
     
-    func load(url: String, callback: @escaping (MainFeedStory?) ->()) {
+    func load(url: String, callback: @escaping (MainFeedStory?, DeepDiveContent?) ->()) {
         let slug = self.extractSlugFrom(url: url)
         self.getStoryID(slug: slug) { (storyID) in
             if let _storyID = storyID {
-                self.getStoryData(storyID: _storyID) { (story) in
+                self.getStoryData(storyID: _storyID) { (story, deepDive) in
                     if(story==nil){ print("ERROR: getStoryData") }
-                    callback(story)
+                    callback(story, deepDive)
                 }
             } else {
                 print("ERROR: getStoryID")
-                callback(nil)
+                callback(nil, nil)
             }
         }
     }
@@ -73,7 +73,7 @@ extension StoryContent {
     }
     
     func getStoryData(storyID: String,
-        callback: @escaping (MainFeedStory?) -> () ) {
+        callback: @escaping (MainFeedStory?, DeepDiveContent?) -> () ) {
         //callback: @escaping (StoryData?, [StoryFact]?, [StorySpin]?, [StoryArticle]?, String?) ->() ) {
         
         var url = storyData_url.replacingOccurrences(of: "<ID>", with: storyID)
@@ -90,21 +90,90 @@ extension StoryContent {
         let task = URLSession.shared.dataTask(with: request) { (data, resp, error) in
             if let _error = error {
                 print(_error.localizedDescription)
-                callback(nil)
+                callback(nil, nil)
             } else {
                 if let json = JSON(fromData: data) {
                     if let _ = json["error"] {
-                        callback(nil)
+                        callback(nil, nil)
                     } else {
+                        var deepDive: DeepDiveContent? = nil
                         let story = MainFeedStory(json) //Story content
-                        callback(story)
+                        
+                        if let _deepDiveNode = json["deepDive"] as? [String: Any] {
+                            if let _sections = _deepDiveNode["sections"] as? [[String: Any]] {
+                                deepDive = DeepDiveContent(_sections)
+                            }
+                        }
+                        
+                        callback(story, deepDive)
                     }
                 } else {
-                    callback(nil)
+                    callback(nil, nil)
                 }
             }
         }
         task.resume()
+    }
+    
+}
+
+class DeepDiveContent {
+    
+    var sections = [DeepDiveSection]()
+    
+    init(_ sections: [[String: Any]]) {
+        self.sections = []
+        
+        for _S in sections {
+            let newSection = DeepDiveSection(_S)
+            self.sections.append(newSection)
+        }
+    }
+    
+    func sectionNames() -> [String] {
+        var result = [String]()
+        for _S in self.sections {
+            result.append(_S.title)
+        }
+        
+        return result
+    }
+    
+}
+
+class DeepDiveSection {
+    
+    var title: String = ""
+    var content: (String, String) = ("", "")
+    var additionalInfo: (String, String) = ("", "")
+    var sources: [String] = []
+    var stories: [MainFeedArticle] = []
+    
+    init(_ json: [String: Any]) {
+        self.title = CHECK(json["title"])
+        
+        if let _node = json["content"] as? [[String: String]], let _first = _node.first {
+            self.content.0 = CHECK(_first["type"])
+            self.content.1 = CHECK(_first["content"])
+        }
+        
+        if let _node = json["additionalInfo"] as? [String: String] {
+            self.additionalInfo.0 = CHECK(_node["title"])
+            self.additionalInfo.1 = CHECK(_node["description"])
+        }
+        
+        self.sources = []
+        if let _node = json["sources"] as? [String] {
+            self.sources = _node
+        }
+        
+        self.stories = []
+        if let _node = json["stories"] as? [[String: Any]] {
+            for ST in _node {
+                let newStory = MainFeedArticle(jsonFromGoDeeper: ST)
+                self.stories.append(newStory)
+            }
+        }
     }
     
 }

@@ -48,6 +48,7 @@ class StoryViewController: BaseViewController {
     
     var loadedImage: UIImage? = nil
     var loadedStory: MainFeedStory!
+    var deepDive: DeepDiveContent? = nil
     
     var webBrowser: WKWebView? = nil
     var goDeeperStories = [StorySearchResult]()
@@ -58,6 +59,11 @@ class StoryViewController: BaseViewController {
     
     var showSplitSource: Bool = false
     var collapsableSources: [CollapsableSources] = []
+    
+    var deepDiveContent_VStack = UIStackView()
+    var mediaList = [String]()
+    var cSourcesView: CollapsableSources? = nil
+    
     
     deinit {
         self.audioPlayer.close()
@@ -94,7 +100,7 @@ class StoryViewController: BaseViewController {
         CustomNavController.shared.interactivePopGestureRecognizer?.delegate = self // swipe to back
                 
         self.view.addSubview(self.scrollView)
-        self.scrollView.backgroundColor = .systemPink
+        self.scrollView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.scrollView.delegate = self
         self.scrollView.activateConstraints([
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: IPAD_sideOffset()),
@@ -107,7 +113,7 @@ class StoryViewController: BaseViewController {
             H.priority = .defaultLow
             
         self.scrollView.addSubview(self.contentView)
-        self.contentView.backgroundColor = .yellow
+        self.contentView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.contentView.activateConstraints([
             self.contentView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor),
             self.contentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
@@ -118,7 +124,7 @@ class StoryViewController: BaseViewController {
         ])
         
         self.VStack = VSTACK(into: self.contentView)
-        self.VStack.backgroundColor = .green
+        self.VStack.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.VStack.spacing = 0
         self.VStack.activateConstraints([
             self.VStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
@@ -161,7 +167,7 @@ extension StoryViewController {
         self.showLoading()
 
         if(!self.storyID.isEmpty) {
-            self.storyData.getStoryData(storyID: self.storyID) { story in
+            self.storyData.getStoryData(storyID: self.storyID) { (story, deepDive) in
                 if(story == nil) {
                     // Empty story content
                     ALERT(vc: self, title: "Server error",
@@ -174,10 +180,12 @@ extension StoryViewController {
                         self.scrollView.show()
                         
                         if let _story = story {
+                            self.mediaList = _story.mediaList
                             self.story = MainFeedArticle(story: _story)
                         
                             self.loadedStory = _story
-                            self.addContent(_story)
+                            self.deepDive = deepDive
+                            self.addContent(_story, deepDive)
                             
                             DELAY(1.0) {
                                 self.calculateSectionsY()
@@ -189,7 +197,7 @@ extension StoryViewController {
             
         } else {
             ///
-            self.storyData.load(url: self.story!.url) { (story) in
+            self.storyData.load(url: self.story!.url) { (story, deepDive) in
                 if(story == nil) {
                     // Empty story content
                     ALERT(vc: self, title: "Server error",
@@ -202,8 +210,10 @@ extension StoryViewController {
                         self.scrollView.show()
                         
                         if let _story = story {
+                            self.mediaList = _story.mediaList
                             self.loadedStory = _story
-                            self.addContent(_story)
+                            self.deepDive = deepDive
+                            self.addContent(_story, deepDive)
                             
                             DELAY(1.0) {
                                 self.calculateSectionsY()
@@ -240,7 +250,7 @@ extension StoryViewController {
 // MARK: - Content
 extension StoryViewController {
 
-    func addContent(_ story: MainFeedStory) {
+    func addContent(_ story: MainFeedStory, _ deepDive: DeepDiveContent?) {
         if(self.webBrowser != nil) {
             REMOVE_ALL_CONSTRAINTS(from: self.webBrowser!)
             self.VStack.removeArrangedSubview(self.webBrowser!)
@@ -312,33 +322,42 @@ extension StoryViewController {
         if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
             self.addImageCredit(story.image_credit_title, story.image_credit_url, description: story.image_description)
         }
+        self.addDeepDiveSections()
 
 //        story.time
 //
 //        MainFeedArticle
 //        MainFeedStory
         
-        self.addFactsStructure()
-            self.facts = story.facts
-            self.groupSources()     // works with self.facts
-            
-        if(self.showSplitSource) {
-            self.populateFacts_new()
-        } else {
-            self.populateFacts()    // works with self.facts
-        }
+        self.facts = story.facts
+        self.groupSources()
         
-        if(self.showSplitSource) {
-            if(IPHONE()) {
-                self.addSourceSplitGraph(container: self.VStack)
+        if(self.deepDive == nil) {
+            self.addFactsStructure()
+                //self.facts = story.facts
+                //self.groupSources()
+                
+            if(self.showSplitSource) {
+                self.populateFacts_new()
             } else {
-                if let _container = self.view.viewWithTag(555) as? UIStackView {
-                    self.addSourceSplitGraph(container: _container)
+                self.populateFacts()    // works with self.facts
+            }
+        
+            if(self.showSplitSource) {
+                if(IPHONE()) {
+                    self.addSourceSplitGraph(container: self.VStack)
+                } else {
+                    if let _container = self.view.viewWithTag(555) as? UIStackView {
+                        self.addSourceSplitGraph(container: _container)
+                    }
                 }
+            } else {
+                self.addSourcesStructure()
+                self.populateSources()
             }
         } else {
-            self.addSourcesStructure()
-            self.populateSources()
+            self.addDeepDiveContentStructure()
+            self.showDeepDiveContent(forIndex: 0)
         }
 
         self.addSpins(story.spins)
@@ -464,14 +483,17 @@ extension StoryViewController {
         var view = UIView()
         switch(tag) {
             case 1:
-                let view = self.view.viewWithTag(140)!
-                val_Y = -self.contentView.convert(view.frame.origin, to: view).y
+                if let _view = self.view.viewWithTag(140) {
+                    val_Y = -self.contentView.convert(_view.frame.origin, to: _view).y
+                }
             case 2:
-                view = self.view.viewWithTag(160)!
-                val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+                if let _view = self.view.viewWithTag(160) {
+                    val_Y = self.contentView.convert(_view.frame.origin, to: self.scrollView).y
+                }
             case 3:
-                view = self.view.viewWithTag(170)!
-                val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+                if let _view = self.view.viewWithTag(170) {
+                    val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+                }
         
             default:
                 NOTHING()
@@ -525,7 +547,7 @@ extension StoryViewController {
             let VIEW2 = iPhoneAllNews_vImgCol_v3(width: W, minimumLineNum: false)
             
             // item 1
-            if let _A = self.goDeeperStories.first {            
+            if let _A = self.goDeeperStories.first {
                 VIEW1.refreshDisplayMode()
                 VIEW1.populate(story: _A)
 //                if(_A.type == 2){ self.adaptToGoDeeper(view: VIEW1) }
@@ -1315,8 +1337,9 @@ extension StoryViewController {
             noSpinsLabel.font = CSS.shared.iPhoneStoryContent_subTitleFont
             if(IPAD()){ noSpinsLabel.font = DM_SERIF_DISPLAY_fixed(19) //MERRIWEATHER_BOLD(19)
             }
-            noSpinsLabel.text = "No spin available"
+            noSpinsLabel.text = "    No spin available"
             noSpinsLabel.textColor = CSS.shared.displayMode().main_textColor
+            
             innerHStack.addArrangedSubview(noSpinsLabel)
             
             ADD_SPACER(to: self.VStack, height: CSS.shared.iPhoneSide_padding)
@@ -2597,7 +2620,12 @@ extension StoryViewController {
             //DM_SERIF_DISPLAY_fixed(17) //MERRIWEATHER_BOLD(17)
             if(IPAD()){ FactsLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) //MERRIWEATHER_BOLD(19)
             }
-            FactsLabel.text = "The Facts"
+            
+            if(self.deepDive == nil) {
+                FactsLabel.text = "The Facts"
+            } else {
+                FactsLabel.text = "Overview"
+            }
             FactsLabel.textColor = CSS.shared.displayMode().main_textColor
             //DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
             VStack.addArrangedSubview(FactsLabel)
@@ -3762,16 +3790,18 @@ extension StoryViewController: UIScrollViewDelegate {
         for i in 1...3 {
             switch(i) {
                 case 1:
-                    let targetView = self.view.viewWithTag(140)!
-                    let value = -self.contentView.convert(targetView.frame.origin, to: targetView).y
-                    self.sections_y.append(value)
+                    if let _targetView = self.view.viewWithTag(140) {
+                        let value = -self.contentView.convert(_targetView.frame.origin, to: _targetView).y
+                        self.sections_y.append(value)
+                    }
                 case 2:
-                    let targetView = self.view.viewWithTag(160)!
-                    let value = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
-                    self.sections_y.append(value)
+                    if let _targetView = self.view.viewWithTag(160) {
+                        let value = self.contentView.convert(_targetView.frame.origin, to: self.scrollView).y
+                        self.sections_y.append(value)
+                    }
                 case 3:
-                    if let targetView = self.view.viewWithTag(170) {
-                        let value = self.contentView.convert(targetView.frame.origin, to: self.scrollView).y
+                    if let _targetView = self.view.viewWithTag(170) {
+                        let value = self.contentView.convert(_targetView.frame.origin, to: self.scrollView).y
                         self.sections_y.append(value)
                     }
                 default:
@@ -3867,7 +3897,7 @@ extension StoryViewController {
         
         if let _content = self.view.viewWithTag(170) {
             _content.removeFromSuperview()
-            self.addContent(self.loadedStory)
+            self.addContent(self.loadedStory, self.deepDive)
         }
         
 
