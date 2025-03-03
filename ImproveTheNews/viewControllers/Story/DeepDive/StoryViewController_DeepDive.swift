@@ -277,7 +277,8 @@ extension StoryViewController { // Deep Dive Utils
     }
     
     func attributedContent(withText text: String) -> NSAttributedString? {
-        let _text = text.replacingOccurrences(of: "<p></p>", with: "")
+        var _text = text.replacingOccurrences(of: "<p></p>", with: "")
+        _text = text.replacingOccurrences(of: "’", with: "'")
         let data = _text.data(using: .utf8)!
                         
         if let attributedText = try? NSMutableAttributedString(data: data,
