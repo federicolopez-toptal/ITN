@@ -62,11 +62,17 @@ extension StoryViewController {
         self.VStack.addArrangedSubview(mainView)
                 
         self.deepDiveContent_VStack = VSTACK(into: mainView)
-        self.deepDiveContent_VStack.backgroundColor = CSS.shared.displayMode().main_bgColor //.orange
+        self.deepDiveContent_VStack.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.deepDiveContent_VStack.activateConstraints([
             self.deepDiveContent_VStack.topAnchor.constraint(equalTo: mainView.topAnchor),
-            self.deepDiveContent_VStack.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 16),
-            self.deepDiveContent_VStack.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -16),
+            self.deepDiveContent_VStack.widthAnchor.constraint(equalToConstant: self.deepDiveWidth()),
+            //self.deepDiveContent_VStack.centerXAnchor.constraint(equalTo: mainView.centerXAnchor)
+            
+            self.deepDiveContent_VStack.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 16)
+        
+  
+//            self.deepDiveContent_VStack.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 16),
+//            self.deepDiveContent_VStack.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -16),
         ])
         
         mainView.bottomAnchor.constraint(equalTo: self.deepDiveContent_VStack.bottomAnchor).isActive = true
