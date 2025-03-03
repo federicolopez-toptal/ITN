@@ -292,9 +292,7 @@ extension StoryViewController {
             //print("-----")
         }
             
-        if(IPAD()) {
-            ADD_SPACER(to: self.deepDiveContent_VStack, height: 16)
-        }
+        ADD_SPACER(to: self.deepDiveContent_VStack, height: 16)
 
         let hStack = HSTACK(into: vstack)
         hStack.backgroundColor = .clear

@@ -173,8 +173,8 @@ extension MainFeed_v3_viewController {
                 if(Layout.current() == .textImages) {
                     cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsImg_cell_v3.identifier)!
                 } else {
-                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsImg_cell_v3.identifier)!
-//                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsTxt_cell_v3.identifier)!
+//                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsImg_cell_v3.identifier)!
+                    cell = self.list.dequeueReusableCell(withIdentifier: iPhoneGoDeeper_2colsTxt_cell_v3.identifier)!
                 }
             }
             
@@ -333,8 +333,8 @@ extension MainFeed_v3_viewController {
                     result = _cell.calculateGroupHeight()
                 }
             } else {
-                if let _cell = self.getCell(indexPath) as? iPhoneGoDeeper_2colsImg_cell_v3 {
-//                if let _cell = self.getCell(indexPath) as? iPhoneGoDeeper_2colsTxt_cell_v3 {
+//                if let _cell = self.getCell(indexPath) as? iPhoneGoDeeper_2colsImg_cell_v3 {
+                if let _cell = self.getCell(indexPath) as? iPhoneGoDeeper_2colsTxt_cell_v3 {
                     result = _cell.calculateGroupHeight()
                 }
             }

@@ -93,8 +93,8 @@ extension StoryViewController: UITextViewDelegate {
         if(IPHONE()) {
             if(index > 0) {
                 self.addDeepDiveSection(index: index, width: self.deepDiveWidth(), into: self.deepDiveContent_VStack)
-                self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
-                self.showDeepDiveStories(into: self.deepDiveContent_VStack, width: side, index: index)
+//                self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
+//                self.showDeepDiveStories(into: self.deepDiveContent_VStack, width: side, index: index)
             } else {
                 self.showDeepDiveFacts(into: self.deepDiveContent_VStack)
                 self.showDeepDiveFactsSources(into: self.deepDiveContent_VStack, width: self.deepDiveWidth())
@@ -116,8 +116,8 @@ extension StoryViewController: UITextViewDelegate {
             if(index==0) {
                 self.showDeepDiveFactsSources(into: RVStack, width: side)
             } else {
-                self.showDeepDiveStories(into: RVStack, width: side, index: index)
-                self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
+//                self.showDeepDiveStories(into: RVStack, width: side, index: index)
+//                self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
             }
         }
     }
