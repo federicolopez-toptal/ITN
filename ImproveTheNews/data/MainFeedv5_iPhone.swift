@@ -173,47 +173,49 @@ extension MainFeedv5_iPhone {
         self.topics = [MainFeedTopic]()
         
         for (i, obj) in mainNode.enumerated() {
-            let _obj = obj as! [Any]
-            if(_obj.count>1) {
-                // Topics
-                var topicInfo = [Any]()
-                
-                if let _topicInfo = _obj[0] as? NSDictionary {
-                    let allKeys = (_topicInfo.allKeys as! [String]).sorted()
-                    for key in allKeys {
-                        topicInfo.append(_topicInfo[key]!)
-                    }
-                } else {
-                    topicInfo = _obj[0] as! [Any]
-                }
-
-                var isBanner = false
-                if( (topicInfo[0] as! String) == "INFO"){ isBanner = true }
+            if let _obj = obj as? [Any] {
+                if(_obj.count>1) { ///
+                    // Topics
+                    var topicInfo = [Any]()
                     
-                if(!isBanner) {
-                    var articles = _obj[1] as! [Any]
-                    if(i==1) {
-                        while(articles.count>mainTopicItemsLimit) { // api fix
-                            articles.removeLast()
+                    if let _topicInfo = _obj[0] as? NSDictionary {
+                        let allKeys = (_topicInfo.allKeys as! [String]).sorted()
+                        for key in allKeys {
+                            topicInfo.append(_topicInfo[key]!)
                         }
+                    } else {
+                        topicInfo = _obj[0] as! [Any]
                     }
-                    let newTopic = MainFeedTopic(topicInfo, articles)
-                    
-                    if(newTopic.name == self.topic) {
-                        for item in newTopic.articles {
-                            if(!item.isStory) {
-                                self.count_AR += 1
-                            } else {
-                                self.count_ST += 1
+
+                    var isBanner = false
+                    if( (topicInfo[0] as! String) == "INFO"){ isBanner = true }
+                        
+                    if(!isBanner) {
+                        var articles = _obj[1] as! [Any]
+                        if(i==1) {
+                            while(articles.count>mainTopicItemsLimit) { // api fix
+                                articles.removeLast()
                             }
                         }
+                        let newTopic = MainFeedTopic(topicInfo, articles)
+                        
+                        if(newTopic.name == self.topic) {
+                            for item in newTopic.articles {
+                                if(!item.isStory) {
+                                    self.count_AR += 1
+                                } else {
+                                    self.count_ST += 1
+                                }
+                            }
+                        }
+                        
+                        self.topics.append(newTopic)
+                    } else {
+                        if(self.banner == nil) { self.banner = Banner(topicInfo) }
                     }
-                    
-                    self.topics.append(newTopic)
-                } else {
-                    if(self.banner == nil) { self.banner = Banner(topicInfo) }
-                }
+                } ///
             }
+            
         }
     }
     

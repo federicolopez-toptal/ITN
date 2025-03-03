@@ -64,6 +64,7 @@ class StoryViewController: BaseViewController {
     var mediaList = [String]()
     var cSourcesView: CollapsableSources? = nil
     var deepDiveImageLinks: [String] = []
+    var tags: [Tag] = []
     
     
     deinit {
@@ -297,6 +298,8 @@ extension StoryViewController {
         }
         
         self.addTitle(text: story.title)
+        
+        self.addTags(story.tags)
         self.addAudioPlayer(story.audio)
         
         if(self.isContext) {
@@ -4261,6 +4264,104 @@ extension StoryViewController {
                     }
                 }
             }
+        }
+        
+        
+    }
+    
+    func addTags(_ tags: [Tag]) {
+        self.tags = tags
+        if(tags.count == 0){ return }
+        
+        let hStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: hStack, width: 16)
+        
+        let mainContainer = VSTACK(into: hStack, spacing: 6)
+        mainContainer.backgroundColor = .clear
+        
+        let tagHeight: CGFloat = 24
+        let limit = SCREEN_SIZE().width-32
+        
+        var val_x: CGFloat = 0
+
+        for (i, T) in tags.enumerated() {
+            let tagLabel = UILabel()
+            tagLabel.backgroundColor = .clear
+            tagLabel.text = "#" + T.name.uppercased()
+            tagLabel.textColor = CSS.shared.displayMode().sec_textColor
+            tagLabel.font = AILERON(12)
+    
+            let tagWidth = tagLabel.calculateWidthFor(height: tagHeight)+16
+        
+            var createRow = false
+            if(val_x == 0) {
+                createRow = true
+            } else if(val_x + tagWidth > limit) {
+                createRow = true
+            }
+            
+            var rowView: UIView
+            if(createRow) {
+                val_x = 0
+            
+                rowView = UIView()
+                rowView.backgroundColor = .clear
+                rowView.heightAnchor.constraint(equalToConstant: tagHeight).isActive = true
+                mainContainer.addArrangedSubview(rowView)
+            } else {
+                rowView = mainContainer.arrangedSubviews.last!
+            }
+            
+             let tagView = UIView()
+            tagView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x2d2d31) : UIColor(hex: 0xe3e3e3)
+            tagView.layer.cornerRadius = 6.0
+            rowView.addSubview(tagView)
+            tagView.activateConstraints([
+                tagView.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: val_x),
+                tagView.topAnchor.constraint(equalTo: rowView.topAnchor),
+                tagView.heightAnchor.constraint(equalToConstant: tagHeight),
+                tagView.widthAnchor.constraint(equalToConstant: tagWidth)
+            ])
+            
+            tagView.addSubview(tagLabel)
+            tagLabel.activateConstraints([
+                tagLabel.centerXAnchor.constraint(equalTo: tagView.centerXAnchor),
+                tagLabel.centerYAnchor.constraint(equalTo: tagView.centerYAnchor)
+            ])
+
+            let buttonArea = UIButton(type: .system)
+            buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+            tagView.addSubview(buttonArea)
+            buttonArea.activateConstraints([
+                buttonArea.leadingAnchor.constraint(equalTo: tagView.leadingAnchor),
+                buttonArea.topAnchor.constraint(equalTo: tagView.topAnchor),
+                buttonArea.trailingAnchor.constraint(equalTo: tagView.trailingAnchor),
+                buttonArea.bottomAnchor.constraint(equalTo: tagView.bottomAnchor)
+            ])
+            buttonArea.tag = i
+            buttonArea.addTarget(self, action: #selector(self.onTagTap(_:)), for: .touchUpInside)
+
+            val_x += tagWidth + 6
+        }
+        
+        ADD_SPACER(to: hStack, width: 16)
+        ADD_SPACER(to: self.VStack, height: 16)
+    }
+    
+    @objc func onTagTap(_ sender: UIButton?) {
+        let index = sender!.tag
+        let T = self.tags[index].id
+        
+        if(IPHONE()) {
+            let vc = MainFeed_v3_viewController()
+            vc.topic = T
+            vc.reloadOnError = false
+            CustomNavController.shared.pushViewController(vc, animated: true)
+        } else {
+            let vc = MainFeediPad_v3_viewController()
+            vc.topic = T
+            vc.reloadOnError = false
+            CustomNavController.shared.pushViewController(vc, animated: true)
         }
         
         

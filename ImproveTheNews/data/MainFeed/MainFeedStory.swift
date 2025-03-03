@@ -7,6 +7,16 @@
 
 import Foundation
 
+struct Tag {
+    var id: String = ""
+    var name: String = ""
+    
+    init(id: String, name: String) {
+        self.id = id
+        self.name = name
+    }
+}
+
 struct MainFeedStory {
     
     var id = "1"
@@ -30,6 +40,7 @@ struct MainFeedStory {
     var video: String = ""
     
     var mediaList: [String] = []
+    var tags: [Tag] = []
     
     
     init (_ json: [String: Any]) {
@@ -63,6 +74,15 @@ struct MainFeedStory {
         self.id = getSTRING(mainNode["id"], defaultValue: "1")
         self.title = getSTRING(mainNode["title"], defaultValue: "Title not available")
         self.time = getSTRING(mainNode["time"])
+        
+        if let _topics = mainNode["topics"] as? [[String: String]] {
+            for T in _topics {
+                let url = CHECK(T["url"])
+                let urlComponents = url.components(separatedBy: "/")
+                let tag = Tag(id: urlComponents.last!, name: CHECK(T["title"]))
+                self.tags.append(tag)
+            }
+        }
         
         if let _imageObj = mainNode["image"] as? [String: Any] {
             self.image_src = FIX_URL( getSTRING(_imageObj["src"]) )

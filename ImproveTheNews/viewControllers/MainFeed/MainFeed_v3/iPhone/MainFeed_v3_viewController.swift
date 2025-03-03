@@ -38,7 +38,7 @@ class MainFeed_v3_viewController: BaseViewController {
     var safeAreaTop: CGFloat = 0
     
     var goDeeperPage: Int = 1
-    
+    var reloadOnError = true
     
     
     //var debugText = UITextField()
@@ -371,11 +371,15 @@ extension MainFeed_v3_viewController {
         MAIN_THREAD {
             self.hideLoading()
             self.list.hideRefresher()
-            
+         
             ALERT(vc: self, title: "",
                 message: "Trouble loading the news,\nplease try again later.", onCompletion: {
-                DELAY(1.0) {
-                    self.loadData(showLoading: true)
+                if(self.reloadOnError) {
+                    DELAY(1.0) {
+                        self.loadData(showLoading: true)
+                    }
+                } else {
+                    CustomNavController.shared.popViewController(animated: true)
                 }
             })
         }

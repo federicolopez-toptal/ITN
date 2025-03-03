@@ -42,6 +42,10 @@ class MainFeediPad_v3_viewController: BaseViewController {
     var safeAreaTop: CGFloat = 0
     var goDeeperPage: Int = 1
 
+    var reloadOnError = true
+
+
+    
     
     // MARK: - Start
     override func viewDidLoad() {
@@ -346,8 +350,12 @@ extension MainFeediPad_v3_viewController {
             
             ALERT(vc: self, title: "",
                 message: "Trouble loading the news,\nplease try again later.", onCompletion: {
-                DELAY(1.0) {
-                    self.loadData(showLoading: true)
+                if(self.reloadOnError) {
+                    DELAY(1.0) {
+                        self.loadData(showLoading: true)
+                    }
+                } else {
+                    CustomNavController.shared.popViewController(animated: true)
                 }
             })
         }
