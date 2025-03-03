@@ -292,8 +292,10 @@ extension StoryViewController {
 //            self.thirdPillText = "Split"
 //        }
         
+        if(self.deepDive == nil) {
+            self.addTabs()
+        }
         
-        self.addTabs()
         self.addTitle(text: story.title)
         self.addAudioPlayer(story.audio)
         
@@ -493,13 +495,13 @@ extension StoryViewController {
                 }
             case 3:
                 if let _view = self.view.viewWithTag(170) {
-                    val_Y = self.contentView.convert(view.frame.origin, to: self.scrollView).y
+                    val_Y = self.contentView.convert(_view.frame.origin, to: self.scrollView).y
                 }
         
             default:
                 NOTHING()
         }
-        
+         
         let limit = self.contentView.frame.size.height - self.scrollView.frame.size.height
         if(val_Y > limit){ val_Y = limit }
         self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y), animated: true)
