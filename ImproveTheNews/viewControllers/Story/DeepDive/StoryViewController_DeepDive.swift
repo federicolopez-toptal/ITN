@@ -221,6 +221,52 @@ extension StoryViewController: UITextViewDelegate {
             }
         }
         
+        // ADDITIONAL INFO
+        if(!section.additionalInfo.0.isEmpty && !section.additionalInfo.1.isEmpty) {
+            let infoViewHStack = HSTACK(into: vstack)
+            infoViewHStack.backgroundColor = .clear
+            ADD_SPACER(to: infoViewHStack, width: 24) ///
+            
+            let infoViewVStack = VSTACK(into: infoViewHStack)
+            ADD_SPACER(to: infoViewVStack, height: 24)
+            
+            let infoTitleLabel = UILabel()
+            infoTitleLabel.font = DM_SERIF_DISPLAY(21)
+            infoTitleLabel.text = section.additionalInfo.0
+            infoTitleLabel.textColor = CSS.shared.displayMode().main_textColor
+            infoViewVStack.addArrangedSubview(infoTitleLabel)
+            ADD_SPACER(to: infoViewVStack, height: 12)
+            
+            let infoContentLabel = UILabel()
+            infoContentLabel.font = AILERON_resize(16)
+            infoContentLabel.numberOfLines = 0
+            infoContentLabel.text = section.additionalInfo.1
+            infoContentLabel.textColor = CSS.shared.displayMode().sec_textColor
+            infoViewVStack.addArrangedSubview(infoContentLabel)
+            
+            ADD_SPACER(to: infoViewVStack, height: 24)
+            ADD_SPACER(to: infoViewHStack, width: 24) ///
+
+            let bgView = RectangularDashedView()
+            bgView.backgroundColor = DARK_MODE() ? UIColor(hex: 0x232326) : UIColor(hex: 0xE3E3E3)
+            bgView.cornerRadius = 16
+            bgView.dashWidth = 1
+            bgView.dashColor = CSS.shared.displayMode().sec_textColor
+            bgView.dashLength = 5
+            bgView.betweenDashesSpace = 5
+            
+            infoViewHStack.addSubview(bgView)
+            bgView.activateConstraints([
+                bgView.leadingAnchor.constraint(equalTo: infoViewHStack.leadingAnchor),
+                bgView.trailingAnchor.constraint(equalTo: infoViewHStack.trailingAnchor),
+                bgView.topAnchor.constraint(equalTo: infoViewHStack.topAnchor),
+                bgView.bottomAnchor.constraint(equalTo: infoViewHStack.bottomAnchor)
+            ])
+            
+            infoViewHStack.sendSubviewToBack(bgView)
+            ADD_SPACER(to: vstack, height: 16)
+        }
+        
         ///
         ADD_SPACER(to: vstack)
     }
