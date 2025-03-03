@@ -63,6 +63,7 @@ class StoryViewController: BaseViewController {
     var deepDiveContent_VStack = UIStackView()
     var mediaList = [String]()
     var cSourcesView: CollapsableSources? = nil
+    var deepDiveImageLinks: [String] = []
     
     
     deinit {

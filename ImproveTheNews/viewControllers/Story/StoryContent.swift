@@ -141,10 +141,34 @@ class DeepDiveContent {
     
 }
 
+class DeepDiveContentBasic {
+    var type: String = ""
+    var content: String = ""
+    
+    init(_ values: [String: String]) {
+        self.type = CHECK(values["type"]).uppercased()
+        self.content = CHECK(values["content"])
+    }
+}
+
+class DeepDiveContent_IMG: DeepDiveContentBasic {
+    var src: String = ""
+    var link: String = ""
+    var linkText: String = ""
+    
+    override init(_ values: [String: String]) {
+        super.init(values)
+        self.src = CHECK(values["src"])
+        self.link = CHECK(values["link"])
+        self.linkText = CHECK(values["linkText"])
+    }
+}
+
 class DeepDiveSection {
     
     var title: String = ""
     var content: (String, String) = ("", "")
+    var newContent: [DeepDiveContentBasic] = []
     var additionalInfo: (String, String) = ("", "")
     var sources: [String] = []
     var stories: [MainFeedArticle] = []
@@ -152,9 +176,24 @@ class DeepDiveSection {
     init(_ json: [String: Any]) {
         self.title = CHECK(json["title"])
         
-        if let _node = json["content"] as? [[String: String]], let _first = _node.first {
-            self.content.0 = CHECK(_first["type"])
-            self.content.1 = CHECK(_first["content"])
+        if let _content = json["content"] as? [[String: String]] {
+            if let _first = _content.first {
+                self.content.0 = CHECK(_first["type"])
+                self.content.1 = CHECK(_first["content"])
+            }
+            
+            self.newContent = []
+            for _item in _content {
+                if let _type = _item["type"]?.uppercased() {
+                    if(_type == "HTML") {
+                        let newItem = DeepDiveContentBasic(_item)
+                        self.newContent.append(newItem)
+                    } else if(_type == "IMAGE") {
+                        let newItem = DeepDiveContent_IMG(_item)
+                        self.newContent.append(newItem)
+                    }
+                }
+            }
         }
         
         if let _node = json["additionalInfo"] as? [String: String] {

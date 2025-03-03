@@ -93,88 +93,143 @@ extension StoryViewController: UITextViewDelegate {
         if(IPHONE()) {
             if(index > 0) {
                 self.addDeepDiveSection(index: index, width: self.deepDiveWidth(), into: self.deepDiveContent_VStack)
-//                self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
-//                self.showDeepDiveStories(into: self.deepDiveContent_VStack, width: side, index: index)
+                self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
+                self.showDeepDiveStories(into: self.deepDiveContent_VStack, width: side, index: index)
             } else {
                 self.showDeepDiveFacts(into: self.deepDiveContent_VStack)
                 self.showDeepDiveFactsSources(into: self.deepDiveContent_VStack, width: self.deepDiveWidth())
             }
         } else { // IPAD
+            let LWidth = self.deepDiveWidth()-sep-side
+        
             let hStack = HSTACK(into: self.deepDiveContent_VStack)
             let LVStack = VSTACK(into: hStack)
-            
+            LVStack.widthAnchor.constraint(equalToConstant: LWidth).isActive = true
+            //LVStack.backgroundColor = .orange
+
             if(index > 0) {
-                self.addDeepDiveSection(index: index, width: self.deepDiveWidth()-sep-side, into: LVStack)
+                self.addDeepDiveSection(index: index, width: LWidth, into: LVStack)
             } else {
                 self.showDeepDiveFacts(into: LVStack)
             }
             
             ADD_SPACER(to: hStack, width: 16)
             let RVStack = VSTACK(into: hStack)
+            //RVStack.backgroundColor = .orange
             RVStack.widthAnchor.constraint(equalToConstant: side).isActive = true
             
             if(index==0) {
                 self.showDeepDiveFactsSources(into: RVStack, width: side)
             } else {
-//                self.showDeepDiveStories(into: RVStack, width: side, index: index)
-//                self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
+                self.showDeepDiveStories(into: RVStack, width: side, index: index)
+                ADD_SPACER(to: RVStack)
+                self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
             }
+            
+            //ADD_SPACER(to: self.deepDiveContent_VStack, backgroundColor: .green, height: 16)
         }
     }
         
     func addDeepDiveSection(index: Int, width: CGFloat, into vstack: UIStackView) {
+        self.deepDiveImageLinks = []
         let section = self.deepDive!.sections[index-1]
-        
+                
         let titleLabel = UILabel()
         titleLabel.font = DM_SERIF_DISPLAY( IPHONE() ? 21 : 32 )
         titleLabel.text = section.title
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
         vstack.addArrangedSubview(titleLabel)
         
-        ADD_SPACER(to: vstack, height: 8)
-        let attributedContent = self.attributedContent(withText: section.content.1)
+        for contentItem in section.newContent {
+            if(contentItem.type == "HTML") { // Text
+                ADD_SPACER(to: vstack, height: 8)
+                //let attributedContent = self.attributedContent(withText: section.content.1)
+                let attributedContent = self.attributedContent(withText: contentItem.content)
 
-        let tmpContentLabel = UILabel()
-        tmpContentLabel.numberOfLines = 0
-        tmpContentLabel.attributedText = attributedContent
-        //tmpContentLabel.textAlignment = .justified
+                let tmpContentLabel = UILabel()
+                tmpContentLabel.numberOfLines = 0
+                tmpContentLabel.attributedText = attributedContent
+                //tmpContentLabel.textAlignment = .justified
 
-        let contentTextView = UITextView()
-        contentTextView.delegate = self
-        contentTextView.isScrollEnabled = false
-        contentTextView.textContainer.lineFragmentPadding = 0
-        contentTextView.textContainerInset = .zero
-        //contentTextView.isSelectable = false
-        contentTextView.backgroundColor = CSS.shared.displayMode().main_bgColor
-        contentTextView.attributedText = attributedContent
-        contentTextView.tintColor = CSS.shared.orange
-        //contentTextView.textAlignment = .justified
-        vstack.addArrangedSubview(contentTextView)
-        contentTextView.activateConstraints([
-            contentTextView.heightAnchor.constraint(equalToConstant: tmpContentLabel.calculateHeightFor(width: width))
-        ])
+                let contentTextView = UITextView()
+                contentTextView.delegate = self
+                contentTextView.isScrollEnabled = false
+                contentTextView.textContainer.lineFragmentPadding = 0
+                contentTextView.textContainerInset = .zero
+                //contentTextView.isSelectable = false
+                contentTextView.backgroundColor = CSS.shared.displayMode().main_bgColor
+                contentTextView.attributedText = attributedContent
+                contentTextView.tintColor = CSS.shared.orange
+                //contentTextView.textAlignment = .justified
+                vstack.addArrangedSubview(contentTextView)
+                contentTextView.activateConstraints([
+                    contentTextView.heightAnchor.constraint(equalToConstant: tmpContentLabel.calculateHeightFor(width: width))
+                ])
+                
+//                vstack.addSubview(tmpContentLabel)
+//                tmpContentLabel.backgroundColor = .red.withAlphaComponent(0.3)
+//                tmpContentLabel.textColor = .red
+//                tmpContentLabel.backgroundColor = .clear
+//                tmpContentLabel.activateConstraints([
+//                    tmpContentLabel.leadingAnchor.constraint(equalTo: contentTextView.leadingAnchor, constant: 0),
+//                    tmpContentLabel.topAnchor.constraint(equalTo: contentTextView.topAnchor, constant: 0),
+//                    tmpContentLabel.widthAnchor.constraint(equalTo: contentTextView.widthAnchor)
+//                ])
+//                vstack.bringSubviewToFront(tmpContentLabel)
+                
+                //ADD_SPACER(to: vstack, backgroundColor: .orange) // filler
+            } else if(contentItem.type == "IMAGE") { // Image
+                if let _contentItem_IMG = contentItem as? DeepDiveContent_IMG {
+                    let imageView = CustomImageView()
+                    imageView.showCorners(false)
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.clipsToBounds = true
+                    
+                    imageView.sd_setImage(with: URL(string: _contentItem_IMG.src)) { (img, error, cacheType, url) in
+                        if let _img = img {
+                            let img_width: CGFloat = _img.size.width
+                            let img_height: CGFloat = _img.size.height
+                            let H = (width * img_height)/img_width
+                            
+                            imageView.heightAnchor.constraint(equalToConstant: H).isActive = true
+                        }
+                    }
+                    vstack.addArrangedSubview(imageView)
+                    
+                    ADD_SPACER(to: vstack, height: 8)
+                    
+                    let text = _contentItem_IMG.content + ", Image copyright: " + _contentItem_IMG.linkText
+                    let descrLabel = UILabel()
+                    self.setLabelAsImageCredit(descrLabel, text: text, boldText: _contentItem_IMG.linkText)
+                    vstack.addArrangedSubview(descrLabel)
+
+                    let descrButton = UIButton(type: .system)
+                    descrLabel.backgroundColor = .clear
+                    vstack.addSubview(descrButton)
+                    descrButton.activateConstraints([
+                        descrButton.leadingAnchor.constraint(equalTo: descrLabel.leadingAnchor),
+                        descrButton.trailingAnchor.constraint(equalTo: descrLabel.trailingAnchor),
+                        descrButton.topAnchor.constraint(equalTo: descrLabel.topAnchor),
+                        descrButton.bottomAnchor.constraint(equalTo: descrLabel.bottomAnchor)
+                    ])
+                    descrButton.addTarget(self, action: #selector(descrButtonOnTap(_:)), for: .touchUpInside)
+                    self.deepDiveImageLinks.append(_contentItem_IMG.link)
+                    descrButton.tag = self.deepDiveImageLinks.count-1
+
+                    ADD_SPACER(to: vstack, height: 12)
+                }
+            }
+        }
         
+        ///
         ADD_SPACER(to: vstack)
     }
     
-    func attributedContent(withText text: String) -> NSAttributedString? {
-        var _text = text.replacingOccurrences(of: "<p></p>", with: "")
-        let data = _text.data(using: .utf8)!
-                        
-        if let attributedText = try? NSMutableAttributedString(data: data,
-                        options: [.documentType: NSAttributedString.DocumentType.html],
-                        documentAttributes: nil) {
-            
-            let all = NSRange(location: 0, length: attributedText.length)
-            attributedText.addAttribute(.foregroundColor, value: CSS.shared.displayMode().sec_textColor, range: all)
-            attributedText.addAttribute(.backgroundColor, value: CSS.shared.displayMode().main_bgColor, range: all)
-            attributedText.addAttribute(.font, value: AILERON(16), range: all)
-            
-            return attributedText
-        } else {
-            return nil
+    @objc func descrButtonOnTap(_ sender: UIButton?) {
+        if let _index = sender?.tag {
+            let link = self.deepDiveImageLinks[_index]
+            OPEN_URL(link)
         }
-  
     }
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL,
@@ -196,3 +251,49 @@ extension StoryViewController: UITextViewDelegate {
     }
 }
 
+
+extension StoryViewController { // Deep Dive Utils
+
+    func setLabelAsImageCredit(_ label: UILabel, text: String, boldText: String) {
+        label.numberOfLines = 0
+        label.tintColor = CSS.shared.displayMode().main_textColor
+        
+        let fullString = text as NSString
+        let font = ROBOTO(14)
+        let boldFont = ROBOTO_BOLD(14)
+        let boldPartsOfString = [boldText as NSString]
+        
+        let nonBoldFontAttribute = [NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: CSS.shared.displayMode().sec_textColor]
+        let boldFontAttribute = [NSAttributedString.Key.font: boldFont,
+            NSAttributedString.Key.foregroundColor: CSS.shared.displayMode().main_textColor]
+        
+        let boldString = NSMutableAttributedString(string: fullString as String, attributes: nonBoldFontAttribute)
+        for i in 0 ..< boldPartsOfString.count {
+            boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
+        }
+        
+        label.attributedText = boldString
+    }
+    
+    func attributedContent(withText text: String) -> NSAttributedString? {
+        let _text = text.replacingOccurrences(of: "<p></p>", with: "")
+        let data = _text.data(using: .utf8)!
+                        
+        if let attributedText = try? NSMutableAttributedString(data: data,
+                        options: [.documentType: NSAttributedString.DocumentType.html],
+                        documentAttributes: nil) {
+            
+            let all = NSRange(location: 0, length: attributedText.length)
+            attributedText.addAttribute(.foregroundColor, value: CSS.shared.displayMode().sec_textColor, range: all)
+            attributedText.addAttribute(.backgroundColor, value: CSS.shared.displayMode().main_bgColor, range: all)
+            attributedText.addAttribute(.font, value: AILERON(16), range: all)
+            
+            return attributedText
+        } else {
+            return nil
+        }
+  
+    }
+    
+}
