@@ -97,6 +97,17 @@ class iPhoneGoDeeper_2colsImg_cell_v3: GroupItemCell_v3 {
             _H.constant = self.calculateGroupHeight() - 16
         }
         
+        let height_1 = (self.subViews[0] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
+        let height_2 = (self.subViews[1] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
+
+        if(height_1 < height_2) {
+            let diff = height_2 - height_1
+            (self.subViews[0] as! iPhoneGoDeeper_vImgCol_v3).addComponentsSeparation(diff)
+        } else {
+            let diff = height_1 - height_2
+            (self.subViews[1] as! iPhoneGoDeeper_vImgCol_v3).addComponentsSeparation(diff)
+        }
+        
         self.refreshDisplayMode()
     }
     

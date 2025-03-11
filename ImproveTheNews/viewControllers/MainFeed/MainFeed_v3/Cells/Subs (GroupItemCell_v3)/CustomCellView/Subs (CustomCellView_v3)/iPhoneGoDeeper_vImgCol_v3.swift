@@ -28,6 +28,8 @@ class iPhoneGoDeeper_vImgCol_v3: CustomCellView_v3 {
         let storyTimeLabel = UILabel()
         let storyMoreSources = UILabel()
     
+    var sourcesTopConstraint: NSLayoutConstraint!
+    
     // MARK: - Start
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -69,9 +71,10 @@ class iPhoneGoDeeper_vImgCol_v3: CustomCellView_v3 {
         storyComponents.append(self.storyTitleLabel)
         
         self.storySources.buildInto(self)
+        self.sourcesTopConstraint = self.storySources.topAnchor.constraint(equalTo: self.storyTitleLabel.bottomAnchor, constant: 8)
         self.storySources.activateConstraints([
             self.storySources.leadingAnchor.constraint(equalTo: self.storyTitleLabel.leadingAnchor),
-            self.storySources.topAnchor.constraint(equalTo: self.storyTitleLabel.bottomAnchor, constant: 8),
+            self.sourcesTopConstraint
         ])
         storyComponents.append(self.storySources)
         
@@ -190,12 +193,18 @@ class iPhoneGoDeeper_vImgCol_v3: CustomCellView_v3 {
         self.storyTimeLabel.textColor = CSS.shared.displayMode().sec_textColor
         self.mainImageView.refreshDisplayMode()
         self.storyMoreSources.textColor = CSS.shared.displayMode().main_textColor
+        
         self.backgroundColor = .clear
+//        self.backgroundColor = .systemPink.withAlphaComponent(0.25)
     }
     
     // MARK: misc
     private func calculateHeightForStory() -> CGFloat {
         return self.storyTitleLabel.calculateHeightFor(width: self.WIDTH)
+    }
+    
+    func addComponentsSeparation(_ value: CGFloat) {
+        self.sourcesTopConstraint.constant = value + 8
     }
     
     func calculateHeight() -> CGFloat {

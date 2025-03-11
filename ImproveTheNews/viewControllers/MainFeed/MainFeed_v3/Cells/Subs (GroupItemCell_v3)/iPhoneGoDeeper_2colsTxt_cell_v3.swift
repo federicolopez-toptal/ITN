@@ -97,6 +97,17 @@ class iPhoneGoDeeper_2colsTxt_cell_v3: GroupItemCell_v3 {
             _H.constant = self.calculateGroupHeight() - 16
         }
         
+        let height_1 = (self.subViews[0] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
+        let height_2 = (self.subViews[1] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
+
+        if(height_1 < height_2) {
+            let diff = height_2 - height_1
+            (self.subViews[0] as! iPhoneGoDeeper_vImgCol_v3).addComponentsSeparation(diff)
+        } else {
+            let diff = height_1 - height_2
+            (self.subViews[1] as! iPhoneGoDeeper_vImgCol_v3).addComponentsSeparation(diff)
+        }
+        
         self.refreshDisplayMode()
     }
     
@@ -109,6 +120,7 @@ class iPhoneGoDeeper_2colsTxt_cell_v3: GroupItemCell_v3 {
         
         for bgV in self.bgViews {
             bgV.backgroundColor = DARK_MODE() ? UIColor(hex: 0x232326) : UIColor(hex: 0xE3E3E3)
+//            bgV.backgroundColor = .green
         }
     }
     

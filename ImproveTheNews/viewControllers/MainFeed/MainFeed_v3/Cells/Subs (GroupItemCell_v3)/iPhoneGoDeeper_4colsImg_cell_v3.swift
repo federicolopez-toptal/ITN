@@ -109,10 +109,16 @@ class iPhoneGoDeeper_4colsImg_cell_v3: GroupItemCell_v3 {
     override func populate(with group: DP3_groupItem) {
         super.populate(with: group)
         
-        view1_heightConstraint.constant = (self.subViews[0] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
-        view2_heightConstraint.constant = (self.subViews[1] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
-        view3_heightConstraint.constant = (self.subViews[2] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
-        view4_heightConstraint.constant = (self.subViews[3] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
+        var Hs: [CGFloat] = []
+        for i in 0...3 {
+            let h = (self.subViews[i] as! iPhoneGoDeeper_vImgCol_v3).calculateHeight()
+            Hs.append(h)
+        }
+        
+        view1_heightConstraint.constant = Hs[0]
+        view2_heightConstraint.constant = Hs[1]
+        view3_heightConstraint.constant = Hs[2]
+        view4_heightConstraint.constant = Hs[3]
         
         for _H in self.bgViewsHeight {
             _H.constant = self.calculateGroupHeight() - 16
@@ -120,6 +126,12 @@ class iPhoneGoDeeper_4colsImg_cell_v3: GroupItemCell_v3 {
         
         for bgV in self.bgViews {
             bgV.backgroundColor = DARK_MODE() ? UIColor(hex: 0x232326) : UIColor(hex: 0xE3E3E3)
+        }
+        
+        let max = Hs.max()!
+        for i in 0...3 {
+            let diff = max - Hs[i]
+            (self.subViews[i] as! iPhoneGoDeeper_vImgCol_v3).addComponentsSeparation(diff)
         }
         
         self.refreshDisplayMode()
