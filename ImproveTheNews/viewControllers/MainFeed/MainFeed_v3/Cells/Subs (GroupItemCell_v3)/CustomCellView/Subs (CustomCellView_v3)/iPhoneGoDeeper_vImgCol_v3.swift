@@ -113,7 +113,7 @@ class iPhoneGoDeeper_vImgCol_v3: CustomCellView_v3 {
         storyPillContainer.widthAnchor.constraint(equalTo: self.storyPillLabel.widthAnchor, constant: 22).isActive = true
         
         
-        self.storyTimeLabel.font = AILERON(13)
+        self.storyTimeLabel.font = AILERON(12)
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
         self.storyTimeLabel.activateConstraints([
