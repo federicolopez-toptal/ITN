@@ -28,6 +28,7 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         let storyTitleLabel = UILabel()
         let storyPill = StoryPillMiniView()
         let storySources = SourceIconsView(size: 24, border: 2, separation: 18)
+        var storySourcesLeadingConstraint: NSLayoutConstraint?
         
         let storyTimeLabel = UILabel()
         var storyTimeLeadingConstraint: NSLayoutConstraint?
@@ -93,9 +94,10 @@ class iPhoneAllNews_vImgCol_v3: CustomCellView_v3 {
         storyComponents.append(self.storyPill)
         
         self.storySources.buildInto(self)
+        self.storySourcesLeadingConstraint = self.storySources.leadingAnchor.constraint(equalTo: self.storyPill.leadingAnchor, constant: 0)
         self.storySources.activateConstraints([
             self.storySources.centerYAnchor.constraint(equalTo: self.storyPill.centerYAnchor),
-            self.storySources.leadingAnchor.constraint(equalTo: self.storyPill.leadingAnchor)
+            self.storySourcesLeadingConstraint!
 //            self.storySources.leadingAnchor.constraint(equalTo: self.storyPill.trailingAnchor,
 //                constant: CSS.shared.iPhoneSide_padding/2)
         ])
@@ -689,6 +691,25 @@ extension iPhoneAllNews_vImgCol_v3: StanceIconViewDelegate {
         popup.populate(sourceName: sourceName, country: self.article.country,
             LR: self.article.LR, PE: self.article.PE)
         popup.pushFromBottom()
+    }
+    
+}
+
+extension iPhoneAllNews_vImgCol_v3 {
+    
+    func showShortestDate() {
+        if(!self.article.date.isEmpty) {
+            let formatter = DateFormatter()
+            formatter.calendar = Calendar(identifier: .gregorian)
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            
+            if let _createdDate = formatter.date(from: self.article.date) {
+                formatter.dateFormat = "MMM dd"
+                self.storyTimeLabel.text = formatter.string(from: _createdDate).uppercased()
+            }
+        }
+        
+//        self.storyTimeLabel.text = "APR 09"   outdoor
     }
     
 }

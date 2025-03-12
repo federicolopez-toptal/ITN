@@ -11,6 +11,7 @@ struct MainFeedArticle {
     
     var source: String
     var time: String
+    var date: String = ""
     var title: String
     var url: String
     var imgUrl: String
@@ -282,6 +283,7 @@ extension MainFeedArticle {
         self.storySources = A.medianames.components(separatedBy: ",")
         self.storySources.removeDuplicates()
         self.url = ITN_URL() + "/" + A.slug
+        self.date = A.date
         
         self.markups = [Markup]()
         self.isStory = true

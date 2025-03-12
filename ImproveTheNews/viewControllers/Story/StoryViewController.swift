@@ -181,7 +181,7 @@ extension StoryViewController {
                         self.hideLoading()
                         self.scrollView.show()
                         
-                        if let _story = story {
+                        if let _story = story {                        
                             self.mediaList = _story.mediaList
                             self.story = MainFeedArticle(story: _story)
                         
@@ -557,6 +557,7 @@ extension StoryViewController {
                 VIEW1.refreshDisplayMode()
                 VIEW1.populate(story: _A)
                 if(_A.type == 2){ self.adaptToGoDeeper(view: VIEW1) }
+                else if(_A.type == 3){ self.adaptToDeepDive(view: VIEW1) }
 //                self.adaptToGoDeeper(view: VIEW1)
                                 
                 H1 = VIEW1.calculateHeight()
@@ -577,6 +578,7 @@ extension StoryViewController {
                 VIEW2.refreshDisplayMode()
                 VIEW2.populate(story: _A)
                 if(_A.type == 2){ self.adaptToGoDeeper(view: VIEW2) }
+                else if(_A.type == 3){ self.adaptToDeepDive(view: VIEW2) }
 //                self.adaptToGoDeeper(view: VIEW2)
                 
                 H2 = VIEW2.calculateHeight()
@@ -624,6 +626,19 @@ extension StoryViewController {
         _V.storySources.widthConstraint?.constant = 0
         
         _V.storyTimeLeadingConstraint?.constant = 53 + 8
+    }
+    
+    func adaptToDeepDive(view _V: iPhoneAllNews_vImgCol_v3) {
+        _V.isContext = true
+        _V.storyPill.setAsDeepDive()
+        _V.storyPill.show()
+                
+        _V.storySources.show()
+        _V.storySourcesLeadingConstraint?.constant = 63 + 8
+                
+        _V.storyTimeLabel.show()
+        _V.storyTimeLeadingConstraint?.constant = 8
+        _V.showShortestDate()
     }
 
     // ------------------------------------------

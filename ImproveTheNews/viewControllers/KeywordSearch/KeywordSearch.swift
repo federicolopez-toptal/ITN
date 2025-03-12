@@ -354,6 +354,7 @@ struct StorySearchResult {
     var image_url: String = ""
     var slug: String = ""
     var timeago: String = ""
+    var date: String = ""
     var title: String = ""
     var medianames: String = ""
     var used: Bool = false
@@ -399,6 +400,7 @@ struct StorySearchResult {
             self.timeago = FIX_TIME(_timeAgo)
         }
         
+        self.date = CHECK(data["created"])
         self.title = data["title"] as! String
         
         self.medianames = ""

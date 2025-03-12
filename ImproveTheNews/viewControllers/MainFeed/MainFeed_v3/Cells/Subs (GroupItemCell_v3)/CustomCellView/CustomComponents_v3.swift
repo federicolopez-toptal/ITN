@@ -344,6 +344,16 @@ class StoryPillMiniView: UIView {
         self.widthConstraint?.constant = 43
     }
     
+    func setAsDeepDive() {
+        self.label.text = "DEEP DIVE"
+        self.label.textColor = UIColor(hex: 0x19191C)
+        self.backgroundColor = UIColor(hex: 0xEFD80D)
+        self.widthConstraint?.constant = 63
+    }
+    
+    /*
+    outdoor
+     */
 }
 
 /////////////////////////////////////////////////////////////////////////////////
