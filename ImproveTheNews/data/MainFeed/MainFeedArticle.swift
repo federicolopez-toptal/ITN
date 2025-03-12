@@ -11,7 +11,7 @@ struct MainFeedArticle {
     
     var source: String
     var time: String
-    var date: String = ""
+    var updatedDate: String = ""
     var title: String
     var url: String
     var imgUrl: String
@@ -131,6 +131,7 @@ struct MainFeedArticle {
         self.title = CHECK(jsonObj["title"])
         self.url = CHECK(jsonObj["url"])
         self.imgUrl = CHECK(jsonObj["image"])
+        self.updatedDate = CHECK(jsonObj["timestamp"])
         
         self.summaryText = CHECK(jsonObj["storytype"])
         
@@ -283,7 +284,7 @@ extension MainFeedArticle {
         self.storySources = A.medianames.components(separatedBy: ",")
         self.storySources.removeDuplicates()
         self.url = ITN_URL() + "/" + A.slug
-        self.date = A.date
+        self.updatedDate = A.date
         
         self.markups = [Markup]()
         self.isStory = true

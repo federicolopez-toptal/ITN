@@ -698,12 +698,12 @@ extension iPhoneAllNews_vImgCol_v3: StanceIconViewDelegate {
 extension iPhoneAllNews_vImgCol_v3 {
     
     func showShortestDate() {
-        if(!self.article.date.isEmpty) {
+        if(!self.article.updatedDate.isEmpty) {
             let formatter = DateFormatter()
             formatter.calendar = Calendar(identifier: .gregorian)
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             
-            if let _createdDate = formatter.date(from: self.article.date) {
+            if let _createdDate = formatter.date(from: self.article.updatedDate) {
                 formatter.dateFormat = "MMM dd"
                 self.storyTimeLabel.text = formatter.string(from: _createdDate).uppercased()
             }

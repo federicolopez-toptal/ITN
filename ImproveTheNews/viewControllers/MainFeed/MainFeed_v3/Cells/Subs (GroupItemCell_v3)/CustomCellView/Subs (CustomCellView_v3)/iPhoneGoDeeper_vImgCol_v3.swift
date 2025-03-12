@@ -175,6 +175,26 @@ class iPhoneGoDeeper_vImgCol_v3: CustomCellView_v3 {
 
         self.storyTimeLabel.text = "UPDATED " + SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
         
+        if(!article.updatedDate.isEmpty) {
+            let formatter = DateFormatter()
+            formatter.calendar = Calendar(identifier: .gregorian)
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            
+            if let _createdDate = formatter.date(from: self.article.updatedDate) {
+                let diff = Date().timeIntervalSince(_createdDate)
+                
+                print(article.title, diff)
+                
+                let DAY: TimeInterval = 60 * 60 * 24
+                let MONTH: TimeInterval = DAY * 30
+                
+                if(diff > MONTH) {
+                    formatter.dateFormat = "MMM dd"
+                    self.storyTimeLabel.text = "UPDATED " + formatter.string(from: _createdDate).uppercased()
+                }
+            }
+        }
+        
         let type = article.summaryText.lowercased()
         
         if(type == "deepdive") {

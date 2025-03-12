@@ -400,7 +400,7 @@ struct StorySearchResult {
             self.timeago = FIX_TIME(_timeAgo)
         }
         
-        self.date = CHECK(data["created"])
+        self.date = CHECK(data["timestamp"])
         self.title = data["title"] as! String
         
         self.medianames = ""
