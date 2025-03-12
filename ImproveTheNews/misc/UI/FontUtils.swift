@@ -50,6 +50,10 @@ func ROBOTO_BOLD(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
     return UIFont(name: "Roboto-Bold", size: size)!
 }
 
+func ROBOTO_ITALIC(_ size: CGFloat = 10.0) -> UIFont {
+    return UIFont(name: "Roboto-Italic", size: size)!
+}
+
 func AILERON(_ size: CGFloat = 10.0, resize: Bool = true) -> UIFont {
 //    if(resize) {
 //        return customFont(name: "Aileron-Regular", size: size)

@@ -183,8 +183,6 @@ class iPhoneGoDeeper_vImgCol_v3: CustomCellView_v3 {
             if let _createdDate = formatter.date(from: self.article.updatedDate) {
                 let diff = Date().timeIntervalSince(_createdDate)
                 
-                print(article.title, diff)
-                
                 let DAY: TimeInterval = 60 * 60 * 24
                 let MONTH: TimeInterval = DAY * 30
                 

@@ -204,10 +204,18 @@ extension StoryViewController: UITextViewDelegate {
                     
                     ADD_SPACER(to: vstack, height: 8)
                     
+                let hstackDescr = HSTACK(into: vstack)
+                    
+                    let vLine = UIView()
+                    vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x424345) : UIColor(hex: 0xD6D6D6)
+                    vLine.widthAnchor.constraint(equalToConstant: 2).isActive = true
+                    hstackDescr.addArrangedSubview(vLine)
+                    ADD_SPACER(to: hstackDescr, width: 13)
+                    
                     let text = _contentItem_IMG.content + ", Image copyright: " + _contentItem_IMG.linkText
                     let descrLabel = UILabel()
                     self.setLabelAsImageCredit(descrLabel, text: text, boldText: _contentItem_IMG.linkText)
-                    vstack.addArrangedSubview(descrLabel)
+                    hstackDescr.addArrangedSubview(descrLabel)
 
                     let descrButton = UIButton(type: .system)
                     descrLabel.backgroundColor = .clear
@@ -318,7 +326,8 @@ extension StoryViewController { // Deep Dive Utils
         let nonBoldFontAttribute = [NSAttributedString.Key.font: font,
             NSAttributedString.Key.foregroundColor: CSS.shared.displayMode().sec_textColor]
         let boldFontAttribute = [NSAttributedString.Key.font: boldFont,
-            NSAttributedString.Key.foregroundColor: CSS.shared.displayMode().main_textColor]
+            NSAttributedString.Key.foregroundColor: CSS.shared.displayMode().main_textColor,
+                                 NSAttributedString.Key.underlineStyle: 1] as [NSAttributedString.Key : Any]
         
         let boldString = NSMutableAttributedString(string: fullString as String, attributes: nonBoldFontAttribute)
         for i in 0 ..< boldPartsOfString.count {

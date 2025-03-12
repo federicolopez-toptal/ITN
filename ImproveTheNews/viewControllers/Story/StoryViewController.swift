@@ -326,7 +326,8 @@ extension StoryViewController {
         
         self.addStoryMetaData(figures: story.figures, time: story.time)
         if(!story.image_credit_title.isEmpty && !story.image_credit_url.isEmpty) {
-            self.addImageCredit(story.image_credit_title, story.image_credit_url, description: story.image_description)
+            self.addImageCredit(story.image_credit_title, story.image_credit_url,
+                description: story.image_description, time: story.time)
         }
         self.addDeepDiveSections()
 
@@ -2994,7 +2995,67 @@ extension StoryViewController {
     }
     
     
-    private func addImageCredit(_ title: String, _ url: String, description: String) {
+    private func addImageCredit(_ title: String, _ url: String, description: String, time: String) {
+        let vLine = UIView()
+        vLine.backgroundColor = DARK_MODE() ? UIColor(hex: 0x424345) : UIColor(hex: 0xD6D6D6)
+        vLine.widthAnchor.constraint(equalToConstant: 2).isActive = true
+
+        let HStack = HSTACK(into: self.VStack)
+        ADD_SPACER(to: HStack, width: 13)
+        HStack.addArrangedSubview(vLine)
+        ADD_SPACER(to: HStack, width: 13)
+        
+        let infoLabel = UILabel()
+        infoLabel.font = ROBOTO_resize(14)
+        infoLabel.textColor = CSS.shared.displayMode().sec_textColor
+        infoLabel.numberOfLines = 0
+        
+        var textToShow = ""
+        
+        if(!description.isEmpty) {
+            textToShow += "Above: " + description
+        }
+        textToShow += "Image copyright: " + title
+        
+        self.setLabelAsImageCredit(infoLabel, text: textToShow, boldText: title)
+        
+        let VStackLabels = VSTACK(into: HStack)
+        VStackLabels.addArrangedSubview(infoLabel)
+        
+        var timeText = ""
+        if(self.deepDive == nil) { timeText = "Story" }
+        else { timeText = "DeepDive" }
+        timeText += " last updated " + time
+        
+        let timeLabel = UILabel()
+        timeLabel.font = ROBOTO_ITALIC(14)
+        timeLabel.textColor = CSS.shared.displayMode().sec_textColor
+        timeLabel.text = timeText
+                
+        ADD_SPACER(to: VStackLabels, height: 4)
+        VStackLabels.addArrangedSubview(timeLabel)
+        
+        ///
+        let creditButton = UIButton(type: .system)
+        creditButton.backgroundColor = .clear // .red.withAlphaComponent(0.5)
+        VStackLabels.addSubview(creditButton)
+        creditButton.activateConstraints([
+            creditButton.leadingAnchor.constraint(equalTo: VStackLabels.leadingAnchor),
+            creditButton.trailingAnchor.constraint(equalTo: VStackLabels.trailingAnchor),
+            creditButton.bottomAnchor.constraint(equalTo: timeLabel.bottomAnchor),
+            creditButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+        creditButton.addTarget(self, action: #selector(onImageCreditButtonTap(_:)), for: .touchUpInside)
+        
+        self.imageCreditUrl = url
+        ///
+        
+        
+        ADD_SPACER(to: HStack, width: 13)
+        ADD_SPACER(to: self.VStack, height: 16)
+    }
+    
+    private func addImageCredit_2(_ title: String, _ url: String, description: String) {
         if(!description.isEmpty) {
             let descrLabel = UILabel()
             descrLabel.font = ROBOTO_resize(14)
@@ -3034,8 +3095,6 @@ extension StoryViewController {
         
         self.imageCreditUrl = url
         ADD_SPACER(to: self.VStack, height: 12)
-        
-        
     }
     
     private func addTime(time: String) {
