@@ -367,7 +367,10 @@ extension StoryViewController {
             self.showDeepDiveContent(forIndex: 0)
         }
 
-        self.addSpins(story.spins)
+        //if(self.deepDive == nil) {
+            self.addSpins(story.spins)
+        //}
+        
         self.addPublicFigures(story.figures)
         self.addControversies(story.controversies)
 
@@ -1424,28 +1427,6 @@ extension StoryViewController {
                     
                     _W = SCREEN_SIZE_iPadSideTab().width - (_side*2)
                     
-//                    var _W = SCREEN_SIZE().width
-//                    if(SCREEN_SIZE().height<_W){ _W = SCREEN_SIZE().height }
-//                    _W -= (M*2)
-//                    
-//                    let _side = (SCREEN_SIZE().width - _W)/2
-//                    
-//                    let embedUrl = self.getMetaculusUrl(from: S.url)!
-//                    let naWebHStack = HSTACK(into: innerHStack)
-//                    naWebHStack.backgroundColor = CSS.shared.displayMode().main_bgColor
-//                    ADD_SPACER(to: naWebHStack, width: _side)
-//                    let webView = WKWebView()
-//                    webView.navigationDelegate = self
-//                    webView.load(URLRequest(url: URL(string: embedUrl)!))
-//                    
-//                    //let _W = SCREEN_SIZE_iPadSideTab().width - (M*2)
-//                    let H: CGFloat = (9 * _W)/16
-//                                        
-//                    webView.activateConstraints([
-//                        webView.heightAnchor.constraint(equalToConstant: floor(H)),
-//                        webView.widthAnchor.constraint(equalToConstant: _W)
-//                    ])
-                    
                     let embedUrl = self.getMetaculusUrl(from: S.url)!
                     let naWebHStack = HSTACK(into: innerHStack)
                     naWebHStack.backgroundColor = CSS.shared.displayMode().main_bgColor
@@ -1512,16 +1493,6 @@ extension StoryViewController {
             descriptionLabel.setLineSpacing(lineSpacing: 7.0)
             descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
             colVStack.addArrangedSubview(descriptionLabel)
-            
-//            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
-//            let ART = iPhoneArticle_vImg_v3(width: W)
-//            ART.refreshDisplayMode()
-//            ART.populate(spin: S)
-//            colVStack.addArrangedSubview(ART)
-//            ART.activateConstraints([
-//                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
-//            ])
-//            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
             
             ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
 
@@ -1643,13 +1614,15 @@ extension StoryViewController {
         }
     }
     
-    func addSpins_iPhone(_ spins: [Spin], innerHStack: UIStackView) {
+    func addSpins_iPhone(_ spins: [Spin], innerHStack: UIStackView, margins: Bool = true) {
         for (i, S) in spins.enumerated() {
             // Metaculus ----------------------------------------
             if(self.metaculus(S)) {
                 if let _mUrl = self.getMetaculusUrl(from: S.url) {
                     let natitleHStack = HSTACK(into: innerHStack)
-                    ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                    if(margins) {
+                        ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+                    }
                         let titleLabel = UILabel()
                         titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
                         titleLabel.text = "Metaculus Prediction"
@@ -1685,6 +1658,8 @@ extension StoryViewController {
             }
             
             let natitleHStack = HSTACK(into: innerHStack)
+            natitleHStack.backgroundColor = .green.withAlphaComponent(0.2)
+            
             ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
                 let titleLabel = UILabel()
                 titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont

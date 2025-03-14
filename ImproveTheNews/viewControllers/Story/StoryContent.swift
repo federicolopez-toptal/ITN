@@ -172,6 +172,7 @@ class DeepDiveSection {
     var additionalInfo: (String, String) = ("", "")
     var sources: [String] = []
     var stories: [MainFeedArticle] = []
+    var spins: [Spin] = []
     
     init(_ json: [String: Any]) {
         self.title = CHECK(json["title"])
@@ -211,6 +212,14 @@ class DeepDiveSection {
             for ST in _node {
                 let newStory = MainFeedArticle(jsonFromGoDeeper: ST)
                 self.stories.append(newStory)
+            }
+        }
+        
+        self.spins = []
+        if let _node = json["spins"] as? [[String: Any]] {
+            for SP in _node {
+                let newSpin = Spin(SP)
+                self.spins.append(newSpin)
             }
         }
     }

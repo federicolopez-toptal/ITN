@@ -105,6 +105,8 @@ extension StoryViewController: UITextViewDelegate {
                 self.showDeepDiveFacts(into: self.deepDiveContent_VStack)
                 self.showDeepDiveFactsSources(into: self.deepDiveContent_VStack, width: self.deepDiveWidth())
             }
+            
+            //self.showDeepDiveSpins(into: self.deepDiveContent_VStack, index: index)
         } else { // IPAD
             let LWidth = self.deepDiveWidth()-sep-side
         

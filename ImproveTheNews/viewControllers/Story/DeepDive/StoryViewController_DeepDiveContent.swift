@@ -234,7 +234,7 @@ extension StoryViewController {
             }
         }
         
-        ADD_SPACER(to: vstack)
+        ADD_SPACER(to: vstack, height: 16)
     }
     
     @objc func showMoreOverviewButtonOnTap(_ sender: UIButton) {
