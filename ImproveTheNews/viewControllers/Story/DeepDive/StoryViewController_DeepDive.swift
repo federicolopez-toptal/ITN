@@ -146,11 +146,14 @@ extension StoryViewController: UITextViewDelegate {
         titleLabel.textColor = CSS.shared.displayMode().main_textColor
         vstack.addArrangedSubview(titleLabel)
         
-        for contentItem in section.newContent {
+        for (i, contentItem) in section.newContent.enumerated() {
             if(contentItem.type == "HTML") { // Text
                 ADD_SPACER(to: vstack, height: 8)
                 //let attributedContent = self.attributedContent(withText: section.content.1)
-                let attributedContent = self.attributedContent(withText: contentItem.content)
+            print(contentItem.content) //HTML
+                
+                let attributedContent = self.attributedContent(withText: contentItem.content,
+                    bold: (i==0) ? true : false)
 
                 let tmpContentLabel = UILabel()
                 tmpContentLabel.numberOfLines = 0
@@ -165,7 +168,8 @@ extension StoryViewController: UITextViewDelegate {
                 //contentTextView.isSelectable = false
                 contentTextView.backgroundColor = CSS.shared.displayMode().main_bgColor
                 contentTextView.attributedText = attributedContent
-                contentTextView.tintColor = CSS.shared.orange
+                //contentTextView.font = UIFont.systemFont(ofSize: 16)
+                contentTextView.tintColor = CSS.shared.displayMode().main_textColor
                 //contentTextView.textAlignment = .justified
                 vstack.addArrangedSubview(contentTextView)
                 contentTextView.activateConstraints([
@@ -175,7 +179,6 @@ extension StoryViewController: UITextViewDelegate {
 //                vstack.addSubview(tmpContentLabel)
 //                tmpContentLabel.backgroundColor = .red.withAlphaComponent(0.3)
 //                tmpContentLabel.textColor = .red
-//                tmpContentLabel.backgroundColor = .clear
 //                tmpContentLabel.activateConstraints([
 //                    tmpContentLabel.leadingAnchor.constraint(equalTo: contentTextView.leadingAnchor, constant: 0),
 //                    tmpContentLabel.topAnchor.constraint(equalTo: contentTextView.topAnchor, constant: 0),
@@ -245,14 +248,15 @@ extension StoryViewController: UITextViewDelegate {
             ADD_SPACER(to: infoViewVStack, height: 24)
             
             let infoTitleLabel = UILabel()
-            infoTitleLabel.font = DM_SERIF_DISPLAY(21)
+            infoTitleLabel.font = DM_SERIF_DISPLAY(18)
             infoTitleLabel.text = section.additionalInfo.0
+            infoTitleLabel.numberOfLines = 0
             infoTitleLabel.textColor = CSS.shared.displayMode().main_textColor
             infoViewVStack.addArrangedSubview(infoTitleLabel)
             ADD_SPACER(to: infoViewVStack, height: 12)
             
             let infoContentLabel = UILabel()
-            infoContentLabel.font = AILERON_resize(16)
+            infoContentLabel.font = AILERON_resize(14)
             infoContentLabel.numberOfLines = 0
             infoContentLabel.text = section.additionalInfo.1
             infoContentLabel.textColor = CSS.shared.displayMode().sec_textColor
@@ -337,19 +341,38 @@ extension StoryViewController { // Deep Dive Utils
         label.attributedText = boldString
     }
     
-    func attributedContent(withText text: String) -> NSAttributedString? {
+    func attributedContent(withText text: String, bold: Bool = false) -> NSAttributedString? {
         var _text = text.replacingOccurrences(of: "<p></p>", with: "")
-        _text = text.replacingOccurrences(of: "’", with: "'")
+        _text = _text.replacingOccurrences(of: "’", with: "'")
+        
+        let _p_regular_style = " style=\"font-family:Aileron; font-size:13px;\""
+        let _p_title_style = " style=\"font-family:Aileron; font-size:15px;\""
+        _text = _text.replacingOccurrences(of: "<p>", with: "<p" + _p_regular_style + ">")
+        _text = _text.replacingOccurrences(of: "<h3>", with: "<h3" + _p_title_style + "><strong>")
+        _text = _text.replacingOccurrences(of: "</h3>", with: "</strong></h3>")
+        
         let data = _text.data(using: .utf8)!
-                        
         if let attributedText = try? NSMutableAttributedString(data: data,
                         options: [.documentType: NSAttributedString.DocumentType.html],
                         documentAttributes: nil) {
             
             let all = NSRange(location: 0, length: attributedText.length)
+            
             attributedText.addAttribute(.foregroundColor, value: CSS.shared.displayMode().sec_textColor, range: all)
             attributedText.addAttribute(.backgroundColor, value: CSS.shared.displayMode().main_bgColor, range: all)
-            attributedText.addAttribute(.font, value: AILERON(16), range: all)
+
+
+
+
+//            attributedText.addAttribute(.backgroundColor, value: UIColor.red, range: all)
+            
+//            attributedText.addAttribute(.font, value: AILERON(14), range: all)
+            
+//            if(!bold) {
+//                attributedText.addAttribute(.font, value: AILERON(16), range: all)
+//            } else {
+//                attributedText.addAttribute(.font, value: AILERON_BOLD(16), range: all)
+//            }
             
             return attributedText
         } else {
