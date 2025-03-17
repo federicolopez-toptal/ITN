@@ -128,6 +128,7 @@ extension StoryViewController: UITextViewDelegate {
             
             if(index==0) {
                 self.showDeepDiveFactsSources(into: RVStack, width: side)
+                ADD_SPACER(to: RVStack)
             } else {
                 self.showDeepDiveStories(into: RVStack, width: side, index: index)
                 ADD_SPACER(to: RVStack)
