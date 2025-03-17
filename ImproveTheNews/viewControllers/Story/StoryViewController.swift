@@ -293,9 +293,9 @@ extension StoryViewController {
 //            self.thirdPillText = "Split"
 //        }
         
-        if(self.deepDive == nil) {
-            self.addTabs()
-        }
+//        if(self.deepDive == nil) {
+//            self.addTabs()
+//        }
         
         self.addTitle(text: story.title)
         
