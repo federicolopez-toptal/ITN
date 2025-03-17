@@ -14,12 +14,19 @@
 
 #import <FBSDKCoreKit/FBSDKAppEventName.h>
 #import <FBSDKCoreKit/FBSDKAppEventParameterName.h>
-#import <FBSDKCoreKit/FBSDKAppEventUserDataType.h>
+#import <FBSDKCoreKit/FBSDKAppEventsConfiguring.h>
 #import <FBSDKCoreKit/FBSDKAppEventsFlushBehavior.h>
+#import <FBSDKCoreKit/FBSDKAppEventUserDataType.h>
+#import <FBSDKCoreKit/FBSDKApplicationActivating.h>
+#import <FBSDKCoreKit/FBSDKApplicationLifecycleObserving.h>
+#import <FBSDKCoreKit/FBSDKApplicationStateSetting.h>
+#import <FBSDKCoreKit/FBSDKEventLogging.h>
 #import <FBSDKCoreKit/FBSDKGraphRequest.h>
 #import <FBSDKCoreKit/FBSDKGraphRequestConnection.h>
 #import <FBSDKCoreKit/FBSDKProductAvailability.h>
 #import <FBSDKCoreKit/FBSDKProductCondition.h>
+#import <FBSDKCoreKit/FBSDKSourceApplicationTracking.h>
+#import <FBSDKCoreKit/FBSDKUserIDProviding.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -74,7 +81,15 @@ NS_SWIFT_NAME(AppEventsOverrideAppIDBundleKey);
  + The length of each parameter value can be no more than on the order of 100 characters.
  */
 NS_SWIFT_NAME(AppEvents)
-@interface FBSDKAppEvents : NSObject
+@interface FBSDKAppEvents : NSObject <
+  FBSDKEventLogging,
+  FBSDKAppEventsConfiguring,
+  FBSDKApplicationActivating,
+  FBSDKApplicationLifecycleObserving,
+  FBSDKApplicationStateSetting,
+  FBSDKSourceApplicationTracking,
+  FBSDKUserIDProviding
+>
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
@@ -263,6 +278,21 @@ NS_SWIFT_NAME(AppEvents)
          parameters:(nullable NSDictionary<FBSDKAppEventParameterName, id> *)parameters
         accessToken:(nullable FBSDKAccessToken *)accessToken
   NS_SWIFT_NAME(logPurchase(amount:currency:parameters:accessToken:));
+// UNCRUSTIFY_FORMAT_ON
+
+/**
+ Call this API to log when an In-App Purchase fails on Store Kit 2 even if you have auto-logging turned on. A  purchase
+ is considered failed when the call to `product.purchase()` throws or the `Product.PurchaseResult`
+ is not `success` or `pending`
+ 
+ NOTE:  This API is only available in iOS 15.0+ because it is intended to be used with StoreKit 2, which is not available
+ until iOS 15.0
+ 
+ @param productID The product identifier of the product that the user failed to purchase. Can be
+ retrieved using `product.id`
+ */
+// UNCRUSTIFY_FORMAT_OFF
+-(void)logFailedStoreKit2Purchase:(NSString *)productID API_AVAILABLE(ios(15.0));
 // UNCRUSTIFY_FORMAT_ON
 
 /*
@@ -515,6 +545,8 @@ NS_SWIFT_NAME(setUser(email:firstName:lastName:phone:dateOfBirth:gender:city:sta
               parameters:(nullable NSDictionary<FBSDKAppEventParameterName, id> *)parameters
       isImplicitlyLogged:(BOOL)isImplicitlyLogged
              accessToken:(nullable FBSDKAccessToken *)accessToken;
+
+- (void)flushForReason:(FBSDKAppEventsFlushReason)flushReason;
 
 @end
 

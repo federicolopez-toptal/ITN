@@ -67,7 +67,8 @@ NS_SWIFT_NAME(InternalUtilityProtocol)
 - (nullable NSURL *)facebookURLWithHostPrefix:(NSString *)hostPrefix
                                          path:(NSString *)path
                               queryParameters:(NSDictionary<NSString *, NSString *> *)queryParameters
-                                        error:(NSError *__autoreleasing *)errorRef;
+                                        error:(NSError *__autoreleasing *)errorRef
+NS_SWIFT_NAME(facebookURL(hostPrefix:path:queryParameters:));
 
 /**
  Registers a transient object so that it will not be deallocated until unregistered
@@ -115,12 +116,25 @@ NS_SWIFT_NAME(InternalUtilityProtocol)
 /// validates that Facebook reserved URL schemes are not registered, throws an NSException if they are.
 - (void)validateFacebookReservedURLSchemes;
 
+- (void)validateDomainConfiguration;
+
 /**
  Parses an FB url's query params (and potentially fragment) into a dictionary.
  @param url The FB url.
  @return A dictionary with the key/value pairs.
  */
 - (NSDictionary<NSString *, id> *)parametersFromFBURL:(NSURL *)url;
+
+/**
+ Returns bundle for returning localized strings
+
+ We assume a convention of a bundle named FBSDKStrings.bundle, otherwise we
+ return the main bundle.
+ */
+@property (nonatomic, readonly, strong) NSBundle *bundleForStrings;
+
+/// Returns currently displayed top view controller.
+- (nullable UIViewController *)topMostViewController;
 
 @end
 

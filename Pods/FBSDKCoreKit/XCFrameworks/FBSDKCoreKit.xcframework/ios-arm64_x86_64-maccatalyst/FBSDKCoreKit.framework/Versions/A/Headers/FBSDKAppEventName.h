@@ -80,6 +80,16 @@ FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameInitiatedCheckout;
 /// Log this event when the user has completed a transaction.  The valueToSum passed to logEvent should be the total price of the transaction.
 FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNamePurchased;
 
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNamePurchaseRestored;
+
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameSubscribeRestore;
+
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNamePurchaseFailed;
+
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameSubscribeInitiatedCheckout;
+
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameSubscribeFailed;
+
 // MARK: - Gaming
 
 /// Log this event when the user has achieved a level in the app.
@@ -90,3 +100,17 @@ FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameUnlockedAchievement;
 
 /// Log this event when the user has spent app credits.  The valueToSum passed to logEvent should be the number of credits spent.
 FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameSpentCredits;
+
+// MARK: - Internal
+
+/**
+ Internal values exposed to facilitate transition to Swift.
+ API Subject to change or removal without warning. Do not use.
+
+ @warning INTERNAL - DO NOT USE
+ */
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameInitializeSDK;
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameBackgroundStatusAvailable;
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameBackgroundStatusDenied;
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameBackgroundStatusRestricted;
+FOUNDATION_EXPORT FBSDKAppEventName const FBSDKAppEventNameSDKSettingsChanged;

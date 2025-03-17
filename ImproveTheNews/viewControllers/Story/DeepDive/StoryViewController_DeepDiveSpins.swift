@@ -11,7 +11,10 @@ import UIKit
 extension StoryViewController {
 
     func showDeepDiveSpins(into vstack: UIStackView, index: Int) {
-        let section = self.deepDive!.sections[index]
+        var _i = index-1
+        if(_i<0){ _i = 0  }
+        
+        let section = self.deepDive!.sections[_i]
         self.spins = section.spins
         ADD_SPACER(to: vstack, height: CSS.shared.iPhoneSide_padding)
     

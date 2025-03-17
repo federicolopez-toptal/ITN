@@ -367,9 +367,9 @@ extension StoryViewController {
             self.showDeepDiveContent(forIndex: 0)
         }
 
-        //if(self.deepDive == nil) {
+        if(self.deepDive == nil) {
             self.addSpins(story.spins)
-        //}
+        }
         
         self.addPublicFigures(story.figures)
         self.addControversies(story.controversies)
@@ -1658,20 +1658,30 @@ extension StoryViewController {
             }
             
             let natitleHStack = HSTACK(into: innerHStack)
-            natitleHStack.backgroundColor = .green.withAlphaComponent(0.2)
+            //natitleHStack.backgroundColor = .green.withAlphaComponent(0.2)
             
-            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+            if(margins) {
+                ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+            }
+            
                 let titleLabel = UILabel()
                 titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
                 titleLabel.text = _title
                 titleLabel.numberOfLines = 0
                 titleLabel.textColor = CSS.shared.displayMode().sec_textColor
                 natitleHStack.addArrangedSubview(titleLabel)
-            ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+            
+            if(margins) {
+                ADD_SPACER(to: natitleHStack, width: CSS.shared.iPhoneSide_padding)
+            }
             
             ADD_SPACER(to: innerHStack, height: 10)
             let descrHStack = HSTACK(into: innerHStack)
-            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
+            
+            if(margins) {
+                ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding)
+            }
+            
                 let descriptionLabel = UILabel()
                 descriptionLabel.font = AILERON_resize(16) //CSS.shared.iPhoneStoryContent_textFont
                 descriptionLabel.numberOfLines = 0
@@ -1680,7 +1690,10 @@ extension StoryViewController {
                 descriptionLabel.setLineSpacing(lineSpacing: 7.0)
                 descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
                 descrHStack.addArrangedSubview(descriptionLabel)
-            ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
+            
+            if(margins) {
+                ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
+            }
             
         ///
 //            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
@@ -1711,7 +1724,7 @@ extension StoryViewController {
             spinSource.buildInto(spinDataView)
             spinSource.activateConstraints([
                 spinSource.topAnchor.constraint(equalTo: spinDataView.topAnchor),
-                spinSource.leadingAnchor.constraint(equalTo: spinDataView.leadingAnchor, constant: 16)
+                spinSource.leadingAnchor.constraint(equalTo: spinDataView.leadingAnchor, constant: margins ? 16 : 0)
             ])
             
             var sourcesArray = [String]()

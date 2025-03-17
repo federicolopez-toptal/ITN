@@ -4,66 +4,132 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/FBAEMKit.h</key>
+		<key>Headers/FBAEMKit-Swift.h</key>
 		<data>
-		V75rdQ4cHxfRUCGfQ/+wVn/mJvw=
-		</data>
-		<key>Headers/FBAEMNetworking.h</key>
-		<data>
-		ghTzHaeILWcH507QH7tTFKT45po=
-		</data>
-		<key>Headers/FBAEMReporter.h</key>
-		<data>
-		KbMATolPzdG8LplQLXqOEddxB0M=
-		</data>
-		<key>Headers/FBSKAdNetworkReporting.h</key>
-		<data>
-		pky/QYIj/dB780WrIohjghUSH/E=
+		DSTW5xcVrndsThDrooe6v4sWabA=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		JJ2hqA0u3oJ7Pr9jUxKkg4vrzgw=
+		ZBuK065vx2Dan+mc+y4hEjYBoMs=
+		</data>
+		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
+		<data>
+		jIpzsulpmfli0PLQZ881X3f86+w=
+		</data>
+		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
+		<data>
+		MTxAt6ZgnwDKZ7FFQWghq6D7PGs=
+		</data>
+		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
+		<data>
+		synp6/Qeas50FWdWiV/xTBRXXOA=
+		</data>
+		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
+		<data>
+		MTxAt6ZgnwDKZ7FFQWghq6D7PGs=
+		</data>
+		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
+		<data>
+		jIpzsulpmfli0PLQZ881X3f86+w=
+		</data>
+		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
+		<data>
+		dYVvQfkyT0tPlgsdWIo0G3W1czw=
+		</data>
+		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
+		<data>
+		ixyz4f13PEQwnPgnz+7ZHp1UFlw=
+		</data>
+		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
+		<data>
+		dYVvQfkyT0tPlgsdWIo0G3W1czw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		o73dPj2eTzQWqpQxXcxLGPew27w=
+		Ci3QIdviXpIzxSC88i1rGvW2cSs=
+		</data>
+		<key>PrivacyInfo.xcprivacy</key>
+		<data>
+		Fo7sebV/R02g8kqyPtqICO8eVyI=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/FBAEMKit.h</key>
+		<key>Headers/FBAEMKit-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			5xz6AOyX3mQLFhMTuIWY6jJi2BB9u2Qsl8Ltv+WT77E=
+			ExT0qOgPAxGylyRJEWPIwQ0mqWOmyszTJ2hdRUsEejM=
 			</data>
 		</dict>
-		<key>Headers/FBAEMNetworking.h</key>
+		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7e2i1241Ft2Xvaut6NIyhoHw6N+wMpOIsbrTDlI81g0=
+			2uD0lnw+T6Jd0pHhXMKuAg2PP77QPbLIloKG1FIqxYI=
 			</data>
 		</dict>
-		<key>Headers/FBAEMReporter.h</key>
+		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gKuzbfbkkPsPqSImGLDm8boO2Svi09PT1U0r24dNVfM=
+			ZfIGN0Q/x3nVuxntAY6Gq/+n/1f40gT/bdJKmdy6oGc=
 			</data>
 		</dict>
-		<key>Headers/FBSKAdNetworkReporting.h</key>
+		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			elf75HlZ2bDZbULPVssKTSgy8K957SFxGfCuUVz2S6c=
+			2VsMY1HNMbXii8ciNbwM4D35tKXE7R3nU3wL6B752gM=
+			</data>
+		</dict>
+		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ZfIGN0Q/x3nVuxntAY6Gq/+n/1f40gT/bdJKmdy6oGc=
+			</data>
+		</dict>
+		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			2uD0lnw+T6Jd0pHhXMKuAg2PP77QPbLIloKG1FIqxYI=
+			</data>
+		</dict>
+		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			/h2l+NH0of7I/sMebx0224zca+82k/05hGMOGVMDG+E=
+			</data>
+		</dict>
+		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			VayeiXnrQLd37lGpjKQifOFM88Lh3NlzWj/DBHzd3Ms=
+			</data>
+		</dict>
+		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			/h2l+NH0of7I/sMebx0224zca+82k/05hGMOGVMDG+E=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9ORxRsqYiPdgcfSgTQLYaXLs6qCXFGAUTOO4deJ9/xQ=
+			jq+nSulDKiN4tenILjgXg82TzM040TCurYFTCVRKXxM=
+			</data>
+		</dict>
+		<key>PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ZFIpWmrSklTJLGaAOPLGos/UQMB82oH4FOmWrCFbhBU=
 			</data>
 		</dict>
 	</dict>
