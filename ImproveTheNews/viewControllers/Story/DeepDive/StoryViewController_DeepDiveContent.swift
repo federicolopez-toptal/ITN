@@ -246,7 +246,10 @@ extension StoryViewController {
         let section = self.deepDive!.sections[index-1]
         
         for (i, AR) in section.stories.enumerated() {
-            let newCell = iPhoneAllNews_vTxtCol_v3_B(width: width, useMaxNumLines: false)
+            var fontSize: CGFloat = 24
+            if(IPAD()){ fontSize = 20 }
+        
+            let newCell = iPhoneAllNews_vTxtCol_v3_B(width: width, fontSize: fontSize, useMaxNumLines: false)
             newCell.populate(AR)
             newCell.heightAnchor.constraint(equalToConstant: newCell.calculateHeight()).isActive = true
             vstack.addArrangedSubview(newCell)

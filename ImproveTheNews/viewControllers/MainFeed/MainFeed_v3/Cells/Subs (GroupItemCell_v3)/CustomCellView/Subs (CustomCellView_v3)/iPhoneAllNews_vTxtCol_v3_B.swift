@@ -12,7 +12,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
 
     var article: MainFeedArticle!
     private var WIDTH: CGFloat = 1
-    private var fontSize: CGFloat = 18
+    private var fontSize: CGFloat = 24
     
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
@@ -40,7 +40,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat, fontSize: CGFloat = 18, useMaxNumLines: Bool = true) {
+    init(width: CGFloat, fontSize: CGFloat = 24, useMaxNumLines: Bool = true) {
         super.init(frame: .zero)
         self.WIDTH = width
         self.fontSize = fontSize
@@ -53,7 +53,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
 
     // Story
         self.storyTitleLabel.numberOfLines = 0
-        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(24)
+        self.storyTitleLabel.font = DM_SERIF_DISPLAY_resize(self.fontSize)
         self.addSubview(self.storyTitleLabel)
         self.storyTitleLabel.activateConstraints([
             self.storyTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -164,7 +164,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         
         self.openIcon.hide()
         if(article.isStory) {
-            self.storyTitleLabel.text = article.title
+            self.storyTitleLabel.text = article.title + "lalala"
             
             if(self.self.useMaxNumLines) {
                 let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight

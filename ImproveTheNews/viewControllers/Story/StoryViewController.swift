@@ -2995,9 +2995,11 @@ extension StoryViewController {
         vLine.widthAnchor.constraint(equalToConstant: 2).isActive = true
 
         let HStack = HSTACK(into: self.VStack)
-        ADD_SPACER(to: HStack, width: 13)
-        HStack.addArrangedSubview(vLine)
-        ADD_SPACER(to: HStack, width: 13)
+        //HStack.backgroundColor = .orange.withAlphaComponent(0.25)
+        
+        ADD_SPACER(to: HStack, width: 16)
+//        HStack.addArrangedSubview(vLine)
+//        ADD_SPACER(to: HStack, width: 13)
         
         let infoLabel = UILabel()
         infoLabel.font = ROBOTO_resize(14)
@@ -3012,6 +3014,7 @@ extension StoryViewController {
         textToShow += "Image copyright: " + title
         
         self.setLabelAsImageCredit(infoLabel, text: textToShow, boldText: title)
+        infoLabel.textAlignment = .right
         
         let VStackLabels = VSTACK(into: HStack)
         VStackLabels.addArrangedSubview(infoLabel)
@@ -3025,6 +3028,7 @@ extension StoryViewController {
         timeLabel.font = ROBOTO_ITALIC(14)
         timeLabel.textColor = CSS.shared.displayMode().sec_textColor
         timeLabel.text = timeText
+        timeLabel.textAlignment = .right
                 
         ADD_SPACER(to: VStackLabels, height: 4)
         VStackLabels.addArrangedSubview(timeLabel)
@@ -3042,10 +3046,12 @@ extension StoryViewController {
         creditButton.addTarget(self, action: #selector(onImageCreditButtonTap(_:)), for: .touchUpInside)
         
         self.imageCreditUrl = url
-        ///
-        
         
         ADD_SPACER(to: HStack, width: 13)
+        HStack.addArrangedSubview(vLine)
+        ADD_SPACER(to: HStack, width: 16)
+        ///
+        
         ADD_SPACER(to: self.VStack, height: 16)
     }
     
