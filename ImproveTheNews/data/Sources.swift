@@ -130,6 +130,12 @@ class Sources {
             }
         }
         
+        if(found == nil && _identifier.count>4) {
+            if let _eFound = self.allExtra?.first(where: { $0.name.lowercased().contains(_identifier.lowercased()) }) {
+                found = SourceIcon(data: _eFound)
+            }
+        }
+        
         return found
     }
     func fixIdentifier(_ id: String) -> String {
@@ -174,6 +180,26 @@ class Sources {
         }
         
         return nil
+    }
+    
+    func search(id: String, name N: String) -> String? { //gato
+        // name: name
+        // id: shortname or label
+        
+        var result: String? = nil
+        if let _id = Sources.shared.search(name: N) {
+            result = _id
+        } else {
+            if let _found = self.all?.first(where: { $0.identifier.lowercased() == id.lowercased() }) {
+                result = _found.identifier
+            }
+        }
+        
+//        if(result == nil) {
+//            result = self.search(identifier: id)?.identifier
+//        }
+        
+        return result
     }
     
     func updateSourceState(_ code: String, _ state: Bool) {

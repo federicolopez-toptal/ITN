@@ -1728,10 +1728,16 @@ extension StoryViewController {
             ])
             
             var sourcesArray = [String]()
-            if let _identifier = Sources.shared.search(name: S.media_title) {
+            if let _identifier = Sources.shared.search(id: S.media_label, name: S.media_title) {
                 sourcesArray.append(_identifier)
+                spinSource.load(sourcesArray)
+            } else {
+                if let _icon = Sources.shared.search(identifier: S.media_label), let _url = _icon.url {
+                    spinSource.loadSingle(url: _url)
+                } else {
+                    spinSource.load([])
+                }
             }
-            spinSource.load(sourcesArray)
             
         // Source (name)
             let spinName = UILabel()

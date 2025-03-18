@@ -135,6 +135,7 @@ extension StoryViewController: UITextViewDelegate {
                 self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
             }
             
+            self.showDeepDiveSpins(into: self.deepDiveContent_VStack, index: index)
             //ADD_SPACER(to: self.deepDiveContent_VStack, backgroundColor: .green, height: 16)
         }
     }
