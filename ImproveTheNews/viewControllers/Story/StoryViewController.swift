@@ -1478,7 +1478,8 @@ extension StoryViewController {
     
     func addSpins_iPad(_ spins: [Spin], innerHStack: UIStackView) {
         let M = CSS.shared.iPhoneSide_padding
-        let W = ((SCREEN_SIZE_iPadSideTab().width) - (M * 3))/2
+//        let W = ((SCREEN_SIZE_iPadSideTab().width) - (M * 3))/2
+        let W = ((SCREEN_SIZE_iPadSideTab().width) - (M * 7))/2
         
         var col = 1
         //for i in 1...3 {
@@ -1533,9 +1534,9 @@ extension StoryViewController {
             var rowView: UIView!
             if(col==1) {
                 rowView = UIView()
-                ADD_SPACER(to: innerHStack, width: M)
+                ADD_SPACER(to: innerHStack, width: M*2)
                     innerHStack.addArrangedSubview(rowView)
-                ADD_SPACER(to: innerHStack, width: M)
+                ADD_SPACER(to: innerHStack, width: M*2)
             } else {
                 let _i = innerHStack.arrangedSubviews.count-1-1
                 if(_i>=0) {
@@ -1543,8 +1544,8 @@ extension StoryViewController {
                 }
             }
             
-            var offsetX: CGFloat = M
-            if(col==2){ offsetX += W+M }
+            var offsetX: CGFloat = M+M
+            if(col==2){ offsetX += W+(M*3) }
             
             let colVStack = VSTACK(into: rowView)
             colVStack.activateConstraints([
@@ -1559,6 +1560,8 @@ extension StoryViewController {
                 let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 _title = "Narrative " + letters.getCharAt(index: i)!
             }
+            
+            ADD_SPACER(to: colVStack, height: 16)
             
             let titleLabel = UILabel()
             titleLabel.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
@@ -1635,6 +1638,24 @@ extension StoryViewController {
             buttonArea.bottomAnchor.constraint(equalTo: spinSource.bottomAnchor)
         ])
         buttonArea.addTarget(self, action: #selector(self.spinButtonAreaOnTap(_:)), for: .touchUpInside)
+
+                let bgColorView = RectangularDashedView()
+                bgColorView.backgroundColor = CSS.shared.displayMode().main_bgColor
+                bgColorView.cornerRadius = 16
+                bgColorView.dashWidth = 1
+                bgColorView.dashColor = CSS.shared.displayMode().sec_textColor
+                bgColorView.dashLength = 5
+                bgColorView.betweenDashesSpace = 5
+            
+                innerHStack.addSubview(bgColorView)
+                bgColorView.activateConstraints([
+                    bgColorView.leadingAnchor.constraint(equalTo: colVStack.leadingAnchor, constant: -16),
+                    bgColorView.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: 16),
+                    bgColorView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -16),
+                    bgColorView.bottomAnchor.constraint(equalTo: spinDataView.bottomAnchor, constant: 16)
+                ])
+                innerHStack.sendSubviewToBack(bgColorView)
+
 
             ///
             ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding*2)
@@ -1857,6 +1878,19 @@ extension StoryViewController {
                 buttonArea.bottomAnchor.constraint(equalTo: spinSource.bottomAnchor)
             ])
             buttonArea.addTarget(self, action: #selector(self.spinButtonAreaOnTap(_:)), for: .touchUpInside)
+              
+            if(i<spins.count-1) {
+                let line = UIView()
+                line.backgroundColor = .red
+                innerHStack.addSubview(line)
+                line.activateConstraints([
+                    line.heightAnchor.constraint(equalToConstant: 2),
+                    line.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                    line.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                    line.topAnchor.constraint(equalTo: spinDataView.bottomAnchor, constant: 16)
+                ])
+                ADD_HDASHES(to: line)
+            }
               
             ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding*2)
         }
