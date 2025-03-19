@@ -378,7 +378,11 @@ extension StoryViewController {
         self.addControversies(story.controversies)
 
         if(story.goDeeper.count > 0) {
-            self.addGoDeeper(stories: story.goDeeper)
+            if(IPHONE()) {
+                self.addGoDeeper_iPhone(stories: story.goDeeper)
+            } else {
+                self.addGoDeeper(stories: story.goDeeper)
+            }
         }
         if(story.articles.count > 0) {
             self.addArticles(story.articles)
@@ -515,6 +519,81 @@ extension StoryViewController {
         let limit = self.contentView.frame.size.height - self.scrollView.frame.size.height
         if(val_Y > limit){ val_Y = limit }
         self.scrollView.setContentOffset(CGPoint(x: 0, y: val_Y), animated: true)
+    }
+    
+    private func addGoDeeper_iPhone(stories: [StorySearchResult]) {
+        self.goDeeperStories = stories
+        if(stories.count==0){ return }
+        
+        let sectionView = UIView()
+        sectionView.tag = 170
+        self.VStack.addArrangedSubview(sectionView)
+        
+        let title = UILabel()
+        title.textColor = CSS.shared.displayMode().main_textColor
+        //title.backgroundColor = .red.withAlphaComponent(0.3)
+        title.font = DM_SERIF_DISPLAY_resize(20) //CSS.shared.iPhoneStoryContent_subTitleFont
+        title.text = "Go Deeper"
+        sectionView.addSubview(title)
+        title.activateConstraints([
+            title.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: 20),
+            title.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor, constant: 15),
+            title.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor, constant: -15)
+        ])
+        
+        var W: CGFloat = SCREEN_SIZE().width - (16*2)
+        var posY: CGFloat = 20 + title.calculateHeightFor(width: W) + 20
+        if(IPAD()) {
+            W = (SCREEN_SIZE_iPadSideTab().width - (CSS.shared.iPhoneSide_padding * 3))/2
+        }
+        
+        var count = 0
+        while(self.goDeeperStories.count>0) {
+
+            let colsHStack = HSTACK(into: sectionView, spacing: 0)
+            //colsHStack.backgroundColor = .green
+            colsHStack.activateConstraints([
+                colsHStack.leadingAnchor.constraint(equalTo: sectionView.leadingAnchor,
+                    constant: CSS.shared.iPhoneSide_padding),
+                colsHStack.trailingAnchor.constraint(equalTo: sectionView.trailingAnchor,
+                    constant: -CSS.shared.iPhoneSide_padding),
+                colsHStack.topAnchor.constraint(equalTo: sectionView.topAnchor, constant: posY)
+            ])
+            
+            var H1: CGFloat = 1
+            let VIEW1 = iPhoneAllNews_vImgCol_v3(width: W, minimumLineNum: false)
+            
+            // item 1
+            if let _A = self.goDeeperStories.first {
+                VIEW1.refreshDisplayMode()
+                VIEW1.populate(story: _A)
+                if(_A.type == 2){ self.adaptToGoDeeper(view: VIEW1) }
+                else if(_A.type == 3){ self.adaptToDeepDive(view: VIEW1) }
+                                
+                H1 = VIEW1.calculateHeight()
+                colsHStack.addArrangedSubview(VIEW1)
+                VIEW1.activateConstraints([
+                    VIEW1.widthAnchor.constraint(equalToConstant: W)
+                ])
+                
+                self.goDeeperStories.removeFirst()
+                count += 1
+            } else {
+                H1 = 0
+                ADD_SPACER(to: colsHStack, width: W)
+            }
+            
+            VIEW1.heightAnchor.constraint(equalToConstant: H1).isActive = true
+            posY += H1
+            
+            if(count >= 20) {
+                break
+            }
+        }
+        
+        self.sectionViewHeightConstraint = nil
+        self.sectionViewHeightConstraint = sectionView.heightAnchor.constraint(equalToConstant: posY)
+        self.sectionViewHeightConstraint?.isActive = true
     }
     
     private func addGoDeeper(stories: [StorySearchResult]) {
