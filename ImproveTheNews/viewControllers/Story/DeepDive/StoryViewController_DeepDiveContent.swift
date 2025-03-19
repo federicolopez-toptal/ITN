@@ -264,37 +264,104 @@ extension StoryViewController {
         }
     }
     
+    func showDeepDiveStories_2COLS(into vstack: UIStackView, width: CGFloat, index: Int) {
+        ADD_SPACER(to: vstack, height: 16)
+        
+        let section = self.deepDive!.sections[index-1]
+        
+        var col = 1
+        let _W: CGFloat = (SCREEN_SIZE().width-32-16)/2
+        var row: UIStackView?
+        
+        for (i, AR) in section.stories.enumerated() {
+            if(col==1) {
+                row = HSTACK(into: vstack)
+            } else {
+                row = vstack.arrangedSubviews.last as? UIStackView
+            }
+            
+            let newCell = iPhoneAllNews_vTxtCol_v3_B(width: _W, fontSize: 19, useMaxNumLines: false, sourceIconsSize: 28)
+            newCell.populate(AR)
+            newCell.activateConstraints([
+                newCell.widthAnchor.constraint(equalToConstant: _W),
+                newCell.heightAnchor.constraint(equalToConstant: newCell.calculateHeight())
+            ])
+            row!.addArrangedSubview(newCell)
+            
+            if(col==1) {
+                ADD_SPACER(to: row!, width: 16)
+            }
+            
+
+            let last = section.stories.count-1
+            if(i==last && col==1) {
+                ADD_SPACER(to: row!)
+                break
+//                let line = UIView()
+//                line.heightAnchor.constraint(equalToConstant: 2).isActive = true
+//                ADD_HDASHES(to: line)
+//                vstack.addArrangedSubview(line)
+            }
+            
+            col += 1
+            if(col==3){
+                col = 1
+            }
+        }
+    }
+    
     func showDeepDiveSources(into vstack: UIStackView, index: Int) {
         let section = self.deepDive!.sections[index-1]
     
-        self.mediaList = self.mediaList.sorted { // longer strings first
-            $0.count > $1.count
-        }
-
+//        self.mediaList = self.mediaList.sorted { // longer strings first
+//            $0.count > $1.count
+//        }
+  
+        let sortedMediaList = self.mediaList.sorted(by: { $0.key.count > $1.key.count }) // longer strings first
+  
         var sources: [SourceForGraph] = []
-        for (i, SO) in section.sources.enumerated() {
+        for SO in section.sources {
             if let _url = URL(string: SO), let _domain = _url.host {
-                for ME in self.mediaList {
-                    if(_domain.contains(ME)) {
-                        
-                        var name = ""
-                        if let _name = Sources.shared.search(identifier: ME)?.name {
-                            name = _name
+                
+                var found = false
+                sortedMediaList.forEach { (key, value) in
+                    if(!found) {
+                        if(_domain.contains(key)) {
+                            var name = ""
+                            if let _name = Sources.shared.search(identifier: key)?.name {
+                                name = _name
+                            }
+                            
+                            let newItem = SourceForGraph(id: key, name: name, url: SO)
+                            sources.append(newItem)
+                            found = true
                         }
-                        
-                        let newItem = SourceForGraph(id: ME, name: name, url: SO)
-                        sources.append(newItem)
-                        break
                     }
                 }
-            }
+                
+                if(sources.count == 3) {
+                    break
+                }
+                
+                
             
-            if(sources.count == 3) {
-                break
+//                for ME in self.mediaList {
+//                    if(_domain.contains(ME)) {
+//                        
+//                        var name = ""
+//                        if let _name = Sources.shared.search(identifier: ME)?.name {
+//                            name = _name
+//                        }
+//                        
+//                        let newItem = SourceForGraph(id: ME, name: name, url: SO)
+//                        sources.append(newItem)
+//                        break
+//                    }
+//                }
             }
             //print("-----")
         }
-            
+
         ADD_SPACER(to: self.deepDiveContent_VStack, height: 16)
 
         let hStack = HSTACK(into: vstack)
@@ -317,6 +384,196 @@ extension StoryViewController {
         RHStack.backgroundColor = .clear
         self.cSourcesView = CollapsableSources(buildInto: RHStack, sources: sources, extraText: extraText)
         ADD_SPACER(to: self.deepDiveContent_VStack, height: 16)
+    }
+    
+    func addDeepDiveBottomMenu() {
+        let C: UIColor = DARK_MODE() ? UIColor(hex: 0x232326) : .white
+        let rectView = UIView()
+        rectView.backgroundColor = C
+        
+        self.view.addSubview(rectView)
+        rectView.activateConstraints([
+            rectView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            rectView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            rectView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: IPHONE_bottomOffset()),
+            rectView.heightAnchor.constraint(equalToConstant: 65)
+        ])
+        
+        let _W: CGFloat = (SCREEN_SIZE().width/2)-(16*2)
+        
+    // BACK
+        let backView = UIView()
+        backView.backgroundColor = C
+        rectView.addSubview(backView)
+        backView.activateConstraints([
+            backView.leadingAnchor.constraint(equalTo: rectView.leadingAnchor, constant: 16),
+            backView.centerYAnchor.constraint(equalTo: rectView.centerYAnchor),
+            backView.widthAnchor.constraint(equalToConstant: _W),
+            backView.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        backView.tag = 973
+        
+        let backCircleView = UIView()
+        backCircleView.backgroundColor = C
+        backView.addSubview(backCircleView)
+        backCircleView.activateConstraints([
+            backCircleView.leadingAnchor.constraint(equalTo: backView.leadingAnchor),
+            backCircleView.centerYAnchor.constraint(equalTo: backView.centerYAnchor),
+            backCircleView.widthAnchor.constraint(equalToConstant: 36),
+            backCircleView.heightAnchor.constraint(equalToConstant: 36)
+        ])
+        backCircleView.layer.cornerRadius = 36/2
+        backCircleView.layer.borderWidth = 1.0
+        backCircleView.layer.borderColor = CSS.shared.displayMode().sec_textColor.cgColor
+        
+        let backArrow = UIImageView(image: UIImage(named: DisplayMode.imageName("closeArrow"))?.withRenderingMode(.alwaysTemplate))
+        backArrow.tintColor = CSS.shared.displayMode().main_textColor
+        backCircleView.addSubview(backArrow)
+        backArrow.activateConstraints([
+            backArrow.widthAnchor.constraint(equalToConstant: 18),
+            backArrow.heightAnchor.constraint(equalToConstant: 18),
+            backArrow.centerXAnchor.constraint(equalTo: backCircleView.centerXAnchor),
+            backArrow.centerYAnchor.constraint(equalTo: backCircleView.centerYAnchor)
+        ])
+        
+        let backLabel = UILabel()
+        backLabel.text = "Back"
+        backLabel.textColor = CSS.shared.displayMode().main_textColor
+        backLabel.textAlignment = .left
+        backLabel.numberOfLines = 0
+        backLabel.font = AILERON(14)
+        backView.addSubview(backLabel)
+        backLabel.activateConstraints([
+            backLabel.leadingAnchor.constraint(equalTo: backCircleView.trailingAnchor, constant: 8),
+            backLabel.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: -8),
+            backLabel.centerYAnchor.constraint(equalTo: backCircleView.centerYAnchor)
+        ])
+        
+        let backButton = UIButton(type: .system)
+        backButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        backView.addSubview(backButton)
+        backButton.activateConstraints([
+            backButton.leadingAnchor.constraint(equalTo: backView.leadingAnchor),
+            backButton.trailingAnchor.constraint(equalTo: backView.trailingAnchor),
+            backButton.topAnchor.constraint(equalTo: backView.topAnchor),
+            backButton.bottomAnchor.constraint(equalTo: backView.bottomAnchor)
+        ])
+        backButton.tag = -1
+        backButton.addTarget(self, action: #selector(self.onDeepDiveMenuButtonTap(_:)), for: .touchUpInside)
+        
+    //  FORWARD
+        let forwardView = UIView()
+        forwardView.backgroundColor = C
+        rectView.addSubview(forwardView)
+        forwardView.activateConstraints([
+            forwardView.trailingAnchor.constraint(equalTo: rectView.trailingAnchor, constant: -16),
+            forwardView.centerYAnchor.constraint(equalTo: rectView.centerYAnchor),
+            forwardView.widthAnchor.constraint(equalToConstant: _W),
+            forwardView.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        forwardView.tag = 974
+        
+        let forwardCircleView = UIView()
+        forwardCircleView.backgroundColor = C
+        forwardView.addSubview(forwardCircleView)
+        forwardCircleView.activateConstraints([
+            forwardCircleView.trailingAnchor.constraint(equalTo: forwardView.trailingAnchor),
+            forwardCircleView.centerYAnchor.constraint(equalTo: forwardView.centerYAnchor),
+            forwardCircleView.widthAnchor.constraint(equalToConstant: 36),
+            forwardCircleView.heightAnchor.constraint(equalToConstant: 36)
+        ])
+        forwardCircleView.layer.cornerRadius = 36/2
+        forwardCircleView.layer.borderWidth = 1.0
+        forwardCircleView.layer.borderColor = CSS.shared.displayMode().sec_textColor.cgColor
+        
+        let forwardArrow = UIImageView(image: UIImage(named: DisplayMode.imageName("deployArrow"))?.withRenderingMode(.alwaysTemplate))
+        forwardArrow.tintColor = CSS.shared.displayMode().main_textColor
+        forwardCircleView.addSubview(forwardArrow)
+        forwardArrow.activateConstraints([
+            forwardArrow.widthAnchor.constraint(equalToConstant: 18),
+            forwardArrow.heightAnchor.constraint(equalToConstant: 18),
+            forwardArrow.centerXAnchor.constraint(equalTo: forwardCircleView.centerXAnchor),
+            forwardArrow.centerYAnchor.constraint(equalTo: forwardCircleView.centerYAnchor)
+        ])
+        
+        let forwardLabel = UILabel()
+        forwardLabel.text = "asdasd asdasdd"
+        forwardLabel.textColor = CSS.shared.displayMode().main_textColor
+        forwardLabel.textAlignment = .right
+        forwardLabel.numberOfLines = 0
+        forwardLabel.font = backLabel.font
+        forwardView.addSubview(forwardLabel)
+        forwardLabel.activateConstraints([
+            forwardLabel.leadingAnchor.constraint(equalTo: forwardView.leadingAnchor, constant: 8),
+            forwardLabel.trailingAnchor.constraint(equalTo: forwardCircleView.leadingAnchor, constant: -8),
+            forwardLabel.centerYAnchor.constraint(equalTo: forwardView.centerYAnchor)
+        ])
+        
+        let forwardButton = UIButton(type: .system)
+        forwardButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+        forwardView.addSubview(forwardButton)
+        forwardButton.activateConstraints([
+            forwardButton.leadingAnchor.constraint(equalTo: forwardView.leadingAnchor),
+            forwardButton.trailingAnchor.constraint(equalTo: forwardView.trailingAnchor),
+            forwardButton.topAnchor.constraint(equalTo: forwardView.topAnchor),
+            forwardButton.bottomAnchor.constraint(equalTo: forwardView.bottomAnchor)
+        ])
+        forwardButton.tag = 1
+        forwardButton.addTarget(self, action: #selector(self.onDeepDiveMenuButtonTap(_:)), for: .touchUpInside)
+        
+        self.view.bringSubviewToFront(rectView)
+        self.updateDeepDiveMenu(index: 0)
+    }
+    
+    @objc func onDeepDiveMenuButtonTap(_ sender: UIButton?) {
+        let i = self.deepDiveSectionIndex + sender!.tag
+        //print(i)
+        
+        if let _selector = self.view.viewWithTag(367) as? SectionSelector {
+            _selector.selectSection(index: i)
+        }
+        self.updateDeepDiveMenu(index: i, scrollSelector: true)
+    }
+        
+    func updateDeepDiveMenu(index i: Int, scrollSelector: Bool = false) {
+        if(scrollSelector) {
+            if let _selector = self.view.viewWithTag(367) as? SectionSelector {
+                _selector.scrollToItem(index: i)
+            }
+        }
+    
+        if let _backView = self.view.viewWithTag(973), let _deepDive = self.deepDive {
+            if(i==0) {
+                _backView.hide()
+            } else {
+                for V in _backView.subviews {
+                    if let _label = V as? UILabel {
+                        if(i==1) {
+                            _label.text = "Overview"
+                        } else {
+                            _label.text = _deepDive.sections[i-2].title
+                        }
+                    }
+                }
+            
+                _backView.show()
+            }
+        }
+        if let _forwardView = self.view.viewWithTag(974), let _deepDive = self.deepDive {
+            if(i==_deepDive.sections.count) {
+                _forwardView.hide()
+            } else {
+                for V in _forwardView.subviews {
+                    if let _label = V as? UILabel {
+                        _label.text = _deepDive.sections[i].title
+                    }
+                }
+            
+                _forwardView.show()
+            }
+        }
+        
+        self.showDeepDiveContent(forIndex: i)
     }
 }
 

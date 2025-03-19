@@ -39,7 +39,7 @@ struct MainFeedStory {
     var audio: AudioFile?
     var video: String = ""
     
-    var mediaList: [String] = []
+    var mediaList: [String: String] = [:]
     var tags: [Tag] = []
     
     
@@ -53,20 +53,14 @@ struct MainFeedStory {
         }
         //let mainNode = json["storyData"] as! [String: Any]
         
-        if let _media = mainNode["media"] as? [String: String], let _mediaList = _media["mediaList"] {
-            let mediaListItems = _mediaList.components(separatedBy: ",")
-            
-            for _M in mediaListItems {
-                var found = false
-                for M in self.mediaList {
-                    if(M == _M) {
-                        found = true
-                        break
-                    }
-                }
+        if let _media = mainNode["media"] as? [String: Any] {
+            if let _mediaList = _media["mediaList"] as? String, let _mediaIcons = _media["mediaIcons"] as? [String] {
+
+                let mediaListItems = _mediaList.components(separatedBy: ",")
+                print(mediaListItems.count)
                 
-                if(!found) {
-                    self.mediaList.append(_M)
+                for (i, _M) in mediaListItems.enumerated() {
+                    self.mediaList[_M] = _mediaIcons[i]
                 }
             }
         }
@@ -188,6 +182,7 @@ struct MainFeedStory {
             self.controversies.append(newClaim)
         }
     
+
     }
         
 

@@ -14,8 +14,8 @@
             filePath = "ImproveTheNews/viewControllers/Story/StoryViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1735"
-            endingLineNumber = "1735"
+            startingLineNumber = "1738"
+            endingLineNumber = "1738"
             landmarkName = "addSpins_iPhone(_:innerHStack:margins:)"
             landmarkType = "7">
          </BreakpointContent>

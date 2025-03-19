@@ -264,6 +264,10 @@ class StoryPillView: UIView {
         self.refreshDisplayMode()
     }
     
+    func getWidth() -> CGFloat {
+        return self.widthConstraint?.constant ?? 0
+    }
+    
     func refreshDisplayMode() {
         self.backgroundColor = CSS.shared.orange
         self.label.textColor = .white
@@ -281,6 +285,13 @@ class StoryPillView: UIView {
         self.label.textColor = .white
         self.backgroundColor = CSS.shared.orange
         self.widthConstraint?.constant = 59
+    }
+    
+    func setAsDeepDive() {
+        self.label.text = "DEEP DIVE"
+        self.label.textColor = UIColor(hex: 0x19191C)
+        self.backgroundColor = UIColor(hex: 0xEFD80D)
+        self.widthConstraint?.constant = 74
     }
     
 }

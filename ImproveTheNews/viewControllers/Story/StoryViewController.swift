@@ -61,11 +61,12 @@ class StoryViewController: BaseViewController {
     var collapsableSources: [CollapsableSources] = []
     
     var deepDiveContent_VStack = UIStackView()
-    var mediaList = [String]()
+    var mediaList = [String: String]()
     var cSourcesView: CollapsableSources? = nil
     var deepDiveImageLinks: [String] = []
     var tags: [Tag] = []
     
+    var deepDiveSectionIndex: Int = 0
     
     deinit {
         self.audioPlayer.close()
@@ -364,8 +365,10 @@ extension StoryViewController {
             }
         } else {
             self.addDeepDiveContentStructure()
+            self.addDeepDiveBottomMenu()
             self.showDeepDiveContent(forIndex: 0)
         }
+
 
         if(self.deepDive == nil) {
             self.addSpins(story.spins)
@@ -2997,9 +3000,13 @@ extension StoryViewController {
         let HStack = HSTACK(into: self.VStack)
         //HStack.backgroundColor = .orange.withAlphaComponent(0.25)
         
-        ADD_SPACER(to: HStack, width: 16)
-//        HStack.addArrangedSubview(vLine)
-//        ADD_SPACER(to: HStack, width: 13)
+        if(IPHONE()) {
+            ADD_SPACER(to: HStack, width: 13)
+            HStack.addArrangedSubview(vLine)
+            ADD_SPACER(to: HStack, width: 13)
+        } else {
+            ADD_SPACER(to: HStack, width: 16)
+        }
         
         let infoLabel = UILabel()
         infoLabel.font = ROBOTO_resize(14)
@@ -3014,7 +3021,8 @@ extension StoryViewController {
         textToShow += "Image copyright: " + title
         
         self.setLabelAsImageCredit(infoLabel, text: textToShow, boldText: title)
-        infoLabel.textAlignment = .right
+        infoLabel.setLineSpacing(lineSpacing: 7.0)
+        infoLabel.textAlignment = IPHONE() ? .left : .right
         
         let VStackLabels = VSTACK(into: HStack)
         VStackLabels.addArrangedSubview(infoLabel)
@@ -3022,15 +3030,15 @@ extension StoryViewController {
         var timeText = ""
         if(self.deepDive == nil) { timeText = "Story" }
         else { timeText = "DeepDive" }
-        timeText += " last updated " + time
+        timeText += " last updated " + self.timeForImageCredit(with: time)
         
         let timeLabel = UILabel()
         timeLabel.font = ROBOTO_ITALIC(14)
         timeLabel.textColor = CSS.shared.displayMode().sec_textColor
         timeLabel.text = timeText
-        timeLabel.textAlignment = .right
+        timeLabel.textAlignment = infoLabel.textAlignment
                 
-        ADD_SPACER(to: VStackLabels, height: 4)
+        ADD_SPACER(to: VStackLabels, height: 6)
         VStackLabels.addArrangedSubview(timeLabel)
         
         ///
@@ -3047,9 +3055,13 @@ extension StoryViewController {
         
         self.imageCreditUrl = url
         
-        ADD_SPACER(to: HStack, width: 13)
-        HStack.addArrangedSubview(vLine)
-        ADD_SPACER(to: HStack, width: 16)
+        if(IPHONE()) {
+            ADD_SPACER(to: HStack, width: 16)
+        } else {
+            ADD_SPACER(to: HStack, width: 13)
+            HStack.addArrangedSubview(vLine)
+            ADD_SPACER(to: HStack, width: 16)
+        }
         ///
         
         ADD_SPACER(to: self.VStack, height: 16)
@@ -3215,8 +3227,22 @@ extension StoryViewController {
         rowView.backgroundColor = self.view.backgroundColor //.green.withAlphaComponent(0.25)
         self.VStack.addArrangedSubview(rowView)
         
-        var val_x: CGFloat = 16
-        var limit = 3
+        let pill = StoryPillView()
+        pill.buildInto(rowView)
+        pill.activateConstraints([
+            pill.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: 16),
+            pill.centerYAnchor.constraint(equalTo: rowView.centerYAnchor)
+        ])
+        
+        pill.setAsStory()
+        if(self.deepDive != nil) {
+            pill.setAsDeepDive()
+        } else if(self.story!.summaryText.lowercased() == "context") {
+            pill.setAsContext()
+        }
+        
+        var val_x: CGFloat = pill.getWidth() + 16+8
+        let limit = 3
         
         if(figures.count>0) {
             var count = 0
@@ -3291,7 +3317,7 @@ extension StoryViewController {
         let timeLabel = UILabel()
         timeLabel.textColor = CSS.shared.displayMode().sec_textColor
         timeLabel.font = AILERON(12)
-        timeLabel.text = FIX_TIME(time).uppercased()
+        timeLabel.text = self.timeForImageCredit(with: self.loadedStory.created)
         rowView.addSubview(timeLabel)
         timeLabel.activateConstraints([
             timeLabel.centerYAnchor.constraint(equalTo: rowView.centerYAnchor),

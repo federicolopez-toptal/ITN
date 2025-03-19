@@ -155,7 +155,7 @@ func FIX_TIME(_ time: String) -> String {
         }
         
         if(num==1) {
-            result = result.replacingOccurrences(of: "seconds", with: "seconds")
+            result = result.replacingOccurrences(of: "seconds", with: "second")
             result = result.replacingOccurrences(of: "minutes", with: "minute")
             result = result.replacingOccurrences(of: "hours", with: "hour")
             result = result.replacingOccurrences(of: "days", with: "day")

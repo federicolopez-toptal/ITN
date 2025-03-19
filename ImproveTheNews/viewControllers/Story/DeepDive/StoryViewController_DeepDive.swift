@@ -47,6 +47,7 @@ extension StoryViewController {
         ])
                 
         let selector = SectionSelector()
+        selector.tag = 367
         selector.buildInto(centeredContainerView)
         selector.delegate = self
         selector.setSections(self.deepDive!.sectionNames())
@@ -84,6 +85,7 @@ extension StoryViewController: SectionSelectorViewDelegate {
     
     func onSectionSelected(_ index: Int) {
         self.showDeepDiveContent(forIndex: index)
+        self.updateDeepDiveMenu(index: index)
     }
     
 }
@@ -91,6 +93,7 @@ extension StoryViewController: SectionSelectorViewDelegate {
 extension StoryViewController: UITextViewDelegate {
 
     func showDeepDiveContent(forIndex index: Int) {
+        self.deepDiveSectionIndex = index
         REMOVE_ALL_SUBVIEWS(from: self.deepDiveContent_VStack)
         
         let sep: CGFloat = 16
@@ -100,7 +103,7 @@ extension StoryViewController: UITextViewDelegate {
             if(index > 0) {
                 self.addDeepDiveSection(index: index, width: self.deepDiveWidth(), into: self.deepDiveContent_VStack)
                 self.showDeepDiveSources(into: self.deepDiveContent_VStack, index: index)
-                self.showDeepDiveStories(into: self.deepDiveContent_VStack, width: side, index: index)
+                self.showDeepDiveStories_2COLS(into: self.deepDiveContent_VStack, width: side, index: index)
             } else {
                 self.showDeepDiveFacts(into: self.deepDiveContent_VStack)
                 self.showDeepDiveFactsSources(into: self.deepDiveContent_VStack, width: self.deepDiveWidth())
@@ -154,7 +157,7 @@ extension StoryViewController: UITextViewDelegate {
             if(contentItem.type == "HTML") { // Text
                 ADD_SPACER(to: vstack, height: 8)
                 //let attributedContent = self.attributedContent(withText: section.content.1)
-            print(contentItem.content) //HTML
+                //print(contentItem.content) //HTML
                 
                 let attributedContent = self.attributedContent(withText: contentItem.content,
                     bold: (i==0) ? true : false)
@@ -162,6 +165,7 @@ extension StoryViewController: UITextViewDelegate {
                 let tmpContentLabel = UILabel()
                 tmpContentLabel.numberOfLines = 0
                 tmpContentLabel.attributedText = attributedContent
+            tmpContentLabel.setLineSpacing(lineSpacing: 7.0)
                 //tmpContentLabel.textAlignment = .justified
 
                 let contentTextView = UITextView()
@@ -172,6 +176,7 @@ extension StoryViewController: UITextViewDelegate {
                 //contentTextView.isSelectable = false
                 contentTextView.backgroundColor = CSS.shared.displayMode().main_bgColor
                 contentTextView.attributedText = attributedContent
+            contentTextView.setLineSpacing(lineSpacing: 7.0)
                 //contentTextView.font = UIFont.systemFont(ofSize: 16)
                 contentTextView.tintColor = CSS.shared.displayMode().main_textColor
                 //contentTextView.textAlignment = .justified
@@ -222,6 +227,7 @@ extension StoryViewController: UITextViewDelegate {
                     let text = _contentItem_IMG.content + ", Image copyright: " + _contentItem_IMG.linkText
                     let descrLabel = UILabel()
                     self.setLabelAsImageCredit(descrLabel, text: text, boldText: _contentItem_IMG.linkText)
+                    descrLabel.setLineSpacing(lineSpacing: 7.0)
                     hstackDescr.addArrangedSubview(descrLabel)
 
                     let descrButton = UIButton(type: .system)
@@ -263,6 +269,7 @@ extension StoryViewController: UITextViewDelegate {
             infoContentLabel.font = AILERON_resize(14)
             infoContentLabel.numberOfLines = 0
             infoContentLabel.text = section.additionalInfo.1
+            infoContentLabel.setLineSpacing(lineSpacing: 7.0)
             infoContentLabel.textColor = CSS.shared.displayMode().sec_textColor
             infoViewVStack.addArrangedSubview(infoContentLabel)
             
@@ -349,11 +356,16 @@ extension StoryViewController { // Deep Dive Utils
         var _text = text.replacingOccurrences(of: "<p></p>", with: "")
         _text = _text.replacingOccurrences(of: "’", with: "'")
         
-        let _p_regular_style = " style=\"font-family:Aileron; font-size:13px;\""
-        let _p_title_style = " style=\"font-family:Aileron; font-size:15px;\""
+        let _p_regular_style = " style=\"font-family:Aileron; font-size:14px;\""
+        let _p_title_style = " style=\"font-family:Aileron; font-size:16px;\""
         _text = _text.replacingOccurrences(of: "<p>", with: "<p" + _p_regular_style + ">")
-        _text = _text.replacingOccurrences(of: "<h3>", with: "<h3" + _p_title_style + "><strong>")
-        _text = _text.replacingOccurrences(of: "</h3>", with: "</strong></h3>")
+        _text = _text.replacingOccurrences(of: "<h3>", with: "<br><h3" + _p_title_style + "><strong>")
+        _text = _text.replacingOccurrences(of: "</h3>", with: "</strong></h3><br>")
+
+        //%2D
+        if(!_text.contains("<li>")) {
+            _text = _text.replacingOccurrences(of: ".</p>", with: ".</p><br>")
+        }
         
         let data = _text.data(using: .utf8)!
         if let attributedText = try? NSMutableAttributedString(data: data,
@@ -364,12 +376,10 @@ extension StoryViewController { // Deep Dive Utils
             
             attributedText.addAttribute(.foregroundColor, value: CSS.shared.displayMode().sec_textColor, range: all)
             attributedText.addAttribute(.backgroundColor, value: CSS.shared.displayMode().main_bgColor, range: all)
-
-
-
+            
+            attributedText.mutableString.replaceOccurrences(of: "â€“", with: "-", range: all)
 
 //            attributedText.addAttribute(.backgroundColor, value: UIColor.red, range: all)
-            
 //            attributedText.addAttribute(.font, value: AILERON(14), range: all)
             
 //            if(!bold) {

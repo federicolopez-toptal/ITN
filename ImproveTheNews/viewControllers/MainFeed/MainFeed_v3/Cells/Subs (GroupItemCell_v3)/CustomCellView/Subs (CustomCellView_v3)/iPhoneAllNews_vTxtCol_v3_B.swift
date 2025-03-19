@@ -17,7 +17,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
     var storyComponents = [UIView]()
         let storyTitleLabel = UILabel()
         let storyPill = StoryPillBigView()
-        let storySources = SourceIconsView(size: 32, border: 3, separation: 22)
+        var storySources = SourceIconsView(size: 32, border: 3, separation: 22)
         let storyTimeLabel = UILabel()
 
     var articleComponents = [UIView]()
@@ -40,11 +40,17 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(width: CGFloat, fontSize: CGFloat = 24, useMaxNumLines: Bool = true) {
+    init(width: CGFloat, fontSize: CGFloat = 24, useMaxNumLines: Bool = true, sourceIconsSize: CGFloat? = nil) {
         super.init(frame: .zero)
         self.WIDTH = width
         self.fontSize = fontSize
         self.useMaxNumLines = useMaxNumLines
+        
+        if let _sourceIconsSize = sourceIconsSize {
+            if(_sourceIconsSize == 28) {
+                self.storySources = SourceIconsView(size: 28, border: 2, separation: 18)
+            }
+        }
         
         self.buildContent()
     }
@@ -80,6 +86,10 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         self.storySources.refreshDisplayMode()
         
         self.storyTimeLabel.font = AILERON(16)
+        if(self.storySources.size() == 32) {
+            self.storyTimeLabel.font = AILERON(13)
+        }
+        
         self.storyTimeLabel.numberOfLines = 0
         self.storyTimeLabel.textAlignment = .left
         self.addSubview(self.storyTimeLabel)
@@ -164,7 +174,7 @@ class iPhoneAllNews_vTxtCol_v3_B: CustomCellView_v3 {
         
         self.openIcon.hide()
         if(article.isStory) {
-            self.storyTitleLabel.text = article.title + "lalala"
+            self.storyTitleLabel.text = article.title
             
             if(self.self.useMaxNumLines) {
                 let numLines = self.storyTitleLabel.calculateHeightFor(width: self.WIDTH) / self.storyTitleLabel.font.lineHeight

@@ -168,6 +168,38 @@ class SectionSelector: UIView {
             size: CGSize(width: 10, height: 10)),
             animated: true)
     }
+    
+    func scrollToItem(index: Int) {
+        let HStack = self.contentView.subviews.first as! UIStackView
+        var targetView: UIView? = nil
+
+        var i = -1
+        for V in HStack.arrangedSubviews {
+            if(V.subviews.count>0) {
+                i += 1
+                if(i==index) {
+                    targetView = V
+                    break
+                }
+            }
+        }
+
+        if let _targetView = targetView {
+            let val_X: CGFloat = _targetView.frame.origin.x
+            self.scrollView.setContentOffset(CGPoint(x: val_X, y: 0), animated: true)
+        }
+
+//        var i = index - 1
+//        if(i<0){ i=0 }
+//        if(i>=HStack.arrangedSubviews.count){ i=HStack.arrangedSubviews.count-1 }
+        
+//        let targetView = HStack.arrangedSubviews[index]
+//        print(targetView.subviews)
+    
+        
+    }
+    
+    
 
 }
 
