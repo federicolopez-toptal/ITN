@@ -19,6 +19,7 @@ enum NewAdType: String {
     case newsLetter = "newsletter"
     case podcast = "podcast"
     case whatsApp = "whatsApp"
+    case deepDiveTrump = "deepDiveTrump"
 }
 
 class DP3_newAd: DP3_item {
@@ -32,13 +33,16 @@ class DP3_newAd: DP3_item {
 // --------------------------
 class newAds {
     
-    // Append ads, for testing purposes
     static func appendAds(to dataProvider: inout [DP3_item], topic: String) {
-        
 
-        var currentAd = 0
-        let ads: [NewAdType] = [.newsLetter, .podcast, .whatsApp]
+        var ads: [NewAdType] = [.deepDiveTrump, .newsLetter, .podcast, .whatsApp]
+        if(topic != "news") {
+            ads = [.newsLetter]
+        }
+        
         //let ads: [NewAdType] = [.podcast, .usElection, .newsLetter, .whatsApp]
+        
+        var currentAd = 0
         for (i, DP) in dataProvider.enumerated() {
             if(DP is DP3_more && currentAd != -1) {
                 let adType = ads[currentAd]
@@ -55,9 +59,9 @@ class newAds {
                     }
                 }
 
-                if(topic != "news") {
-                    break
-                }
+//                if(topic != "news") {
+//                    break
+//                }
 
                 currentAd += 1
                 if(currentAd == ads.count) {
@@ -80,6 +84,7 @@ class newAdCell_v3: UITableViewCell {
     static let orange = UIColor(hex: 0xDA4933)
     static let green = UIColor(hex: 0x71D656)
     static let cyan = UIColor(hex: 0x60C4D6)
+    static let yellow = UIColor(hex: 0xEFD80D)
     
     static var adTypeClosed: NewAdType = .undefined
     
@@ -205,6 +210,11 @@ class newAdCell_v3: UITableViewCell {
                 
             case .podcast:
                 let vc = PodcastViewController()
+                CustomNavController.shared.pushViewController(vc, animated: true)
+                
+            case .deepDiveTrump:
+                let vc = StoryViewController()
+                vc.story = MainFeedArticle(url: "https://verity.news/story/2025/attempted-trump-assassination-july-")
                 CustomNavController.shared.pushViewController(vc, animated: true)
                 
             default:
@@ -430,7 +440,46 @@ class newAdCell_v3: UITableViewCell {
                     subTitleLabel.numberOfLines = 0
                 }
             }
-        
+// DeepDive Trump
+        } else if(self.currentType == .deepDiveTrump) {
+            var titleText = "Deep Dive into the Trump\nAssassination Attemp"
+            //if(IPHONE()){ titleText = "Join the Verity Community\non WhatsApp!" }
+            let titleLabel = self.titleLabel(text: titleText)
+            let actionButton = self.actionButton(text: "Deep Dive!", bgColor: newAdCell_v3.yellow)
+            
+            self.mainContentView.addSubview(actionButton)
+            self.mainContentView.addSubview(titleLabel)
+            
+            if(IPHONE()) {
+                titleLabel.activateConstraints([
+                    titleLabel.leadingAnchor.constraint(equalTo: self.mainContentView.leadingAnchor, constant: 21),
+                    titleLabel.topAnchor.constraint(equalTo: self.mainContentView.topAnchor, constant: 19)
+                ])
+                
+                actionButton.activateConstraints([
+                    actionButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+                    actionButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+                    actionButton.widthAnchor.constraint(equalToConstant: 110)
+                ])
+            } else {
+                titleLabel.activateConstraints([
+                    titleLabel.leadingAnchor.constraint(equalTo: self.mainContentView.leadingAnchor, constant: 32),
+                    titleLabel.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor)
+                ])
+            
+                actionButton.activateConstraints([
+                    actionButton.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -305),
+                    actionButton.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor),
+                    actionButton.widthAnchor.constraint(equalToConstant: 152)
+                ])
+            
+//                if(!SMALL_IPAD()) {
+//                    logo.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -350).isActive = true
+//                } else {
+//                    logo.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -300).isActive = true
+//                }
+            }
+// Podcast
         }
         
     }

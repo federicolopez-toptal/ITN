@@ -47,7 +47,7 @@ class ControversiesData {
     func loadListForSearch(term: String, callback: @escaping (Error?, [ControversyListItem]?, Int?) -> ()) {
         var T = term
         if(T.isEmpty){ T = "d" }
-        var url = ITN_URL() + "/claims-api/claim/search/\(T)?page=1&per_page=200"
+        var url = ITN_URL() + "/claims-api/claim/search/\(T)?page=1&per_page=24&cagtegory="
         
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
