@@ -2730,6 +2730,7 @@ extension StoryViewController {
     }
     
     private func populateFacts() {
+        self.collapsableSources = []
         let VStack = self.view.viewWithTag(140) as! UIStackView
         
         //VStack.backgroundColor = .systemPink
@@ -2807,7 +2808,7 @@ extension StoryViewController {
                 vLineBelow.activateConstraints([
                     vLineBelow.leadingAnchor.constraint(equalTo: HStack.leadingAnchor, constant: 11),
                     vLineBelow.topAnchor.constraint(equalTo: HStack.topAnchor, constant: 24),
-                    vLineBelow.bottomAnchor.constraint(equalTo: HStack.bottomAnchor, constant: extraH),
+                    vLineBelow.bottomAnchor.constraint(equalTo: HStack.bottomAnchor, constant: extraH+16+31),
                     vLineBelow.widthAnchor.constraint(equalToConstant: 2.0)
                 ])
 
@@ -2834,8 +2835,20 @@ extension StoryViewController {
                 numberButton.tag = 77 + F.sourceIndex
                 numberButton.addTarget(self, action: #selector(numberButtonOnTap(_:)), for: .touchUpInside)
                 
-                ADD_SPACER(to: VStack, height: (CSS.shared.iPhoneSide_padding * 3)) // separation from next item
+            // Fact multiple sources ---
+                ADD_SPACER(to: VStack, height: 16)
+                let hStackSources = HSTACK(into: VStack)
+                hStackSources.heightAnchor.constraint(equalToConstant: 31).isActive = true
+                ADD_SPACER(to: hStackSources, width: 35)
+                let hStackSources2 = HSTACK(into: hStackSources)
+                hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
+                hStackSources2.heightAnchor.constraint(equalToConstant: 31).isActive = true
                 
+                let cSources = CollapsableSources(buildInto: hStackSources2, sources: F.sources)
+                self.collapsableSources.append(cSources)
+            // Fact multiple sources ---
+
+                ADD_SPACER(to: VStack, height: (CSS.shared.iPhoneSide_padding * 3)) // separation from next item
                 if(self.show3 && i==2) {
                     self.lastSourceIndex =  F.sourceIndex
                     break

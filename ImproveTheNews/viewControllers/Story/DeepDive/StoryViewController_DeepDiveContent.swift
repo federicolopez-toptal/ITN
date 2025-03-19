@@ -63,7 +63,7 @@ extension StoryViewController {
             vLineBelow.activateConstraints([
                 vLineBelow.leadingAnchor.constraint(equalTo: HStack.leadingAnchor, constant: 11),
                 vLineBelow.topAnchor.constraint(equalTo: HStack.topAnchor, constant: 24),
-                vLineBelow.bottomAnchor.constraint(equalTo: HStack.bottomAnchor, constant: extraH),
+                vLineBelow.bottomAnchor.constraint(equalTo: HStack.bottomAnchor, constant: extraH+16+31),
                 vLineBelow.widthAnchor.constraint(equalToConstant: 2.0)
             ])
 
@@ -85,6 +85,19 @@ extension StoryViewController {
             ])
             numberButton.tag = 77 + F.sourceIndex
             numberButton.addTarget(self, action: #selector(numberButtonOnTap(_:)), for: .touchUpInside)
+            
+            // Fact multiple sources ---
+                ADD_SPACER(to: vstack, height: 16)
+                let hStackSources = HSTACK(into: vstack)
+                hStackSources.heightAnchor.constraint(equalToConstant: 31).isActive = true
+                ADD_SPACER(to: hStackSources, width: 35)
+                let hStackSources2 = HSTACK(into: hStackSources)
+                hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
+                hStackSources2.heightAnchor.constraint(equalToConstant: 31).isActive = true
+                
+                let cSources = CollapsableSources(buildInto: hStackSources2, sources: F.sources)
+                self.collapsableSources.append(cSources)
+            // Fact multiple sources ---
             
             ADD_SPACER(to: vstack, height: 24) // separation from next item
             
