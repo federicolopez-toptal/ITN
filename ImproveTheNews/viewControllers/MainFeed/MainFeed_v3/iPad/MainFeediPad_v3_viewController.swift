@@ -213,6 +213,7 @@ extension MainFeediPad_v3_viewController {
                             self.loadGoDeeper()
                         }
                         
+                        TopicsHelper.shared.loadTopics()
                     }
                 }
             }

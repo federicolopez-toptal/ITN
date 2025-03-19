@@ -222,6 +222,7 @@ extension MainFeed_v3_viewController {
                             self.loadGoDeeper()
                         }
                         
+                        TopicsHelper.shared.loadTopics()
                     }
                 }
             }
