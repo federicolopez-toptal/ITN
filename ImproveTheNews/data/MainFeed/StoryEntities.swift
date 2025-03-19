@@ -76,12 +76,20 @@ struct Spin {
     var media_label: String = ""
     var media_country_code: String = ""
 
+    var multipleSources: [SourceForGraph] = []
+
     init(_ json: [String: Any]) {
         self.title = getSTRING(json["title"])
         self.description = getSTRING(json["description"])
         self.timeStamp = getSTRING(json["timestamp"])
                 
         if let _spinsArray = json["spins"] as? [[String: Any]] {
+            self.multipleSources = []
+            for spinNode in _spinsArray {
+                let newSP = SourceForGraph(json: spinNode)
+                self.multipleSources.append(newSP)
+            }
+            
             if(_spinsArray.count>0) {
                 let first = _spinsArray[0]
                 
@@ -157,6 +165,10 @@ struct SourceForGraph {
         if let _media = json["media"] as? [String: Any] {
             self.id = CHECK(_media["label"])
             self.name = CHECK(_media["name"])
+            
+            if(self.name.isEmpty) {
+                self.name = CHECK(_media["title"])
+            }
         }
         
         self.LR = CHECK_NUM(json["LR"])

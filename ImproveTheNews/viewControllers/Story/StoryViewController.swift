@@ -1579,65 +1579,21 @@ extension StoryViewController {
             descriptionLabel.textColor = CSS.shared.displayMode().main_textColor
             colVStack.addArrangedSubview(descriptionLabel)
             
-            ADD_SPACER(to: colVStack, height: CSS.shared.iPhoneSide_padding)
-
-            let spinDataView = UIView()
-            spinDataView.backgroundColor = .clear
-            colVStack.addArrangedSubview(spinDataView)
-            spinDataView.activateConstraints([
-                spinDataView.heightAnchor.constraint(equalToConstant: 32)
-            ])
-
-        // Source (icon)
-            let spinSource = SourceIconsView(size: 30, border: 2, separation: 15)
-            spinSource.buildInto(spinDataView)
-            spinSource.activateConstraints([
-                spinSource.topAnchor.constraint(equalTo: spinDataView.topAnchor),
-                spinSource.leadingAnchor.constraint(equalTo: spinDataView.leadingAnchor, constant: 16)
-            ])
-            
-            var sourcesArray = [String]()
-            if let _identifier = Sources.shared.search(name: S.media_title) {
-                sourcesArray.append(_identifier)
-            }
-            spinSource.load(sourcesArray)
-            
-        // Source (name)
-            let spinName = UILabel()
-            spinName.font = CSS.shared.iPhoneArticle_bigTextFont
-            spinName.numberOfLines = 0
-            spinName.textColor = CSS.shared.displayMode().main_textColor
-            spinName.textAlignment = .left
-            spinDataView.addSubview(spinName)
-            spinName.activateConstraints([
-                spinName.leadingAnchor.constraint(equalTo: spinSource.trailingAnchor, constant: 10),
-                spinName.centerYAnchor.constraint(equalTo: spinSource.centerYAnchor)
-            ])
-            let sourceName = CLEAN_SOURCE(from: S.media_title).uppercased()
-            spinName.text = sourceName
-            
-        let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
-            
-            spinDataView.addSubview(openIcon)
-            openIcon.activateConstraints([
-                openIcon.widthAnchor.constraint(equalToConstant: 12),
-                openIcon.heightAnchor.constraint(equalToConstant: 12),
-                openIcon.centerYAnchor.constraint(equalTo: spinName.centerYAnchor),
-                openIcon.leadingAnchor.constraint(equalTo: spinName.trailingAnchor, constant: 6)
-            ])
-            openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
-            
-        let buttonArea = UIButton(type: .custom)
-        buttonArea.tag = 222 + i
-        buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-        spinDataView.addSubview(buttonArea)
-        buttonArea.activateConstraints([
-            buttonArea.leadingAnchor.constraint(equalTo: spinSource.leadingAnchor, constant: -5),
-            buttonArea.trailingAnchor.constraint(equalTo: openIcon.trailingAnchor, constant: 16),
-            buttonArea.topAnchor.constraint(equalTo: spinSource.topAnchor),
-            buttonArea.bottomAnchor.constraint(equalTo: spinSource.bottomAnchor)
-        ])
-        buttonArea.addTarget(self, action: #selector(self.spinButtonAreaOnTap(_:)), for: .touchUpInside)
+            //  multiple sources ---
+                ADD_SPACER(to: colVStack, height: 16)
+                let hStackSources = HSTACK(into: colVStack)
+                hStackSources.heightAnchor.constraint(equalToConstant: 31).isActive = true
+                ADD_SPACER(to: colVStack, width: 16)
+                
+                let hStackSources2 = HSTACK(into: hStackSources)
+                hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
+                hStackSources2.heightAnchor.constraint(equalToConstant: 31).isActive = true
+                hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
+                ADD_SPACER(to: hStackSources, width: 16)
+                
+                let cSources = CollapsableSources(buildInto: hStackSources2, sources: S.multipleSources)
+                self.collapsableSources.append(cSources)
+            // Fact multiple sources ---
 
                 let bgColorView = RectangularDashedView()
                 bgColorView.backgroundColor = CSS.shared.displayMode().main_bgColor
@@ -1652,7 +1608,7 @@ extension StoryViewController {
                     bgColorView.leadingAnchor.constraint(equalTo: colVStack.leadingAnchor, constant: -16),
                     bgColorView.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: 16),
                     bgColorView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -16),
-                    bgColorView.bottomAnchor.constraint(equalTo: spinDataView.bottomAnchor, constant: 16)
+                    bgColorView.bottomAnchor.constraint(equalTo: hStackSources.bottomAnchor, constant: 16)
                 ])
                 innerHStack.sendSubviewToBack(bgColorView)
 
@@ -1798,87 +1754,28 @@ extension StoryViewController {
                 ADD_SPACER(to: descrHStack, width: CSS.shared.iPhoneSide_padding + 10)
             }
             
-        ///
-//            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
-//            let ART_HStack = HSTACK(into: innerHStack)
-//            
-//            let W = SCREEN_SIZE().width //- (CSS.shared.iPhoneSide_padding * 2)
-//            let ART = iPhoneArticle_vImg_v3(width: W)
-//            ART.refreshDisplayMode()
-//            ART.populate(spin: S)
-//            ART_HStack.addArrangedSubview(ART)
-//            ART.activateConstraints([
-//                ART.heightAnchor.constraint(equalToConstant: ART.calculateHeight())
-//            ])
-//            
-//            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
-
-            ADD_SPACER(to: innerHStack, height: CSS.shared.iPhoneSide_padding)
-
-            let spinDataView = UIView()
-            spinDataView.backgroundColor = .clear
-            innerHStack.addArrangedSubview(spinDataView)
-            spinDataView.activateConstraints([
-                spinDataView.heightAnchor.constraint(equalToConstant: 32)
-            ])
-
-        // Source (icon)
-            let spinSource = SourceIconsView(size: 30, border: 2, separation: 15)
-            spinSource.buildInto(spinDataView)
-            spinSource.activateConstraints([
-                spinSource.topAnchor.constraint(equalTo: spinDataView.topAnchor),
-                spinSource.leadingAnchor.constraint(equalTo: spinDataView.leadingAnchor, constant: margins ? 16 : 0)
-            ])
-            
-            var sourcesArray = [String]()
-            if let _identifier = Sources.shared.search(id: S.media_label, name: S.media_title) {
-                sourcesArray.append(_identifier)
-                spinSource.load(sourcesArray)
-            } else {
-                if let _icon = Sources.shared.search(identifier: S.media_label), let _url = _icon.url {
-                    spinSource.loadSingle(url: _url)
-                } else {
-                    spinSource.load([])
+            //  multiple sources ---
+                ADD_SPACER(to: innerHStack, height: 16)
+                let hStackSources = HSTACK(into: innerHStack)
+                hStackSources.heightAnchor.constraint(equalToConstant: 31).isActive = true
+                
+                if(margins) {
+                    ADD_SPACER(to: hStackSources, width: 16)
                 }
-            }
-            
-        // Source (name)
-            let spinName = UILabel()
-            spinName.font = CSS.shared.iPhoneArticle_bigTextFont
-            spinName.numberOfLines = 0
-            spinName.textAlignment = .left
-            spinName.textColor = CSS.shared.displayMode().main_textColor
-            spinDataView.addSubview(spinName)
-            spinName.activateConstraints([
-                spinName.leadingAnchor.constraint(equalTo: spinSource.trailingAnchor, constant: 10),
-                spinName.centerYAnchor.constraint(equalTo: spinSource.centerYAnchor)
-            ])
-            let sourceName = CLEAN_SOURCE(from: S.media_title).uppercased()
-            spinName.text = sourceName
-            
-            let openIcon = UIImageView(image: UIImage(named: "openArticleIcon")?.withRenderingMode(.alwaysTemplate))
-            
-            spinDataView.addSubview(openIcon)
-            openIcon.activateConstraints([
-                openIcon.widthAnchor.constraint(equalToConstant: 12),
-                openIcon.heightAnchor.constraint(equalToConstant: 12),
-                openIcon.centerYAnchor.constraint(equalTo: spinName.centerYAnchor),
-                openIcon.leadingAnchor.constraint(equalTo: spinName.trailingAnchor, constant: 6)
-            ])
-            openIcon.tintColor = DARK_MODE() ? .white : UIColor(hex: 0x19191C)
-            
-            let buttonArea = UIButton(type: .custom)
-            buttonArea.tag = 222 + i
-            buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.25)
-            spinDataView.addSubview(buttonArea)
-            buttonArea.activateConstraints([
-                buttonArea.leadingAnchor.constraint(equalTo: spinSource.leadingAnchor, constant: -5),
-                buttonArea.trailingAnchor.constraint(equalTo: openIcon.trailingAnchor, constant: 16),
-                buttonArea.topAnchor.constraint(equalTo: spinSource.topAnchor),
-                buttonArea.bottomAnchor.constraint(equalTo: spinSource.bottomAnchor)
-            ])
-            buttonArea.addTarget(self, action: #selector(self.spinButtonAreaOnTap(_:)), for: .touchUpInside)
-              
+                
+                let hStackSources2 = HSTACK(into: hStackSources)
+                hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
+                hStackSources2.heightAnchor.constraint(equalToConstant: 31).isActive = true
+                hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
+                
+                if(margins) {
+                    ADD_SPACER(to: hStackSources, width: 16)
+                }
+                
+                let cSources = CollapsableSources(buildInto: hStackSources2, sources: S.multipleSources)
+                self.collapsableSources.append(cSources)
+            // Fact multiple sources ---
+
             if(i<spins.count-1) {
                 let line = UIView()
                 line.backgroundColor = .red
@@ -1887,7 +1784,7 @@ extension StoryViewController {
                     line.heightAnchor.constraint(equalToConstant: 2),
                     line.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                     line.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                    line.topAnchor.constraint(equalTo: spinDataView.bottomAnchor, constant: 16)
+                    line.topAnchor.constraint(equalTo: hStackSources.bottomAnchor, constant: 16)
                 ])
                 ADD_HDASHES(to: line)
             }
@@ -2878,27 +2775,10 @@ extension StoryViewController {
             showMoreButton.addTarget(self, action: #selector(showMoreButtonOnTap(_:)), for: .touchUpInside)
             //////////////////////////////////////
             ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding)
-//            let line = UIView()
-//            line.backgroundColor = DARK_MODE() ? UIColor(hex: 0x28282D) : UIColor(hex: 0xE2E3E3)
-//            VStack.addArrangedSubview(line)
-//            line.activateConstraints([
-//                line.heightAnchor.constraint(equalToConstant: 1)
-//            ])
-//            ADD_SPACER(to: VStack, height: 20)
-            //////////////////////////////////////
 
             ADD_SPACER(to: VStack, height: 15)
         }
-        
-        //ADD_SPACER(to: VStack, height: CSS.shared.iPhoneSide_padding * 2)
-        //print("--------------------")
-        
-//        let line2 = UIView()
-//        self.VStack.addArrangedSubview(line2)
-//        line2.activateConstraints([
-//            line2.heightAnchor.constraint(equalToConstant: 1),
-//        ])
-//        ADD_HDASHES(to: line2)
+
     }
     
     func populateSources() {
