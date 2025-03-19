@@ -709,5 +709,46 @@ extension MainFeedv5_iPhone {
 
         task.resume()
     }
+    
+    func loadDeepDiveForSearch(page: Int, callback: @escaping (Error?, [StorySearchResult]?) -> () ) {
+        let strUrl = ITN_URL() + "/php/stories/index.php?path=home-page-extra-content&page=" + String(page)
+        var request = URLRequest(url: URL(string: strUrl)!)
+        request.httpMethod = "GET"
+        
+        print("GO DEEPER from\n", request.url!.absoluteString)
+        let task = URL_SESSION().dataTask(with: request) { (data, resp, error) in
+            if(error as? URLError)?.code == .timedOut {
+                print("Reques TIME OUT!")
+                callback(error, nil)
+            }
+            
+            if let _error = error {
+                print(_error.localizedDescription)
+                callback(_error, nil)
+            } else {
+                if let _json = JSON(fromData: data) {
+                    if let _data = _json["data"] as? [[String: Any]] {
+                        var list: [StorySearchResult] = []
+                        for _item in _data {
+                            if let _storytype = _item["storytype"] as? String, _storytype == "deepDive" {
+                                let newObj = StorySearchResult(_item, strType: "DD")
+                                list.append(newObj)
+                            }
+                        }
+                        
+                        callback(nil, list)
+                    } else {
+                        let _error = CustomError.jsonParseError
+                        callback(_error, nil)
+                    }
+                } else {
+                    let _error = CustomError.jsonParseError
+                    callback(_error, nil)
+                }
+            }
+        }
+
+        task.resume()
+    }
 }
 

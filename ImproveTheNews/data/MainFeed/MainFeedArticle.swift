@@ -283,7 +283,11 @@ extension MainFeedArticle {
         self.time = A.timeago
         self.storySources = A.medianames.components(separatedBy: ",")
         self.storySources.removeDuplicates()
-        self.url = ITN_URL() + "/" + A.slug
+        
+        var _slug = A.slug
+        _slug = A.slug.replacingOccurrences(of: "https://www.verity.news", with: "")
+        self.url = ITN_URL() + "/" + _slug
+        
         self.updatedDate = A.date
         
         self.markups = [Markup]()

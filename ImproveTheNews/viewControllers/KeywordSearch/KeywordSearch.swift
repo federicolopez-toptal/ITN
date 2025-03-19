@@ -21,6 +21,8 @@ class KeywordSearch {
     var stories: [StorySearchResult] = []
     var contextStories: [StorySearchResult] = []
     var articles: [ArticleSearchResult] = []
+    var deepDiveStories: [StorySearchResult] = []
+    var loadingDeepDive = false
     
     var controversies: [ControversyListItem] = []
     var loadingControversies = false
@@ -39,14 +41,15 @@ class KeywordSearch {
         self.contextStories = []
         self.articles = []
         self.controversies = []
+        self.deepDiveStories = []
     }
     
     func cancelSearch() {
         self.task?.cancel()
     }
     
-    func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool, Int, Bool) -> () ) {
-        
+    func search(_ text: String, type: searchType = .all, pageNumber: Int = 1, callback: @escaping (Bool, Int, Bool, Bool) -> () ) {
+        // callback: success, total, isControversy, isDeepDive
         self.searchType = type
         self.lastSearch = text
         let offset = self.searchPageSize * (pageNumber-1)
@@ -57,6 +60,7 @@ class KeywordSearch {
             self.contextStories = []
             self.articles = []
             self.controversies = []
+            self.deepDiveStories = []
         }
         
 //        var _text = text
@@ -82,9 +86,27 @@ class KeywordSearch {
             if let _json = json, success {
             
                 var count = self.parseResult(_json)
-                callback(true, count, false)
+                callback(true, count, false, false)
                 
                 if(pageNumber == 1) {
+                    
+                // DEEP DIVE
+                    if(text.isEmpty) {
+                        self.loadingDeepDive = true
+                        DELAY(1.0) {
+                            MainFeedv5_iPhone().loadDeepDiveForSearch(page: 1) { (error, list) in
+                                if let _list = list {
+                                    self.deepDiveStories = _list
+                                }
+                                
+                                count += self.deepDiveStories.count
+                                self.loadingDeepDive = false
+                                callback(true, count, false, true)
+                            }
+                        }
+                    }
+                
+                // CONTROVERSIES
                     self.loadingControversies = true
                     DELAY(1.5) {
                         ControversiesData.shared.loadListForSearch(term: text.urlEncodedString()) { (_, list, total) in
@@ -93,9 +115,11 @@ class KeywordSearch {
                                 count += _total
                             }
                             self.loadingControversies = false
-                            callback(true, count, true)
+                            callback(true, count, true, false)
                         }
                     }
+                    
+                    
                 }
                 
 //                if(pageNumber==1) {
@@ -115,7 +139,7 @@ class KeywordSearch {
             
             } else {
                 print("ERROR", serverMsg)
-                callback(false, -1, false)
+                callback(false, -1, false, false)
             }
         }
     }
@@ -218,7 +242,7 @@ class KeywordSearch {
             }
             
             // CONTROVERSIES
-            
+            // DEEP DIVE
         }
         
         if(self.searchType == .stories) { // ONLY ADDING STORIES
@@ -410,6 +434,8 @@ struct StorySearchResult {
             self.medianames = _mediaNames.joined(separator: ",")
         } else if let _mediaNames = data["mediaList"] as? [String] {
             self.medianames = _mediaNames.joined(separator: ",")
+        } else if let _mediaNames = data["mediaList"] as? String {
+            self.medianames = _mediaNames
         }
         
         if let _type = data["storytype"] as? Int {

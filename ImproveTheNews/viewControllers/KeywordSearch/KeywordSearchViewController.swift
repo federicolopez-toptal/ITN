@@ -106,7 +106,8 @@ extension KeywordSearchViewController {
         self.searchTextfield.setPlaceHolder(text: "Search All")
         
         self.searchSelector.buildInto(self.view, yOffset: topValue+32+47+48+25)
-        self.searchSelector.setTopics(["All", "Topics", "Stories", "Context Stories", "Controversies", "Articles"])
+//        self.searchSelector.setTopics(["All", "Topics", "Stories", "Context Stories", "Controversies", "Articles"])
+        self.searchSelector.setTopics(["All", "Topics", "Stories", "Context Stories", "Deep Dive Stories", "Controversies", "Articles"])
         self.searchSelector.delegate = self
         
         self.listInit()
@@ -181,32 +182,15 @@ extension KeywordSearchViewController {
         self.showLoading()
 
         KeywordSearch.searchTerm = nil
-        
-//        if(self.textHasSpecialCharacters(text)) {
-//            DELAY(2.5) {
-//                KeywordSearch.shared.toZero()
-//                self.fillDataProvider()
-//                self.updateFilteredDataProvider()
-//                self.refreshList()
-//                
-//                MAIN_THREAD {
-//                    self.hideLoading()
-//                }
-//            }
-//            
-//            return
-//        }
-        
+    
         // -----------------------------------
-        KeywordSearch.shared.search(text, type: sType) { (success, _, isControversy) in
+        KeywordSearch.shared.search(text, type: sType) { (success, _, isControversy, isDeepDive) in
             self.searchCount += 1
             
             if(success) {
                 KeywordSearch.searchTerm = text
             
-                if(!isControversy) {
-                    self.fillDataProvider()
-                } else {
+                if(isControversy) {
                     var controv = false
                     for (i, DP) in self.dataProvider.enumerated() {
                         if let _header = DP as? DP3_headerItem {
@@ -221,16 +205,23 @@ extension KeywordSearchViewController {
                             break
                         }
                     }
-                    
-                    //let _ = self.addControversies()
-                    
-//                    if(self.thereAreControversiesToShow()) {
-//                        let i = self.removeAddMoreControversy()
-//                        let _ = self.addControversies(index: i)
-//                        
-//                        self.updateFilteredDataProvider()
-//                        self.refreshList()
-//                    }
+                } else if(isDeepDive) {
+                    var dd = false
+                    for (i, DP) in self.dataProvider.enumerated() {
+                        if let _header = DP as? DP3_headerItem {
+                            if(_header.title.lowercased() == "deep dive stories") {
+                                dd = true
+                            }
+                        }
+                        
+                        if(dd) {
+                            self.dataProvider.remove(at: i+2)
+                            let _ = self.addDeepDives(index: i+2)
+                            break
+                        }
+                    }
+                } else {
+                    self.fillDataProvider()
                 }
                 
                 self.updateFilteredDataProvider()
@@ -325,6 +316,7 @@ extension KeywordSearchViewController {
         self.addTopics()
         let _ = self.addStories(tapOnTab: true)
         let _ = self.addContextStories()
+        let _ = self.addDeepDives()
         let _ = self.addControversies()
         let _ = self.addArticles()
         
@@ -555,6 +547,55 @@ extension KeywordSearchViewController {
         }
         
         return result
+    }
+    
+    func addDeepDives(index: Int = -1) -> Int {
+        var count = 0
+        if(index == -1){ self.addHeaderWith(text: "DEEP DIVE STORIES") }
+        
+        if(KeywordSearch.shared.deepDiveStories.count == 0) {
+            let empty = DP3_text(text: "No Deep Dive stories found")
+            self.dataProvider.append(empty)
+            return 0
+        }
+        
+        let div = 2 //IPHONE() ? 1 : 2
+        for i in 1...(self.PAGE_SIZE/div) {
+            let group = DP3_groupItem()
+            group.MaxNumOfItems = 2 //IPHONE() ? 1 : 2
+            group.storyFlags = [true]
+            
+            for (i, ST) in KeywordSearch.shared.deepDiveStories.enumerated() {
+                if(ST.used == false) {
+                    //StorySearchResult
+                    var _ST = MainFeedArticle(story: ST)
+                    _ST.isContext = true // force context type
+                    
+                    group.articles.append(_ST)
+                    count += 1
+                    KeywordSearch.shared.deepDiveStories[i].used = true
+                    
+                    if(group.articles.count == group.MaxNumOfItems) {
+                        break
+                    }
+                }
+            }
+            
+            if(group.articles.count>0) {
+                if(index == -1) {
+                    self.dataProvider.append(group)
+                } else {
+                    self.dataProvider.insert(group, at: index+i-1)
+                }
+            }
+        }
+        
+        if(index == -1 && count==self.PAGE_SIZE) {
+            let moreItem = DP3_more(topic: "DD", completed: false)
+            self.dataProvider.append(moreItem)
+        }
+        
+        return count
     }
     
     func addControversies(index: Int = -1) -> Int {

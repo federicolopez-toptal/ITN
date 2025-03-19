@@ -219,6 +219,8 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             self.loadMoreControversies()
         } else if(sender.topic == "CX") {
             self.loadMoreContextStories()
+        } else if(sender.topic == "DD") {
+            //self.loadMoreContextStories()
         } else {
             self.loadMoreArticles()
         }
@@ -250,7 +252,7 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             self.showLoading()
             let T = self.searchTextfield.text()
             
-            KeywordSearch.shared.search(T, type: .contextStories, pageNumber: self.contextStoriesSearchPage+1) { (ok, _, isControversy) in
+            KeywordSearch.shared.search(T, type: .contextStories, pageNumber: self.contextStoriesSearchPage+1) { (ok, _, isControversy, isDeepDive) in
                 if(ok) {
                     self.contextStoriesSearchPage += 1
                     let i = self.removeAddMoreItem(isStory: true, topic: "CX")
@@ -286,7 +288,7 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             
             self.showLoading()
             let T = self.searchTextfield.text()
-            KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage+1) { (ok, _, isControversy) in
+            KeywordSearch.shared.search(T, type: .stories, pageNumber: self.storySearchPage+1) { (ok, _, isControversy, isDeepDive) in
                 if(ok) {
                     self.storySearchPage += 1
                     let i = self.removeAddMoreItem(isStory: true, topic: "ST")
@@ -322,7 +324,7 @@ extension KeywordSearchViewController: iPhoneMoreCell_v3_delegate {
             
             self.showLoading()
             let T = self.searchTextfield.text()
-            KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage+1) { (ok, _, isControversy) in
+            KeywordSearch.shared.search(T, type: .articles, pageNumber: self.articleSearchPage+1) { (ok, _, isControversy, isDeepDive) in
                 if(ok) {
                     self.articleSearchPage += 1
                     let i = self.removeAddMoreItem(isStory: false, topic: "AR")
