@@ -58,7 +58,9 @@ class StoryViewController: BaseViewController {
     var upButtonBottomConstraint: NSLayoutConstraint?
     
     var showSplitSource: Bool = false
-    var collapsableSources: [CollapsableSources] = []
+    var collapsableFactSources: [CollapsableSources] = []
+    var collapsableSpinSources: [CollapsableSources] = []
+    
     
     var deepDiveContent_VStack = UIStackView()
     var mediaList = [String: String]()
@@ -1477,6 +1479,8 @@ extension StoryViewController {
     }
     
     func addSpins_iPad(_ spins: [Spin], innerHStack: UIStackView) {
+        self.collapsableSpinSources = []
+        
         let M = CSS.shared.iPhoneSide_padding
 //        let W = ((SCREEN_SIZE_iPadSideTab().width) - (M * 3))/2
         let W = ((SCREEN_SIZE_iPadSideTab().width) - (M * 7))/2
@@ -1592,7 +1596,7 @@ extension StoryViewController {
                 ADD_SPACER(to: hStackSources, width: 16)
                 
                 let cSources = CollapsableSources(buildInto: hStackSources2, sources: S.multipleSources)
-                self.collapsableSources.append(cSources)
+                self.collapsableSpinSources.append(cSources)
             // Fact multiple sources ---
 
                 let bgColorView = RectangularDashedView()
@@ -1674,6 +1678,8 @@ extension StoryViewController {
     }
     
     func addSpins_iPhone(_ spins: [Spin], innerHStack: UIStackView, margins: Bool = true) {
+        self.collapsableSpinSources = []
+        
         for (i, S) in spins.enumerated() {
             // Metaculus ----------------------------------------
             if(self.metaculus(S)) {
@@ -1773,7 +1779,7 @@ extension StoryViewController {
                 }
                 
                 let cSources = CollapsableSources(buildInto: hStackSources2, sources: S.multipleSources)
-                self.collapsableSources.append(cSources)
+                self.collapsableSpinSources.append(cSources)
             // Fact multiple sources ---
 
             if(i<spins.count-1) {
@@ -2380,7 +2386,7 @@ extension StoryViewController {
     
     private func addMultipleSourceIcons(withSources sources: [SourceForGraph], into container: UIStackView, factIndex: Int) {
         let newSources = CollapsableSources(buildInto: container, sources: sources)
-        self.collapsableSources.append(newSources)
+        self.collapsableFactSources.append(newSources)
     }
     
     private func addSourceIcon(withSource S: SourceForGraph, into container: UIStackView, factIndex: Int) {
@@ -2472,7 +2478,7 @@ extension StoryViewController {
     
     
     private func populateFacts_new() {
-        self.collapsableSources = []
+        self.collapsableFactSources = []
         let VStack = self.view.viewWithTag(140) as! UIStackView
         
         //VStack.backgroundColor = .systemPink
@@ -2627,7 +2633,7 @@ extension StoryViewController {
     }
     
     private func populateFacts() {
-        self.collapsableSources = []
+        self.collapsableFactSources = []
         let VStack = self.view.viewWithTag(140) as! UIStackView
         
         //VStack.backgroundColor = .systemPink
@@ -2742,7 +2748,7 @@ extension StoryViewController {
                 hStackSources2.heightAnchor.constraint(equalToConstant: 31).isActive = true
                 
                 let cSources = CollapsableSources(buildInto: hStackSources2, sources: F.sources)
-                self.collapsableSources.append(cSources)
+                self.collapsableFactSources.append(cSources)
             // Fact multiple sources ---
 
                 ADD_SPACER(to: VStack, height: (CSS.shared.iPhoneSide_padding * 3)) // separation from next item

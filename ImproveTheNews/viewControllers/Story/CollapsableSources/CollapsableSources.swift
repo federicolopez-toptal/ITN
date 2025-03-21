@@ -96,6 +96,9 @@ class CollapsableSources {
         ])
         self.actionButton.addTarget(self, action: #selector(self.actionButtonTap(_:)), for: .touchUpInside)
 
+        if(sources.count == 1) {
+            self.actionButtonTap(nil)
+        }
     }
     
     // MARK: Button actions

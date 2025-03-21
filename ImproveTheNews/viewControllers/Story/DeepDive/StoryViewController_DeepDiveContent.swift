@@ -96,7 +96,7 @@ extension StoryViewController {
                 hStackSources2.heightAnchor.constraint(equalToConstant: 31).isActive = true
                 
                 let cSources = CollapsableSources(buildInto: hStackSources2, sources: F.sources)
-                self.collapsableSources.append(cSources)
+                self.collapsableFactSources.append(cSources)
             // Fact multiple sources ---
             
             ADD_SPACER(to: vstack, height: 24) // separation from next item
