@@ -39,15 +39,34 @@ class TopicsHelper {
 
     var data: [TopicRef] = []
 
-    func searchByName(_ nameParam: String) -> String? {
-        var N = nameParam.replacingOccurrences(of: "-", with: " ")
-        let found = self.data.first { $0.name.lowercased() == N.lowercased() }
+    func searchByTag(_ tag: Tag) -> String? {
+        var found: TopicRef? = nil
+        
+        found = self.data.first { $0.name.lowercased() == tag.name.lowercased() }
+        if let _found = found {
+            return _found.key
+        }
+        
     
+        //print(tag.id, tag.name)
+    
+        /*
+        let found = self.data.first { $0.name.lowercased() == nameParam.lowercased() }
         if let _found = found {
             return _found.key
         } else {
-            return nil
+            let N = nameParam.replacingOccurrences(of: "-", with: " ")
+            let found = self.data.first { $0.name.lowercased() == N.lowercased() }
+            
+            if let _found = found {
+                return _found.key
+            } else {
+                return nil
+            }
         }
+        */
+        
+        return nil
     }
 
     func loadTopics() {

@@ -4462,9 +4462,10 @@ extension StoryViewController {
     
     @objc func onTagTap(_ sender: UIButton?) {
         let index = sender!.tag
-        var T = self.tags[index].id
-        
-        if let _T = TopicsHelper.shared.searchByName(T) {
+        let tag = self.tags[index]
+        var T = tag.id
+                
+        if let _T = TopicsHelper.shared.searchByTag(tag) {
             T = _T
         }
                 

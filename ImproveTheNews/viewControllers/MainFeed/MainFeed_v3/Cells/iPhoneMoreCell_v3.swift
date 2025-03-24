@@ -71,6 +71,9 @@ class iPhoneMoreCell_v3: UITableViewCell {
             self.rectView.show()
         } else {
             self.infoLabel.text = "No more articles for this topic"
+            if(item.itemsCount == 0) {
+                self.infoLabel.text = "No articles for this topic"
+            }
             self.infoLabel.alpha = 0.5
             self.rectView.hide()
         }

@@ -54,10 +54,12 @@ class DP3_spacer: DP3_item {
 class DP3_more: DP3_item {
     var topic = "news"
     var completed = false
+    var itemsCount: Int = -1
     
-    init(topic: String, completed: Bool) {
+    init(topic: String, completed: Bool, itemsCount: Int = -1) {
         self.topic = topic
         self.completed = completed
+        self.itemsCount = itemsCount
     }
 }
 

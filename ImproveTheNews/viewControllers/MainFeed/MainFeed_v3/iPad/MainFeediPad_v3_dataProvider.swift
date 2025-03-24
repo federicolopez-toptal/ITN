@@ -141,6 +141,9 @@ extension MainFeediPad_v3_viewController {
             //if(i==0) { self.insertNewBanner() }
 
             // "Load more" item
+            if(_T.articles.count == 0) {
+                self.topicsCompleted[_T.name] = true
+            }
             self.addLoadMore(topicName: _T.name)
             
         } // for
@@ -268,6 +271,9 @@ extension MainFeediPad_v3_viewController {
             //if(i==0) { self.insertNewBanner() }
 
             // "Load more" item
+            if(_T.articles.count == 0) {
+                self.topicsCompleted[_T.name] = true
+            }
             self.addLoadMore(topicName: _T.name)
             
         } // for
@@ -358,7 +364,13 @@ extension MainFeediPad_v3_viewController {
         if let _ = self.topicsCompleted[topicName] {
             isCompleted = true
         }
-        let loadMore = DP3_more(topic: topicName, completed: isCompleted)
+        
+        var count = -1
+        if let _found = self.data.topics.first(where: {$0.name == topicName}) {
+            count = _found.articles.count
+        }
+        
+        let loadMore = DP3_more(topic: topicName, completed: isCompleted, itemsCount: count)
         self.dataProvider.append(loadMore)
     }
     
