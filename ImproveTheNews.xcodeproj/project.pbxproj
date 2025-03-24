@@ -574,6 +574,8 @@
 		BDD3DACB2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */; };
 		BDD4EA842C225C6B0002906A /* NewsLetterContentUI_daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */; };
 		BDD6F1BC2D823E9000A30A07 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDD6F1BB2D823E9000A30A07 /* Roboto-Italic.ttf */; };
+		BDE2DD9D2D91E8FE0046BB30 /* CollapsableSources_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE2DD9C2D91E8FD0046BB30 /* CollapsableSources_v2.swift */; };
+		BDE2DDA12D91EC930046BB30 /* SourceView_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE2DDA02D91EC850046BB30 /* SourceView_v2.swift */; };
 		BDE576052D0883690021E7B3 /* newAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE576042D0883690021E7B3 /* newAds.swift */; };
 		BDE79DAD2CBEE1BC00B6E4AF /* iPhoneAllNews_vImgCol_v3_B.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE79DAC2CBEE1BC00B6E4AF /* iPhoneAllNews_vImgCol_v3_B.swift */; };
 		BDE79DAF2CBEE56400B6E4AF /* iPhoneAllNews_vTxtCol_v3_B.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE79DAE2CBEE56400B6E4AF /* iPhoneAllNews_vTxtCol_v3_B.swift */; };
@@ -1165,6 +1167,8 @@
 		BDD3DACA2C2AEA2E00BFDB5E /* TabsBar_iPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBar_iPhone.swift; sourceTree = "<group>"; };
 		BDD4EA832C225C6B0002906A /* NewsLetterContentUI_daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLetterContentUI_daily.swift; sourceTree = "<group>"; };
 		BDD6F1BB2D823E9000A30A07 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Italic.ttf"; sourceTree = "<group>"; };
+		BDE2DD9C2D91E8FD0046BB30 /* CollapsableSources_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsableSources_v2.swift; sourceTree = "<group>"; };
+		BDE2DDA02D91EC850046BB30 /* SourceView_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceView_v2.swift; sourceTree = "<group>"; };
 		BDE576042D0883690021E7B3 /* newAds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newAds.swift; sourceTree = "<group>"; };
 		BDE79DAC2CBEE1BC00B6E4AF /* iPhoneAllNews_vImgCol_v3_B.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneAllNews_vImgCol_v3_B.swift; sourceTree = "<group>"; };
 		BDE79DAE2CBEE56400B6E4AF /* iPhoneAllNews_vTxtCol_v3_B.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iPhoneAllNews_vTxtCol_v3_B.swift; sourceTree = "<group>"; };
@@ -1322,6 +1326,7 @@
 				1F7B9EBA296DEC7200D99C5D /* StoryViewController.swift.txt */,
 				1F7B9EBD296DEFBA00D99C5D /* StoryContent.swift */,
 				BD18CF6B2D6E76F90038D2A2 /* CollapsableSources */,
+				BDE2DD9E2D91EC5C0046BB30 /* CollapsableSources_v2 */,
 				BD18CF6C2D6E77070038D2A2 /* DeepDive */,
 				BD170F632D89FFD500B226F4 /* StoryViewController_time.swift */,
 			);
@@ -2363,6 +2368,15 @@
 			path = components;
 			sourceTree = "<group>";
 		};
+		BDE2DD9E2D91EC5C0046BB30 /* CollapsableSources_v2 */ = {
+			isa = PBXGroup;
+			children = (
+				BDE2DD9C2D91E8FD0046BB30 /* CollapsableSources_v2.swift */,
+				BDE2DDA02D91EC850046BB30 /* SourceView_v2.swift */,
+			);
+			path = CollapsableSources_v2;
+			sourceTree = "<group>";
+		};
 		BDE576032D0882D40021E7B3 /* newAds */ = {
 			isa = PBXGroup;
 			children = (
@@ -2913,6 +2927,7 @@
 				1F95D96D29A7F5A100A43E9F /* iPadHeaderCell.swift in Sources */,
 				1FC557162AF2EE4800C0117A /* CustomNavController.swift in Sources */,
 				BDE838A02BF7D61800C4C8D2 /* SVGLoader.swift in Sources */,
+				BDE2DDA12D91EC930046BB30 /* SourceView_v2.swift in Sources */,
 				1FD2340429155F1700B85AE9 /* MenuView.swift in Sources */,
 				1FF088CD29F824ED00F31523 /* NSAttributedStringExtension.swift in Sources */,
 				1FC8352C2A1549E5007BCE56 /* DataExtension.swift in Sources */,
@@ -3067,6 +3082,7 @@
 				BD1275102C94849600B5EED0 /* iPad5items_type1_cell_v3.swift in Sources */,
 				1FD5BDF128DC0F91003E650F /* NoInternetPopupView.swift in Sources */,
 				1F455E7E2BA151BF00551336 /* NewsLetterData.swift in Sources */,
+				BDE2DD9D2D91E8FE0046BB30 /* CollapsableSources_v2.swift in Sources */,
 				1F58C85D2B05BBBA00E0A151 /* iPhoneSplitHeaderCell_v3.swift in Sources */,
 				1FA8AA3428D0D50200B6C956 /* HeaderOverCell.swift in Sources */,
 				1F70BE712913FD940061E3FA /* SearchTextView.swift in Sources */,

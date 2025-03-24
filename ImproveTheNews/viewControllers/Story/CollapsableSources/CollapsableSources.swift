@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class CollapsableSources {
-
     weak var container: UIStackView? = nil
     var isOpen = false
 

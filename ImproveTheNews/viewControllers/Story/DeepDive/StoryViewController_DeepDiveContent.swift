@@ -95,7 +95,7 @@ extension StoryViewController {
                 hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
                 hStackSources2.heightAnchor.constraint(equalToConstant: 31).isActive = true
                 
-                let cSources = CollapsableSources(buildInto: hStackSources2, sources: F.sources)
+                let cSources = CollapsableSources_v2(buildInto: hStackSources2, sources: F.sources)
                 self.collapsableFactSources.append(cSources)
             // Fact multiple sources ---
             
@@ -382,10 +382,12 @@ extension StoryViewController {
         
         let sourcesLabel = UILabel()
         sourcesLabel.font = AILERON(16)
-        sourcesLabel.text = "Sources:  "
+        sourcesLabel.text = "Sources:"
         sourcesLabel.textColor = CSS.shared.displayMode().sec_textColor
         hStack.addArrangedSubview(sourcesLabel)
         sourcesLabel.centerYAnchor.constraint(equalTo: hStack.centerYAnchor)
+        
+        ADD_SPACER(to: hStack, width: 10)
         
         var extraText: String? = nil
         let diff = section.sources.count - sources.count
@@ -395,7 +397,9 @@ extension StoryViewController {
         
         let RHStack = HSTACK(into: hStack)
         RHStack.backgroundColor = .clear
-        self.cSourcesView = CollapsableSources(buildInto: RHStack, sources: sources, extraText: extraText)
+//        self.cSourcesView = CollapsableSources(buildInto: RHStack, sources: sources, extraText: extraText)
+        self.cSourcesView = CollapsableSources_v2(buildInto: RHStack, sources: sources)
+        
         ADD_SPACER(to: self.deepDiveContent_VStack, height: 16)
     }
     

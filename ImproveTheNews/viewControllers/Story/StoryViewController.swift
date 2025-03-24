@@ -58,13 +58,12 @@ class StoryViewController: BaseViewController {
     var upButtonBottomConstraint: NSLayoutConstraint?
     
     var showSplitSource: Bool = false
-    var collapsableFactSources: [CollapsableSources] = []
-    var collapsableSpinSources: [CollapsableSources] = []
-    
+    var collapsableFactSources: [CollapsableSources_v2] = []
+    var collapsableSpinSources: [CollapsableSources_v2] = []
     
     var deepDiveContent_VStack = UIStackView()
     var mediaList = [String: String]()
-    var cSourcesView: CollapsableSources? = nil
+    var cSourcesView: CollapsableSources_v2? = nil
     var deepDiveImageLinks: [String] = []
     var tags: [Tag] = []
     
@@ -1595,7 +1594,7 @@ extension StoryViewController {
                 hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
                 ADD_SPACER(to: hStackSources, width: 16)
                 
-                let cSources = CollapsableSources(buildInto: hStackSources2, sources: S.multipleSources)
+                let cSources = CollapsableSources_v2(buildInto: hStackSources2, sources: S.multipleSources)
                 self.collapsableSpinSources.append(cSources)
             // Fact multiple sources ---
 
@@ -1778,7 +1777,7 @@ extension StoryViewController {
                     ADD_SPACER(to: hStackSources, width: 16)
                 }
                 
-                let cSources = CollapsableSources(buildInto: hStackSources2, sources: S.multipleSources)
+                let cSources = CollapsableSources_v2(buildInto: hStackSources2, sources: S.multipleSources)
                 self.collapsableSpinSources.append(cSources)
             // Fact multiple sources ---
 
@@ -2385,7 +2384,7 @@ extension StoryViewController {
     }
     
     private func addMultipleSourceIcons(withSources sources: [SourceForGraph], into container: UIStackView, factIndex: Int) {
-        let newSources = CollapsableSources(buildInto: container, sources: sources)
+        let newSources = CollapsableSources_v2(buildInto: container, sources: sources)
         self.collapsableFactSources.append(newSources)
     }
     
@@ -2747,7 +2746,7 @@ extension StoryViewController {
                 hStackSources2.backgroundColor = CSS.shared.displayMode().main_bgColor
                 hStackSources2.heightAnchor.constraint(equalToConstant: 31).isActive = true
                 
-                let cSources = CollapsableSources(buildInto: hStackSources2, sources: F.sources)
+                let cSources = CollapsableSources_v2(buildInto: hStackSources2, sources: F.sources)
                 self.collapsableFactSources.append(cSources)
             // Fact multiple sources ---
 
