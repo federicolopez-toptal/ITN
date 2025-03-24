@@ -443,6 +443,10 @@ class newAdCell_v3: UITableViewCell {
 // DeepDive Trump
         } else if(self.currentType == .deepDiveTrump) {
             var titleText = "Deep Dive into the Trump\nAssassination Attemp"
+            if(SMALL_IPAD()) {
+                titleText = "Deep Dive into the\nTrump Assassination\nAttemp"
+            }
+            
             //if(IPHONE()){ titleText = "Join the Verity Community\non WhatsApp!" }
             let titleLabel = self.titleLabel(text: titleText)
             let actionButton = self.actionButton(text: "Deep Dive!", bgColor: newAdCell_v3.yellow)
@@ -467,19 +471,18 @@ class newAdCell_v3: UITableViewCell {
                     titleLabel.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor)
                 ])
             
+                if(!SMALL_IPAD()) {
+                    actionButton.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -305).isActive = true
+                } else {
+                    actionButton.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -275).isActive = true
+                }
+            
                 actionButton.activateConstraints([
-                    actionButton.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -305),
                     actionButton.centerYAnchor.constraint(equalTo: self.mainContentView.centerYAnchor),
                     actionButton.widthAnchor.constraint(equalToConstant: 152)
                 ])
-            
-//                if(!SMALL_IPAD()) {
-//                    logo.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -350).isActive = true
-//                } else {
-//                    logo.trailingAnchor.constraint(equalTo: self.mainContentView.trailingAnchor, constant: -300).isActive = true
-//                }
             }
-// Podcast
+
         }
         
     }
