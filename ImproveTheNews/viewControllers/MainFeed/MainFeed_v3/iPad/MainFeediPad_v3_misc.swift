@@ -168,8 +168,11 @@ extension MainFeediPad_v3_viewController: TopicSelectorViewDelegate {
         if(index==0) {
             self.list.scrollToTop()
         } else {
-            let _i = index+1
+            var _i = index
+            if(self.topic == "news"){ _i += 1 }
+                        
             let topic = self.data.topics[_i].name
+            print(_i, topic)
         
             if(topic == "us-election-2024") {
                 ControversiesViewController.topic = "us-election-2024"
