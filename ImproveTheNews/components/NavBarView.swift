@@ -443,16 +443,19 @@ class NavBarView: UIView {
                 label.text = " "
                 label.textColor = .black
                 label.textAlignment = .center
-                //label.backgroundColor = .red.withAlphaComponent(0.25)
+                label.backgroundColor = .clear //.yellow.withAlphaComponent(0.25)
                 label.font = CSS.shared.iPhoneTitleBar_font
+                label.minimumScaleFactor = 0.5
+                label.adjustsFontSizeToFitWidth = true
                 self.addSubview(label)
                 label.activateConstraints([
                     label.topAnchor.constraint(equalTo: self.topAnchor, constant: Y_TOP_NOTCH_FIX(CSS.shared.navBar_icon_posY)),
-                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: IPAD_sideOffset(multiplier: -0.5))
-//                    label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset),
-//                    label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset),
+//                    label.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: IPAD_sideOffset(multiplier: -0.5))
+                    label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: offset),
+                    label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -offset),
                 ])
                 label.tag = 7
+                label.isUserInteractionEnabled = false
                 self.displayModeComponents.append(label)
                 
                 let button = UIButton(type: .system)
