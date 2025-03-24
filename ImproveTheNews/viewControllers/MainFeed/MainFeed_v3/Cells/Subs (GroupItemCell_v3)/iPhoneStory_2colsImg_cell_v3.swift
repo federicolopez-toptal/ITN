@@ -67,14 +67,15 @@ class iPhoneStory_2colsImg_cell_v3: GroupItemCell_v3 {
         for (i, V) in self.subViews.enumerated() {
             if let _v = V as? iPhoneAllNews_vImgCol_v3 {
                 if(status) {
-//                    _v.storyTitleLabel.backgroundColor = .red
-                    _v.minimumLineNum = false
-                    _v.populate(group.articles[i])
+                    if(i<group.articles.count) {
+                        _v.minimumLineNum = false
+                        _v.populate(group.articles[i])
+                    }
                 } else {
-//                    _v.storyTitleLabel.backgroundColor = .clear
-                    _v.minimumLineNum = true
-                    _v.populate(group.articles[i])
-                    
+                    if(i<group.articles.count) {
+                        _v.minimumLineNum = true
+                        _v.populate(group.articles[i])
+                    }
                 }
             }
         }
