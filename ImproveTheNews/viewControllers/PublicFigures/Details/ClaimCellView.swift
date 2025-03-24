@@ -544,7 +544,7 @@ class ClaimCellView: UIView {
         self.controversySlug = claim.controversySlug
     
         self.photoImageView.sd_setImage(with: URL(string: claim.figureImage))
-        self.nameLabel.text = claim.figureName.uppercased()
+        self.nameLabel.text = claim.figureName.replacingOccurrences(of: "\n", with: "").uppercased()
         self.timeLabel.text = claim.time.uppercased()
         self.titleLabel.text = claim.claim
         

@@ -287,6 +287,7 @@ class MetaculusClaimCellView: UIView {
     
         var parsed = url.replacingOccurrences(of: "https://www.metaculus.com/questions/", with: "")
         parsed = parsed.replacingOccurrences(of: "https://metaculus.com/questions/", with: "")
+        parsed = parsed.replacingOccurrences(of: "https://www.metaculus.com/c/brightlinewatch/", with: "")
         
         if(!parsed.isEmpty) {
             for (i, CHR) in parsed.enumerated() {

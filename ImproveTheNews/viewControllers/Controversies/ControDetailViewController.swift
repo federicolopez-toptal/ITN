@@ -1318,6 +1318,8 @@ extension ControDetailViewController: ClaimCellViewDelegate {
             for V in containerView.subviews {
                 if let _claimView = V as? ClaimCellView {
                     H += _claimView.calculateHeight()
+                } else if let _claimView = V as? MetaculusClaimCellView {
+                    H += _claimView.calculateHeight()
                 }
             }
         } else { //IPAD
@@ -1327,6 +1329,12 @@ extension ControDetailViewController: ClaimCellViewDelegate {
             
             for V in containerView.subviews {
                 if let _claimView = V as? ClaimCellView {
+                    if(col==1) {
+                        col1_H += _claimView.calculateHeight()
+                    } else {
+                        col2_H += _claimView.calculateHeight()
+                    }
+                } else if let _claimView = V as? MetaculusClaimCellView {
                     if(col==1) {
                         col1_H += _claimView.calculateHeight()
                     } else {
@@ -1362,7 +1370,7 @@ extension ControDetailViewController: ClaimCellViewDelegate {
     func claimCellViewOnFigureTap(sender: ClaimCellView?) {
         if let _slug = sender?.figureSlug {
             let vc = FigureDetailsViewController()
-            vc.slug = _slug
+            vc.slug = _slug.replacingOccurrences(of: "\n", with: "")
             CustomNavController.shared.pushViewController(vc, animated: true)
         }
     }
