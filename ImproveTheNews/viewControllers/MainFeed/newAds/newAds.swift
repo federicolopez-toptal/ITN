@@ -449,6 +449,7 @@ class newAdCell_v3: UITableViewCell {
             
             //if(IPHONE()){ titleText = "Join the Verity Community\non WhatsApp!" }
             let titleLabel = self.titleLabel(text: titleText)
+            if(SMALL_IPAD()){ titleLabel.font = DM_SERIF_DISPLAY(28) }
             let actionButton = self.actionButton(text: "Deep Dive!", bgColor: newAdCell_v3.yellow)
             
             self.mainContentView.addSubview(actionButton)
