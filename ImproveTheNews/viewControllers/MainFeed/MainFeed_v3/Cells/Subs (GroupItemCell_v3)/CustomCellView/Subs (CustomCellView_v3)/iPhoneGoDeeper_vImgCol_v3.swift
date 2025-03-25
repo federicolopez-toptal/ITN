@@ -173,7 +173,8 @@ class iPhoneGoDeeper_vImgCol_v3: CustomCellView_v3 {
 //        timeText += SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
 //            timeText += FIX_TIME(article.time).uppercased()
 
-        self.storyTimeLabel.text = "UPDATED " + SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
+//        self.storyTimeLabel.text = "UPDATED " + SHORT_TIME(input: FIX_TIME(article.time)) + " AGO"
+        self.storyTimeLabel.text = "UPDATED " + UPDATED_TIME_v1(with: article.time).uppercased()
         
         if(!article.updatedDate.isEmpty) {
             let formatter = DateFormatter()

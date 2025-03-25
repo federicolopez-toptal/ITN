@@ -3045,7 +3045,8 @@ extension StoryViewController {
         var timeText = ""
         if(self.deepDive == nil) { timeText = "Story" }
         else { timeText = "DeepDive" }
-        timeText += " last updated " + self.timeForImageCredit(with: time)
+//        timeText += " last updated " + self.timeForImageCredit(with: time)
+        timeText += " last updated " + UPDATED_TIME_v1(with: time)
         
         let timeLabel = UILabel()
         timeLabel.font = ROBOTO_ITALIC(14)
