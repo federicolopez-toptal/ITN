@@ -442,9 +442,9 @@ class newAdCell_v3: UITableViewCell {
             }
 // DeepDive Trump
         } else if(self.currentType == .deepDiveTrump) {
-            var titleText = "Deep Dive into the Trump\nAssassination Attemp"
+            var titleText = "Deep Dive into the Trump\nAssassination Attempt"
             if(SMALL_IPAD()) {
-                titleText = "Deep Dive into the\nTrump Assassination\nAttemp"
+                titleText = "Deep Dive into the\nTrump Assassination\nAttempt"
             }
             
             //if(IPHONE()){ titleText = "Join the Verity Community\non WhatsApp!" }

@@ -10,8 +10,8 @@ import UIKit
 
 extension UIScrollView {
 
-    func scrollToZero() {
-        self.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    func scrollToZero(animated A: Bool = true) {
+        self.setContentOffset(CGPoint(x: 0, y: 0), animated: A)
     }
 
 }

@@ -16,9 +16,11 @@ class CollapsableSources_v2 {
     let closedView = UIView()
     let openedView = UIView()
 
+    private var showInfoButton: Bool = false
 
-    init(buildInto container: UIStackView, sources: [SourceForGraph]) {
+    init(buildInto container: UIStackView, sources: [SourceForGraph], showInfoButton: Bool = false) {
         if(sources.count==0) { return }
+        self.showInfoButton = showInfoButton
         
         self.container = container // HStack
         container.spacing = 0
@@ -44,6 +46,7 @@ class CollapsableSources_v2 {
             self.closedView.bottomAnchor.constraint(equalTo: self.container!.bottomAnchor)
         ])
         
+        var count = 0
         var val_X: CGFloat = 0
         for S in sources {
             let V = SourceView_v2(source: S, showName: false)
@@ -52,7 +55,12 @@ class CollapsableSources_v2 {
                 V.leadingAnchor.constraint(equalTo: self.closedView.leadingAnchor, constant: val_X),
                 V.topAnchor.constraint(equalTo: self.closedView.topAnchor),
             ])
+            
             val_X += 27
+            count += 1
+            if(count==3) {
+                break
+            }
         }
         for V in self.closedView.subviews.reversed() {
             self.closedView.bringSubviewToFront(V)
@@ -78,10 +86,32 @@ class CollapsableSources_v2 {
             openButton.bottomAnchor.constraint(equalTo: self.closedView.bottomAnchor)
         ])
         openButton.addTarget(self, action: #selector(self.openOnTap(_:)), for: .touchUpInside)
-        //self.closedView.hide()
         
-    // Opened view
-        self.openedView.backgroundColor = .red //CSS.shared.displayMode().main_bgColor
+        if(self.showInfoButton) {
+            let iconImageView = UIImageView()
+            iconImageView.image = UIImage(named: DisplayMode.imageName("storyInfo"))
+            self.closedView.addSubview(iconImageView)
+            iconImageView.activateConstraints([
+                iconImageView.leadingAnchor.constraint(equalTo: openButton.trailingAnchor, constant: 8),
+                iconImageView.centerYAnchor.constraint(equalTo: self.closedView.centerYAnchor),
+                iconImageView.widthAnchor.constraint(equalToConstant: 72/3),
+                iconImageView.heightAnchor.constraint(equalToConstant: 72/3)
+            ])
+                
+            let infoButton = UIButton(type: .custom)
+            infoButton.backgroundColor = .clear //.red.withAlphaComponent(0.25)
+            self.closedView.addSubview(infoButton)
+            infoButton.activateConstraints([
+                infoButton.leadingAnchor.constraint(equalTo: iconImageView.leadingAnchor, constant: -5),
+                infoButton.topAnchor.constraint(equalTo: iconImageView.topAnchor, constant: -5),
+                infoButton.trailingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 5),
+                infoButton.bottomAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 5)
+            ])
+            infoButton.addTarget(self, action: #selector(infoButtonOnTap(_:)), for: .touchUpInside)
+        }
+        
+    // Opened view --------------------------------------------------------------------------------
+        self.openedView.backgroundColor = CSS.shared.displayMode().main_bgColor
         self.container?.addSubview(self.openedView)
         self.openedView.activateConstraints([
             self.openedView.leadingAnchor.constraint(equalTo: self.container!.leadingAnchor),
@@ -89,7 +119,7 @@ class CollapsableSources_v2 {
             self.openedView.topAnchor.constraint(equalTo: self.container!.topAnchor),
             self.openedView.bottomAnchor.constraint(equalTo: self.container!.bottomAnchor)
         ])
-        
+                            
         let scrollView = UIScrollView()
         scrollView.backgroundColor = CSS.shared.displayMode().main_bgColor
         scrollView.showsHorizontalScrollIndicator = false
@@ -129,14 +159,59 @@ class CollapsableSources_v2 {
             let V = SourceView_v2(source: S)
             HStack.addArrangedSubview(V)            
         }
+        
+        //ADD_SPACER(to: HStack, width: 8)
+                
+        // CLOSE
+        let closeButton = UIButton(type: .custom)
+        closeButton.backgroundColor = .clear //.blue.withAlphaComponent(0.25)
+        HStack.addArrangedSubview(closeButton)
+        closeButton.activateConstraints([
+            closeButton.widthAnchor.constraint(equalToConstant: 32)
+        ])
+        closeButton.addTarget(self, action: #selector(self.closeOnTap(_:)), for: .touchUpInside)
+        
+        let closeArrowImageView = UIImageView(image: UIImage(named: "closeArrow")?.withRenderingMode(.alwaysTemplate))
+        closeArrowImageView.tintColor = CSS.shared.displayMode().main_textColor
+        closeButton.addSubview(closeArrowImageView)
+        closeArrowImageView.activateConstraints([
+            closeArrowImageView.widthAnchor.constraint(equalToConstant: 18),
+            closeArrowImageView.heightAnchor.constraint(equalToConstant: 18),
+            closeArrowImageView.centerYAnchor.constraint(equalTo: closeButton.centerYAnchor),
+            closeArrowImageView.centerXAnchor.constraint(equalTo: closeButton.centerXAnchor)
+        ])
+        closeArrowImageView.isUserInteractionEnabled = false
+        
         self.openedView.hide()
     }
     
     @objc func openOnTap(_ sender: UIButton?) {
         self.closedView.hide()
+        
+        for V in self.openedView.subviews {
+            if let _scrollView = V as? UIScrollView {
+                _scrollView.scrollToZero(animated: false)
+            }
+        }
+        
         self.openedView.show()
     }
     
+    @objc func closeOnTap(_ sender: UIButton?) {
+        self.openedView.hide()
+        self.closedView.show()
+    }
+    
+    @objc func infoButtonOnTap(_ sender: UIButton?) {
+        let descr = """
+        We source our facts from a wide range of news outlets across the political and establishment spectrum, as well as supplementary primary sources (e.g. academic publications, social media posts by public figures, think tanks, NGOs, databases, etc.) where possible. We classify sources as left/right and pro-establishment/establishment-critical based on an MIT [0] on media bias conducted by Max Tegmark and Samantha D’Alonzo.
+        """
+        
+        let popup = StoryInfoPopupView(title: "Sources", description: descr, linkedTexts: ["study"],
+                    links: ["https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271947"], height: 310)
+                
+        popup.pushFromBottom()
+    }
     
     
     // -----------------------------------------------------------------

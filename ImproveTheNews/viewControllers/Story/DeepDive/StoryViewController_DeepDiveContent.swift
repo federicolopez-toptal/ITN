@@ -333,6 +333,8 @@ extension StoryViewController {
         let sortedMediaList = self.mediaList.sorted(by: { $0.key.count > $1.key.count }) // longer strings first
   
         var sources: [SourceForGraph] = []
+        
+        print(section.sources.count)
         for SO in section.sources {
             if let _url = URL(string: SO), let _domain = _url.host {
                 
@@ -352,27 +354,11 @@ extension StoryViewController {
                     }
                 }
                 
-                if(sources.count == 3) {
-                    break
+                if(!found) {
+                    let newItem = SourceForGraph(id: "unknown", name: _domain, url: SO)
+                    sources.append(newItem)
                 }
-                
-                
-            
-//                for ME in self.mediaList {
-//                    if(_domain.contains(ME)) {
-//                        
-//                        var name = ""
-//                        if let _name = Sources.shared.search(identifier: ME)?.name {
-//                            name = _name
-//                        }
-//                        
-//                        let newItem = SourceForGraph(id: ME, name: name, url: SO)
-//                        sources.append(newItem)
-//                        break
-//                    }
-//                }
             }
-            //print("-----")
         }
 
         ADD_SPACER(to: self.deepDiveContent_VStack, height: 16)
@@ -389,16 +375,16 @@ extension StoryViewController {
         
         ADD_SPACER(to: hStack, width: 10)
         
-        var extraText: String? = nil
-        let diff = section.sources.count - sources.count
-        if(diff > 0) {
-            extraText = "+" + String(diff)
-        }
+//        var extraText: String? = nil
+//        let diff = section.sources.count - sources.count
+//        if(diff > 0) {
+//            extraText = "+" + String(diff)
+//        }
         
         let RHStack = HSTACK(into: hStack)
         RHStack.backgroundColor = .clear
 //        self.cSourcesView = CollapsableSources(buildInto: RHStack, sources: sources, extraText: extraText)
-        self.cSourcesView = CollapsableSources_v2(buildInto: RHStack, sources: sources)
+        self.cSourcesView = CollapsableSources_v2(buildInto: RHStack, sources: sources, showInfoButton: true)
         
         ADD_SPACER(to: self.deepDiveContent_VStack, height: 16)
     }
