@@ -258,6 +258,10 @@ extension StoryViewController {
     func showDeepDiveStories(into vstack: UIStackView, width: CGFloat, index: Int) {
         let section = self.deepDive!.sections[index-1]
         
+        if(IPAD()) {
+            ADD_SPACER(to: vstack, height: 48)
+        }
+        
         for (i, AR) in section.stories.enumerated() {
             var fontSize: CGFloat = 24
             if(IPAD()){ fontSize = 20 }
