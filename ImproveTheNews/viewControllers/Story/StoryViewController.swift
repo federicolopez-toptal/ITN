@@ -409,6 +409,10 @@ extension StoryViewController {
             ADD_SPACER(to: VStack, height: 200)
         }
         
+        if(self.deepDive != nil) {
+            ADD_SPACER(to: VStack, height: 70)
+        }
+        
         // TMP //------------------------------------------
         self.scrollView.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
