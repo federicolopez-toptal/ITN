@@ -246,9 +246,13 @@ func NOW_MINUS(hours: Int) -> Date {
         return result
     }
 
-func STRTIME_with(num: Int, typeSingular: String, typePlural: String) -> String {
+func STRTIME_with(num: Int, typeSingular: String, typePlural: String, uppercased: Bool = true) -> String {
         let result = String(num) + " " + (num==1 ? typeSingular : typePlural) + " ago"
-        return result.uppercased()
+        if(uppercased) {
+            return result.uppercased()
+        } else {
+            return result
+        }
     }
 
 func UPDATED_TIME_v1(with time: String) -> String {
@@ -314,7 +318,39 @@ func UPDATED_TIME_v1(with time: String) -> String {
         } else {
             return time
         }
-    }
+}
+
+func HOURS_TO_DAYS(with time: String) -> String {
+        let parts = time.components(separatedBy: " ")
+        if let _strNum = parts.first, let _num = Int(_strNum) {
+            let _type = parts[1]
+            
+            var result = ""
+            switch(_type.lowercased()) {
+                case "minute", "minutes":
+                    result = STRTIME_with(num: _num, typeSingular: "minute", typePlural: "minutes", uppercased: false)
+                    
+                case "hour", "hours":
+                    if(_num>23) {
+                        let days = _num/24
+                        result = STRTIME_with(num: days, typeSingular: "day", typePlural: "days", uppercased: false)
+                    } else {
+                        result = STRTIME_with(num: _num, typeSingular: "hour", typePlural: "hours", uppercased: false)
+                    }
+                
+                default:
+                    NOTHING()
+            }
+            
+            if(result.isEmpty) {
+                return time
+            } else {
+                return result
+            }
+        } else {
+            return time
+        }
+}
 
 
 

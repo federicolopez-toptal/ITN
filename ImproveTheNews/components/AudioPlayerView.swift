@@ -217,20 +217,23 @@ class AudioPlayerView: UIView {
         let titleLabel = UILabel()
         titleLabel.numberOfLines = 3
         
-        let components = file.created.components(separatedBy: " ")
-        var firstPart = ""
-        for (i, C) in components.enumerated() {
-            firstPart += C
-            if(i == components.count-2) {
-                firstPart += ", "
-            } else {
-                firstPart += " "
-            }
-        }
+        let created = HOURS_TO_DAYS(with: file.created)
         
-        firstPart = firstPart.replacingOccurrences(of: ",,", with: ",")
+//        print(file.created)
+//        let components = file.created.components(separatedBy: " ")
+//        var firstPart = ""
+//        for (i, C) in components.enumerated() {
+//            firstPart += C
+//            if(i == components.count-2) {
+//                firstPart += ", "
+//            } else {
+//                firstPart += " "
+//            }
+//        }
+//        
+//        firstPart = firstPart.replacingOccurrences(of: ",,", with: ",")
         
-        let textStart = firstPart + ": "
+        let textStart = created + ": "
         let text = textStart + file.title
         //titleLabel.textColor = DARK_MODE() ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x1D242F)
         titleLabel.font = AILERON(16)

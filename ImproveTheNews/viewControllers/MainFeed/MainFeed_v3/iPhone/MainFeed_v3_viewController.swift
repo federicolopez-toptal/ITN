@@ -65,7 +65,7 @@ class MainFeed_v3_viewController: BaseViewController {
             if(self.imFirstViewController()) {
                 self.navBar.addComponents([.logo, .menuIcon, .searchIcon, .user, .newsletter])
             } else {
-                self.navBar.addComponents([.back, .title, .headlines])
+                self.navBar.addComponents([.back, .adaptativeTitle, .headlines])
             }
             
             self.topicSelector.buildInto(self.view)

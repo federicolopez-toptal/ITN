@@ -49,6 +49,8 @@
 		<string>Aileron-Bold.otf</string>
 		<string>DMSerifDisplay-Regular.ttf</string>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
