@@ -128,6 +128,50 @@ extension StoryViewController {
     }
      
     func showDeepDiveFactsSources(into vstack: UIStackView, width: CGFloat) {
+        ADD_SPACER(to: vstack, height: 16)
+        
+        let SourcesLabel = UILabel()
+        SourcesLabel.font = DM_SERIF_DISPLAY_fixed_resize(17) //MERRIWEATHER_BOLD(17)
+        if(IPAD()){ SourcesLabel.font = DM_SERIF_DISPLAY_fixed_resize(19) } //MERRIWEATHER_BOLD(19)
+
+        SourcesLabel.text = "Sources"
+        SourcesLabel.textColor = CSS.shared.displayMode().sec_textColor
+        vstack.addArrangedSubview(SourcesLabel)
+        
+        self.addInfoButtonNextTo(label: SourcesLabel, index: 3)
+        ADD_SPACER(to: vstack, height: CSS.shared.iPhoneSide_padding)
+        
+        let VStack_sources = VSTACK(into: vstack)
+        VStack_sources.spacing = 16 //+ 8
+        ADD_SPACER(to: VStack_sources, height: 8)
+        
+        //------------------------------------------
+        for (i, currentSource) in self.groupedSources.enumerated() {
+            //print("SOURCE", currentItem.0, currentItem.1)
+            
+            let sourceLabel = UILabel()
+            sourceLabel.font = AILERON_resize(16)
+            sourceLabel.textColor = CSS.shared.orange
+            sourceLabel.text = currentSource.0
+            VStack_sources.addArrangedSubview(sourceLabel)
+            
+            let buttonArea = UIButton(type: .system)
+            buttonArea.backgroundColor = .clear //.red.withAlphaComponent(0.5)
+            buttonArea.tag = i
+            VStack_sources.addSubview(buttonArea)
+            buttonArea.activateConstraints([
+                buttonArea.leadingAnchor.constraint(equalTo: sourceLabel.leadingAnchor),
+                buttonArea.trailingAnchor.constraint(equalTo: sourceLabel.trailingAnchor),
+                buttonArea.topAnchor.constraint(equalTo: sourceLabel.topAnchor),
+                buttonArea.bottomAnchor.constraint(equalTo: sourceLabel.bottomAnchor)
+            ])
+            buttonArea.addTarget(self, action: #selector(self.newSourceOnButtonTap(_:)), for: .touchUpInside)
+        }
+        
+        ADD_SPACER(to: vstack, height: 16)
+        
+        /*
+    
     // SOURCES
         ADD_SPACER(to: vstack, height: 16)
         let SourcesLabel = UILabel()
@@ -248,6 +292,7 @@ extension StoryViewController {
         }
         
         ADD_SPACER(to: vstack, height: 16)
+        */
     }
     
     @objc func showMoreOverviewButtonOnTap(_ sender: UIButton) {

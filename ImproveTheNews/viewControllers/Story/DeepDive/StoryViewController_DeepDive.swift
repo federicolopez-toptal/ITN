@@ -173,7 +173,8 @@ extension StoryViewController: UITextViewDelegate {
                 contentTextView.isScrollEnabled = false
                 contentTextView.textContainer.lineFragmentPadding = 0
                 contentTextView.textContainerInset = .zero
-                //contentTextView.isSelectable = false
+                contentTextView.isSelectable = true
+                contentTextView.isEditable = false
                 contentTextView.backgroundColor = CSS.shared.displayMode().main_bgColor
                 contentTextView.attributedText = attributedContent
             contentTextView.setLineSpacing(lineSpacing: 7.0)

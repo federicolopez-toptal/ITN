@@ -546,6 +546,7 @@
 		BD5918762C61576B00AD8FC6 /* SourceCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5918752C61576B00AD8FC6 /* SourceCheck.swift */; };
 		BD5975872BFEE49600BDBEBB /* StoryInfoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */; };
 		BD598ACD2CE2E401001252A7 /* ElectionResultsPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD598ACC2CE2E401001252A7 /* ElectionResultsPopupView.swift */; };
+		BD5A5DA62D9578A9000E740A /* StoryViewController_newSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5A5DA52D95789E000E740A /* StoryViewController_newSources.swift */; };
 		BD5C80762C59359B00ED0A60 /* Tour_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C80752C59359B00ED0A60 /* Tour_v2.swift */; };
 		BD5C80782C59500800ED0A60 /* DialogBubbleView_iPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C80772C59500800ED0A60 /* DialogBubbleView_iPhone.swift */; };
 		BD5C807C2C59524200ED0A60 /* DialogBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C807B2C59524200ED0A60 /* DialogBubbleView.swift */; };
@@ -1139,6 +1140,7 @@
 		BD5918752C61576B00AD8FC6 /* SourceCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceCheck.swift; sourceTree = "<group>"; };
 		BD5975862BFEE49600BDBEBB /* StoryInfoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryInfoPopupView.swift; sourceTree = "<group>"; };
 		BD598ACC2CE2E401001252A7 /* ElectionResultsPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElectionResultsPopupView.swift; sourceTree = "<group>"; };
+		BD5A5DA52D95789E000E740A /* StoryViewController_newSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewController_newSources.swift; sourceTree = "<group>"; };
 		BD5C80752C59359B00ED0A60 /* Tour_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tour_v2.swift; sourceTree = "<group>"; };
 		BD5C80772C59500800ED0A60 /* DialogBubbleView_iPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubbleView_iPhone.swift; sourceTree = "<group>"; };
 		BD5C807B2C59524200ED0A60 /* DialogBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubbleView.swift; sourceTree = "<group>"; };
@@ -1329,6 +1331,7 @@
 				BDE2DD9E2D91EC5C0046BB30 /* CollapsableSources_v2 */,
 				BD18CF6C2D6E77070038D2A2 /* DeepDive */,
 				BD170F632D89FFD500B226F4 /* StoryViewController_time.swift */,
+				BD5A5DA52D95789E000E740A /* StoryViewController_newSources.swift */,
 			);
 			path = Story;
 			sourceTree = "<group>";
@@ -2861,6 +2864,7 @@
 				BD44510D2C7F5FFC00BBD346 /* MainFeedv3.swift in Sources */,
 				BD5C80782C59500800ED0A60 /* DialogBubbleView_iPhone.swift in Sources */,
 				1F41FCCC29B24AFC002081AE /* FAQ_content.swift in Sources */,
+				BD5A5DA62D9578A9000E740A /* StoryViewController_newSources.swift in Sources */,
 				BD2D0A782CF5413D00CAEC74 /* MetaculusClaimCellView.swift in Sources */,
 				1FC7390B298A05A8003EB38D /* SignInUpViewController.swift in Sources */,
 				1FD5BDF328DC11DC003E650F /* PopupView.swift in Sources */,
@@ -3245,7 +3249,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 169;
+				CURRENT_PROJECT_VERSION = 171;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3284,7 +3288,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 169;
+				CURRENT_PROJECT_VERSION = 171;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;
@@ -3376,7 +3380,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ImproveTheNews/ImproveTheNews.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 169;
+				CURRENT_PROJECT_VERSION = 171;
 				DEVELOPMENT_TEAM = U7V2C7L759;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImproveTheNews/app/Info.plist;

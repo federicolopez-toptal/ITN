@@ -232,6 +232,55 @@ extension StoryViewController {
     
     private func groupSources() {
         self.groupedSources = [(String, String)]()
+        
+        for F in self.facts {
+        
+            for S in F.sources {
+                let _name = S.name
+                let _url = S.url
+                
+                var found = false
+                for _S in self.groupedSources {
+                    if(_S.0 == _name && _S.1 == _url) {
+                        found = true
+                        break
+                    }
+                }
+                
+                // Avoid duplicates
+                if(!found) {
+                    self.groupedSources.append( (_name, _url) )
+                }
+            }
+        }
+        
+        // Add numbers (if needed)
+        var names = [String: Int]()
+        for S in self.groupedSources {
+            if let _num = names[S.0] {
+                names[S.0] = _num + 1
+            } else {
+                names[S.0] = 1
+            }
+        }
+        for(_name, _num) in names {
+            if(_num > 1) { // These sources needs to be numered
+                var count = 1
+                
+                for (j, S) in self.groupedSources.enumerated() {
+                    if(S.0 == _name) {
+                        self.groupedSources[j].0 = _name + "[" + String(count) + "]"
+                        count += 1
+                    }
+                }
+            }
+        }
+        
+        // Finally, sorting
+        self.groupedSources = self.groupedSources.sorted { $0 < $1 }
+        
+        
+        /*
         for (i, F) in self.facts.enumerated() {
             var found = false
             for (j, S) in self.groupedSources.enumerated() {
@@ -247,6 +296,7 @@ extension StoryViewController {
                 self.facts[i].sourceIndex = self.groupedSources.count-1
             }
         }
+        */
     }
     
 }
@@ -2729,17 +2779,17 @@ extension StoryViewController {
                 contentLabel.setLineSpacing(lineSpacing: 7.0)
                 HStack.addArrangedSubview(contentLabel)
                 
-                let numberButton = UIButton(type: .custom)
-                numberButton.backgroundColor = .clear //.red.withAlphaComponent(0.5)
-                HStack.addSubview(numberButton)
-                numberButton.activateConstraints([
-                    numberButton.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor),
-                    numberButton.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor),
-                    numberButton.bottomAnchor.constraint(equalTo: contentLabel.bottomAnchor),
-                    numberButton.heightAnchor.constraint(equalToConstant: 25)
-                ])
-                numberButton.tag = 77 + F.sourceIndex
-                numberButton.addTarget(self, action: #selector(numberButtonOnTap(_:)), for: .touchUpInside)
+//                let numberButton = UIButton(type: .custom)
+//                numberButton.backgroundColor = .red.withAlphaComponent(0.5)
+//                HStack.addSubview(numberButton)
+//                numberButton.activateConstraints([
+//                    numberButton.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor),
+//                    numberButton.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor),
+//                    numberButton.bottomAnchor.constraint(equalTo: contentLabel.bottomAnchor),
+//                    numberButton.heightAnchor.constraint(equalToConstant: 25)
+//                ])
+//                numberButton.tag = 77 + F.sourceIndex
+//                numberButton.addTarget(self, action: #selector(numberButtonOnTap(_:)), for: .touchUpInside)
                 
             // Fact multiple sources ---
                 ADD_SPACER(to: VStack, height: 16)
@@ -2790,7 +2840,7 @@ extension StoryViewController {
 
     }
     
-    func populateSources() {
+    func populateSources_old() {
         let VStack = self.view.viewWithTag(150) as! UIStackView
         REMOVE_ALL_SUBVIEWS(from: VStack)
         
@@ -3732,8 +3782,8 @@ extension StoryViewController: UIGestureRecognizerDelegate {
         let font = AILERON_resize(15) //UIFont(name: "Aileron-Regular", size: 15)
         let fontItalic = AILERON_resize(15) //UIFont(name: "Aileron-Regular", size: 15)
         //let fontItalic = UIFont(name: "Merriweather-LightItalic", size: 14)
-        let extraText = "[" + String(index) + "]"
-        let mText = text + " " + extraText
+        //let extraText = "[" + String(index) + "]"
+        let mText = text + "" //+ " " + extraText
         
         let attr = prettifyText(fullString: mText as NSString, boldPartsOfString: [],
             font: font, boldFont: font, paths: [], linkedSubstrings: [], accented: [])
@@ -3745,14 +3795,14 @@ extension StoryViewController: UIGestureRecognizerDelegate {
             value: CSS.shared.displayMode().main_textColor,
             range: range)
         
-        range = NSRange(location: attr.string.count - extraText.count, length: extraText.count)
-        
-        mAttr.addAttribute(NSAttributedString.Key.foregroundColor,
-            value: CSS.shared.orange,
-            range: range)
-        mAttr.addAttribute(NSAttributedString.Key.font,
-            value: fontItalic,
-            range: range)
+//        range = NSRange(location: attr.string.count - extraText.count, length: extraText.count)
+//        
+//        mAttr.addAttribute(NSAttributedString.Key.foregroundColor,
+//            value: CSS.shared.orange,
+//            range: range)
+//        mAttr.addAttribute(NSAttributedString.Key.font,
+//            value: fontItalic,
+//            range: range)
             
             
         return mAttr
